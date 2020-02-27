@@ -1,6 +1,5 @@
 <template>
   <div class="main_page">
-
     <div class="p_head_detail">
       <div class="top">
         <span>杭州网络科技有限公司</span>
@@ -8,7 +7,8 @@
           <div class="el-dropdown-link">
             <div class="doit"></div>
             <div>
-              下拉菜单 <i class="el-icon-caret-bottom el-icon--right"></i>
+              下拉菜单
+              <i class="el-icon-caret-bottom el-icon--right"></i>
             </div>
           </div>
           <el-dropdown-menu slot="dropdown">
@@ -28,9 +28,7 @@
           :disable-transitions="false"
           size="small"
           @close="handleClose(tag)"
-        >
-          {{ tag }}
-        </el-tag>
+        >{{ tag }}</el-tag>
         <el-input
           class="input-new-tag"
           v-if="inputVisible"
@@ -39,19 +37,12 @@
           size="mini"
           @keyup.enter.native="handleInputConfirm"
           @blur="handleInputConfirm"
-        >
-        </el-input>
-        <el-button v-else class="button-new-tag" size="small" @click="showInput"
-          >+ New Tag</el-button
-        >
+        ></el-input>
+        <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
       </div>
     </div>
 
-    <detailMode
-      :ruleForm="ruleForm"
-      :configData="configData"
-      @edit="itemEdit"
-    ></detailMode>
+    <detailMode :ruleForm="ruleForm" :configData="configData" @edit="itemEdit"></detailMode>
 
     <detailMode :ruleForm="ruleForm" :configData="configData"></detailMode>
 
@@ -59,24 +50,15 @@
       <div class="title">应用</div>
       <el-row>
         <el-col :span="8" class="app">
-          <img
-            src="https://avatars1.githubusercontent.com/u/23054546?s=64&v=4"
-            alt=""
-          />
+          <img src="https://avatars1.githubusercontent.com/u/23054546?s=64&v=4" alt />
           <div>订购设备</div>
         </el-col>
         <el-col :span="8" class="app">
-          <img
-            src="https://avatars1.githubusercontent.com/u/23054546?s=64&v=4"
-            alt=""
-          />
+          <img src="https://avatars1.githubusercontent.com/u/23054546?s=64&v=4" alt />
           <div>佣金结算</div>
         </el-col>
         <el-col :span="8" class="app border_none">
-          <img
-            src="https://avatars1.githubusercontent.com/u/23054546?s=64&v=4"
-            alt=""
-          />
+          <img src="https://avatars1.githubusercontent.com/u/23054546?s=64&v=4" alt />
           <div>第三方对接</div>
         </el-col>
       </el-row>
@@ -98,8 +80,7 @@
               :key="item.value"
               :label="item.label"
               :value="item.value"
-            >
-            </el-option>
+            ></el-option>
           </el-select>
 
           <el-row>
@@ -120,12 +101,10 @@
       </el-col>
       <el-col :span="15">
         <div class="bg_box" style="margin-left:0;margin-top:0;height:314px">
-          <img class="title_img" src="@/assets/img/clock.png" alt="" />
+          <img class="title_img" src="@/assets/img/clock.png" alt />
           <div class="title">
             待沟通3次
-            <el-button type="primary" style="float:right;margin:10px 24px"
-              >添加沟通计划</el-button
-            >
+            <el-button type="primary" style="float:right;margin:10px 24px">添加沟通计划</el-button>
           </div>
 
           <BaseCrud
@@ -139,17 +118,14 @@
             form-title="用户"
             :is-async="false"
             style="margin:24px;border:1px solid #EBEEF5;height:212px;overflow:hidden"
-          >
-          </BaseCrud>
+          ></BaseCrud>
         </div>
       </el-col>
     </el-row>
     <div class="bg_box" style="height:411px;margin-top:0;">
       <div class="title">
         历史沟通记录
-        <el-button type="primary" style="float:right;margin:10px 24px">
-          添加沟通计划
-        </el-button>
+        <el-button type="primary" style="float:right;margin:10px 24px">添加沟通计划</el-button>
         <el-button style="float:right;margin:10px 0px">查看联系人</el-button>
       </div>
 
@@ -164,14 +140,11 @@
         form-title="用户"
         :is-async="false"
         style="margin:24px;border:1px solid #EBEEF5;height:309px;overflow:hidden"
-      >
-      </BaseCrud>
+      ></BaseCrud>
     </div>
 
     <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false">
-      <div class="p_head">
-        {{ fromConfigData.title }}
-      </div>
+      <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
         :formBaseData="fromConfigData.formData"
         :showFootBtn="fromConfigData.showFootBtn"
@@ -182,286 +155,286 @@
 </template>
 
 <script>
-import Form from '@/components/form/index.vue';
-import BaseCrud from '@/components/table/BaseCrud.vue';
-import detailMode from '@/components/detailMode/detailMode.vue';
-import { USER_CONFIG } from './tableConfig/config_communicate';
-import { FORM_CONFIG } from './formConfig/agentDetail';
+import Form from "@/components/form/index.vue";
+import BaseCrud from "@/components/table/BaseCrud.vue";
+import detailMode from "@/components/detailMode/detailMode.vue";
+import { USER_CONFIG } from "./tableConfig/config_communicate";
+import { FORM_CONFIG } from "./formConfig/agentDetail";
 
 export default {
-    name: 'Theme',
-    data () {
-        return {
-            drawer: false,
-            dynamicTags: ['标签一', '标签二', '标签三'],
-            inputVisible: false,
-            inputValue: '',
-            configData: {
-                name: '基本信息',
-                child: [
-                    {
-                        name: '基本资料',
-                        modelName: 'basicData',
-                        models: [
-                            {
-                                items: [
-                                    {
-                                        name: '公司名称',
-                                        key: 'name1',
-                                    },
-                                    {
-                                        name: '法人手机号',
-                                        key: 'name',
-                                    },
-                                ],
-                            },
-                            {
-                                items: [
-                                    {
-                                        name: '邮箱',
-                                        key: 'email',
-                                    },
-                                    {
-                                        name: '营业执照图',
-                                        key: 'pic',
-                                        type: 'img',
-                                    },
-                                ],
-                            },
-                            {
-                                items: [
-                                    {
-                                        name: '法人姓名',
-                                        key: 'name3',
-                                    },
-                                    {
-                                        name: '公司地址',
-                                        key: 'name',
-                                    },
-                                ],
-                            },
-                        ],
-                    },
-                    {
-                        name: '财务',
-                        modelName: 'finance',
-                        models: [
-                            {
-                                items: [
-                                    {
-                                        name: '结算卡类型',
-                                        key: 'name1',
-                                    },
-                                    {
-                                        name: '开户支行地区',
-                                        key: 'name',
-                                    },
-                                ],
-                            },
-                            {
-                                items: [
-                                    {
-                                        name: '开户名',
-                                        key: 'email',
-                                    },
-                                    {
-                                        name: '开户支行',
-                                        key: 'pic',
-                                        type: 'img',
-                                    },
-                                ],
-                            },
-                            {
-                                items: [
-                                    {
-                                        name: '银行卡号',
-                                        key: 'name3',
-                                    },
-                                ],
-                            },
-                        ],
-                    },
-                    {
-                        name: '邮寄地址',
-                        modelName: 'mailAddress',
-                        models: [
-                            {
-                                items: [
-                                    {
-                                        name: '收件人',
-                                        key: 'name1',
-                                    },
-                                    {
-                                        name: '详细地址',
-                                        key: 'name',
-                                    },
-                                ],
-                            },
-                            {
-                                items: [
-                                    {
-                                        name: '手机号',
-                                        key: 'email',
-                                    },
-                                ],
-                            },
-                            {
-                                items: [
-                                    {
-                                        name: '地区',
-                                        key: 'name3',
-                                    },
-                                ],
-                            },
-                        ],
-                    },
-                ],
-            },
-            value: '',
-            options: [
-                {
-                    value: 1,
-                    label: 'a',
-                },
-            ],
-            testData: [],
-            tableConfigData: USER_CONFIG,
-            fromConfigData: [],
-            ruleForm: {
-                name: '1',
-                name1: '2',
-                name2: '3',
-                name3: '4',
-                email: '12312312@163.com',
-                pic:
-          'https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg',
-            },
-        };
+  name: "Theme",
+  data() {
+    return {
+      drawer: false,
+      dynamicTags: ["标签一", "标签二", "标签三"],
+      inputVisible: false,
+      inputValue: "",
+      configData: {
+        name: "基本信息",
+        child: [
+          {
+            name: "基本资料",
+            modelName: "basicData",
+            models: [
+              {
+                items: [
+                  {
+                    name: "公司名称",
+                    key: "name1"
+                  },
+                  {
+                    name: "法人手机号",
+                    key: "name"
+                  }
+                ]
+              },
+              {
+                items: [
+                  {
+                    name: "邮箱",
+                    key: "email"
+                  },
+                  {
+                    name: "营业执照图",
+                    key: "pic",
+                    type: "img"
+                  }
+                ]
+              },
+              {
+                items: [
+                  {
+                    name: "法人姓名",
+                    key: "name3"
+                  },
+                  {
+                    name: "公司地址",
+                    key: "name"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            name: "财务",
+            modelName: "finance",
+            models: [
+              {
+                items: [
+                  {
+                    name: "结算卡类型",
+                    key: "name1"
+                  },
+                  {
+                    name: "开户支行地区",
+                    key: "name"
+                  }
+                ]
+              },
+              {
+                items: [
+                  {
+                    name: "开户名",
+                    key: "email"
+                  },
+                  {
+                    name: "开户支行",
+                    key: "pic",
+                    type: "img"
+                  }
+                ]
+              },
+              {
+                items: [
+                  {
+                    name: "银行卡号",
+                    key: "name3"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            name: "邮寄地址",
+            modelName: "mailAddress",
+            models: [
+              {
+                items: [
+                  {
+                    name: "收件人",
+                    key: "name1"
+                  },
+                  {
+                    name: "详细地址",
+                    key: "name"
+                  }
+                ]
+              },
+              {
+                items: [
+                  {
+                    name: "手机号",
+                    key: "email"
+                  }
+                ]
+              },
+              {
+                items: [
+                  {
+                    name: "地区",
+                    key: "name3"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      value: "",
+      options: [
+        {
+          value: 1,
+          label: "a"
+        }
+      ],
+      testData: [],
+      tableConfigData: USER_CONFIG,
+      fromConfigData: [],
+      ruleForm: {
+        name: "1",
+        name1: "2",
+        name2: "3",
+        name3: "4",
+        email: "12312312@163.com",
+        pic:
+          "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
+      }
+    };
+  },
+  components: { detailMode, BaseCrud, Form },
+  mounted() {
+    this.testData = [
+      {
+        id: "1",
+        tel: "15184318420",
+        name: "小白",
+        email: "412412@qq.com",
+        status: "1",
+        create_time: "2018-04-20",
+        expand: "扩展信息一",
+        role: ["2"]
+      },
+      {
+        id: "1",
+        tel: "15184318420",
+        name: "小白",
+        email: "412412@qq.com",
+        status: "1",
+        create_time: "2018-04-20",
+        expand: "扩展信息一",
+        role: ["2"]
+      },
+      {
+        id: "1",
+        tel: "15184318420",
+        name: "小白",
+        email: "412412@qq.com",
+        status: "1",
+        create_time: "2018-04-20",
+        expand: "扩展信息一",
+        role: ["2"]
+      },
+      {
+        id: "1",
+        tel: "15184318420",
+        name: "小白",
+        email: "412412@qq.com",
+        status: "1",
+        create_time: "2018-04-20",
+        expand: "扩展信息一",
+        role: ["2"]
+      },
+      {
+        id: "1",
+        tel: "15184318420",
+        name: "小白",
+        email: "412412@qq.com",
+        status: "1",
+        create_time: "2018-04-20",
+        expand: "扩展信息一",
+        role: ["2"]
+      },
+      {
+        id: "1",
+        tel: "15184318420",
+        name: "小白",
+        email: "412412@qq.com",
+        status: "1",
+        create_time: "2018-04-20",
+        expand: "扩展信息一",
+        role: ["2"]
+      },
+      {
+        id: "1",
+        tel: "15184318420",
+        name: "小白",
+        email: "412412@qq.com",
+        status: "1",
+        create_time: "2018-04-20",
+        expand: "扩展信息一",
+        role: ["2"]
+      },
+      {
+        id: "1",
+        tel: "15184318420",
+        name: "小白",
+        email: "412412@qq.com",
+        status: "1",
+        create_time: "2018-04-20",
+        expand: "扩展信息一",
+        role: ["2"]
+      }
+    ];
+  },
+  methods: {
+    handleClose(tag) {
+      this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
     },
-    components: { detailMode, BaseCrud, Form },
-    mounted () {
-        this.testData = [
-            {
-                id: '1',
-                tel: '15184318420',
-                name: '小白',
-                email: '412412@qq.com',
-                status: '1',
-                create_time: '2018-04-20',
-                expand: '扩展信息一',
-                role: ['2'],
-            },
-            {
-                id: '1',
-                tel: '15184318420',
-                name: '小白',
-                email: '412412@qq.com',
-                status: '1',
-                create_time: '2018-04-20',
-                expand: '扩展信息一',
-                role: ['2'],
-            },
-            {
-                id: '1',
-                tel: '15184318420',
-                name: '小白',
-                email: '412412@qq.com',
-                status: '1',
-                create_time: '2018-04-20',
-                expand: '扩展信息一',
-                role: ['2'],
-            },
-            {
-                id: '1',
-                tel: '15184318420',
-                name: '小白',
-                email: '412412@qq.com',
-                status: '1',
-                create_time: '2018-04-20',
-                expand: '扩展信息一',
-                role: ['2'],
-            },
-            {
-                id: '1',
-                tel: '15184318420',
-                name: '小白',
-                email: '412412@qq.com',
-                status: '1',
-                create_time: '2018-04-20',
-                expand: '扩展信息一',
-                role: ['2'],
-            },
-            {
-                id: '1',
-                tel: '15184318420',
-                name: '小白',
-                email: '412412@qq.com',
-                status: '1',
-                create_time: '2018-04-20',
-                expand: '扩展信息一',
-                role: ['2'],
-            },
-            {
-                id: '1',
-                tel: '15184318420',
-                name: '小白',
-                email: '412412@qq.com',
-                status: '1',
-                create_time: '2018-04-20',
-                expand: '扩展信息一',
-                role: ['2'],
-            },
-            {
-                id: '1',
-                tel: '15184318420',
-                name: '小白',
-                email: '412412@qq.com',
-                status: '1',
-                create_time: '2018-04-20',
-                expand: '扩展信息一',
-                role: ['2'],
-            },
-        ];
+
+    showInput() {
+      this.inputVisible = true;
+      this.$nextTick(() => {
+        this.$refs.saveTagInput.$refs.input.focus();
+      });
     },
-    methods: {
-        handleClose (tag) {
-            this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
-        },
 
-        showInput () {
-            this.inputVisible = true;
-            this.$nextTick(() => {
-                this.$refs.saveTagInput.$refs.input.focus();
-            });
-        },
-
-        handleInputConfirm () {
-            let inputValue = this.inputValue;
-            if (inputValue) {
-                this.dynamicTags.push(inputValue);
-            }
-            this.inputVisible = false;
-            this.inputValue = '';
-        },
-
-        selectionChange ($val) {
-            // eslint-disable-next-line no-console
-            console.log($val);
-        },
-        go_detail () {
-            // eslint-disable-next-line no-console
-            this.$router.push('/agent/list/detail');
-        },
-        itemEdit ($model) {
-            this.drawer = true;
-            this.fromConfigData = FORM_CONFIG[$model];
-            // eslint-disable-next-line no-console
-            console.log(this.fromConfigData);
-        },
-        cancel () {
-            this.drawer = false;
-        },
+    handleInputConfirm() {
+      let inputValue = this.inputValue;
+      if (inputValue) {
+        this.dynamicTags.push(inputValue);
+      }
+      this.inputVisible = false;
+      this.inputValue = "";
     },
+
+    selectionChange($val) {
+      // eslint-disable-next-line no-console
+      console.log($val);
+    },
+    go_detail() {
+      // eslint-disable-next-line no-console
+      this.$router.push("/agent/list/detail");
+    },
+    itemEdit($model) {
+      this.drawer = true;
+      this.fromConfigData = FORM_CONFIG[$model];
+      // eslint-disable-next-line no-console
+      console.log(this.fromConfigData);
+    },
+    cancel() {
+      this.drawer = false;
+    }
+  }
 };
 </script>
 

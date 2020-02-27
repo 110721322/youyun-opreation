@@ -100,7 +100,51 @@ const asyncRoutes = {
       icon: 'agentCheckList'
     },
     component: () => import('@/page/agent/agentCheckList.vue')
-  }
+  },
+
+  work: {
+    path: '/work',
+    name: 'work',
+    component: () => import('./index.vue'),
+    meta: {
+      title: 'work',
+      icon: 'work'
+    },
+    children: []
+  },
+
+  'work-bench': {
+    path: 'bench',
+    name: 'workBench',
+    meta: {
+      title: 'workBench',
+      icon: 'workBench'
+    },
+    component: () => import('@/page/work/workBench.vue'),
+    children: []
+  },
+  
+  'work-todo': {
+    path: 'todo',
+    name: 'workTodo',
+    meta: {
+      title: 'workTodo',
+      icon: 'workTodo'
+    },
+    component: () => import('@/page/work/workTodo.vue'),
+    children: []
+  },
+
+  'work-sentMessage': {
+    path: 'sentMessage',
+    name: 'workSentMessage',
+    meta: {
+      title: 'workSentMessage',
+      icon: 'workSentMessage'
+    },
+    component: () => import('@/page/work/workSentMessage.vue'),
+    children: []
+  },
 }
 // eslint-disable-next-line no-console
 console.log(asyncRoutes)

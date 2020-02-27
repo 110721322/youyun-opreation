@@ -4,7 +4,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import 'babel-polyfill';
 
 // import animated from 'animate.css';
-import './assets/img/icon-font/iconfont.css'; // icon图
+// import './assets/img/icon-font/iconfont.css'; // icon图
 import VueQrcode from '@chenfengyuan/vue-qrcode';
 import router from './router';
 import App from './App.vue';

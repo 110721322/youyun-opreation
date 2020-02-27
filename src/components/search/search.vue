@@ -6,7 +6,8 @@
       class="form-inline"
       :style="isOpen ? 'height:' + (openHeight + 40) + 'px' : ''"
     >
-      <el-form-item label="开通时间：" label-width="100px">
+      <el-form-item label="开通时间：" label-width="100px" >
+
         <date-select
           size="large"
           :type="'daterange'"
@@ -17,64 +18,43 @@
         ></date-select>
       </el-form-item>
 
-      <el-form-item label="精准筛选：" label-width="100px">
-        <el-input
-          placeholder="请输入内容"
-          class="input-with-select"
-          size="large"
-          v-model="inputForm"
+      <template >
+
+        <el-form-item
+          :key="key"
+          v-for="(item, key) of setects"
+          :label="item.name + '：'"
+          :class="['form_item', key % 2 == 0 ? 'clear_both' : '']"
+          :label-width="key % 2 == 0 ? '100px' : '185px'"
         >
           <el-select
-            slot="prepend"
-            v-model="inputSelect"
             style="width:294px"
+            v-model="searchData[item.key]"
             placeholder="请选择"
+            size="large"
           >
             <el-option
-              v-for="(item, key) in inputOptions"
-              :key="key"
-              :label="item.label"
-              :value="item.value"
+              v-for="option in item.options"
+              :key="option.value"
+              :label="option.label"
+              :value="option.value"
             >
             </el-option>
           </el-select>
-        </el-input>
-      </el-form-item>
-
-      <el-form-item
-        :key="key"
-        v-for="(item, key) of setects"
-        :label="item.name + '：'"
-        :class="['form_item', key % 2 == 0 ? 'clear_both' : '']"
-        :label-width="key % 2 == 0 ? '100px' : '185px'"
-      >
-        <el-select
-          style="width:294px"
-          v-model="searchData[item.key]"
-          placeholder="请选择"
-          size="large"
-        >
-          <el-option
-            v-for="option in item.options"
-            :key="option.value"
-            :label="option.label"
-            :value="option.value"
-          >
-          </el-option>
-        </el-select>
-      </el-form-item>
+        </el-form-item>
+      </template>
 
       <div class="btn_list" style="margin-bottom:0">
         <el-button
           type="primary"
           size="large"
-          v-show="isOpen"
           @click="onClick_search"
         >
           搜索</el-button
         >
         <el-button plain size="large" @click="reset">重置</el-button>
-        <div class="open_btn" @click="onClick_openOrClose">
+        <div class="open_btn" @click="onClick_openOrClose" >
+
           <span v-show="!isOpen">展开</span>
           <span v-show="isOpen">收起</span>
 
@@ -93,7 +73,7 @@ export default {
     components: {
         DateSelect,
     },
-    props: ['setects', 'inputOptions', 'openHeight'],
+    props: ['setects', 'inputOptions', 'openHeight' ],
     data () {
         return {
             isSelectToday: true,

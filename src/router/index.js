@@ -140,7 +140,53 @@ let menuItems = [
         }
       }
     ]
-  }
+  },
+  {
+    text: '工作台',
+    type: 'ios-paper',
+    path: 'work',
+    name: 'work',
+    isShow: true,
+    meta: {
+      title: '工作台',
+      icon: '工作台'
+    },
+    children: [
+      {
+        type: 'ios-grid',
+        name: 'work-bench',
+        text: '工作台',
+        path: 'bench',
+        isShow: true,
+        meta: {
+          title: '工作台',
+          icon: 'work-bench'
+        }
+      },
+      {
+        type: 'ios-grid',
+        name: 'work-todo',
+        text: '待办事项',
+        path: 'Todo',
+        isShow: true,
+        meta: {
+          title: '待办事项',
+          icon: 'work-todo'
+        }
+      },
+      {
+        type: 'ios-grid',
+        name: 'work-sentMessage',
+        text: '短信群发',
+        path: 'sentMessage',
+        isShow: true,
+        meta: {
+          title: '短信群发',
+          icon: 'work-sentMessage'
+        }
+      }
+    ]
+  },
   //   {
   //     text: 'index2',
   //     type: 'ios-paper',
