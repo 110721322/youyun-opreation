@@ -3,11 +3,15 @@
         <el-input v-model="ruleForm[formItem.key]"
             :placeholder="placeholder"
             :type="inputType"
-            rows="4"
+            :rows="row"
             :maxlength="maxlength"
             show-word-limit
             :show-password="showPsd"
-            clearable></el-input>
+            clearable
+            :style="inputStyle"
+            :disabled="formItem.isDisable?formItem.isDisable(ruleForm):false">
+                <template v-if="formItem.isShowSlot" slot="append"> <span>{{formItem.showSlotName}}</span></template>
+            </el-input>
     </div>
 </template>
 
@@ -34,6 +38,14 @@ export default {
         },
         showPsd () {
             return this.inputType === 'password';
+        },
+        row () {
+            const item = this.formItem;
+            return item.row ? item.row : 4;
+        },
+        inputStyle(){
+            const item = this.formItem;
+            return item.style ? item.style : "";
         },
     },
     data () {

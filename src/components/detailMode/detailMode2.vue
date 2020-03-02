@@ -2,12 +2,20 @@
   <div class="bg_box">
     <div class="title">
       {{ configData.name }}
+      <slot name="taskDetail"></slot>
       <el-button
         v-show="isShowEditBtn"
         type="primary"
         class="edit_btn"
         size="mini"
         >编辑</el-button
+      >
+      <el-button
+        v-show="isShowCallBtn"
+        type="primary"
+        class="edit_btn"
+        size="mini"
+        >立即沟通</el-button
       >
     </div>
 
@@ -20,7 +28,7 @@
       label-position="left"
     >
       <el-row>
-        <el-col :span="8" v-for="(item, key) of configData.models" :key="key">
+        <el-col :span="spanWidth?spanWidth:8" v-for="(item, key) of configData.models" :key="key">
           <el-form-item
             :label="item.name + '：'"
             v-for="(item, key) of item.items"
@@ -45,7 +53,7 @@
 <script>
 export default {
     name: '',
-    props: { ruleForm: Object, configData: Object, isShowEditBtn: Boolean },
+    props: { ruleForm: Object, configData: Object, isShowEditBtn: Boolean ,isShowCallBtn:Boolean ,spanWidth:Number},
     computed: {},
     data () {
         return {
@@ -65,6 +73,7 @@ export default {
   background: #fff;
   overflow: hidden;
   .title {
+    position:relative;
     height: 54px;
     line-height: 54px;
     padding-left: 32px;

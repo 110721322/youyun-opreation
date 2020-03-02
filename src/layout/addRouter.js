@@ -145,6 +145,56 @@ const asyncRoutes = {
     component: () => import('@/page/work/workSentMessage.vue'),
     children: []
   },
+  'taskDetail': {
+    path: 'taskDetail',
+    name: 'taskDetail',
+    meta: {
+      title: 'taskDetail',
+      icon: 'taskDetail'
+    },
+    component: () => import('@/page/work/taskDetail.vue'),
+    children: []
+  },
+  'approvalDetail': {
+    path: 'approvalDetail',
+    name: 'approvalDetail',
+    meta: {
+      title: 'approvalDetail',
+      icon: 'approvalDetail'
+    },
+    component: () => import('@/page/work/approvalDetail.vue'),
+    children: []
+  },
+  message: {
+    path: '/message',
+    name: 'message',
+    component: () => import('./index.vue'),
+    meta: {
+      title: 'message',
+      icon: 'message'
+    },
+    children: []
+  },
+  'serviceAnnouncementList':{
+    path: 'serviceAnnouncementList',
+    name: 'serviceAnnouncementList',
+    meta: {
+      title: 'serviceAnnouncementList',
+      icon: 'serviceAnnouncementList'
+    },
+    component: () => import('@/page/message/serviceAnnouncementList.vue'),
+    children: []
+  },
+  'announcementEdit':{
+    path: 'announcementEdit',
+    name: 'announcementEdit',
+    meta: {
+      title: 'announcementEdit',
+      icon: 'announcementEdit'
+    },
+    component: () => import('@/page/message/announcementEdit.vue'),
+    children: []
+  }
 }
 // eslint-disable-next-line no-console
 console.log(asyncRoutes)

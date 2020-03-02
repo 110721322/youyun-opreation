@@ -1,22 +1,33 @@
 <template>
   <div class="main_page">
     <div class="p_head">
-      短信群发
-    </div>
+        短信群发
+      </div>
+    <div class="content-box">
+      
+      <div class="title">
+        {{fromConfigData.title}}
+      </div>
 
-    <detailMode :ruleForm="ruleForm" :configData="configData"></detailMode>
+      <sendMessage 
+      :formBaseData="fromConfigData.formData"
+      :labelWidth ="'auto'"
+      ></sendMessage>
+    </div>
 
   </div>
 </template>
 
 <script>
-import detailMode from '@/components/detailMode/detailMode4.vue';
+import sendMessage from '@/components/form/sendMessage.vue';
+import { FORM_CONFIG } from "./formConfig/sendMessage";
 
 export default {
     name: 'Theme',
-    components: { detailMode },
+    components: { sendMessage },
     data () {
         return {
+          fromConfigData:FORM_CONFIG.sendMessageData,
             configData: {
                 name:"短信群发",
                 models:[
@@ -44,4 +55,19 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.content-box {
+  margin:24px;
+  background-color:#fff;
+  padding-bottom:90px;
+}
+.title {
+    height: 54px;
+    line-height: 54px;
+    padding-left: 32px;
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(51, 51, 53, 1);
+    border-bottom: 1px solid #ebeef5;
+  }
+</style>

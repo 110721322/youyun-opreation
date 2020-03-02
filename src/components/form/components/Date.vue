@@ -3,7 +3,8 @@
         <el-date-picker v-model="ruleForm[formItem.key]"
             :type="dateType"
             value-format="timestamp"
-            placeholder="选择日期">
+            placeholder="选择日期"
+            :style="dateStyle">
         </el-date-picker>
     </div>
 </template>
@@ -18,6 +19,9 @@ export default {
     computed: {
         dateType () {
             return this.formItem.dateType ? this.formItem.dateType : 'date';
+        },
+        dateStyle () {
+            return this.formItem.style ? this.formItem.style : '';
         },
     },
     data () {

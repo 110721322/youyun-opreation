@@ -184,7 +184,75 @@ let menuItems = [
           title: '短信群发',
           icon: 'work-sentMessage'
         }
-      }
+      },
+      {
+        type: 'ios-grid',
+        name: 'taskDetail',
+        text: '日常任务详情',
+        path: 'taskDetail',
+        isShow: true,
+        meta: {
+          title: '日常任务详情',
+          icon: 'taskDetail'
+        }
+      },
+      {
+        type: 'ios-grid',
+        name: 'approvalDetail',
+        text: '审批任务详情',
+        path: 'approvalDetail',
+        isShow: true,
+        meta: {
+          title: '日常任务详情',
+          icon: 'approvalDetail'
+        }
+      },
+    ]
+  },
+  {
+    text: '消息管理',
+    type: 'ios-paper',
+    path: 'message',
+    name: 'message',
+    isShow: true,
+    meta: {
+      title: '消息管理',
+      icon: '消息管理'
+    },
+    children: [
+      {
+        type: 'ios-grid',
+        name: 'serviceAnnouncementList',
+        text: '服务商公告',
+        path: 'serviceAnnouncementList',
+        isShow: true,
+        meta: {
+          title: '服务商公告',
+          icon: 'serviceAnnouncementList'
+        }
+      },
+      {
+        type: 'ios-grid',
+        name: 'announcementEdit',
+        text: '编辑服务商公告',
+        path: 'announcementEdit',
+        isShow: true,
+        meta: {
+          title: '编辑服务商公告',
+          icon: 'announcementEdit'
+        }
+      },
+      // {
+      //   type: 'ios-grid',
+      //   name: 'announcementEdit',
+      //   text: '编辑服务商公告',
+      //   path: 'announcementEdit',
+      //   isShow: true,
+      //   meta: {
+      //     title: '编辑服务商公告',
+      //     icon: 'announcementEdit'
+      //   }
+      // },
     ]
   },
   //   {

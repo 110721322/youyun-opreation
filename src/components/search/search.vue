@@ -18,7 +18,30 @@
         ></date-select>
       </el-form-item>
 
-      <template >
+    <el-form-item label="精准筛选：" label-width="100px">
+        <el-input
+          placeholder="请输入内容"
+          class="input-with-select"
+          size="large"
+          v-model="inputForm"
+        >
+          <el-select
+            slot="prepend"
+            v-model="inputSelect"
+            style="width:294px"
+            placeholder="请选择"
+          >
+            <el-option
+              v-for="(item, key) in inputOptions"
+              :key="key"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-select>
+        </el-input>
+      </el-form-item>
+
 
         <el-form-item
           :key="key"
@@ -42,7 +65,6 @@
             </el-option>
           </el-select>
         </el-form-item>
-      </template>
 
       <div class="btn_list" style="margin-bottom:0">
         <el-button

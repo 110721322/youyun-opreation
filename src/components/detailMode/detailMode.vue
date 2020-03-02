@@ -1,10 +1,20 @@
 <template>
   <div class="bg_box">
-    <div class="title">{{ configData.name }}</div>
+    <div class="title">
+      {{ configData.name }} 
+      <slot name="operatingTop">
+          <span class="edit" @click="edit(child.modelName)">编辑</span>
+        </slot>
+    </div>
+    <slot name="step">
+
+    </slot>
     <div class="con_box" v-for="(child, key) of configData.child" :key="key">
       <div class="title">
         {{ child.name }}
-        <span class="edit" @click="edit(child.modelName)">编辑</span>
+        <slot name="operatingItem">
+          <span class="edit" @click="edit(child.modelName)">编辑</span>
+        </slot>
       </div>
       <el-form
         :inline="false"
@@ -35,6 +45,9 @@
         </el-row>
       </el-form>
     </div>
+      <slot name="operatingBottom">
+
+      </slot>
   </div>
 </template>
 

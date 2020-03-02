@@ -258,10 +258,12 @@ export default {
     },
 
     isArr (target) {
+     
         return this.jugeType(target) === '[object Array]';
     },
 
     isObj (target) {
+      
         return this.jugeType(target) === '[object Object]';
     },
 
