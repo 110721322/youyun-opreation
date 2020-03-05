@@ -59,7 +59,7 @@ const router = new VueRouter({
 // 全局钩子函数,在跳转之前执行
 import currRouter from '@/layout/addRouter.js'
 
-let menuItems = [
+const menuItems = [
   {
     text: '商户管理',
     type: 'ios-paper',
@@ -206,7 +206,7 @@ let menuItems = [
           title: '日常任务详情',
           icon: 'approvalDetail'
         }
-      },
+      }
     ]
   },
   {
@@ -241,7 +241,7 @@ let menuItems = [
           title: '编辑服务商公告',
           icon: 'announcementEdit'
         }
-      },
+      }
     ]
   },
   {
@@ -265,7 +265,7 @@ let menuItems = [
           title: '工作任务统计',
           icon: 'statisticsDetail'
         }
-      },
+      }
     ]
   },
   {
@@ -300,9 +300,9 @@ let menuItems = [
           title: '商户数据',
           icon: 'merchantData'
         }
-      },
+      }
     ]
-  },
+  }
   //   {
   //     text: 'index2',
   //     type: 'ios-paper',
