@@ -234,6 +234,16 @@ const asyncRoutes = {
     },
     component: () => import('@/page/dataMarket/transactionData.vue'),
     children: []
+  },
+  'merchantData':{
+    path: 'merchantData',
+    name: 'merchantData',
+    meta: {
+      title: 'merchantData',
+      icon: 'merchantData'
+    },
+    component: () => import('@/page/dataMarket/merchantData.vue'),
+    children: []
   }
 }
 // eslint-disable-next-line no-console

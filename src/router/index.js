@@ -290,6 +290,17 @@ let menuItems = [
           icon: 'transactionData'
         }
       },
+      {
+        type: 'ios-grid',
+        name: 'merchantData',
+        text: '商户数据',
+        path: 'merchantData',
+        isShow: true,
+        meta: {
+          title: '商户数据',
+          icon: 'merchantData'
+        }
+      },
     ]
   },
   //   {

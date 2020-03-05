@@ -13,6 +13,8 @@
       :row-key="rowKey"
       :default-expand-all="defaultExpandAll"
       :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+
+      :header-cell-style="headerCellStyle"
     >
       <el-table-column v-if="isSelect" type="selection" width="55">
       </el-table-column>

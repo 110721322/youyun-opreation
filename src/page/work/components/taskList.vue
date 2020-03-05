@@ -68,12 +68,11 @@ export default {
     },
     watch: {
         isCheckAll:function($val){
-            var _self = this
             if($val===true){
             // eslint-disable-next-line no-console
                 console.log(this.checkList.length)
-                this.checkList.forEach(function($item,$index){
-                    _self.$set(_self.checkList, $index, true)
+                this.checkList.forEach(($item,$index)=>{
+                    this.$set(this.checkList, $index, true)
                 })
             }
             this.changeCheckList();
