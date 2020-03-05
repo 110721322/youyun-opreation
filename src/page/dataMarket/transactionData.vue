@@ -1,569 +1,631 @@
 <template>
   <div class="main_page">
-      <div class="p_head">
-        交易数据
-      </div>
-      <search
-        :inputOptions="inputOptions"
-        :setects="setects"
-        :openHeight="searchMaxHeight"
-        @search="search"
-      ></search>
-      <div class="d-box">
-        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+    <div class="p_head">交易数据</div>
+    <search
+      :inputOptions="inputOptions"
+      :setects="setects"
+      :openHeight="searchMaxHeight"
+      @search="search"
+    ></search>
+    <div class="d-box">
+      <el-menu
+        :default-active="activeIndex"
+        class="el-menu-demo"
+        mode="horizontal"
+        @select="handleSelect"
+      >
         <el-menu-item index="1">全部订单</el-menu-item>
         <el-menu-item index="2">微信</el-menu-item>
         <el-menu-item index="3">支付宝</el-menu-item>
         <el-menu-item index="4">云闪付</el-menu-item>
         <el-menu-item index="5">银联</el-menu-item>
-        </el-menu>
-        <div class="echarts-box">
-            <div class="">
-                <div class="data-box" v-for="(item,index) in amountList" :key="index">
-                    
-                    <div class="title">{{item.title}}</div>
-                    <div class="amount-all"><span class="amount-icon">¥</span> {{item.amountAll}}</div>
-                    <el-tooltip class="item" effect="dark" :content="item.tooltip" placement="bottom">
-                    <div class="progress-box">
-                        <img src="" class="data-img">
-                        <el-progress :percentage="50" color="rgba(58,189,45,1)" class="progress" :show-text="false"></el-progress>
-                        <span class="amount-face">¥ {{item.amountFace}}</span>
-                    </div>
-                    </el-tooltip>
-                    <div :class="[radio===index?'check-radio':'uncheck-radio']" @click="onClick_changeRadio(index)"></div>
-                </div>
+      </el-menu>
+      <div class="echarts-box">
+        <div class="data-box">
+          <div class="data-item" v-for="(item,index) in amountList" :key="index">
+            <div class="title">{{item.title}}</div>
+            <div class="amount-all">
+              <span class="amount-icon">¥</span>
+              {{item.amountAll}}
             </div>
-            <div class="right">
-                <div class="tip">
-                    <span class="dot_blue"></span>订单总交易额 <span class="dot_green"></span>刷脸总交易额 <div class="change-btn" @click="onClick_changeArts"><img src="" class="change-icon">{{isLineShow?'切换柱状图':'切换折线图'}}</div>
-                </div>
-                <div ref="echartsLine" class="arts-line" v-show="isLineShow">
-
-                </div>
-                <div ref="echartsBar" class="arts-line" v-show="!isLineShow">
-
-                </div>
-            </div>
-        </div>
-        <areaSelect
-        
-        >
-        </areaSelect>
-      </div>
-      <search
-        :inputOptions="inputOptions"
-        :setects="setects"
-        :openHeight="searchMaxHeight"
-        @search="search"
-      ></search>
-      <div class="pie-box">
-          <div class="pie-item" v-for="(item,index) in pieOptionList" :key="index">
-              <div class="title">{{titleList[index].name}}</div>
-              <div class="tags">
-                <el-radio-group v-model="radioList[index].radio">
-                <el-radio-button :label="0">交易额</el-radio-button>
-                <el-radio-button :label="1">交易笔数</el-radio-button>
-                </el-radio-group>
+            <el-tooltip class="item" effect="dark" :content="item.tooltip" placement="bottom">
+              <div class="progress-box">
+                <img src class="data-img" />
+                <el-progress
+                  :percentage="50"
+                  color="rgba(58,189,45,1)"
+                  class="progress"
+                  :show-text="false"
+                ></el-progress>
+                <span class="amount-face">¥ {{item.amountFace}}</span>
               </div>
-              <div class="line"></div>
-                <div class="data-title">{{titleList[index].name}}</div>
-                <div class="data-box">
-                    <div class="data-pie" :ref="`echartsPie${index}`">
-
-                    </div>
-                    <div class="data-list">
-                            <div v-for="(item1,index1) in dataList[index]" :key="index1" class="data-item">
-                                <span><span :class="item1.className"></span>{{item1.title}}</span> <span class="perc">| {{item1.perc}}</span>
-                            </div>
-                    </div>
-                </div>
+            </el-tooltip>
+            <div
+              :class="[radio===index?'check-radio':'uncheck-radio']"
+              @click="onClick_changeRadio(index)"
+            ></div>
           </div>
+        </div>
+        <div class="right">
+          <div class="tip">
+            <span class="dot_blue"></span>订单总交易额
+            <span class="dot_green"></span>刷脸总交易额
+            <div class="change-btn" @click="onClick_changeArts">
+              <img src class="change-icon" />
+              {{isLineShow?'切换柱状图':'切换折线图'}}
+            </div>
+          </div>
+          <div class="chart-box">
+            <div
+              class="chart-panel"
+              ref="echartsLine"
+              :class="[isLineShow?'chart-show':'chart-hide']"
+            ></div>
+            <div
+              class="chart-panel"
+              ref="echartsBar"
+              :class="[!isLineShow?'chart-show':'chart-hide']"
+            ></div>
+          </div>
+        </div>
       </div>
+    </div>
+    <search
+      :inputOptions="inputOptions"
+      :setects="setects"
+      :openHeight="searchMaxHeight"
+      @search="search"
+    ></search>
+    <div class="pie-box">
+      <div v-for="(item,index) in pieOptionList" :key="index" class="pie-item">
+        <dataItem
+          :radio="radioListData[index]"
+          :title="titleList[index].name"
+          :pieOption="pieOptionList[index]"
+          :piwRefName="`echartsPie${index}`"
+          :dataList="dataList[index]"
+          :isShowPie="true"
+        ></dataItem>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import search from '@/components/search/search.vue';
+import dataItem from "./components/dataItem.vue";
+import search from "@/components/search/search.vue";
 // import BaseCrud from '@/components/table/BaseCrud.vue';
-import areaSelect from '@/components/areaSelect.vue';
 
 export default {
-    name: 'Theme',
-    components: { search ,areaSelect },
-    data () {
-        return {
-            searchMaxHeight: '300',
-            activeIndex:'1',
-            testData: [],
-            payWay:'all',
-            radio:0,
-            isLineShow: true,
-            titleList:[
-                {name:'大区交易占比'},
-                {name:'行业交易占比'},
-            ],
-            radioList:[
-                {radio:'0'},
-                {radio:'0'},
-            ],
-            dataList:[
-                [
-                    {
-                        title:'华东',
-                        className:['dot','dot_d'],
-                        perc:'36%',
-                    },
-                    {
-                        title:'华中',
-                        className:['dot','dot_z'],
-                        perc:'20%',
-                    },
-                    {
-                        title:'华北',
-                        className:['dot','dot_b'],
-                        perc:'10%',
-                    },
-                    {
-                        title:'华南',
-                        className:['dot','dot_n'],
-                        perc:'36%',
-                    },
-                    {
-                        title:'华西',
-                        className:['dot','dot_x'],
-                        perc:'36%',
-                    },
-                ],
-                [
-                    {
-                        title:'房产汽车类',
-                        className:['dot','dot_d'],
-                        perc:'36%',
-                    },
-                    {
-                        title:'民生类',
-                        className:['dot','dot_z'],
-                        perc:'20%',
-                    },
-                    {
-                        title:'一般类',
-                        className:['dot','dot_b'],
-                        perc:'10%',
-                    },
-                    {
-                        title:'批发类',
-                        className:['dot','dot_n'],
-                        perc:'36%',
-                    },
-                    {
-                        title:'餐娱类',
-                        className:['dot','dot_x'],
-                        perc:'36%',
-                    },
-                ]
-            ],
-            amountList:[
-                {
-                    title:'订单总交易额',
-                    amountAll:'126,560',
-                    amountFace:'12,423',
-                    tooltip:'刷脸交易额占比：22.33%',
-                },
-                {
-                    title:'订单总交易笔数',
-                    amountAll:'126,560',
-                    amountFace:'12,423',
-                    tooltip:'刷脸交易额占比：22.33%',
-                },
-            ],
-            inputOptions: [
-                {
-                    label: '商户ID',
-                    value: 'ID',
-                },
-                {
-                    label: '商户名称',
-                    value: 'name',
-                },
-                {
-                    label: '所属服务商名称',
-                    value: 'agentName',
-                },
-                {
-                    label: '开通通道情况',
-                    value: 'openType',
-                },
-                {
-                    label: '乐刷商户号',
-                    value: 'leshuaNo',
-                },
-                {
-                    label: '新大陆商户号',
-                    value: 'xindaluNo',
-                },
-            ],
-            setects: [
-                {
-                    name: '使用通道',
-                    key: 'channel',
-                    options: [
-                        {
-                            labee: '全部',
-                            value: 'all',
-                        },
-                        {
-                            labee: '企业',
-                            value: 'qiye',
-                        },
-                        {
-                            labee: '个人',
-                            value: 'geren',
-                        },
-                    ],
-                },
-                {
-                    name: '行业类目',
-                    key: 'class',
-                    options: [
-                        {
-                            labee: '全部',
-                            value: 'all',
-                        },
-                        {
-                            labee: '已驳回',
-                            value: '1',
-                        },
-                        {
-                            labee: '待审核',
-                            value: '2',
-                        },
-                    ],
-                },
-                {
-                    name: '地区',
-                    key: 'address',
-                    options: [
-                        {
-                            labee: '全部',
-                            value: 'all',
-                        },
-                        {
-                            labee: '已驳回',
-                            value: '1',
-                        },
-                        {
-                            labee: '待审核',
-                            value: '2',
-                        },
-                    ],
-                },
-                {
-                    name: '所属运营',
-                    key: 'yunying',
-                    options: [
-                        {
-                            labee: '全部',
-                            value: 'all',
-                        },
-                        {
-                            labee: '已驳回',
-                            value: '1',
-                        },
-                        {
-                            labee: '待审核',
-                            value: '2',
-                        },
-                    ],
-                },
-            ],
-            lineOption:{
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                        type: 'cross',
-                        label: {
-                            backgroundColor: '#6a7985'
-                        }
-                    }
-                },
-                grid: {
-                    top: '30px',
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
-                    containLabel: true
-                },
-                xAxis: [
-                    {
-                        type: 'category',
-                        boundaryGap: false,
-                        data: ['10月', '11月', '12月', '1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月']
-                    }
-                ],
-                yAxis: [
-                    {
-                        type: 'value'
-                    }
-                ],
-                series: [
-                    {
-                        name: '订单总交易额',
-                        type: 'line',
-                        stack: '总量',
-                        lineStyle: {
-                            color:'#1890FF'
-                        },
-                        symbol:'none',
-                        areaStyle: {
-                            color: {
-                                type: 'linear',
-                                x: 0,
-                                y: 0,
-                                x2: 0,
-                                y2: 1,
-                                colorStops: [{
-                                    offset: 0, color: '#4EA6FF' // 0% 处的颜色
-                                }, {
-                                    offset: 1, color: '#ffffff' // 100% 处的颜色
-                                }],
-                                global: false // 缺省为 false
-                            }
-                        },
-                        data: [120, 132, 101, 134, 90, 230, 210, 101, 134, 90, 230, 330 ]
-                    },
-                    {
-                        name: '刷脸总交易额',
-                        type: 'line',
-                        stack: '总量',
-                        lineStyle: {
-                            color:'#3ABD2D'
-                        },
-                        symbol:'none',
-                        areaStyle: {
-                            color: {
-                                type: 'linear',
-                                x: 0,
-                                y: 0,
-                                x2: 0,
-                                y2: 1,
-                                colorStops: [{
-                                    offset: 0, color: '#6CDE61' // 0% 处的颜色
-                                }, {
-                                    offset: 1, color: '#ffffff' // 100% 处的颜色
-                                }],
-                                global: false // 缺省为 false
-                            }
-                        },
-                        data: [220, 182, 191, 234, 290, 330, 310, 191, 234, 290, 330, 330]
-                    },
-                ]
+  name: "Theme",
+  components: { search, dataItem },
+  data() {
+    return {
+      searchMaxHeight: "300",
+      activeIndex: "1",
+      testData: [],
+      payWay: "all",
+      radio: 0,
+      isLineShow: true,
+      titleList: [{ name: "大区交易占比" }, { name: "行业交易占比" }],
+      radioListData: [
+        {
+          radio: "0",
+          namelist: [
+            { name: "交易额", label: "0" },
+            { name: "交易笔数", label: "1" }
+          ]
+        },
+        {
+          radio: "0",
+          namelist: [
+            { name: "交易额", label: "0" },
+            { name: "交易笔数", label: "1" }
+          ]
+        }
+      ],
+      dataList: [
+        [
+          {
+            title: "华东",
+            className: ["dot", "dot_d"],
+            perc: "36%"
+          },
+          {
+            title: "华中",
+            className: ["dot", "dot_z"],
+            perc: "20%"
+          },
+          {
+            title: "华北",
+            className: ["dot", "dot_b"],
+            perc: "10%"
+          },
+          {
+            title: "华南",
+            className: ["dot", "dot_n"],
+            perc: "36%"
+          },
+          {
+            title: "华西",
+            className: ["dot", "dot_x"],
+            perc: "36%"
+          }
+        ],
+        [
+          {
+            title: "房产汽车类",
+            className: ["dot", "dot_d"],
+            perc: "36%"
+          },
+          {
+            title: "民生类",
+            className: ["dot", "dot_z"],
+            perc: "20%"
+          },
+          {
+            title: "一般类",
+            className: ["dot", "dot_b"],
+            perc: "10%"
+          },
+          {
+            title: "批发类",
+            className: ["dot", "dot_n"],
+            perc: "36%"
+          },
+          {
+            title: "餐娱类",
+            className: ["dot", "dot_x"],
+            perc: "36%"
+          }
+        ]
+      ],
+      amountList: [
+        {
+          title: "订单总交易额",
+          amountAll: "126,560",
+          amountFace: "12,423",
+          tooltip: "刷脸交易额占比：22.33%"
+        },
+        {
+          title: "订单总交易笔数",
+          amountAll: "126,560",
+          amountFace: "12,423",
+          tooltip: "刷脸交易额占比：22.33%"
+        }
+      ],
+      inputOptions: [
+        {
+          label: "商户ID",
+          value: "ID"
+        },
+        {
+          label: "商户名称",
+          value: "name"
+        },
+        {
+          label: "所属服务商名称",
+          value: "agentName"
+        },
+        {
+          label: "开通通道情况",
+          value: "openType"
+        },
+        {
+          label: "乐刷商户号",
+          value: "leshuaNo"
+        },
+        {
+          label: "新大陆商户号",
+          value: "xindaluNo"
+        }
+      ],
+      setects: [
+        {
+          name: "使用通道",
+          key: "channel",
+          options: [
+            {
+              labee: "全部",
+              value: "all"
             },
-            barOption:{
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-                        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                    }
-                },
-                grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
-                    containLabel: true
-                },
-                xAxis: [
-                    {
-                        type: 'category',
-                        data: ['10月', '11月', '12月', '1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月']
-                    }
-                ],
-                yAxis: [
-                    {
-                        type: 'value'
-                    }
-                ],
-                series: [
-                    {
-                        name: '订单总交易额',
-                        type: 'bar',
-                        stack: '总量',
-                        itemStyle:{
-                            color: '#1890FF'
-                        },
-                        data: [120, 132, 101, 134, 90, 230, 210, 101, 134, 90, 230, 330 ]
-                    },
-                    {
-                        name: '刷脸总交易额',
-                        type: 'bar',
-                        stack: '总量',
-                        itemStyle:{
-                            color: '#34B64C'
-                        },
-                        data: [220, 182, 191, 234, 290, 330, 310, 191, 234, 290, 330, 330]
-                    },
-                ]
+            {
+              labee: "企业",
+              value: "qiye"
             },
-            pieOptionList:[
-                {
-                    tooltip: {
-                        trigger: 'item',
-                        formatter: '{b}: {c} ({d}%)'
-                    },
-                    series: [
-                        {
-                            name: '交易额大区占比',
-                            type: 'pie',
-                            avoidLabelOverlap: false,
-                            radius: ['40%', '80%'],
-                            label: {
-                                normal: {
-                                    show: false,
-                                },
-                            },
-                            labelLine: {
-                                normal: {
-                                    show: false
-                                }
-                            },
-                            data: [
-                                {value: 0.36, name: '华东',itemStyle:{color:'#00A1FF'}},
-                                {value: 0.2, name: '华中',itemStyle:{color:'#37CBCB'}},
-                                {value: 0.1, name: '华北',itemStyle:{color:'#FAD337'}},
-                                {value: 0.09, name: '华南',itemStyle:{color:'#F2637B'}},
-                                {value: 0.09, name: '华西',itemStyle:{color:'#975FE4'}}
-                            ]
-                        }
-                    ]
-                },
-                {
-                    tooltip: {
-                        trigger: 'item',
-                        formatter: '{b}: {c} ({d}%)'
-                    },
-                    series: [
-                        {
-                            name: '交易额大区占比',
-                            type: 'pie',
-                            avoidLabelOverlap: false,
-                            radius: ['40%', '80%'],
-                            label: {
-                                normal: {
-                                    show: false,
-                                },
-                            },
-                            labelLine: {
-                                normal: {
-                                    show: false
-                                }
-                            },
-                            data: [
-                                {value: 0.36, name: '华东',itemStyle:{color:'#00A1FF'}},
-                                {value: 0.2, name: '华中',itemStyle:{color:'#37CBCB'}},
-                                {value: 0.1, name: '华北',itemStyle:{color:'#FAD337'}},
-                                {value: 0.09, name: '华南',itemStyle:{color:'#F2637B'}},
-                                {value: 0.09, name: '华西',itemStyle:{color:'#975FE4'}}
-                            ]
-                        }
-                    ]
-                },
+            {
+              labee: "个人",
+              value: "geren"
+            }
+          ]
+        },
+        {
+          name: "行业类目",
+          key: "class",
+          options: [
+            {
+              labee: "全部",
+              value: "all"
+            },
+            {
+              labee: "已驳回",
+              value: "1"
+            },
+            {
+              labee: "待审核",
+              value: "2"
+            }
+          ]
+        },
+        {
+          name: "地区",
+          key: "address",
+          options: [
+            {
+              labee: "全部",
+              value: "all"
+            },
+            {
+              labee: "已驳回",
+              value: "1"
+            },
+            {
+              labee: "待审核",
+              value: "2"
+            }
+          ]
+        },
+        {
+          name: "所属运营",
+          key: "yunying",
+          options: [
+            {
+              labee: "全部",
+              value: "all"
+            },
+            {
+              labee: "已驳回",
+              value: "1"
+            },
+            {
+              labee: "待审核",
+              value: "2"
+            }
+          ]
+        }
+      ],
+      lineOption: {
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "cross",
+            label: {
+              backgroundColor: "#6a7985"
+            }
+          }
+        },
+        grid: {
+          top: "30px",
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: "category",
+            boundaryGap: false,
+            data: [
+              "10月",
+              "11月",
+              "12月",
+              "1月",
+              "2月",
+              "3月",
+              "4月",
+              "5月",
+              "6月",
+              "7月",
+              "8月",
+              "9月"
             ]
-        };
-    },
-    mounted () {
+          }
+        ],
+        yAxis: [
+          {
+            type: "value"
+          }
+        ],
+        series: [
+          {
+            name: "订单总交易额",
+            type: "line",
+            stack: "总量",
+            lineStyle: {
+              color: "#1890FF"
+            },
+            symbol: "none",
+            areaStyle: {
+              color: {
+                type: "linear",
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: "#4EA6FF" // 0% 处的颜色
+                  },
+                  {
+                    offset: 1,
+                    color: "#ffffff" // 100% 处的颜色
+                  }
+                ],
+                global: false // 缺省为 false
+              }
+            },
+            data: [120, 132, 101, 134, 90, 230, 210, 101, 134, 90, 230, 330]
+          },
+          {
+            name: "刷脸总交易额",
+            type: "line",
+            stack: "总量",
+            lineStyle: {
+              color: "#3ABD2D"
+            },
+            symbol: "none",
+            areaStyle: {
+              color: {
+                type: "linear",
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: "#6CDE61" // 0% 处的颜色
+                  },
+                  {
+                    offset: 1,
+                    color: "#ffffff" // 100% 处的颜色
+                  }
+                ],
+                global: false // 缺省为 false
+              }
+            },
+            data: [220, 182, 191, 234, 290, 330, 310, 191, 234, 290, 330, 330]
+          }
+        ]
+      },
+      barOption: {
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            // 坐标轴指示器，坐标轴触发有效
+            type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+          }
+        },
+        grid: {
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: "category",
+            data: [
+              "10月",
+              "11月",
+              "12月",
+              "1月",
+              "2月",
+              "3月",
+              "4月",
+              "5月",
+              "6月",
+              "7月",
+              "8月",
+              "9月"
+            ]
+          }
+        ],
+        yAxis: [
+          {
+            type: "value"
+          }
+        ],
+        series: [
+          {
+            name: "订单总交易额",
+            type: "bar",
+            stack: "总量",
+            itemStyle: {
+              color: "#1890FF"
+            },
+            data: [120, 132, 101, 134, 90, 230, 210, 101, 134, 90, 230, 330]
+          },
+          {
+            name: "刷脸总交易额",
+            type: "bar",
+            stack: "总量",
+            itemStyle: {
+              color: "#34B64C"
+            },
+            data: [220, 182, 191, 234, 290, 330, 310, 191, 234, 290, 330, 330]
+          }
+        ]
+      },
+      pieOptionList: [
+        {
+          title: {
+            text: "交易额大区占比",
+            left: "center",
+            textStyle: {
+              color: "rgba(0,0,0,0.85)",
+              fontSize: 14
+            }
+          },
+          tooltip: {
+            trigger: "item",
+            formatter: "{b}: {c} ({d}%)"
+          },
+          series: [
+            {
+              name: "交易额大区占比",
+              type: "pie",
+              avoidLabelOverlap: false,
+              radius: ["40%", "80%"],
+              label: {
+                normal: {
+                  show: false
+                }
+              },
+              labelLine: {
+                normal: {
+                  show: false
+                }
+              },
+              data: [
+                { value: 0.36, name: "华东", itemStyle: { color: "#00A1FF" } },
+                { value: 0.2, name: "华中", itemStyle: { color: "#37CBCB" } },
+                { value: 0.1, name: "华北", itemStyle: { color: "#FAD337" } },
+                { value: 0.09, name: "华南", itemStyle: { color: "#F2637B" } },
+                { value: 0.09, name: "华西", itemStyle: { color: "#975FE4" } }
+              ]
+            }
+          ]
+        },
+        {
+          title: {
+            text: "交易额行业占比",
+            left: "center",
+            textStyle: {
+              color: "rgba(0,0,0,0.85)",
+              fontSize: 14
+            }
+          },
+          tooltip: {
+            trigger: "item",
+            formatter: "{b}: {c} ({d}%)"
+          },
+          series: [
+            {
+              name: "交易额大区占比",
+              type: "pie",
+              avoidLabelOverlap: false,
+              radius: ["40%", "80%"],
+              label: {
+                normal: {
+                  show: false
+                }
+              },
+              labelLine: {
+                normal: {
+                  show: false
+                }
+              },
+              data: [
+                { value: 0.36, name: "华东", itemStyle: { color: "#00A1FF" } },
+                { value: 0.2, name: "华中", itemStyle: { color: "#37CBCB" } },
+                { value: 0.1, name: "华北", itemStyle: { color: "#FAD337" } },
+                { value: 0.09, name: "华南", itemStyle: { color: "#F2637B" } },
+                { value: 0.09, name: "华西", itemStyle: { color: "#975FE4" } }
+              ]
+            }
+          ]
+        }
+      ]
+    };
+  },
+  mounted() {
     // eslint-disable-next-line no-console
-        console.log(this.$route);
-        this.init();
+    console.log(this.$route);
+    this.init();
+  },
+  methods: {
+    init() {
+      this.showLine();
+      //   this.showBar();
     },
-    methods: {
-        onClick_changeArts(){
-            if(this.isLineShow){
-                this.showBar();
-            }else {
-                this.showLine();
-            }
-            this.isLineShow = !this.isLineShow;
-        },
-        onClick_changeRadio($index){
-            this.radio = $index;
-        },
-        showLine(){
-            // 基于准备好的dom，初始化echarts实例
-            let myChartLine = this.$echarts.init(this.$refs.echartsLine);
-
-            // 绘制图表
-            myChartLine.setOption(this.lineOption);
-        },
-        showPie(){
-            let _self = this;
-
-            this.pieOptionList.forEach(function($item,$index){
-                let refStr = 'echartsPie'+$index;
-                let myChartPie = _self.$echarts.init(_self.$refs[`${refStr}`][0]);
-                myChartPie.setOption($item);
-            })
-        },
-        showBar(){
-            // 基于准备好的dom，初始化echarts实例
-            let myChartBar = this.$echarts.init(this.$refs.echartsBar);
-
-            // 绘制图表
-            myChartBar.setOption(this.barOption);
-        },
-        init(){
-            this.showLine();
-            // this.showBar();
-            this.showPie();
-        },
-        getData () {
-            this.testData = [
-                {
-                    id: '1',
-                    tel: '15184318420',
-                    name: '小白',
-                    email: '412412@qq.com',
-                    status: '1',
-                    create_time: '2018-04-20',
-                    expand: '扩展信息一',
-                    role: ['2'],
-                },
-                {
-                    id: '2',
-                    tel: '13777369283',
-                    name: '小红',
-                    email: '456465@qq.com',
-                    status: '0',
-                    create_time: '2018-03-23',
-                    expand: 'hashashashas',
-                    role: ['1'],
-                },
-            ];
-        },
-        search () {
-            this.getData();
-        },
-        handleSelect($index){
-            switch ($index) {
-                case '1':
-                    this.payWay = 'all';
-                    break;
-                case '2':
-                    this.payWay = 'wxpay';
-                    break;
-                case '3':
-                    this.payWay = 'alipay';
-                    break;
-                case '4':
-                    this.payWay = 'yunshan';
-                    break;
-                case '5':
-                    this.payWay = 'yinlian';
-                    break;
-                default:
-                    this.payWay = 'all';
-            }
-
-        },
+    onClick_changeArts() {
+      this.isLineShow = !this.isLineShow;
+      this.isLineShow ? this.showLine() : this.showBar();
     },
+    onClick_changeRadio($index) {
+      this.radio = $index;
+    },
+    showLine() {
+      // 基于准备好的dom，初始化echarts实例
+      let myChartLine = this.$echarts.init(this.$refs.echartsLine);
+
+      // 绘制图表
+      myChartLine.setOption(this.lineOption);
+      window.addEventListener("resize", function() {
+        myChartLine.resize();
+      });
+    },
+    showBar() {
+      // 基于准备好的dom，初始化echarts实例
+      let myChartBar = this.$echarts.init(this.$refs.echartsBar);
+
+      // 绘制图表
+      myChartBar.setOption(this.barOption);
+      window.addEventListener("resize", function() {
+        myChartBar.resize();
+      });
+    },
+    getData() {
+      this.testData = [
+        {
+          id: "1",
+          tel: "15184318420",
+          name: "小白",
+          email: "412412@qq.com",
+          status: "1",
+          create_time: "2018-04-20",
+          expand: "扩展信息一",
+          role: ["2"]
+        },
+        {
+          id: "2",
+          tel: "13777369283",
+          name: "小红",
+          email: "456465@qq.com",
+          status: "0",
+          create_time: "2018-03-23",
+          expand: "hashashashas",
+          role: ["1"]
+        }
+      ];
+    },
+    search() {
+      this.getData();
+    },
+    handleSelect($index) {
+      switch ($index) {
+        case "1":
+          this.payWay = "all";
+          break;
+        case "2":
+          this.payWay = "wxpay";
+          break;
+        case "3":
+          this.payWay = "alipay";
+          break;
+        case "4":
+          this.payWay = "yunshan";
+          break;
+        case "5":
+          this.payWay = "yinlian";
+          break;
+        default:
+          this.payWay = "all";
+      }
+    }
+  }
 };
 </script>
 
@@ -573,207 +635,151 @@ export default {
   padding: 0 24px;
   overflow: hidden;
   background: #fff;
-    .echarts-box {
-        display:flex;
-        border-radius:2px;
-        margin-top: 22px;
-        .right {
-            margin-left: 46px;
-            .tip {
-                margin-left: 25px;
-            }
-            .change-btn {
-                float: right;
-                color:#1989FA;
-                line-height:22px;
-                position: relative;
-                top: -3px;
-                right: 32px;
-            }
-            .change-icon {
-                width :16px;
-                height :16px;
-                vertical-align: middle;
-            }
-        }
-        .arts-line {
-            width:830px;
-            height:301px;
-        }
-        .data-box {
-            position: relative;
-            width:205px;
-            height:146px;
-            border-radius:4px;
-            border:1px solid rgba(235,238,245,1);
-            padding:12px 10px;
-            &:last-child {
-                margin-top:25px;
-                margin-bottom: 28px;
-            }
-            .data-img{
-                width:20px;
-                height:20px;
-            }
-            .title {
-                padding-left: 6px;
-                color:rgba(144,147,153,1);
-                line-height:22px;
-            }
-            .progress-box {
-                display:flex;
-                justify-content: flex-start;
-                align-items:center;
-                margin-top: 16px;
-                .progress {
-                    margin-left: 8px;
-                    flex-basis: 58px;
-                }
-                .amount-face {
-                    margin-left: 8px;
-                }
-            }
-            .amount-all {
-                padding-left: 6px;
-                margin-top: 8px;
-                font-size:30px;
-                font-family:HelveticaNeue;
-                color:rgba(51,51,53,1);
-                line-height:24px;
-                padding-bottom: 24px;
-                border-bottom: 1px #EBEEF5 solid;
-                .amount-icon {
-                    font-size: 14px;
-                    vertical-align: middle;
-                }
-            }
-        }
-        .dot_blue {
-            display: inline-block;
-            margin-right: 8px;
-            width:6px;
-            height:6px;
-            background:#1989FA;
-            border-radius: 50%;
-            vertical-align: middle;
-        }
-        .dot_green {
-            display: inline-block;
-            margin-left:30px;
-            margin-right: 8px;
-            width:6px;
-            height:6px;
-            background:#3ABD2D;
-            border-radius: 50%;
-            vertical-align: middle;
-        }
-        .check-radio {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            width:14px;
-            height:14px;
-            background:#ffffff;
-            border: 5px solid #1989FA;
-            border-radius: 50%;
-        }
-        .uncheck-radio {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            width:14px;
-            height:14px;
-            background:rgba(255,255,255,1);
-            border:1px solid #D5D8DE;
-            border-radius: 50%;
-        }
+  .echarts-box {
+    display: flex;
+    border-radius: 2px;
+    margin-top: 22px;
+    justify-content: space-around;
+    .right {
+      width: 75%;
+      .tip {
+        margin-left: 35px;
+      }
+      .change-btn {
+        float: right;
+        color: #1989fa;
+        line-height: 22px;
+        position: relative;
+        top: -3px;
+        right: 32px;
+      }
+      .change-icon {
+        width: 16px;
+        height: 16px;
+        vertical-align: middle;
+      }
     }
+    .chart-box {
+      width: 100%;
+      height: 301px;
+      position: relative;
+      .chart-panel {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+      .chart-show {
+        z-index: 1;
+      }
+      .chart-hide {
+        z-index: -1;
+      }
+    }
+    .data-box {
+      width: 20%;
+    }
+    .data-item {
+      position: relative;
+      min-width: 205px;
+      height: 146px;
+      border-radius: 4px;
+      border: 1px solid rgba(235, 238, 245, 1);
+      padding: 12px 10px;
+      &:last-child {
+        margin-top: 25px;
+        margin-bottom: 28px;
+      }
+      .data-img {
+        width: 20px;
+        height: 20px;
+      }
+      .title {
+        padding-left: 6px;
+        color: rgba(144, 147, 153, 1);
+        line-height: 22px;
+      }
+      .progress-box {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-top: 16px;
+        .progress {
+          margin-left: 8px;
+          flex-basis: 58px;
+        }
+        .amount-face {
+          margin-left: 8px;
+        }
+      }
+      .amount-all {
+        padding-left: 6px;
+        margin-top: 8px;
+        font-size: 30px;
+        font-family: HelveticaNeue;
+        color: rgba(51, 51, 53, 1);
+        line-height: 24px;
+        padding-bottom: 24px;
+        border-bottom: 1px #ebeef5 solid;
+        .amount-icon {
+          font-size: 14px;
+          vertical-align: middle;
+        }
+      }
+    }
+    .dot_blue {
+      display: inline-block;
+      margin-right: 8px;
+      width: 6px;
+      height: 6px;
+      background: #1989fa;
+      border-radius: 50%;
+      vertical-align: middle;
+    }
+    .dot_green {
+      display: inline-block;
+      margin-left: 30px;
+      margin-right: 8px;
+      width: 6px;
+      height: 6px;
+      background: #3abd2d;
+      border-radius: 50%;
+      vertical-align: middle;
+    }
+    .check-radio {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 14px;
+      height: 14px;
+      background: #ffffff;
+      border: 5px solid #1989fa;
+      border-radius: 50%;
+    }
+    .uncheck-radio {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 14px;
+      height: 14px;
+      background: rgba(255, 255, 255, 1);
+      border: 1px solid #d5d8de;
+      border-radius: 50%;
+    }
+  }
 }
 .pie-box {
-    overflow: hidden;
-    margin: 24px;
-    display: flex;
-    justify-content: space-between;
-    .pie-item {
-        width:50%;
-        background: #fff;
-        &:nth-child(even){
-            margin-left: 24px;
-        }
-        .title {
-            margin-left: 24px;
-            margin-top: 16px;
-            font-size:16px;
-            font-weight:500;
-            color:rgba(0,0,0,0.85);
-            line-height:24px;
-        }
-        .tags {
-            margin-left: 24px;
-            margin-top: 16px;
-        }
-        .line {
-            margin-top: 15px;
-            width:100%;
-            height:1px;
-            background:#E8E8E8;
-        }
-        .data-title {
-            padding:36px 0 0 100px;
-            color:rgba(0,0,0,0.85);
-            line-height:22px;
-        }
-        .data-box {
-            padding: 0 24px;
-            display: flex;
-            .data-pie {
-                width: 240px;
-                height: 240px;
-            }
-            .data-list {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                margin-left: 46px;
-                .data-item {
-                    margin-top: 16px;
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    &:first-child {
-                        margin-top: 0;
-                    }
-                }
-                .dot {
-                    display: inline-block;
-                    margin-right: 8px;
-                    width:6px;
-                    height:6px;
-                    border-radius: 50%;
-                }
-                .dot_d {
-                    background:#00A1FF;
-                }
-                .dot_z {
-                    background:#37CBCB;
-                }
-                .dot_b {
-                    background:#FAD337;
-                }
-                .dot_n {
-                    background:#F2637B;
-                }
-                .dot_x {
-                    background:#975FE4;
-                }
-                .perc {
-                    margin-left: 8px;
-                    font-family:HelveticaNeue;
-                    color:rgba(0,0,0,0.45);
-                    line-height:22px;
-                }
-            }
-        }
+  overflow: hidden;
+  margin: 24px;
+  display: flex;
+  justify-content: space-between;
+  .pie-item {
+    width: 50%;
+    background: #fff;
+    &:nth-child(even) {
+      margin-left: 24px;
     }
+  }
 }
 </style>

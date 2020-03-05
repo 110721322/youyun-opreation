@@ -9,6 +9,7 @@
       style="width: 100%;font-size:14px"
       @selection-change="handleSelectionChange"
       :height="tableHeight"
+      :header-cell-style="headerCellStyle"
     >
       <el-table-column v-if="isSelect" type="selection" width="55">
       </el-table-column>
@@ -136,6 +137,8 @@ export default {
         'isSelect',
         //  设置表高度（是否固定表头）
         'tableHeight',
+        //表头样式设置
+        'headerCellStyle',
     ],
     data () {
         return {

@@ -222,6 +222,9 @@ export default {
                     this.checkedListLength++;
                 }
             }
+            if(this.checkedListLength!==this.checkList.length){
+                this.isCheckAll = false;
+            }
         },
         onClick_reset() {
 

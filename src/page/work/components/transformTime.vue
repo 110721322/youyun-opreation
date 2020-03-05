@@ -24,11 +24,10 @@ export default {
     },
     methods:{
         transform($time){
-            var _self = this;
-            var intenval = setInterval(function(){
+            var intenval = setInterval(()=>{
                 var _time = new Date().getTime()-$time.getTime();
                 if(_time<=0){
-                    _self.TimeString = "00:00:00";
+                    this.TimeString = "00:00:00";
                     clearInterval(intenval);
                     return ;
                 }
@@ -36,7 +35,7 @@ export default {
                 var _mins = Math.floor((_time-_hours*3600*1000)/60/1000);
                 var _secs = Math.floor((_time-_hours*3600*1000-_mins*60*1000)/1000);
 
-                _self.TimeString = pad(_hours,2)+":"+pad(_mins,2)+":"+pad(_secs,2);
+                this.TimeString = pad(_hours,2)+":"+pad(_mins,2)+":"+pad(_secs,2);
             },1000)
         },
     },
