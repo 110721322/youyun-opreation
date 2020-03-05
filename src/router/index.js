@@ -242,17 +242,54 @@ let menuItems = [
           icon: 'announcementEdit'
         }
       },
-      // {
-      //   type: 'ios-grid',
-      //   name: 'announcementEdit',
-      //   text: '编辑服务商公告',
-      //   path: 'announcementEdit',
-      //   isShow: true,
-      //   meta: {
-      //     title: '编辑服务商公告',
-      //     icon: 'announcementEdit'
-      //   }
-      // },
+    ]
+  },
+  {
+    text: '运营数据',
+    type: 'ios-paper',
+    path: 'task',
+    name: 'task',
+    isShow: true,
+    meta: {
+      title: '运营数据',
+      icon: '运营数据'
+    },
+    children: [
+      {
+        type: 'ios-grid',
+        name: 'statisticsDetail',
+        text: '工作任务统计',
+        path: 'statisticsDetail',
+        isShow: true,
+        meta: {
+          title: '工作任务统计',
+          icon: 'statisticsDetail'
+        }
+      },
+    ]
+  },
+  {
+    text: '数据大盘',
+    type: 'ios-paper',
+    path: 'dataMarket',
+    name: 'dataMarket',
+    isShow: true,
+    meta: {
+      title: '数据大盘',
+      icon: '数据大盘'
+    },
+    children: [
+      {
+        type: 'ios-grid',
+        name: 'transactionData',
+        text: '交易数据',
+        path: 'transactionData',
+        isShow: true,
+        meta: {
+          title: '交易数据',
+          icon: 'transactionData'
+        }
+      },
     ]
   },
   //   {

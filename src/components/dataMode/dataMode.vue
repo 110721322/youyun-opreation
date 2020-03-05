@@ -1,23 +1,8 @@
 <template>
   <div class="d-box">
-    <div class="item-box">
-      <div class="title">商家数量</div>
-      <div class="data">555个</div>
-    </div>
-
-    <div class="item-box">
-      <div class="title">交易金额</div>
-      <div class="data">3237800.00元</div>
-    </div>
-
-    <div class="item-box">
-      <div class="title">手续费</div>
-      <div class="data">37800.00元</div>
-    </div>
-
-    <div class="item-box last_item">
-      <div class="title">手续费</div>
-      <div class="data">37800.00元</div>
+    <div class="item-box" v-for="(item,index) in configData" :key="index">
+      <div class="title">{{item.title}}</div>
+      <div class="data">{{item.data}}</div>
     </div>
   </div>
 </template>
@@ -25,6 +10,7 @@
 <script>
 export default {
     name: 'dataMode',
+    props:['configData'],
     data () {
         return {};
     },
@@ -38,7 +24,7 @@ export default {
   background: rgba(255, 255, 255, 1);
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   align-content: center;
 
 }
@@ -48,7 +34,8 @@ export default {
   border-right: 1px solid #e8e8e8;
   margin-top: 24px;
   overflow: hidden;
-  flex-basis: 100%;
+  // flex-basis: 100%;
+  width:50%;
   .title {
     font-size: 14px;
     font-weight: 400;
@@ -61,8 +48,8 @@ export default {
     color: rgba(0, 0, 0, 0.85);
     margin-top: 10px;
   }
-}
-.last_item{
-  border: none
+  &:last-child {
+    border: none;
+  }
 }
 </style>

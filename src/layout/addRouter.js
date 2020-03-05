@@ -194,6 +194,46 @@ const asyncRoutes = {
     },
     component: () => import('@/page/message/announcementEdit.vue'),
     children: []
+  },
+  task: {
+    path: '/task',
+    name: 'task',
+    component: () => import('./index.vue'),
+    meta: {
+      title: 'task',
+      icon: 'task'
+    },
+    children: []
+  },
+  'statisticsDetail':{
+    path: 'statisticsDetail',
+    name: 'statisticsDetail',
+    meta: {
+      title: 'statisticsDetail',
+      icon: 'statisticsDetail'
+    },
+    component: () => import('@/page/task/statisticsDetail.vue'),
+    children: []
+  },
+  'dataMarket': {
+    path: '/dataMarket',
+    name: 'dataMarket',
+    component: () => import('./index.vue'),
+    meta: {
+      title: 'dataMarket',
+      icon: 'dataMarket'
+    },
+    children: []
+  },
+  'transactionData':{
+    path: 'transactionData',
+    name: 'transactionData',
+    meta: {
+      title: 'transactionData',
+      icon: 'transactionData'
+    },
+    component: () => import('@/page/dataMarket/transactionData.vue'),
+    children: []
   }
 }
 // eslint-disable-next-line no-console
