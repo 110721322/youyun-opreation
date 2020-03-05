@@ -31,7 +31,7 @@ export default {
         init(){
             var _self = this;
             let data = [{"name":"内蒙古自治区","code":"150000"},{"name":"通辽市","code":"150500"},{"name":"通辽市","code":"150524"}];
-            data.forEach(function($item,$index){
+            data.forEach(($item,$index)=>{
                 _self.$set(_self.value,$index,$item.code)
             })
         },

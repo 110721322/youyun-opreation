@@ -1,82 +1,39 @@
 <template>
-  <div class="s_box" :style="isOpen ? 'height:' + openHeight + 'px' : ''">
+  <div :class="['s_box',isShowAll?'is_show_all':'']" :style="isOpen ? 'height:' + openHeight + 'px' : ''">
     <el-form
       size="large"
-      :model="searchData"
-      class="form-inline"
+      ref="formTep"
+      :inline="false"
+      :label-position="labelPosition"
+      :model="ruleForm"
+      :rules="rules"
+      :label-width="labelWidth"
+      :class="['form-inline',isShowAll?'is_show_all':'']"
       :style="isOpen ? 'height:' + (openHeight + 40) + 'px' : ''"
     >
-      <el-form-item label="开通时间：" label-width="100px" >
-
-        <date-select
-          size="large"
-          :type="'daterange'"
-          @select="onChange_Time"
-          :pickerOptions="pickerOptions"
-          :isSelectToday="isSelectToday"
-          :isRest="refresh"
-        ></date-select>
+      <el-form-item
+        v-for="formItem in formBaseData"
+        :key="formItem.key"
+        :prop="formItem.key"
+        :label="formItem.label + ':'"
+        :rules="formItem.rules"
+        :class="['formTemplate-item', formItem.class]"
+        :label-width="formItem.labelWidth"
+      >
+        <components
+          :is="transType(formItem.type)"
+          :ruleForm="ruleForm"
+          :formItem="formItem"
+          :isRest="isRest"
+        ></components>
       </el-form-item>
-
-    <el-form-item label="精准筛选：" label-width="100px">
-        <el-input
-          placeholder="请输入内容"
-          class="input-with-select"
-          size="large"
-          v-model="inputForm"
-        >
-          <el-select
-            slot="prepend"
-            v-model="inputSelect"
-            style="width:294px"
-            placeholder="请选择"
-          >
-            <el-option
-              v-for="(item, key) in inputOptions"
-              :key="key"
-              :label="item.label"
-              :value="item.value"
-            >
-            </el-option>
-          </el-select>
-        </el-input>
-      </el-form-item>
-
-
-        <el-form-item
-          :key="key"
-          v-for="(item, key) of setects"
-          :label="item.name + '：'"
-          :class="['form_item', key % 2 == 0 ? 'clear_both' : '']"
-          :label-width="key % 2 == 0 ? '100px' : '185px'"
-        >
-          <el-select
-            style="width:294px"
-            v-model="searchData[item.key]"
-            placeholder="请选择"
-            size="large"
-          >
-            <el-option
-              v-for="option in item.options"
-              :key="option.value"
-              :label="option.label"
-              :value="option.value"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
 
       <div class="btn_list" style="margin-bottom:0">
-        <el-button
-          type="primary"
-          size="large"
-          @click="onClick_search"
-        >
+        <el-button type="primary" size="large" @click="handleClick">
           搜索</el-button
         >
-        <el-button plain size="large" @click="reset">重置</el-button>
-        <div class="open_btn" @click="onClick_openOrClose" >
-
+        <el-button plain size="large" @click="resetForm">重置</el-button>
+        <div class="open_btn" @click="onClick_openOrClose" v-show="!isShowAll">
           <span v-show="!isOpen">展开</span>
           <span v-show="isOpen">收起</span>
 
@@ -88,58 +45,147 @@
 </template>
 
 <script>
-import DateSelect from '@/components/dateSelect.vue';
+// import DateSelect from '@/components/dateSelect.vue'
+import * as g from '@/libs/global'
+import {
+  transFormType,
+  clearFormData,
+  formatFormData
+} from '@/libs/kit/formFns.js'
+import Input from './components/Input.vue'
+import Select from './components/Select.vue'
+import Tinymce from './components/Tinymce/index.vue'
+import DateSelect from './components/DateSelect.vue'
+import SelectInput from './components/SelectInput.vue'
 
 export default {
-    name: 'search',
-    components: {
-        DateSelect,
+  name: 'search',
+  components: {
+    Input,
+    Select,
+    Date,
+    Tinymce,
+    DateSelect,
+    SelectInput
+  },
+  props: {
+    isShowAll:{
+      type: Boolean,
+      default() {
+        return false
+      }
     },
-    props: ['setects', 'inputOptions', 'openHeight' ],
-    data () {
-        return {
-            isSelectToday: true,
-            isOpen: false,
-            inputSelect: '',
-            inputForm: '',
-            searchData: {},
-            slectedData: '',
-            searchObj: {},
-            refresh: false,
-            pickerOptions: {
-                disabledDate (time) {
-                    return time.getTime() > Date.now() - 3600 * 1000 * 24 * 1;
-                },
-            },
-        };
+    formBaseData: Array,
+    rules: Object,
+    openHeight: String,
+    showFootBtn: {
+      type: Boolean,
+      default() {
+        return true
+      }
     },
-    methods: {
-        onChange_Time ($date) {
-            this.searchData.startTime = $date[0];
-            this.searchData.endTime = $date[1];
-            this.$emit('search', this.searchData, this.searchObj);
-        },
-        onClick_openOrClose () {
-            this.isOpen = !this.isOpen;
-        },
-        onClick_search () {
-            if (this.inputSelect) {
-                this.searchObj = {};
-                this.searchObj[this.inputSelect] = this.inputForm;
-            }
-            this.$emit('search', this.searchData, this.searchObj);
-        },
-        reset () {
-            this.searchObj = {};
-            this.inputForm = '';
-            this.searchData = {};
-            this.refresh = true;
-            setTimeout(() => {
-                this.refresh = false;
-            }, 1000);
-        },
+    showFootCancel: {
+      type: Boolean,
+      default() {
+        return true
+      }
     },
-};
+    footBtnLabel: {
+      type: String,
+      default: '保存'
+    },
+    labelPosition: {
+      type: String,
+      default: 'right'
+    },
+    labelWidth: {
+      type: String,
+      default: '100px'
+    },
+    showFootReset: {
+      type: Boolean,
+      default() {
+        return false
+      }
+    },
+    showFootClear: {
+      type: Boolean,
+      default() {
+        return false
+      }
+    }
+  },
+  data() {
+    return {
+      ruleForm: {},
+      formKeys: [],
+      isOpen: false,
+      isRest: false
+    }
+  },
+  created() {
+    
+    this.init()
+  },
+  methods: {
+    init() {
+      if (this.formBaseData.length > 0) {
+        for (const iterator of this.formBaseData) {
+          let initVal = iterator.initVal
+          if (g.utils.isUndefined(initVal)) {
+            initVal = null
+          }
+          this.formKeys.push(iterator.key)
+          this.$set(this.ruleForm, iterator.key, initVal)
+        }
+      }
+    },
+    handleClick() {
+      this.$refs.formTep.validate(valid => {
+        // 校验
+        if (valid) {
+          let formInfo = g.utils.deepClone(this.ruleForm)
+          // 统一过滤表单
+          formatFormData(formInfo, this.formKeys)
+          // eslint-disable-next-line no-console
+          console.log(this.ruleForm)
+        }
+      })
+    },
+    resetForm() {
+      // 初始化表单
+      this.isRest = true
+      setTimeout(() => {
+        this.isRest = false
+      }, 500)
+
+      this.$refs.formTep.resetFields()
+    },
+    clearForm() {
+      // 清空表单
+      const p = () =>
+        new Promise(resolve => {
+          clearFormData(this.ruleForm, this.formKeys)
+          resolve()
+        })
+      p().then(() => {
+        this.$refs.formTep.clearValidate()
+      })
+    },
+    cancelForm() {
+      // 初始化表单
+      this.$emit('cancel')
+    },
+    transType(value) {
+      // 获取表单项类型
+      return transFormType(value)
+    },
+
+    onClick_openOrClose() {
+      this.isOpen = !this.isOpen
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -152,7 +198,9 @@ export default {
   transition: 0.5s;
   min-width: 1000px;
 }
-
+.is_show_all{
+  height: auto !important; 
+}
 .btn_list {
   /* background: rebeccapurple; */
   position: absolute;
@@ -169,7 +217,7 @@ export default {
   user-select: none;
 }
 .form-inline {
-  margin: 27px 24px;
+  margin: 27px 24px 10px;
   height: 40px;
   overflow: hidden;
   transition: 0.5s;
@@ -193,7 +241,12 @@ export default {
   margin-bottom: 16px !important;
   margin-top: 0px !important;
 }
-
+.formTemplate-item {
+  float: left !important;
+}
+.max-width {
+  width: 100%;
+}
 .form_item {
   float: left !important;
 }

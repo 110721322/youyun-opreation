@@ -58,6 +58,10 @@ import Check from './components/Check.vue';
 import Date from './components/Date.vue';
 import iSwitch from './components/Switch.vue';
 import Radio from './components/Radio.vue';
+import Upload from './components/Upload.vue';
+import Tinymce from './components/Tinymce/index.vue';
+import Cascader from './components/Cascader.vue';
+
 // import { isUndefined, deepClone } from '@/libs/lit/utils'
 
 export default {
@@ -69,6 +73,9 @@ export default {
         Date,
         iSwitch,
         Radio,
+        Upload,
+        Tinymce,
+        Cascader
     },
     props: {
         formBaseData: Array,
@@ -138,6 +145,8 @@ export default {
                     let formInfo = g.utils.deepClone(this.ruleForm);
                     // 统一过滤表单
                     formatFormData(formInfo, this.formKeys);
+                    // eslint-disable-next-line no-console
+                    console.log(this.ruleForm);
                 }
             });
         },

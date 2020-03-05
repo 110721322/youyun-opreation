@@ -2,7 +2,7 @@
   <div>
     <el-date-picker
       style="float: left;"
-      size='large'
+      size="large"
       v-model="timeInterval"
       :type="type"
       range-separator="至"
@@ -20,7 +20,9 @@
       :key="item.label"
       :class="item.value == selectItem.value ? 'select' : ''"
       @click="onClick_item(item)"
-      >{{ item.label }}</div>
+    >
+      {{ item.label }}
+    </div>
     <!--    <span class="date-item" v-for="item of dateList" :class="item.value == selectItem.value?'select':''"  @click="onClick_item(item)">{{item.label}}</span>-->
   </div>
 </template>
@@ -59,6 +61,8 @@ export default {
             type: String,
             default: 'daterange',
         },
+        ruleForm: Object,
+        formItem: Object,
         pickerOptions: {
             type: Object,
             default () {
@@ -90,7 +94,6 @@ export default {
                 if (this.isSelectToday) {
                     this.dateList[0].label = '今天';
                 }
-
 
                 if (this.type === 'datetimerange') {
                     this.defaultTime = ['00:00:00', '23:59:59'];
@@ -127,6 +130,7 @@ export default {
 
 
             this.$emit('select', timeArr);
+            this.ruleForm[this.formItem.key] = timeArr;
         },
         onClick_item ($item) {
             this.selectItem = $item;
@@ -158,6 +162,7 @@ export default {
             }
 
             this.$emit('select', this.timeInterval);
+            this.ruleForm[this.formItem.key] = this.timeInterval;
         },
         getDay (day) {
             var today = new Date();
@@ -200,13 +205,13 @@ export default {
 </script>
 <style type="text/css" lang="scss" rel="stylesheet/scss" scoped>
 .date-item {
-    float: left;
+  float: left;
   height: 40px;
   width: 77px;
-//   padding: 5px;
+  //   padding: 5px;
   margin-left: 15px;
-text-align: center;
-line-height:40px;
+  text-align: center;
+  line-height: 40px;
   font-size: 14px;
   color: #b0b2b8;
   cursor: pointer;
