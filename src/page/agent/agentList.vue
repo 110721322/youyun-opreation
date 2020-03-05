@@ -6,21 +6,18 @@
         服务商列表
       </div>
       <search
-        :openHeight="searchMaxHeight"
-        :formBaseData="searchConfig.formData"
-        :showFootBtn="searchConfig.showFootBtn"
+        :open-height="searchMaxHeight"
+        :form-base-data="searchConfig.formData"
+        :show-foot-btn="searchConfig.showFootBtn"
         @search="search"
-      ></search>
+      />
 
-     
       <!-- <data-mode></data-mode> -->
       <div class="table_box">
         <el-button>批量转移运营</el-button>
         <div class="select_data">
-          <span class="el-icon-info icon"></span>
-          <span
-            >已选择 <span class="blue">{{ selectData.length }}</span> 项目</span
-          >
+          <span class="el-icon-info icon" />
+          <span>已选择 <span class="blue">{{ selectData.length }}</span> 项目</span>
           <el-button class="btn" type="text">清空</el-button>
         </div>
         <BaseCrud
@@ -32,15 +29,14 @@
           :grid-edit-width="300"
           form-title="用户"
           :is-async="true"
-          :isSelect="true"
+          :is-select="true"
           @selectionChange="selectionChange"
           @detail="openDetail"
           @thaw="thaw"
           @frozen="frozen"
           @openAgentManager="openAgentManager"
           @goMerchantList="goMerchantList"
-        >
-        </BaseCrud>
+        />
       </div>
     </div>
   </div>

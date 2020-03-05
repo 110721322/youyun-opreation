@@ -1,12 +1,11 @@
 export const FORM_CONFIG = {
-
   formData: [
     {
       type: 1,
       label: '标签',
       key: 'tag1',
       style: 'width:294px',
-      labelWidth:'100px',
+      labelWidth: '100px',
       options: [
         {
           label: '川菜',
@@ -27,9 +26,7 @@ export const FORM_CONFIG = {
       label: '标签',
       key: 'tag2',
       style: 'width:294px',
-      labelWidth:'185px',
-     
-      options: [
+      labelWidth: '185px', options: [
         {
           label: '川菜',
           value: 0
@@ -49,8 +46,8 @@ export const FORM_CONFIG = {
       label: '标签',
       key: 'tag3',
       style: 'width:294px',
-      labelWidth:'100px',
-      class:'clear_both',
+      labelWidth: '10 0px',
+      class: 'c lear_both',
       options: [
         {
           label: '川菜',

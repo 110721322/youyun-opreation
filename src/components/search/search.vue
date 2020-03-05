@@ -1,14 +1,17 @@
 <template>
-  <div :class="['s_box',isShowAll?'is_show_all':'']" :style="isOpen ? 'height:' + openHeight + 'px' : ''">
+  <div
+    :class="['s_box', isShowAll ? 'is_show_all' : '']"
+    :style="isOpen ? 'height:' + openHeight + 'px' : ''"
+  >
     <el-form
-      size="large"
       ref="formTep"
+      size="large"
       :inline="false"
       :label-position="labelPosition"
       :model="ruleForm"
       :rules="rules"
       :label-width="labelWidth"
-      :class="['form-inline',isShowAll?'is_show_all':'']"
+      :class="['form-inline', isShowAll ? 'is_show_all' : '']"
       :style="isOpen ? 'height:' + (openHeight + 40) + 'px' : ''"
     >
       <el-form-item
@@ -22,22 +25,21 @@
       >
         <components
           :is="transType(formItem.type)"
-          :ruleForm="ruleForm"
-          :formItem="formItem"
-          :isRest="isRest"
-        ></components>
+          :rule-form="ruleForm"
+          :form-item="formItem"
+          :is-rest="isRest"
+        />
       </el-form-item>
 
       <div class="btn_list" style="margin-bottom:0">
         <el-button type="primary" size="large" @click="handleClick">
-          搜索</el-button
-        >
+          搜索</el-button>
         <el-button plain size="large" @click="resetForm">重置</el-button>
-        <div class="open_btn" @click="onClick_openOrClose" v-show="!isShowAll">
+        <div v-show="!isShowAll" class="open_btn" @click="onClick_openOrClose">
           <span v-show="!isOpen">展开</span>
           <span v-show="isOpen">收起</span>
 
-          <i :class="['el-icon-arrow-down', 'more', isOpen ? 'down' : '']"></i>
+          <i :class="['el-icon-arrow-down', 'more', isOpen ? 'down' : '']" />
         </div>
       </div>
     </el-form>
@@ -59,7 +61,7 @@ import DateSelect from './components/DateSelect.vue'
 import SelectInput from './components/SelectInput.vue'
 
 export default {
-  name: 'search',
+  name: 'Search',
   components: {
     Input,
     Select,
@@ -69,7 +71,7 @@ export default {
     SelectInput
   },
   props: {
-    isShowAll:{
+    isShowAll: {
       type: Boolean,
       default() {
         return false
@@ -124,7 +126,6 @@ export default {
     }
   },
   created() {
-    
     this.init()
   },
   methods: {
@@ -144,7 +145,7 @@ export default {
       this.$refs.formTep.validate(valid => {
         // 校验
         if (valid) {
-          let formInfo = g.utils.deepClone(this.ruleForm)
+          const formInfo = g.utils.deepClone(this.ruleForm)
           // 统一过滤表单
           formatFormData(formInfo, this.formKeys)
           // eslint-disable-next-line no-console
@@ -198,8 +199,8 @@ export default {
   transition: 0.5s;
   min-width: 1000px;
 }
-.is_show_all{
-  height: auto !important; 
+.is_show_all {
+  height: auto !important;
 }
 .btn_list {
   /* background: rebeccapurple; */

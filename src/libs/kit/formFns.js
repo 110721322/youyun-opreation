@@ -37,9 +37,9 @@ export const transFormType = typeNum => {
     case 9:
       componentName = 'DateSelect'
       break
-      case 10:
-        componentName = 'SelectInput'
-        break
+    case 10:
+      componentName = 'SelectInput'
+      break
     default:
     // throwError("formType \"" + typeNum + "\" does not exist.open fn.js and add it");
   }
@@ -79,7 +79,7 @@ export const setRules = (function() {
  */
 export const formatFormData = (obj, keys) => {
   for (const key of keys) {
-    let value = obj[key]
+    const value = obj[key]
     if (g.utils.isArr(value)) {
       obj[key] = value.toString()
     }
@@ -97,7 +97,7 @@ export const formatFormData = (obj, keys) => {
  */
 export const clearFormData = (obj, keys) => {
   for (const key of keys) {
-    let value = obj[key]
+    const value = obj[key]
     if (g.utils.isArr(value)) {
       obj[key] = []
     }

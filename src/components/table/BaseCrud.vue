@@ -4,23 +4,22 @@
 
     <!--crud主体内容区，展示表格内容-->
     <el-table
-      :data="showGridData"
       v-loading="listLoading"
+      :data="showGridData"
       style="width: 100%;font-size:14px"
-      @selection-change="handleSelectionChange"
       :height="tableHeight"
       :border="false"
       :row-key="rowKey"
       :default-expand-all="defaultExpandAll"
       :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-
       :header-cell-style="headerCellStyle"
+
+      @selection-change="handleSelectionChange"
     >
-      <el-table-column v-if="isSelect" type="selection" width="55">
-      </el-table-column>
+      <el-table-column v-if="isSelect" type="selection" width="55" />
       <el-table-column v-if="isExpand" type="expand" width="55">
         <template slot-scope="scope">
-          <slot :row="scope.row"></slot>
+          <slot :row="scope.row" />
         </template>
       </el-table-column>
       <el-table-column
@@ -39,54 +38,51 @@
             :column="item"
             :index="scope.$index"
             :render="item.render"
-          ></Cell>
+          />
           <span v-else>{{ scope.row[item.prop] }}</span>
         </template>
       </el-table-column>
       <el-table-column
-        fixed="right"
         v-if="!hideEditArea"
+        fixed="right"
         label="操作"
         :width="gridEditWidth ? gridEditWidth : 200"
       >
         <template slot-scope="scope">
           <el-button
-            size="medium"
             v-if="gridBtnConfig.update"
+            size="medium"
             type="primary"
             @click="createOrUpdate(scope.row)"
-            >修改
+          >修改
           </el-button>
           <el-button
-            size="medium"
             v-if="gridBtnConfig.delete"
+            size="medium"
             type="danger"
             @click="remove(scope.row)"
-            >删除</el-button
-          >
+          >删除</el-button>
           <el-button
-            size="medium"
             v-if="gridBtnConfig.view"
+            size="medium"
             type="primary"
             @click="view(scope.row)"
-            >查看</el-button
-          >
+          >查看</el-button>
           <!--扩展按钮-->
-          <span :key="index" v-for="(item, index) in gridBtnConfig.expands">
+          <span v-for="(item, index) in gridBtnConfig.expands" :key="index">
             <span v-if="isShowFun(item, scope)">
               <el-button
                 size="medium"
-                @click="handleEmit(item.emitName, scope.row)"
                 :style="item.style"
                 :type="item.type ? item.type : 'primary'"
+                @click="handleEmit(item.emitName, scope.row)"
               >
                 {{ item.name }}
               </el-button>
               <span
-                style="color:#EBEEF5;margin:0 3px"
                 v-if="index !== gridBtnConfig.expands.length - 1"
-                >|</span
-              >
+                style="color:#EBEEF5;margin:0 3px"
+              >|</span>
             </span>
           </span>
         </template>
@@ -99,15 +95,14 @@
       <el-pagination
         v-if="isAsync"
         size="medium"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
         :current-page="currentPage"
         :page-sizes="[10, 20, 30, 40]"
         :page-size="currentPageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="dataTotal"
-      >
-      </el-pagination>
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      />
     </div>
   </div>
 </template>
@@ -116,7 +111,7 @@
 import Cell from './expand'
 
 export default {
-  name: 'base-crud',
+  name: 'BaseCrud',
   components: {
     Cell
   },
@@ -145,12 +140,13 @@ export default {
     'isSelect',
     //  设置表高度（是否固定表头）
     'tableHeight',
-    //表格是否可以展开
+    // 表 格是否可以展开
     'isExpand',
-    //表格子项拓展
+    // 表 格子项拓展
     'rowKey',
-    //表格子项默认是否全部展开
-    'defaultExpandAll'
+    // 表 格子项默认是否全部展开
+    'defaultExpandAll',
+    'headerCellStyle'
   ],
   data() {
     return {
@@ -168,6 +164,13 @@ export default {
       formModel: {},
       //  表格加载状态
       listLoading: false
+    }
+  },
+
+  watch: {
+    // 防止表格预置数据不成功，涉及生命周期问题
+    gridData() {
+      this.showGridData = this.gridData
     }
   },
   mounted() {
@@ -226,14 +229,7 @@ export default {
     handleSelectionChange(val) {
       this.$emit('selectionChange', val)
     }
-  },
-  watch: {
-    // 防止表格预置数据不成功，涉及生命周期问题
-    gridData() {
-      this.showGridData = this.gridData
-    }
-  }
-}
+  }}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>

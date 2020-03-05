@@ -16,11 +16,11 @@
     <transition name="fade">
       <div>
         <Search
-          :isShowAll="true"
-          :formBaseData="searchConfig.formData"
+          :is-show-all="true"
+          :form-base-data="searchConfig.formData"
           @search="search"
-        ></Search>
-        <data-mode :configData="modeConfigData"></data-mode>
+        />
+        <data-mode :config-data="modeConfigData" />
         <div class="table_box">
           <BaseCrud
             :grid-config="configData.gridConfig"
@@ -30,11 +30,11 @@
             :form-data="configData.formModel"
             :grid-edit-width="300"
             :is-async="true"
-            :isSelect="false"
-            :isExpand="false"
-            :rowKey="'id'"
+            :is-select="false"
+            :is-expand="false"
+            :row-key="'id'"
             :default-expand-all="false"
-            :hideEditArea="configData.hideEditArea"
+            :hide-edit-area="configData.hideEditArea"
             @selectionChange="selectionChange"
           >
             <template v-slot="{ row }">
@@ -96,8 +96,6 @@
     </transition>
   </div>
 </template>
-
-
 <script>
 import Search from '@/components/search/search.vue'
 import DataMode from '@/components/dataMode/dataMode.vue'
@@ -165,11 +163,10 @@ export default {
           this.configData = FINISH_CONFIG
           break
       }
-      
 
       this.getTableData()
     },
-    search(){
+    search() {
       // eslint-disable-next-line no-console
       console.log(this.ruleForm)
     }
