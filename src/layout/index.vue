@@ -17,6 +17,7 @@
 
     <div
       v-if="menu2Data && rootPath"
+      class="menu2"
       style="width:166px;height:100%;background-color:#fff;float:left;position: absolute;
     font-size: 0px;
     top: 0;
