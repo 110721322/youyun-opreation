@@ -7,7 +7,7 @@ export const FINISH_CONFIG = {
     },
     {
       label: '任务名称',
-      prop: 'name',
+      prop: 'taskName',
       width: '150px'
     },
     {
@@ -18,7 +18,7 @@ export const FINISH_CONFIG = {
     {
       label: '任务平均完成时长',
       prop: 'time',
-      width: '150px'
+      width: '350px'
     }
   ],
   // crud的模态框表单配置，可配置表单类型，验证规则，是否必填,col-span布局可通过span参数配置

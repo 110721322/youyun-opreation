@@ -2,8 +2,8 @@ export const FORM_CONFIG = {
   formData: [
     {
       type: 1,
-      label: '标签',
-      key: 'tag1',
+      label: '任务类型',
+      key: 'type',
       style: 'width:294px',
       labelWidth: '100px',
       options: [
@@ -23,10 +23,10 @@ export const FORM_CONFIG = {
     },
     {
       type: 1,
-      label: '标签',
-      key: 'tag2',
+      label: '任务名称',
+      key: 'name',
       style: 'width:294px',
-      labelWidth: '185px', options: [
+      labelWidth: '100px', options: [
         {
           label: '川菜',
           value: 0
@@ -43,11 +43,10 @@ export const FORM_CONFIG = {
     },
     {
       type: 1,
-      label: '标签',
-      key: 'tag3',
+      label: '成员',
+      key: 'member',
       style: 'width:294px',
-      labelWidth: '10 0px',
-      class: 'c lear_both',
+      labelWidth: '100px',
       options: [
         {
           label: '川菜',

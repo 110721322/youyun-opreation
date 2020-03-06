@@ -13,7 +13,6 @@
       :default-expand-all="defaultExpandAll"
       :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
       :header-cell-style="headerCellStyle"
-
       @selection-change="handleSelectionChange"
     >
       <el-table-column v-if="isSelect" type="selection" width="55" />
@@ -32,6 +31,7 @@
         :fixed="item.isFixed || false"
       >
         <template slot-scope="scope">
+          <i v-if="item.hasIcon" class="el-icon-caret-top icon-increase"></i>
           <Cell
             v-if="item.render"
             :row="scope.row"
@@ -54,8 +54,7 @@
             size="medium"
             type="primary"
             @click="createOrUpdate(scope.row)"
-          >修改
-          </el-button>
+          >修改</el-button>
           <el-button
             v-if="gridBtnConfig.delete"
             size="medium"
@@ -76,9 +75,7 @@
                 :style="item.style"
                 :type="item.type ? item.type : 'primary'"
                 @click="handleEmit(item.emitName, scope.row)"
-              >
-                {{ item.name }}
-              </el-button>
+              >{{ item.name }}</el-button>
               <span
                 v-if="index !== gridBtnConfig.expands.length - 1"
                 style="color:#EBEEF5;margin:0 3px"
@@ -108,50 +105,50 @@
 </template>
 
 <script>
-import Cell from './expand'
+import Cell from "./expand";
 
 export default {
-  name: 'BaseCrud',
+  name: "BaseCrud",
   components: {
     Cell
   },
   props: [
     // 表单标题，例如用户、角色
-    'formTitle',
+    "formTitle",
     // 表单配置
-    'formConfig',
+    "formConfig",
     // 表单的model数据
-    'formData',
+    "formData",
     // 表格配置
-    'gridConfig',
+    "gridConfig",
     // 表格按钮配置
-    'gridBtnConfig',
+    "gridBtnConfig",
     // 表格死数据
-    'gridData',
+    "gridData",
     // 数据接口
-    'apiService',
+    "apiService",
     // 判断是否是异步数据
-    'isAsync',
+    "isAsync",
     //  表格编辑区域宽度
-    'gridEditWidth',
+    "gridEditWidth",
     //  是否隐藏表格操作
-    'hideEditArea',
+    "hideEditArea",
     //  是否可进行选择
-    'isSelect',
+    "isSelect",
     //  设置表高度（是否固定表头）
-    'tableHeight',
+    "tableHeight",
     // 表 格是否可以展开
-    'isExpand',
+    "isExpand",
     // 表 格子项拓展
-    'rowKey',
+    "rowKey",
     // 表 格子项默认是否全部展开
-    'defaultExpandAll',
-    'headerCellStyle'
+    "defaultExpandAll",
+    "headerCellStyle"
   ],
   data() {
     return {
       // 新增修改模态框title
-      dialogTitle: '',
+      dialogTitle: "",
       // 展示的表格数据，数据来源可能是父组件传递的固定数据，可能是接口请求数据
       showGridData: [],
       // 当前页码
@@ -164,30 +161,30 @@ export default {
       formModel: {},
       //  表格加载状态
       listLoading: false
-    }
+    };
   },
 
   watch: {
     // 防止表格预置数据不成功，涉及生命周期问题
     gridData() {
-      this.showGridData = this.gridData
+      this.showGridData = this.gridData;
     }
   },
   mounted() {
-    this.getData()
+    this.getData();
   },
   methods: {
     // 获取列表数据
     getData() {
-      this.listLoading = true
+      this.listLoading = true;
       // let params = {
       //   page: this.currentPage,
       //   limit: this.currentPageSize
       // }
 
-      this.showGridData = []
-      this.dataTotal = 0
-      this.listLoading = false
+      this.showGridData = [];
+      this.dataTotal = 0;
+      this.listLoading = false;
       // this.apiService.list(params).then(
       //   res => {
       //     this.showGridData = res.data.list
@@ -202,34 +199,35 @@ export default {
 
     // 处理相应父组件的事件方法
     handleEmit(emitName, row) {
-      this.$emit(emitName, row)
+      this.$emit(emitName, row);
     },
     handleCurrentChange(page) {
-      this.currentPage = page
-      this.getData()
+      this.currentPage = page;
+      this.getData();
     },
     handleSizeChange(size) {
-      this.currentPageSize = size
-      this.getData()
+      this.currentPageSize = size;
+      this.getData();
     },
     // 模态框数据提交
     dialogSubmit(data) {
-      this.apiService[data.userId ? 'update' : 'create'](data).then(() => {
-        this.getData()
-        this.$message.success(this.dialogTitle + '成功！')
-      })
+      this.apiService[data.userId ? "update" : "create"](data).then(() => {
+        this.getData();
+        this.$message.success(this.dialogTitle + "成功！");
+      });
     },
     isShowFun($row, $scope) {
       if ($row.isShow) {
-        return $row.isShow($scope.row)
+        return $row.isShow($scope.row);
       } else {
-        return true
+        return true;
       }
     },
     handleSelectionChange(val) {
-      this.$emit('selectionChange', val)
+      this.$emit("selectionChange", val);
     }
-  }}
+  }
+};
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
@@ -243,5 +241,9 @@ export default {
     text-align: right;
     margin-top: 25px;
   }
+}
+.icon-increase {
+  color: #3abd2d;
+  margin-right: 8px;
 }
 </style>

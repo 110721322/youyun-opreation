@@ -15,11 +15,7 @@
 
     <transition name="fade">
       <div>
-        <Search
-          :is-show-all="true"
-          :form-base-data="searchConfig.formData"
-          @search="search"
-        />
+        <Search :is-show-all="true" :form-base-data="searchConfig.formData" @search="search" />
         <data-mode :config-data="modeConfigData" />
         <div class="table_box">
           <BaseCrud
@@ -31,61 +27,26 @@
             :grid-edit-width="300"
             :is-async="true"
             :is-select="false"
-            :is-expand="false"
+            :is-expand="true"
             :row-key="'id'"
             :default-expand-all="false"
             :hide-edit-area="configData.hideEditArea"
             @selectionChange="selectionChange"
           >
             <template v-slot="{ row }">
-              <el-form
-                label-position="left"
-                inline
-                class="demo-table-expand"
-                label-width="80px"
-              >
-                <div>
-                  <el-form-item label="商品名称">
-                    <span>{{ row.id }}</span>
+              <el-form label-position="left" inline class="demo-table-expand">
+                <div v-for="(item,index) in row.childrenData" :key="index" class="form-box">
+                  <el-form-item label="商户ID：">
+                    <span>{{ item.id }}</span>
                   </el-form-item>
-                  <el-form-item label="所属店铺">
-                    <span>123123</span>
+                  <el-form-item label="商户名称：">
+                    <span>{{ item.name }}</span>
                   </el-form-item>
-                  <el-form-item label="商品 ID">
-                    <span>123123</span>
+                  <el-form-item label="结算金额：">
+                    <span>{{ item.amount }}</span>
                   </el-form-item>
-                  <el-form-item label="店铺 ID">
-                    <span>123123</span>
-                  </el-form-item>
-                </div>
-
-                <div>
-                  <el-form-item label="商品名称">
-                    <span>123123</span>
-                  </el-form-item>
-                  <el-form-item label="所属店铺">
-                    <span>123123</span>
-                  </el-form-item>
-                  <el-form-item label="商品 ID">
-                    <span>123123</span>
-                  </el-form-item>
-                  <el-form-item label="店铺 ID">
-                    <span>123123</span>
-                  </el-form-item>
-                </div>
-
-                <div>
-                  <el-form-item label="商品名称">
-                    <span>123123</span>
-                  </el-form-item>
-                  <el-form-item label="所属店铺">
-                    <span>123123</span>
-                  </el-form-item>
-                  <el-form-item label="商品 ID">
-                    <span>123123</span>
-                  </el-form-item>
-                  <el-form-item label="店铺 ID">
-                    <span>123123</span>
+                  <el-form-item label="失败原因：">
+                    <span>{{ item.reason }}</span>
                   </el-form-item>
                 </div>
               </el-form>
@@ -97,15 +58,15 @@
   </div>
 </template>
 <script>
-import Search from '@/components/search/search.vue'
-import DataMode from '@/components/dataMode/dataMode.vue'
-import BaseCrud from '@/components/table/BaseCrud.vue'
-import { FINISH_CONFIG } from './tableConfig/finishConfig'
-import { UNFINISH_CONFIG } from './tableConfig/unfinishConfig'
-import { FORM_CONFIG } from './formConfig/staticSearch'
+import Search from "@/components/search/search.vue";
+import DataMode from "@/components/dataMode/dataMode.vue";
+import BaseCrud from "@/components/table/BaseCrud.vue";
+import { FINISH_CONFIG } from "./tableConfig/finishConfig";
+import { UNFINISH_CONFIG } from "./tableConfig/unfinishConfig";
+import { FORM_CONFIG } from "./formConfig/staticSearch";
 
 export default {
-  name: 'Theme',
+  name: "Theme",
   components: { Search, BaseCrud, DataMode },
   // components: { dataMode, BaseCrud },
   data() {
@@ -113,65 +74,98 @@ export default {
       searchConfig: FORM_CONFIG,
       modeConfigData: [
         {
-          title: '任务总数',
-          data: '555个'
+          title: "任务总数",
+          data: "555个"
         }
       ],
-      searchMaxHeight: '240',
-      activeIndex: '1',
+      searchMaxHeight: "240",
+      activeIndex: "1",
       configData: UNFINISH_CONFIG,
       testData: [],
       isChangeMode: true
-    }
+    };
   },
   mounted() {
-    this.getTableData()
+    this.getTableData();
   },
   methods: {
     getTableData() {
       this.testData = [
         {
-          id: 1,
-          type: '日常任务',
-          name: '商户结算失败',
-          num: '4',
-          oper: '提醒',
-          time: '20:00:23'
+          type: "日常任务",
+          taskName: "商户结算失败",
+          num: "4",
+          oper: "提醒",
+          name: "XXXX店铺",
+          time: "20:00:23",
+          amount: "222.22",
+          reason: "银行卡账号错误，服务商无法联系",
+          childrenData: [
+            {
+              id: 1,
+              name: "XXXX店铺",
+              amount: "222.22",
+              reason: "银行卡账号错误，服务商无法联系"
+            },
+            {
+              id: 2,
+              name: "XXXX店铺",
+              amount: "222.22",
+              reason: "银行卡账号错误，服务商无法联系"
+            }
+          ]
         },
         {
           id: 2,
-          type: '日常任务',
-          name: '商户结算失败',
-          num: '4',
-          oper: '提醒',
-          time: '20:00:23'
+          type: "日常任务",
+          taskName: "商户结算失败",
+          num: "4",
+          oper: "提醒",
+          name: "XXXX店铺",
+          time: "20:00:23",
+          amount: "222.22",
+          reason: "银行卡账号错误，服务商无法联系",
+          childrenData: [
+            {
+              id: 1,
+              name: "XXXX店铺",
+              amount: "222.22",
+              reason: "银行卡账号错误，服务商无法联系"
+            },
+            {
+              id: 2,
+              name: "XXXX店铺",
+              amount: "222.22",
+              reason: "银行卡账号错误，服务商无法联系"
+            }
+          ]
         }
-      ]
+      ];
     },
     selectionChange($val) {
       // eslint-disable-next-line no-console
-      console.log($val)
+      console.log($val);
     },
     handleSelect($item) {
       // eslint-disable-next-line no-console
-      this.activeIndex = $item
+      this.activeIndex = $item;
       switch ($item) {
-        case '1':
-          this.configData = UNFINISH_CONFIG
-          break
-        case '2':
-          this.configData = FINISH_CONFIG
-          break
+        case "1":
+          this.configData = UNFINISH_CONFIG;
+          break;
+        case "2":
+          this.configData = FINISH_CONFIG;
+          break;
       }
 
-      this.getTableData()
+      this.getTableData();
     },
     search() {
       // eslint-disable-next-line no-console
-      console.log(this.ruleForm)
+      console.log(this.ruleForm);
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -206,6 +200,10 @@ export default {
 .demo-table-expand .el-form-item {
   margin-right: 0;
   margin-bottom: 0;
-  width: 25%;
+  /* width: 25%; */
+}
+.form-box {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

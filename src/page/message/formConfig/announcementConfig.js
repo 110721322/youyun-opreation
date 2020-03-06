@@ -133,6 +133,21 @@ export const FORM_CONFIG = {
             return true;
           }
         }
+      },
+      {
+        type: 7,
+        label: '公告内容',
+        key: 'content',
+        initVal: '',
+        rules: setRules('公告内容').isRequired.get,
+        style: 'width:364px',
+        isShow: ($item) => {
+          if ($item.announcementType === 1) {
+            return true;
+          } else {
+            return false;
+          }
+        }
       }
     ]
   }
