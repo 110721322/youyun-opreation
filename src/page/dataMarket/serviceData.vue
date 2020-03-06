@@ -2,6 +2,27 @@
   <div class="main_page">
     <div class="p_head">服务商数据</div>
     <div class="title">服务器数量分布</div>
+    <div class="map-box">
+      <div class="chart-box">
+        <div ref="echartsMap" class="chart-panel"></div>
+      </div>
+      <div class="data-box">
+        <div class="data-title">
+          省份分布排行榜
+          <span class="all-num">共33940个</span>
+        </div>
+        <div v-for="(item,index) in mapData" :key="index" class="data-item">
+          <div class="data-left">
+            <span :class="['index',index<=2?'hightlight':'normal']">{{ index+1 }}</span>
+            {{ item.name }}
+          </div>
+          <div class="data-right">
+            <span>{{ item.num }}</span> |
+            <span class="perc">{{ item.perc }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="service-box">
       <pie
         :pie-option="pieOptionList[0]"
@@ -112,6 +133,16 @@ export default {
   },
   data() {
     return {
+      mapData: [
+        { name: "安徽省", num: "323,209", perc: "36%" },
+        { name: "甘肃省", num: "323,209", perc: "36%" },
+        { name: "安徽省", num: "323,209", perc: "36%" },
+        { name: "香港特别行政区", num: "323,209", perc: "36%" },
+        { name: "安徽省", num: "323,209", perc: "36%" },
+        { name: "山西省", num: "234", perc: "36%" },
+        { name: "山西省", num: "234", perc: "36%" },
+        { name: "山西省", num: "234", perc: "36%" }
+      ],
       searchConfig: FORM_CONFIG2,
       searchMaxHeight: "300",
       testData: [],
@@ -556,6 +587,70 @@ export default {
   }
   .data-box {
     width: 30%;
+  }
+}
+.map-box {
+  margin: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  background-color: #ffffff;
+  border-bottom: 1px solid #ebeef5;
+  .chart-box {
+    width: 70%;
+    height: 429px;
+    position: relative;
+    .chart-panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+  }
+  .data-box {
+    width: 30%;
+    padding: 28px 60px 0 0;
+    .data-title {
+      color: rgba(0, 0, 0, 0.85);
+      line-height: 22px;
+      padding-bottom: 7px;
+    }
+    .all-num {
+      color: #1989fa;
+    }
+    .data-item {
+      margin-top: 18px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .data-left {
+      color: rgba(0, 0, 0, 0.65);
+      line-height: 22px;
+      .index {
+        display: inline-block;
+        margin-right: 24px;
+        text-align: center;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        border-radius: 50%;
+      }
+      .hightlight {
+        background: rgba(24, 144, 255, 1);
+        color: #ffffff;
+      }
+      .normal {
+        background: #f0f2f5;
+        color: rgba(0, 0, 0, 0.65);
+      }
+    }
+    .data-right {
+      color: rgba(0, 0, 0, 0.65);
+      line-height: 22px;
+      .perc {
+        color: rgba(0, 0, 0, 0.45);
+      }
+    }
   }
 }
 </style>
