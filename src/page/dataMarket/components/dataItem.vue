@@ -1,22 +1,22 @@
 <template>
   <div class="data-item">
     <div class="title">
-      {{title}}
-      <span class="show-more" v-if="isShowMore">查看更多</span>
+      {{ title }}
+      <span v-if="isShowMore" class="show-more">查看更多</span>
     </div>
-    <div class="tags" v-if="radio">
+    <div v-if="radio" class="tags">
       <el-radio-group v-model="radio.radio">
         <el-radio-button
-          :label="item.label"
           v-for="(item,index) in radio.namelist"
           :key="index"
-        >{{item.name}}</el-radio-button>
+          :label="item.label"
+        >{{ item.name }}</el-radio-button>
       </el-radio-group>
     </div>
-    <div class="line" v-if="isShowLine"></div>
+    <div v-if="isShowLine" class="line"></div>
 
     <template v-if="isShowPie">
-      <pie :pieOption="pieOption" :refName="piwRefName" :dataList="dataList"></pie>
+      <pie :pie-option="pieOption" :ref-name="piwRefName" :data-list="dataList"></pie>
     </template>
 
     <div v-if="isShowTable" class="table-box">
@@ -28,8 +28,8 @@
         :form-data="configData.formModel"
         :grid-edit-width="300"
         form-title="用户"
-        :isSelect="false"
-        :hideEditArea="true"
+        :is-select="false"
+        :hide-edit-area="true"
         :header-cell-style="itemHeaderCellStyle"
       ></baseCrud>
     </div>
@@ -40,6 +40,10 @@ import pie from "./pie.vue";
 import baseCrud from "@/components/table/BaseCrud.vue";
 export default {
   name: "DataItem",
+  components: {
+    pie,
+    baseCrud
+  },
   props: {
     radio: {},
     title: {},
@@ -53,13 +57,9 @@ export default {
     dataList: {},
     isShowMore: {},
     isShowTable: {},
-    configData:{},
-    itemTestData:{},
-    itemHeaderCellStyle:{},
-  },
-  components: {
-    pie,
-    baseCrud
+    configData: {},
+    itemTestData: {},
+    itemHeaderCellStyle: {}
   },
   data() {
     return {};
@@ -73,7 +73,7 @@ export default {
     margin-top: 16px;
     font-size: 16px;
     font-weight: 500;
-    color:#333335;
+    color: #333335;
     line-height: 24px;
     height: 24px;
     .show-more {

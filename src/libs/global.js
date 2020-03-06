@@ -9,27 +9,26 @@ import selectData from './data/selectData';
 
 window.trace = utils.trace;
 
-
 function getConfig () {
-    let config;
-    if (process.env.VUE_APP_ENV_CONFIG === 'dev') {
-        config = devConfig;
-    } else if (process.env.VUE_APP_ENV_CONFIG === 'test') {
-        config = testConfig;
-    } else if (process.env.VUE_APP_ENV_CONFIG === 'prod') {
-        config = prodConfig;
-    } else {
-        config = devConfig;
-    }
-    return config;
+  let config;
+  if (process.env.VUE_APP_ENV_CONFIG === 'dev') {
+    config = devConfig;
+  } else if (process.env.VUE_APP_ENV_CONFIG === 'test') {
+    config = testConfig;
+  } else if (process.env.VUE_APP_ENV_CONFIG === 'prod') {
+    config = prodConfig;
+  } else {
+    config = devConfig;
+  }
+  return config;
 }
 
 const config = getConfig();
 
 export {
-    utils,
-    // fun,
-    config,
-    selectData,
-    // menuModel,
+  utils,
+  // fun,
+  config,
+  selectData
+  // menuModel,
 };
