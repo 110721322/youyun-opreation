@@ -26,6 +26,7 @@ module.exports = {
     ],
     'vue/require-prop-types': 'off',
     'vue/require-default-prop': 'off',
+    'vue/html-self-closing':'off',
     'vue/singleline-html-element-content-newline': 'off',
     'vue/multiline-html-element-content-newline': 'off',
     'vue/name-property-casing': ['error', 'PascalCase'],
@@ -65,7 +66,9 @@ module.exports = {
     curly: [2, 'multi-line'],
     'dot-location': [2, 'property'],
     'eol-last': 2,
-    eqeqeq: ['error', 'always', { null: 'ignore' }],
+    eqeqeq: ['error', 'always', {
+      null: 'ignore'
+    }],
     'generator-star-spacing': [
       2,
       {
@@ -216,14 +219,14 @@ module.exports = {
     ],
     'padded-blocks': [2, 'never'],
     quotes: [
-      2,
+      0,
       'single',
       {
         avoidEscape: true,
         allowTemplateLiterals: true
       }
     ],
-    semi: [2, 'never'],
+    semi: [0, 'never'],
     'semi-spacing': [
       2,
       {
@@ -232,7 +235,7 @@ module.exports = {
       }
     ],
     'space-before-blocks': [2, 'always'],
-    'space-before-function-paren': [2, 'never'],
+    'space-before-function-paren': [0, 'never'],
     'space-in-parens': [2, 'never'],
     'space-infix-ops': 2,
     'space-unary-ops': [
@@ -266,7 +269,7 @@ module.exports = {
     'prefer-const': 2,
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     'object-curly-spacing': [
-      2,
+      0,
       'always',
       {
         objectsInObjects: false
