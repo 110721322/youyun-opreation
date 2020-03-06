@@ -7,7 +7,7 @@ export const UNFINISH_CONFIG = {
     },
     {
       label: '任务名称',
-      prop: 'name',
+      prop: 'taskName',
       width: '150px'
     },
     {

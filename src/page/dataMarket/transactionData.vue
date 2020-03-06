@@ -70,12 +70,7 @@
         </div>
       </div>
     </div>
-    <search
-      :open-height="searchMaxHeight"
-      :form-base-data="searchConfig.formData"
-      :show-foot-btn="searchConfig.showFootBtn"
-      @search="search"
-    />
+    <search :is-show-all="true" :form-base-data="searchConfig2.formData" @search="search" />
     <div class="pie-box">
       <div v-for="(item, index) in pieOptionList" :key="index" class="pie-item">
         <dataItem
@@ -95,14 +90,15 @@
 import dataItem from "./components/dataItem.vue";
 import search from "@/components/search/search.vue";
 // import BaseCrud from '@/components/table/BaseCrud.vue';
-import { FORM_CONFIG } from "./formConfig/dataViewSearch";
+import { FORM_CONFIG, FORM_CONFIG2 } from "./formConfig/dataViewSearch";
 export default {
   name: "Theme",
   components: { search, dataItem },
   data() {
     return {
       searchConfig: FORM_CONFIG,
-      searchMaxHeight: "300",
+      searchConfig2: FORM_CONFIG2,
+      searchMaxHeight: "320",
       activeIndex: "1",
       testData: [],
       payWay: "all",
@@ -345,7 +341,7 @@ export default {
             lineStyle: {
               color: "#1890FF"
             },
-            symbol: "none",
+            // symbol: "none",
             areaStyle: {
               color: {
                 type: "linear",
@@ -366,6 +362,14 @@ export default {
                 global: false // 缺省为 false
               }
             },
+            itemStyle: {
+              normal: {
+                color: "#4EA6FF",
+                lineStyle: {
+                  color: "#4EA6FF"
+                }
+              }
+            },
             data: [120, 132, 101, 134, 90, 230, 210, 101, 134, 90, 230, 330]
           },
           {
@@ -375,7 +379,7 @@ export default {
             lineStyle: {
               color: "#3ABD2D"
             },
-            symbol: "none",
+            // symbol: "none",
             areaStyle: {
               color: {
                 type: "linear",
@@ -394,6 +398,14 @@ export default {
                   }
                 ],
                 global: false // 缺省为 false
+              }
+            },
+            itemStyle: {
+              normal: {
+                color: "#6CDE61",
+                lineStyle: {
+                  color: "#6CDE61"
+                }
               }
             },
             data: [220, 182, 191, 234, 290, 330, 310, 191, 234, 290, 330, 330]

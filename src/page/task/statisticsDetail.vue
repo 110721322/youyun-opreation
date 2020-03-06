@@ -27,56 +27,26 @@
             :grid-edit-width="300"
             :is-async="true"
             :is-select="false"
-            :is-expand="false"
+            :is-expand="true"
             :row-key="'id'"
             :default-expand-all="false"
             :hide-edit-area="configData.hideEditArea"
             @selectionChange="selectionChange"
           >
             <template v-slot="{ row }">
-              <el-form label-position="left" inline class="demo-table-expand" label-width="80px">
-                <div>
-                  <el-form-item label="商品名称">
-                    <span>{{ row.id }}</span>
+              <el-form label-position="left" inline class="demo-table-expand">
+                <div v-for="(item,index) in row.childrenData" :key="index" class="form-box">
+                  <el-form-item label="商户ID：">
+                    <span>{{ item.id }}</span>
                   </el-form-item>
-                  <el-form-item label="所属店铺">
-                    <span>123123</span>
+                  <el-form-item label="商户名称：">
+                    <span>{{ item.name }}</span>
                   </el-form-item>
-                  <el-form-item label="商品 ID">
-                    <span>123123</span>
+                  <el-form-item label="结算金额：">
+                    <span>{{ item.amount }}</span>
                   </el-form-item>
-                  <el-form-item label="店铺 ID">
-                    <span>123123</span>
-                  </el-form-item>
-                </div>
-
-                <div>
-                  <el-form-item label="商品名称">
-                    <span>123123</span>
-                  </el-form-item>
-                  <el-form-item label="所属店铺">
-                    <span>123123</span>
-                  </el-form-item>
-                  <el-form-item label="商品 ID">
-                    <span>123123</span>
-                  </el-form-item>
-                  <el-form-item label="店铺 ID">
-                    <span>123123</span>
-                  </el-form-item>
-                </div>
-
-                <div>
-                  <el-form-item label="商品名称">
-                    <span>123123</span>
-                  </el-form-item>
-                  <el-form-item label="所属店铺">
-                    <span>123123</span>
-                  </el-form-item>
-                  <el-form-item label="商品 ID">
-                    <span>123123</span>
-                  </el-form-item>
-                  <el-form-item label="店铺 ID">
-                    <span>123123</span>
+                  <el-form-item label="失败原因：">
+                    <span>{{ item.reason }}</span>
                   </el-form-item>
                 </div>
               </el-form>
@@ -122,24 +92,60 @@ export default {
     getTableData() {
       this.testData = [
         {
-          id: 1,
           type: "日常任务",
-          name: "商户结算失败",
+          taskName: "商户结算失败",
           num: "4",
           oper: "提醒",
-          time: "20:00:23"
+          name: "XXXX店铺",
+          time: "20:00:23",
+          amount: "222.22",
+          reason: "银行卡账号错误，服务商无法联系",
+          childrenData: [
+            {
+              id: 1,
+              name: "XXXX店铺",
+              amount: "222.22",
+              reason: "银行卡账号错误，服务商无法联系"
+            },
+            {
+              id: 2,
+              name: "XXXX店铺",
+              amount: "222.22",
+              reason: "银行卡账号错误，服务商无法联系"
+            }
+          ]
         },
         {
           id: 2,
           type: "日常任务",
-          name: "商户结算失败",
+          taskName: "商户结算失败",
           num: "4",
           oper: "提醒",
-          time: "20:00:23"
+          name: "XXXX店铺",
+          time: "20:00:23",
+          amount: "222.22",
+          reason: "银行卡账号错误，服务商无法联系",
+          childrenData: [
+            {
+              id: 1,
+              name: "XXXX店铺",
+              amount: "222.22",
+              reason: "银行卡账号错误，服务商无法联系"
+            },
+            {
+              id: 2,
+              name: "XXXX店铺",
+              amount: "222.22",
+              reason: "银行卡账号错误，服务商无法联系"
+            }
+          ]
         }
       ];
     },
-    selectionChange($val) {},
+    selectionChange($val) {
+      // eslint-disable-next-line no-console
+      console.log($val);
+    },
     handleSelect($item) {
       // eslint-disable-next-line no-console
       this.activeIndex = $item;
@@ -154,7 +160,10 @@ export default {
 
       this.getTableData();
     },
-    search() {}
+    search() {
+      // eslint-disable-next-line no-console
+      console.log(this.ruleForm);
+    }
   }
 };
 </script>
@@ -191,6 +200,10 @@ export default {
 .demo-table-expand .el-form-item {
   margin-right: 0;
   margin-bottom: 0;
-  width: 25%;
+  /* width: 25%; */
+}
+.form-box {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

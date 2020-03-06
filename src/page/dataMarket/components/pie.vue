@@ -1,13 +1,13 @@
 <template>
   <div class="data-box">
-    <div class="data-pie" :ref="refName"></div>
+    <div :ref="refName" class="data-pie" :style="pieStyle"></div>
     <div class="data-list">
       <div v-for="(item,index) in dataList" :key="index" class="data-item">
         <span>
           <span :class="item.className"></span>
-          {{item.title}}
+          {{ item.title }}
         </span>
-        <span class="perc">| {{item.perc}}</span>
+        <span class="perc">| {{ item.perc }}</span>
       </div>
     </div>
   </div>
@@ -15,7 +15,7 @@
 <script>
 export default {
   name: "Pie",
-  props: ["pieOption", "refName", "dataList"],
+  props: ["pieOption", "refName", "dataList", "pieStyle"],
   data() {
     return {};
   },
@@ -25,7 +25,7 @@ export default {
   methods: {
     init() {
       // 基于准备好的dom，初始化echarts实例
-      let myChartBar = this.$echarts.init(this.$refs[`${this.refName}`]);
+      const myChartBar = this.$echarts.init(this.$refs[`${this.refName}`]);
 
       // 绘制图表
       myChartBar.setOption(this.pieOption);
@@ -46,7 +46,6 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-left: 46px;
     .data-item {
       margin-top: 16px;
       display: flex;

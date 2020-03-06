@@ -1,24 +1,33 @@
 <template>
   <div class="main_page">
-    <div class="p_head">商户数据</div>
+    <div class="p_head">服务商数据</div>
+    <div class="title">服务器数量分布</div>
+    <div class="service-box">
+      <pie
+        :pie-option="pieOptionList[0]"
+        :data-list="dataList[0]"
+        :ref-name="'echartPie0'"
+        :pie-style="pieStyle"
+      ></pie>
+      <pie
+        :pie-option="pieOptionList[0]"
+        :data-list="dataList[0]"
+        :ref-name="'echartPie1'"
+        :pie-style="pieStyle"
+      ></pie>
+      <pie
+        :pie-option="pieOptionList[0]"
+        :data-list="dataList[0]"
+        :ref-name="'echartPie2'"
+        :pie-style="pieStyle"
+      ></pie>
+    </div>
     <search
       :is-show-all="true"
       :form-base-data="searchConfig.formData"
       :show-foot-btn="searchConfig.showFootBtn"
       @search="search"
     />
-    <div class="pie-box">
-      <div v-for="(item, index) in pieOptionList" :key="index" class="pie-item">
-        <dataItem
-          :radio="radioListData[index]"
-          :title="titleList[index].name"
-          :pie-option="pieOptionList[index]"
-          :piw-ref-name="`echartsPie${index}`"
-          :data-list="dataList[index]"
-          :is-show-pie="true"
-        />
-      </div>
-    </div>
     <div class="title">商户平均交易额走势</div>
     <div class="trend-box">
       <div class="chart-box">
@@ -26,34 +35,21 @@
       </div>
       <div class="data-box">
         <dataItem
-          :radio="radioListData2[0]"
           :is-show-table="true"
           :title="'总交易额排行榜'"
           :is-show-more="true"
-          :config-data="tableConfigData3"
-          :item-test-data="testData3"
+          :config-data="tableConfigData5"
+          :item-test-data="testData5"
           :is-show-line="false"
           :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
         ></dataItem>
       </div>
     </div>
     <div class="pie-box">
-      <div v-for="(item, index) in pieOptionList2" :key="index" class="pie-item">
-        <dataItem
-          :radio="radioListData2[index]"
-          :title="titleList2[index].name"
-          :pie-option="pieOptionList2[index]"
-          :piw-ref-name="`echartsPie2${index}`"
-          :data-list="dataList2[index]"
-          :is-show-pie="true"
-          :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
-        />
-      </div>
-    </div>
-    <div class="pie-box">
-      <dataItem
+      <data-item
         class="pie-item"
-        :title="'无交易商户上期排行'"
+        :radio="radioListData[0]"
+        :title="'交易额涨跌排行'"
         :config-data="tableConfigData"
         :is-show-more="true"
         :is-show-table="true"
@@ -61,7 +57,6 @@
         :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
       />
       <dataItem
-        :radio="radioListData2[2]"
         class="pie-item"
         :title="'交易额涨跌排行'"
         :config-data="tableConfigData2"
@@ -71,23 +66,49 @@
         :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
       />
     </div>
+    <div class="pie-box">
+      <dataItem
+        class="pie-item"
+        :radio="radioListData[1]"
+        :title="'无交易商户上期排行'"
+        :config-data="tableConfigData3"
+        :is-show-more="true"
+        :is-show-table="true"
+        :item-test-data="testData3"
+        :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
+      />
+      <dataItem
+        class="pie-item"
+        :radio="radioListData[2]"
+        :title="'无交易商户上期排行'"
+        :config-data="tableConfigData4"
+        :is-show-more="true"
+        :is-show-table="true"
+        :item-test-data="testData4"
+        :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
+      />
+    </div>
   </div>
 </template>
 <script>
+import pie from "./components/pie.vue";
 import dataItem from "./components/dataItem.vue";
 import search from "@/components/search/search.vue";
 import {
   MERCHANTDATACONFIG1,
   MERCHANTDATACONFIG2,
-  MERCHANTDATACONFIG3
-} from "./tableConfig/merchantDataConfig";
+  MERCHANTDATACONFIG3,
+  MERCHANTDATACONFIG4,
+  MERCHANTDATACONFIG5
+} from "./tableConfig/serviceDataConfig";
 import { FORM_CONFIG2 } from "./formConfig/dataViewSearch";
 
 export default {
-  name: "MerchantData",
+  name: "ServiceData",
   components: {
     search,
-    dataItem
+    dataItem,
+    pie
   },
   data() {
     return {
@@ -96,25 +117,37 @@ export default {
       testData: [],
       testData2: [],
       testData3: [],
+      testData4: [],
+      testData5: [],
       tableConfigData: MERCHANTDATACONFIG1,
       tableConfigData2: MERCHANTDATACONFIG2,
       tableConfigData3: MERCHANTDATACONFIG3,
-      titleList: [{ name: "商户数大区占比" }, { name: "商户数行业占比" }],
+      tableConfigData4: MERCHANTDATACONFIG4,
+      tableConfigData5: MERCHANTDATACONFIG5,
+      pieStyle: {
+        width: "200px",
+        height: "250px"
+      },
       radioListData: [
         {
           radio: "0",
           namelist: [
-            { name: "新增商户", label: "0" },
-            { name: "交易商户", label: "1" },
-            { name: "流失商户", label: "2" }
+            { name: "涨幅排行", label: "0" },
+            { name: "跌幅排行", label: "1" }
           ]
         },
         {
           radio: "0",
           namelist: [
-            { name: "新增商户", label: "0" },
-            { name: "交易商户", label: "1" },
-            { name: "流失商户", label: "2" }
+            { name: "新增数量", label: "0" },
+            { name: "会员交易", label: "1" }
+          ]
+        },
+        {
+          radio: "0",
+          namelist: [
+            { name: "金额", label: "0" },
+            { name: "笔数", label: "1" }
           ]
         }
       ],
@@ -254,159 +287,6 @@ export default {
           ]
         }
       ],
-      titleList2: [
-        { name: "平均交易笔数分布" },
-        { name: "商户交易涨跌概况占比" }
-      ],
-      radioListData2: [
-        {
-          radio: "0",
-          namelist: [
-            { name: "新增商户", label: "0" },
-            { name: "交易商户", label: "1" }
-          ]
-        },
-        {
-          radio: "0",
-          namelist: [
-            { name: "新增商户", label: "0" },
-            { name: "交易商户", label: "1" }
-          ]
-        },
-        {
-          radio: "0",
-          namelist: [
-            { name: "涨幅排行", label: "0" },
-            { name: "跌幅排行", label: "1" }
-          ]
-        }
-      ],
-      dataList2: [
-        [
-          {
-            title: "1000笔以上",
-            className: ["dot", "dot_d"],
-            perc: "36%"
-          },
-          {
-            title: "101-1000笔",
-            className: ["dot", "dot_z"],
-            perc: "20%"
-          },
-          {
-            title: "11-100笔",
-            className: ["dot", "dot_b"],
-            perc: "10%"
-          },
-          {
-            title: "1-10笔",
-            className: ["dot", "dot_n"],
-            perc: "36%"
-          }
-        ],
-        [
-          {
-            title: "大幅上涨",
-            className: ["dot", "dot_d"],
-            perc: "36%"
-          },
-          {
-            title: "小幅上涨",
-            className: ["dot", "dot_z"],
-            perc: "20%"
-          },
-          {
-            title: "小幅下跌",
-            className: ["dot", "dot_b"],
-            perc: "10%"
-          },
-          {
-            title: "异常下跌",
-            className: ["dot", "dot_n"],
-            perc: "36%"
-          }
-        ]
-      ],
-      pieOptionList2: [
-        {
-          title: {
-            text: "新增商户平均交易笔数概况",
-            left: "center",
-            textStyle: {
-              color: "rgba(0,0,0,0.85)",
-              fontSize: 14
-            }
-          },
-          tooltip: {
-            trigger: "item",
-            formatter: "{b}: {c} ({d}%)"
-          },
-          series: [
-            {
-              name: "新增商户平均交易笔数概况",
-              type: "pie",
-              avoidLabelOverlap: false,
-              radius: ["40%", "80%"],
-              label: {
-                normal: {
-                  show: false
-                }
-              },
-              labelLine: {
-                normal: {
-                  show: false
-                }
-              },
-              data: [
-                { value: 0.36, name: "华东", itemStyle: { color: "#00A1FF" } },
-                { value: 0.2, name: "华中", itemStyle: { color: "#37CBCB" } },
-                { value: 0.1, name: "华北", itemStyle: { color: "#FAD337" } },
-                { value: 0.09, name: "华南", itemStyle: { color: "#F2637B" } },
-                { value: 0.09, name: "华西", itemStyle: { color: "#975FE4" } }
-              ]
-            }
-          ]
-        },
-        {
-          title: {
-            text: "新增商户交易涨跌概况",
-            left: "center",
-            textStyle: {
-              color: "rgba(0,0,0,0.85)",
-              fontSize: 14
-            }
-          },
-          tooltip: {
-            trigger: "item",
-            formatter: "{b}: {c} ({d}%)"
-          },
-          series: [
-            {
-              name: "新增商户交易涨跌概况",
-              type: "pie",
-              avoidLabelOverlap: false,
-              radius: ["40%", "80%"],
-              label: {
-                normal: {
-                  show: false
-                }
-              },
-              labelLine: {
-                normal: {
-                  show: false
-                }
-              },
-              data: [
-                { value: 0.36, name: "华东", itemStyle: { color: "#00A1FF" } },
-                { value: 0.2, name: "华中", itemStyle: { color: "#37CBCB" } },
-                { value: 0.1, name: "华北", itemStyle: { color: "#FAD337" } },
-                { value: 0.09, name: "华南", itemStyle: { color: "#F2637B" } },
-                { value: 0.09, name: "华西", itemStyle: { color: "#975FE4" } }
-              ]
-            }
-          ]
-        }
-      ],
       lineOption: {
         tooltip: {
           trigger: "axis",
@@ -415,7 +295,8 @@ export default {
             label: {
               backgroundColor: "#6a7985"
             }
-          }
+          },
+          formatter: "{b0}<br />{a0}: ¥ {c0}"
         },
         grid: {
           top: "50",
@@ -482,6 +363,17 @@ export default {
                 global: false // 缺省为 false
               }
             },
+            // emphasis: {
+            //   itemStyle: {
+            //     // 高亮时点的颜色。
+            //     color: "blue"
+            //   },
+            //   label: {
+            //     show: true,
+            //     // 高亮时标签的文字。
+            //     formatter: "This is a emphasis label."
+            //   }
+            // },
             itemStyle: {
               normal: {
                 color: "#1890FF",
@@ -496,11 +388,7 @@ export default {
       }
     };
   },
-  created() {
-    this.tableConfigData = MERCHANTDATACONFIG1;
-    this.tableConfigData2 = MERCHANTDATACONFIG2;
-    this.tableConfigData3 = MERCHANTDATACONFIG3;
-  },
+  created() {},
   mounted() {
     this.init();
     this.getData();
@@ -527,31 +415,57 @@ export default {
         {
           rank: "1",
           name: "利郎男装有限公司",
-          times: "707",
-          amount: "¥ 206"
+          amount: "707",
+          increase: "¥ 206"
         },
         {
           rank: "2",
           name: "利郎男装有限公司",
-          times: "707",
-          amount: "¥ 206"
+          amount: "707",
+          increase: "¥ 206"
         }
       ];
       this.testData2 = [
         {
           rank: "1",
           name: "利郎男装有限公司",
-          increase: "128%",
-          amount: "¥ 206"
+          new: "128%"
         },
         {
           rank: "2",
           name: "利郎男装有限公司",
-          increase: "128%",
-          amount: "¥ 206"
+          new: "128%"
         }
       ];
       this.testData3 = [
+        {
+          rank: "1",
+          name: "利郎男装有限公司",
+          new: "128%",
+          perc: "128%"
+        },
+        {
+          rank: "2",
+          name: "利郎男装有限公司",
+          new: "128%",
+          perc: "128%"
+        }
+      ];
+      this.testData4 = [
+        {
+          rank: "1",
+          name: "利郎男装有限公司",
+          amount: "128%",
+          perc: "128%"
+        },
+        {
+          rank: "2",
+          name: "利郎男装有限公司",
+          amount: "128%",
+          perc: "128%"
+        }
+      ];
+      this.testData5 = [
         {
           rank: "1",
           name: "利郎男装有限公司",
@@ -601,6 +515,16 @@ export default {
     }
   }
 }
+.service-box {
+  margin: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  background: #fff;
+  overflow: hidden;
+  .pie-item2 {
+    width: 33%;
+  }
+}
 .title {
   margin: 24px 24px 0;
   height: 64px;
@@ -620,7 +544,7 @@ export default {
   background-color: #ffffff;
   .chart-box {
     width: 70%;
-    height: 400px;
+    height: 350px;
     position: relative;
     .chart-panel {
       position: absolute;

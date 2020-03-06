@@ -24,9 +24,9 @@
     left: 133px;
     z-index: 1001;"
     >
-      <!-- <menu2 :menu2-data="menu2Data" :root-path="rootPath"></menu2> -->
+      <menu2 :menu2-data="menu2Data" :root-path="rootPath"></menu2>
 
-      <el-menu
+      <!-- <el-menu
         :default-active="currRouter"
         :router="true"
         class="el-menu-vertical-demo"
@@ -52,7 +52,7 @@
             <span slot="title">{{ item.text }}</span>
           </el-menu-item>
         </div>
-      </el-menu>
+      </el-menu>-->
     </div>
 
     <div class="main-container" :class="[menu2Data && rootPath ? 'addMargin' : '']">
@@ -126,11 +126,9 @@ export default {
           item.children.forEach(childItem => {
             if (childItem.name === this.$route.name) {
               this.menu2Data = item.children;
+
               this.rootPath = item.path;
-
               this.currRouter = this.$route.path;
-
-              console.log(111);
               return;
             }
           });

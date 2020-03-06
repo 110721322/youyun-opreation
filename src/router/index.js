@@ -300,6 +300,17 @@ const menuItems = [
           title: '商户数据',
           icon: 'merchantData'
         }
+      },
+      {
+        type: 'ios-grid',
+        name: 'serviceData',
+        text: '服务商数据',
+        path: 'serviceData',
+        isShow: true,
+        meta: {
+          title: '服务商数据',
+          icon: 'serviceData'
+        }
       }
     ]
   }

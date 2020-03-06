@@ -42,7 +42,27 @@ export const MERCHANTDATACONFIG2 = {
     {
       label: "同比涨幅",
       prop: "increase",
-      width: "100px"
+      width: "100px",
+      hasIcon: true
+    }
+  ]
+}
+export const MERCHANTDATACONFIG3 = {
+  gridConfig: [
+    {
+      label: "排名",
+      prop: "rank",
+      width: "52px"
+    },
+    {
+      label: "商户名称",
+      prop: "name",
+      width: "176px"
+    },
+    {
+      label: "交易额",
+      prop: "amount",
+      width: "70px"
     }
   ]
 }

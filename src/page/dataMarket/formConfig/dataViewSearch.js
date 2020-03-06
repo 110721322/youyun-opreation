@@ -1,3 +1,4 @@
+// import areaData from "@/assets/data/areaData"
 export const FORM_CONFIG = {
   formData: [
     {
@@ -8,30 +9,76 @@ export const FORM_CONFIG = {
       labelWidth: '100px'
     },
     {
-      type: 10,
-      label: '精准筛选',
-      key: '',
-      class: 'max-width',
+      type: 1,
+      label: '通道',
+      key: 'aisle',
+      style: 'width:294px',
+      labelWidth: '185px',
       options: [
         {
-          label: '服务商ID',
-          value: 'id'
+          label: '川菜',
+          value: 0
         },
         {
-          label: '服务商名称',
-          value: 'name'
+          label: '粤菜',
+          value: 1
+        },
+        {
+          label: '杭帮菜',
+          value: 2
         }
-      ],
-      labelWidth: '100px'
+      ]
     },
     {
-      type: 0,
-      label: '邮箱',
-      key: 'name',
+      type: 1,
+      label: '大区',
+      key: 'Region',
       style: 'width:294px',
-      labelWidth: '100px'
+      labelWidth: '185px',
+      options: [
+        {
+          label: '川菜',
+          value: 0
+        },
+        {
+          label: '粤菜',
+          value: 1
+        },
+        {
+          label: '杭帮菜',
+          value: 2
+        }
+      ]
     },
-
+    // {
+    //   type: 8,
+    //   label: '地区',
+    //   key: 'area',
+    //   style: 'width:294px',
+    //   labelWidth: '185px',
+    //   options: areaData
+    // },
+    {
+      type: 1,
+      label: '运营人员',
+      key: 'oper',
+      style: 'width:294px',
+      labelWidth: '185px',
+      options: [
+        {
+          label: '川菜',
+          value: 0
+        },
+        {
+          label: '粤菜',
+          value: 1
+        },
+        {
+          label: '杭帮菜',
+          value: 2
+        }
+      ]
+    },
     {
       type: 1,
       label: '标签',
@@ -52,6 +99,59 @@ export const FORM_CONFIG = {
           value: 2
         }
       ]
+    },
+    {
+      type: 1,
+      label: '服务商类型',
+      key: 'type',
+      style: 'width:294px',
+      labelWidth: '185px',
+      options: [
+        {
+          label: '川菜',
+          value: 0
+        },
+        {
+          label: '粤菜',
+          value: 1
+        },
+        {
+          label: '杭帮菜',
+          value: 2
+        }
+      ]
+    },
+    {
+      type: 1,
+      label: '商户开通日期',
+      key: 'merData',
+      style: 'width:294px',
+      labelWidth: '185px',
+      options: [
+        {
+          label: '川菜',
+          value: 0
+        },
+        {
+          label: '粤菜',
+          value: 1
+        },
+        {
+          label: '杭帮菜',
+          value: 2
+        }
+      ]
+    }
+  ]
+}
+export const FORM_CONFIG2 = {
+  formData: [
+    {
+      type: 9,
+      label: '筛选时间',
+      key: 'date',
+      class: 'max-width',
+      labelWidth: '100px'
     }
   ]
 }

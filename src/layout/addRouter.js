@@ -252,6 +252,16 @@ const asyncRoutes = {
     },
     component: () => import('@/page/dataMarket/merchantData.vue'),
     children: []
+  },
+  'serviceData': {
+    path: 'serviceData',
+    name: 'serviceData',
+    meta: {
+      title: 'serviceData',
+      icon: 'serviceData'
+    },
+    component: () => import('@/page/dataMarket/serviceData.vue'),
+    children: []
   }
 }
 const routers = []
