@@ -79,17 +79,17 @@ const asyncRoutes = {
     },
     component: () => import('@/page/agent/subAgentList.vue'),
     children: [
-        {
-            path: 'detail',
-            name: 'agentSubListDetail',
-            meta: {
-              title: 'agentSubListDetail',
-              icon: 'agentSubListDetail'
-            },
-            component: () => import('@/page/agent/subAgentDetail.vue')
-          },
+      {
+        path: 'detail',
+        name: 'agentSubListDetail',
+        meta: {
+          title: 'agentSubListDetail',
+          icon: 'agentSubListDetail'
+        },
+        component: () => import('@/page/agent/subAgentDetail.vue')
+      }
     ]
-        
+
   },
 
   'agent-checkList': {
@@ -123,7 +123,7 @@ const asyncRoutes = {
     component: () => import('@/page/work/workBench.vue'),
     children: []
   },
-  
+
   'work-todo': {
     path: 'todo',
     name: 'workTodo',
@@ -175,7 +175,7 @@ const asyncRoutes = {
     },
     children: []
   },
-  'serviceAnnouncementList':{
+  'serviceAnnouncementList': {
     path: 'serviceAnnouncementList',
     name: 'serviceAnnouncementList',
     meta: {
@@ -185,7 +185,7 @@ const asyncRoutes = {
     component: () => import('@/page/message/serviceAnnouncementList.vue'),
     children: []
   },
-  'announcementEdit':{
+  'announcementEdit': {
     path: 'announcementEdit',
     name: 'announcementEdit',
     meta: {
@@ -205,7 +205,7 @@ const asyncRoutes = {
     },
     children: []
   },
-  'statisticsDetail':{
+  'statisticsDetail': {
     path: 'statisticsDetail',
     name: 'statisticsDetail',
     meta: {
@@ -225,7 +225,7 @@ const asyncRoutes = {
     },
     children: []
   },
-  'transactionData':{
+  'transactionData': {
     path: 'transactionData',
     name: 'transactionData',
     meta: {
@@ -235,7 +235,7 @@ const asyncRoutes = {
     component: () => import('@/page/dataMarket/transactionData.vue'),
     children: []
   },
-  'merchantData':{
+  'merchantData': {
     path: 'merchantData',
     name: 'merchantData',
     meta: {
@@ -248,11 +248,11 @@ const asyncRoutes = {
 }
 // eslint-disable-next-line no-console
 console.log(asyncRoutes)
-let routers = []
+const routers = []
 // 传入后台数据 生成路由表
 
 // 将菜单信息转成对应的路由信息 动态添加
-const menusToRoutes = function(data) {
+const menusToRoutes = function (data) {
   const result = []
   // const children = []
 
@@ -263,7 +263,7 @@ const menusToRoutes = function(data) {
   // })
 
   data.forEach(item => {
-    let curr = asyncRoutes[item.name]
+    const curr = asyncRoutes[item.name]
     item.children.forEach(item2 => {
       generateRoutes(curr.children, item2)
     })
@@ -284,11 +284,11 @@ const menusToRoutes = function(data) {
   return result
 }
 
-const getRouters = function() {
+const getRouters = function () {
   return routers[0].children
 }
 
-let generateRoutes = function(children, item) {
+const generateRoutes = function (children, item) {
   if (item.name) {
     children.push(asyncRoutes[item.name])
   } else if (item.children) {
