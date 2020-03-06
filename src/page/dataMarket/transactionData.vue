@@ -2,11 +2,11 @@
   <div class="main_page">
     <div class="p_head">交易数据</div>
     <search
-      :inputOptions="inputOptions"
-      :setects="setects"
-      :openHeight="searchMaxHeight"
+      :open-height="searchMaxHeight"
+      :form-base-data="searchConfig.formData"
+      :show-foot-btn="searchConfig.showFootBtn"
       @search="search"
-    ></search>
+    />
     <div class="d-box">
       <el-menu
         :default-active="activeIndex"
@@ -22,332 +22,342 @@
       </el-menu>
       <div class="echarts-box">
         <div class="data-box">
-          <div class="data-item" v-for="(item,index) in amountList" :key="index">
-            <div class="title">{{item.title}}</div>
+          <div
+            v-for="(item, index) in amountList"
+            :key="index"
+            class="data-item"
+          >
+            <div class="title">{{ item.title }}</div>
             <div class="amount-all">
               <span class="amount-icon">¥</span>
-              {{item.amountAll}}
+              {{ item.amountAll }}
             </div>
-            <el-tooltip class="item" effect="dark" :content="item.tooltip" placement="bottom">
+            <el-tooltip
+              class="item"
+              effect="dark"
+              :content="item.tooltip"
+              placement="bottom"
+            >
               <div class="progress-box">
-                <img src class="data-img" />
+                <img src class="data-img">
                 <el-progress
                   :percentage="50"
                   color="rgba(58,189,45,1)"
                   class="progress"
                   :show-text="false"
-                ></el-progress>
-                <span class="amount-face">¥ {{item.amountFace}}</span>
+                />
+                <span class="amount-face">¥ {{ item.amountFace }}</span>
               </div>
             </el-tooltip>
             <div
-              :class="[radio===index?'check-radio':'uncheck-radio']"
+              :class="[radio === index ? 'check-radio' : 'uncheck-radio']"
               @click="onClick_changeRadio(index)"
-            ></div>
+            />
           </div>
         </div>
         <div class="right">
           <div class="tip">
-            <span class="dot_blue"></span>订单总交易额
-            <span class="dot_green"></span>刷脸总交易额
+            <span class="dot_blue" />订单总交易额
+            <span class="dot_green" />刷脸总交易额
             <div class="change-btn" @click="onClick_changeArts">
-              <img src class="change-icon" />
-              {{isLineShow?'切换柱状图':'切换折线图'}}
+              <img src class="change-icon">
+              {{ isLineShow ? '切换柱状图' : '切换折线图' }}
             </div>
           </div>
           <div class="chart-box">
             <div
-              class="chart-panel"
               ref="echartsLine"
-              :class="[isLineShow?'chart-show':'chart-hide']"
-            ></div>
-            <div
               class="chart-panel"
+              :class="[isLineShow ? 'chart-show' : 'chart-hide']"
+            />
+            <div
               ref="echartsBar"
-              :class="[!isLineShow?'chart-show':'chart-hide']"
-            ></div>
+              class="chart-panel"
+              :class="[!isLineShow ? 'chart-show' : 'chart-hide']"
+            />
           </div>
         </div>
       </div>
     </div>
     <search
-      :inputOptions="inputOptions"
-      :setects="setects"
-      :openHeight="searchMaxHeight"
+      :open-height="searchMaxHeight"
+      :form-base-data="searchConfig.formData"
+      :show-foot-btn="searchConfig.showFootBtn"
       @search="search"
-    ></search>
+    />
     <div class="pie-box">
-      <div v-for="(item,index) in pieOptionList" :key="index" class="pie-item">
+      <div v-for="(item, index) in pieOptionList" :key="index" class="pie-item">
         <dataItem
           :radio="radioListData[index]"
           :title="titleList[index].name"
-          :pieOption="pieOptionList[index]"
-          :piwRefName="`echartsPie${index}`"
-          :dataList="dataList[index]"
-          :isShowPie="true"
-        ></dataItem>
+          :pie-option="pieOptionList[index]"
+          :piw-ref-name="`echartsPie${index}`"
+          :data-list="dataList[index]"
+          :is-show-pie="true"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import dataItem from "./components/dataItem.vue";
-import search from "@/components/search/search.vue";
+import dataItem from './components/dataItem.vue'
+import search from '@/components/search/search.vue'
 // import BaseCrud from '@/components/table/BaseCrud.vue';
-
+import { FORM_CONFIG } from './formConfig/dataViewSearch'
 export default {
-  name: "Theme",
+  name: 'Theme',
   components: { search, dataItem },
   data() {
     return {
-      searchMaxHeight: "300",
-      activeIndex: "1",
+      searchConfig: FORM_CONFIG,
+      searchMaxHeight: '300',
+      activeIndex: '1',
       testData: [],
-      payWay: "all",
+      payWay: 'all',
       radio: 0,
       isLineShow: true,
-      titleList: [{ name: "大区交易占比" }, { name: "行业交易占比" }],
+      titleList: [{ name: '大区交易占比' }, { name: '行业交易占比' }],
       radioListData: [
         {
-          radio: "0",
+          radio: '0',
           namelist: [
-            { name: "交易额", label: "0" },
-            { name: "交易笔数", label: "1" }
+            { name: '交易额', label: '0' },
+            { name: '交易笔数', label: '1' }
           ]
         },
         {
-          radio: "0",
+          radio: '0',
           namelist: [
-            { name: "交易额", label: "0" },
-            { name: "交易笔数", label: "1" }
+            { name: '交易额', label: '0' },
+            { name: '交易笔数', label: '1' }
           ]
         }
       ],
       dataList: [
         [
           {
-            title: "华东",
-            className: ["dot", "dot_d"],
-            perc: "36%"
+            title: '华东',
+            className: ['dot', 'dot_d'],
+            perc: '36%'
           },
           {
-            title: "华中",
-            className: ["dot", "dot_z"],
-            perc: "20%"
+            title: '华中',
+            className: ['dot', 'dot_z'],
+            perc: '20%'
           },
           {
-            title: "华北",
-            className: ["dot", "dot_b"],
-            perc: "10%"
+            title: '华北',
+            className: ['dot', 'dot_b'],
+            perc: '10%'
           },
           {
-            title: "华南",
-            className: ["dot", "dot_n"],
-            perc: "36%"
+            title: '华南',
+            className: ['dot', 'dot_n'],
+            perc: '36%'
           },
           {
-            title: "华西",
-            className: ["dot", "dot_x"],
-            perc: "36%"
+            title: '华西',
+            className: ['dot', 'dot_x'],
+            perc: '36%'
           }
         ],
         [
           {
-            title: "房产汽车类",
-            className: ["dot", "dot_d"],
-            perc: "36%"
+            title: '房产汽车类',
+            className: ['dot', 'dot_d'],
+            perc: '36%'
           },
           {
-            title: "民生类",
-            className: ["dot", "dot_z"],
-            perc: "20%"
+            title: '民生类',
+            className: ['dot', 'dot_z'],
+            perc: '20%'
           },
           {
-            title: "一般类",
-            className: ["dot", "dot_b"],
-            perc: "10%"
+            title: '一般类',
+            className: ['dot', 'dot_b'],
+            perc: '10%'
           },
           {
-            title: "批发类",
-            className: ["dot", "dot_n"],
-            perc: "36%"
+            title: '批发类',
+            className: ['dot', 'dot_n'],
+            perc: '36%'
           },
           {
-            title: "餐娱类",
-            className: ["dot", "dot_x"],
-            perc: "36%"
+            title: '餐娱类',
+            className: ['dot', 'dot_x'],
+            perc: '36%'
           }
         ]
       ],
       amountList: [
         {
-          title: "订单总交易额",
-          amountAll: "126,560",
-          amountFace: "12,423",
-          tooltip: "刷脸交易额占比：22.33%"
+          title: '订单总交易额',
+          amountAll: '126,560',
+          amountFace: '12,423',
+          tooltip: '刷脸交易额占比：22.33%'
         },
         {
-          title: "订单总交易笔数",
-          amountAll: "126,560",
-          amountFace: "12,423",
-          tooltip: "刷脸交易额占比：22.33%"
+          title: '订单总交易笔数',
+          amountAll: '126,560',
+          amountFace: '12,423',
+          tooltip: '刷脸交易额占比：22.33%'
         }
       ],
       inputOptions: [
         {
-          label: "商户ID",
-          value: "ID"
+          label: '商户ID',
+          value: 'ID'
         },
         {
-          label: "商户名称",
-          value: "name"
+          label: '商户名称',
+          value: 'name'
         },
         {
-          label: "所属服务商名称",
-          value: "agentName"
+          label: '所属服务商名称',
+          value: 'agentName'
         },
         {
-          label: "开通通道情况",
-          value: "openType"
+          label: '开通通道情况',
+          value: 'openType'
         },
         {
-          label: "乐刷商户号",
-          value: "leshuaNo"
+          label: '乐刷商户号',
+          value: 'leshuaNo'
         },
         {
-          label: "新大陆商户号",
-          value: "xindaluNo"
+          label: '新大陆商户号',
+          value: 'xindaluNo'
         }
       ],
       setects: [
         {
-          name: "使用通道",
-          key: "channel",
+          name: '使用通道',
+          key: 'channel',
           options: [
             {
-              labee: "全部",
-              value: "all"
+              labee: '全部',
+              value: 'all'
             },
             {
-              labee: "企业",
-              value: "qiye"
+              labee: '企业',
+              value: 'qiye'
             },
             {
-              labee: "个人",
-              value: "geren"
+              labee: '个人',
+              value: 'geren'
             }
           ]
         },
         {
-          name: "行业类目",
-          key: "class",
+          name: '行业类目',
+          key: 'class',
           options: [
             {
-              labee: "全部",
-              value: "all"
+              labee: '全部',
+              value: 'all'
             },
             {
-              labee: "已驳回",
-              value: "1"
+              labee: '已驳回',
+              value: '1'
             },
             {
-              labee: "待审核",
-              value: "2"
+              labee: '待审核',
+              value: '2'
             }
           ]
         },
         {
-          name: "地区",
-          key: "address",
+          name: '地区',
+          key: 'address',
           options: [
             {
-              labee: "全部",
-              value: "all"
+              labee: '全部',
+              value: 'all'
             },
             {
-              labee: "已驳回",
-              value: "1"
+              labee: '已驳回',
+              value: '1'
             },
             {
-              labee: "待审核",
-              value: "2"
+              labee: '待审核',
+              value: '2'
             }
           ]
         },
         {
-          name: "所属运营",
-          key: "yunying",
+          name: '所属运营',
+          key: 'yunying',
           options: [
             {
-              labee: "全部",
-              value: "all"
+              labee: '全部',
+              value: 'all'
             },
             {
-              labee: "已驳回",
-              value: "1"
+              labee: '已驳回',
+              value: '1'
             },
             {
-              labee: "待审核",
-              value: "2"
+              labee: '待审核',
+              value: '2'
             }
           ]
         }
       ],
       lineOption: {
         tooltip: {
-          trigger: "axis",
+          trigger: 'axis',
           axisPointer: {
-            type: "cross",
+            type: 'cross',
             label: {
-              backgroundColor: "#6a7985"
+              backgroundColor: '#6a7985'
             }
           }
         },
         grid: {
-          top: "30px",
-          left: "3%",
-          right: "4%",
-          bottom: "3%",
+          top: '30px',
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
           containLabel: true
         },
         xAxis: [
           {
-            type: "category",
+            type: 'category',
             boundaryGap: false,
             data: [
-              "10月",
-              "11月",
-              "12月",
-              "1月",
-              "2月",
-              "3月",
-              "4月",
-              "5月",
-              "6月",
-              "7月",
-              "8月",
-              "9月"
+              '10月',
+              '11月',
+              '12月',
+              '1月',
+              '2月',
+              '3月',
+              '4月',
+              '5月',
+              '6月',
+              '7月',
+              '8月',
+              '9月'
             ]
           }
         ],
         yAxis: [
           {
-            type: "value"
+            type: 'value'
           }
         ],
         series: [
           {
-            name: "订单总交易额",
-            type: "line",
-            stack: "总量",
+            name: '订单总交易额',
+            type: 'line',
+            stack: '总量',
             lineStyle: {
-              color: "#1890FF"
+              color: '#1890FF'
             },
-            symbol: "none",
+            symbol: 'none',
             areaStyle: {
               color: {
-                type: "linear",
+                type: 'linear',
                 x: 0,
                 y: 0,
                 x2: 0,
@@ -355,11 +365,11 @@ export default {
                 colorStops: [
                   {
                     offset: 0,
-                    color: "#4EA6FF" // 0% 处的颜色
+                    color: '#4EA6FF' // 0% 处的颜色
                   },
                   {
                     offset: 1,
-                    color: "#ffffff" // 100% 处的颜色
+                    color: '#ffffff' // 100% 处的颜色
                   }
                 ],
                 global: false // 缺省为 false
@@ -368,16 +378,16 @@ export default {
             data: [120, 132, 101, 134, 90, 230, 210, 101, 134, 90, 230, 330]
           },
           {
-            name: "刷脸总交易额",
-            type: "line",
-            stack: "总量",
+            name: '刷脸总交易额',
+            type: 'line',
+            stack: '总量',
             lineStyle: {
-              color: "#3ABD2D"
+              color: '#3ABD2D'
             },
-            symbol: "none",
+            symbol: 'none',
             areaStyle: {
               color: {
-                type: "linear",
+                type: 'linear',
                 x: 0,
                 y: 0,
                 x2: 0,
@@ -385,11 +395,11 @@ export default {
                 colorStops: [
                   {
                     offset: 0,
-                    color: "#6CDE61" // 0% 处的颜色
+                    color: '#6CDE61' // 0% 处的颜色
                   },
                   {
                     offset: 1,
-                    color: "#ffffff" // 100% 处的颜色
+                    color: '#ffffff' // 100% 处的颜色
                   }
                 ],
                 global: false // 缺省为 false
@@ -401,58 +411,58 @@ export default {
       },
       barOption: {
         tooltip: {
-          trigger: "axis",
+          trigger: 'axis',
           axisPointer: {
             // 坐标轴指示器，坐标轴触发有效
-            type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+            type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
           }
         },
         grid: {
-          left: "3%",
-          right: "4%",
-          bottom: "3%",
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
           containLabel: true
         },
         xAxis: [
           {
-            type: "category",
+            type: 'category',
             data: [
-              "10月",
-              "11月",
-              "12月",
-              "1月",
-              "2月",
-              "3月",
-              "4月",
-              "5月",
-              "6月",
-              "7月",
-              "8月",
-              "9月"
+              '10月',
+              '11月',
+              '12月',
+              '1月',
+              '2月',
+              '3月',
+              '4月',
+              '5月',
+              '6月',
+              '7月',
+              '8月',
+              '9月'
             ]
           }
         ],
         yAxis: [
           {
-            type: "value"
+            type: 'value'
           }
         ],
         series: [
           {
-            name: "订单总交易额",
-            type: "bar",
-            stack: "总量",
+            name: '订单总交易额',
+            type: 'bar',
+            stack: '总量',
             itemStyle: {
-              color: "#1890FF"
+              color: '#1890FF'
             },
             data: [120, 132, 101, 134, 90, 230, 210, 101, 134, 90, 230, 330]
           },
           {
-            name: "刷脸总交易额",
-            type: "bar",
-            stack: "总量",
+            name: '刷脸总交易额',
+            type: 'bar',
+            stack: '总量',
             itemStyle: {
-              color: "#34B64C"
+              color: '#34B64C'
             },
             data: [220, 182, 191, 234, 290, 330, 310, 191, 234, 290, 330, 330]
           }
@@ -461,23 +471,23 @@ export default {
       pieOptionList: [
         {
           title: {
-            text: "交易额大区占比",
-            left: "center",
+            text: '交易额大区占比',
+            left: 'center',
             textStyle: {
-              color: "rgba(0,0,0,0.85)",
+              color: 'rgba(0,0,0,0.85)',
               fontSize: 14
             }
           },
           tooltip: {
-            trigger: "item",
-            formatter: "{b}: {c} ({d}%)"
+            trigger: 'item',
+            formatter: '{b}: {c} ({d}%)'
           },
           series: [
             {
-              name: "交易额大区占比",
-              type: "pie",
+              name: '交易额大区占比',
+              type: 'pie',
               avoidLabelOverlap: false,
-              radius: ["40%", "80%"],
+              radius: ['40%', '80%'],
               label: {
                 normal: {
                   show: false
@@ -489,34 +499,34 @@ export default {
                 }
               },
               data: [
-                { value: 0.36, name: "华东", itemStyle: { color: "#00A1FF" } },
-                { value: 0.2, name: "华中", itemStyle: { color: "#37CBCB" } },
-                { value: 0.1, name: "华北", itemStyle: { color: "#FAD337" } },
-                { value: 0.09, name: "华南", itemStyle: { color: "#F2637B" } },
-                { value: 0.09, name: "华西", itemStyle: { color: "#975FE4" } }
+                { value: 0.36, name: '华东', itemStyle: { color: '#00A1FF' }},
+                { value: 0.2, name: '华中', itemStyle: { color: '#37CBCB' }},
+                { value: 0.1, name: '华北', itemStyle: { color: '#FAD337' }},
+                { value: 0.09, name: '华南', itemStyle: { color: '#F2637B' }},
+                { value: 0.09, name: '华西', itemStyle: { color: '#975FE4' }}
               ]
             }
           ]
         },
         {
           title: {
-            text: "交易额行业占比",
-            left: "center",
+            text: '交易额行业占比',
+            left: 'center',
             textStyle: {
-              color: "rgba(0,0,0,0.85)",
+              color: 'rgba(0,0,0,0.85)',
               fontSize: 14
             }
           },
           tooltip: {
-            trigger: "item",
-            formatter: "{b}: {c} ({d}%)"
+            trigger: 'item',
+            formatter: '{b}: {c} ({d}%)'
           },
           series: [
             {
-              name: "交易额大区占比",
-              type: "pie",
+              name: '交易额大区占比',
+              type: 'pie',
               avoidLabelOverlap: false,
-              radius: ["40%", "80%"],
+              radius: ['40%', '80%'],
               label: {
                 normal: {
                   show: false
@@ -528,105 +538,105 @@ export default {
                 }
               },
               data: [
-                { value: 0.36, name: "华东", itemStyle: { color: "#00A1FF" } },
-                { value: 0.2, name: "华中", itemStyle: { color: "#37CBCB" } },
-                { value: 0.1, name: "华北", itemStyle: { color: "#FAD337" } },
-                { value: 0.09, name: "华南", itemStyle: { color: "#F2637B" } },
-                { value: 0.09, name: "华西", itemStyle: { color: "#975FE4" } }
+                { value: 0.36, name: '华东', itemStyle: { color: '#00A1FF' }},
+                { value: 0.2, name: '华中', itemStyle: { color: '#37CBCB' }},
+                { value: 0.1, name: '华北', itemStyle: { color: '#FAD337' }},
+                { value: 0.09, name: '华南', itemStyle: { color: '#F2637B' }},
+                { value: 0.09, name: '华西', itemStyle: { color: '#975FE4' }}
               ]
             }
           ]
         }
       ]
-    };
+    }
   },
   mounted() {
     // eslint-disable-next-line no-console
-    console.log(this.$route);
-    this.init();
+    console.log(this.$route)
+    this.init()
   },
   methods: {
     init() {
-      this.showLine();
+      this.showLine()
       //   this.showBar();
     },
     onClick_changeArts() {
-      this.isLineShow = !this.isLineShow;
-      this.isLineShow ? this.showLine() : this.showBar();
+      this.isLineShow = !this.isLineShow
+      this.isLineShow ? this.showLine() : this.showBar()
     },
     onClick_changeRadio($index) {
-      this.radio = $index;
+      this.radio = $index
     },
     showLine() {
       // 基于准备好的dom，初始化echarts实例
-      let myChartLine = this.$echarts.init(this.$refs.echartsLine);
+      const myChartLine = this.$echarts.init(this.$refs.echartsLine)
 
       // 绘制图表
-      myChartLine.setOption(this.lineOption);
-      window.addEventListener("resize", function() {
-        myChartLine.resize();
-      });
+      myChartLine.setOption(this.lineOption)
+      window.addEventListener('resize', function() {
+        myChartLine.resize()
+      })
     },
     showBar() {
       // 基于准备好的dom，初始化echarts实例
-      let myChartBar = this.$echarts.init(this.$refs.echartsBar);
+      const myChartBar = this.$echarts.init(this.$refs.echartsBar)
 
       // 绘制图表
-      myChartBar.setOption(this.barOption);
-      window.addEventListener("resize", function() {
-        myChartBar.resize();
-      });
+      myChartBar.setOption(this.barOption)
+      window.addEventListener('resize', function() {
+        myChartBar.resize()
+      })
     },
     getData() {
       this.testData = [
         {
-          id: "1",
-          tel: "15184318420",
-          name: "小白",
-          email: "412412@qq.com",
-          status: "1",
-          create_time: "2018-04-20",
-          expand: "扩展信息一",
-          role: ["2"]
+          id: '1',
+          tel: '15184318420',
+          name: '小白',
+          email: '412412@qq.com',
+          status: '1',
+          create_time: '2018-04-20',
+          expand: '扩展信息一',
+          role: ['2']
         },
         {
-          id: "2",
-          tel: "13777369283",
-          name: "小红",
-          email: "456465@qq.com",
-          status: "0",
-          create_time: "2018-03-23",
-          expand: "hashashashas",
-          role: ["1"]
+          id: '2',
+          tel: '13777369283',
+          name: '小红',
+          email: '456465@qq.com',
+          status: '0',
+          create_time: '2018-03-23',
+          expand: 'hashashashas',
+          role: ['1']
         }
-      ];
+      ]
     },
     search() {
-      this.getData();
+      this.getData()
     },
     handleSelect($index) {
       switch ($index) {
-        case "1":
-          this.payWay = "all";
-          break;
-        case "2":
-          this.payWay = "wxpay";
-          break;
-        case "3":
-          this.payWay = "alipay";
-          break;
-        case "4":
-          this.payWay = "yunshan";
-          break;
-        case "5":
-          this.payWay = "yinlian";
-          break;
+        case '1':
+          this.payWay = 'all'
+          break
+        case '2':
+          this.payWay = 'wxpay'
+          break
+        case '3':
+          this.payWay = 'alipay'
+          break
+        case '4':
+          this.payWay = 'yunshan'
+          break
+        case '5':
+          this.payWay = 'yinlian'
+          break
         default:
-          this.payWay = "all";
+          this.payWay = 'all'
       }
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
