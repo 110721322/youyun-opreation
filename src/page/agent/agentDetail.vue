@@ -22,18 +22,18 @@
       </div>
       <div class="tags">
         <el-tag
-          :key="tag"
           v-for="tag in dynamicTags"
+          :key="tag"
           closable
           :disable-transitions="false"
           size="small"
           @close="handleClose(tag)"
         >{{ tag }}</el-tag>
         <el-input
-          class="input-new-tag"
           v-if="inputVisible"
-          v-model="inputValue"
           ref="saveTagInput"
+          v-model="inputValue"
+          class="input-new-tag"
           size="mini"
           @keyup.enter.native="handleInputConfirm"
           @blur="handleInputConfirm"
@@ -42,9 +42,9 @@
       </div>
     </div>
 
-    <detailMode :ruleForm="ruleForm" :configData="configData" @edit="itemEdit"></detailMode>
+    <detailMode :rule-form="ruleForm" :config-data="configData" @edit="itemEdit"></detailMode>
 
-    <detailMode :ruleForm="ruleForm" :configData="configData"></detailMode>
+    <detailMode :rule-form="ruleForm" :config-data="configData"></detailMode>
 
     <div class="bg_box">
       <div class="title">应用</div>
@@ -114,7 +114,7 @@
             :form-config="tableConfigData.formConfig"
             :form-data="tableConfigData.formModel"
             :grid-edit-width="100"
-            :tableHeight="212"
+            :table-height="212"
             form-title="用户"
             :is-async="false"
             style="margin:24px;border:1px solid #EBEEF5;height:212px;overflow:hidden"
@@ -136,7 +136,7 @@
         :form-config="tableConfigData.formConfig"
         :form-data="tableConfigData.formModel"
         :grid-edit-width="100"
-        :tableHeight="309"
+        :table-height="309"
         form-title="用户"
         :is-async="false"
         style="margin:24px;border:1px solid #EBEEF5;height:309px;overflow:hidden"
@@ -146,8 +146,8 @@
     <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
-        :formBaseData="fromConfigData.formData"
-        :showFootBtn="fromConfigData.showFootBtn"
+        :form-base-data="fromConfigData.formData"
+        :show-foot-btn="fromConfigData.showFootBtn"
         @cancel="cancel"
       ></Form>
     </el-drawer>
@@ -163,6 +163,7 @@ import { FORM_CONFIG } from "./formConfig/agentDetail";
 
 export default {
   name: "Theme",
+  components: { detailMode, BaseCrud, Form },
   data() {
     return {
       drawer: false,
@@ -311,7 +312,6 @@ export default {
       }
     };
   },
-  components: { detailMode, BaseCrud, Form },
   mounted() {
     this.testData = [
       {
@@ -409,7 +409,7 @@ export default {
     },
 
     handleInputConfirm() {
-      let inputValue = this.inputValue;
+      const inputValue = this.inputValue;
       if (inputValue) {
         this.dynamicTags.push(inputValue);
       }
@@ -417,10 +417,7 @@ export default {
       this.inputValue = "";
     },
 
-    selectionChange($val) {
-      // eslint-disable-next-line no-console
-      console.log($val);
-    },
+    selectionChange($val) {},
     go_detail() {
       // eslint-disable-next-line no-console
       this.$router.push("/agent/list/detail");
@@ -428,8 +425,6 @@ export default {
     itemEdit($model) {
       this.drawer = true;
       this.fromConfigData = FORM_CONFIG[$model];
-      // eslint-disable-next-line no-console
-      console.log(this.fromConfigData);
     },
     cancel() {
       this.drawer = false;

@@ -210,8 +210,6 @@ export default {
     handleCheckList($data) {
       this.checkList = $data;
       this.checkedListLength = 0;
-      // eslint-disable-next-line no-console
-      console.log(this.checkList);
       for (var i = 0; i <= this.checkList.length; i++) {
         if (this.checkList[i] === true) {
           this.checkedListLength++;
@@ -252,10 +250,7 @@ export default {
         }
       ];
     },
-    selectionChange($val) {
-      // eslint-disable-next-line no-console
-      console.log($val);
-    },
+    selectionChange($val) {},
     go_detail() {
       // eslint-disable-next-line no-console
       this.$router.push("/agent/list/detail");
@@ -301,10 +296,7 @@ export default {
         this.canCheckAll = false;
       }
     },
-    search($form, $obj) {
-      // eslint-disable-next-line no-console
-      console.log($form, $obj);
-    }
+    search($form, $obj) {}
   }
 };
 </script>

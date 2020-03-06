@@ -223,66 +223,46 @@ export default {
     };
     return _time.getFullYear() + '-' + pad((_time.getMonth() + 1), 2) + '-' + pad(_time.getDate(), 2);
   },
-  trace () {
-    // if (process.env.ENV_CONFIG === 'dev' || process.env.ENV_CONFIG === 'test') {
-    //     if (console.log.apply) {
-    //         var arr = ['%c[TRACE]', 'background: #42a8f1;color:#fff'];
-    //         if (typeof arguments[0] === 'string' && arguments[0].toString().indexOf('[ERROR]') === 0) {
-    //             arguments[0] = arguments[0].replace('[ERROR]', '');
-    //             arr = ['%c[ERROR]', 'background: #ff0000;color:#fff'];
-    //         }
-    //         for (var i = 0; i < arguments.length; i += 1) {
-    //             arr.push(arguments[i]);
-    //         }
-    //         console.log.apply(console, arr);
-    //     } else {
-    //         var argumentsArr = [];
-    //         for (var j = 0; j < arguments.length; j += 1) {
-    //             argumentsArr.push(arguments[j]);
-    //         }
-    //         console.log(argumentsArr.join(','));
-    //     }
-    // }
-
+  trace() {
   },
 
-  jugeType (obj) {
+  jugeType(obj) {
     const getType = Object.prototype.toString;
     return getType.call(obj);
   },
 
-  isArr (target) {
+  isArr(target) {
     return this.jugeType(target) === '[object Array]';
   },
 
-  isObj (target) {
+  isObj(target) {
     return this.jugeType(target) === '[object Object]';
   },
 
-  isString (target) {
+  isString(target) {
     return this.jugeType(target) === '[object String]';
   },
 
-  isNumber (target) {
+  isNumber(target) {
     return this.jugeType(target) === '[object Number]';
   },
 
-  isBoolean (target) {
+  isBoolean(target) {
     return this.jugeType(target) === '[object Boolean]';
   },
 
-  isUndefined (target) {
+  isUndefined(target) {
     return this.jugeType(target) === '[object Undefined]';
   },
 
-  isNull (target) {
+  isNull(target) {
     return this.jugeType(target) === '[object Null]';
   },
 
   /**
      * 对象深拷贝
      */
-  deepClone (data) {
+  deepClone(data) {
     let obj;
     if (this.isArr(data)) {
       obj = [];
@@ -326,7 +306,7 @@ export default {
 
   // },
 
-  throwError (msg) {
+  throwError(msg) {
     throw new ReferenceError(msg);
   }
 };

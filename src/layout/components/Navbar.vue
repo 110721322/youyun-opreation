@@ -4,22 +4,16 @@
       id="hamburger-container"
       class="hamburger-container"
       @toggleClick="toggleSideBar"
-    /> -->
+    />-->
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
     <div class="right-menu">
       <template>
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
       </template>
 
-      <el-dropdown
-        class="avatar-container right-menu-item hover-effect"
-        trigger="click"
-      >
+      <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <img
-            src="https://avatars1.githubusercontent.com/u/23054546?s=64&v=4"
-            class="user-avatar"
-          />
+          <img src="https://avatars1.githubusercontent.com/u/23054546?s=64&v=4" class="user-avatar" />
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
@@ -37,28 +31,29 @@
 
 <script>
 // import Hamburger from './Head/index.vue'
-import Breadcrumb from './breadcrumb.vue';
-import Screenfull from './Screenfull/index.vue';
-import { EventBus } from '../bus/event-bus.js';
+import Breadcrumb from "./breadcrumb.vue";
+import Screenfull from "./Screenfull/index.vue";
+import { EventBus } from "../bus/event-bus.js";
 
 export default {
-    components: {
+  components: {
     // Hamburger,
-        Breadcrumb,
-        Screenfull,
+    Breadcrumb,
+    Screenfull
+  },
+  computed: {},
+  methods: {
+    toggleSideBar() {
+      const openSlider = localStorage.getItem("openSlider");
+      // eslint-disable-next-line eqeqeq
+      localStorage.setItem("openSlider", openSlider == 1 ? 2 : 1);
+      EventBus.$emit("decreased", {});
     },
-    computed: {},
-    methods: {
-        toggleSideBar () {
-            let openSlider = localStorage.getItem('openSlider');
-            localStorage.setItem('openSlider', openSlider == 1 ? 2 : 1);
-            EventBus.$emit('decreased', {});
-        },
-        async logout () {
-            await this.$store.dispatch('user/logout');
-            this.$router.push(`/login?redirect=${this.$route.fullPath}`);
-        },
-    },
+    async logout() {
+      await this.$store.dispatch("user/logout");
+      this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+    }
+  }
 };
 </script>
 

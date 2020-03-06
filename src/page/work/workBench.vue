@@ -4,13 +4,12 @@
       <div class="head">您好，小柒</div>
       <div class="tip">今天是2019年08月08日 星期四，欢迎您回到小马哥运营后台</div>
     </div>
-    <detailMode :configData="configData"></detailMode>
-    <detailMode :configData="configData2"></detailMode>
+    <detailMode :config-data="configData"></detailMode>
+    <detailMode :config-data="configData2"></detailMode>
   </div>
 </template>
 
 <script>
-
 import detailMode from "@/components/detailMode/detailMode3.vue";
 // import search from '@/components/search/search.vue';
 // import BaseCrud from '@/components/table/BaseCrud.vue';
@@ -18,88 +17,89 @@ import detailMode from "@/components/detailMode/detailMode3.vue";
 
 export default {
   name: "Theme",
-  components:{ detailMode },
+  components: { detailMode },
   data() {
     return {
-        configData:{
-            name:"日常应用",
-            imgColor:'#1989FA',
-            list:[
-                {
-                    list:[
-                        {
-                            imgUrl:"",
-                            dotNum:5,
-                            text:"待办事项"
-                        }
-                    ]
-                }
-                
+      configData: {
+        name: "日常应用",
+        imgColor: "#1989FA",
+        list: [
+          {
+            list: [
+              {
+                imgUrl: "",
+                dotNum: 5,
+                text: "待办事项",
+                path: "/work/todo"
+              }
             ]
-        },
-        configData2:{
-            name:"业务应用",
-            hasTitle:true,
-            imgColor:'#E4611B',
-            list:[
-                {
-                    title:"审核",
-                    list:[
-                        {
-                            imgUrl:"",
-                            text:"商户入件审核"
-                        },
-                        {
-                            imgUrl:"",
-                            text:"下级服务商入件审核"
-                        },
-                        {
-                            imgUrl:"",
-                            text:"合伙人入件审核"
-                        },
-                        {
-                            imgUrl:"",
-                            text:"服务商佣金结算"
-                        }
-                    ]
-                },
-                {
-                    title:"服务",
-                    list:[
-                        {
-                            imgUrl:"",
-                            text:"设备解绑"
-                        },
-                        {
-                            imgUrl:"",
-                            text:"公告"
-                        },
-                        {
-                            imgUrl:"",
-                            text:"短信群发"
-                        }
-                    ]
-                },
-                {
-                    title:"数据",
-                    list:[
-                        {
-                            imgUrl:"",
-                            text:"商户数据"
-                        },
-                        {
-                            imgUrl:"",
-                            text:"服务商数据"
-                        },
-                        {
-                            imgUrl:"",
-                            text:"设备数据"
-                        }
-                    ]
-                },
-                
+          }
+        ]
+      },
+      configData2: {
+        name: "业务应用",
+        hasTitle: true,
+        imgColor: "#E4611B",
+        list: [
+          {
+            title: "审核",
+            list: [
+              {
+                imgUrl: "",
+                text: "商户入件审核"
+              },
+              {
+                imgUrl: "",
+                text: "下级服务商入件审核"
+              },
+              {
+                imgUrl: "",
+                text: "合伙人入件审核"
+              },
+              {
+                imgUrl: "",
+                text: "服务商佣金结算"
+              }
             ]
-        }
+          },
+          {
+            title: "服务",
+            list: [
+              {
+                imgUrl: "",
+                text: "设备解绑"
+              },
+              {
+                imgUrl: "",
+                text: "公告",
+                path: "/message/serviceAnnouncementList"
+              },
+              {
+                imgUrl: "",
+                text: "短信群发",
+                path: "/work/sentMessage"
+              }
+            ]
+          },
+          {
+            title: "数据",
+            list: [
+              {
+                imgUrl: "",
+                text: "商户数据"
+              },
+              {
+                imgUrl: "",
+                text: "服务商数据"
+              },
+              {
+                imgUrl: "",
+                text: "设备数据"
+              }
+            ]
+          }
+        ]
+      }
     };
   },
   mounted() {},

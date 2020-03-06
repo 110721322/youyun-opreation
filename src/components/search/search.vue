@@ -12,7 +12,7 @@
       :rules="rules"
       :label-width="labelWidth"
       :class="['form-inline', isShowAll ? 'is_show_all' : '']"
-      :style="isOpen ? 'height:' + (openHeight + 40) + 'px' : ''"
+      :style="isOpen ? 'height:' + (Number(openHeight) + 40) + 'px' : ''"
     >
       <el-form-item
         v-for="formItem in formBaseData"
@@ -32,8 +32,7 @@
       </el-form-item>
 
       <div class="btn_list" style="margin-bottom:0">
-        <el-button type="primary" size="large" @click="handleClick">
-          搜索</el-button>
+        <el-button type="primary" size="large" @click="handleClick">搜索</el-button>
         <el-button plain size="large" @click="resetForm">重置</el-button>
         <div v-show="!isShowAll" class="open_btn" @click="onClick_openOrClose">
           <span v-show="!isOpen">展开</span>
@@ -48,20 +47,20 @@
 
 <script>
 // import DateSelect from '@/components/dateSelect.vue'
-import * as g from '@/libs/global'
+import * as g from "@/libs/global";
 import {
   transFormType,
   clearFormData,
   formatFormData
-} from '@/libs/kit/formFns.js'
-import Input from './components/Input.vue'
-import Select from './components/Select.vue'
-import Tinymce from './components/Tinymce/index.vue'
-import DateSelect from './components/DateSelect.vue'
-import SelectInput from './components/SelectInput.vue'
+} from "@/libs/kit/formFns.js";
+import Input from "./components/Input.vue";
+import Select from "./components/Select.vue";
+import Tinymce from "./components/Tinymce/index.vue";
+import DateSelect from "./components/DateSelect.vue";
+import SelectInput from "./components/SelectInput.vue";
 
 export default {
-  name: 'Search',
+  name: "Search",
   components: {
     Input,
     Select,
@@ -74,7 +73,7 @@ export default {
     isShowAll: {
       type: Boolean,
       default() {
-        return false
+        return false;
       }
     },
     formBaseData: Array,
@@ -83,37 +82,37 @@ export default {
     showFootBtn: {
       type: Boolean,
       default() {
-        return true
+        return true;
       }
     },
     showFootCancel: {
       type: Boolean,
       default() {
-        return true
+        return true;
       }
     },
     footBtnLabel: {
       type: String,
-      default: '保存'
+      default: "保存"
     },
     labelPosition: {
       type: String,
-      default: 'right'
+      default: "right"
     },
     labelWidth: {
       type: String,
-      default: '100px'
+      default: "100px"
     },
     showFootReset: {
       type: Boolean,
       default() {
-        return false
+        return false;
       }
     },
     showFootClear: {
       type: Boolean,
       default() {
-        return false
+        return false;
       }
     }
   },
@@ -123,21 +122,21 @@ export default {
       formKeys: [],
       isOpen: false,
       isRest: false
-    }
+    };
   },
   created() {
-    this.init()
+    this.init();
   },
   methods: {
     init() {
       if (this.formBaseData.length > 0) {
         for (const iterator of this.formBaseData) {
-          let initVal = iterator.initVal
+          let initVal = iterator.initVal;
           if (g.utils.isUndefined(initVal)) {
-            initVal = null
+            initVal = null;
           }
-          this.formKeys.push(iterator.key)
-          this.$set(this.ruleForm, iterator.key, initVal)
+          this.formKeys.push(iterator.key);
+          this.$set(this.ruleForm, iterator.key, initVal);
         }
       }
     },
@@ -145,48 +144,46 @@ export default {
       this.$refs.formTep.validate(valid => {
         // 校验
         if (valid) {
-          const formInfo = g.utils.deepClone(this.ruleForm)
+          const formInfo = g.utils.deepClone(this.ruleForm);
           // 统一过滤表单
-          formatFormData(formInfo, this.formKeys)
-          // eslint-disable-next-line no-console
-          console.log(this.ruleForm)
+          formatFormData(formInfo, this.formKeys);
         }
-      })
+      });
     },
     resetForm() {
       // 初始化表单
-      this.isRest = true
+      this.isRest = true;
       setTimeout(() => {
-        this.isRest = false
-      }, 500)
+        this.isRest = false;
+      }, 500);
 
-      this.$refs.formTep.resetFields()
+      this.$refs.formTep.resetFields();
     },
     clearForm() {
       // 清空表单
       const p = () =>
         new Promise(resolve => {
-          clearFormData(this.ruleForm, this.formKeys)
-          resolve()
-        })
+          clearFormData(this.ruleForm, this.formKeys);
+          resolve();
+        });
       p().then(() => {
-        this.$refs.formTep.clearValidate()
-      })
+        this.$refs.formTep.clearValidate();
+      });
     },
     cancelForm() {
       // 初始化表单
-      this.$emit('cancel')
+      this.$emit("cancel");
     },
     transType(value) {
       // 获取表单项类型
-      return transFormType(value)
+      return transFormType(value);
     },
 
     onClick_openOrClose() {
-      this.isOpen = !this.isOpen
+      this.isOpen = !this.isOpen;
     }
   }
-}
+};
 </script>
 
 <style scoped>

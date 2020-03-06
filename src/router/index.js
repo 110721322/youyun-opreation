@@ -17,7 +17,6 @@ const router = new VueRouter({
     {
       path: '/index',
       component: Layout,
-      hidden: true,
       children: [
         {
           path: '/index',
@@ -61,6 +60,74 @@ import currRouter from '@/layout/addRouter.js'
 
 const menuItems = [
   {
+    text: '工作台',
+    type: 'ios-paper',
+    path: 'work',
+    name: 'work',
+    isShow: false,
+    meta: {
+      title: '工作台',
+      icon: '工作台'
+    },
+    children: [
+      {
+        type: 'ios-grid',
+        name: 'work-bench',
+        text: '工作台',
+        path: 'bench',
+        isShow: false,
+        meta: {
+          title: '工作台',
+          icon: 'work-bench'
+        }
+      },
+      {
+        type: 'ios-grid',
+        name: 'work-todo',
+        text: '待办事项',
+        path: 'Todo',
+        isShow: false,
+        meta: {
+          title: '待办事项',
+          icon: 'work-todo'
+        }
+      },
+      {
+        type: 'ios-grid',
+        name: 'work-sentMessage',
+        text: '短信群发',
+        path: 'sentMessage',
+        isShow: false,
+        meta: {
+          title: '短信群发',
+          icon: 'work-sentMessage'
+        }
+      },
+      {
+        type: 'ios-grid',
+        name: 'taskDetail',
+        text: '日常任务详情',
+        path: 'taskDetail',
+        isShow: false,
+        meta: {
+          title: '日常任务详情',
+          icon: 'taskDetail'
+        }
+      },
+      {
+        type: 'ios-grid',
+        name: 'approvalDetail',
+        text: '审批任务详情',
+        path: 'approvalDetail',
+        isShow: false,
+        meta: {
+          title: '日常任务详情',
+          icon: 'approvalDetail'
+        }
+      }
+    ]
+  },
+  {
     text: '商户管理',
     type: 'ios-paper',
     path: 'merchant',
@@ -73,7 +140,7 @@ const menuItems = [
     children: [
       {
         type: 'ios-grid',
-        name: 'merchant-list',
+        name: 'merchantList',
         text: '商户列表',
         path: 'list',
         isShow: true,
@@ -84,7 +151,7 @@ const menuItems = [
       },
       {
         type: 'ios-grid',
-        name: 'merchant-setRecord',
+        name: 'merchantSetRecord',
         text: '结算记录',
         path: 'setRecord',
         isShow: true,
@@ -108,7 +175,7 @@ const menuItems = [
     children: [
       {
         type: 'ios-grid',
-        name: 'agent-list',
+        name: 'agentList',
         text: '服务商列表',
         path: 'list',
         isShow: true,
@@ -119,7 +186,7 @@ const menuItems = [
       },
       {
         type: 'ios-grid',
-        name: 'agent-subList',
+        name: 'agentSubList',
         text: '下级服务商列表',
         path: 'subList',
         isShow: true,
@@ -130,7 +197,7 @@ const menuItems = [
       },
       {
         type: 'ios-grid',
-        name: 'agent-checkList',
+        name: 'agentCheckList',
         text: '服务商审核列表',
         path: 'checkList',
         isShow: true,
@@ -141,74 +208,7 @@ const menuItems = [
       }
     ]
   },
-  {
-    text: '工作台',
-    type: 'ios-paper',
-    path: 'work',
-    name: 'work',
-    isShow: true,
-    meta: {
-      title: '工作台',
-      icon: '工作台'
-    },
-    children: [
-      {
-        type: 'ios-grid',
-        name: 'work-bench',
-        text: '工作台',
-        path: 'bench',
-        isShow: true,
-        meta: {
-          title: '工作台',
-          icon: 'work-bench'
-        }
-      },
-      {
-        type: 'ios-grid',
-        name: 'work-todo',
-        text: '待办事项',
-        path: 'Todo',
-        isShow: true,
-        meta: {
-          title: '待办事项',
-          icon: 'work-todo'
-        }
-      },
-      {
-        type: 'ios-grid',
-        name: 'work-sentMessage',
-        text: '短信群发',
-        path: 'sentMessage',
-        isShow: true,
-        meta: {
-          title: '短信群发',
-          icon: 'work-sentMessage'
-        }
-      },
-      {
-        type: 'ios-grid',
-        name: 'taskDetail',
-        text: '日常任务详情',
-        path: 'taskDetail',
-        isShow: true,
-        meta: {
-          title: '日常任务详情',
-          icon: 'taskDetail'
-        }
-      },
-      {
-        type: 'ios-grid',
-        name: 'approvalDetail',
-        text: '审批任务详情',
-        path: 'approvalDetail',
-        isShow: true,
-        meta: {
-          title: '日常任务详情',
-          icon: 'approvalDetail'
-        }
-      }
-    ]
-  },
+
   {
     text: '消息管理',
     type: 'ios-paper',
@@ -325,16 +325,14 @@ const menuItems = [
   //   }
 ]
 localStorage.setItem('menus', JSON.stringify(menuItems))
-// eslint-disable-next-line no-console
-console.log('currRouter')
-// eslint-disable-next-line no-console
-console.log(currRouter.menusToRoutes(menuItems))
+
+console.log(currRouter.menusToRoutes(menuItems));
 router.addRoutes(currRouter.menusToRoutes(menuItems))
 router.beforeEach((to, from, next) => {
   document.title = '商家管理系统'
+
   if (to.meta.requireLogin) {
-    // eslint-disable-next-line no-console
-    console.log(1230)
+    next()
   } else {
     next()
   }

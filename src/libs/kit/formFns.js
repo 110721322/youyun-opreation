@@ -49,8 +49,8 @@ export const transFormType = typeNum => {
 /**
  * 链式设置校验规则
  */
-export const setRules = (function() {
-  return function(keyName, keyType) {
+export const setRules = (function () {
+  return function (keyName, keyType) {
     const fnStack = []
     const proxy = new Proxy(
       {},
@@ -130,6 +130,5 @@ export const getOptionsByUrl = urlOptions => {
       return result
     })
     .catch(() => {
-      // console.log(err)
     })
 }

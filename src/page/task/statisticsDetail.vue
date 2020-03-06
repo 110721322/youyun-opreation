@@ -15,11 +15,7 @@
 
     <transition name="fade">
       <div>
-        <Search
-          :is-show-all="true"
-          :form-base-data="searchConfig.formData"
-          @search="search"
-        />
+        <Search :is-show-all="true" :form-base-data="searchConfig.formData" @search="search" />
         <data-mode :config-data="modeConfigData" />
         <div class="table_box">
           <BaseCrud
@@ -38,12 +34,7 @@
             @selectionChange="selectionChange"
           >
             <template v-slot="{ row }">
-              <el-form
-                label-position="left"
-                inline
-                class="demo-table-expand"
-                label-width="80px"
-              >
+              <el-form label-position="left" inline class="demo-table-expand" label-width="80px">
                 <div>
                   <el-form-item label="商品名称">
                     <span>{{ row.id }}</span>
@@ -97,15 +88,15 @@
   </div>
 </template>
 <script>
-import Search from '@/components/search/search.vue'
-import DataMode from '@/components/dataMode/dataMode.vue'
-import BaseCrud from '@/components/table/BaseCrud.vue'
-import { FINISH_CONFIG } from './tableConfig/finishConfig'
-import { UNFINISH_CONFIG } from './tableConfig/unfinishConfig'
-import { FORM_CONFIG } from './formConfig/staticSearch'
+import Search from "@/components/search/search.vue";
+import DataMode from "@/components/dataMode/dataMode.vue";
+import BaseCrud from "@/components/table/BaseCrud.vue";
+import { FINISH_CONFIG } from "./tableConfig/finishConfig";
+import { UNFINISH_CONFIG } from "./tableConfig/unfinishConfig";
+import { FORM_CONFIG } from "./formConfig/staticSearch";
 
 export default {
-  name: 'Theme',
+  name: "Theme",
   components: { Search, BaseCrud, DataMode },
   // components: { dataMode, BaseCrud },
   data() {
@@ -113,65 +104,59 @@ export default {
       searchConfig: FORM_CONFIG,
       modeConfigData: [
         {
-          title: '任务总数',
-          data: '555个'
+          title: "任务总数",
+          data: "555个"
         }
       ],
-      searchMaxHeight: '240',
-      activeIndex: '1',
+      searchMaxHeight: "240",
+      activeIndex: "1",
       configData: UNFINISH_CONFIG,
       testData: [],
       isChangeMode: true
-    }
+    };
   },
   mounted() {
-    this.getTableData()
+    this.getTableData();
   },
   methods: {
     getTableData() {
       this.testData = [
         {
           id: 1,
-          type: '日常任务',
-          name: '商户结算失败',
-          num: '4',
-          oper: '提醒',
-          time: '20:00:23'
+          type: "日常任务",
+          name: "商户结算失败",
+          num: "4",
+          oper: "提醒",
+          time: "20:00:23"
         },
         {
           id: 2,
-          type: '日常任务',
-          name: '商户结算失败',
-          num: '4',
-          oper: '提醒',
-          time: '20:00:23'
+          type: "日常任务",
+          name: "商户结算失败",
+          num: "4",
+          oper: "提醒",
+          time: "20:00:23"
         }
-      ]
+      ];
     },
-    selectionChange($val) {
-      // eslint-disable-next-line no-console
-      console.log($val)
-    },
+    selectionChange($val) {},
     handleSelect($item) {
       // eslint-disable-next-line no-console
-      this.activeIndex = $item
+      this.activeIndex = $item;
       switch ($item) {
-        case '1':
-          this.configData = UNFINISH_CONFIG
-          break
-        case '2':
-          this.configData = FINISH_CONFIG
-          break
+        case "1":
+          this.configData = UNFINISH_CONFIG;
+          break;
+        case "2":
+          this.configData = FINISH_CONFIG;
+          break;
       }
 
-      this.getTableData()
+      this.getTableData();
     },
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm)
-    }
+    search() {}
   }
-}
+};
 </script>
 
 <style scoped>

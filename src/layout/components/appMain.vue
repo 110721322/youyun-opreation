@@ -12,11 +12,9 @@
 // import routers from '@/router/index.js'
 // import menusToRoutes from '@/layout/addRouter.js'
 export default {
-    created () {
-    // console.log(this.$route)
-    },
-    name: 'AppMasin',
-    computed: {},
+  name: "AppMasin",
+  computed: {},
+  created() {}
 };
 </script>
 

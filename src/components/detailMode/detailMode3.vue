@@ -1,16 +1,21 @@
 <template>
   <div class="w-box">
-    <div class="head">{{configData.name}}</div>
+    <div class="head">{{ configData.name }}</div>
     <div class="box">
-      <div :key="index" v-for="(item,index) in configData.list">
-        <div class="title" v-if="item.title">{{item.title}}</div>
+      <div v-for="(item,index) in configData.list" :key="index">
+        <div v-if="item.title" class="title">{{ item.title }}</div>
         <div class="list">
-          <div class="item1" :key="index" v-for="(item,index) in configData.list[index].list">
+          <div
+            v-for="(item2,index2) in configData.list[index].list"
+            :key="index2"
+            class="item1"
+            @click="onClick_item(item2)"
+          >
             <div class="img" :style="{backgroundColor:configData.imgColor}">
-              <div class="dot" v-if="item.dotNum>0">{{item.dotNum}}</div>
-              <img :src="item.imgUrl" alt />
+              <div v-if=" item2.dotNum>0 " class="dot">{{ item2.dotNum }}</div>
+              <img :src="item2.imgUrl" alt />
             </div>
-            <div class="text">{{item.text}}</div>
+            <div class="text">{{ item2.text }}</div>
           </div>
         </div>
       </div>
@@ -22,7 +27,6 @@
 export default {
   name: "",
   props: { configData: Object, isShowEditBtn: Boolean },
-  computed: {},
   data() {
     return {
       rules: {
@@ -30,15 +34,23 @@ export default {
       }
     };
   },
+  computed: {},
 
-  methods: {}
+  methods: {
+    onClick_item($item) {
+      if ($item.path) {
+        this.$router.push({
+          path: $item.path
+        });
+      }
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 .w-box {
   margin: 24px;
-  width: 100%;
   background: rgba(255, 255, 255, 1);
   overflow: hidden;
   .head {
@@ -73,6 +85,7 @@ export default {
       height: 80px;
       border-radius: 2px;
       border: 1px solid rgba(220, 223, 230, 0);
+      cursor: pointer;
     }
     .img {
       position: relative;
@@ -110,13 +123,13 @@ export default {
   }
   .title {
     margin: 16px 0 0 8px;
-    width:28px;
-    height:20px;
-    font-size:14px;
-    font-family:PingFang-SC-Regular,PingFang-SC;
-    font-weight:400;
-    color:rgba(96,98,102,1);
-    line-height:20px;
+    width: 28px;
+    height: 20px;
+    font-size: 14px;
+    font-family: PingFang-SC-Regular, PingFang-SC;
+    font-weight: 400;
+    color: rgba(96, 98, 102, 1);
+    line-height: 20px;
   }
 }
 </style>

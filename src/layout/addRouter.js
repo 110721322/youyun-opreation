@@ -1,3 +1,5 @@
+import Layout from '@/layout'
+
 const asyncRoutes = {
   merchant: {
     path: '/merchant',
@@ -9,7 +11,7 @@ const asyncRoutes = {
     },
     children: []
   },
-  'merchant-list': {
+  'merchantList': {
     path: 'list',
     name: 'merchantList',
     meta: {
@@ -29,7 +31,7 @@ const asyncRoutes = {
       }
     ]
   },
-  'merchant-setRecord': {
+  'merchantSetRecord': {
     path: 'setRecord',
     name: 'merchantSetRecord',
     meta: {
@@ -49,7 +51,7 @@ const asyncRoutes = {
     children: []
   },
 
-  'agent-list': {
+  'agentList': {
     path: 'list',
     name: 'agentList',
     meta: {
@@ -70,7 +72,7 @@ const asyncRoutes = {
     ]
   },
 
-  'agent-subList': {
+  'agentSubList': {
     path: 'subList',
     name: 'agentSubList',
     meta: {
@@ -92,7 +94,7 @@ const asyncRoutes = {
 
   },
 
-  'agent-checkList': {
+  'agentCheckList': {
     path: 'checkList',
     name: 'agentCheckList',
     meta: {
@@ -102,15 +104,21 @@ const asyncRoutes = {
     component: () => import('@/page/agent/agentCheckList.vue')
   },
 
-  work: {
+  'work': {
     path: '/work',
     name: 'work',
-    component: () => import('./index.vue'),
+    component: Layout,
     meta: {
       title: 'work',
       icon: 'work'
     },
-    children: []
+    children: [
+      {
+        name: 'work',
+        path: 'work',
+        component: () => import('@/page/work/workBench.vue')
+      }
+    ]
   },
 
   'work-bench': {
@@ -246,8 +254,6 @@ const asyncRoutes = {
     children: []
   }
 }
-// eslint-disable-next-line no-console
-console.log(asyncRoutes)
 const routers = []
 // 传入后台数据 生成路由表
 
@@ -263,12 +269,12 @@ const menusToRoutes = function (data) {
   // })
 
   data.forEach(item => {
-    const curr = asyncRoutes[item.name]
-    item.children.forEach(item2 => {
-      generateRoutes(curr.children, item2)
-    })
-    // eslint-disable-next-line no-console
-    console.log(curr)
+    const curr = asyncRoutes[item.name];
+    if (item.children) {
+      item.children.forEach(item2 => {
+        generateRoutes(curr.children, item2)
+      })
+    }
     result.push(curr)
   })
 

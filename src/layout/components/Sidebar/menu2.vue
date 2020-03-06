@@ -1,29 +1,24 @@
 <template>
   <div>
-    <el-menu
-      :default-active="this.$route.path"
-      :router="true"
-      class="el-menu-vertical-demo"
-    >
-      <div :key="key" v-for="(item, key) of menu2Data">
-        <el-submenu :index="rootPath + '/' + item.path" v-if="item.children">
+    <el-menu :default-active="currRouter" :router="true" class="el-menu-vertical-demo">
+      <div v-for="(item, key) of menu2Data" :key="key">
+        <el-submenu v-if="item.children" :index="'/'+rootPath + '/' + item.path">
           <template slot="title">
             <span>{{ item.text }}</span>
           </template>
-          <div  :key="childKey" v-for="(childItem, childKey) of item.children">
+          <div v-for="(childItem, childKey) of item.children" :key="childKey">
             <el-menu-item
-              @click="onClick_item"
-              :index="'/' + rootPath + '/' + item.path"
               v-if="item.isShow"
-              >{{ childItem.text }}</el-menu-item
-            >
+              :index="'/' + rootPath + '/' + item.path"
+              @click="onClick_item"
+            >{{ childItem.text }}</el-menu-item>
           </div>
         </el-submenu>
 
         <el-menu-item
-          @click="onClick_item"
-          :index="'/' + rootPath + '/' + item.path"
           v-if="!item.children && item.isShow"
+          :index="'/' + rootPath + '/' + item.path"
+          @click="onClick_item"
         >
           <span slot="title">{{ item.text }}</span>
         </el-menu-item>
@@ -34,27 +29,28 @@
 
 <script>
 // import AppLink from './Link'
-import { EventBus } from '../../bus/event-bus.js';
+// import { EventBus } from "../../bus/event-bus.js";
 
 export default {
-    name: 'Sidebar2',
-    // components: { AppLink },
-    created () {},
-    data () {
-        return {};
-    },
-    props: {
-        menu2Data: Array,
-        rootPath: String,
-    },
-    methods: {
-        onClick_item () {
-            // eslint-disable-next-line no-console
-            localStorage.setItem('menu2Data', JSON.stringify(this.menu2Data));
-            localStorage.setItem('rootPath', JSON.stringify(this.rootPath));
-            // this.menu2Data
-            EventBus.$emit('selectItem', {});
-        },
-    },
+  name: "Sidebar2",
+  props: {
+    menu2Data: Array,
+    rootPath: String
+  },
+  data() {
+    return {
+      currRouter: ""
+    };
+  },
+  $route(to, from) {
+    this.currRouter = this.$route.path;
+  },
+  // components: { AppLink },
+  created() {
+    this.currRouter = this.$route.path;
+  },
+  methods: {
+    onClick_item() {}
+  }
 };
 </script>
