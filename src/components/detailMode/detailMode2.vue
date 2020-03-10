@@ -1,48 +1,35 @@
 <template>
-  <div class="bg_box">
-    <div class="title">
+  <div class="bg_box" :class="configData.border?'border':''">
+    <div class="title" :style="{background:configData.headColor}">
       {{ configData.name }}
       <slot name="taskDetail"></slot>
-      <el-button
-        v-show="isShowEditBtn"
-        type="primary"
-        class="edit_btn"
-        size="mini"
-        >编辑</el-button
-      >
-      <el-button
-        v-show="isShowCallBtn"
-        type="primary"
-        class="edit_btn"
-        size="mini"
-        >立即沟通</el-button
-      >
+      <el-button v-show="isShowEditBtn" type="primary" class="edit_btn" size="mini">编辑</el-button>
+      <el-button v-show="isShowCallBtn" type="primary" class="edit_btn" size="mini">立即沟通</el-button>
     </div>
 
     <el-form
+      ref="ruleForm"
       :inline="false"
       :model="ruleForm"
       :rules="rules"
-      ref="ruleForm"
       class="form"
       label-position="left"
     >
       <el-row>
-        <el-col :span="spanWidth?spanWidth:8" v-for="(item, key) of configData.models" :key="key">
-          <el-form-item
-            :label="item.name + '：'"
-            v-for="(item, key) of item.items"
-            :key="key"
-          >
+        <el-col
+          v-for="(item1, key1) of configData.models"
+          :key="key1"
+          :span="spanWidth?spanWidth:8"
+        >
+          <el-form-item v-for="(item, key) of item1.items" :key="key" :label="item.name + '：'">
             <el-image
               v-if="item.type === 'img'"
               style="width: 100px; height: 100px"
               :src="ruleForm[item.key]"
               :preview-src-list="[ruleForm[item.key]]"
-            >
-            </el-image>
+            ></el-image>
             <span v-else class="item-value">{{ ruleForm[item.key] }}</span>
-            <span class="edit_btn" v-if="item.type == 'edit'">修改</span>
+            <span v-if="item.type == 'edit'" class="edit_btn">修改</span>
           </el-form-item>
         </el-col>
       </el-row>
@@ -52,28 +39,37 @@
 
 <script>
 export default {
-    name: '',
-    props: { ruleForm: Object, configData: Object, isShowEditBtn: Boolean ,isShowCallBtn:Boolean ,spanWidth:Number},
-    computed: {},
-    data () {
-        return {
-            rules: {
-                name: [{ required: true }],
-            },
-        };
-    },
+  name: "",
+  props: {
+    ruleForm: Object,
+    configData: Object,
+    isShowEditBtn: Boolean,
+    isShowCallBtn: Boolean,
+    spanWidth: Number
+  },
+  data() {
+    return {
+      rules: {
+        name: [{ required: true }]
+      }
+    };
+  },
+  computed: {},
 
-    methods: {},
+  methods: {}
 };
 </script>
 
 <style lang="scss" scoped>
+.border {
+  border: 1px solid #ebeef5;
+}
 .bg_box {
   margin: 24px;
   background: #fff;
   overflow: hidden;
   .title {
-    position:relative;
+    position: relative;
     height: 54px;
     line-height: 54px;
     padding-left: 32px;
