@@ -361,7 +361,17 @@ const asyncRoutes = {
       title: 'repairList',
       icon: 'repairList'
     },
-    children: []
+    children: [
+      {
+        path: 'detail',
+        name: 'repairList',
+        meta: {
+          title: 'repairList',
+          icon: 'repairList'
+        },
+        component: () => import('@/page/device/usageManage/repairDetail.vue')
+      }
+    ]
   },
   'deviceData': {
     path: 'deviceData',
@@ -372,6 +382,26 @@ const asyncRoutes = {
       icon: 'deviceData'
     },
     children: []
+  },
+  'shopCenter': {
+    path: 'shopCenter',
+    name: 'shopCenter',
+    component: () => import('@/page/device/shopCenter/shopCenter.vue'),
+    meta: {
+      title: 'shopCenter',
+      icon: 'shopCenter'
+    },
+    children: [
+      {
+        path: 'detail',
+        name: 'shopCenter',
+        meta: {
+          title: 'shopCenter',
+          icon: 'shopCenter'
+        },
+        component: () => import('@/page/device/shopCenter/shopDetail.vue')
+      }
+    ]
   }
 }
 const routers = []

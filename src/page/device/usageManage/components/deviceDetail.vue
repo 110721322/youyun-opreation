@@ -16,12 +16,12 @@
         :form-data="configData.formModel"
         :grid-edit-width="200"
         :is-async="true"
-        :is-expand="true"
-        row-key="id"
+        :custom-is-expand="true"
+        :row-key="'id'"
         :hide-edit-area="configData.hideEditArea"
-        :expands="[2]"
+        @showLife="onClick_showLife"
       >
-        <div>123123</div>
+        <div>123123123123123</div>
       </BaseCrud>
     </div>
   </div>
@@ -112,6 +112,14 @@ export default {
 
     cancel(done) {
       done();
+    },
+    onClick_showLife($item, $table) {
+      console.log($table);
+      // console.log($item);
+      this.testData.map(item => {
+        item.expansion = !item.expansion;
+      });
+      $table.toggleRowExpansion($item);
     }
   }
 };

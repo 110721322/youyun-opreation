@@ -4,6 +4,7 @@
 
     <!--crud主体内容区，展示表格内容-->
     <el-table
+      ref="table"
       v-loading="listLoading"
       :data="showGridData"
       style="width: 100%;font-size:14px"
@@ -14,10 +15,11 @@
       :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
       :header-cell-style="headerCellStyle"
       :expand-row-keys="expands"
+      :cell-class-name="tableRowClass"
       @selection-change="handleSelectionChange"
     >
       <el-table-column v-if="isSelect" type="selection" width="55" />
-      <el-table-column v-if="isExpand" type="expand" width="55">
+      <el-table-column v-if="isExpand" type="expand" width="30">
         <template slot-scope="scope">
           <slot :row="scope.row" />
         </template>
@@ -29,30 +31,46 @@
         :label="item.label"
         show-overflow-tooltip
         :min-width="item.width ? item.width : ''"
+        :width="item.customIsExpand?'1px':''"
         :fixed="item.isFixed || false"
+        :type="item.customIsExpand?'expand':''"
       >
         <template slot-scope="scope">
-          <i v-if="item.hasIcon" class="el-icon-caret-top icon-increase"></i>
-          <Cell
-            v-if="item.render"
-            :row="scope.row"
-            :column="item"
-            :index="scope.$index"
-            :render="item.render"
-          />
-          <template v-if="scope.row.edit&&item.isEdit">
-            <el-input v-model="scope.row[item.prop]" class="edit-input" size="small" />
-            <el-button
-              class="cancel-btn"
-              size="medium"
-              type="text"
-              @click="cancelEdit(scope.row)"
-            >取消</el-button>
-          </template>
+          <div v-if="item.customIsExpand">
+            <template>
+              <slot :row="scope.row" />
+            </template>
+          </div>
+          <div v-else>
+            <i v-if="item.hasIcon" class="el-icon-caret-top icon-increase"></i>
+            <Cell
+              v-if="item.render"
+              :row="scope.row"
+              :column="item"
+              :index="scope.$index"
+              :render="item.render"
+            />
+            <template v-if="scope.row.edit&&item.isEdit">
+              <el-input v-model="scope.row[item.prop]" class="edit-input" size="small" />
+              <el-button
+                class="cancel-btn"
+                size="medium"
+                type="text"
+                @click="cancelEdit(scope.row)"
+              >取消</el-button>
+            </template>
 
-          <span v-else>{{ scope.row[item.prop] }}</span>
+            <span v-if="!item.render&&(!scope.row.edit||!item.isEdit)">{{ scope.row[item.prop] }}</span>
+            <img
+              v-show="item.imgUrl"
+              :src="item.imgUrl"
+              :style="item.imgStyle"
+              @click="onClick_tabImg(item.emitName, scope.row)"
+            />
+          </div>
         </template>
       </el-table-column>
+
       <el-table-column
         v-if="!hideEditArea"
         fixed="right"
@@ -150,6 +168,8 @@ export default {
     "tableHeight",
     // 表 格是否可以展开
     "isExpand",
+    // 表 格是否可以展开(自定义按钮)
+    "customIsExpand",
     // 表 格子项拓展
     "rowKey",
     // 表 格子项默认是否全部展开
@@ -180,7 +200,6 @@ export default {
   watch: {
     // 防止表格预置数据不成功，涉及生命周期问题
     gridData() {
-      console.log(this.gridData);
       this.showGridData = this.gridData;
     }
   },
@@ -188,6 +207,11 @@ export default {
     this.getData();
   },
   methods: {
+    tableRowClass(val) {
+      if (val.column.type === "expand" && val.column.width === 1) {
+        return "expand";
+      }
+    },
     // 获取列表数据
     getData() {
       // console.log(this.gridData);
@@ -245,6 +269,10 @@ export default {
     cancelEdit($item) {
       $item.edit = false;
       this.$emit("cancelEdit", $item);
+    },
+    onClick_tabImg($emitName, $item) {
+      const $table = this.$refs.table;
+      this.$emit($emitName, $item, $table);
     }
   }
 };
@@ -273,8 +301,10 @@ export default {
   margin-left: 20px;
   color: #efa911;
 }
+</style>
 
-.crud .el-table__row .el-table__expand-column .cell {
+<style>
+.expand .cell {
   display: none;
 }
 </style>

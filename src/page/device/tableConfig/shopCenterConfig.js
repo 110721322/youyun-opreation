@@ -1,44 +1,23 @@
-import icon from "@/assets/img/life.png";
-export const DEVICEDETAIL_CONFIG = {
+export const SHOPCENTER_CONFIG = {
   gridConfig: [
     {
-      label: '设备型号',
+      label: '设备类型',
       prop: 'type',
-      width: '150px',
-      hasImg: true,
-      imgUrl: icon,
-      emitName: 'showLife',
-      imgStyle: 'width:16px;height:16px;cursor:pointer'
+      width: '150px'
     },
     {
-      label: '',
-      prop: 'id',
-      width: '1px',
-      customIsExpand: true
+      label: '设备型号',
+      prop: 'taskName',
+      width: '150px'
     },
 
     {
-      label: '设备标识',
-      prop: 'taskName',
-      width: '150px'
-    },
-    {
-      label: '所属商户',
-      prop: 'taskName',
-      width: '150px'
-    },
-    {
-      label: '所属服务商',
+      label: '排序',
       prop: 'time',
       width: '150px'
     },
     {
-      label: '订单数量（笔）',
-      prop: 'time',
-      width: '150px'
-    },
-    {
-      label: '交易额（元）',
+      label: '更新时间',
       prop: 'time',
       width: '150px'
     }
@@ -53,14 +32,26 @@ export const DEVICEDETAIL_CONFIG = {
     delete: false,
     view: false,
     expands: [
+
       {
-        name: '解绑',
-        emitName: 'distribution',
+        name: '编辑',
+        emitName: 'edit',
         type: 'text'
       },
       {
-        name: '恢复可用',
+        name: '删除',
         emitName: 'adopt',
+        type: 'text',
+        style: 'color:#F5222D'
+      },
+      {
+        name: '上架',
+        emitName: 'buy',
+        type: 'text'
+      },
+      {
+        name: '下架',
+        emitName: 'buy',
         type: 'text'
       }
     ]
@@ -76,5 +67,5 @@ export const DEVICEDETAIL_CONFIG = {
     expand: '',
     roleIdList: []
   },
-  hideEditArea: true
+  hideEditArea: false
 };
