@@ -1,5 +1,5 @@
 <template>
-  <div>index3</div>
+  <div>设备统计</div>
 </template>
 
 <script>

@@ -56,9 +56,10 @@ const router = new VueRouter({
 })
 
 // 全局钩子函数,在跳转之前执行
-import currRouter from '@/layout/addRouter.js'
+import currRouter from './addRouter.js'
 
 const menuItems = [
+
   {
     text: '工作台',
     type: 'ios-paper',
@@ -311,6 +312,111 @@ const menuItems = [
           title: '服务商数据',
           icon: 'serviceData'
         }
+      }
+    ]
+  },
+  {
+    text: '设备管理',
+    type: 'ios-paper',
+    path: 'deviceManage',
+    name: 'deviceManage',
+    isShow: true,
+    meta: {
+      title: '设备管理',
+      icon: '设备管理'
+    },
+    children: [
+      {
+        type: 'ios-grid',
+        name: 'stock',
+        text: '库存管理',
+        path: 'stock',
+        isShow: true,
+        meta: {
+          title: '库存管理',
+          icon: 'stock'
+        },
+        children: [
+          {
+            type: 'ios-grid',
+            name: 'stockList',
+            text: '设备库存',
+            path: 'stockList',
+            isShow: true,
+            meta: {
+              title: '设备库存',
+              icon: 'stockList'
+            }
+          },
+          {
+            type: 'ios-grid',
+            name: 'stockSave',
+            text: '入库管理',
+            path: 'stockSave',
+            isShow: true,
+            meta: {
+              title: '入库管理',
+              icon: 'stockSave'
+            }
+          },
+          {
+            type: 'ios-grid',
+            name: 'stockOut',
+            text: '出库管理',
+            path: 'stockOut',
+            isShow: true,
+            meta: {
+              title: '出库管理',
+              icon: 'stockOut'
+            }
+          }
+        ]
+      },
+      {
+        type: 'ios-grid',
+        name: 'usageManage',
+        text: '设备使用管理',
+        path: 'usageManage',
+        isShow: true,
+        meta: {
+          title: '设备使用管理',
+          icon: 'usageManage'
+        },
+        children: [
+          {
+            type: 'ios-grid',
+            name: 'usageList',
+            text: '设备使用列表',
+            path: 'usageList',
+            isShow: true,
+            meta: {
+              title: '设备使用列表',
+              icon: 'usageList'
+            }
+          },
+          {
+            type: 'ios-grid',
+            name: 'repairList',
+            text: '设备维修',
+            path: 'repairList',
+            isShow: true,
+            meta: {
+              title: '设备维修',
+              icon: 'repairList'
+            }
+          },
+          {
+            type: 'ios-grid',
+            name: 'deviceData',
+            text: '设备数据',
+            path: 'deviceData',
+            isShow: true,
+            meta: {
+              title: '设备数据',
+              icon: 'deviceData'
+            }
+          }
+        ]
       }
     ]
   }

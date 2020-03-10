@@ -9,8 +9,6 @@
 </template>
 
 <script>
-// import routers from '@/router/index.js'
-// import menusToRoutes from '@/layout/addRouter.js'
 export default {
   name: "AppMasin",
   computed: {},

@@ -77,9 +77,22 @@ export default {
   methods: {
     onClick_item($item) {
       if (this.$route.name === $item.children[0].name) return;
-      this.$router.push({
-        path: this.resolvePath($item.children[0].path)
-      });
+
+      if ($item.children[0].children) {
+        this.$router.push({
+          path: this.resolvePath(
+            "." +
+              path.resolve(
+                $item.children[0].path,
+                $item.children[0].children[0].path
+              )
+          )
+        });
+      } else {
+        this.$router.push({
+          path: this.resolvePath($item.children[0].path)
+        });
+      }
     },
     hasOneShowingChild(children = [], parent) {
       if (children.length === 0) {

@@ -183,7 +183,9 @@ export default {
       ]
     };
   },
-  mounted() {},
+  mounted() {
+    this.getData();
+  },
   methods: {
     getData() {
       this.testData = [

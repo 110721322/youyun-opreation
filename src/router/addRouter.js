@@ -1,10 +1,10 @@
-import Layout from '@/layout'
+import Layout from '@/layout/index.vue'
 
 const asyncRoutes = {
   merchant: {
     path: '/merchant',
     name: 'merchant',
-    component: () => import('./index.vue'),
+    component: Layout,
     meta: {
       title: 'merchant',
       icon: 'merchant'
@@ -43,7 +43,7 @@ const asyncRoutes = {
   agent: {
     path: '/agent',
     name: 'agent',
-    component: () => import('./index.vue'),
+    component: Layout,
     meta: {
       title: 'agent',
       icon: 'agent'
@@ -62,7 +62,7 @@ const asyncRoutes = {
     children: [
       {
         path: 'detail',
-        name: 'agentDetail',
+        name: 'agentList',
         meta: {
           title: 'agentDetail',
           icon: 'agentDetail'
@@ -83,7 +83,7 @@ const asyncRoutes = {
     children: [
       {
         path: 'detail',
-        name: 'agentSubListDetail',
+        name: 'agentSubList',
         meta: {
           title: 'agentSubListDetail',
           icon: 'agentSubListDetail'
@@ -173,10 +173,10 @@ const asyncRoutes = {
     component: () => import('@/page/work/approvalDetail.vue'),
     children: []
   },
-  message: {
+  'message': {
     path: '/message',
     name: 'message',
-    component: () => import('./index.vue'),
+    component: Layout,
     meta: {
       title: 'message',
       icon: 'message'
@@ -203,10 +203,10 @@ const asyncRoutes = {
     component: () => import('@/page/message/announcementEdit.vue'),
     children: []
   },
-  task: {
+  'task': {
     path: '/task',
     name: 'task',
-    component: () => import('./index.vue'),
+    component: Layout,
     meta: {
       title: 'task',
       icon: 'task'
@@ -226,7 +226,7 @@ const asyncRoutes = {
   'dataMarket': {
     path: '/dataMarket',
     name: 'dataMarket',
-    component: () => import('./index.vue'),
+    component: Layout,
     meta: {
       title: 'dataMarket',
       icon: 'dataMarket'
@@ -262,6 +262,116 @@ const asyncRoutes = {
     },
     component: () => import('@/page/dataMarket/serviceData.vue'),
     children: []
+  },
+  'deviceManage': {
+    path: '/deviceManage',
+    name: 'deviceManage',
+    component: Layout,
+    meta: {
+      title: 'deviceManage',
+      icon: 'deviceManage'
+    },
+    children: []
+  },
+  'stock': {
+    path: 'stock',
+    name: 'stock',
+    component: () => import('@/page/device/stock/stock.vue'),
+    meta: {
+      title: 'stock',
+      icon: 'stock'
+    },
+    children: []
+  },
+  'stockList': {
+    path: 'stockList',
+    name: 'stockList',
+    component: () => import('@/page/device/stock/stockList.vue'),
+    meta: {
+      title: 'stockList',
+      icon: 'stockList'
+    },
+    children: []
+  },
+  'stockSave': {
+    path: 'stockSave',
+    name: 'stockSave',
+    component: () => import('@/page/device/stock/saveManage.vue'),
+    meta: {
+      title: 'stockSave',
+      icon: 'stockSave'
+    },
+    children: [
+      {
+        path: 'detail',
+        name: 'stockSave',
+        meta: {
+          title: 'stockSave',
+          icon: 'stockSave'
+        },
+        component: () => import('@/page/device/stock/saveDetail.vue')
+      }
+    ]
+  },
+  'stockOut': {
+    path: 'stockOut',
+    name: 'stockOut',
+    component: () => import('@/page/device/stock/outManage.vue'),
+    meta: {
+      title: 'stockOut',
+      icon: 'stockOut'
+    },
+    children: [
+      {
+        path: 'detail',
+        name: 'stockOut',
+        meta: {
+          title: 'outDetail',
+          icon: 'outDetail'
+        },
+        component: () => import('@/page/device/stock/outDetail.vue')
+      }
+    ]
+  },
+  'usageManage': {
+    path: 'usageManage',
+    name: 'usageManage',
+    component: () => import('@/page/device/usageManage/usageManage.vue'),
+    meta: {
+      title: 'usageManage',
+      icon: 'usageManage'
+    },
+    children: []
+  },
+  'usageList': {
+    path: 'usageList',
+    name: 'usageList',
+    component: () => import('@/page/device/usageManage/usageList.vue'),
+    meta: {
+      title: 'usageList',
+      icon: 'usageList'
+    },
+    children: []
+  },
+  'repairList': {
+    path: 'repairList',
+    name: 'repairList',
+    component: () => import('@/page/device/usageManage/repairList.vue'),
+    meta: {
+      title: 'repairList',
+      icon: 'repairList'
+    },
+    children: []
+  },
+  'deviceData': {
+    path: 'deviceData',
+    name: 'deviceData',
+    component: () => import('@/page/device/usageManage/deviceData.vue'),
+    meta: {
+      title: 'deviceData',
+      icon: 'deviceData'
+    },
+    children: []
   }
 }
 const routers = []
@@ -296,7 +406,7 @@ const menusToRoutes = function (data) {
 
   // 最后添加404页面 否则会在登陆成功后跳到404页面
   result.push({ path: '*', redirect: '/error' })
-
+  console.log(result);
   return result
 }
 
@@ -307,9 +417,11 @@ const getRouters = function () {
 const generateRoutes = function (children, item) {
   if (item.name) {
     children.push(asyncRoutes[item.name])
-  } else if (item.children) {
+  }
+
+  if (item.children) {
     item.children.forEach(e => {
-      generateRoutes(children, e)
+      generateRoutes(asyncRoutes[item.name].children, e)
     })
   }
 }

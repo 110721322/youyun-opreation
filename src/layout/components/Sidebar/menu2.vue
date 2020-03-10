@@ -9,7 +9,7 @@
           <div v-for="(childItem, childKey) of item.children" :key="childKey">
             <el-menu-item
               v-if="item.isShow"
-              :index="'/' + rootPath + '/' + item.path"
+              :index="'/' + rootPath + '/' + item.path+'/'+childItem.path"
               @click="onClick_item"
             >{{ childItem.text }}</el-menu-item>
           </div>

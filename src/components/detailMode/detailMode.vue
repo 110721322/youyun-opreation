@@ -1,15 +1,13 @@
 <template>
   <div class="bg_box">
     <div class="title">
-      {{ configData.name }} 
+      {{ configData.name }}
       <slot name="operatingTop">
-          <span class="edit" @click="edit(child.modelName)">编辑</span>
-        </slot>
+        <span class="edit" @click="edit(child.modelName)">编辑</span>
+      </slot>
     </div>
-    <slot name="step">
-
-    </slot>
-    <div class="con_box" v-for="(child, key) of configData.child" :key="key">
+    <slot name="step"></slot>
+    <div v-for="(child, key) of configData.child" :key="key" class="con_box">
       <div class="title">
         {{ child.name }}
         <slot name="operatingItem">
@@ -17,58 +15,55 @@
         </slot>
       </div>
       <el-form
+        ref="ruleForm"
         :inline="false"
         :model="ruleForm"
         :rules="rules"
-        ref="ruleForm"
         class="form"
         label-position="left"
       >
         <el-row>
-          <el-col :span="8" v-for="(item, key) of child.models" :key="key">
+          <el-col v-for="(item, key) of child.models" :key="key" :span="8">
             <el-form-item
-              :label="item.name + '：'"
-              prop="name"
               v-for="(item, key) of item.items"
               :key="key"
+              :label="item.name + '：'"
+              prop="name"
             >
               <el-image
                 v-if="item.type === 'img'"
                 style="width: 100px; height: 100px"
                 :src="ruleForm[item.key]"
                 :preview-src-list="[ruleForm[item.key]]"
-              >
-              </el-image>
+              ></el-image>
               <span v-else class="item-value">{{ ruleForm[item.key] }}</span>
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
     </div>
-      <slot name="operatingBottom">
-
-      </slot>
+    <slot name="operatingBottom"></slot>
   </div>
 </template>
 
 <script>
 export default {
-    name: '',
-    props: { ruleForm: Object, configData: Object },
-    computed: {},
-    data () {
-        return {
-            rules: {
-                name: [{ required: true }],
-            },
-        };
-    },
+  name: "",
+  props: { ruleForm: Object, configData: Object },
+  data() {
+    return {
+      rules: {
+        name: [{ required: true }]
+      }
+    };
+  },
+  computed: {},
 
-    methods: {
-        edit ($modelName) {
-            this.$emit('edit', $modelName);
-        },
-    },
+  methods: {
+    edit($modelName) {
+      this.$emit("edit", $modelName);
+    }
+  }
 };
 </script>
 

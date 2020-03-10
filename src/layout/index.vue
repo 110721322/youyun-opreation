@@ -125,12 +125,24 @@ export default {
       menus.forEach(item => {
         if (item.isShow && item.children) {
           item.children.forEach(childItem => {
-            if (childItem.name === this.$route.name) {
-              this.menu2Data = item.children;
+            if (childItem.children) {
+              childItem.children.forEach(child2Item => {
+                console.log(this.$route.name);
+                if (child2Item.name === this.$route.name) {
+                  this.menu2Data = item.children;
+                  this.rootPath = item.path;
+                  this.currRouter = this.$route.path;
+                  return;
+                }
+              });
+            } else {
+              if (childItem.name === this.$route.name) {
+                this.menu2Data = item.children;
 
-              this.rootPath = item.path;
-              this.currRouter = this.$route.path;
-              return;
+                this.rootPath = item.path;
+                this.currRouter = this.$route.path;
+                return;
+              }
             }
           });
         } else {

@@ -24,11 +24,7 @@
       </el-form-item>
     </el-form>
     <div v-if="showFootBtn" class="foot_btn_box">
-      <el-button class="foot_btn" type="primary" @click="handleClick">
-        {{
-          footBtnLabel
-        }}
-      </el-button>
+      <el-button class="foot_btn" type="primary" @click="handleClick">{{ footBtnLabel }}</el-button>
       <el-button v-if="showFootReset" class="foot_btn" @click="resetForm">重置</el-button>
       <el-button v-if="showFootClear" class="foot_btn" @click="clearForm">清空</el-button>
       <el-button v-if="showFootCancel" class="foot_btn" @click="cancelForm">取消</el-button>
@@ -52,6 +48,7 @@ import Radio from "./components/Radio.vue";
 import Upload from "./components/Upload.vue";
 import Tinymce from "./components/Tinymce/index.vue";
 import Cascader from "./components/Cascader.vue";
+import UploadFile from "./components/UploadFile";
 
 // import { isUndefined, deepClone } from '@/libs/lit/utils'
 
@@ -66,7 +63,8 @@ export default {
     Radio,
     Upload,
     Tinymce,
-    Cascader
+    Cascader,
+    UploadFile
   },
   props: {
     formBaseData: Array,

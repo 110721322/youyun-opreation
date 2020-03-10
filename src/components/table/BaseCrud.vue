@@ -8,11 +8,12 @@
       :data="showGridData"
       style="width: 100%;font-size:14px"
       :height="tableHeight"
-      :border="false"
+      :border="border"
       :row-key="rowKey"
       :default-expand-all="defaultExpandAll"
       :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
       :header-cell-style="headerCellStyle"
+      :expand-row-keys="expands"
       @selection-change="handleSelectionChange"
     >
       <el-table-column v-if="isSelect" type="selection" width="55" />
@@ -39,6 +40,16 @@
             :index="scope.$index"
             :render="item.render"
           />
+          <template v-if="scope.row.edit&&item.isEdit">
+            <el-input v-model="scope.row[item.prop]" class="edit-input" size="small" />
+            <el-button
+              class="cancel-btn"
+              size="medium"
+              type="text"
+              @click="cancelEdit(scope.row)"
+            >取消</el-button>
+          </template>
+
           <span v-else>{{ scope.row[item.prop] }}</span>
         </template>
       </el-table-column>
@@ -143,7 +154,9 @@ export default {
     "rowKey",
     // 表 格子项默认是否全部展开
     "defaultExpandAll",
-    "headerCellStyle"
+    "headerCellStyle",
+    "border",
+    "expands"
   ],
   data() {
     return {
@@ -167,6 +180,7 @@ export default {
   watch: {
     // 防止表格预置数据不成功，涉及生命周期问题
     gridData() {
+      console.log(this.gridData);
       this.showGridData = this.gridData;
     }
   },
@@ -176,6 +190,7 @@ export default {
   methods: {
     // 获取列表数据
     getData() {
+      // console.log(this.gridData);
       this.listLoading = true;
       // let params = {
       //   page: this.currentPage,
@@ -183,6 +198,7 @@ export default {
       // }
 
       this.showGridData = [];
+      this.showGridData = this.gridData;
       this.dataTotal = 0;
       this.listLoading = false;
       // this.apiService.list(params).then(
@@ -225,6 +241,10 @@ export default {
     },
     handleSelectionChange(val) {
       this.$emit("selectionChange", val);
+    },
+    cancelEdit($item) {
+      $item.edit = false;
+      this.$emit("cancelEdit", $item);
     }
   }
 };
@@ -245,5 +265,16 @@ export default {
 .icon-increase {
   color: #3abd2d;
   margin-right: 8px;
+}
+.edit-input {
+  width: 200px;
+}
+.cancel-btn {
+  margin-left: 20px;
+  color: #efa911;
+}
+
+.crud .el-table__row .el-table__expand-column .cell {
+  display: none;
 }
 </style>

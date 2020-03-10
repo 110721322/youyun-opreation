@@ -1,5 +1,5 @@
 <template>
-  <div>index3</div>
+  <div>repairDetail</div>
 </template>
 
 <script>

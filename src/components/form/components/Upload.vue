@@ -9,25 +9,17 @@
       :http-request="upLoad"
       :on-preview="handlePictureCardPreview"
     >
-      <img
-        v-if="dialogImageUrl"
-        :src="dialogImagePath + dialogImageUrl"
-        class="avatar"
-      />
+      <img v-if="dialogImageUrl" :src="dialogImagePath + dialogImageUrl" class="avatar" />
       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
     <i
       v-if="dialogImageUrl"
-      @click="onClick_preview"
       class="el-icon-plus el-icon-zoom-in"
       style="float:left;position:relative;left:-20px;top:5px;cursor:pointer"
+      @click="onClick_preview"
     ></i>
 
-    <el-image-viewer
-      v-if="showViewer"
-      :on-close="closeViewer"
-      :url-list="[dialogImageUrl]"
-    />
+    <el-image-viewer v-if="showViewer" :on-close="closeViewer" :url-list="[dialogImageUrl]" />
   </div>
 </template>
 <style lang="scss" scoped>
@@ -110,116 +102,116 @@
 }
 </style>
 <script>
-import api from '@/api/api_common'
-import ElImageViewer from 'element-ui/packages/image/src/image-viewer'
+import api from "@/api/api_common";
+import ElImageViewer from "element-ui/packages/image/src/image-viewer";
 export default {
-  data() {
-    return {
-      loading: false,
-      showViewer: false,
-      dialogImageUrl: '',
-      dialogImagePath: '',
-      ossData: {} // 存签名信息
-    }
-  },
   components: { ElImageViewer },
   props: {
     getupImgTokenUrl: {},
     img: {
       type: String,
-      default: ''
+      default: ""
     },
     upType: {
       type: Number,
       default: 1
     },
-    IDtext: {
+    iDtext: {
       type: String,
-      default: ''
+      default: ""
     },
     type: {
       type: String,
-      default: ''
+      default: ""
     }
+  },
+  data() {
+    return {
+      loading: false,
+      showViewer: false,
+      dialogImageUrl: "",
+      dialogImagePath: "",
+      ossData: {} // 存签名信息
+    };
   },
 
   created() {
     if (this.img) {
-      this.dialogImageUrl = this.img
+      this.dialogImageUrl = this.img;
     }
   },
+
+  mounted() {},
   methods: {
     handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url
-      this.dialogVisible = true
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
     },
 
     beforeUpload() {
       return new Promise(resolve => {
-        if (this.type === 'entry') {
+        if (this.type === "entry") {
           api
             .EntryUploadPic({ count: 1 })
             .then(result => {
-              this.ossData = result.object
-              resolve(true)
+              this.ossData = result.object;
+              resolve(true);
             })
-            .catch()
+            .catch();
         } else {
           api
             .uploadPic({ count: 1 })
             .then(result => {
-              this.ossData = result.object
-              resolve(true)
+              this.ossData = result.object;
+              resolve(true);
             })
-            .catch()
+            .catch();
         }
-      })
+      });
     },
 
     upLoad(file) {
-      let formData = new FormData()
+      const formData = new FormData();
       formData.append(
-        'key',
-        this.ossData.objectKeyPrefix + '/' + this.ossData.objectKeys[0]
-      ) // 存储在oss的文件路径
-      formData.append('OSSAccessKeyId', this.ossData.accessKeyId) // accessKeyId
-      formData.append('policy', this.ossData.policy) // policy
-      formData.append('signature', this.ossData.signature) // 签名
-      formData.append('file', file.file)
-      formData.append('success_action_status', 200) // 成功后返回的操作码
-      this.loading = true
+        "key",
+        this.ossData.objectKeyPrefix + "/" + this.ossData.objectKeys[0]
+      ); // 存储在oss的文件路径
+      formData.append("OSSAccessKeyId", this.ossData.accessKeyId); // accessKeyId
+      formData.append("policy", this.ossData.policy); // policy
+      formData.append("signature", this.ossData.signature); // 签名
+      formData.append("file", file.file);
+      formData.append("success_action_status", 200); // 成功后返回的操作码
+      this.loading = true;
       // eslint-disable-next-line no-undef
       $.ajax({
         url: this.ossData.ossHost,
-        type: 'POST',
+        type: "POST",
         data: formData,
         // async: false,
         cache: false,
         processData: false,
         contentType: false,
         success: () => {
-          this.dialogImagePath = this.ossData.ossHost + '/'
+          this.dialogImagePath = this.ossData.ossHost + "/";
           this.dialogImageUrl =
-            this.ossData.objectKeyPrefix + '/' + this.ossData.objectKeys[0]
-          this.$emit('uploadSuccess', {
+            this.ossData.objectKeyPrefix + "/" + this.ossData.objectKeys[0];
+          this.$emit("uploadSuccess", {
             dialogImagePath: this.dialogImagePath,
             dialogImageUrl: this.dialogImageUrl
-          })
-          this.loading = false
+          });
+          this.loading = false;
         },
         error: () => {
-          this.loading = false
+          this.loading = false;
         }
-      })
+      });
     },
     onClick_preview() {
-      this.showViewer = true
+      this.showViewer = true;
     },
     closeViewer() {
-      this.showViewer = false
+      this.showViewer = false;
     }
-  },
-
-  mounted() {}
-}
+  }
+};
 </script>
