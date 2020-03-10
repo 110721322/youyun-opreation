@@ -372,6 +372,46 @@ const asyncRoutes = {
       icon: 'deviceData'
     },
     children: []
+  },
+  'check': {
+    path: '/check',
+    name: 'check',
+    component: Layout,
+    meta: {
+      title: 'check',
+      icon: 'check'
+    },
+    children: []
+  },
+  'checkMerchant': {
+    path: 'checkMerchant',
+    name: 'checkMerchant',
+    component: () => import('@/page/check/merchantCheck/merchantCheck.vue'),
+    meta: {
+      title: 'checkMerchant',
+      icon: 'checkMerchant'
+    },
+    children: []
+  },
+  'indirectList': {
+    path: 'indirectList',
+    name: 'indirectList',
+    component: () => import('@/page/check/merchantCheck/indirectList.vue'),
+    meta: {
+      title: 'indirectList',
+      icon: 'indirectList'
+    },
+    children: [
+      {
+        path: 'detail',
+        name: 'indirectList',
+        meta: {
+          title: 'indirectListDetail',
+          icon: 'indirectListDetail'
+        },
+        component: () => import('@/page/check/merchantCheck/indirectListDetail.vue')
+      }
+    ]
   }
 }
 const routers = []

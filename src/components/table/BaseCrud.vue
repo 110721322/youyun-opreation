@@ -277,4 +277,20 @@ export default {
 .crud .el-table__row .el-table__expand-column .cell {
   display: none;
 }
+//dot为通道状态乐刷新大陆网商前面小点
+.dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #52c41a;
+  vertical-align: middle;
+  margin: 0 5px;
+  &:nth-child(2) {
+    background-color: #ffae00;
+  }
+  &:nth-child(3) {
+    background: rgba(0, 0, 0, 0.25);
+  }
+}
 </style>

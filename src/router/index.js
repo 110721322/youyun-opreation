@@ -237,7 +237,7 @@ const menuItems = [
         name: 'announcementEdit',
         text: '编辑服务商公告',
         path: 'announcementEdit',
-        isShow: true,
+        isShow: false,
         meta: {
           title: '编辑服务商公告',
           icon: 'announcementEdit'
@@ -416,6 +416,77 @@ const menuItems = [
               icon: 'deviceData'
             }
           }
+        ]
+      }
+    ]
+  },
+  {
+    text: '审核与签约',
+    type: 'ios-paper',
+    path: 'check',
+    name: 'check',
+    isShow: true,
+    meta: {
+      title: '审核与签约',
+      icon: '审核与签约'
+    },
+    children: [
+      {
+        type: 'ios-grid',
+        name: 'checkMerchant',
+        text: '商户审核',
+        path: 'checkMerchant',
+        isShow: true,
+        meta: {
+          title: '商户审核',
+          icon: 'checkMerchant'
+        },
+        children: [
+          {
+            type: 'ios-grid',
+            name: 'indirectList',
+            text: '间连审核',
+            path: 'indirectList',
+            isShow: true,
+            meta: {
+              title: '间连审核',
+              icon: 'indirectCheck'
+            }
+          }
+          // ,
+          // {
+          //   type: 'ios-grid',
+          //   name: 'settlementUpdata',
+          //   text: '结算卡修改审核',
+          //   path: 'settlementUpdata',
+          //   isShow: true,
+          //   meta: {
+          //     title: '结算卡修改审核',
+          //     icon: 'settlementUpdata'
+          //   }
+          // },
+          // {
+          //   type: 'ios-grid',
+          //   name: 'aliDirectCheck',
+          //   text: '支付宝直连审核',
+          //   path: 'aliDirectCheck',
+          //   isShow: true,
+          //   meta: {
+          //     title: '支付宝直连审核',
+          //     icon: 'aliDirectCheck'
+          //   }
+          // },
+          // {
+          //   type: 'ios-grid',
+          //   name: 'wxDirectCheck',
+          //   text: '微信直连审核',
+          //   path: 'wxDirectCheck',
+          //   isShow: true,
+          //   meta: {
+          //     title: '微信直连审核',
+          //     icon: 'wxDirectCheck'
+          //   }
+          // }
         ]
       }
     ]
