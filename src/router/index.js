@@ -417,7 +417,19 @@ const menuItems = [
             }
           }
         ]
+      },
+      {
+        type: 'ios-grid',
+        name: 'shopCenter',
+        text: '商城管理',
+        path: 'shopCenter',
+        isShow: true,
+        meta: {
+          title: '商城管理',
+          icon: 'shopCenter'
+        }
       }
+
     ]
   },
   {

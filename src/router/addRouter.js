@@ -373,6 +373,26 @@ const asyncRoutes = {
     },
     children: []
   },
+  'shopCenter': {
+    path: 'shopCenter',
+    name: 'shopCenter',
+    component: () => import('@/page/device/shopCenter/shopCenter.vue'),
+    meta: {
+      title: 'shopCenter',
+      icon: 'shopCenter'
+    },
+    children: [
+      {
+        path: 'detail',
+        name: 'shopCenter',
+        meta: {
+          title: 'shopCenter',
+          icon: 'shopCenter'
+        },
+        component: () => import('@/page/device/shopCenter/shopDetail.vue')
+      }
+    ]
+  },
   'check': {
     path: '/check',
     name: 'check',
