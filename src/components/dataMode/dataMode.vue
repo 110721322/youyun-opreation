@@ -1,19 +1,19 @@
 <template>
   <div class="d-box">
-    <div class="item-box" v-for="(item,index) in configData" :key="index">
-      <div class="title">{{item.title}}</div>
-      <div class="data">{{item.data}}</div>
+    <div v-for="(item,index) in configData" :key="index" class="item-box">
+      <div class="title">{{ item.title }}</div>
+      <div class="data">{{ item.data }}</div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-    name: 'dataMode',
-    props:['configData'],
-    data () {
-        return {};
-    },
+  name: "DataMode",
+  props: ["configData"],
+  data() {
+    return {};
+  }
 };
 </script>
 
@@ -26,7 +26,6 @@ export default {
   flex-direction: row;
   justify-content: flex-start;
   align-content: center;
-
 }
 .item-box {
   text-align: center;
@@ -35,7 +34,7 @@ export default {
   margin-top: 24px;
   overflow: hidden;
   // flex-basis: 100%;
-  width:50%;
+  width: 50%;
   .title {
     font-size: 14px;
     font-weight: 400;

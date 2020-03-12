@@ -10,7 +10,6 @@
       >
         <el-menu-item index="1">待处理</el-menu-item>
         <el-menu-item index="2">已处理</el-menu-item>
-        <el-menu-item index="3">已发起</el-menu-item>
       </el-menu>
     </div>
 
@@ -68,34 +67,6 @@
               </el-form-item>
             </el-form>
             <div>
-              <!-- <taskList
-                    :listData="taskListConfig.dailyListData"
-                    :type="taskListConfig.dailyType"
-                    :cssConfig ="taskListConfig.dailyCssConfig"
-                    >
-              </taskList>-->
-
-              <!-- <taskList
-                    :listData="taskListConfig.approvalListData"
-                    :type="taskListConfig.approvalType"
-                    :cssConfig ="taskListConfig.approvalCssConfig"
-                    >
-              </taskList>-->
-
-              <!-- <taskList
-                    :listData="taskListConfig.handleListData"
-                    :type="taskListConfig.handleType"
-                    :cssConfig ="taskListConfig.dailyCssConfig"
-                    >
-              </taskList>-->
-
-              <!-- <taskList
-                    :listData="taskListConfig.handleListData"
-                    :type="taskListConfig.handleType"
-                    :cssConfig ="taskListConfig.approvalCssConfig"
-                    >
-              </taskList>-->
-
               <taskList
                 :list-data="configData.listData"
                 :type="configData.type"
@@ -130,22 +101,18 @@ export default {
 
   data() {
     return {
+      currentStatus: "",
       checkList: [],
       checkedListLength: 0,
       activeIndex: "1",
-      configData: {
-        listData: TASKLIST_CONFIG.dailyListData,
-        type: TASKLIST_CONFIG.dailyType,
-        cssConfig: TASKLIST_CONFIG.dailyCssConfig
-      },
+      configData: {},
       testData: [],
       isChangeMode: true,
       inputForm: "",
       inputSelect: "",
-      taskListConfig: TASKLIST_CONFIG,
       isCheck: false,
       isCheckAll: false,
-      canCheckAll: true,
+      canCheckAll: false,
       inputOptions: [
         {
           label: "公司名称",
@@ -200,7 +167,69 @@ export default {
       }
     };
   },
+  watch: {
+    currentStatus: function($val) {
+      // dailyPending 日常未处理 dailyProcessed 日常已处理 approvalPending 审批未处理 approvalProcessed 审批已处理
+      switch ($val) {
+        case "dailyPending":
+          this.$set(this.configData, "listData", TASKLIST_CONFIG.dailyListData);
+          this.$set(this.configData, "type", TASKLIST_CONFIG.dailyType);
+          this.$set(
+            this.configData,
+            "cssConfig",
+            TASKLIST_CONFIG.dailyCssConfig
+          );
+          this.canCheckAll = true;
+          break;
+        case "dailyProcessed":
+          this.$set(
+            this.configData,
+            "listData",
+            TASKLIST_CONFIG.handleListData
+          );
+          this.$set(this.configData, "type", TASKLIST_CONFIG.handleType);
+          this.$set(
+            this.configData,
+            "cssConfig",
+            TASKLIST_CONFIG.dailyCssConfig
+          );
+          this.canCheckAll = false;
+          break;
+        case "approvalPending":
+          this.$set(
+            this.configData,
+            "listData",
+            TASKLIST_CONFIG.approvalListData
+          );
+          this.$set(this.configData, "type", TASKLIST_CONFIG.approvalType);
+          this.$set(
+            this.configData,
+            "cssConfig",
+            TASKLIST_CONFIG.approvalCssConfig
+          );
+          this.canCheckAll = false;
+          break;
+        case "approvalProcessed":
+          this.$set(
+            this.configData,
+            "listData",
+            TASKLIST_CONFIG.handleListData
+          );
+          this.$set(this.configData, "type", TASKLIST_CONFIG.handleType);
+          this.$set(
+            this.configData,
+            "cssConfig",
+            TASKLIST_CONFIG.approvalCssConfig
+          );
+          this.canCheckAll = false;
+          break;
+        default:
+          break;
+      }
+    }
+  },
   mounted() {
+    this.currentStatus = "dailyPending";
     this.getTableData();
   },
   methods: {
@@ -260,18 +289,12 @@ export default {
       this.activeIndex = $item;
       switch ($item) {
         case "1":
-          this.configData.listData = TASKLIST_CONFIG.dailyListData;
-          this.configData.type = TASKLIST_CONFIG.dailyType;
-          this.configData.cssConfig = TASKLIST_CONFIG.dailyCssConfig;
-          this.canCheckAll = true;
+          this.currentStatus = "dailyPending";
           break;
         case "2":
-          this.configData.listData = TASKLIST_CONFIG.handleListData;
-          this.configData.type = TASKLIST_CONFIG.handleType;
-          this.configData.cssConfig = TASKLIST_CONFIG.approvalCssConfig;
-          this.canCheckAll = false;
+          this.currentStatus = "dailyProcessed";
           break;
-        case "3":
+        default:
           break;
       }
       this.isChangeMode = false;
@@ -284,16 +307,22 @@ export default {
       }, 1000);
     },
     handleNodeClick($data) {
-      if ($data.type === "daily") {
-        this.configData.listData = TASKLIST_CONFIG.dailyListData;
-        this.configData.type = TASKLIST_CONFIG.dailyType;
-        this.configData.cssConfig = TASKLIST_CONFIG.dailyCssConfig;
-        this.canCheckAll = true;
-      } else if ($data.type === "approval") {
-        this.configData.listData = TASKLIST_CONFIG.approvalListData;
-        this.configData.type = TASKLIST_CONFIG.approvalType;
-        this.configData.cssConfig = TASKLIST_CONFIG.approvalCssConfig;
-        this.canCheckAll = false;
+      console.log($data);
+      if (this.activeIndex === "1") {
+        if ($data.type === "daily") {
+          this.currentStatus = "dailyPending";
+        }
+        if ($data.type === "approval") {
+          this.currentStatus = "approvalPending";
+        }
+      }
+      if (this.activeIndex === "2") {
+        if ($data.type === "daily") {
+          this.currentStatus = "dailyProcessed";
+        }
+        if ($data.type === "approval") {
+          this.currentStatus = "approvalProcessed";
+        }
       }
     },
     search($form, $obj) {}

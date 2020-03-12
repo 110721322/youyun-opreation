@@ -1,4 +1,4 @@
-export const STOCKLIST_CONFIG = {
+export const INDIRECTLIST_CONFIG = {
   gridConfig: [
     {
       label: '商户',

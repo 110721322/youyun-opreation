@@ -15,6 +15,7 @@
       :header-cell-style="headerCellStyle"
       :expand-row-keys="expands"
       @selection-change="handleSelectionChange"
+      @sort-change="sortDate"
     >
       <el-table-column v-if="isSelect" type="selection" width="55" />
       <el-table-column v-if="isExpand" type="expand" width="55">
@@ -30,6 +31,7 @@
         show-overflow-tooltip
         :min-width="item.width ? item.width : ''"
         :fixed="item.isFixed || false"
+        :sortable="item.sortable"
       >
         <template slot-scope="scope">
           <i v-if="item.hasIcon" class="el-icon-caret-top icon-increase"></i>
@@ -188,6 +190,32 @@ export default {
     this.getData();
   },
   methods: {
+    sortDate: function(val) {
+      if (undefined === this.showGridData || this.showGridData.length === 0) {
+        return;
+      }
+      const list = JSON.parse(JSON.stringify(this.showGridData));
+      const isDesc = val.order === "descending";
+      const key = val.prop;
+      const pattPerc = /^\d+%$/;
+      this.showGridData = list.sort(function(a, b) {
+        var dateA = a[key];
+        var dateB = b[key];
+        var aIsPerc = pattPerc.test(dateA);
+        var bIsPerc = pattPerc.test(dateA);
+        if (aIsPerc) {
+          dateA = dateA.replace("%", "");
+        }
+        if (bIsPerc) {
+          dateB = dateB.replace("%", "");
+        }
+        if (isDesc) {
+          return Number(dateA) <= Number(dateB) ? 1 : -1;
+        } else {
+          return Number(dateA) >= Number(dateB) ? 1 : -1;
+        }
+      });
+    },
     // 获取列表数据
     getData() {
       // console.log(this.gridData);
