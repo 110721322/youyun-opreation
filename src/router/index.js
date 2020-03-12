@@ -206,6 +206,17 @@ const menuItems = [
           title: '服务商审核列表',
           icon: 'agentCheckList'
         }
+      },
+      {
+        type: 'ios-grid',
+        name: 'dividedOverview',
+        text: '分润总览',
+        path: 'dividedOverview',
+        isShow: true,
+        meta: {
+          title: '分润总览',
+          icon: 'dividedOverview'
+        }
       }
     ]
   },
@@ -435,8 +446,8 @@ const menuItems = [
   {
     text: '审核与签约',
     type: 'ios-paper',
-    path: 'check',
-    name: 'check',
+    path: 'approval',
+    name: 'approval',
     isShow: true,
     meta: {
       title: '审核与签约',
@@ -464,41 +475,88 @@ const menuItems = [
               title: '间连审核',
               icon: 'indirectCheck'
             }
+          },
+          {
+            type: 'ios-grid',
+            name: 'settlementList',
+            text: '结算卡修改审核',
+            path: 'settlementList',
+            isShow: true,
+            meta: {
+              title: '结算卡修改审核',
+              icon: 'settlementList'
+            }
+          },
+          {
+            type: 'ios-grid',
+            name: 'aliDirectList',
+            text: '支付宝直连审核',
+            path: 'aliDirectList',
+            isShow: true,
+            meta: {
+              title: '支付宝直连审核',
+              icon: 'aliDirectList'
+            }
+          },
+          {
+            type: 'ios-grid',
+            name: 'wxDirectList',
+            text: '微信直连审核',
+            path: 'wxDirectList',
+            isShow: true,
+            meta: {
+              title: '微信直连审核',
+              icon: 'wxDirectList'
+            }
           }
-          // ,
-          // {
-          //   type: 'ios-grid',
-          //   name: 'settlementUpdata',
-          //   text: '结算卡修改审核',
-          //   path: 'settlementUpdata',
-          //   isShow: true,
-          //   meta: {
-          //     title: '结算卡修改审核',
-          //     icon: 'settlementUpdata'
-          //   }
-          // },
-          // {
-          //   type: 'ios-grid',
-          //   name: 'aliDirectCheck',
-          //   text: '支付宝直连审核',
-          //   path: 'aliDirectCheck',
-          //   isShow: true,
-          //   meta: {
-          //     title: '支付宝直连审核',
-          //     icon: 'aliDirectCheck'
-          //   }
-          // },
-          // {
-          //   type: 'ios-grid',
-          //   name: 'wxDirectCheck',
-          //   text: '微信直连审核',
-          //   path: 'wxDirectCheck',
-          //   isShow: true,
-          //   meta: {
-          //     title: '微信直连审核',
-          //     icon: 'wxDirectCheck'
-          //   }
-          // }
+        ]
+      },
+      {
+        type: 'ios-grid',
+        name: 'checkService',
+        text: '下级服务商审核',
+        path: 'checkService',
+        isShow: true,
+        meta: {
+          title: '下级服务商审核',
+          icon: 'checkService'
+        },
+        children: [
+          {
+            type: 'ios-grid',
+            name: 'checkServiceList',
+            text: '下级服务商审核',
+            path: 'checkServiceList',
+            isShow: true,
+            meta: {
+              title: '下级服务商审核',
+              icon: 'checkServiceList'
+            }
+          }
+        ]
+      },
+      {
+        type: 'ios-grid',
+        name: 'checkPartner',
+        text: '合伙人审核',
+        path: 'checkPartner',
+        isShow: true,
+        meta: {
+          title: '合伙人审核',
+          icon: 'checkPartner'
+        },
+        children: [
+          {
+            type: 'ios-grid',
+            name: 'checkPartnerList',
+            text: '合伙人审核',
+            path: 'checkPartnerList',
+            isShow: true,
+            meta: {
+              title: '合伙人审核',
+              icon: 'checkPartnerList'
+            }
+          }
         ]
       }
     ]

@@ -104,6 +104,16 @@ const asyncRoutes = {
     component: () => import('@/page/agent/agentCheckList.vue')
   },
 
+  'dividedOverview': {
+    path: 'dividedOverview',
+    name: 'dividedOverview',
+    meta: {
+      title: 'dividedOverview',
+      icon: 'dividedOverview'
+    },
+    component: () => import('@/page/agent/dividedOverview.vue')
+  },
+
   'work': {
     path: '/work',
     name: 'work',
@@ -393,20 +403,20 @@ const asyncRoutes = {
       }
     ]
   },
-  'check': {
-    path: '/check',
-    name: 'check',
+  'approval': {
+    path: '/approval',
+    name: 'approval',
     component: Layout,
     meta: {
-      title: 'check',
-      icon: 'check'
+      title: 'approval',
+      icon: 'approval'
     },
     children: []
   },
   'checkMerchant': {
     path: 'checkMerchant',
     name: 'checkMerchant',
-    component: () => import('@/page/check/merchantCheck/merchantCheck.vue'),
+    component: () => import('@/page/approval/merchantCheck/merchantCheck.vue'),
     meta: {
       title: 'checkMerchant',
       icon: 'checkMerchant'
@@ -416,7 +426,7 @@ const asyncRoutes = {
   'indirectList': {
     path: 'indirectList',
     name: 'indirectList',
-    component: () => import('@/page/check/merchantCheck/indirectList.vue'),
+    component: () => import('@/page/approval/merchantCheck/indirectList.vue'),
     meta: {
       title: 'indirectList',
       icon: 'indirectList'
@@ -429,7 +439,163 @@ const asyncRoutes = {
           title: 'indirectListDetail',
           icon: 'indirectListDetail'
         },
-        component: () => import('@/page/check/merchantCheck/indirectListDetail.vue')
+        component: () => import('@/page/approval/merchantCheck/indirectListDetail.vue')
+      },
+      {
+        path: 'recordDetail',
+        name: 'indirectList',
+        meta: {
+          title: 'indirectRecordDetail',
+          icon: 'indirectRecordDetail'
+        },
+        component: () => import('@/page/approval/merchantCheck/indirectRecordDetail.vue')
+      }
+    ]
+  },
+  'settlementList': {
+    path: 'settlementList',
+    name: 'settlementList',
+    component: () => import('@/page/approval/merchantCheck/settlementList.vue'),
+    meta: {
+      title: 'settlementList',
+      icon: 'settlementList'
+    },
+    children: [
+      {
+        path: 'detail',
+        name: 'settlementList',
+        meta: {
+          title: 'settlementListDetail',
+          icon: 'settlementListDetail'
+        },
+        component: () => import('@/page/approval/merchantCheck/settlementListDetail.vue')
+      },
+      {
+        path: 'recordDetail',
+        name: 'settlementList',
+        meta: {
+          title: 'settlementRecordDetail',
+          icon: 'settlementRecordDetail'
+        },
+        component: () => import('@/page/approval/merchantCheck/settlementRecordDetail.vue')
+      }
+    ]
+  },
+  'aliDirectList': {
+    path: 'aliDirectList',
+    name: 'aliDirectList',
+    component: () => import('@/page/approval/merchantCheck/aliDirectList.vue'),
+    meta: {
+      title: 'aliDirectList',
+      icon: 'aliDirectList'
+    },
+    children: [
+      {
+        path: 'detail',
+        name: 'aliDirectList',
+        meta: {
+          title: 'aliDirectListDetail',
+          icon: 'aliDirectListDetail'
+        },
+        component: () => import('@/page/approval/merchantCheck/aliDirectListDetail.vue')
+      },
+      {
+        path: 'recordDetail',
+        name: 'aliDirectList',
+        meta: {
+          title: 'aliDirectRecordDetail',
+          icon: 'aliDirectRecordDetail'
+        },
+        component: () => import('@/page/approval/merchantCheck/aliDirectRecordDetail.vue')
+      }
+    ]
+  },
+  'wxDirectList': {
+    path: 'wxDirectList',
+    name: 'wxDirectList',
+    component: () => import('@/page/approval/merchantCheck/wxDirectList.vue'),
+    meta: {
+      title: 'wxDirectList',
+      icon: 'wxDirectList'
+    },
+    children: [
+      {
+        path: 'detail',
+        name: 'wxDirectList',
+        meta: {
+          title: 'wxDirectListDetail',
+          icon: 'wxDirectListDetail'
+        },
+        component: () => import('@/page/approval/merchantCheck/wxDirectListDetail.vue')
+      },
+      {
+        path: 'recordDetail',
+        name: 'wxDirectList',
+        meta: {
+          title: 'wxDirectRecordDetail',
+          icon: 'wxDirectRecordDetail'
+        },
+        component: () => import('@/page/approval/merchantCheck/wxDirectRecordDetail.vue')
+      }
+    ]
+  },
+  'checkService': {
+    path: 'checkService',
+    name: 'checkService',
+    component: () => import('@/page/approval/serviceCheck/serviceCheck.vue'),
+    meta: {
+      title: 'checkService',
+      icon: 'checkService'
+    },
+    children: []
+  },
+  'checkServiceList': {
+    path: 'checkServiceList',
+    name: 'checkServiceList',
+    component: () => import('@/page/approval/serviceCheck/checkServiceList.vue'),
+    meta: {
+      title: 'checkServiceList',
+      icon: 'checkServiceList'
+    },
+    children: [
+      {
+        path: 'detail',
+        name: 'checkServiceList',
+        meta: {
+          title: 'checkServiceListDetail',
+          icon: 'checkServiceListDetail'
+        },
+        component: () => import('@/page/approval/serviceCheck/checkServiceListDetail.vue')
+      }
+    ]
+  },
+  'checkPartner': {
+    path: 'checkPartner',
+    name: 'checkPartner',
+    component: () => import('@/page/approval/partnerCheck/partnerCheck.vue'),
+    meta: {
+      title: 'checkPartner',
+      icon: 'checkPartner'
+    },
+    children: []
+  },
+  'checkPartnerList': {
+    path: 'checkPartnerList',
+    name: 'checkPartnerList',
+    component: () => import('@/page/approval/partnerCheck/checkPartnerList.vue'),
+    meta: {
+      title: 'checkPartnerList',
+      icon: 'checkPartnerList'
+    },
+    children: [
+      {
+        path: 'detail',
+        name: 'checkPartnerList',
+        meta: {
+          title: 'checkPartnerListDetail',
+          icon: 'checkPartnerListDetail'
+        },
+        component: () => import('@/page/approval/partnerCheck/checkPartnerListDetail.vue')
       }
     ]
   }

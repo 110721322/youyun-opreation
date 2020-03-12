@@ -3,7 +3,13 @@
     <div class="title" :style="{background:configData.headColor}">
       {{ configData.name }}
       <slot name="taskDetail"></slot>
-      <el-button v-show="isShowEditBtn" type="primary" class="edit_btn" size="mini">编辑</el-button>
+      <el-button
+        v-show="isShowEditBtn"
+        type="primary"
+        class="edit_btn"
+        size="mini"
+        @click="onClick_edit"
+      >编辑</el-button>
       <el-button v-show="isShowCallBtn" type="primary" class="edit_btn" size="mini">立即沟通</el-button>
     </div>
 
@@ -16,19 +22,28 @@
       label-position="left"
     >
       <el-row>
-        <el-col
-          v-for="(item1, key1) of configData.models"
-          :key="key1"
-          :span="spanWidth?spanWidth:8"
-        >
-          <el-form-item v-for="(item, key) of item1.items" :key="key" :label="item.name + '：'">
+        <el-col v-for="(item, key) of imageList" :key="key" :span="imgWidth?imgWidth:8">
+          <el-form-item>
             <el-image
-              v-if="item.type === 'img'"
-              style="width: 100px; height: 100px"
+              style="width: 100px; height: 100px;display:block;margin: auto;"
               :src="ruleForm[item.key]"
               :preview-src-list="[ruleForm[item.key]]"
             ></el-image>
-            <span v-else class="item-value">{{ ruleForm[item.key] }}</span>
+            <div class="img-des">{{ item.name }}</div>
+            <span v-if="item.type == 'edit'" class="edit_btn">修改</span>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row class="row">
+        <el-col
+          v-for="(item, key) in textList"
+          :key="key"
+          :span="spanWidth?spanWidth:8"
+          class="col"
+        >
+          <i v-if="item.hasIconTime" class="el-icon-time icon-time"></i>
+          <el-form-item :label="item.name + '：'">
+            <span class="item-value">{{ ruleForm[item.key] }}</span>
             <span v-if="item.type == 'edit'" class="edit_btn">修改</span>
           </el-form-item>
         </el-col>
@@ -45,22 +60,44 @@ export default {
     configData: Object,
     isShowEditBtn: Boolean,
     isShowCallBtn: Boolean,
-    spanWidth: Number
+    spanWidth: Number,
+    imgWidth: Number
   },
   data() {
     return {
       rules: {
         name: [{ required: true }]
-      }
+      },
+      imageList: [],
+      textList: []
     };
   },
   computed: {},
+  mounted() {
+    console.log(this.configData.models);
+    this.configData.items.forEach($item => {
+      if ($item.type === "image") {
+        this.imageList.push($item);
+      } else {
+        this.textList.push($item);
+      }
+    });
+  },
 
-  methods: {}
+  methods: {
+    onClick_edit() {
+      this.$emit("edit", this.ruleForm);
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
+.img-des {
+  color: rgba(96, 98, 102, 1);
+  line-height: 22px;
+  text-align: center;
+}
 .border {
   border: 1px solid #ebeef5;
 }
@@ -94,6 +131,19 @@ export default {
       margin-left: 15px;
       cursor: pointer;
     }
+  }
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+.col {
+  position: relative;
+  .icon-time {
+    position: absolute;
+    color: rgb(200, 200, 15);
+    top: 9px;
+    left: -21px;
   }
 }
 </style>

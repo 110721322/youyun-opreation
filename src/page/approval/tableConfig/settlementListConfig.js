@@ -1,25 +1,29 @@
-export const TABLE_CONFIG = {
+export const SETTELMENTLIST_CONFIG = {
   gridConfig: [
     {
-      label: '设备品牌',
-      prop: 'type',
+      label: '商户',
+      prop: 'merchantName',
       width: '150px'
     },
     {
-      label: '设备型号',
-      prop: 'taskName',
+      label: '通道',
+      prop: 'channel',
       width: '150px'
     },
     {
-      label: '设备台数（台）',
-      prop: 'taskName',
-      width: '150px'
-    },
-    {
-      label: '设备标识',
+      label: '提交时间',
       prop: 'time',
-      width: '250px',
-      isEdit: true
+      width: '150px'
+    },
+    {
+      label: '所属运营',
+      prop: 'oper',
+      width: '150px'
+    },
+    {
+      label: '状态',
+      prop: 'status',
+      width: '150px'
     }
   ],
 
@@ -33,38 +37,33 @@ export const TABLE_CONFIG = {
     view: false,
     expands: [
       {
-        name: '完成',
-        emitName: 'okEdit',
+        name: '详情',
+        emitName: 'detail',
         type: 'text',
-        style: 'color:#3ABD2D',
         isShow: ($item) => {
-          if ($item.children) {
-            return false
+          if ($item.showDetail) {
+            return true;
           } else {
-            if ($item.edit) {
-              return true
-            } else {
-              return false
-            }
+            return false
           }
         }
       },
       {
-        name: '编辑',
-        emitName: 'edit',
+        name: '预审核',
+        emitName: 'preApprove',
         type: 'text',
-        style: 'color:#1989FA',
         isShow: ($item) => {
-          if ($item.children) {
-            return false
+          if ($item.showPreApprove) {
+            return true;
           } else {
-            if (!$item.edit) {
-              return true
-            } else {
-              return false
-            }
+            return false
           }
         }
+      },
+      {
+        name: '审核记录',
+        emitName: 'record',
+        type: 'text'
       }
     ]
   },

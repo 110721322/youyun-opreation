@@ -1,9 +1,11 @@
 <template>
-  <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
+  <div class>
+    <router-view
+      v-if="this.$route.path.indexOf('/detail') !== -1||this.$route.path.indexOf('/recordDetail') !== -1"
+    />
     <div v-else>
       <div class="tab_head">
-        <span class="title">商户间连审核</span>
+        <span class="title">下级服务商审核</span>
       </div>
       <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
 
@@ -23,7 +25,6 @@
           :hide-edit-area="configData.hideEditArea"
           @detail="handleDetail"
           @preApprove="handlePreApprove"
-          @record="handleRecord"
         ></BaseCrud>
       </div>
     </div>
@@ -33,19 +34,19 @@
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 
-import { SEARCH_CONFIG } from "./../formConfig/indirectListSearch";
-import { STOCKLIST_CONFIG } from "./../tableConfig/indirectListConfig";
+import { SEARCH_CONFIG } from "./../formConfig/checkServiceListSearch";
+import { CHECKSERVICELIST_CONFIG } from "./../tableConfig/checkServiceListConfig";
 
 export default {
-  name: "IndirectList",
+  name: "CheckServiceList",
   components: { Search, BaseCrud },
   data() {
     return {
       searchConfig: SEARCH_CONFIG,
-      configData: STOCKLIST_CONFIG,
+      configData: CHECKSERVICELIST_CONFIG,
       testData: [],
       direction: "rtl",
-      searchHeight: "260"
+      searchHeight: "320"
     };
   },
   mounted() {
@@ -54,20 +55,12 @@ export default {
   methods: {
     handleDetail() {
       this.$router.push({
-        path: "/check/checkMerchant/indirectList/detail",
-        query: { plan: "detail" }
+        path: "/approval/checkService/checkServiceList/detail"
       });
     },
     handlePreApprove() {
       this.$router.push({
-        path: "/check/checkMerchant/indirectList/detail",
-        query: { plan: "preApprove" }
-      });
-    },
-    handleRecord() {
-      this.$router.push({
-        path: "/check/checkMerchant/indirectList/detail",
-        query: { plan: "record" }
+        path: "/approval/checkService/checkServiceList/detail"
       });
     },
     search() {
@@ -77,24 +70,22 @@ export default {
     getTableData() {
       this.testData = [
         {
-          merchantName: "紫菜网络科技有限公司,ID: 13293127119831938",
           serviceName: "紫菜网络科技有限公司,ID: 13293127119831938",
-          status: ["乐刷", "新大陆", "网商"],
+          status: "驳回",
+          law: "乐刷",
           time: "2014-02-15 16:00:23",
+          oper: "AA",
           showDetail: true
         },
         {
-          merchantName: "紫菜网络科技有限公司,ID: 13293127119831938",
           serviceName: "紫菜网络科技有限公司,ID: 13293127119831938",
-          status: ["乐刷", "新大陆", "网商"],
+          status: "驳回",
+          law: "乐刷",
           time: "2014-02-15 16:00:23",
+          oper: "AA",
           showPreApprove: true
         }
       ];
-    },
-    selectionChange($val) {
-      // eslint-disable-next-line no-console
-      console.log($val);
     }
   }
 };

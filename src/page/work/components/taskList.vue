@@ -12,16 +12,16 @@
       </div>
       <div class="title">{{ item.title }}</div>
       <div class="detail" :style="{width:cssConfig.detailWidth}">
-        <div v-for="(item,index) in listData[index].detail" :key="index">
+        <div v-for="(item1,index1) in listData[index].detail" :key="index1">
           <div
-            v-if="item.label==='失败原因'"
+            v-if="item1.label==='失败原因'"
             class="reason ellipsis"
-          >{{ item.label ? item.label+":"+item.value :item.value }}</div>
+          >{{ item1.label ? item1.label+":"+item1.value :item1.value }}</div>
           <div
-            v-else-if="item.label==='发起人备注'"
+            v-else-if="item1.label==='发起人备注'"
             class="note ellipsis3"
-          >{{ item.label ? item.label+":"+item.value :item.value }}</div>
-          <div v-else>{{ item.label ? item.label+":"+item.value :item.value }}</div>
+          >{{ item1.label ? item1.label+":"+item1.value :item1.value }}</div>
+          <div v-else>{{ item1.label ? item1.label+":"+item1.value :item1.value }}</div>
         </div>
       </div>
       <div v-if="type===1" class="oper-box">
@@ -67,12 +67,13 @@ export default {
         });
       }
       this.changeCheckList();
+    },
+    listData: function($val) {
+      this.checkList.length = this.listData.length;
+      this.checkList.fill(false);
     }
   },
-  mounted() {
-    this.checkList.length = this.listData.length;
-    this.checkList.fill(false);
-  },
+  mounted() {},
   methods: {
     changeCheckList() {
       this.$emit("handleCheckList", this.checkList);

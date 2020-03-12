@@ -1,5 +1,5 @@
 export const TASKLIST_CONFIG = {
-  // Type 1为日常沟通 2为审核 3为已处理
+  // Type 1为日常沟通 2为审核未处理 3为已处理
   dailyType: 1,
   approvalType: 2,
   handleType: 3,
