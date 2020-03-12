@@ -502,6 +502,131 @@ const menuItems = [
         ]
       }
     ]
+  },
+  {
+    text: '系统配置',
+    type: 'ios-paper',
+    name: 'systemConfig',
+    path: 'systemConfig',
+    isShow: true,
+    meta: {
+      title: '系统配置',
+      icon: 'systemConfig'
+    },
+    children: [
+      {
+        text: '成员列表',
+        type: 'ios-paper',
+        name: 'userList',
+        path: 'userList',
+        isShow: true,
+        meta: {
+          title: '成员列表',
+          icon: 'userList'
+        }
+      },
+      {
+        text: '成员管理',
+        type: 'ios-paper',
+        name: 'userManager',
+        path: 'userManager',
+        isShow: true,
+        meta: {
+          title: '成员管理',
+          icon: 'userManager'
+        }
+      },
+      {
+        text: '菜单管理',
+        type: 'ios-paper',
+        name: 'menuManager',
+        path: 'menuManager',
+        isShow: true,
+        meta: {
+          title: '菜单管理',
+          icon: 'menuManager'
+        }
+      },
+      {
+        text: '服务商产品权限',
+        type: 'ios-paper',
+        name: 'agentPowerManager',
+        path: 'agentPowerManager',
+        isShow: true,
+        meta: {
+          title: '服务商产品权限',
+          icon: 'agentPowerManager'
+        },
+        children: [
+          {
+            text: '后台角色权限',
+            type: 'ios-paper',
+            name: 'agentPcManager',
+            path: 'agentPcManager',
+            isShow: true,
+            meta: {
+              title: '后台角色权限',
+              icon: 'agentPcManager'
+            }
+          },
+          {
+            text: '小程序角色权限',
+            type: 'ios-paper',
+            name: 'agentAppletManager',
+            path: 'agentAppletManager',
+            isShow: true,
+            meta: {
+              title: '小程序角色权限',
+              icon: 'agentAppletManager'
+            }
+          }
+        ]
+      },
+      {
+        text: '权限管理',
+        type: 'ios-paper',
+        name: 'powerManager',
+        path: 'powerManager',
+        isShow: true,
+        meta: {
+          title: '权限管理',
+          icon: 'powerManager'
+        }
+      },
+      {
+        text: '审批管理',
+        type: 'ios-paper',
+        name: 'approvalManager',
+        path: 'approvalManager',
+        isShow: true,
+        meta: {
+          title: '审批管理',
+          icon: 'approvalManager'
+        }
+      },
+      {
+        text: '自定义表单',
+        type: 'ios-paper',
+        name: 'customForm',
+        path: 'customForm',
+        isShow: true,
+        meta: {
+          title: '自定义表单',
+          icon: 'customForm'
+        }
+      },
+      {
+        text: '参数设置',
+        type: 'ios-paper',
+        name: 'paramSetting',
+        path: 'paramSetting',
+        isShow: true,
+        meta: {
+          title: '参数设置',
+          icon: 'paramSetting'
+        }
+      }
+    ]
   }
   //   {
   //     text: 'index2',

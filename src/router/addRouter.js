@@ -432,6 +432,116 @@ const asyncRoutes = {
         component: () => import('@/page/check/merchantCheck/indirectListDetail.vue')
       }
     ]
+  },
+  'systemConfig': {
+    path: '/systemConfig',
+    name: 'systemConfig',
+    component: Layout,
+    meta: {
+      title: 'systemConfig',
+      icon: 'systemConfig'
+    },
+    children: []
+  },
+  'userList': {
+    path: 'userList',
+    name: 'userList',
+    component: () => import('@/page/systemConfig/userList.vue'),
+    meta: {
+      title: 'userList',
+      icon: 'userList'
+    },
+    children: []
+  },
+  'userManager': {
+    path: 'userManager',
+    name: 'userManager',
+    component: () => import('@/page/systemConfig/userManager.vue'),
+    meta: {
+      title: 'userManager',
+      icon: 'userManager'
+    },
+    children: []
+  },
+  'menuManager': {
+    path: 'menuManager',
+    name: 'menuManager',
+    component: () => import('@/page/systemConfig/menuManager.vue'),
+    meta: {
+      title: 'menuManager',
+      icon: 'menuManager'
+    },
+    children: []
+  },
+  'approvalManager': {
+    path: 'approvalManager',
+    name: 'approvalManager',
+    component: () => import('@/page/systemConfig/approvalManager.vue'),
+    meta: {
+      title: 'approvalManager',
+      icon: 'approvalManager'
+    },
+    children: []
+  },
+  'customForm': {
+    path: 'customForm',
+    name: 'customForm',
+    component: () => import('@/page/systemConfig/customForm.vue'),
+    meta: {
+      title: 'customForm',
+      icon: 'customForm'
+    },
+    children: []
+  },
+  'paramSetting': {
+    path: 'paramSetting',
+    name: 'paramSetting',
+    component: () => import('@/page/systemConfig/paramSetting.vue'),
+    meta: {
+      title: 'paramSetting',
+      icon: 'paramSetting'
+    },
+    children: []
+  },
+  'powerManager': {
+    path: 'powerManager',
+    name: 'powerManager',
+    component: () => import('@/page/systemConfig/powerManager.vue'),
+    meta: {
+      title: 'powerManager',
+      icon: 'powerManager'
+    },
+    children: []
+  },
+  'agentPowerManager': {
+    path: 'agentPowerManager',
+    name: 'agentPowerManager',
+    component: () => import('@/page/systemConfig/agentPowerManager/agentPowerManager.vue'),
+    meta: {
+      title: 'agentPowerManager',
+      icon: 'agentPowerManager'
+    },
+    children: []
+  },
+  'agentPcManager': {
+    path: 'agentPcManager',
+    name: 'agentPcManager',
+    component: () => import('@/page/systemConfig/agentPowerManager/agentPcManager.vue'),
+    meta: {
+      title: 'agentPcManager',
+      icon: 'agentPcManager'
+    },
+    children: []
+  },
+  'agentAppletManager': {
+    path: 'agentAppletManager',
+    name: 'agentAppletManager',
+    component: () => import('@/page/systemConfig/agentPowerManager/agentAppletManager.vue'),
+    meta: {
+      title: 'agentAppletManager',
+      icon: 'agentAppletManager'
+    },
+    children: []
   }
 }
 const routers = []
