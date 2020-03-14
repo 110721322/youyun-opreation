@@ -25,25 +25,21 @@
         :row-key="'id'"
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
-        @buy="onClick_buy"
+        @perfect="onClick_perfect"
+        @editBasics="onClick_editBasics"
+        @editPost="onClick_editPost"
       ></BaseCrud>
     </div>
 
-    <el-drawer :visible.sync="drawer" :with-header="false">
-      <div class="p_head">{{ fromConfigData.title }}</div>
-      <Form
-        :form-base-data="fromConfigData.formData"
-        :show-foot-btn="fromConfigData.showFootBtn"
-        label-width="130px"
-        @cancel="cancel"
-      ></Form>
+    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
+      <PerfectPost></PerfectPost>
     </el-drawer>
   </div>
 </template>
 <script>
 import Search from "@/components/search/search.vue";
-import Form from "@/components/form/index.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
+import PerfectPost from "./component/perfectPost.vue";
 
 import { FORM_CONFIG } from "./formConfig/deviceDetail";
 import { SEARCH_CONFIG } from "./formConfig/userListSearch";
@@ -51,7 +47,7 @@ import { USERLIST_CONFIG } from "./tableConfig/userManagerConfig";
 
 export default {
   name: "Theme",
-  components: { Search, BaseCrud, Form },
+  components: { Search, BaseCrud, PerfectPost },
   data() {
     return {
       searchMaxHeight: "340",
@@ -60,7 +56,13 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl"
+      innerDrawer: false,
+      direction: "rtl",
+      form: {},
+      defaultProps: {
+        children: "children",
+        label: "label"
+      }
     };
   },
   mounted() {
@@ -111,10 +113,22 @@ export default {
     cancel(done) {
       done();
     },
-    onClick_buy() {
+    onClick_perfect() {
       this.fromConfigData = FORM_CONFIG.buyData;
       this.drawer = true;
-    }
+    },
+    handleClose(done) {
+      this.$confirm("还有未保存的工作哦确定关闭吗？")
+        .then(_ => {
+          done();
+        })
+        .catch(_ => {});
+    },
+    onClick_setPower() {
+      this.innerDrawer = true;
+    },
+    onClick_editPost() {},
+    onClick_editBasics() {}
   }
 };
 </script>
@@ -172,6 +186,27 @@ export default {
   }
   .btn {
     float: right;
+  }
+}
+.foot_btn_box {
+  width: 100%;
+  height: 96px;
+  border-top: 1px solid #ebeef5;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  .foot_btn {
+    width: 113px;
+    height: 40px;
+    margin-top: 28px;
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+  .form_box {
+    margin: 0 59px;
   }
 }
 </style>

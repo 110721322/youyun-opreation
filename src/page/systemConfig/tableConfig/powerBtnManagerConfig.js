@@ -1,21 +1,27 @@
 
-export const MENU_CONFIG = {
+export const POWERBTNMANAGER_CONFIG = {
   gridConfig: [
     {
-      label: '菜单名称',
+      label: '按钮名称',
       prop: 'type',
-      width: '150px'
+      width: '50px'
     },
     {
-      label: '图标',
-      prop: 'taskName',
-      width: '150px'
+      label: '按钮链接',
+      prop: 'type',
+      width: '50px'
     },
     {
-      label: '页面链接',
-      prop: 'image',
-      width: '150px'
+      label: '关闭权限效果',
+      prop: 'type',
+      width: '50px'
+    },
+    {
+      label: '审批操纵',
+      prop: 'type',
+      width: '50px'
     }
+
   ],
 
   // crud的模态框表单配置，可配置表单类型，验证规则，是否必填,col-span布局可通过span参数配置
@@ -27,19 +33,16 @@ export const MENU_CONFIG = {
     delete: false,
     view: false,
     expands: [
-      {
-        name: '添加下级菜单',
-        emitName: 'addSubMenu',
-        type: 'text'
-      },
+
       {
         name: '编辑',
         emitName: 'edit',
         type: 'text'
       },
+
       {
         name: '删除',
-        emitName: 'adopt',
+        emitName: 'delet',
         type: 'text'
       }
     ]

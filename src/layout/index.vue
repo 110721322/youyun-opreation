@@ -127,7 +127,6 @@ export default {
           item.children.forEach(childItem => {
             if (childItem.children) {
               childItem.children.forEach(child2Item => {
-                console.log(this.$route.name);
                 if (child2Item.name === this.$route.name) {
                   this.menu2Data = item.children;
                   this.rootPath = item.path;
@@ -136,9 +135,14 @@ export default {
                 }
               });
             } else {
+              if (childItem.name === this.$route.meta.fatherName) {
+                this.menu2Data = item.children;
+                this.rootPath = item.path;
+                this.currRouter = this.$route.path;
+                return;
+              }
               if (childItem.name === this.$route.name) {
                 this.menu2Data = item.children;
-
                 this.rootPath = item.path;
                 this.currRouter = this.$route.path;
                 return;

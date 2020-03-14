@@ -64,17 +64,17 @@ export const USERLIST_CONFIG = {
     expands: [
       {
         name: '完善岗位信息',
-        emitName: 'adopt',
+        emitName: 'perfect',
         type: 'text'
       },
       {
         name: '编辑基础信息',
-        emitName: 'adopt',
+        emitName: 'editBasics',
         type: 'text'
       },
       {
         name: '编辑岗位信息',
-        emitName: 'adopt',
+        emitName: 'editPost',
         type: 'text'
       }
     ]

@@ -24,7 +24,7 @@ export const USERLIST_CONFIG = {
     expands: [
       {
         name: '编辑',
-        emitName: 'adopt',
+        emitName: 'edit',
         type: 'text'
       }
     ]

@@ -168,7 +168,7 @@ export default {
 
 <style lang="scss" scoped>
 .formTemplate {
-  margin: 40px 59px 0;
+  margin: 40px 20px 0;
 }
 .formTemplate-item {
   margin-right: 20px;

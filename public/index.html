@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -11,36 +12,39 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Cache-control" content="no-cache">
   <meta http-equiv="Cache" content="no-cache">
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1,user-scalable=no">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;"  />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>商户后台</title>
   <!--<script src="./static/fastclick.js"></script>-->
 
 
 </head>
+
 <body>
-<!--<script id="ouer-open-sdk" data-c="hzzhifu" src="//img-cows.kkkd.com/open/sdk-1.2.3.min.js?v=20190701"></script>-->
-<script>
-  (function () {
-    var html = document.documentElement;
+  <!--<script id="ouer-open-sdk" data-c="hzzhifu" src="//img-cows.kkkd.com/open/sdk-1.2.3.min.js?v=20190701"></script>-->
+  <script>
+    (function () {
+      var html = document.documentElement;
 
-    function onWindowResize() {
-      html.style.fontSize = html.getBoundingClientRect().width / 20 + 'px';
-    }
+      function onWindowResize() {
+        html.style.fontSize = html.getBoundingClientRect().width / 20 + 'px';
+      }
 
-    window.addEventListener('resize', onWindowResize);
-    onWindowResize();
+      window.addEventListener('resize', onWindowResize);
+      onWindowResize();
 
 
-    var handle = function(event){
-      event.preventDefault(); //阻止元素发生默认的行为
-    }
-    document.body.addEventListener('touchmove',handle,false);//添加监听事件--页面不可滚动
-  })();
-</script>
-<div id="app"></div>
-<!-- built files will be auto injected -->
+      var handle = function (event) {
+        event.preventDefault(); //阻止元素发生默认的行为
+      }
+      document.body.addEventListener('touchmove', handle, false);//添加监听事件--页面不可滚动
+    })();
+  </script>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
 
 </body>
+
 </html>

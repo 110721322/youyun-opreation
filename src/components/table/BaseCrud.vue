@@ -42,17 +42,19 @@
             :index="scope.$index"
             :render="item.render"
           />
-          <template v-if="scope.row.edit&&item.isEdit">
-            <el-input v-model="scope.row[item.prop]" class="edit-input" size="small" />
-            <el-button
-              class="cancel-btn"
-              size="medium"
-              type="text"
-              @click="cancelEdit(scope.row)"
-            >取消</el-button>
-          </template>
+          <span v-else>
+            <template v-if="scope.row.edit&&item.isEdit">
+              <el-input v-model="scope.row[item.prop]" class="edit-input" size="small" />
+              <el-button
+                class="cancel-btn"
+                size="medium"
+                type="text"
+                @click="cancelEdit(scope.row)"
+              >取消</el-button>
+            </template>
 
-          <span v-else>{{ scope.row[item.prop] }}</span>
+            <span v-else>{{ scope.row[item.prop] }}</span>
+          </span>
         </template>
       </el-table-column>
       <el-table-column
@@ -182,7 +184,6 @@ export default {
   watch: {
     // 防止表格预置数据不成功，涉及生命周期问题
     gridData() {
-      console.log(this.gridData);
       this.showGridData = this.gridData;
     }
   },
@@ -218,7 +219,6 @@ export default {
     },
     // 获取列表数据
     getData() {
-      // console.log(this.gridData);
       this.listLoading = true;
       // let params = {
       //   page: this.currentPage,

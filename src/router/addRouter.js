@@ -62,8 +62,9 @@ const asyncRoutes = {
     children: [
       {
         path: 'detail',
-        name: 'agentList',
+        name: 'agentDetail',
         meta: {
+          fatherName: 'agentList',
           title: 'agentDetail',
           icon: 'agentDetail'
         },
@@ -83,8 +84,9 @@ const asyncRoutes = {
     children: [
       {
         path: 'detail',
-        name: 'agentSubList',
+        name: 'agentSubListDetail',
         meta: {
+          fatherName: 'agentSubList',
           title: 'agentSubListDetail',
           icon: 'agentSubListDetail'
         },
@@ -124,7 +126,7 @@ const asyncRoutes = {
     },
     children: [
       {
-        name: 'work',
+        name: 'index',
         path: 'work',
         component: () => import('@/page/work/workBench.vue')
       }
@@ -314,10 +316,11 @@ const asyncRoutes = {
     children: [
       {
         path: 'detail',
-        name: 'stockSave',
+        name: 'stockDetail',
         meta: {
-          title: 'stockSave',
-          icon: 'stockSave'
+          fatherName: 'stockSave',
+          title: 'stockDetail',
+          icon: 'stockDetail'
         },
         component: () => import('@/page/device/stock/saveDetail.vue')
       }
@@ -334,8 +337,9 @@ const asyncRoutes = {
     children: [
       {
         path: 'detail',
-        name: 'stockOut',
+        name: 'outDetail',
         meta: {
+          fatherName: 'stockOut',
           title: 'outDetail',
           icon: 'outDetail'
         },
@@ -394,10 +398,11 @@ const asyncRoutes = {
     children: [
       {
         path: 'detail',
-        name: 'shopCenter',
+        name: 'shopCenterDetail',
         meta: {
-          title: 'shopCenter',
-          icon: 'shopCenter'
+          fatherName: 'shopCenter',
+          title: 'shopCenterDetail',
+          icon: 'shopCenterDetail'
         },
         component: () => import('@/page/device/shopCenter/shopDetail.vue')
       }
@@ -434,8 +439,9 @@ const asyncRoutes = {
     children: [
       {
         path: 'detail',
-        name: 'indirectList',
+        name: 'indirectListDetail',
         meta: {
+          fatherName: 'indirectList',
           title: 'indirectListDetail',
           icon: 'indirectListDetail'
         },
@@ -443,8 +449,9 @@ const asyncRoutes = {
       },
       {
         path: 'recordDetail',
-        name: 'indirectList',
+        name: 'indirectRecordDetail',
         meta: {
+          fatherName: 'indirectList',
           title: 'indirectRecordDetail',
           icon: 'indirectRecordDetail'
         },
@@ -463,8 +470,9 @@ const asyncRoutes = {
     children: [
       {
         path: 'detail',
-        name: 'settlementList',
+        name: 'settlementListDetail',
         meta: {
+          fatherName: 'settlementList',
           title: 'settlementListDetail',
           icon: 'settlementListDetail'
         },
@@ -472,8 +480,9 @@ const asyncRoutes = {
       },
       {
         path: 'recordDetail',
-        name: 'settlementList',
+        name: 'settlementRecordDetail',
         meta: {
+          fatherName: 'settlementList',
           title: 'settlementRecordDetail',
           icon: 'settlementRecordDetail'
         },
@@ -492,8 +501,9 @@ const asyncRoutes = {
     children: [
       {
         path: 'detail',
-        name: 'aliDirectList',
+        name: 'aliDirectListDetail',
         meta: {
+          fatherName: 'aliDirectList',
           title: 'aliDirectListDetail',
           icon: 'aliDirectListDetail'
         },
@@ -501,8 +511,9 @@ const asyncRoutes = {
       },
       {
         path: 'recordDetail',
-        name: 'aliDirectList',
+        name: 'aliDirectRecordDetail',
         meta: {
+          fatherName: 'aliDirectList',
           title: 'aliDirectRecordDetail',
           icon: 'aliDirectRecordDetail'
         },
@@ -521,8 +532,9 @@ const asyncRoutes = {
     children: [
       {
         path: 'detail',
-        name: 'wxDirectList',
+        name: 'wxDirectListDetail',
         meta: {
+          fatherName: 'wxDirectList',
           title: 'wxDirectListDetail',
           icon: 'wxDirectListDetail'
         },
@@ -530,8 +542,9 @@ const asyncRoutes = {
       },
       {
         path: 'recordDetail',
-        name: 'wxDirectList',
+        name: 'wxDirectRecordDetail',
         meta: {
+          fatherName: 'wxDirectList',
           title: 'wxDirectRecordDetail',
           icon: 'wxDirectRecordDetail'
         },
@@ -560,8 +573,9 @@ const asyncRoutes = {
     children: [
       {
         path: 'detail',
-        name: 'checkServiceList',
+        name: 'checkServiceListDetail',
         meta: {
+          fatherName: 'checkServiceList',
           title: 'checkServiceListDetail',
           icon: 'checkServiceListDetail'
         },
@@ -590,8 +604,9 @@ const asyncRoutes = {
     children: [
       {
         path: 'detail',
-        name: 'checkPartnerList',
+        name: 'checkPartnerListDetail',
         meta: {
+          fatherName: 'checkPartnerList',
           title: 'checkPartnerListDetail',
           icon: 'checkPartnerListDetail'
         },
@@ -677,7 +692,18 @@ const asyncRoutes = {
       title: 'powerManager',
       icon: 'powerManager'
     },
-    children: []
+    children: [
+      {
+        path: 'powerBtnManager',
+        name: 'powerBtnManager',
+        component: () => import('@/page/systemConfig/powerBtnManager.vue'),
+        meta: {
+          fatherName: 'powerManager',
+          title: 'powerBtnManager',
+          icon: 'powerBtnManager'
+        }
+      }
+    ]
   },
   'agentPowerManager': {
     path: 'agentPowerManager',
@@ -733,16 +759,8 @@ const menusToRoutes = function (data) {
     }
     result.push(curr)
   })
-
-  // children.push({
-  //     path: 'error',
-  //     name: 'error',
-  //     component: () => import('../page/404/404.vue')
-  // })
-
   // 最后添加404页面 否则会在登陆成功后跳到404页面
   result.push({ path: '*', redirect: '/error' })
-  console.log(result);
   return result
 }
 

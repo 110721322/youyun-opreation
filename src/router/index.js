@@ -709,7 +709,7 @@ const menuItems = [
 ]
 localStorage.setItem('menus', JSON.stringify(menuItems))
 
-console.log(currRouter.menusToRoutes(menuItems));
+// console.log(currRouter.menusToRoutes(menuItems));
 router.addRoutes(currRouter.menusToRoutes(menuItems))
 router.beforeEach((to, from, next) => {
   document.title = '商家管理系统'

@@ -1,44 +1,48 @@
 <template>
   <div class="main_page">
-    <div class="tab_head">
-      <span class="title">权限管理</span>
-    </div>
+    <router-view v-if="this.$route.path.indexOf('/powerBtnManager') !== -1" />
+    <div v-else>
+      <div class="tab_head">
+        <span class="title">权限管理</span>
+      </div>
 
-    <div class="table_box">
-      <BaseCrud
-        :grid-config="configData.gridConfig"
-        :grid-btn-config="configData.gridBtnConfig"
-        :grid-data="testData"
-        :form-config="configData.formConfig"
-        :form-data="configData.formModel"
-        :grid-edit-width="150"
-        :is-async="true"
-        :is-select="false"
-        :is-expand="false"
-        :row-key="'id'"
-        :default-expand-all="false"
-        :hide-edit-area="configData.hideEditArea"
-        @buy="onClick_buy"
-      ></BaseCrud>
-    </div>
+      <div class="table_box">
+        <BaseCrud
+          :grid-config="configData.gridConfig"
+          :grid-btn-config="configData.gridBtnConfig"
+          :grid-data="testData"
+          :form-config="configData.formConfig"
+          :form-data="configData.formModel"
+          :grid-edit-width="150"
+          :is-async="true"
+          :is-select="false"
+          :is-expand="false"
+          :row-key="'id'"
+          :default-expand-all="false"
+          :hide-edit-area="configData.hideEditArea"
+          @add="onClick_add"
+          @btns="onClick_btns"
+        ></BaseCrud>
+      </div>
 
-    <el-drawer :visible.sync="drawer" :with-header="false">
-      <div class="p_head">{{ fromConfigData.title }}</div>
-      <Form
-        :form-base-data="fromConfigData.formData"
-        :show-foot-btn="fromConfigData.showFootBtn"
-        label-width="130px"
-        @cancel="cancel"
-      ></Form>
-    </el-drawer>
+      <el-drawer :visible.sync="drawer" :with-header="false">
+        <div class="p_head">{{ fromConfigData.title }}</div>
+        <Form
+          :form-base-data="fromConfigData.formData"
+          :show-foot-btn="fromConfigData.showFootBtn"
+          label-width="130px"
+          @cancel="cancel"
+        ></Form>
+      </el-drawer>
+    </div>
   </div>
 </template>
 <script>
 import Form from "@/components/form/index.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 
-import { FORM_CONFIG } from "./formConfig/deviceDetail";
-import { USERLIST_CONFIG } from "./tableConfig/approvalManagerConfig";
+import { FORM_CONFIG } from "./formConfig/powerDetail";
+import { POWERMANAGER_CONFIG } from "./tableConfig/powerManagerConfig";
 
 export default {
   name: "Theme",
@@ -46,7 +50,7 @@ export default {
   data() {
     return {
       searchMaxHeight: "340",
-      configData: USERLIST_CONFIG,
+      configData: POWERMANAGER_CONFIG,
       fromConfigData: {},
       testData: [],
       drawer: false,
@@ -74,7 +78,24 @@ export default {
           amount: "222.22",
           image:
             "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          reason: "银行卡账号错误，服务商无法联系"
+          reason: "银行卡账号错误，服务商无法联系",
+          btnList: [{ name: "详情" }, { name: "详情" }, { name: "详情" }],
+          children: [
+            {
+              id: 3,
+              type: "日常任务",
+              taskName: "商户结算失败",
+              num: "4",
+              oper: "提醒",
+              name: "XXXX店铺",
+              time: "20:00:23",
+              amount: "222.22",
+              image:
+                "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
+              reason: "银行卡账号错误，服务商无法联系",
+              btnList: [{ name: "详情" }, { name: "详情" }, { name: "详情" }]
+            }
+          ]
         },
         {
           id: 2,
@@ -87,7 +108,8 @@ export default {
           image:
             "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
           amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系"
+          reason: "银行卡账号错误，服务商无法联系",
+          btnList: [{ name: "详情" }, { name: "详情" }, { name: "详情" }]
         }
       ];
     },
@@ -102,9 +124,14 @@ export default {
     cancel(done) {
       done();
     },
-    onClick_buy() {
+    onClick_add() {
       this.fromConfigData = FORM_CONFIG.buyData;
       this.drawer = true;
+    },
+    onClick_btns() {
+      this.$router.push({
+        path: "/systemConfig/powerManager/powerBtnManager"
+      });
     }
   }
 };

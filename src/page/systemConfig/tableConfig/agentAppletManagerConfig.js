@@ -1,19 +1,14 @@
 
-export const MENU_CONFIG = {
+export const AGENTAPPLET_CONFIG = {
   gridConfig: [
     {
-      label: '菜单名称',
+      label: '按钮名称',
       prop: 'type',
       width: '150px'
     },
     {
-      label: '图标',
+      label: '所属页面',
       prop: 'taskName',
-      width: '150px'
-    },
-    {
-      label: '页面链接',
-      prop: 'image',
       width: '150px'
     }
   ],
@@ -28,18 +23,8 @@ export const MENU_CONFIG = {
     view: false,
     expands: [
       {
-        name: '添加下级菜单',
-        emitName: 'addSubMenu',
-        type: 'text'
-      },
-      {
         name: '编辑',
         emitName: 'edit',
-        type: 'text'
-      },
-      {
-        name: '删除',
-        emitName: 'adopt',
         type: 'text'
       }
     ]

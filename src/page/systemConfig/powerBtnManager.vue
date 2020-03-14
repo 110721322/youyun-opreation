@@ -1,12 +1,13 @@
 <template>
   <div class="main_page">
     <div class="tab_head">
-      <span class="title">菜单管理</span>
+      <span class="title">编辑按钮</span>
     </div>
 
     <div class="table_box">
       <div class="tabale_title_box">
-        <el-button class="btn" type="primary" @click="onClick_add">添加一级菜单</el-button>
+        所属页面：工作台
+        <el-button class="btn" type="primary" @click="onClick_add">添加按钮</el-button>
       </div>
       <BaseCrud
         :grid-config="configData.gridConfig"
@@ -21,8 +22,8 @@
         :row-key="'id'"
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
-        @addSubMenu="onClick_addSubMenu"
-        @edit="onClick_edit"
+        @add="onClick_add"
+        @btns="onClick_btns"
       ></BaseCrud>
     </div>
 
@@ -31,7 +32,7 @@
       <Form
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
-        label-width="100px"
+        label-width="130px"
         @cancel="cancel"
       ></Form>
     </el-drawer>
@@ -41,8 +42,8 @@
 import Form from "@/components/form/index.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 
-import { FORM_CONFIG } from "./formConfig/menuDetail";
-import { MENU_CONFIG } from "./tableConfig/menuManagerConfig";
+import { FORM_CONFIG } from "./formConfig/powerBtnDetail";
+import { POWERBTNMANAGER_CONFIG } from "./tableConfig/powerBtnManagerConfig";
 
 export default {
   name: "Theme",
@@ -50,7 +51,7 @@ export default {
   data() {
     return {
       searchMaxHeight: "340",
-      configData: MENU_CONFIG,
+      configData: POWERBTNMANAGER_CONFIG,
       fromConfigData: {},
       testData: [],
       drawer: false,
@@ -79,36 +80,7 @@ export default {
           image:
             "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
           reason: "银行卡账号错误，服务商无法联系",
-          children: [
-            {
-              id: 12,
-              type: "日常任务111",
-              taskName: "商户结算失败",
-              num: "4",
-              oper: "提醒",
-              name: "XXXX店铺",
-              time: "20:00:23",
-              image:
-                "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-              amount: "222.22",
-              reason: "银行卡账号错误，服务商无法联系",
-              children: [
-                {
-                  id: 122,
-                  type: "日常任务111",
-                  taskName: "商户结算失败",
-                  num: "4",
-                  oper: "提醒",
-                  name: "XXXX店铺",
-                  time: "20:00:23",
-                  image:
-                    "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-                  amount: "222.22",
-                  reason: "银行卡账号错误，服务商无法联系"
-                }
-              ]
-            }
-          ]
+          btnList: [{ name: "详情" }, { name: "详情" }, { name: "详情" }]
         },
         {
           id: 2,
@@ -129,25 +101,18 @@ export default {
       // eslint-disable-next-line no-console
       console.log($val);
     },
-    onClick_add() {
-      this.fromConfigData = FORM_CONFIG.deviceData;
-      this.drawer = true;
-    },
-    onClick_addSubMenu() {
-      this.fromConfigData = FORM_CONFIG.deviceData;
-      this.drawer = true;
-    },
-    onClick_edit() {
+    onClick_addUser() {
       this.fromConfigData = FORM_CONFIG.deviceData;
       this.drawer = true;
     },
     cancel(done) {
       done();
     },
-    onClick_buy() {
+    onClick_add() {
       this.fromConfigData = FORM_CONFIG.buyData;
       this.drawer = true;
-    }
+    },
+    onClick_btns() {}
   }
 };
 </script>

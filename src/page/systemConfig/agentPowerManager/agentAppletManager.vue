@@ -18,39 +18,99 @@
         :row-key="'id'"
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
-        @buy="onClick_buy"
+        @edit="onClick_edit"
       ></BaseCrud>
     </div>
 
     <el-drawer :visible.sync="drawer" :with-header="false">
-      <div class="p_head">{{ fromConfigData.title }}</div>
-      <Form
-        :form-base-data="fromConfigData.formData"
-        :show-foot-btn="fromConfigData.showFootBtn"
-        label-width="130px"
-        @cancel="cancel"
-      ></Form>
+      <div class="p_head">小程序角色权限</div>
+      <el-tree
+        :data="data"
+        show-checkbox
+        node-key="id"
+        :default-expanded-keys="[2, 3]"
+        :default-checked-keys="[5]"
+        :props="defaultProps"
+        style="margin:24px"
+      ></el-tree>
+      <div class="foot_btn_box">
+        <el-button type="primary" class="foot_btn">确定</el-button>
+        <el-button class="foot_btn">取消</el-button>
+      </div>
     </el-drawer>
   </div>
 </template>
 <script>
-import Form from "@/components/form/index.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 
 import { FORM_CONFIG } from "./../formConfig/deviceDetail";
-import { USERLIST_CONFIG } from "./../tableConfig/approvalManagerConfig";
+import { AGENTAPPLET_CONFIG } from "./../tableConfig/agentAppletManagerConfig";
 
 export default {
   name: "Theme",
-  components: { BaseCrud, Form },
+  components: { BaseCrud },
   data() {
     return {
       searchMaxHeight: "340",
-      configData: USERLIST_CONFIG,
+      configData: AGENTAPPLET_CONFIG,
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl"
+      direction: "rtl",
+      data: [
+        {
+          id: 1,
+          label: "一级 1",
+          children: [
+            {
+              id: 4,
+              label: "二级 1-1",
+              children: [
+                {
+                  id: 9,
+                  label: "三级 1-1-1"
+                },
+                {
+                  id: 10,
+                  label: "三级 1-1-2"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: 2,
+          label: "一级 2",
+          children: [
+            {
+              id: 5,
+              label: "二级 2-1"
+            },
+            {
+              id: 6,
+              label: "二级 2-2"
+            }
+          ]
+        },
+        {
+          id: 3,
+          label: "一级 3",
+          children: [
+            {
+              id: 7,
+              label: "二级 3-1"
+            },
+            {
+              id: 8,
+              label: "二级 3-2"
+            }
+          ]
+        }
+      ],
+      defaultProps: {
+        children: "children",
+        label: "label"
+      }
     };
   },
   mounted() {
@@ -102,8 +162,7 @@ export default {
     cancel(done) {
       done();
     },
-    onClick_buy() {
-      this.fromConfigData = FORM_CONFIG.buyData;
+    onClick_edit() {
       this.drawer = true;
     }
   }
@@ -163,6 +222,29 @@ export default {
   }
   .btn {
     float: right;
+  }
+}
+.foot_btn_box {
+  width: 100%;
+  height: 96px;
+  border-top: 1px solid #ebeef5;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+
+  .foot_btn {
+    width: 113px;
+    height: 40px;
+    margin-top: 28px;
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+
+  .form_box {
+    margin: 0 59px;
   }
 }
 </style>
