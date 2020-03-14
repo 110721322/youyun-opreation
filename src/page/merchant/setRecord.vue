@@ -51,7 +51,7 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import { ERR_CONFIG } from "./tableConfig/errRecordConfig";
 import { SUCCESS_CONFIG } from "./tableConfig/successRecordConfig";
 import { UNEWTTLED_CONFIG } from "./tableConfig/unsettledRecordConfig";
-import { FORM_CONFIG } from "./formConfig/merchantListSearch";
+import { FORM_CONFIG } from "./formConfig/setRecordSearch";
 
 export default {
   name: "Theme",

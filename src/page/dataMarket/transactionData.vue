@@ -30,7 +30,7 @@
             </div>
             <el-tooltip class="item" effect="dark" :content="item.tooltip" placement="bottom">
               <div class="progress-box">
-                <img src class="data-img" />
+                <img :src="smileImg" class="data-img" />
                 <el-progress
                   :percentage="50"
                   color="rgba(58,189,45,1)"
@@ -51,7 +51,7 @@
             <span class="dot_blue" />订单总交易额
             <span class="dot_green" />刷脸总交易额
             <div class="change-btn" @click="onClick_changeArts">
-              <img src class="change-icon" />
+              <img :src="toggleImg" class="change-icon" />
               {{ isLineShow ? '切换柱状图' : '切换折线图' }}
             </div>
           </div>
@@ -91,14 +91,18 @@ import dataItem from "./components/dataItem.vue";
 import search from "@/components/search/search.vue";
 // import BaseCrud from '@/components/table/BaseCrud.vue';
 import { FORM_CONFIG, FORM_CONFIG2 } from "./formConfig/dataViewSearch";
+import smileImg from "@/assets/img/smile.png";
+import toggleImg from "@/assets/img/toggle.png";
 export default {
   name: "Theme",
   components: { search, dataItem },
   data() {
     return {
+      smileImg: smileImg,
+      toggleImg: toggleImg,
       searchConfig: FORM_CONFIG,
       searchConfig2: FORM_CONFIG2,
-      searchMaxHeight: "320",
+      searchMaxHeight: "380",
       activeIndex: "1",
       testData: [],
       payWay: "all",

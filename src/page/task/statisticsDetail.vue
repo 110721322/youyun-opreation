@@ -15,7 +15,12 @@
 
     <transition name="fade">
       <div>
-        <Search :is-show-all="true" :form-base-data="searchConfig.formData" @search="search" />
+        <Search
+          :is-show-all="true"
+          :form-base-data="searchConfig.formData"
+          :open-height="searchMaxHeight"
+          @search="search"
+        />
         <data-mode :config-data="modeConfigData" />
         <div class="table_box">
           <BaseCrud
@@ -78,7 +83,7 @@ export default {
           data: "555个"
         }
       ],
-      searchMaxHeight: "240",
+      searchMaxHeight: "260",
       activeIndex: "1",
       configData: UNFINISH_CONFIG,
       testData: [],

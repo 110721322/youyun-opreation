@@ -1,4 +1,4 @@
-export const SEARCH_CONFIG = {
+export const FORM_CONFIG = {
   formData: [
     {
       type: 9,
@@ -8,56 +8,30 @@ export const SEARCH_CONFIG = {
       labelWidth: '100px'
     },
     {
-      type: 1,
-      label: '设备型号',
-      key: 'type',
+      type: 0,
+      label: '公司名称',
+      key: 'companyName',
       style: 'width:294px',
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
+      labelWidth: '100px'
     },
     {
       type: 0,
-      label: '购买服务商',
-      key: 'buyService',
+      label: '法人姓名',
+      key: 'lawName',
       style: 'width:294px',
       labelWidth: '185px'
     },
     {
-      type: 1,
-      label: '状态',
-      key: 'status',
+      type: 0,
+      label: '法人手机号',
+      key: 'phone',
       style: 'width:294px',
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
+      labelWidth: '100px'
     },
     {
       type: 1,
-      label: '销售人员',
-      key: 'saleman',
+      label: '服务商类型',
+      key: 'type',
       style: 'width:294px',
       labelWidth: '185px',
       options: [
@@ -77,9 +51,10 @@ export const SEARCH_CONFIG = {
     },
     {
       type: 1,
-      label: '出库人员',
-      key: 'outman',
+      label: '状态',
+      key: 'status',
       style: 'width:294px',
+      labelWidth: '100px',
       options: [
         {
           label: '川菜',
@@ -94,13 +69,6 @@ export const SEARCH_CONFIG = {
           value: 2
         }
       ]
-    },
-    {
-      type: 0,
-      label: '订单号',
-      key: 'orderId',
-      style: 'width:294px',
-      labelWidth: '185px'
     }
   ]
 }

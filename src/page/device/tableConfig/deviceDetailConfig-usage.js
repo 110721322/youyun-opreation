@@ -8,38 +8,38 @@ export const DEVICEDETAIL_CONFIG = {
       hasImg: true,
       imgUrl: icon,
       emitName: 'showLife',
-      imgStyle: 'width:16px;height:16px;cursor:pointer'
+      imgStyle: 'width:16px;height:16px;cursor:pointer;vertical-align: middle;margin-left: 5px;'
     },
-    {
-      label: '',
-      prop: 'id',
-      width: '1px',
-      customIsExpand: true
-    },
+    // {
+    //   label: '',
+    //   prop: 'id',
+    //   width: '1px',
+    //   customIsExpand: true
+    // },
 
     {
       label: '设备标识',
-      prop: 'taskName',
+      prop: 'logo',
       width: '150px'
     },
     {
       label: '所属商户',
-      prop: 'taskName',
+      prop: 'merchantProvider',
       width: '150px'
     },
     {
       label: '所属服务商',
-      prop: 'time',
+      prop: 'serviceProvider',
       width: '150px'
     },
     {
       label: '订单数量（笔）',
-      prop: 'time',
+      prop: 'orderNum',
       width: '150px'
     },
     {
       label: '交易额（元）',
-      prop: 'time',
+      prop: 'amount',
       width: '150px'
     }
   ],

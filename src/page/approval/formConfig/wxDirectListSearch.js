@@ -12,8 +12,7 @@ export const SEARCH_CONFIG = {
       type: 0,
       label: '商户ID',
       key: 'id',
-      style: 'width:294px',
-      labelWidth: '185px'
+      style: 'width:294px'
     },
     {
       type: 0,
@@ -27,7 +26,6 @@ export const SEARCH_CONFIG = {
       label: '状态',
       key: 'status',
       style: 'width:294px',
-      labelWidth: '185px',
       options: [
         {
           label: '待审核',

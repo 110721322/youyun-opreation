@@ -113,7 +113,14 @@ const asyncRoutes = {
       title: 'dividedOverview',
       icon: 'dividedOverview'
     },
-    component: () => import('@/page/agent/dividedOverview.vue')
+    component: () => import('@/page/agent/dividedOverview.vue'),
+    children: [
+      {
+        name: 'dividedOverview',
+        path: 'detail',
+        component: () => import('@/page/agent/dividedOverviewDetail.vue')
+      }
+    ]
   },
 
   'work': {

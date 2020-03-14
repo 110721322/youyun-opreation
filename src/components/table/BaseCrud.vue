@@ -4,6 +4,7 @@
 
     <!--crud主体内容区，展示表格内容-->
     <el-table
+      :ref="refName"
       v-loading="listLoading"
       :data="showGridData"
       style="width: 100%;font-size:14px"
@@ -18,7 +19,12 @@
       @sort-change="sortDate"
     >
       <el-table-column v-if="isSelect" type="selection" width="55" />
-      <el-table-column v-if="isExpand" type="expand" width="55">
+      <el-table-column
+        v-if="isExpand"
+        type="expand"
+        :class-name="hideExpendColumn?'hide-expand-icon':''"
+        :width="hideExpendColumn?1:55"
+      >
         <template slot-scope="scope">
           <slot :row="scope.row" />
         </template>
@@ -52,8 +58,14 @@
                 @click="cancelEdit(scope.row)"
               >取消</el-button>
             </template>
-
             <span v-else>{{ scope.row[item.prop] }}</span>
+            <template v-if="item.hasImg">
+              <img
+                :src="item.imgUrl"
+                :style="item.imgStyle"
+                @click="onClick_handleToggle(scope.row)"
+              />
+            </template>
           </span>
         </template>
       </el-table-column>
@@ -160,7 +172,9 @@ export default {
     "defaultExpandAll",
     "headerCellStyle",
     "border",
-    "expands"
+    "expands",
+    "refName",
+    "hideExpendColumn"
   ],
   data() {
     return {
@@ -191,6 +205,11 @@ export default {
     this.getData();
   },
   methods: {
+    onClick_handleToggle($row) {
+      if (this.$refs[this.refName]) {
+        this.$refs[this.refName].toggleRowExpansion($row);
+      }
+    },
     sortDate: function(val) {
       if (undefined === this.showGridData || this.showGridData.length === 0) {
         return;
@@ -320,5 +339,10 @@ export default {
   &:nth-child(3) {
     background: rgba(0, 0, 0, 0.25);
   }
+}
+</style>
+<style>
+.hide-expand-icon .el-table__expand-icon {
+  visibility: hidden;
 }
 </style>

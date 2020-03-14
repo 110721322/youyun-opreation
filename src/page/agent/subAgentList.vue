@@ -37,7 +37,7 @@ import search from "@/components/search/search.vue";
 // import dataMode from '@/components/dataMode/dataMode.vue'
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { USER_CONFIG } from "./tableConfig/subAgentConfig";
-import { FORM_CONFIG } from "./formConfig/agentListSearch";
+import { FORM_CONFIG } from "./formConfig/subAgentListSearch";
 
 export default {
   name: "Theme",
@@ -46,7 +46,7 @@ export default {
 
   data() {
     return {
-      searchMaxHeight: "340",
+      searchMaxHeight: "380",
       configData: USER_CONFIG,
       searchConfig: FORM_CONFIG,
       testData: [],

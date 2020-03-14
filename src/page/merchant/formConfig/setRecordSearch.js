@@ -1,4 +1,4 @@
-export const SEARCH_CONFIG = {
+export const FORM_CONFIG = {
   formData: [
     {
       type: 9,
@@ -8,9 +8,27 @@ export const SEARCH_CONFIG = {
       labelWidth: '100px'
     },
     {
+      type: 10,
+      label: '精准筛选',
+      key: '',
+      class: 'max-width',
+      placeholder: "请输入商户号",
+      options: [
+        {
+          label: '服务商ID',
+          value: 'id'
+        },
+        {
+          label: '服务商名称',
+          value: 'name'
+        }
+      ],
+      labelWidth: '100px'
+    },
+    {
       type: 1,
-      label: '设备型号',
-      key: 'tag',
+      label: '交易通道',
+      key: 'useChannel',
       style: 'width:294px',
       options: [
         {

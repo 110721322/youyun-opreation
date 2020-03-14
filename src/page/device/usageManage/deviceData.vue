@@ -1,7 +1,7 @@
 <template>
-  <div class="main_page">
+  <div class>
     <div class="tab_head">
-      <span class="title">任务统计详情</span>
+      <span class="title">设备数据</span>
       <el-menu
         :default-active="activeIndex"
         class="el-menu"

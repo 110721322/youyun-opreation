@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div class>
     <search
       :open-height="searchMaxHeight"
       :form-base-data="searchConfig.formData"
@@ -18,27 +18,39 @@
         :is-async="true"
         :custom-is-expand="true"
         :row-key="'id'"
+        :is-expand="true"
         :hide-edit-area="configData.hideEditArea"
+        :ref-name="'deviceDetailTable'"
+        :hide-expend-column="true"
         @showLife="onClick_showLife"
       >
-        <div>123123123123123</div>
+        <template v-slot="{ row }">
+          <deviceDetailProcess :row="row"></deviceDetailProcess>
+        </template>
       </BaseCrud>
     </div>
   </div>
 </template>
 <script>
+import iconRuku from "@/assets/img/ruku.png";
+import iconChuku from "@/assets/img/chuku.png";
+import iconBingMerchant from "@/assets/img/bingMerchant.png";
+import iconUnbing from "@/assets/img/unbing.png";
+import iconGenerateTransaction from "@/assets/img/generateTransaction.png";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 
 import { SEARCH_CONFIG } from "./../../formConfig/deviceDetailSearch-usage";
 import { DEVICEDETAIL_CONFIG } from "./../../tableConfig/deviceDetailConfig-usage";
 
+import deviceDetailProcess from "./deviceDetailProcess.vue";
+
 export default {
   name: "Theme",
-  components: { Search, BaseCrud },
+  components: { Search, BaseCrud, deviceDetailProcess },
   data() {
     return {
-      searchMaxHeight: "340",
+      searchMaxHeight: "320",
       searchConfig: SEARCH_CONFIG,
       configData: DEVICEDETAIL_CONFIG,
       fromConfigData: {},
@@ -58,48 +70,106 @@ export default {
     getTableData() {
       this.testData = [
         {
-          id: 1,
-          type: "日常任务",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          reason: "银行卡账号错误，服务商无法联系",
-          deviceList: [
+          type: 1,
+          id: "34534",
+          logo: "商户结算失败",
+          merchantProvider: "4",
+          serviceProvider: "提醒",
+          orderNum: "XXXX店铺",
+          amount: "20:00:23",
+          rowExpandCover: true,
+          processList: [
             {
-              name: "蜻蜓F4",
-              value: "10"
+              icon: iconRuku,
+              label: "入库",
+              time: "2016-12-12 "
             },
             {
-              name: "青蛙pro",
-              value: "20"
+              icon: iconChuku,
+              label: "出库",
+              time: "2016-12-12 "
+            },
+            {
+              icon: iconBingMerchant,
+              label: "绑定商户",
+              time: "2016-12-12 "
+            },
+            {
+              icon: iconGenerateTransaction,
+              label: "产生交易",
+              time: "2016-12-12 "
+            },
+            {
+              icon: iconUnbing,
+              label: "解绑",
+              time: "2016-12-12 "
+            },
+            {
+              icon: iconBingMerchant,
+              label: "绑定商户",
+              time: "2016-12-12 "
+            },
+            {
+              icon: iconUnbing,
+              label: "解绑",
+              time: "2016-12-12 "
+            },
+            {
+              icon: iconBingMerchant,
+              label: "绑定商户",
+              time: "2016-12-12 "
+            },
+            {
+              icon: iconUnbing,
+              label: "解绑",
+              time: "2016-12-12 "
+            },
+            {
+              icon: iconBingMerchant,
+              label: "绑定商户",
+              time: "2016-12-12 "
             }
           ]
         },
         {
-          id: 2,
-          type: "日常任务",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系",
-          deviceList: [
+          type: 1,
+          id: "344",
+          logo: "商户结算失败",
+          merchantProvider: "4",
+          serviceProvider: "提醒",
+          orderNum: "XXXX店铺",
+          amount: "20:00:23",
+          rowExpandCover: true,
+          processList: [
             {
-              name: "蜻蜓F4",
-              value: "10"
+              icon: iconRuku,
+              label: "入库",
+              time: "2016-12-12 "
             },
             {
-              name: "青蛙pro",
-              value: "20"
+              icon: iconChuku,
+              label: "出库",
+              time: "2016-12-12 "
+            },
+            {
+              icon: iconBingMerchant,
+              label: "绑定商户",
+              time: "2016-12-12 "
+            },
+            {
+              icon: iconGenerateTransaction,
+              label: "产生交易",
+              time: "2016-12-12 "
+            },
+            {
+              icon: iconUnbing,
+              label: "解绑",
+              time: "2016-12-12 "
+            },
+            {
+              icon: iconBingMerchant,
+              label: "绑定商户",
+              time: "2016-12-12 "
             }
           ]
         }
