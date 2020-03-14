@@ -1,113 +1,120 @@
 <template>
   <div class="main_page">
-    <div class="p_head">服务商数据</div>
-    <div class="title">服务器数量分布</div>
-    <div class="map-box">
-      <div class="chart-box">
-        <div ref="echartsMap" class="chart-panel"></div>
-      </div>
-      <div class="data-box">
-        <div class="data-title">
-          省份分布排行榜
-          <span class="all-num">共33940个</span>
+    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
+    <div v-else>
+      <div class="p_head">服务商数据</div>
+      <div class="title">服务器数量分布</div>
+      <div class="map-box">
+        <div class="chart-box">
+          <div ref="echartsMap" class="chart-panel"></div>
         </div>
-        <div v-for="(item,index) in mapData" :key="index" class="data-item">
-          <div class="data-left">
-            <span :class="['index',index<=2?'hightlight':'normal']">{{ index+1 }}</span>
-            {{ item.name }}
+        <div class="data-box">
+          <div class="data-title">
+            省份分布排行榜
+            <span class="all-num">共33940个</span>
           </div>
-          <div class="data-right">
-            <span>{{ item.num }}</span> |
-            <span class="perc">{{ item.perc }}</span>
+          <div v-for="(item,index) in mapData" :key="index" class="data-item">
+            <div class="data-left">
+              <span :class="['index',index<=2?'hightlight':'normal']">{{ index+1 }}</span>
+              {{ item.name }}
+            </div>
+            <div class="data-right">
+              <span>{{ item.num }}</span> |
+              <span class="perc">{{ item.perc }}</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="service-box">
-      <pie
-        :pie-option="pieOptionList[0]"
-        :data-list="dataList[0]"
-        :ref-name="'echartPie0'"
-        :pie-style="pieStyle"
-      ></pie>
-      <pie
-        :pie-option="pieOptionList[0]"
-        :data-list="dataList[0]"
-        :ref-name="'echartPie1'"
-        :pie-style="pieStyle"
-      ></pie>
-      <pie
-        :pie-option="pieOptionList[0]"
-        :data-list="dataList[0]"
-        :ref-name="'echartPie2'"
-        :pie-style="pieStyle"
-      ></pie>
-    </div>
-    <search
-      :is-show-all="true"
-      :form-base-data="searchConfig.formData"
-      :show-foot-btn="searchConfig.showFootBtn"
-      @search="search"
-    />
-    <div class="title">商户平均交易额走势</div>
-    <div class="trend-box">
-      <div class="chart-box">
-        <div ref="echartsLine" class="chart-panel"></div>
+      <div class="service-box">
+        <pie
+          :pie-option="pieOptionList[0]"
+          :data-list="dataList[0]"
+          :ref-name="'echartPie0'"
+          :pie-style="pieStyle"
+        ></pie>
+        <pie
+          :pie-option="pieOptionList[0]"
+          :data-list="dataList[0]"
+          :ref-name="'echartPie1'"
+          :pie-style="pieStyle"
+        ></pie>
+        <pie
+          :pie-option="pieOptionList[0]"
+          :data-list="dataList[0]"
+          :ref-name="'echartPie2'"
+          :pie-style="pieStyle"
+        ></pie>
       </div>
-      <div class="data-box">
-        <dataItem
-          :is-show-table="true"
-          :title="'总交易额排行榜'"
+      <search
+        :is-show-all="true"
+        :form-base-data="searchConfig.formData"
+        :show-foot-btn="searchConfig.showFootBtn"
+        @search="search"
+      />
+      <div class="title">商户平均交易额走势</div>
+      <div class="trend-box">
+        <div class="chart-box">
+          <div ref="echartsLine" class="chart-panel"></div>
+        </div>
+        <div class="data-box">
+          <dataItem
+            :is-show-table="true"
+            :title="'总交易额排行榜'"
+            :is-show-more="true"
+            :config-data="tableConfigData5"
+            :item-test-data="testData5"
+            :is-show-line="false"
+            :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
+            @showMore="handleShowMore"
+          ></dataItem>
+        </div>
+      </div>
+      <div class="pie-box">
+        <data-item
+          class="pie-item"
+          :radio="radioListData[0]"
+          :title="'交易额涨跌排行'"
+          :config-data="tableConfigData"
           :is-show-more="true"
-          :config-data="tableConfigData5"
-          :item-test-data="testData5"
-          :is-show-line="false"
+          :is-show-table="true"
+          :item-test-data="testData"
           :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
-        ></dataItem>
+        />
+        <dataItem
+          class="pie-item"
+          :title="'交易额涨跌排行'"
+          :config-data="tableConfigData2"
+          :is-show-more="true"
+          :is-show-table="true"
+          :item-test-data="testData2"
+          :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
+          @showMore="handleShowMore"
+        />
       </div>
-    </div>
-    <div class="pie-box">
-      <data-item
-        class="pie-item"
-        :radio="radioListData[0]"
-        :title="'交易额涨跌排行'"
-        :config-data="tableConfigData"
-        :is-show-more="true"
-        :is-show-table="true"
-        :item-test-data="testData"
-        :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
-      />
-      <dataItem
-        class="pie-item"
-        :title="'交易额涨跌排行'"
-        :config-data="tableConfigData2"
-        :is-show-more="true"
-        :is-show-table="true"
-        :item-test-data="testData2"
-        :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
-      />
-    </div>
-    <div class="pie-box">
-      <dataItem
-        class="pie-item"
-        :radio="radioListData[1]"
-        :title="'无交易商户上期排行'"
-        :config-data="tableConfigData3"
-        :is-show-more="true"
-        :is-show-table="true"
-        :item-test-data="testData3"
-        :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
-      />
-      <dataItem
-        class="pie-item"
-        :radio="radioListData[2]"
-        :title="'无交易商户上期排行'"
-        :config-data="tableConfigData4"
-        :is-show-more="true"
-        :is-show-table="true"
-        :item-test-data="testData4"
-        :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
-      />
+      <div class="pie-box">
+        <dataItem
+          class="pie-item"
+          :radio="radioListData[1]"
+          :title="'无交易商户上期排行'"
+          :config-data="tableConfigData3"
+          :is-show-more="true"
+          :is-show-table="true"
+          :item-test-data="testData3"
+          :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
+          @showMore="handleShowMore"
+        />
+        <dataItem
+          class="pie-item"
+          :radio="radioListData[2]"
+          :title="'无交易商户上期排行'"
+          :config-data="tableConfigData4"
+          :is-show-more="true"
+          :is-show-table="true"
+          :item-test-data="testData4"
+          :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
+          @showMore="handleShowMore"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -430,8 +437,12 @@ export default {
     init() {
       this.showLine();
     },
+    handleShowMore() {
+      this.$router.push({ path: "/dataMarket/serviceData/detail" });
+    },
     showLine() {
       // 基于准备好的dom，初始化echarts实例
+      if (!this.$refs.echartsLine) return;
       const myChartLine = this.$echarts.init(this.$refs.echartsLine);
 
       // 绘制图表
@@ -532,6 +543,7 @@ export default {
       ];
     },
     initMap() {
+      if (!this.$refs.echartsMap) return;
       const myChart = echarts.init(this.$refs.echartsMap);
       const dataList = [
         {

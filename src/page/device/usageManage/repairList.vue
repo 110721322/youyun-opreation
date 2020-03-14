@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div class>
     <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
     <div v-else>
       <div class="tab_head">
@@ -40,7 +40,7 @@ export default {
   components: { Search, BaseCrud },
   data() {
     return {
-      searchMaxHeight: "340",
+      searchMaxHeight: "320",
       searchConfig: SEARCH_CONFIG,
       configData: REPAIRLIST_CONFIG,
       fromConfigData: {},

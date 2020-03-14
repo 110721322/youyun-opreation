@@ -92,10 +92,6 @@ export default {
           showPreApprove: true
         }
       ];
-    },
-    selectionChange($val) {
-      // eslint-disable-next-line no-console
-      console.log($val);
     }
   }
 };

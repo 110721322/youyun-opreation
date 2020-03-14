@@ -1,12 +1,12 @@
 export const ERR_CONFIG = {
   gridConfig: [
     {
-      label: '商户ID',
+      label: '商户',
       prop: 'id',
       width: '150px'
     },
     {
-      label: '商户名称',
+      label: '渠道商户号',
       prop: 'tel',
       width: '150px'
     },

@@ -270,7 +270,18 @@ const asyncRoutes = {
       icon: 'merchantData'
     },
     component: () => import('@/page/dataMarket/merchantData.vue'),
-    children: []
+    children: [
+      {
+        path: 'detail',
+        name: 'merchantData',
+        meta: {
+          fatherName: 'merchantData',
+          title: 'merchantDataDetail',
+          icon: 'merchantDataDetail'
+        },
+        component: () => import('@/page/dataMarket/merchantDataDetail.vue')
+      }
+    ]
   },
   'serviceData': {
     path: 'serviceData',
@@ -280,7 +291,18 @@ const asyncRoutes = {
       icon: 'serviceData'
     },
     component: () => import('@/page/dataMarket/serviceData.vue'),
-    children: []
+    children: [
+      {
+        path: 'detail',
+        name: 'serviceData',
+        meta: {
+          fatherName: 'serviceData',
+          title: 'serviceDataDetail',
+          icon: 'serviceDataDetail'
+        },
+        component: () => import('@/page/dataMarket/serviceDataDetail.vue')
+      }
+    ]
   },
   'deviceManage': {
     path: '/deviceManage',

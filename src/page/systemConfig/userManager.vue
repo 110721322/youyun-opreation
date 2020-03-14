@@ -1,7 +1,7 @@
 <template>
   <div class="main_page">
     <div class="tab_head">
-      <span class="title">成员列表</span>
+      <span class="title">成员管理</span>
     </div>
     <search
       :open-height="searchMaxHeight"
@@ -42,7 +42,7 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import PerfectPost from "./component/perfectPost.vue";
 
 import { FORM_CONFIG } from "./formConfig/deviceDetail";
-import { SEARCH_CONFIG } from "./formConfig/userListSearch";
+import { SEARCH_CONFIG } from "./formConfig/userManagerSearch";
 import { USERLIST_CONFIG } from "./tableConfig/userManagerConfig";
 
 export default {
@@ -50,7 +50,7 @@ export default {
   components: { Search, BaseCrud, PerfectPost },
   data() {
     return {
-      searchMaxHeight: "340",
+      searchMaxHeight: "380",
       searchConfig: SEARCH_CONFIG,
       configData: USERLIST_CONFIG,
       fromConfigData: {},

@@ -60,127 +60,7 @@ export default {
       configData: USER_CONFIG,
       searchConfig: FORM_CONFIG,
       testData: [],
-      selectData: [],
-      inputOptions: [
-        {
-          label: "服务商ID",
-          value: "id"
-        },
-        {
-          label: "服务商名称",
-          value: "name"
-        }
-      ],
-      setects: [
-        {
-          name: "标签",
-          key: "target",
-          options: [
-            {
-              labee: "全部",
-              value: "all"
-            },
-            {
-              labee: "企业",
-              value: "qiye"
-            },
-            {
-              labee: "个人",
-              value: "geren"
-            }
-          ]
-        },
-        {
-          name: "所属大区",
-          key: "ascriptionAd",
-          options: [
-            {
-              labee: "全部",
-              value: "all"
-            },
-            {
-              labee: "企业",
-              value: "qiye"
-            },
-            {
-              labee: "个人",
-              value: "geren"
-            }
-          ]
-        },
-        {
-          name: "服务商等级",
-          key: "level",
-          options: [
-            {
-              labee: "全部",
-              value: "all"
-            },
-            {
-              labee: "企业",
-              value: "qiye"
-            },
-            {
-              labee: "个人",
-              value: "geren"
-            }
-          ]
-        },
-        {
-          name: "服务地区",
-          key: "address",
-          options: [
-            {
-              labee: "全部",
-              value: "all"
-            },
-            {
-              labee: "企业",
-              value: "qiye"
-            },
-            {
-              labee: "个人",
-              value: "geren"
-            }
-          ]
-        },
-        {
-          name: "所属运营",
-          key: "ascriptionPersion",
-          options: [
-            {
-              labee: "全部",
-              value: "all"
-            },
-            {
-              labee: "企业",
-              value: "qiye"
-            },
-            {
-              labee: "个人",
-              value: "geren"
-            }
-          ]
-        },
-        {
-          name: "状态",
-          key: "type",
-          options: [
-            {
-              labee: "全部",
-              value: "all"
-            },
-            {
-              labee: "已驳回",
-              value: "1"
-            },
-            {
-              labee: "待审核",
-              value: "2"
-            }
-          ]
-        }
-      ]
+      selectData: []
     };
   },
   mounted() {
@@ -190,7 +70,7 @@ export default {
     getData() {
       this.testData = [
         {
-          id: "1",
+          id: "1两行两行两行两行",
           tel: "15184318420",
           name: "小白",
           email: "412412@qq.com",
@@ -200,7 +80,7 @@ export default {
           role: ["2"]
         },
         {
-          id: "2",
+          id: "2两行两行两行两行",
           tel: "13777369283",
           name: "小红",
           email: "456465@qq.com",

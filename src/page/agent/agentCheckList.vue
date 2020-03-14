@@ -42,62 +42,12 @@ export default {
       searchMaxHeight: "320",
       configData: USER_CONFIG,
       searchConfig: FORM_CONFIG,
-      testData: [],
-      inputOptions: [
-        {
-          label: "公司名称",
-          value: "companyName"
-        },
-        {
-          label: "法人姓名",
-          value: "name"
-        },
-        {
-          label: "法人手机号",
-          value: "phone"
-        }
-      ],
-      setects: [
-        {
-          name: "服务商类型",
-          key: "agentType",
-          options: [
-            {
-              labee: "全部",
-              value: "all"
-            },
-            {
-              labee: "企业",
-              value: "qiye"
-            },
-            {
-              labee: "个人",
-              value: "geren"
-            }
-          ]
-        },
-        {
-          name: "状态",
-          key: "type",
-          options: [
-            {
-              labee: "全部",
-              value: "all"
-            },
-            {
-              labee: "已驳回",
-              value: "1"
-            },
-            {
-              labee: "待审核",
-              value: "2"
-            }
-          ]
-        }
-      ]
+      testData: []
     };
   },
-  mounted() {},
+  mounted() {
+    this.getData();
+  },
   methods: {
     getData() {
       this.testData = [
@@ -123,7 +73,6 @@ export default {
         }
       ];
     },
-    selectionChange($val) {},
     search($form, $obj) {
       this.getData();
     },

@@ -45,110 +45,12 @@ export default {
       searchMaxHeight: "380",
       searchConfig: FORM_CONFIG,
       configData: USER_CONFIG,
-      testData: [],
-      inputOptions: [
-        {
-          label: "商户ID",
-          value: "ID"
-        },
-        {
-          label: "商户名称",
-          value: "name"
-        },
-        {
-          label: "所属服务商名称",
-          value: "agentName"
-        },
-        {
-          label: "开通通道情况",
-          value: "openType"
-        },
-        {
-          label: "乐刷商户号",
-          value: "leshuaNo"
-        },
-        {
-          label: "新大陆商户号",
-          value: "xindaluNo"
-        }
-      ],
-      setects: [
-        {
-          name: "使用通道",
-          key: "channel",
-          options: [
-            {
-              labee: "全部",
-              value: "all"
-            },
-            {
-              labee: "企业",
-              value: "qiye"
-            },
-            {
-              labee: "个人",
-              value: "geren"
-            }
-          ]
-        },
-        {
-          name: "行业类目",
-          key: "class",
-          options: [
-            {
-              labee: "全部",
-              value: "all"
-            },
-            {
-              labee: "已驳回",
-              value: "1"
-            },
-            {
-              labee: "待审核",
-              value: "2"
-            }
-          ]
-        },
-        {
-          name: "地区",
-          key: "address",
-          options: [
-            {
-              labee: "全部",
-              value: "all"
-            },
-            {
-              labee: "已驳回",
-              value: "1"
-            },
-            {
-              labee: "待审核",
-              value: "2"
-            }
-          ]
-        },
-        {
-          name: "所属运营",
-          key: "yunying",
-          options: [
-            {
-              labee: "全部",
-              value: "all"
-            },
-            {
-              labee: "已驳回",
-              value: "1"
-            },
-            {
-              labee: "待审核",
-              value: "2"
-            }
-          ]
-        }
-      ]
+      testData: []
     };
   },
-  mounted() {},
+  mounted() {
+    this.getData();
+  },
   methods: {
     getData() {
       this.testData = [

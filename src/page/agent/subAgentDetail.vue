@@ -25,48 +25,36 @@ export default {
       },
       configData: {
         name: "基本信息",
+        items: [
+          {
+            name: "所属上级服务商",
+            key: "name1",
+            type: "edit"
+          },
+          {
+            name: "账号类型",
+            key: "email"
+          },
 
-        models: [
           {
-            items: [
-              {
-                name: "所属上级服务商",
-                key: "name1",
-                type: "edit"
-              },
-              {
-                name: "法人姓名",
-                key: "name"
-              },
-              {
-                name: "邮箱",
-                key: "name"
-              }
-            ]
+            name: "公司名称",
+            key: "name3"
           },
           {
-            items: [
-              {
-                name: "账号类型",
-                key: "email"
-              },
-              {
-                name: "地区",
-                key: "pic"
-              }
-            ]
+            name: "法人姓名",
+            key: "name"
           },
           {
-            items: [
-              {
-                name: "公司名称",
-                key: "name3"
-              },
-              {
-                name: "详细地址",
-                key: "name"
-              }
-            ]
+            name: "地区",
+            key: "pic"
+          },
+          {
+            name: "详细地址",
+            key: "name"
+          },
+          {
+            name: "邮箱",
+            key: "name"
           }
         ]
       }

@@ -279,7 +279,6 @@ export default {
         }
       ];
     },
-    selectionChange($val) {},
     go_detail() {
       // eslint-disable-next-line no-console
       this.$router.push("/agent/list/detail");

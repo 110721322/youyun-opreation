@@ -59,10 +59,6 @@ export default {
           content: "2014-02-15 16:00:23"
         }
       ];
-    },
-    selectionChange($val) {
-      // eslint-disable-next-line no-console
-      console.log($val);
     }
   }
 };

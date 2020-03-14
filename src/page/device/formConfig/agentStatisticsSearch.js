@@ -65,6 +65,7 @@ export const SEARCH_CONFIG = {
       ]
     },
     {
+      // cascader
       type: 1,
       label: '地区',
       key: 'address',

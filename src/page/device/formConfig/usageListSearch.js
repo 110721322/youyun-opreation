@@ -8,36 +8,52 @@ export const SEARCH_CONFIG = {
       labelWidth: '100px'
     },
     {
-      type: 10,
-      label: '精准筛选',
-      key: '',
-      class: 'max-width',
+      type: 1,
+      label: '设备型号',
+      key: 'type',
+      style: 'width:294px',
+      labelWidth: '100px',
       options: [
         {
-          label: '服务商ID',
-          value: 'id'
+          label: '川菜',
+          value: 0
         },
         {
-          label: '服务商名称',
-          value: 'name'
+          label: '粤菜',
+          value: 1
+        },
+        {
+          label: '杭帮菜',
+          value: 2
         }
-      ],
-      labelWidth: '100px'
+      ]
     },
     {
       type: 0,
-      label: '邮箱',
-      key: 'name',
+      label: '设备标识',
+      key: 'Identity',
       style: 'width:294px',
-      labelWidth: '100px'
+      labelWidth: '185px'
     },
-
+    {
+      type: 0,
+      label: '所属商户',
+      key: 'merchantProvider',
+      style: 'width:294px'
+    },
+    {
+      type: 0,
+      label: '所属服务商',
+      key: 'serviceProvider',
+      style: 'width:294px',
+      labelWidth: '185px'
+    },
     {
       type: 1,
-      label: '标签',
-      key: 'tag',
+      label: '设备状态',
+      key: 'status',
       style: 'width:294px',
-      labelWidth: '185px',
+      labelWidth: '100px',
       options: [
         {
           label: '川菜',

@@ -66,48 +66,22 @@ export default {
       searchConfig: FORM_CONFIG,
       testData: [],
       isChangeMode: true,
-      inputOptions: [
-        {
-          label: "商户ID",
-          value: "companyName"
-        },
-        {
-          label: "商户名称",
-          value: "name"
-        },
-        {
-          label: "渠道商户号",
-          value: "phone"
-        }
-      ],
       modeConfigData: [
         {
-          title: "任务总数",
+          title: "商家数量",
           data: "555个"
         },
         {
-          title: "任务总数",
+          title: "交易金额",
           data: "555个"
-        }
-      ],
-      setects: [
+        },
         {
-          name: "交易通道",
-          key: "agentType",
-          options: [
-            {
-              labee: "全部",
-              value: "all"
-            },
-            {
-              labee: "企业",
-              value: "qiye"
-            },
-            {
-              labee: "个人",
-              value: "geren"
-            }
-          ]
+          title: "手续费",
+          data: "555个"
+        },
+        {
+          title: "结算金额",
+          data: "555个"
         }
       ]
     };
@@ -119,7 +93,7 @@ export default {
     getTableData() {
       this.testData = [
         {
-          id: "1",
+          id: "1两行两行两行两行两行",
           tel: "15184318420",
           name: "小白",
           email: "412412@qq.com",
@@ -129,7 +103,7 @@ export default {
           role: ["2"]
         },
         {
-          id: "2",
+          id: "2两行两行两行两行两行",
           tel: "13777369283",
           name: "小红",
           email: "456465@qq.com",

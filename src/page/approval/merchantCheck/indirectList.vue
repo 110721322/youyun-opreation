@@ -78,22 +78,28 @@ export default {
         {
           merchantName: "紫菜网络科技有限公司,ID: 13293127119831938",
           serviceName: "紫菜网络科技有限公司,ID: 13293127119831938",
-          status: ["乐刷", "新大陆", "网商"],
+          statusList: [
+            { name: "乐刷", status: "opened" },
+            { name: "乐刷", status: "review" },
+            { name: "乐刷", status: "reject" },
+            { name: "乐刷", status: "unused" }
+          ],
           time: "2014-02-15 16:00:23",
           showDetail: true
         },
         {
           merchantName: "紫菜网络科技有限公司,ID: 13293127119831938",
           serviceName: "紫菜网络科技有限公司,ID: 13293127119831938",
-          status: ["乐刷", "新大陆", "网商"],
+          statusList: [
+            { name: "乐刷", status: "opened" },
+            { name: "乐刷", status: "review" },
+            { name: "乐刷", status: "reject" },
+            { name: "乐刷", status: "unused" }
+          ],
           time: "2014-02-15 16:00:23",
           showPreApprove: true
         }
       ];
-    },
-    selectionChange($val) {
-      // eslint-disable-next-line no-console
-      console.log($val);
     }
   }
 };
