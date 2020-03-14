@@ -2,33 +2,39 @@ export const AGENTSTA_CONFIG = {
   gridConfig: [
     {
       label: '服务商',
-      prop: 'type',
+      prop: 'service',
       width: '150px'
     },
     {
       label: '设备型号',
-      prop: 'taskName',
+      prop: 'type',
       width: '150px'
     },
     {
       label: '购买数量（台）',
-      prop: 'taskName',
+      prop: 'buyNum',
       width: '150px'
     },
     {
-      label: '绑定数量（台）',
-      prop: 'time',
+      label: '购买数量环比|同比',
+      prop: 'buyNumPerc',
       width: '150px'
     },
     {
-      label: '订单数量（笔）',
-      prop: 'time',
+      label: '激活数量（台）',
+      prop: 'activeNum',
       width: '150px'
     },
     {
-      label: '交易额（元）',
-      prop: 'time',
+      label: '激活数量环比|同比',
+      prop: 'activeNumPerc',
       width: '150px'
+    },
+    {
+      label: '交易金额环比|同比',
+      prop: 'amountPerc',
+      width: '150px',
+      isFixed: "right"
     }
   ],
 
@@ -40,7 +46,8 @@ export const AGENTSTA_CONFIG = {
     update: false,
     delete: false,
     view: false,
-    expands: []
+    expands: [
+    ]
   },
   // 表单基础数据类型，需要预先赋值
   formModel: {

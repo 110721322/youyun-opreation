@@ -56,7 +56,7 @@ export default {
 
   data() {
     return {
-      searchMaxHeight: "340",
+      searchMaxHeight: "380",
       configData: USER_CONFIG,
       searchConfig: FORM_CONFIG,
       testData: [],

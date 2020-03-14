@@ -8,36 +8,10 @@ export const SEARCH_CONFIG = {
       labelWidth: '100px'
     },
     {
-      type: 10,
-      label: '精准筛选',
-      key: '',
-      class: 'max-width',
-      options: [
-        {
-          label: '服务商ID',
-          value: 'id'
-        },
-        {
-          label: '服务商名称',
-          value: 'name'
-        }
-      ],
-      labelWidth: '100px'
-    },
-    {
-      type: 0,
-      label: '邮箱',
-      key: 'name',
-      style: 'width:294px',
-      labelWidth: '100px'
-    },
-
-    {
       type: 1,
-      label: '标签',
+      label: '设备型号',
       key: 'tag',
       style: 'width:294px',
-      labelWidth: '185px',
       options: [
         {
           label: '川菜',

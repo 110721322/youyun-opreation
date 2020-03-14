@@ -206,6 +206,9 @@ export default {
   bottom: 21px;
   right: 24px;
 }
+.is_show_all .btn_list {
+  bottom: 25px;
+}
 .open_btn {
   float: right;
   margin-left: 16px;

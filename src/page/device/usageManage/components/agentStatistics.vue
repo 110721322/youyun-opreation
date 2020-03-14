@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div class>
     <search
       :open-height="searchMaxHeight"
       :form-base-data="searchConfig.formData"
@@ -33,7 +33,7 @@ export default {
   components: { Search, BaseCrud },
   data() {
     return {
-      searchMaxHeight: "340",
+      searchMaxHeight: "260",
       searchConfig: SEARCH_CONFIG,
       configData: AGENTSTA_CONFIG,
       fromConfigData: {},
@@ -53,49 +53,22 @@ export default {
     getTableData() {
       this.testData = [
         {
-          type: "日常任务",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          reason: "银行卡账号错误，服务商无法联系",
-          deviceList: [
-            {
-              name: "蜻蜓F4",
-              value: "10"
-            },
-            {
-              name: "青蛙pro",
-              value: "20"
-            }
-          ]
+          service: "日常任务",
+          type: "商户结算失败",
+          buyNum: "4",
+          buyNumPerc: "提醒",
+          activeNum: "XXXX店铺",
+          activeNumPerc: "20:00:23",
+          amountPerc: "222.22"
         },
         {
-          id: 2,
-          type: "日常任务",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系",
-          deviceList: [
-            {
-              name: "蜻蜓F4",
-              value: "10"
-            },
-            {
-              name: "青蛙pro",
-              value: "20"
-            }
-          ]
+          service: "日常任务",
+          type: "商户结算失败",
+          buyNum: "4",
+          buyNumPerc: "提醒",
+          activeNum: "XXXX店铺",
+          activeNumPerc: "20:00:23",
+          amountPerc: "222.22"
         }
       ];
     },

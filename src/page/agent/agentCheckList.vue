@@ -32,14 +32,14 @@ import search from "@/components/search/search.vue";
 
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { USER_CONFIG } from "./tableConfig/agentCheckConfig";
-import { FORM_CONFIG } from "./formConfig/agentListSearch";
+import { FORM_CONFIG } from "./formConfig/agentCheckListSearch";
 export default {
   name: "Theme",
   components: { search, BaseCrud },
 
   data() {
     return {
-      searchMaxHeight: "260",
+      searchMaxHeight: "320",
       configData: USER_CONFIG,
       searchConfig: FORM_CONFIG,
       testData: [],

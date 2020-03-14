@@ -12,6 +12,7 @@ export const FORM_CONFIG = {
       label: '精准筛选',
       key: '',
       class: 'max-width',
+      placeholder: "请输入商户号",
       options: [
         {
           label: '服务商ID',
@@ -25,19 +26,93 @@ export const FORM_CONFIG = {
       labelWidth: '100px'
     },
     {
-      type: 0,
-      label: '邮箱',
-      key: 'name',
+      type: 1,
+      label: '使用通道',
+      key: 'useChannel',
       style: 'width:294px',
-      labelWidth: '100px'
+      options: [
+        {
+          label: '川菜',
+          value: 0
+        },
+        {
+          label: '粤菜',
+          value: 1
+        },
+        {
+          label: '杭帮菜',
+          value: 2
+        }
+      ]
     },
-
     {
       type: 1,
-      label: '标签',
-      key: 'tag',
+      label: '通道情况',
+      key: 'channelStatus',
       style: 'width:294px',
       labelWidth: '185px',
+      options: [
+        {
+          label: '川菜',
+          value: 0
+        },
+        {
+          label: '粤菜',
+          value: 1
+        },
+        {
+          label: '杭帮菜',
+          value: 2
+        }
+      ]
+    },
+    {
+      type: 1,
+      label: '行业类目',
+      key: 'industryKind',
+      style: 'width:294px',
+      options: [
+        {
+          label: '川菜',
+          value: 0
+        },
+        {
+          label: '粤菜',
+          value: 1
+        },
+        {
+          label: '杭帮菜',
+          value: 2
+        }
+      ]
+    },
+    {
+      // cascader
+      type: 1,
+      label: '地区',
+      key: 'area',
+      style: 'width:294px',
+      labelWidth: '185px',
+      options: [
+        {
+          label: '川菜',
+          value: 0
+        },
+        {
+          label: '粤菜',
+          value: 1
+        },
+        {
+          label: '杭帮菜',
+          value: 2
+        }
+      ]
+    },
+    {
+      type: 1,
+      label: '所属运营',
+      key: 'oper',
+      style: 'width:294px',
       options: [
         {
           label: '川菜',

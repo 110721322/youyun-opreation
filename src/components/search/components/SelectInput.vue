@@ -1,10 +1,10 @@
 <template>
   <div>
     <el-input
-      placeholder="请输入内容"
+      v-model="inputForm"
+      :placeholder="formItem.placeholder?formItem.placeholder:'请输入内容'"
       class="input-with-select"
       size="large"
-      v-model="inputForm"
       @input="onChange_input"
     >
       <el-select
@@ -19,8 +19,7 @@
           :key="key"
           :label="item.label"
           :value="item.value"
-        >
-        </el-option>
+        ></el-option>
       </el-select>
     </el-input>
   </div>
@@ -28,38 +27,38 @@
 
 <script>
 export default {
-  name: '',
+  name: "",
   props: {
     ruleForm: Object,
     formItem: Object,
     showWordLimit: Boolean,
     isRest: Boolean
   },
+  data() {
+    return {
+      inputSelect: "",
+      inputForm: ""
+    };
+  },
+  computed: {},
   watch: {
     isRest: function($new) {
       if ($new) {
-        this.inputSelect = this.formItem.options[0].value
-        this.inputForm = ''
+        this.inputSelect = this.formItem.options[0].value;
+        this.inputForm = "";
       }
     }
   },
-  computed: {},
   created() {
-    this.inputSelect = this.formItem.options[0].value
-  },
-  data() {
-    return {
-      inputSelect: '',
-      inputForm: ''
-    }
+    this.inputSelect = this.formItem.options[0].value;
   },
   methods: {
     onChange_input() {
-      this.ruleForm.inputSelect = this.inputSelect
-      this.ruleForm.inputForm = this.inputForm
+      this.ruleForm.inputSelect = this.inputSelect;
+      this.ruleForm.inputForm = this.inputForm;
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

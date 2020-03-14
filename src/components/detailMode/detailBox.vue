@@ -1,6 +1,10 @@
 <template>
-  <div class="bg_box">
-    <div class="title">{{ title }}</div>
+  <div :class="[border?'border bg_box':'bg_box']">
+    <div class="title">
+      {{ title }}
+      <el-button v-show="isShowEditBtn" type="primary" class="edit_btn" size="mini">编辑</el-button>
+    </div>
+
     <slot></slot>
   </div>
 </template>
@@ -11,6 +15,12 @@ export default {
   props: {
     title: {
       type: String
+    },
+    border: {
+      type: Boolean
+    },
+    isShowEditBtn: {
+      type: Boolean
     }
   },
   data() {
@@ -23,6 +33,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.border {
+  border: 1px solid #ebeef5;
+  .title {
+    background: #ebeef5;
+  }
+}
 .bg_box {
   margin: 24px;
   background: #fff;

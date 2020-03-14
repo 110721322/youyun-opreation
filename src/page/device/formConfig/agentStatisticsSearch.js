@@ -14,30 +14,61 @@ export const SEARCH_CONFIG = {
       class: 'max-width',
       options: [
         {
-          label: '服务商ID',
+          label: '服务商',
           value: 'id'
         },
         {
-          label: '服务商名称',
+          label: '服务商ID',
           value: 'name'
         }
       ],
       labelWidth: '100px'
     },
     {
-      type: 0,
-      label: '邮箱',
-      key: 'name',
+      type: 1,
+      label: '大区',
+      key: 'area',
       style: 'width:294px',
-      labelWidth: '100px'
+      options: [
+        {
+          label: '川菜',
+          value: 0
+        },
+        {
+          label: '粤菜',
+          value: 1
+        },
+        {
+          label: '杭帮菜',
+          value: 2
+        }
+      ]
     },
-
     {
       type: 1,
-      label: '标签',
-      key: 'tag',
+      label: '设备型号',
+      key: 'type',
       style: 'width:294px',
-      labelWidth: '185px',
+      options: [
+        {
+          label: '川菜',
+          value: 0
+        },
+        {
+          label: '粤菜',
+          value: 1
+        },
+        {
+          label: '杭帮菜',
+          value: 2
+        }
+      ]
+    },
+    {
+      type: 1,
+      label: '地区',
+      key: 'address',
+      style: 'width:294px',
       options: [
         {
           label: '川菜',

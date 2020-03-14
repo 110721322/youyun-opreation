@@ -8,34 +8,56 @@ export const SEARCH_CONFIG = {
       labelWidth: '100px'
     },
     {
-      type: 10,
-      label: '精准筛选',
-      key: '',
-      class: 'max-width',
+      type: 1,
+      label: '设备型号',
+      key: 'type',
+      style: 'width:294px',
       options: [
         {
-          label: '服务商ID',
-          value: 'id'
+          label: '川菜',
+          value: 0
         },
         {
-          label: '服务商名称',
-          value: 'name'
+          label: '粤菜',
+          value: 1
+        },
+        {
+          label: '杭帮菜',
+          value: 2
         }
-      ],
-      labelWidth: '100px'
+      ]
     },
     {
       type: 0,
-      label: '邮箱',
-      key: 'name',
+      label: '购买服务商',
+      key: 'buyService',
       style: 'width:294px',
-      labelWidth: '100px'
+      labelWidth: '185px'
     },
-
     {
       type: 1,
-      label: '标签',
-      key: 'tag',
+      label: '状态',
+      key: 'status',
+      style: 'width:294px',
+      options: [
+        {
+          label: '川菜',
+          value: 0
+        },
+        {
+          label: '粤菜',
+          value: 1
+        },
+        {
+          label: '杭帮菜',
+          value: 2
+        }
+      ]
+    },
+    {
+      type: 1,
+      label: '销售人员',
+      key: 'saleman',
       style: 'width:294px',
       labelWidth: '185px',
       options: [
@@ -52,6 +74,33 @@ export const SEARCH_CONFIG = {
           value: 2
         }
       ]
+    },
+    {
+      type: 1,
+      label: '出库人员',
+      key: 'outman',
+      style: 'width:294px',
+      options: [
+        {
+          label: '川菜',
+          value: 0
+        },
+        {
+          label: '粤菜',
+          value: 1
+        },
+        {
+          label: '杭帮菜',
+          value: 2
+        }
+      ]
+    },
+    {
+      type: 0,
+      label: '订单号',
+      key: 'orderId',
+      style: 'width:294px',
+      labelWidth: '185px'
     }
   ]
 }

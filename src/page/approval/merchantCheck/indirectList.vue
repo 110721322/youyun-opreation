@@ -47,7 +47,7 @@ export default {
       configData: INDIRECTLIST_CONFIG,
       testData: [],
       direction: "rtl",
-      searchHeight: "260"
+      searchHeight: "320"
     };
   },
   mounted() {
