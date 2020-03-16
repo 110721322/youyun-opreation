@@ -404,7 +404,18 @@ const asyncRoutes = {
       title: 'repairList',
       icon: 'repairList'
     },
-    children: []
+    children: [
+      {
+        path: 'detail',
+        name: 'repairDetail',
+        meta: {
+          fatherName: 'repairList',
+          title: 'repairDetail',
+          icon: 'repairDetail'
+        },
+        component: () => import('@/page/device/usageManage/repairDetail.vue')
+      }
+    ]
   },
   'deviceData': {
     path: 'deviceData',
