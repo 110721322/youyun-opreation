@@ -1,3 +1,4 @@
+import areaData from "@/assets/data/areaData";
 export const FORM_CONFIG = {
   formData: [
     {
@@ -5,7 +6,8 @@ export const FORM_CONFIG = {
       label: '筛选时间',
       key: 'date',
       class: 'max-width',
-      labelWidth: '100px'
+      labelWidth: '100px',
+      isSelectToday: true
     },
     {
       type: 10,
@@ -87,32 +89,115 @@ export const FORM_CONFIG = {
       ]
     },
     {
-      // cascader
-      type: 1,
-      label: '地区',
-      key: 'area',
+      type: 8,
+      label: '开通通道详情',
+      key: 'channelType',
       style: 'width:294px',
       labelWidth: '185px',
       options: [
         {
-          label: '川菜',
-          value: 0
+          'value': '1',
+          'label': '乐刷',
+          'children': [
+            {
+              'value': '1',
+              'label': '已开通'
+            },
+            {
+              'value': '2',
+              'label': '审核中'
+            },
+            {
+              'value': '3',
+              'label': '驳回'
+            },
+            {
+              'value': '4',
+              'label': '未开通'
+            }
+          ]
         },
         {
-          label: '粤菜',
-          value: 1
+          'value': '1',
+          'label': '新大陆',
+          'children': [
+            {
+              'value': '1',
+              'label': '已开通'
+            },
+            {
+              'value': '2',
+              'label': '审核中'
+            },
+            {
+              'value': '3',
+              'label': '驳回'
+            },
+            {
+              'value': '4',
+              'label': '未开通'
+            }
+          ]
         },
         {
-          label: '杭帮菜',
-          value: 2
+          'value': '1',
+          'label': '支付宝直连',
+          'children': [
+            {
+              'value': '1',
+              'label': '已开通'
+            },
+            {
+              'value': '2',
+              'label': '审核中'
+            },
+            {
+              'value': '3',
+              'label': '驳回'
+            },
+            {
+              'value': '4',
+              'label': '未开通'
+            }
+          ]
+        },
+        {
+          'value': '2',
+          'label': '微信直连',
+          'children': [
+            {
+              'value': '1',
+              'label': '已开通'
+            },
+            {
+              'value': '2',
+              'label': '审核中'
+            },
+            {
+              'value': '3',
+              'label': '驳回'
+            },
+            {
+              'value': '4',
+              'label': '未开通'
+            }
+          ]
         }
       ]
+    },
+    {
+      type: 8,
+      label: '地区',
+      key: 'area',
+      style: 'width:294px',
+      options: areaData
     },
     {
       type: 1,
       label: '所属运营',
       key: 'oper',
       style: 'width:294px',
+      labelWidth: '185px',
       options: [
         {
           label: '川菜',

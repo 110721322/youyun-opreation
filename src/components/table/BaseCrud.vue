@@ -18,7 +18,7 @@
       @selection-change="handleSelectionChange"
       @sort-change="sortDate"
     >
-      <el-table-column v-if="isSelect" type="selection" width="55" />
+      <el-table-column v-if="isSelect" type="selection" width="55"></el-table-column>
       <el-table-column
         v-if="isExpand"
         type="expand"
@@ -29,16 +29,20 @@
           <slot :row="scope.row" />
         </template>
       </el-table-column>
+
       <el-table-column
         v-for="(item, index) in gridConfig"
         :key="index"
-        :prop="item.prop"
+        :prop="item.prop instanceof Array ?'': item.prop"
         :label="item.label"
         show-overflow-tooltip
         :min-width="item.width ? item.width : ''"
         :fixed="item.isFixed || false"
         :sortable="item.sortable"
       >
+        <template v-if="item.customHead" slot="header">
+          <slot name="head" :item="item"></slot>
+        </template>
         <template slot-scope="scope">
           <i v-if="item.hasIcon" class="el-icon-caret-top icon-increase"></i>
           <Cell
@@ -48,7 +52,7 @@
             :index="scope.$index"
             :render="item.render"
           />
-          <span v-else>
+          <span v-if="!item.render">
             <template v-if="scope.row.edit&&item.isEdit">
               <el-input v-model="scope.row[item.prop]" class="edit-input" size="small" />
               <el-button
@@ -66,6 +70,12 @@
                 @click="onClick_handleToggle(scope.row)"
               />
             </template>
+          </span>
+
+          <span v-if="(item.prop instanceof Array)">
+            <div v-for="(propItem,propKey) of item.prop" :key="propKey">
+              {{ (propItem.label||'') + scope.row[propItem.key] }}
+            </div>
           </span>
         </template>
       </el-table-column>

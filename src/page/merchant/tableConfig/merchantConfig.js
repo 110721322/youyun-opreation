@@ -1,13 +1,8 @@
 export const USER_CONFIG = {
   gridConfig: [
     {
-      label: '商户ID',
-      prop: 'id',
-      width: '150px'
-    },
-    {
-      label: '商户名称',
-      prop: 'tel',
+      label: '商户',
+      prop: [{ key: 'id', label: 'ID:' }, { key: 'tel' }],
       width: '150px'
     },
     {

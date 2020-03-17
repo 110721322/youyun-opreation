@@ -58,6 +58,7 @@ import Select from "./components/Select.vue";
 import Tinymce from "./components/Tinymce/index.vue";
 import DateSelect from "./components/DateSelect.vue";
 import SelectInput from "./components/SelectInput.vue";
+import Cascader from "./components/Cascader.vue";
 
 export default {
   name: "Search",
@@ -67,7 +68,8 @@ export default {
     Date,
     Tinymce,
     DateSelect,
-    SelectInput
+    SelectInput,
+    Cascader
   },
   props: {
     isShowAll: {

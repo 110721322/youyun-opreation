@@ -11,9 +11,9 @@ export const INDIRECTLIST_CONFIG = {
       width: '150px'
     },
     {
-      label: '通道情况',
-      // prop: 'status', basecrud v-if v-else重复显示
+      label: '通道情况 ',
       width: '150px',
+      customHead: true,
       render: (h, params) => {
         const status = params.row.statusList;
         return h('div', {

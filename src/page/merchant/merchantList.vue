@@ -56,7 +56,7 @@ export default {
       this.testData = [
         {
           id: "1",
-          tel: "15184318420",
+          tel: "紫菜网络科技有限公司",
           name: "小白",
           email: "412412@qq.com",
           status: "1",
@@ -66,7 +66,7 @@ export default {
         },
         {
           id: "2",
-          tel: "13777369283",
+          tel: "紫菜网络科技有限公司",
           name: "小红",
           email: "456465@qq.com",
           status: "0",
