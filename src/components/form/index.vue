@@ -17,7 +17,7 @@
         :key="formItem.key"
         class="formTemplate-item"
         :prop="formItem.key"
-        :label="formItem.label+':'"
+        :label="formItem.label+(formItem.hideColon?'':':')"
         :rules="formItem.rules"
       >
         <components :is="transType(formItem.type)" :rule-form="ruleForm" :form-item="formItem"></components>

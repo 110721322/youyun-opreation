@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div>
     <el-cascader
       v-model="ruleForm[formItem.key]"
       :options="formItem.options"
@@ -9,41 +9,39 @@
 </template>
 
 <script>
-
 export default {
-  name: '',
+  name: "",
   props: {
     ruleForm: Object,
     formItem: Object,
     remoteMethod: Function
   },
-  created() {},
-  computed: {
-  },
   data() {
-    return {}
+    return {};
   },
+  computed: {},
+  created() {},
 
   methods: {
     handleChange(val) {
-      let options  = JSON.parse(JSON.stringify(this.formItem.options));
-      let obj = []
+      const options = JSON.parse(JSON.stringify(this.formItem.options));
+      const obj = [];
       obj[0] = options.find(item => {
-        return item.value === val[0]
-      })
+        return item.value === val[0];
+      });
       obj[1] = obj[0].children.find(item => {
-        return item.value === val[1]
-      })
+        return item.value === val[1];
+      });
       obj[2] = obj[1].children.find(item => {
-        return item.value === val[2]
-      })
+        return item.value === val[2];
+      });
       obj.forEach(item => {
-        delete item.children
+        delete item.children;
       });
       this.ruleForm.addressObj = obj;
     }
   }
-}
+};
 </script>
 
 <style></style>

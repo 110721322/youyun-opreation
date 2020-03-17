@@ -36,10 +36,10 @@
           <el-form-item style="margin:16px 100px;width:300px" label-width="20px">
             <el-select v-model="form.checkList[key]" placeholder="请选择">
               <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                v-for="(item2,key2) in options"
+                :key="key2"
+                :label="item2.label"
+                :value="item2.value"
               ></el-option>
             </el-select>
             <el-button style="margin-left:10px">删除</el-button>

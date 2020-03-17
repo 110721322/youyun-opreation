@@ -1,76 +1,99 @@
 <template>
-  <div class="main_page">
-    <div class="tab_head">
-      <span class="title">参数设置</span>
-    </div>
-
-    <div class="table_box" style="padding:0">
-      <div class="left_box">
-        <div class="tab_head">
-          <span class="title">类型</span>
+  <div>
+    <DetailBox title="大区" :border="true">
+      <div v-for="(item,key) of areaList" :key="key" class="area_box">
+        <div class="area_box_title">
+          {{ item.title }}
+          <el-button type="primary" style="float:right;margin-top:16px">编辑</el-button>
         </div>
-        <div class="device_list">
-          <div
-            v-for="(item,key) of menuList"
-            :key="key"
-            class="device_item"
-            :class="item.type == selectMenu.type?'select':''"
-            @click="onClick_menuItem(item)"
-          >
-            <div class="device_name">{{ item.name }}</div>
-            <div class="device_num"></div>
-          </div>
-        </div>
-      </div>
-      <div class="right_box">
-        <div v-show="selectMenu.type == 'todoList'">
-          <TodoSetting></TodoSetting>
-        </div>
-
-        <div v-show="selectMenu.type == 'target'">
-          <TagSetting></TagSetting>
-        </div>
-
-        <div v-show="selectMenu.type == 'area'">
-          <AreaSetting></AreaSetting>
+        <div class="tag-box">
+          <el-tag
+            v-for="tag in item.dynamicTags"
+            :key="tag"
+            closable
+            :disable-transitions="false"
+            @close="handleClose(tag)"
+          >{{ tag }}</el-tag>
+          <el-cascader
+            v-if="item.isShowSelect"
+            :options="areaDate"
+            size="small"
+            @change="areaSelectConfirm($event,item)"
+          ></el-cascader>
+          <el-button v-else class="button-new-tag" size="small" @click="areaSelect(item)">+ 添加城市</el-button>
         </div>
       </div>
-    </div>
+
+      <el-button type="primary" class="add_area">添加大区类型</el-button>
+    </DetailBox>
+
+    <el-drawer :visible.sync="drawer" :with-header="false">
+      <div class="p_head">{{ fromConfigData.title }}</div>
+      <Form
+        :form-base-data="fromConfigData.formData"
+        :show-foot-btn="fromConfigData.showFootBtn"
+        label-width="130px"
+        @cancel="cancel"
+      ></Form>
+    </el-drawer>
   </div>
 </template>
 <script>
-import TodoSetting from "./component/todoSetting.vue";
-import AreaSetting from "./component/areaSetting.vue";
-import TagSetting from "./component/tagsSetting.vue";
+import Form from "@/components/form/index.vue";
+import DetailBox from "@/components/detailMode/detailBox.vue";
+import areaDate from "@/assets/data/areaData";
 
 export default {
   name: "Theme",
-  components: { TodoSetting, AreaSetting, TagSetting },
+  components: { Form, DetailBox },
   data() {
     return {
-      menuList: [
+      areaDate: areaDate,
+      drawer: false,
+      fromConfigData: {},
+      areaList: [
         {
-          name: "代办事项",
-          type: "todoList"
+          id: 1,
+          title: "华中",
+          isShowSelect: false,
+          dynamicTags: ["标签一", "标签二"]
         },
         {
-          name: "标签",
-          type: "target"
-        },
-        {
-          name: "大区",
-          type: "area"
+          id: 2,
+          title: "华东",
+          isShowSelect: false,
+          dynamicTags: ["标签一"]
         }
-      ],
-      selectMenu: {}
+      ]
     };
   },
-  mounted() {
-    this.selectMenu = this.menuList[0];
-  },
+  mounted() {},
   methods: {
-    onClick_menuItem($item) {
-      this.selectMenu = $item;
+    areaSelect($item) {
+      $item.isShowSelect = true;
+    },
+    areaSelectConfirm($value, $item) {
+      const options = JSON.parse(JSON.stringify(this.areaDate));
+      const obj = [];
+      obj[0] = options.find(item => {
+        return item.value === $value[0];
+      });
+      obj[1] = obj[0].children.find(item => {
+        return item.value === $value[1];
+      });
+      obj[2] = obj[1].children.find(item => {
+        return item.value === $value[2];
+      });
+      obj.forEach(item => {
+        delete item.children;
+      });
+      $item.dynamicTags.push(
+        obj[0].label + "," + obj[1].label + "," + obj[2].label
+      );
+      $item.isShowSelect = false;
+    },
+    cancel(done) {
+      done();
     }
   }
 };

@@ -263,8 +263,8 @@ const menuItems = [
     name: 'task',
     isShow: true,
     meta: {
-      title: '运营数据',
-      icon: '运营数据'
+      title: 'task',
+      icon: 'task'
     },
     children: [
       {

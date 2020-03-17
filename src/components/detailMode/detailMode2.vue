@@ -42,9 +42,15 @@
           class="col"
         >
           <i v-if="item.hasIconTime" class="el-icon-time icon-time"></i>
-          <el-form-item :label="item.name + '：'">
-            <span class="item-value">{{ ruleForm[item.key] }}</span>
+          <el-form-item :label="item.name +(item.hideColon?'':'：') ">
+            <span v-if="item.type != 'switch'" class="item-value">{{ ruleForm[item.key] }}</span>
             <span v-if="item.type == 'edit'" class="edit_btn">修改</span>
+            <el-switch
+              v-if="item.type == 'switch'"
+              v-model="ruleForm[item.key]"
+              inactive-value="0"
+              active-value="100"
+            ></el-switch>
           </el-form-item>
         </el-col>
       </el-row>

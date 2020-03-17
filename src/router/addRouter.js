@@ -6,7 +6,7 @@ const asyncRoutes = {
     name: 'merchant',
     component: Layout,
     meta: {
-      title: 'merchant',
+      title: '商户管理',
       icon: 'merchant'
     },
     children: []
@@ -15,7 +15,7 @@ const asyncRoutes = {
     path: 'list',
     name: 'merchantList',
     meta: {
-      title: 'merchantList',
+      title: '商户列表',
       icon: 'merchantList'
     },
     component: () => import('@/page/merchant/merchantList.vue'),
@@ -24,7 +24,7 @@ const asyncRoutes = {
         path: 'detail',
         name: 'merchantDetail',
         meta: {
-          title: 'merchantDetail',
+          title: '商户详情',
           icon: 'merchantDetail'
         },
         component: () => import('@/page/merchant/merchantDetail.vue')
@@ -35,7 +35,7 @@ const asyncRoutes = {
     path: 'setRecord',
     name: 'merchantSetRecord',
     meta: {
-      title: 'merchantSetRecord',
+      title: '结算记录',
       icon: 'merchantSetRecord'
     },
     component: () => import('@/page/merchant/setRecord.vue')
@@ -45,7 +45,7 @@ const asyncRoutes = {
     name: 'agent',
     component: Layout,
     meta: {
-      title: 'agent',
+      title: '服务商管理',
       icon: 'agent'
     },
     children: []
@@ -55,7 +55,7 @@ const asyncRoutes = {
     path: 'list',
     name: 'agentList',
     meta: {
-      title: 'agentList',
+      title: '服务商列表',
       icon: 'agentList'
     },
     component: () => import('@/page/agent/agentList.vue'),
@@ -65,7 +65,7 @@ const asyncRoutes = {
         name: 'agentDetail',
         meta: {
           fatherName: 'agentList',
-          title: 'agentDetail',
+          title: '服务商详情',
           icon: 'agentDetail'
         },
         component: () => import('@/page/agent/agentDetail.vue')
@@ -77,7 +77,7 @@ const asyncRoutes = {
     path: 'subList',
     name: 'agentSubList',
     meta: {
-      title: 'agentSubList',
+      title: '下级服务商列表',
       icon: 'agentSubList'
     },
     component: () => import('@/page/agent/subAgentList.vue'),
@@ -87,7 +87,7 @@ const asyncRoutes = {
         name: 'agentSubListDetail',
         meta: {
           fatherName: 'agentSubList',
-          title: 'agentSubListDetail',
+          title: '下级服务商详情',
           icon: 'agentSubListDetail'
         },
         component: () => import('@/page/agent/subAgentDetail.vue')
@@ -100,7 +100,7 @@ const asyncRoutes = {
     path: 'checkList',
     name: 'agentCheckList',
     meta: {
-      title: 'agentCheckList',
+      title: '服务商审核列表',
       icon: 'agentCheckList'
     },
     component: () => import('@/page/agent/agentCheckList.vue')
@@ -110,7 +110,7 @@ const asyncRoutes = {
     path: 'dividedOverview',
     name: 'dividedOverview',
     meta: {
-      title: 'dividedOverview',
+      title: '分润总览',
       icon: 'dividedOverview'
     },
     component: () => import('@/page/agent/dividedOverview.vue'),
@@ -118,7 +118,11 @@ const asyncRoutes = {
       {
         name: 'dividedOverview',
         path: 'detail',
-        component: () => import('@/page/agent/dividedOverviewDetail.vue')
+        component: () => import('@/page/agent/dividedOverviewDetail.vue'),
+        meta: {
+          title: '商户分润明细',
+          icon: 'dividedOverview'
+        }
       }
     ]
   },
@@ -128,7 +132,7 @@ const asyncRoutes = {
     name: 'work',
     component: Layout,
     meta: {
-      title: 'work',
+      title: '工作台',
       icon: 'work'
     },
     children: [
@@ -155,7 +159,7 @@ const asyncRoutes = {
     path: 'todo',
     name: 'workTodo',
     meta: {
-      title: 'workTodo',
+      title: '待办事项',
       icon: 'workTodo'
     },
     component: () => import('@/page/work/workTodo.vue'),
@@ -166,7 +170,7 @@ const asyncRoutes = {
     path: 'sentMessage',
     name: 'workSentMessage',
     meta: {
-      title: 'workSentMessage',
+      title: '短信群发',
       icon: 'workSentMessage'
     },
     component: () => import('@/page/work/workSentMessage.vue'),
@@ -176,7 +180,7 @@ const asyncRoutes = {
     path: 'taskDetail',
     name: 'taskDetail',
     meta: {
-      title: 'taskDetail',
+      title: '日常任务详情',
       icon: 'taskDetail'
     },
     component: () => import('@/page/work/taskDetail.vue'),
@@ -186,7 +190,7 @@ const asyncRoutes = {
     path: 'approvalDetail',
     name: 'approvalDetail',
     meta: {
-      title: 'approvalDetail',
+      title: '审批任务详情',
       icon: 'approvalDetail'
     },
     component: () => import('@/page/work/approvalDetail.vue'),
@@ -197,7 +201,7 @@ const asyncRoutes = {
     name: 'message',
     component: Layout,
     meta: {
-      title: 'message',
+      title: '消息管理',
       icon: 'message'
     },
     children: []
@@ -206,7 +210,7 @@ const asyncRoutes = {
     path: 'serviceAnnouncementList',
     name: 'serviceAnnouncementList',
     meta: {
-      title: 'serviceAnnouncementList',
+      title: '服务商公告',
       icon: 'serviceAnnouncementList'
     },
     component: () => import('@/page/message/serviceAnnouncementList.vue'),
@@ -216,7 +220,7 @@ const asyncRoutes = {
     path: 'announcementEdit',
     name: 'announcementEdit',
     meta: {
-      title: 'announcementEdit',
+      title: '编辑服务商公告',
       icon: 'announcementEdit'
     },
     component: () => import('@/page/message/announcementEdit.vue'),
@@ -227,7 +231,7 @@ const asyncRoutes = {
     name: 'task',
     component: Layout,
     meta: {
-      title: 'task',
+      title: '运营数据',
       icon: 'task'
     },
     children: []
@@ -236,7 +240,7 @@ const asyncRoutes = {
     path: 'statisticsDetail',
     name: 'statisticsDetail',
     meta: {
-      title: 'statisticsDetail',
+      title: '工作任务统计',
       icon: 'statisticsDetail'
     },
     component: () => import('@/page/task/statisticsDetail.vue'),
@@ -247,7 +251,7 @@ const asyncRoutes = {
     name: 'dataMarket',
     component: Layout,
     meta: {
-      title: 'dataMarket',
+      title: '数据大盘',
       icon: 'dataMarket'
     },
     children: []
@@ -256,7 +260,7 @@ const asyncRoutes = {
     path: 'transactionData',
     name: 'transactionData',
     meta: {
-      title: 'transactionData',
+      title: '交易数据',
       icon: 'transactionData'
     },
     component: () => import('@/page/dataMarket/transactionData.vue'),
@@ -266,7 +270,7 @@ const asyncRoutes = {
     path: 'merchantData',
     name: 'merchantData',
     meta: {
-      title: 'merchantData',
+      title: '商户数据',
       icon: 'merchantData'
     },
     component: () => import('@/page/dataMarket/merchantData.vue'),
@@ -276,7 +280,7 @@ const asyncRoutes = {
     path: 'serviceData',
     name: 'serviceData',
     meta: {
-      title: 'serviceData',
+      title: '服务商数据',
       icon: 'serviceData'
     },
     component: () => import('@/page/dataMarket/serviceData.vue'),
@@ -287,7 +291,7 @@ const asyncRoutes = {
     name: 'deviceManage',
     component: Layout,
     meta: {
-      title: 'deviceManage',
+      title: '设备管理',
       icon: 'deviceManage'
     },
     children: []
@@ -297,7 +301,7 @@ const asyncRoutes = {
     name: 'stock',
     component: () => import('@/page/device/stock/stock.vue'),
     meta: {
-      title: 'stock',
+      title: '库存管理',
       icon: 'stock'
     },
     children: []
@@ -307,7 +311,7 @@ const asyncRoutes = {
     name: 'stockList',
     component: () => import('@/page/device/stock/stockList.vue'),
     meta: {
-      title: 'stockList',
+      title: '设备库存',
       icon: 'stockList'
     },
     children: []
@@ -317,7 +321,7 @@ const asyncRoutes = {
     name: 'stockSave',
     component: () => import('@/page/device/stock/saveManage.vue'),
     meta: {
-      title: 'stockSave',
+      title: '入库管理',
       icon: 'stockSave'
     },
     children: [
@@ -326,7 +330,7 @@ const asyncRoutes = {
         name: 'stockDetail',
         meta: {
           fatherName: 'stockSave',
-          title: 'stockDetail',
+          title: '入库详情',
           icon: 'stockDetail'
         },
         component: () => import('@/page/device/stock/saveDetail.vue')
@@ -338,7 +342,7 @@ const asyncRoutes = {
     name: 'stockOut',
     component: () => import('@/page/device/stock/outManage.vue'),
     meta: {
-      title: 'stockOut',
+      title: '出库管理',
       icon: 'stockOut'
     },
     children: [
@@ -347,7 +351,7 @@ const asyncRoutes = {
         name: 'outDetail',
         meta: {
           fatherName: 'stockOut',
-          title: 'outDetail',
+          title: '出库详情',
           icon: 'outDetail'
         },
         component: () => import('@/page/device/stock/outDetail.vue')
@@ -359,7 +363,7 @@ const asyncRoutes = {
     name: 'usageManage',
     component: () => import('@/page/device/usageManage/usageManage.vue'),
     meta: {
-      title: 'usageManage',
+      title: '设备使用管理',
       icon: 'usageManage'
     },
     children: []
@@ -369,7 +373,7 @@ const asyncRoutes = {
     name: 'usageList',
     component: () => import('@/page/device/usageManage/usageList.vue'),
     meta: {
-      title: 'usageList',
+      title: '设备使用列表',
       icon: 'usageList'
     },
     children: []
@@ -379,7 +383,7 @@ const asyncRoutes = {
     name: 'repairList',
     component: () => import('@/page/device/usageManage/repairList.vue'),
     meta: {
-      title: 'repairList',
+      title: '设备维修',
       icon: 'repairList'
     },
     children: []
@@ -389,7 +393,7 @@ const asyncRoutes = {
     name: 'deviceData',
     component: () => import('@/page/device/usageManage/deviceData.vue'),
     meta: {
-      title: 'deviceData',
+      title: '设备数据',
       icon: 'deviceData'
     },
     children: []
@@ -399,7 +403,7 @@ const asyncRoutes = {
     name: 'shopCenter',
     component: () => import('@/page/device/shopCenter/shopCenter.vue'),
     meta: {
-      title: 'shopCenter',
+      title: '商城管理',
       icon: 'shopCenter'
     },
     children: [
@@ -408,7 +412,7 @@ const asyncRoutes = {
         name: 'shopCenterDetail',
         meta: {
           fatherName: 'shopCenter',
-          title: 'shopCenterDetail',
+          title: '商城详情',
           icon: 'shopCenterDetail'
         },
         component: () => import('@/page/device/shopCenter/shopDetail.vue')
@@ -420,7 +424,7 @@ const asyncRoutes = {
     name: 'approval',
     component: Layout,
     meta: {
-      title: 'approval',
+      title: '审批管理',
       icon: 'approval'
     },
     children: []
@@ -430,7 +434,7 @@ const asyncRoutes = {
     name: 'checkMerchant',
     component: () => import('@/page/approval/merchantCheck/merchantCheck.vue'),
     meta: {
-      title: 'checkMerchant',
+      title: '商户审核',
       icon: 'checkMerchant'
     },
     children: []
@@ -440,7 +444,7 @@ const asyncRoutes = {
     name: 'indirectList',
     component: () => import('@/page/approval/merchantCheck/indirectList.vue'),
     meta: {
-      title: 'indirectList',
+      title: '间连审核',
       icon: 'indirectList'
     },
     children: [
@@ -449,7 +453,7 @@ const asyncRoutes = {
         name: 'indirectListDetail',
         meta: {
           fatherName: 'indirectList',
-          title: 'indirectListDetail',
+          title: '间连审核列表',
           icon: 'indirectListDetail'
         },
         component: () => import('@/page/approval/merchantCheck/indirectListDetail.vue')
@@ -460,7 +464,7 @@ const asyncRoutes = {
         meta: {
           fatherName: 'indirectList',
           title: 'indirectRecordDetail',
-          icon: 'indirectRecordDetail'
+          icon: '间连审核详情'
         },
         component: () => import('@/page/approval/merchantCheck/indirectRecordDetail.vue')
       }
@@ -471,7 +475,7 @@ const asyncRoutes = {
     name: 'settlementList',
     component: () => import('@/page/approval/merchantCheck/settlementList.vue'),
     meta: {
-      title: 'settlementList',
+      title: '结算卡修改审核',
       icon: 'settlementList'
     },
     children: [
@@ -480,7 +484,7 @@ const asyncRoutes = {
         name: 'settlementListDetail',
         meta: {
           fatherName: 'settlementList',
-          title: 'settlementListDetail',
+          title: '结算卡修改审核详情',
           icon: 'settlementListDetail'
         },
         component: () => import('@/page/approval/merchantCheck/settlementListDetail.vue')
@@ -490,7 +494,7 @@ const asyncRoutes = {
         name: 'settlementRecordDetail',
         meta: {
           fatherName: 'settlementList',
-          title: 'settlementRecordDetail',
+          title: ' 结算卡修改审核记录',
           icon: 'settlementRecordDetail'
         },
         component: () => import('@/page/approval/merchantCheck/settlementRecordDetail.vue')
@@ -502,7 +506,7 @@ const asyncRoutes = {
     name: 'aliDirectList',
     component: () => import('@/page/approval/merchantCheck/aliDirectList.vue'),
     meta: {
-      title: 'aliDirectList',
+      title: '支付宝直连审核',
       icon: 'aliDirectList'
     },
     children: [
@@ -511,7 +515,7 @@ const asyncRoutes = {
         name: 'aliDirectListDetail',
         meta: {
           fatherName: 'aliDirectList',
-          title: 'aliDirectListDetail',
+          title: '支付宝直连审核详情',
           icon: 'aliDirectListDetail'
         },
         component: () => import('@/page/approval/merchantCheck/aliDirectListDetail.vue')
@@ -521,7 +525,7 @@ const asyncRoutes = {
         name: 'aliDirectRecordDetail',
         meta: {
           fatherName: 'aliDirectList',
-          title: 'aliDirectRecordDetail',
+          title: '支付宝直连审核记录',
           icon: 'aliDirectRecordDetail'
         },
         component: () => import('@/page/approval/merchantCheck/aliDirectRecordDetail.vue')
@@ -533,7 +537,7 @@ const asyncRoutes = {
     name: 'wxDirectList',
     component: () => import('@/page/approval/merchantCheck/wxDirectList.vue'),
     meta: {
-      title: 'wxDirectList',
+      title: '微信直连审核',
       icon: 'wxDirectList'
     },
     children: [
@@ -542,7 +546,7 @@ const asyncRoutes = {
         name: 'wxDirectListDetail',
         meta: {
           fatherName: 'wxDirectList',
-          title: 'wxDirectListDetail',
+          title: '微信直连审核详情',
           icon: 'wxDirectListDetail'
         },
         component: () => import('@/page/approval/merchantCheck/wxDirectListDetail.vue')
@@ -552,7 +556,7 @@ const asyncRoutes = {
         name: 'wxDirectRecordDetail',
         meta: {
           fatherName: 'wxDirectList',
-          title: 'wxDirectRecordDetail',
+          title: '微信直连审核记录',
           icon: 'wxDirectRecordDetail'
         },
         component: () => import('@/page/approval/merchantCheck/wxDirectRecordDetail.vue')
@@ -564,7 +568,7 @@ const asyncRoutes = {
     name: 'checkService',
     component: () => import('@/page/approval/serviceCheck/serviceCheck.vue'),
     meta: {
-      title: 'checkService',
+      title: '下级服务商审核',
       icon: 'checkService'
     },
     children: []
@@ -574,7 +578,7 @@ const asyncRoutes = {
     name: 'checkServiceList',
     component: () => import('@/page/approval/serviceCheck/checkServiceList.vue'),
     meta: {
-      title: 'checkServiceList',
+      title: '下级服务商审核',
       icon: 'checkServiceList'
     },
     children: [
@@ -583,7 +587,7 @@ const asyncRoutes = {
         name: 'checkServiceListDetail',
         meta: {
           fatherName: 'checkServiceList',
-          title: 'checkServiceListDetail',
+          title: '下级服务商审核详情',
           icon: 'checkServiceListDetail'
         },
         component: () => import('@/page/approval/serviceCheck/checkServiceListDetail.vue')
@@ -595,7 +599,7 @@ const asyncRoutes = {
     name: 'checkPartner',
     component: () => import('@/page/approval/partnerCheck/partnerCheck.vue'),
     meta: {
-      title: 'checkPartner',
+      title: '合伙人审核',
       icon: 'checkPartner'
     },
     children: []
@@ -605,7 +609,7 @@ const asyncRoutes = {
     name: 'checkPartnerList',
     component: () => import('@/page/approval/partnerCheck/checkPartnerList.vue'),
     meta: {
-      title: 'checkPartnerList',
+      title: '合伙人审核列表',
       icon: 'checkPartnerList'
     },
     children: [
@@ -614,7 +618,7 @@ const asyncRoutes = {
         name: 'checkPartnerListDetail',
         meta: {
           fatherName: 'checkPartnerList',
-          title: 'checkPartnerListDetail',
+          title: '合伙人审核详情',
           icon: 'checkPartnerListDetail'
         },
         component: () => import('@/page/approval/partnerCheck/checkPartnerListDetail.vue')
@@ -626,7 +630,7 @@ const asyncRoutes = {
     name: 'systemConfig',
     component: Layout,
     meta: {
-      title: 'systemConfig',
+      title: '系统配置',
       icon: 'systemConfig'
     },
     children: []
@@ -636,7 +640,7 @@ const asyncRoutes = {
     name: 'userList',
     component: () => import('@/page/systemConfig/userList.vue'),
     meta: {
-      title: 'userList',
+      title: '成员列表',
       icon: 'userList'
     },
     children: []
@@ -646,7 +650,7 @@ const asyncRoutes = {
     name: 'userManager',
     component: () => import('@/page/systemConfig/userManager.vue'),
     meta: {
-      title: 'userManager',
+      title: '成员管理',
       icon: 'userManager'
     },
     children: []
@@ -656,7 +660,7 @@ const asyncRoutes = {
     name: 'menuManager',
     component: () => import('@/page/systemConfig/menuManager.vue'),
     meta: {
-      title: 'menuManager',
+      title: '菜单管理',
       icon: 'menuManager'
     },
     children: []
@@ -666,7 +670,7 @@ const asyncRoutes = {
     name: 'approvalManager',
     component: () => import('@/page/systemConfig/approvalManager.vue'),
     meta: {
-      title: 'approvalManager',
+      title: '审批管理',
       icon: 'approvalManager'
     },
     children: []
@@ -676,7 +680,7 @@ const asyncRoutes = {
     name: 'customForm',
     component: () => import('@/page/systemConfig/customForm.vue'),
     meta: {
-      title: 'customForm',
+      title: '自定义表单',
       icon: 'customForm'
     },
     children: []
@@ -686,7 +690,7 @@ const asyncRoutes = {
     name: 'paramSetting',
     component: () => import('@/page/systemConfig/paramSetting.vue'),
     meta: {
-      title: 'paramSetting',
+      title: '参数设置',
       icon: 'paramSetting'
     },
     children: []
@@ -696,7 +700,7 @@ const asyncRoutes = {
     name: 'powerManager',
     component: () => import('@/page/systemConfig/powerManager.vue'),
     meta: {
-      title: 'powerManager',
+      title: '权限管理',
       icon: 'powerManager'
     },
     children: [
@@ -706,7 +710,7 @@ const asyncRoutes = {
         component: () => import('@/page/systemConfig/powerBtnManager.vue'),
         meta: {
           fatherName: 'powerManager',
-          title: 'powerBtnManager',
+          title: '编辑按钮',
           icon: 'powerBtnManager'
         }
       }
@@ -717,7 +721,7 @@ const asyncRoutes = {
     name: 'agentPowerManager',
     component: () => import('@/page/systemConfig/agentPowerManager/agentPowerManager.vue'),
     meta: {
-      title: 'agentPowerManager',
+      title: '服务商产品权限',
       icon: 'agentPowerManager'
     },
     children: []
@@ -727,7 +731,7 @@ const asyncRoutes = {
     name: 'agentPcManager',
     component: () => import('@/page/systemConfig/agentPowerManager/agentPcManager.vue'),
     meta: {
-      title: 'agentPcManager',
+      title: '后台角色权限',
       icon: 'agentPcManager'
     },
     children: []
@@ -737,7 +741,7 @@ const asyncRoutes = {
     name: 'agentAppletManager',
     component: () => import('@/page/systemConfig/agentPowerManager/agentAppletManager.vue'),
     meta: {
-      title: 'agentAppletManager',
+      title: '小程序角色权限',
       icon: 'agentAppletManager'
     },
     children: []

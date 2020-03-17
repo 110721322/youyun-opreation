@@ -10,35 +10,34 @@
           <span class="title">类型</span>
         </div>
         <div class="device_list">
-          <div class="device_item select">
-            <div class="device_name">成员信息（编辑信息）</div>
-            <div class="device_num"></div>
-          </div>
-          <div class="device_item">
-            <div class="device_name">成员信息（注册信息）</div>
+          <div
+            v-for="(item,key) of menuList"
+            :key="key"
+            class="device_item"
+            :class="item.type == selectMenu.type?'select':''"
+            @click="onClick_menuItem(item)"
+          >
+            <div class="device_name">{{ item.name }}</div>
             <div class="device_num"></div>
           </div>
         </div>
       </div>
       <div class="right_box">
         <DetailBox title="自定义表单" :border="true">
-          <div class="mod_tips">表单位置：系统配置-成员管理-操作-编辑</div>
+          <div class="mod_tips">表单位置：{{ selectMenu.formLoaction }}</div>
 
           <el-table :data="tableData" style="width: 100%">
-            <el-table-column prop="date" label="名称"></el-table-column>
-            <el-table-column prop="name" label="类型"></el-table-column>
-            <el-table-column prop="must" label="是否必填">
+            <el-table-column
+              v-for="(item,key) of tableConfig"
+              :key="key"
+              :prop="item.prop"
+              :label="item.label"
+            >
               <template slot-scope="scope">
-                <div>
-                  <el-checkbox v-model="scope.row.must"></el-checkbox>
+                <div v-if="item.isShowCheckBox">
+                  <el-checkbox v-model=" scope.row[item.prop]" @input="onInput_checkBox"></el-checkbox>
                 </div>
-              </template>
-            </el-table-column>
-            <el-table-column prop="showList" label="列表显示">
-              <template slot-scope="scope">
-                <div>
-                  <el-checkbox v-model="scope.row.showList"></el-checkbox>
-                </div>
+                <span v-else>{{ scope.row[item.prop] }}</span>
               </template>
             </el-table-column>
           </el-table>
@@ -74,38 +73,82 @@ export default {
       ruleForm: {
         name1: "2"
       },
+      tableConfig: [
+        {
+          label: "名称",
+          prop: "name",
+          width: "90px"
+        },
+        {
+          label: "类型",
+          prop: "type",
+          width: "90px"
+        },
+        {
+          label: "是否必填",
+          prop: "must",
+          width: "90px",
+          isShowCheckBox: true
+        },
+        {
+          label: "列表显示",
+          prop: "showList",
+          width: "90px",
+          isShowCheckBox: true
+        }
+      ],
       tableData: [
         {
-          date: "2016-05-02",
+          type: "2016-05-02",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1518 弄",
           must: false
         },
         {
-          date: "2016-05-04",
+          type: "2016-05-04",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1517 弄",
           must: false
         },
         {
-          date: "2016-05-01",
+          type: "2016-05-01",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1519 弄",
-          must: false
+          must: true
         },
         {
-          date: "2016-05-03",
+          type: "2016-05-03",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1516 弄",
           must: false
         }
-      ]
+      ],
+      menuList: [
+        {
+          name: "成员信息（编辑信息）",
+          type: "editInfo",
+          formLoaction: "系统配置-成员管理-操作-编辑"
+        },
+        {
+          name: "成员信息（注册信息）",
+          type: "registerInfo",
+          formLoaction: "成员注册-完善个人信息"
+        }
+      ],
+      selectMenu: {}
     };
   },
   mounted() {
+    this.selectMenu = this.menuList[0];
     this.getTableData();
   },
   methods: {
+    onClick_menuItem($item) {
+      this.selectMenu = $item;
+    },
+    onInput_checkBox() {
+      console.log(this.tableData);
+    },
     search() {
       // eslint-disable-next-line no-console
       console.log(this.ruleForm);
