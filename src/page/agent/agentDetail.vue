@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div class>
     <div class="p_head_detail">
       <div class="top">
         <span>杭州网络科技有限公司</span>
@@ -44,7 +44,7 @@
 
     <detailMode :rule-form="ruleForm" :config-data="configData" @edit="itemEdit"></detailMode>
 
-    <detailMode :rule-form="ruleForm" :config-data="configData"></detailMode>
+    <detailMode :rule-form="ruleForm" :config-data="configData2"></detailMode>
 
     <div class="bg_box">
       <div class="title">应用</div>
@@ -158,7 +158,7 @@
 import Form from "@/components/form/index.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import detailMode from "@/components/detailMode/detailMode.vue";
-import { USER_CONFIG } from "./tableConfig/config_communicate";
+import { USER_CONFIG, USER_CONFIG2 } from "./tableConfig/config_communicate";
 import { FORM_CONFIG } from "./formConfig/agentDetail";
 
 export default {
@@ -291,6 +291,113 @@ export default {
           }
         ]
       },
+      configData2: {
+        name: "行业信息",
+        child: [
+          {
+            name: "费率",
+            modelName: "basicData",
+            models: [
+              {
+                items: [
+                  {
+                    name: "微信/支付宝费率(直连)",
+                    key: "name1"
+                  },
+                  {
+                    name: "云闪付费率单笔＞1000(间连)",
+                    key: "name"
+                  }
+                ]
+              },
+              {
+                items: [
+                  {
+                    name: "微信/支付宝费率(间连)",
+                    key: "email"
+                  }
+                ]
+              },
+              {
+                items: [
+                  {
+                    name: "云闪付费率单笔≤1000(间连)",
+                    key: "name3"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            name: "续费",
+            modelName: "finance",
+            models: [
+              {
+                items: [
+                  {
+                    name: "开户时间",
+                    key: "name1"
+                  },
+                  {
+                    name: "缴费金额",
+                    key: "name"
+                  }
+                ]
+              },
+              {
+                items: [
+                  {
+                    name: "到期时间",
+                    key: "email"
+                  }
+                ]
+              },
+              {
+                items: [
+                  {
+                    name: "续费方式",
+                    key: "name3"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            name: "权限",
+            modelName: "mailAddress",
+            models: [
+              {
+                items: [
+                  {
+                    name: "服务地区",
+                    key: "name1"
+                  },
+                  {
+                    name: "平台分润抽成",
+                    key: "name"
+                  }
+                ]
+              },
+              {
+                items: [
+                  {
+                    name: "是否开通下级",
+                    key: "email"
+                  }
+                ]
+              },
+              {
+                items: [
+                  {
+                    name: "服务类型",
+                    key: "name3"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
       value: "",
       options: [
         {
@@ -300,6 +407,7 @@ export default {
       ],
       testData: [],
       tableConfigData: USER_CONFIG,
+      tableConfigData2: USER_CONFIG2,
       fromConfigData: [],
       ruleForm: {
         name: "1",
@@ -416,8 +524,6 @@ export default {
       this.inputVisible = false;
       this.inputValue = "";
     },
-
-    selectionChange($val) {},
     go_detail() {
       // eslint-disable-next-line no-console
       this.$router.push("/agent/list/detail");

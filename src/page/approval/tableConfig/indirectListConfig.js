@@ -15,13 +15,13 @@ export const INDIRECTLIST_CONFIG = {
       // prop: 'status', basecrud v-if v-else重复显示
       width: '150px',
       render: (h, params) => {
-        const status = params.row.status;
+        const status = params.row.statusList;
         return h('div', {
           'class': "status-box"
         }, [status.map(function ($item) {
           return [h('span', {
-            'class': "dot"
-          }), $item]
+            'class': "dot " + $item.status
+          }), $item.name]
         })]
         );
       }

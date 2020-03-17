@@ -1,13 +1,8 @@
 export const USER_CONFIG = {
   gridConfig: [
     {
-      label: '服务商ID',
+      label: '服务商',
       prop: 'id'
-    },
-    {
-      label: '服务商名称',
-      prop: 'tel',
-      width: '150px'
     },
     {
       label: '开通时间',

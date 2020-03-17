@@ -26,6 +26,7 @@
 
       <detailMode :rule-form="ruleForm" :config-data="configData"></detailMode>
       <detailMode :rule-form="ruleForm2" :config-data="configData2"></detailMode>
+      <detailMode :rule-form="ruleForm3" :config-data="configData3"></detailMode>
     </div>
   </div>
 </template>
@@ -104,37 +105,21 @@ export default {
           "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
       },
       configData: {
-        name: "发起人提交信息",
+        name: "服务商信息",
         border: true,
         headColor: "#FAFAFA",
-        models: [
+        items: [
           {
-            items: [
-              {
-                name: "服务商ID",
-                key: "name1"
-              },
-              {
-                name: "发起人备注",
-                key: "name"
-              }
-            ]
+            name: "服务商ID",
+            key: "name1"
           },
           {
-            items: [
-              {
-                name: "服务商名称",
-                key: "email"
-              }
-            ]
+            name: "服务商名称",
+            key: "email"
           },
           {
-            items: [
-              {
-                name: "建议结算金额",
-                key: "name3"
-              }
-            ]
+            name: "法人手机号",
+            key: "name3"
           }
         ]
       },
@@ -148,37 +133,50 @@ export default {
           "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
       },
       configData2: {
-        name: "服务商提交信息",
+        name: "设备信息",
         border: true,
         headColor: "#FAFAFA",
-        models: [
+        items: [
           {
-            items: [
-              {
-                name: "服务商ID",
-                key: "name1"
-              },
-              {
-                name: "发起人备注",
-                key: "name"
-              }
-            ]
+            name: "设备型号",
+            key: "name1"
           },
           {
-            items: [
-              {
-                name: "服务商名称",
-                key: "email"
-              }
-            ]
+            name: "设备标识",
+            key: "email"
+          }
+        ]
+      },
+      ruleForm3: {
+        name: "1",
+        name1: "2",
+        name2: "3",
+        name3: "4",
+        email: "12312312@163.com",
+        pic:
+          "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
+      },
+      configData3: {
+        name: " 返修信息",
+        border: true,
+        headColor: "#FAFAFA",
+        items: [
+          {
+            name: "提交时间",
+            key: "name1"
           },
           {
-            items: [
-              {
-                name: "建议结算金额",
-                key: "name3"
-              }
-            ]
+            name: "原因",
+            key: "email"
+          },
+          {
+            name: "设备标识",
+            key: "pic",
+            type: "image"
+          },
+          {
+            name: "寄回快递单号",
+            key: "email"
           }
         ]
       }

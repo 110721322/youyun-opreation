@@ -333,11 +333,17 @@ export default {
   background-color: #52c41a;
   vertical-align: middle;
   margin: 0 5px;
-  &:nth-child(2) {
-    background-color: #ffae00;
+  &.opened {
+    background-color: #52c41a;
   }
-  &:nth-child(3) {
-    background: rgba(0, 0, 0, 0.25);
+  &.review {
+    background-color: #ffc620;
+  }
+  &.reject {
+    background-color: #f5222d;
+  }
+  &.unused {
+    background-color: #9c9c9c;
   }
 }
 </style>

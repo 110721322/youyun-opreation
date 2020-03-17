@@ -33,7 +33,7 @@ export default {
   components: { Search, BaseCrud },
   data() {
     return {
-      searchMaxHeight: "260",
+      searchMaxHeight: "320",
       searchConfig: SEARCH_CONFIG,
       configData: AGENTSTA_CONFIG,
       fromConfigData: {},

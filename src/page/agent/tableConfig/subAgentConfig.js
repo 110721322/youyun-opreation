@@ -1,13 +1,8 @@
 export const USER_CONFIG = {
   gridConfig: [
     {
-      label: '服务商ID',
+      label: '服务商',
       prop: 'id'
-    },
-    {
-      label: '服务商名称',
-      prop: 'tel',
-      width: '150px'
     },
     {
       label: '所属顶级服务商',
@@ -29,12 +24,6 @@ export const USER_CONFIG = {
       prop: 'email',
       width: '150px'
     },
-    {
-      label: '商户数量',
-      prop: 'email',
-      width: '150px'
-    },
-
     {
       label: '状态',
       prop: 'status',

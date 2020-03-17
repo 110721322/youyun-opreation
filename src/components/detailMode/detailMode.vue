@@ -81,6 +81,14 @@ export default {
     color: rgba(51, 51, 53, 1);
     border-bottom: 1px solid #ebeef5;
   }
+  .edit {
+    float: right;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(25, 137, 250, 1);
+    margin-right: 32px;
+    cursor: pointer;
+  }
   .con_box {
     margin: 24px;
     background: #fff;
@@ -90,14 +98,6 @@ export default {
       height: 44px;
       line-height: 44px;
       background: #fafafa;
-      .edit {
-        float: right;
-        font-size: 14px;
-        font-weight: 400;
-        color: rgba(25, 137, 250, 1);
-        margin-right: 32px;
-        cursor: pointer;
-      }
     }
     .form {
       margin: 32px;

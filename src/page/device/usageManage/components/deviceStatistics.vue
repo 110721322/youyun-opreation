@@ -4,6 +4,7 @@
       :open-height="searchMaxHeight"
       :form-base-data="searchConfig.formData"
       :show-foot-btn="searchConfig.showFootBtn"
+      :is-show-all="true"
       @search="search"
     />
     <div class="device-list">
@@ -59,7 +60,7 @@
       </div>
     </div>
     <div class="data_box">
-      <dataItem :radio="radioListData[0]" :title="titleList[1]"></dataItem>
+      <dataItem :radio="radioListData[1]" :title="titleList[1]"></dataItem>
 
       <div class="content-box">
         <div class="left">
@@ -217,6 +218,13 @@ export default {
       ],
       titleList: ["设备数量统计", "设备交易统计"],
       radioListData: [
+        {
+          radio: "0",
+          namelist: [
+            { name: "大区数据", label: "0" },
+            { name: "行业数据", label: "1" }
+          ]
+        },
         {
           radio: "0",
           namelist: [

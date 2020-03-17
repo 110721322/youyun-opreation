@@ -57,7 +57,7 @@ export default {
     },
     placeholder() {
       const item = this.formItem;
-      return item.placeholder ? item.placeholder : `请输入${item.label}`;
+      return item.placeholder ? item.placeholder : `请选择${item.label}`;
     },
     selectClass() {
       const item = this.formItem;

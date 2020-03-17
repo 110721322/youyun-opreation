@@ -2,7 +2,7 @@
   <div class="data-item">
     <div class="title">
       {{ title }}
-      <span v-if="isShowMore" class="show-more">查看更多</span>
+      <span v-if="isShowMore" class="show-more" @click="onClick_showMore">查看更多</span>
     </div>
     <div v-if="radio" class="tags">
       <el-radio-group v-model="radio.radio">
@@ -63,6 +63,11 @@ export default {
   },
   data() {
     return {};
+  },
+  methods: {
+    onClick_showMore() {
+      this.$emit("showMore");
+    }
   }
 };
 </script>
