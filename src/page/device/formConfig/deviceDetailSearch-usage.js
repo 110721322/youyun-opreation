@@ -8,10 +8,21 @@ export const SEARCH_CONFIG = {
       labelWidth: '100px'
     },
     {
-      type: 0,
-      label: '设备标识',
-      key: 'logo',
-      style: 'width:294px'
+      type: 10,
+      label: '精准筛选',
+      key: '',
+      class: 'max-width',
+      options: [
+        {
+          label: '设备标识',
+          value: 'identity'
+        },
+        {
+          label: '所属服务商',
+          value: 'service'
+        }
+      ],
+      labelWidth: '100px'
     },
     {
       type: 1,
@@ -38,6 +49,7 @@ export const SEARCH_CONFIG = {
       label: '大区',
       key: 'area',
       style: 'width:294px',
+      labelWidth: '185px',
       options: [
         {
           label: '川菜',
@@ -54,16 +66,11 @@ export const SEARCH_CONFIG = {
       ]
     },
     {
-      type: 0,
-      label: '所属服务商',
-      key: 'service',
-      style: 'width:294px'
-    },
-    {
       type: 1,
       label: '行业',
       key: 'kind',
       style: 'width:294px',
+      class: "clear_both",
       options: [
         {
           label: '川菜',
@@ -84,6 +91,7 @@ export const SEARCH_CONFIG = {
       label: '服务地区',
       key: 'address',
       style: 'width:294px',
+      labelWidth: '185px',
       options: [
         {
           label: '川菜',

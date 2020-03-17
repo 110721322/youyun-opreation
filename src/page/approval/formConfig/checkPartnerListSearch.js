@@ -9,39 +9,35 @@ export const SEARCH_CONFIG = {
       labelWidth: '100px'
     },
     {
-      type: 0,
-      label: '合伙人姓名',
-      key: 'name',
-      style: 'width:294px',
-      labelWidth: '185px'
-    },
-    {
-      type: 0,
-      label: '合伙人手机号',
-      key: 'phone',
-      style: 'width:294px',
-      labelWidth: '185px'
-    },
-    {
-      type: 0,
-      label: '所属服务商ID',
-      key: 'serviceid',
-      style: 'width:294px',
-      labelWidth: '185px'
-    },
-    {
-      type: 0,
-      label: '所属服务商名称',
-      key: 'servicename',
-      style: 'width:294px',
-      labelWidth: '185px'
+      type: 10,
+      label: '精准筛选',
+      key: '',
+      class: 'max-width',
+      options: [
+        {
+          label: '合伙人姓名',
+          value: 'name'
+        },
+        {
+          label: '合伙人手机号',
+          value: 'phone'
+        },
+        {
+          label: '所属服务商ID',
+          value: 'serviceid'
+        },
+        {
+          label: '所属服务商名称',
+          value: 'servicename'
+        }
+      ],
+      labelWidth: '100px'
     },
     {
       type: 1,
       label: '合伙人类型',
       key: 'type',
       style: 'width:294px',
-      labelWidth: '185px',
       options: [
         {
           label: '拓展员',
@@ -79,7 +75,8 @@ export const SEARCH_CONFIG = {
       label: '所属运营',
       key: 'oper',
       style: 'width:294px',
-      labelWidth: '185px',
+      labelWidth: '100px',
+      class: "clear_both",
       initVal: "全部",
       options: [
         {

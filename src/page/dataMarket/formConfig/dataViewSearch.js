@@ -55,6 +55,7 @@ export const FORM_CONFIG = {
       label: '地区',
       key: 'area',
       style: 'width:294px',
+      class: "clear_both",
       options: [
         {
           label: '川菜',
@@ -96,6 +97,7 @@ export const FORM_CONFIG = {
       label: '标签',
       key: 'tag',
       style: 'width:294px',
+      class: "clear_both",
       options: [
         {
           label: '川菜',
@@ -137,6 +139,7 @@ export const FORM_CONFIG = {
       label: '服务商类型',
       key: 'type',
       style: 'width:294px',
+      class: "clear_both",
       options: [
         {
           label: '川菜',

@@ -217,6 +217,17 @@ const menuItems = [
           title: '分润总览',
           icon: 'dividedOverview'
         }
+      },
+      {
+        type: 'ios-grid',
+        name: 'operationApprove',
+        text: '运营结算审核',
+        path: 'operationApprove',
+        isShow: true,
+        meta: {
+          title: '运营结算审核',
+          icon: 'operationApprove'
+        }
       }
     ]
   },
@@ -263,8 +274,8 @@ const menuItems = [
     name: 'task',
     isShow: true,
     meta: {
-      title: 'task',
-      icon: 'task'
+      title: '运营数据',
+      icon: '运营数据'
     },
     children: [
       {
@@ -379,6 +390,17 @@ const menuItems = [
             meta: {
               title: '出库管理',
               icon: 'stockOut'
+            }
+          },
+          {
+            type: 'ios-grid',
+            name: 'authorized',
+            text: '设备授权激活',
+            path: 'authorized',
+            isShow: true,
+            meta: {
+              title: '设备授权激活',
+              icon: 'authorized'
             }
           }
         ]

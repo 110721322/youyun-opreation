@@ -14,28 +14,16 @@ export const SEARCH_CONFIG = {
       class: 'max-width',
       options: [
         {
-          label: '工号',
+          label: '设备标识',
           value: 'id'
-        },
-        {
-          label: '成员花名',
-          value: 'alias'
-        },
-        {
-          label: '成员姓名',
-          value: 'name'
-        },
-        {
-          label: '手机号',
-          value: 'phone'
         }
       ],
       labelWidth: '100px'
     },
     {
       type: 1,
-      label: '性别',
-      key: 'sex',
+      label: '设备型号',
+      key: 'model',
       style: 'width:294px',
       labelWidth: '100px',
       options: [
@@ -55,32 +43,10 @@ export const SEARCH_CONFIG = {
     },
     {
       type: 1,
-      label: '职位',
-      key: 'position',
+      label: '状态',
+      key: 'status',
       style: 'width:294px',
       labelWidth: '185px',
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
-    },
-    {
-      type: 1,
-      label: '上级',
-      key: 'super',
-      style: 'width:294px',
-      labelWidth: '100px',
-      class: "clear_both",
       options: [
         {
           label: '川菜',

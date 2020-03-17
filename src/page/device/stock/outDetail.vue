@@ -101,84 +101,60 @@ export default {
       },
       configData: {
         name: "订单信息",
-        models: [
+        items: [
           {
-            items: [
-              {
-                name: "销售人员",
-                key: "name1",
-                type: "edit"
-              },
-              {
-                name: "订单号",
-                key: "name"
-              },
-              {
-                name: "订单类型",
-                key: "name"
-              }
-            ]
+            name: "销售人员",
+            key: "name1",
+            type: "edit"
           },
           {
-            items: [
-              {
-                name: "订单金额",
-                key: "email"
-              },
-              {
-                name: "实付金额",
-                key: "pic"
-              },
-              {
-                name: "购买服务商",
-                key: "pic"
-              }
-            ]
+            name: "订单金额",
+            key: "email"
           },
           {
-            items: [
-              {
-                name: "支付方式",
-                key: "name3"
-              },
-              {
-                name: "邮寄地址",
-                key: "name"
-              },
-              {
-                name: "运营备注",
-                key: "name"
-              }
-            ]
+            name: "支付方式",
+            key: "name3"
+          },
+          {
+            name: "订单号",
+            key: "name"
+          },
+          {
+            name: "实付金额",
+            key: "pic"
+          },
+          {
+            name: "邮寄地址",
+            key: "name"
+          },
+          {
+            name: "订单类型",
+            key: "name"
+          },
+          {
+            name: "购买服务商",
+            key: "pic"
+          },
+          {
+            name: "运营备注",
+            key: "name"
           }
         ]
       },
       configData2: {
         name: "订单信息",
-        models: [
+        items: [
           {
-            items: [
-              {
-                name: "出库时间",
-                key: "name1"
-              }
-            ]
+            name: "出库时间",
+            key: "name1"
           },
           {
-            items: [
-              {
-                name: "快递单号",
-                key: "name1"
-              }
-            ]
+            name: "快递单号",
+            key: "name1"
           },
           {
-            items: [
-              {
-                name: "库管备注",
-                key: "name1"
-              }
-            ]
+            name: "库管备注",
+            key: "name1"
           }
         ]
       },

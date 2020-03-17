@@ -71,6 +71,7 @@ export const FORM_CONFIG = {
       label: '行业类目',
       key: 'industryKind',
       style: 'width:294px',
+      class: "clear_both",
       options: [
         {
           label: '川菜',
@@ -113,6 +114,7 @@ export const FORM_CONFIG = {
       label: '所属运营',
       key: 'oper',
       style: 'width:294px',
+      class: "clear_both",
       options: [
         {
           label: '川菜',

@@ -1,4 +1,3 @@
-// import areaData from "@/assets/data/areaData"
 export const SEARCH_CONFIG = {
   formData: [
     {
@@ -15,11 +14,11 @@ export const SEARCH_CONFIG = {
       class: 'max-width',
       options: [
         {
-          label: '商户ID',
+          label: '服务商ID',
           value: 'id'
         },
         {
-          label: '商户名称',
+          label: '服务商名称',
           value: 'name'
         }
       ],
@@ -27,30 +26,10 @@ export const SEARCH_CONFIG = {
     },
     {
       type: 1,
-      label: '状态',
+      label: '审核状态',
       key: 'status',
       style: 'width:294px',
-      options: [
-        {
-          label: '待审核',
-          value: 0
-        },
-        {
-          label: '审核通过',
-          value: 1
-        },
-        {
-          label: '驳回',
-          value: 2
-        }
-      ]
-    },
-    {
-      type: 1,
-      label: '所属运营',
-      key: 'oper',
-      style: 'width:294px',
-      labelWidth: '185px',
+      labelWidth: '100px',
       options: [
         {
           label: '川菜',
@@ -65,5 +44,6 @@ export const SEARCH_CONFIG = {
           value: 2
         }
       ]
-    }]
+    }
+  ]
 }

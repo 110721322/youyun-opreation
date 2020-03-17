@@ -8,6 +8,23 @@ export const SEARCH_CONFIG = {
       labelWidth: '100px'
     },
     {
+      type: 10,
+      label: '精准筛选',
+      key: '',
+      class: 'max-width',
+      options: [
+        {
+          label: '购买服务商',
+          value: 'buyService'
+        },
+        {
+          label: '订单号',
+          value: 'orderId'
+        }
+      ],
+      labelWidth: '100px'
+    },
+    {
       type: 1,
       label: '设备型号',
       key: 'type',
@@ -28,17 +45,11 @@ export const SEARCH_CONFIG = {
       ]
     },
     {
-      type: 0,
-      label: '购买服务商',
-      key: 'buyService',
-      style: 'width:294px',
-      labelWidth: '185px'
-    },
-    {
       type: 1,
       label: '状态',
       key: 'status',
       style: 'width:294px',
+      labelWidth: '185px',
       options: [
         {
           label: '川菜',
@@ -59,7 +70,7 @@ export const SEARCH_CONFIG = {
       label: '销售人员',
       key: 'saleman',
       style: 'width:294px',
-      labelWidth: '185px',
+      class: "clear_both",
       options: [
         {
           label: '川菜',
@@ -80,6 +91,7 @@ export const SEARCH_CONFIG = {
       label: '出库人员',
       key: 'outman',
       style: 'width:294px',
+      labelWidth: '185px',
       options: [
         {
           label: '川菜',
@@ -94,13 +106,6 @@ export const SEARCH_CONFIG = {
           value: 2
         }
       ]
-    },
-    {
-      type: 0,
-      label: '订单号',
-      key: 'orderId',
-      style: 'width:294px',
-      labelWidth: '185px'
     }
   ]
 }

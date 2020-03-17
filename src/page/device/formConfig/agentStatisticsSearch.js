@@ -49,6 +49,7 @@ export const SEARCH_CONFIG = {
       label: '设备型号',
       key: 'type',
       style: 'width:294px',
+      labelWidth: '185px',
       options: [
         {
           label: '川菜',
@@ -70,6 +71,7 @@ export const SEARCH_CONFIG = {
       label: '地区',
       key: 'address',
       style: 'width:294px',
+      class: "clear_both",
       options: [
         {
           label: '川菜',
