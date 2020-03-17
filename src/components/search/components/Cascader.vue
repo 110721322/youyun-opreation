@@ -35,15 +35,21 @@ export default {
       obj[0] = options.find(item => {
         return item.value === val[0];
       });
-      obj[1] = obj[0].children.find(item => {
-        return item.value === val[1];
-      });
-      obj[2] = obj[1].children.find(item => {
-        return item.value === val[2];
-      });
+
+      if (obj[0].children) {
+        obj[1] = obj[0].children.find(item => {
+          return item.value === val[1];
+        });
+      }
+      if (obj[1].children) {
+        obj[2] = obj[1].children.find(item => {
+          return item.value === val[2];
+        });
+      }
       obj.forEach(item => {
         delete item.children;
       });
+      console.log(obj);
       this.ruleForm.addressObj = obj;
     }
   }
