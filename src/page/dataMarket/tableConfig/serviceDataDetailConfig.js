@@ -2,8 +2,8 @@ export const MERCHANTDATADETAILCONFIG = {
   gridConfig: [
     {
       label: "服务商",
-      prop: "service",
-      width: "72px"
+      prop: [{ key: 'service' }, { key: 'id', label: 'ID:' }],
+      width: "150px"
     },
     {
       label: "入件商户数(个)",

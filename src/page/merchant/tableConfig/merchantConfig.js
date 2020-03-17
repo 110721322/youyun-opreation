@@ -7,14 +7,24 @@ export const USER_CONFIG = {
     },
     {
       label: '所属服务商',
-
       prop: [{ key: 'email' }, { key: 'id', label: 'ID:' }],
       width: '150px'
     },
     {
       label: '开通通道情况',
-      prop: 'name',
-      width: '150px'
+      width: '200px',
+      customHead: true,
+      render: (h, params) => {
+        const status = params.row.statusList;
+        return h('div', {
+          'class': "status-box"
+        }, [status.map(function ($item) {
+          return [h('span', {
+            'class': "dot " + $item.status
+          }), $item.name]
+        })]
+        );
+      }
     },
     {
       label: '创建时间',

@@ -2,7 +2,8 @@ export const USER_CONFIG = {
   gridConfig: [
     {
       label: '服务商',
-      prop: 'serviceName'
+      prop: [{ key: 'serviceName' }, { key: 'id', label: 'ID:' }],
+      width: '150px'
     },
     {
       label: '佣金总额（元）',

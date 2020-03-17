@@ -1,3 +1,4 @@
+import areaData from "@/assets/data/areaData";
 export const SEARCH_CONFIG = {
   formData: [
     {
@@ -27,7 +28,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '大区',
-      key: 'area',
+      key: 'region',
       style: 'width:294px',
       options: [
         {
@@ -65,25 +66,11 @@ export const SEARCH_CONFIG = {
       ]
     },
     {
-      // cascader
-      type: 1,
+      type: 8,
       label: '地区',
-      key: 'address',
+      key: 'area',
       style: 'width:294px',
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
+      options: areaData
     }
   ]
 }

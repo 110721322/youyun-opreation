@@ -50,7 +50,8 @@ export default {
     getData() {
       this.testData = [
         {
-          merchantName: "岳阳楼区戴斯酒店,ID: 132535626",
+          merchantName: "岳阳楼区戴斯酒店",
+          id: "岳阳楼区戴斯酒店",
           totalCommission: "10000.00",
           officeReward: "998.00",
           platformReward: "998.00",
@@ -60,7 +61,8 @@ export default {
           yinDivided: "1000.00"
         },
         {
-          merchantName: "岳阳楼区戴斯酒店,ID: 132535626",
+          merchantName: "岳阳楼区戴斯酒店",
+          id: "岳阳楼区戴斯酒店",
           totalCommission: "10000.00",
           officeReward: "998.00",
           platformReward: "998.00",
@@ -70,7 +72,8 @@ export default {
           yinDivided: "1000.00"
         },
         {
-          merchantName: "岳阳楼区戴斯酒店,ID: 132535626",
+          merchantName: "岳阳楼区戴斯酒店",
+          id: "岳阳楼区戴斯酒店",
           totalCommission: "10000.00",
           officeReward: "998.00",
           platformReward: "998.00",

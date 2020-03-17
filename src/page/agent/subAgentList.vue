@@ -85,6 +85,7 @@ export default {
     getData() {
       this.testData = [
         {
+          serviceName: "1两行两行两行两行",
           id: "1两行两行两行两行",
           tel: "15184318420",
           name: "小白",
@@ -95,6 +96,7 @@ export default {
           role: ["2"]
         },
         {
+          serviceName: "1两行两行两行两行",
           id: "2两行两行两行两行",
           tel: "13777369283",
           name: "小红",

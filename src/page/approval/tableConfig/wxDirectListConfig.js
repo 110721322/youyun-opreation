@@ -2,7 +2,7 @@ export const WXDIRECTLIST_CONFIG = {
   gridConfig: [
     {
       label: '商户名称',
-      prop: 'merchantName',
+      prop: [{ key: 'merchantName' }, { key: 'id', label: 'ID:' }],
       width: '150px'
     },
     {

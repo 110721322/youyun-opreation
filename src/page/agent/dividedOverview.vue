@@ -84,7 +84,8 @@ export default {
     getData() {
       this.testData = [
         {
-          serviceName: "岳阳楼区戴斯酒店,ID: 132535626",
+          serviceName: "岳阳楼区戴斯酒店",
+          id: "岳阳楼区戴斯酒店",
           totalCommission: "10000.00",
           orderDistribution: "1000.00",
           officeReward: "998.00",
@@ -92,7 +93,8 @@ export default {
           commissionIncrease: "100%"
         },
         {
-          serviceName: "岳阳楼区戴斯酒店,ID: 132535626",
+          serviceName: "岳阳楼区戴斯酒店",
+          id: "岳阳楼区戴斯酒店",
           totalCommission: "20000.00",
           orderDistribution: "600.00",
           officeReward: "888.00",
@@ -100,7 +102,8 @@ export default {
           commissionIncrease: "98%"
         },
         {
-          serviceName: "岳阳楼区戴斯酒店,ID: 132535626",
+          serviceName: "岳阳楼区戴斯酒店",
+          id: "岳阳楼区戴斯酒店",
           totalCommission: "300.00",
           orderDistribution: "200.00",
           officeReward: "2888.00",

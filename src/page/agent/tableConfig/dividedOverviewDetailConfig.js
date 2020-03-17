@@ -2,7 +2,7 @@ export const USER_CONFIG = {
   gridConfig: [
     {
       label: '商户',
-      prop: 'merchantName',
+      prop: [{ key: 'merchantName' }, { key: 'id', label: 'ID:' }],
       width: '150px'
     },
     {

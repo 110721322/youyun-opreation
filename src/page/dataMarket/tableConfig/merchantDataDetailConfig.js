@@ -2,11 +2,12 @@ export const MERCHANTDATADETAILCONFIG = {
   gridConfig: [
     {
       label: "商户名称",
-      prop: "merchantName"
+      prop: [{ key: 'merchantName' }, { key: 'id', label: 'ID:' }],
+      width: "150px"
     },
     {
       label: "所属服务商名称",
-      prop: "serviceProvider",
+      prop: [{ key: 'serviceProvider' }, { key: 'id', label: 'ID:' }],
       width: "176px"
     },
     {

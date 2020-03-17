@@ -25,7 +25,28 @@
           @detail="go_detail"
           @openAgentManager="openAgentManager"
           @openMerchantManager="openMerchantManager"
-        />
+        >
+          <div slot="head" slot-scope="item">
+            <span>{{ item.item.label }}</span>
+            <el-tooltip class="item" effect="dark" content="Top Center 提示文字" placement="top">
+              <div slot="content">
+                <div>
+                  <span class="dot opened"></span>已开通
+                </div>
+                <div>
+                  <span class="dot review"></span>审核中
+                </div>
+                <div>
+                  <span class="dot reject"></span>驳回
+                </div>
+                <div>
+                  <span class="dot unused"></span>未审核
+                </div>
+              </div>
+              <i class="el-icon-info" />
+            </el-tooltip>
+          </div>
+        </BaseCrud>
       </div>
     </div>
   </div>
@@ -59,7 +80,12 @@ export default {
           tel: "紫菜网络科技有限公司",
           name: "小白",
           email: "412412@qq.com",
-          status: "1",
+          statusList: [
+            { name: "乐刷", status: "opened" },
+            { name: "乐刷", status: "review" },
+            { name: "乐刷", status: "reject" },
+            { name: "乐刷", status: "unused" }
+          ],
           create_time: "2018-04-20",
           expand: "扩展信息一",
           role: ["2"]
@@ -69,7 +95,12 @@ export default {
           tel: "紫菜网络科技有限公司",
           name: "小红",
           email: "456465@qq.com",
-          status: "0",
+          statusList: [
+            { name: "乐刷", status: "opened" },
+            { name: "乐刷", status: "review" },
+            { name: "乐刷", status: "reject" },
+            { name: "乐刷", status: "unused" }
+          ],
           create_time: "2018-03-23",
           expand: "hashashashas",
           role: ["1"]
@@ -89,11 +120,32 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .table_box {
   margin: 24px;
   padding: 24px;
   overflow: hidden;
   background: #fff;
+}
+.dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #52c41a;
+  vertical-align: middle;
+  margin: 0 5px;
+  &.opened {
+    background-color: #52c41a;
+  }
+  &.review {
+    background-color: #ffc620;
+  }
+  &.reject {
+    background-color: #f5222d;
+  }
+  &.unused {
+    background-color: #9c9c9c;
+  }
 }
 </style>

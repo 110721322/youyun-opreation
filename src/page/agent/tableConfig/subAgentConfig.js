@@ -2,7 +2,8 @@ export const USER_CONFIG = {
   gridConfig: [
     {
       label: '服务商',
-      prop: 'id'
+      prop: [{ key: 'serviceName' }, { key: 'id', label: 'ID:' }],
+      width: '150px'
     },
     {
       label: '所属顶级服务商',
@@ -56,7 +57,7 @@ export const USER_CONFIG = {
     },
     {
       label: '所属大区',
-      prop: 'email',
+      prop: 'region',
       width: '150px'
     },
     {

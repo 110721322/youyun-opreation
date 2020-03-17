@@ -2,17 +2,17 @@ export const INDIRECTLIST_CONFIG = {
   gridConfig: [
     {
       label: '商户',
-      prop: 'merchantName',
+      prop: [{ key: 'merchantName' }, { key: 'merchantId', label: 'ID:' }],
       width: '150px'
     },
     {
       label: '所属服务商名称',
-      prop: 'serviceName',
+      prop: [{ key: 'serviceName' }, { key: 'serviceId', label: 'ID:' }],
       width: '150px'
     },
     {
       label: '通道情况 ',
-      width: '150px',
+      width: '200px',
       customHead: true,
       render: (h, params) => {
         const status = params.row.statusList;
