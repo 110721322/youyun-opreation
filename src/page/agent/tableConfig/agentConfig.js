@@ -58,7 +58,7 @@ export const USER_CONFIG = {
     },
     {
       label: '所属大区',
-      prop: 'email',
+      prop: 'region',
       width: '150px'
     },
     {

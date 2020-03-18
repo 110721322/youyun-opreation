@@ -9,17 +9,21 @@ export const FORM_CONFIG = {
       labelWidth: '100px'
     },
     {
-      type: 0,
-      label: '服务商ID',
-      key: 'id',
-      style: 'width:294px'
-    },
-    {
-      type: 0,
-      label: '服务商名称',
-      key: 'serviceName',
-      style: 'width:294px',
-      labelWidth: '185px'
+      type: 10,
+      label: '精准筛选',
+      key: '',
+      class: 'max-width',
+      options: [
+        {
+          label: '服务商ID',
+          value: 'id'
+        },
+        {
+          label: '服务商名称',
+          value: 'serviceName'
+        }
+      ],
+      labelWidth: '100px'
     },
     {
       type: 1,
@@ -67,6 +71,7 @@ export const FORM_CONFIG = {
       label: '服务地区',
       key: 'area',
       style: 'width:294px',
+      class: "clear_both",
       options: areaData
     },
     {

@@ -8,11 +8,32 @@ export const SEARCH_CONFIG = {
       labelWidth: '100px'
     },
     {
+      type: 10,
+      label: '精准筛选',
+      key: '',
+      class: 'max-width',
+      options: [
+        {
+          label: '单号',
+          value: 'order'
+        },
+        {
+          label: '所属服务商ID',
+          value: 'serviceProviderId'
+        },
+        {
+          label: '所属服务商',
+          value: 'serviceProvider'
+        }
+      ],
+      labelWidth: '100px'
+    },
+    {
       type: 1,
       label: '设备名称',
       key: 'name',
       style: 'width:294px',
-      labelWidth: '110px',
+      labelWidth: '100px',
       options: [
         {
           label: '川菜',
@@ -29,32 +50,11 @@ export const SEARCH_CONFIG = {
       ]
     },
     {
-      type: 0,
-      label: '单号',
-      key: 'order',
-      style: 'width:294px',
-      labelWidth: '110px'
-    },
-    {
-      type: 0,
-      label: '所属服务商ID',
-      key: 'serviceProviderId',
-      style: 'width:294px',
-      labelWidth: '110px'
-    },
-    {
-      type: 0,
-      label: '所属服务商',
-      key: 'serviceProvider',
-      style: 'width:294px',
-      labelWidth: '110px'
-    },
-    {
       type: 1,
       label: '状态',
       key: 'status',
       style: 'width:294px',
-      labelWidth: '110px',
+      labelWidth: '185px',
       options: [
         {
           label: '川菜',
@@ -75,7 +75,8 @@ export const SEARCH_CONFIG = {
       label: '所属运营',
       key: 'oper',
       style: 'width:294px',
-      labelWidth: '110px',
+      labelWidth: '100px',
+      class: "clear_both",
       options: [
         {
           label: '川菜',

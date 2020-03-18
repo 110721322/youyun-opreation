@@ -9,39 +9,36 @@ export const FORM_CONFIG = {
       labelWidth: '100px'
     },
     {
-      type: 0,
-      label: '商户ID',
-      key: 'id',
-      style: 'width:294px',
-      labelWidth: '185px'
-    },
-    {
-      type: 0,
-      label: '商户名称',
-      key: 'merchantName',
-      style: 'width:294px',
-      labelWidth: '185px'
-    },
-    {
-      type: 0,
-      label: '所属服务商ID',
-      key: 'serviceId',
-      style: 'width:294px',
-      labelWidth: '185px'
-    },
-    {
-      type: 0,
-      label: '所属服务商名称',
-      key: 'serviceName',
-      style: 'width:294px',
-      labelWidth: '185px'
+      type: 10,
+      label: '精准筛选',
+      key: '',
+      class: 'max-width',
+      options: [
+        {
+          label: '商户ID',
+          value: 'id'
+        },
+        {
+          label: '商户名称',
+          value: 'merchantName'
+        },
+        {
+          label: '所属服务商ID',
+          value: 'serviceId'
+        },
+        {
+          label: '所属服务商名称',
+          value: 'serviceName'
+        }
+      ],
+      labelWidth: '100px'
     },
     {
       type: 1,
       label: '行业类目',
       key: 'kind',
       style: 'width:294px',
-      labelWidth: '185px',
+      labelWidth: '100px',
       options: [
         {
           label: '川菜',
@@ -62,6 +59,7 @@ export const FORM_CONFIG = {
       label: '地区',
       key: 'area',
       style: 'width:294px',
+      labelWidth: '185px',
       options: areaData
     },
     {
@@ -69,7 +67,8 @@ export const FORM_CONFIG = {
       label: '是否开通会员',
       key: 'member',
       style: 'width:294px',
-      labelWidth: '185px',
+      labelWidth: '100px',
+      class: "clear_both",
       options: [
         {
           label: '川菜',

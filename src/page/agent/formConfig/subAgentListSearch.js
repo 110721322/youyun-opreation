@@ -9,18 +9,21 @@ export const FORM_CONFIG = {
       labelWidth: '100px'
     },
     {
-      type: 0,
-      label: '服务商ID',
-      key: 'companyName',
-      style: 'width:294px',
+      type: 10,
+      label: '精准筛选',
+      key: '',
+      class: 'max-width',
+      options: [
+        {
+          label: '服务商ID',
+          value: 'companyName'
+        },
+        {
+          label: '服务商名称',
+          value: 'name'
+        }
+      ],
       labelWidth: '100px'
-    },
-    {
-      type: 0,
-      label: '服务商名称',
-      key: 'name',
-      style: 'width:294px',
-      labelWidth: '185px'
     },
     {
       type: 1,
@@ -68,6 +71,7 @@ export const FORM_CONFIG = {
       label: '服务商等级',
       key: 'level',
       style: 'width:294px',
+      class: "clear_both",
       options: [
         {
           label: '川菜',
@@ -88,6 +92,7 @@ export const FORM_CONFIG = {
       label: '服务地区',
       key: 'area',
       style: 'width:294px',
+      labelWidth: '185px',
       options: areaData
     },
     {
@@ -95,6 +100,7 @@ export const FORM_CONFIG = {
       label: '所属运营',
       key: 'oper',
       style: 'width:294px',
+      class: "clear_both",
       options: [
         {
           label: '川菜',
