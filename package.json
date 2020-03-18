@@ -19,6 +19,7 @@
     "axios": "^0.18.0",
     "core-js": "^3.4.3",
     "echarts": "^4.6.0",
+    "fuse.js": "^5.0.5-beta",
     "husky": "^3.1.0",
     "lint-staged": "^9.5.0",
     "mint-ui": "^2.2.13",

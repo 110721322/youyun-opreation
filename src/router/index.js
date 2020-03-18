@@ -73,35 +73,24 @@ const menuItems = [
     children: [
       {
         type: 'ios-grid',
-        name: 'work-bench',
-        text: '工作台',
-        path: 'bench',
-        isShow: false,
-        meta: {
-          title: '工作台',
-          icon: 'work-bench'
-        }
-      },
-      {
-        type: 'ios-grid',
-        name: 'work-todo',
+        name: 'workTodo',
         text: '待办事项',
         path: 'Todo',
         isShow: false,
         meta: {
           title: '待办事项',
-          icon: 'work-todo'
+          icon: 'workTodo'
         }
       },
       {
         type: 'ios-grid',
-        name: 'work-sentMessage',
+        name: 'workSentMessage',
         text: '短信群发',
         path: 'sentMessage',
         isShow: false,
         meta: {
           title: '短信群发',
-          icon: 'work-sentMessage'
+          icon: 'workSentMessage'
         }
       },
       {
@@ -710,10 +699,10 @@ const menuItems = [
 localStorage.setItem('menus', JSON.stringify(menuItems))
 
 // console.log(currRouter.menusToRoutes(menuItems));
-router.addRoutes(currRouter.menusToRoutes(menuItems))
+const routerList = currRouter.menusToRoutes(menuItems);
+localStorage.setItem('routers', JSON.stringify(routerList));
+router.addRoutes(routerList);
 router.beforeEach((to, from, next) => {
-  document.title = '商家管理系统'
-
   if (to.meta.requireLogin) {
     next()
   } else {

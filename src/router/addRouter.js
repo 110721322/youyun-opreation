@@ -1,5 +1,4 @@
 import Layout from '@/layout/index.vue'
-
 const asyncRoutes = {
   merchant: {
     path: '/merchant',
@@ -137,25 +136,25 @@ const asyncRoutes = {
     },
     children: [
       {
-        name: 'index',
+        name: 'work',
         path: 'work',
         component: () => import('@/page/work/workBench.vue')
       }
     ]
   },
 
-  'work-bench': {
-    path: 'bench',
-    name: 'workBench',
-    meta: {
-      title: 'workBench',
-      icon: 'workBench'
-    },
-    component: () => import('@/page/work/workBench.vue'),
-    children: []
-  },
+  // 'workBench': {
+  //   path: 'bench',
+  //   name: 'workBench',
+  //   meta: {
+  //     title: '工作台',
+  //     icon: 'workBench'
+  //   },
+  //   component: () => import('@/page/work/workBench.vue'),
+  //   children: []
+  // },
 
-  'work-todo': {
+  'workTodo': {
     path: 'todo',
     name: 'workTodo',
     meta: {
@@ -166,7 +165,7 @@ const asyncRoutes = {
     children: []
   },
 
-  'work-sentMessage': {
+  'workSentMessage': {
     path: 'sentMessage',
     name: 'workSentMessage',
     meta: {
@@ -496,7 +495,7 @@ const asyncRoutes = {
         name: 'indirectRecordDetail',
         meta: {
           fatherName: 'indirectList',
-          title: 'indirectRecordDetail',
+          title: '间连审核详情',
           icon: '间连审核详情'
         },
         component: () => import('@/page/approval/merchantCheck/indirectRecordDetail.vue')
@@ -805,6 +804,7 @@ const menusToRoutes = function (data) {
   })
   // 最后添加404页面 否则会在登陆成功后跳到404页面
   result.push({ path: '*', redirect: '/error' })
+  console.log(result);
   return result
 }
 
