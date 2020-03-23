@@ -12,6 +12,7 @@
       <!-- <data-mode></data-mode> -->
       <div class="table_box">
         <BaseCrud
+          ref="table"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
           :grid-data="testData"
@@ -21,6 +22,8 @@
           form-title="用户"
           :is-async="true"
           :is-select="false"
+          :params="params"
+          :api-service="api"
           @selectionChange="selectionChange"
           @detail="go_detail"
           @openAgentManager="openAgentManager"
@@ -67,76 +70,55 @@ export default {
       searchMaxHeight: "380",
       searchConfig: FORM_CONFIG,
       configData: USER_CONFIG,
-      testData: []
+      params: {},
+      testData: [],
+      api: api.queryPageByCondition
     };
   },
-  mounted() {
-    this.getData();
+  created() {
+    this.params = {
+      useChannelCode: "jr8",
+      endDate: "2020-03-17",
+      provinceCode: "wrn",
+      cityCode: "v7e",
+      newlandMerchantNo: "tsi",
+      agentName: "tn5",
+      channelStatus: "pgi",
+      merchantName: "ylu",
+      beginDate: "2020-03-17",
+      categoryCOde: "hb8",
+      leShuaMerchantNo: "emw",
+      merchantNo: "l2a",
+      channelCode: "ew2",
+      operateNo: "32m"
+    };
   },
+  mounted() {},
   methods: {
-    getData() {
-      api
-        .queryPageByCondition({
-          useChannelCode: "jr8",
-          endDate: "2020-03-17",
-          provinceCode: "wrn",
-          cityCode: "v7e",
-          newlandMerchantNo: "tsi",
-          agentName: "tn5",
-          pageSize: 0,
-          channelStatus: "pgi",
-          merchantName: "ylu",
-          beginDate: "2020-03-17",
-          categoryCOde: "hb8",
-          currentPage: 0,
-          leShuaMerchantNo: "emw",
-          merchantNo: "l2a",
-          channelCode: "ew2",
-          operateNo: "32m"
-        })
-        .then(res => {
-          console.log(res);
-        })
-        .catch();
-      // this.testData = [
-      //   {
-      //     id: "1",
-      //     tel: "紫菜网络科技有限公司",
-      //     name: "小白",
-      //     email: "412412@qq.com",
-      //     statusList: [
-      //       { name: "乐刷", status: "opened" },
-      //       { name: "乐刷", status: "review" },
-      //       { name: "乐刷", status: "reject" },
-      //       { name: "乐刷", status: "unused" }
-      //     ],
-      //     create_time: "2018-04-20",
-      //     expand: "扩展信息一",
-      //     role: ["2"]
-      //   },
-      //   {
-      //     id: "2",
-      //     tel: "紫菜网络科技有限公司",
-      //     name: "小红",
-      //     email: "456465@qq.com",
-      //     statusList: [
-      //       { name: "乐刷", status: "opened" },
-      //       { name: "乐刷", status: "review" },
-      //       { name: "乐刷", status: "reject" },
-      //       { name: "乐刷", status: "unused" }
-      //     ],
-      //     create_time: "2018-03-23",
-      //     expand: "hashashashas",
-      //     role: ["1"]
-      //   }
-      // ];
-    },
     selectionChange($val) {},
     go_detail() {
       this.$router.push("/merchant/list/detail");
     },
-    search() {
-      this.getData();
+    search($ruleForm) {
+      console.log($ruleForm);
+      const params = {
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
+        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        provinceCode: $ruleForm.address ? $ruleForm.address[0] : null,
+        cityCode: $ruleForm.address ? $ruleForm.address[1] : null,
+        useChannelCode: $ruleForm.useChannelCode,
+        channelStatus: $ruleForm.channelStatus,
+        categoryCOde: $ruleForm.categoryCOde,
+        operateNo: $ruleForm.operateNo
+      };
+      if ($ruleForm.inputSelect === "agentId") {
+        params.agentId = $ruleForm.inputForm;
+      }
+      if ($ruleForm.inputSelect === "agentName") {
+        params.agentName = $ruleForm.inputForm;
+      }
+      this.params = params;
+      this.$refs.table.getData();
     },
     openAgentManager() {},
     openMerchantManager() {}

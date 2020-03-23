@@ -18,11 +18,11 @@ export const FORM_CONFIG = {
       options: [
         {
           label: '服务商ID',
-          value: 'id'
+          value: 'agentId'
         },
         {
           label: '服务商名称',
-          value: 'name'
+          value: 'agentName'
         }
       ],
       labelWidth: '100px'
@@ -30,20 +30,20 @@ export const FORM_CONFIG = {
     {
       type: 1,
       label: '使用通道',
-      key: 'useChannel',
+      key: 'useChannelCode',
       style: 'width:294px',
       options: [
         {
           label: '川菜',
-          value: 0
+          value: "0"
         },
         {
           label: '粤菜',
-          value: 1
+          value: "1"
         },
         {
           label: '杭帮菜',
-          value: 2
+          value: "2"
         }
       ]
     },
@@ -56,42 +56,42 @@ export const FORM_CONFIG = {
       options: [
         {
           label: '川菜',
-          value: 0
+          value: "0"
         },
         {
           label: '粤菜',
-          value: 1
+          value: "1"
         },
         {
           label: '杭帮菜',
-          value: 2
+          value: "2"
         }
       ]
     },
     {
       type: 1,
       label: '行业类目',
-      key: 'industryKind',
+      key: 'categoryCOde',
       style: 'width:294px',
       options: [
         {
           label: '川菜',
-          value: 0
+          value: "0"
         },
         {
           label: '粤菜',
-          value: 1
+          value: "1"
         },
         {
           label: '杭帮菜',
-          value: 2
+          value: "2"
         }
       ]
     },
     {
       type: 8,
       label: '开通通道详情',
-      key: 'channelType',
+      key: 'channelCode',
       style: 'width:294px',
       labelWidth: '185px',
       options: [
@@ -188,14 +188,14 @@ export const FORM_CONFIG = {
     {
       type: 8,
       label: '地区',
-      key: 'area',
+      key: 'address',
       style: 'width:294px',
       options: areaData
     },
     {
       type: 1,
       label: '所属运营',
-      key: 'oper',
+      key: 'operateNo',
       style: 'width:294px',
       labelWidth: '185px',
       options: [

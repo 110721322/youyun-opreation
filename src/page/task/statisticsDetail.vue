@@ -63,6 +63,7 @@
   </div>
 </template>
 <script>
+import api from "@/api/api_task";
 import Search from "@/components/search/search.vue";
 import DataMode from "@/components/dataMode/dataMode.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
@@ -91,61 +92,93 @@ export default {
     };
   },
   mounted() {
+    this.queryOperationAllTaskMenu();
     this.getTableData();
   },
   methods: {
+    queryOperationAllTaskMenu() {
+      api
+        .queryOperationAllTaskMenu({
+          receiverId: 1,
+          undoType: 1,
+          taskType: 1,
+          status: "",
+          taskOwner: ""
+        })
+        .then(res => {
+          console.log(res.object);
+          this.modeConfigData[0].data = res.object.totalCount;
+        })
+        .catch();
+    },
     getTableData() {
-      this.testData = [
-        {
-          type: "日常任务",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系",
-          childrenData: [
-            {
-              id: 1,
-              name: "XXXX店铺",
-              amount: "222.22",
-              reason: "银行卡账号错误，服务商无法联系"
-            },
-            {
-              id: 2,
-              name: "XXXX店铺",
-              amount: "222.22",
-              reason: "银行卡账号错误，服务商无法联系"
-            }
-          ]
-        },
-        {
-          id: 2,
-          type: "日常任务",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系",
-          childrenData: [
-            {
-              id: 1,
-              name: "XXXX店铺",
-              amount: "222.22",
-              reason: "银行卡账号错误，服务商无法联系"
-            },
-            {
-              id: 2,
-              name: "XXXX店铺",
-              amount: "222.22",
-              reason: "银行卡账号错误，服务商无法联系"
-            }
-          ]
-        }
-      ];
+      api
+        .queryOperationTaskList({
+          receiverId: 1,
+          undoType: 1,
+          taskType: 1,
+          pageSize: 1,
+          currentPage: 1,
+          status: ""
+        })
+        .then(res => {
+          console.log(res.datas);
+          this.testData = res.datas;
+        })
+        .catch(err => {
+          console.error(err);
+        });
+      // this.testData = [
+      //   {
+      //     type: "日常任务",
+      //     taskName: "商户结算失败",
+      //     num: "4",
+      //     oper: "提醒",
+      //     name: "XXXX店铺",
+      //     time: "20:00:23",
+      //     amount: "222.22",
+      //     reason: "银行卡账号错误，服务商无法联系",
+      //     childrenData: [
+      //       {
+      //         id: 1,
+      //         name: "XXXX店铺",
+      //         amount: "222.22",
+      //         reason: "银行卡账号错误，服务商无法联系"
+      //       },
+      //       {
+      //         id: 2,
+      //         name: "XXXX店铺",
+      //         amount: "222.22",
+      //         reason: "银行卡账号错误，服务商无法联系"
+      //       }
+      //     ]
+      //   },
+      //   {
+      //     id: 2,
+      //     type: "日常任务",
+      //     taskName: "商户结算失败",
+      //     num: "4",
+      //     oper: "提醒",
+      //     name: "XXXX店铺",
+      //     time: "20:00:23",
+      //     amount: "222.22",
+      //     reason: "银行卡账号错误，服务商无法联系",
+      //     childrenData: [
+      //       {
+      //         id: 1,
+      //         name: "XXXX店铺",
+      //         amount: "222.22",
+      //         reason: "银行卡账号错误，服务商无法联系"
+      //       },
+      //       {
+      //         id: 2,
+      //         name: "XXXX店铺",
+      //         amount: "222.22",
+      //         reason: "银行卡账号错误，服务商无法联系"
+      //       }
+      //     ]
+      //   }
+      // ];
     },
     selectionChange($val) {
       // eslint-disable-next-line no-console

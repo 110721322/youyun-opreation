@@ -73,9 +73,10 @@
           </span>
 
           <span v-if="(item.prop instanceof Array)">
-            <div v-for="(propItem,propKey) of item.prop" :key="propKey">
-              {{ (propItem.label||'') + scope.row[propItem.key] }}
-            </div>
+            <div
+              v-for="(propItem,propKey) of item.prop"
+              :key="propKey"
+            >{{ (propItem.label||'') + scope.row[propItem.key] }}</div>
           </span>
         </template>
       </el-table-column>
@@ -184,7 +185,8 @@ export default {
     "border",
     "expands",
     "refName",
-    "hideExpendColumn"
+    "hideExpendColumn",
+    "params"
   ],
   data() {
     return {
@@ -201,7 +203,8 @@ export default {
       // 表单数据
       formModel: {},
       //  表格加载状态
-      listLoading: false
+      listLoading: false,
+      queryParams: {}
     };
   },
 
@@ -212,6 +215,7 @@ export default {
     }
   },
   mounted() {
+    // console.log(this.apiService);
     this.getData();
   },
   methods: {
@@ -249,25 +253,19 @@ export default {
     // 获取列表数据
     getData() {
       this.listLoading = true;
-      // let params = {
-      //   page: this.currentPage,
-      //   limit: this.currentPageSize
-      // }
-
-      this.showGridData = [];
-      this.showGridData = this.gridData;
-      this.dataTotal = 0;
-      this.listLoading = false;
-      // this.apiService.list(params).then(
-      //   res => {
-      //     this.showGridData = res.data.list
-      //     this.dataTotal = res.data.total
-      //     this.listLoading = false
-      //   },
-      //   err => {
-      //     this.listLoading = false
-      //   }
-      // )
+      this.queryParams = Object.assign({}, this.params);
+      this.queryParams.page = this.currentPage;
+      this.queryParams.pageSize = this.currentPageSize;
+      this.apiService(this.queryParams)
+        .then(res => {
+          this.showGridData = res.datas;
+          this.dataTotal = res.totalCount;
+          this.listLoading = false;
+        })
+        .catch(err => {
+          this.listLoading = false;
+          console.error(err);
+        });
     },
 
     // 处理相应父组件的事件方法

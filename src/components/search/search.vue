@@ -126,6 +126,7 @@ export default {
       isRest: false
     };
   },
+  watch: {},
   created() {
     this.init();
   },
@@ -151,6 +152,7 @@ export default {
           formatFormData(formInfo, this.formKeys);
         }
       });
+      this.$emit("search", this.ruleForm);
     },
     resetForm() {
       // 初始化表单
