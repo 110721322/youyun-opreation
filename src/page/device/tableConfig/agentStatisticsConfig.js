@@ -2,7 +2,7 @@ export const AGENTSTA_CONFIG = {
   gridConfig: [
     {
       label: '服务商',
-      prop: 'service',
+      prop: [{ key: 'service' }, { key: 'id', label: 'ID:' }],
       width: '150px'
     },
     {

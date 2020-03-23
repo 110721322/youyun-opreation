@@ -12,7 +12,7 @@ export const CHECKPARTNERLIST_CONFIG = {
     },
     {
       label: '所属服务商',
-      prop: 'serviceProvider',
+      prop: [{ key: 'serviceProvider' }, { key: 'id', label: 'ID:' }],
       width: '150px'
     },
     {

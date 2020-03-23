@@ -1,10 +1,10 @@
 import axios from 'axios';
 import qs from 'qs';
-import Vue from 'vue';
+// import Vue from 'vue';
 // import web_config from 'libs/config/config';
 import * as g from '../libs/global';
 
-const _this = new Vue();
+// const _this = new Vue();
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 // axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? web_config.devServer : web_config.server;
 axios.defaults.baseURL = g.config.server;
@@ -33,14 +33,18 @@ axios.interceptors.request.use((config) => {
 
 // 添加一个响应拦截器
 axios.interceptors.response.use((response) => {
-  if (response.data && response.data.status === 'success') {
+  // if (response.data && response.data.status === 'success') {
+  //   return response;
+  // } else {
+  //   if (response.config.url.indexOf('check_login') === -1 && response.data.code === 'UNIDENTIFY') {
+  //     window.reload();
+  //   }
+  //   _this.$message.error(response.data.message);
+  //   return Promise.reject(response.data);
+  // }
+
+  if (response.data) {
     return response;
-  } else {
-    if (response.config.url.indexOf('check_login') === -1 && response.data.code === 'UNIDENTIFY') {
-      window.reload();
-    }
-    _this.$message.error(response.data.message);
-    return Promise.reject(response.data);
   }
 }, (error) => {
   // Do something with response error

@@ -8,32 +8,29 @@ export const SEARCH_CONFIG = {
       labelWidth: '100px'
     },
     {
-      type: 0,
-      label: '工号',
-      key: 'id',
-      style: 'width:294px',
+      type: 10,
+      label: '精准筛选',
+      key: '',
+      class: 'max-width',
+      options: [
+        {
+          label: '工号',
+          value: 'id'
+        },
+        {
+          label: '成员花名',
+          value: 'alias'
+        },
+        {
+          label: '成员姓名',
+          value: 'name'
+        },
+        {
+          label: '手机号',
+          value: 'phone'
+        }
+      ],
       labelWidth: '100px'
-    },
-    {
-      type: 0,
-      label: '成员花名',
-      key: 'alias',
-      style: 'width:294px',
-      labelWidth: '185px'
-    },
-    {
-      type: 0,
-      label: '成员姓名',
-      key: 'name',
-      style: 'width:294px',
-      labelWidth: '100px'
-    },
-    {
-      type: 0,
-      label: '手机号',
-      key: 'phone',
-      style: 'width:294px',
-      labelWidth: '185px'
     },
     {
       type: 1,
@@ -83,6 +80,7 @@ export const SEARCH_CONFIG = {
       key: 'super',
       style: 'width:294px',
       labelWidth: '100px',
+      class: "clear_both",
       options: [
         {
           label: '川菜',

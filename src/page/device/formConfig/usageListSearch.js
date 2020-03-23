@@ -8,6 +8,27 @@ export const SEARCH_CONFIG = {
       labelWidth: '100px'
     },
     {
+      type: 10,
+      label: '精准筛选',
+      key: '',
+      class: 'max-width',
+      options: [
+        {
+          label: '设备标识',
+          value: 'Identity'
+        },
+        {
+          label: '所属商户',
+          value: 'merchantProvider'
+        },
+        {
+          label: '所属服务商',
+          value: 'serviceProvider'
+        }
+      ],
+      labelWidth: '100px'
+    },
+    {
       type: 1,
       label: '设备型号',
       key: 'type',
@@ -29,31 +50,11 @@ export const SEARCH_CONFIG = {
       ]
     },
     {
-      type: 0,
-      label: '设备标识',
-      key: 'Identity',
-      style: 'width:294px',
-      labelWidth: '185px'
-    },
-    {
-      type: 0,
-      label: '所属商户',
-      key: 'merchantProvider',
-      style: 'width:294px'
-    },
-    {
-      type: 0,
-      label: '所属服务商',
-      key: 'serviceProvider',
-      style: 'width:294px',
-      labelWidth: '185px'
-    },
-    {
       type: 1,
       label: '设备状态',
       key: 'status',
       style: 'width:294px',
-      labelWidth: '100px',
+      labelWidth: '185px',
       options: [
         {
           label: '川菜',

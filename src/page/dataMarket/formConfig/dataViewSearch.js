@@ -1,4 +1,4 @@
-// import areaData from "@/assets/data/areaData"
+import areaData from "@/assets/data/areaData";
 export const FORM_CONFIG = {
   formData: [
     {
@@ -49,26 +49,13 @@ export const FORM_CONFIG = {
         }
       ]
     },
-    // cascader
     {
-      type: 1,
+      type: 8,
       label: '地区',
       key: 'area',
       style: 'width:294px',
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
+      class: "clear_both",
+      options: areaData
     },
     {
       type: 1,
@@ -96,6 +83,7 @@ export const FORM_CONFIG = {
       label: '标签',
       key: 'tag',
       style: 'width:294px',
+      class: "clear_both",
       options: [
         {
           label: '川菜',
@@ -137,6 +125,7 @@ export const FORM_CONFIG = {
       label: '服务商类型',
       key: 'type',
       style: 'width:294px',
+      class: "clear_both",
       options: [
         {
           label: '川菜',

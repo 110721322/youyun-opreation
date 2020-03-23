@@ -12,6 +12,7 @@
       <!-- <data-mode></data-mode> -->
       <div class="table_box">
         <BaseCrud
+          ref="table"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
           :grid-data="testData"
@@ -21,17 +22,41 @@
           form-title="用户"
           :is-async="true"
           :is-select="false"
+          :params="params"
+          :api-service="api"
           @selectionChange="selectionChange"
           @detail="go_detail"
           @openAgentManager="openAgentManager"
           @openMerchantManager="openMerchantManager"
-        />
+        >
+          <div slot="head" slot-scope="item">
+            <span>{{ item.item.label }}</span>
+            <el-tooltip class="item" effect="dark" content="Top Center 提示文字" placement="top">
+              <div slot="content">
+                <div>
+                  <span class="dot opened"></span>已开通
+                </div>
+                <div>
+                  <span class="dot review"></span>审核中
+                </div>
+                <div>
+                  <span class="dot reject"></span>驳回
+                </div>
+                <div>
+                  <span class="dot unused"></span>未审核
+                </div>
+              </div>
+              <i class="el-icon-info" />
+            </el-tooltip>
+          </div>
+        </BaseCrud>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import api from "@/api/api_merchant";
 import search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { USER_CONFIG } from "./tableConfig/merchantConfig";
@@ -45,43 +70,55 @@ export default {
       searchMaxHeight: "380",
       searchConfig: FORM_CONFIG,
       configData: USER_CONFIG,
-      testData: []
+      params: {},
+      testData: [],
+      api: api.queryPageByCondition
     };
   },
-  mounted() {
-    this.getData();
+  created() {
+    this.params = {
+      useChannelCode: "jr8",
+      endDate: "2020-03-17",
+      provinceCode: "wrn",
+      cityCode: "v7e",
+      newlandMerchantNo: "tsi",
+      agentName: "tn5",
+      channelStatus: "pgi",
+      merchantName: "ylu",
+      beginDate: "2020-03-17",
+      categoryCOde: "hb8",
+      leShuaMerchantNo: "emw",
+      merchantNo: "l2a",
+      channelCode: "ew2",
+      operateNo: "32m"
+    };
   },
+  mounted() {},
   methods: {
-    getData() {
-      this.testData = [
-        {
-          id: "1",
-          tel: "紫菜网络科技有限公司",
-          name: "小白",
-          email: "412412@qq.com",
-          status: "1",
-          create_time: "2018-04-20",
-          expand: "扩展信息一",
-          role: ["2"]
-        },
-        {
-          id: "2",
-          tel: "紫菜网络科技有限公司",
-          name: "小红",
-          email: "456465@qq.com",
-          status: "0",
-          create_time: "2018-03-23",
-          expand: "hashashashas",
-          role: ["1"]
-        }
-      ];
-    },
     selectionChange($val) {},
     go_detail() {
       this.$router.push("/merchant/list/detail");
     },
-    search() {
-      this.getData();
+    search($ruleForm) {
+      console.log($ruleForm);
+      const params = {
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
+        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        provinceCode: $ruleForm.address ? $ruleForm.address[0] : null,
+        cityCode: $ruleForm.address ? $ruleForm.address[1] : null,
+        useChannelCode: $ruleForm.useChannelCode,
+        channelStatus: $ruleForm.channelStatus,
+        categoryCOde: $ruleForm.categoryCOde,
+        operateNo: $ruleForm.operateNo
+      };
+      if ($ruleForm.inputSelect === "agentId") {
+        params.agentId = $ruleForm.inputForm;
+      }
+      if ($ruleForm.inputSelect === "agentName") {
+        params.agentName = $ruleForm.inputForm;
+      }
+      this.params = params;
+      this.$refs.table.getData();
     },
     openAgentManager() {},
     openMerchantManager() {}
@@ -89,11 +126,32 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .table_box {
   margin: 24px;
   padding: 24px;
   overflow: hidden;
   background: #fff;
+}
+.dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #52c41a;
+  vertical-align: middle;
+  margin: 0 5px;
+  &.opened {
+    background-color: #52c41a;
+  }
+  &.review {
+    background-color: #ffc620;
+  }
+  &.reject {
+    background-color: #f5222d;
+  }
+  &.unused {
+    background-color: #9c9c9c;
+  }
 }
 </style>

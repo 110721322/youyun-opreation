@@ -9,30 +9,29 @@ export const SEARCH_CONFIG = {
       labelWidth: '100px'
     },
     {
-      type: 0,
-      label: '服务商ID',
-      key: 'id',
-      style: 'width:294px'
-    },
-    {
-      type: 0,
-      label: '服务商名称',
-      key: 'name',
-      style: 'width:294px',
-      labelWidth: '185px'
-    },
-    {
-      type: 0,
-      label: '联系人',
-      key: 'concant',
-      style: 'width:294px'
-    },
-    {
-      type: 0,
-      label: '联系方式',
-      key: 'phone',
-      style: 'width:294px',
-      labelWidth: '185px'
+      type: 10,
+      label: '精准筛选',
+      key: '',
+      class: 'max-width',
+      options: [
+        {
+          label: '服务商ID',
+          value: 'id'
+        },
+        {
+          label: '服务商名称',
+          value: 'name'
+        },
+        {
+          label: '联系人',
+          value: 'concant'
+        },
+        {
+          label: '联系方式',
+          value: 'phone'
+        }
+      ],
+      labelWidth: '100px'
     },
     {
       type: 1,

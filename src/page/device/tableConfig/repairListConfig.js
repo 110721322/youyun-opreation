@@ -12,7 +12,7 @@ export const REPAIRLIST_CONFIG = {
     },
     {
       label: '所属服务商',
-      prop: 'taskName',
+      prop: [{ key: 'taskName' }, { key: 'id', label: 'ID:' }],
       width: '150px'
     },
     {

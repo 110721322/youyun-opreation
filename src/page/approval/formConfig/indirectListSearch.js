@@ -9,17 +9,29 @@ export const SEARCH_CONFIG = {
       labelWidth: '100px'
     },
     {
-      type: 0,
-      label: '商户ID',
-      key: 'id',
-      style: 'width:294px'
-    },
-    {
-      type: 0,
-      label: '商户名称',
-      key: 'name',
-      style: 'width:294px',
-      labelWidth: '185px'
+      type: 10,
+      label: '精准筛选',
+      key: '',
+      class: 'max-width',
+      options: [
+        {
+          label: '商户ID',
+          value: 'id'
+        },
+        {
+          label: '商户名称',
+          value: 'name'
+        },
+        {
+          label: '服务商ID',
+          value: 'serviceId'
+        },
+        {
+          label: '服务商名称',
+          value: 'serviceName'
+        }
+      ],
+      labelWidth: '100px'
     },
     {
       type: 1,
@@ -61,19 +73,6 @@ export const SEARCH_CONFIG = {
           value: 2
         }
       ]
-    },
-    {
-      type: 0,
-      label: '服务商ID',
-      key: 'serviceId',
-      style: 'width:294px'
-    },
-    {
-      type: 0,
-      label: '商户名称',
-      key: 'serviceName',
-      style: 'width:294px',
-      labelWidth: '185px'
     }
   ]
 }

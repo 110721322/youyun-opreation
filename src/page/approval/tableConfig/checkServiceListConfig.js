@@ -2,7 +2,7 @@ export const CHECKSERVICELIST_CONFIG = {
   gridConfig: [
     {
       label: '服务商',
-      prop: 'serviceName',
+      prop: [{ key: 'serviceName' }, { key: 'id', label: 'ID:' }],
       width: '150px'
     },
     {

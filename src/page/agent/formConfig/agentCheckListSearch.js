@@ -8,24 +8,24 @@ export const FORM_CONFIG = {
       labelWidth: '100px'
     },
     {
-      type: 0,
-      label: '公司名称',
-      key: 'companyName',
-      style: 'width:294px',
-      labelWidth: '100px'
-    },
-    {
-      type: 0,
-      label: '法人姓名',
-      key: 'lawName',
-      style: 'width:294px',
-      labelWidth: '185px'
-    },
-    {
-      type: 0,
-      label: '法人手机号',
-      key: 'phone',
-      style: 'width:294px',
+      type: 10,
+      label: '精准筛选',
+      key: '',
+      class: 'max-width',
+      options: [
+        {
+          label: '公司名称',
+          value: 'companyName'
+        },
+        {
+          label: '法人姓名',
+          value: 'name'
+        },
+        {
+          label: '法人手机号',
+          value: 'phone'
+        }
+      ],
       labelWidth: '100px'
     },
     {
@@ -33,7 +33,6 @@ export const FORM_CONFIG = {
       label: '服务商类型',
       key: 'type',
       style: 'width:294px',
-      labelWidth: '185px',
       options: [
         {
           label: '川菜',
@@ -54,7 +53,7 @@ export const FORM_CONFIG = {
       label: '状态',
       key: 'status',
       style: 'width:294px',
-      labelWidth: '100px',
+      labelWidth: '185px',
       options: [
         {
           label: '川菜',
