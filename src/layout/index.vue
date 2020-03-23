@@ -2,7 +2,7 @@
   <div class="app-wrapper" :class="openSlider == 1 ? 'openSidebar' : 'hideSidebar'">
     <div class="sidebar-container">
       <div @mouseleave="leave()" @mouseenter="enter()">
-        <sidebar style="float:left;background:#001529" />
+        <sidebar style="float:left;background:#001529" :active-name="activeName" />
       </div>
     </div>
 
@@ -17,43 +17,9 @@
 
     <div
       v-if="menu2Data && rootPath"
-      class="menu2"
-      style="width:166px;height:100%;background-color:#fff;float:left;position: absolute;
-    font-size: 0px;
-    top: 0;
-    bottom: 0;
-    left: 133px;
-    z-index: 1001;"
+      class="menu2 menu22"
     >
       <menu2 :menu2-data="menu2Data" :root-path="rootPath"></menu2>
-
-      <!-- <el-menu
-        :default-active="currRouter"
-        :router="true"
-        class="el-menu-vertical-demo"
-        style="height:100%;border:none;box-shadow:5px 0px 9px 0px rgba(0,0,0,0.05);"
-      >
-        <div v-for="(item, key) of menu2Data" :key="key">
-          <el-submenu v-if="item.children" index="rootPath + '/' + item.path">
-            <template slot="title">
-              <span>{{ item.text }}</span>
-            </template>
-            <div v-for="(childItem, childKey) of item.children" :key="childKey">
-              <el-menu-item
-                v-if="item.isShow"
-                :index="'/' + rootPath + '/' + item.path"
-              >{{ childItem.text }}</el-menu-item>
-            </div>
-          </el-submenu>
-
-          <el-menu-item
-            v-if="!item.children && item.isShow"
-            :index="'/' + rootPath + '/' + item.path"
-          >
-            <span slot="title">{{ item.text }}</span>
-          </el-menu-item>
-        </div>
-      </el-menu>-->
     </div>
 
     <div class="main-container" :class="[menu2Data && rootPath ? 'addMargin' : '']">
@@ -78,6 +44,7 @@ export default {
 
   data() {
     return {
+      activeName: '',
       openSlider: 1,
       menu2Data: "",
       rootPath: "",
@@ -98,12 +65,13 @@ export default {
   watch: {
     $route(to, from) {
       this.matchMenu();
+      this.getActiveName();
     }
   },
 
   created() {
     this.matchMenu();
-
+    this.getActiveName();
     if (localStorage.getItem("openSlider") == null) {
       localStorage.setItem("openSlider", 1);
     } else {
@@ -156,6 +124,37 @@ export default {
         }
       });
     },
+    getActiveName() {
+      const menus = JSON.parse(localStorage.getItem("menus"));
+      let currRouterName;
+      if (this.$route.meta.fatherName) {
+        currRouterName = this.$route.meta.fatherName
+      } else {
+        currRouterName = this.$route.name;
+      }
+      menus.forEach(item => {
+        if (item.name === currRouterName) {
+          this.activeName = item.name;
+        } else {
+          if (item.children) {
+            item.children.forEach(childItem => {
+              if (childItem.name === currRouterName) {
+                this.activeName = item.name;
+              } else {
+                if (childItem.children) {
+                  childItem.children.forEach(childItem2 => {
+                    if (childItem2.name === currRouterName) {
+                      this.activeName = item.name;
+                    }
+                  })
+                }
+              }
+            })
+          }
+        }
+      })
+      this.openSlider = localStorage.getItem("openSlider");
+    },
     leave() {
       this.showMenu2 = false;
     },
@@ -186,5 +185,13 @@ export default {
   top: 0;
   z-index: 1003;
   left: 133px;
+}
+.menu22{
+width:166px;height:100%;background-color:#fff;float:left;position: absolute;
+    font-size: 0px;
+    top: 0;
+    bottom: 0;
+    left: 133px;
+    z-index: 1001;
 }
 </style>

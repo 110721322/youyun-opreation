@@ -2,20 +2,8 @@
   <div class="aaa">
     <logo :collapse="isCollapse" />
     <!-- <el-scrollbar> -->
-    <el-menu
-      :collapse="openSlider == 1 ? false : true"
-      :unique-opened="false"
-      :collapse-transition="false"
-      mode="vertical"
-      background-color="#001529"
-      text-color="#FFFFFF"
-    >
-      <sidebar-item
-        v-for="route in menuList"
-        :key="route.path"
-        :item="route"
-        :base-path="route.path"
-      />
+    <el-menu :default-active="activeName" :collapse="openSlider == 1 ? false : true" :unique-opened="false" :collapse-transition="false" mode="vertical" background-color="#001529" text-color="#FFFFFF">
+      <sidebar-item v-for="route in menuList" :key="route.path" :item="route" :base-path="route.path" />
     </el-menu>
     <!-- </el-scrollbar> -->
   </div>
@@ -29,6 +17,13 @@ import { EventBus } from "../../bus/event-bus.js";
 
 export default {
   components: { SidebarItem, Logo },
+  props: {
+    // route object
+    activeName: {
+      type: String,
+      default: ""
+    }
+  },
   data() {
     return {
       openSlider: 1

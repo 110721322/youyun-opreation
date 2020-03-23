@@ -14,7 +14,6 @@
             >{{ childItem.text }}</el-menu-item>
           </div>
         </el-submenu>
-
         <el-menu-item
           v-if="!item.children && item.isShow"
           :index="'/' + rootPath + '/' + item.path"

@@ -2,35 +2,21 @@
   <div v-if="!item.hidden" @mouseleave="leave(item)" @mouseenter="enter(item)">
     <template v-if="!item.children||item.isShow==false">
       <app-link :to="resolvePath(item.path)">
-        <el-menu-item :index="resolvePath(item.path)" popper-append-to-body class="el-menu-item">
+        <el-menu-item :index="item.name" popper-append-to-body class="el-menu-item">
           <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
         </el-menu-item>
       </app-link>
     </template>
-
-    <!-- <li
-      v-else
-      :index="resolvePath(item.path)"
-      popper-append-to-body
-      class="el-menu-item"
-      @mouseleave="leave(item)"
-      @mouseenter="enter(item)"
-    >-->
     <div v-else>
       <el-menu-item
-        :index="resolvePath(item.path)"
+        :index="item.name"
         popper-append-to-body
         class="el-menu-item"
         @click="onClick_item(item)"
       >
         <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
-        <!-- <div v-show="showMenu2" class="menu2"> -->
-        <!-- <menu2 :menu2-data="menu2Data" :root-path="item.path"></menu2> -->
-        <!-- </div> -->
       </el-menu-item>
     </div>
-
-    <!-- </li> -->
   </div>
 </template>
 
@@ -42,7 +28,7 @@ import AppLink from "./Link.vue";
 import FixiOSBug from "./FixiOSBug";
 // import menu2 from "./menu2.vue";
 import { EventBus } from "../../bus/event-bus.js";
-
+var isMove2 = 1;
 export default {
   name: "SidebarItem",
   components: { Item, AppLink },
@@ -67,7 +53,7 @@ export default {
     return {
       showMenu2: false,
       menu2Data: [],
-      isMove: false
+      isMove2: 1
     };
   },
   created() {
@@ -82,10 +68,7 @@ export default {
         this.$router.push({
           path: this.resolvePath(
             "." +
-              path.resolve(
-                $item.children[0].path,
-                $item.children[0].children[0].path
-              )
+						path.resolve($item.children[0].path, $item.children[0].children[0].path)
           )
         });
       } else {
@@ -117,14 +100,13 @@ export default {
       // this.showMenu2 = false;
     },
     enter(item) {
-      // this.$emit("enterItem", item.children);
+      console.log(isMove2)
       EventBus.$emit("enterItem", item);
-      // this.menu2Data = item.children;
-      // this.showMenu2 = true;
     }
   }
 };
 </script>
 
 <style>
+
 </style>
