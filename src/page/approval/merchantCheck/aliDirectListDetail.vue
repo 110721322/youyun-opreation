@@ -336,8 +336,7 @@ export default {
           "提示",
           {
             confirmButtonText: "确定",
-            cancelButtonText: "取消",
-            type: "warning"
+            cancelButtonText: "取消"
           }
         )
           .then(() => {
@@ -488,5 +487,6 @@ export default {
   background-color: #ffe8e9;
   border: 1px solid #ff7f85;
   color: #f5222d;
+  width: auto;
 }
 </style>

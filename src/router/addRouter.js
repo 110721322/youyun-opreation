@@ -133,6 +133,96 @@ const asyncRoutes = {
     children: [
     ]
   },
+  'orderManage': {
+    path: 'orderManage',
+    name: 'orderManage',
+    component: () => import('@/page/agent/orderManage/orderManage.vue'),
+    meta: {
+      title: 'orderManage',
+      icon: 'orderManage'
+    },
+    children: []
+  },
+  'hardwareOrder': {
+    path: 'hardwareOrder',
+    name: 'hardwareOrder',
+    meta: {
+      title: 'hardwareOrder',
+      icon: 'hardwareOrder'
+    },
+    component: () => import('@/page/agent/orderManage/hardwareOrder.vue'),
+    children: [{
+      path: 'detail',
+      name: 'detail',
+      meta: {
+        title: 'detail',
+        icon: 'detail'
+      },
+      component: () => import('@/page/agent/orderManage/hardwareOrderDetail.vue')
+    }]
+  },
+  'adManage': {
+    path: 'adManage',
+    name: 'adManage',
+    component: () => import('@/page/agent/adManage/adManage.vue'),
+    meta: {
+      title: 'adManage',
+      icon: 'adManage'
+    },
+    children: []
+  },
+  'adAuth': {
+    path: 'adAuth',
+    name: 'adAuth',
+    meta: {
+      title: 'adAuth',
+      icon: 'adAuth'
+    },
+    component: () => import('@/page/agent/adManage/adAuth.vue'),
+    children: []
+  },
+  'adPutList': {
+    path: 'adPutList',
+    name: 'adPutList',
+    meta: {
+      title: 'adPutList',
+      icon: 'adPutList'
+    },
+    component: () => import('@/page/agent/adManage/adPutList.vue'),
+    children: [
+      {
+        path: 'detail',
+        name: 'adPutDetail',
+        meta: {
+          fatherName: 'adPutList',
+          title: 'adPutDetail',
+          icon: 'adPutDetail'
+        },
+        component: () => import('@/page/agent/adManage/adPutDetail.vue')
+      }
+    ]
+  },
+  'platformAdList': {
+    path: 'platformAdList',
+    name: 'platformAdList',
+    meta: {
+      title: 'platformAdList',
+      icon: 'platformAdList'
+    },
+    component: () => import('@/page/agent/adManage/platformAdList.vue'),
+    children: [
+      {
+        path: 'detail',
+        name: 'platformAdDetail',
+        meta: {
+          fatherName: 'platformAdList',
+          title: 'platformAdDetail',
+          icon: 'platformAdDetail'
+        },
+        component: () => import('@/page/agent/adManage/platformAdDetail.vue')
+      }
+    ]
+  },
 
   'work': {
     path: '/work',
@@ -796,6 +886,109 @@ const asyncRoutes = {
       icon: 'agentAppletManager'
     },
     children: []
+  },
+  'risk': {
+    path: '/risk',
+    name: 'risk',
+    component: Layout,
+    meta: {
+      title: 'risk',
+      icon: 'risk'
+    },
+    children: []
+  },
+  'incomingRisk': {
+    path: 'incomingRisk',
+    name: 'incomingRisk',
+    component: () => import('@/page/risk/incomingRisk/incomingRisk.vue'),
+    meta: {
+      title: 'incomingRisk',
+      icon: 'incomingRisk'
+    },
+    children: []
+  },
+  'serviceIncomingRisk': {
+    path: 'serviceIncomingRisk',
+    name: 'serviceIncomingRisk',
+    component: () => import('@/page/risk/incomingRisk/serviceIncomingRisk.vue'),
+    meta: {
+      title: 'serviceIncomingRisk',
+      icon: 'serviceIncomingRisk'
+    },
+    children: []
+  },
+  'merchantDataIncomingRisk': {
+    path: 'merchantDataIncomingRisk',
+    name: 'merchantDataIncomingRisk',
+    component: () => import('@/page/risk/incomingRisk/merchantDataIncomingRisk.vue'),
+    meta: {
+      title: 'merchantDataIncomingRisk',
+      icon: 'merchantDataIncomingRisk'
+    },
+    children: [
+      {
+        path: 'detail',
+        name: 'blackListDetail',
+        meta: {
+          fatherName: 'merchantDataIncomingRisk',
+          title: 'blackListDetail',
+          icon: 'blackListDetail'
+        },
+        component: () => import('@/page/risk/incomingRisk/blackListDetail.vue')
+      }
+    ]
+  },
+  'riskAppeal': {
+    path: 'riskAppeal',
+    name: 'riskAppeal',
+    component: () => import('@/page/risk/riskAppeal/riskAppeal.vue'),
+    meta: {
+      title: 'riskAppeal',
+      icon: 'riskAppeal'
+    },
+    children: []
+  },
+  'leRiskList': {
+    path: 'leRiskList',
+    name: 'leRiskList',
+    component: () => import('@/page/risk/riskAppeal/leRiskList.vue'),
+    meta: {
+      title: 'leRiskList',
+      icon: 'leRiskList'
+    },
+    children: [
+      {
+        path: 'detail',
+        name: 'detail',
+        component: () => import('@/page/risk/riskAppeal/leRiskListDetail.vue'),
+        meta: {
+          fatherName: 'leRiskList',
+          title: 'detail',
+          icon: 'detail'
+        }
+      }
+    ]
+  },
+  "merchantRiskList": {
+    path: 'merchantRiskList',
+    name: 'merchantRiskList',
+    component: () => import('@/page/risk/riskAppeal/merchantRiskList.vue'),
+    meta: {
+      title: 'merchantRiskList',
+      icon: 'merchantRiskList'
+    },
+    children: [
+      {
+        path: 'detail',
+        name: 'detail',
+        component: () => import('@/page/risk/riskAppeal/merchantRiskListDetail.vue'),
+        meta: {
+          fatherName: 'merchantRiskList',
+          title: 'detail',
+          icon: 'detail'
+        }
+      }
+    ]
   }
 }
 const routers = []

@@ -21,6 +21,7 @@
       class="form"
       label-position="left"
     >
+      <slot v-if="currentType" :currentType="currentType"></slot>
       <el-row>
         <el-col v-for="(item, key) of imageList" :key="key" :span="imgWidth?imgWidth:8">
           <el-form-item>
@@ -67,7 +68,8 @@ export default {
     isShowEditBtn: Boolean,
     isShowCallBtn: Boolean,
     spanWidth: Number,
-    imgWidth: Number
+    imgWidth: Number,
+    currentType: String
   },
   data() {
     return {
@@ -127,6 +129,7 @@ export default {
   }
 
   .form {
+    position: relative;
     margin: 32px;
     .item-value {
       color: rgba(96, 98, 102, 1);
