@@ -15,19 +15,19 @@ export const SEARCH_CONFIG = {
       options: [
         {
           label: '工号',
-          value: 'id'
+          value: 'jobNumber'
         },
         {
           label: '成员花名',
-          value: 'alias'
+          value: 'nickName'
         },
         {
           label: '成员姓名',
-          value: 'name'
+          value: 'realName'
         },
         {
           label: '手机号',
-          value: 'phone'
+          value: 'userName'
         }
       ],
       labelWidth: '100px'
@@ -40,15 +40,15 @@ export const SEARCH_CONFIG = {
       labelWidth: '100px',
       options: [
         {
-          label: '川菜',
+          label: '保密',
           value: 0
         },
         {
-          label: '粤菜',
+          label: '男',
           value: 1
         },
         {
-          label: '杭帮菜',
+          label: '女',
           value: 2
         }
       ]

@@ -46,6 +46,7 @@
 import Search from "@/components/search/search.vue";
 import Form from "@/components/form/index.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
+import api from "@/api/api_memberManage.js"
 
 import { FORM_CONFIG } from "./formConfig/deviceDetail";
 import { SEARCH_CONFIG } from "./formConfig/userListSearch";
@@ -66,41 +67,61 @@ export default {
     };
   },
   mounted() {
-    this.getTableData();
+    // this.getTableData();
+    console.log(this.searchConfig.formData)
   },
   methods: {
-    search() {
+    search(result) {
       // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
+      console.log(result);
     },
     getTableData() {
-      this.testData = [
-        {
-          type: "日常任务",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          reason: "银行卡账号错误，服务商无法联系"
-        },
-        {
-          id: 2,
-          type: "日常任务",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系"
-        }
-      ];
+      api.memberList({
+        "superiorName": "je8",
+        "offset": 0,
+        "nickName": "i58",
+        "sex": true,
+        "pageSize": 0,
+        "userName": "fm4",
+        "superiorId": 99328,
+        "realName": "dcj",
+        "id": 55267,
+        "position": "9pm",
+        "state": 348,
+        "currentPage": 0,
+        "jobNumber": "t6p",
+        "startTime": "yyyy-MM-dd HH:mm:ss",
+        "endTime": "yyyy-MM-dd HH:mm:ss"
+      }).then((result) => {
+
+      })
+      // this.testData = [
+      //   {
+      //     type: "日常任务",
+      //     taskName: "商户结算失败",
+      //     num: "4",
+      //     oper: "提醒",
+      //     name: "XXXX店铺",
+      //     time: "20:00:23",
+      //     amount: "222.22",
+      //     image:
+      //       "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
+      //     reason: "银行卡账号错误，服务商无法联系"
+      //   },
+      //   {
+      //     id: 2,
+      //     type: "日常任务",
+      //     taskName: "商户结算失败",
+      //     num: "4",
+      //     oper: "提醒",
+      //     name: "XXXX店铺",
+      //     time: "20:00:23",
+      //     image:
+      //       "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
+      //     amount: "222.22",
+      //     reason: "银行卡账号错误，服务商无法联系"
+      //   }
+      // ];
     },
     selectionChange($val) {
       // eslint-disable-next-line no-console

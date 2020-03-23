@@ -150,6 +150,7 @@ export default {
           const formInfo = g.utils.deepClone(this.ruleForm);
           // 统一过滤表单
           formatFormData(formInfo, this.formKeys);
+          this.$emit("search", this.ruleForm);
         }
       });
       this.$emit("search", this.ruleForm);
