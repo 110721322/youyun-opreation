@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import api from "@/api/api_merchant";
 import search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { USER_CONFIG } from "./tableConfig/merchantConfig";
@@ -74,38 +75,61 @@ export default {
   },
   methods: {
     getData() {
-      this.testData = [
-        {
-          id: "1",
-          tel: "紫菜网络科技有限公司",
-          name: "小白",
-          email: "412412@qq.com",
-          statusList: [
-            { name: "乐刷", status: "opened" },
-            { name: "乐刷", status: "review" },
-            { name: "乐刷", status: "reject" },
-            { name: "乐刷", status: "unused" }
-          ],
-          create_time: "2018-04-20",
-          expand: "扩展信息一",
-          role: ["2"]
-        },
-        {
-          id: "2",
-          tel: "紫菜网络科技有限公司",
-          name: "小红",
-          email: "456465@qq.com",
-          statusList: [
-            { name: "乐刷", status: "opened" },
-            { name: "乐刷", status: "review" },
-            { name: "乐刷", status: "reject" },
-            { name: "乐刷", status: "unused" }
-          ],
-          create_time: "2018-03-23",
-          expand: "hashashashas",
-          role: ["1"]
-        }
-      ];
+      api
+        .queryPageByCondition({
+          useChannelCode: "jr8",
+          endDate: "2020-03-17",
+          provinceCode: "wrn",
+          cityCode: "v7e",
+          newlandMerchantNo: "tsi",
+          agentName: "tn5",
+          pageSize: 0,
+          channelStatus: "pgi",
+          merchantName: "ylu",
+          beginDate: "2020-03-17",
+          categoryCOde: "hb8",
+          currentPage: 0,
+          leShuaMerchantNo: "emw",
+          merchantNo: "l2a",
+          channelCode: "ew2",
+          operateNo: "32m"
+        })
+        .then(res => {
+          console.log(res);
+        })
+        .catch();
+      // this.testData = [
+      //   {
+      //     id: "1",
+      //     tel: "紫菜网络科技有限公司",
+      //     name: "小白",
+      //     email: "412412@qq.com",
+      //     statusList: [
+      //       { name: "乐刷", status: "opened" },
+      //       { name: "乐刷", status: "review" },
+      //       { name: "乐刷", status: "reject" },
+      //       { name: "乐刷", status: "unused" }
+      //     ],
+      //     create_time: "2018-04-20",
+      //     expand: "扩展信息一",
+      //     role: ["2"]
+      //   },
+      //   {
+      //     id: "2",
+      //     tel: "紫菜网络科技有限公司",
+      //     name: "小红",
+      //     email: "456465@qq.com",
+      //     statusList: [
+      //       { name: "乐刷", status: "opened" },
+      //       { name: "乐刷", status: "review" },
+      //       { name: "乐刷", status: "reject" },
+      //       { name: "乐刷", status: "unused" }
+      //     ],
+      //     create_time: "2018-03-23",
+      //     expand: "hashashashas",
+      //     role: ["1"]
+      //   }
+      // ];
     },
     selectionChange($val) {},
     go_detail() {
