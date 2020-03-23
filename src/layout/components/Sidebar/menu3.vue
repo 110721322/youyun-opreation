@@ -51,29 +51,45 @@ export default {
     };
   },
   $route(to, from) {
-    this.currRouter = this.$route.name;
+    console.log("111");
+    if (this.$route.meta.fatherName) {
+      this.currRouter = this.$route.meta.fatherName;
+    } else {
+      this.currRouter = this.$route.name;
+    }
     this.subMenuName = this.$route.meta.subMenuName;
   },
   watch: {
     $route: function() {
-      console.log(this.$route);
-      this.currRouter = this.$route.name;
+      if (this.$route.meta.fatherName) {
+        this.currRouter = this.$route.meta.fatherName;
+      } else {
+        this.currRouter = this.$route.name;
+      }
       this.subMenuName = this.$route.meta.subMenuName;
-      console.log(this.subMenuName);
-      this.$nextTick();
     },
     menu2Data: function() {
-      this.currRouter = this.$route.name;
+      if (this.$route.meta.fatherName) {
+        this.currRouter = this.$route.meta.fatherName;
+      } else {
+        this.currRouter = this.$route.name;
+      }
       this.subMenuName = this.$route.meta.subMenuName;
-      this.$nextTick();
     }
   },
   created() {
-    this.currRouter = this.$route.name;
+    if (this.$route.meta.fatherName) {
+      this.currRouter = this.$route.meta.fatherName;
+    } else {
+      this.currRouter = this.$route.name;
+    }
     this.subMenuName = this.$route.meta.subMenuName;
   },
   methods: {
-    onClick_item() {}
+    onClick_item() {},
+    setColor() {
+      return "color:red";
+    }
   }
 };
 </script>

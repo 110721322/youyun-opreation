@@ -1,33 +1,36 @@
 <template>
   <div class="main_page">
-    <div class="p_head">服务商公告</div>
-    <search
-      :is-show-all="true"
-      :form-base-data="searchConfig.formData"
-      :show-foot-btn="searchConfig.showFootBtn"
-      @search="search"
-    />
-    <!-- <data-mode></data-mode> -->
-    <div class="table_box">
-      <div>
-        <el-button type="primary" class="add_btn" @click="onClick_addAnnouncement">添加公告</el-button>
+    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
+    <div v-else>
+      <div class="p_head">服务商公告</div>
+      <search
+        :is-show-all="true"
+        :form-base-data="searchConfig.formData"
+        :show-foot-btn="searchConfig.showFootBtn"
+        @search="search"
+      />
+      <!-- <data-mode></data-mode> -->
+      <div class="table_box">
+        <div>
+          <el-button type="primary" class="add_btn" @click="onClick_addAnnouncement">添加公告</el-button>
+        </div>
+        <BaseCrud
+          :grid-config="configData.gridConfig"
+          :grid-btn-config="configData.gridBtnConfig"
+          :grid-data="testData"
+          :form-config="configData.formConfig"
+          :form-data="configData.formModel"
+          :grid-edit-width="150"
+          form-title="用户"
+          :is-async="true"
+          :is-select="false"
+          @selectionChange="selectionChange"
+          @detail="go_detail"
+          @openAgentManager="openAgentManager"
+          @openMerchantManager="openMerchantManager"
+          @edit="handelEdit"
+        ></BaseCrud>
       </div>
-      <BaseCrud
-        :grid-config="configData.gridConfig"
-        :grid-btn-config="configData.gridBtnConfig"
-        :grid-data="testData"
-        :form-config="configData.formConfig"
-        :form-data="configData.formModel"
-        :grid-edit-width="150"
-        form-title="用户"
-        :is-async="true"
-        :is-select="false"
-        @selectionChange="selectionChange"
-        @detail="go_detail"
-        @openAgentManager="openAgentManager"
-        @openMerchantManager="openMerchantManager"
-        @edit="handelEdit"
-      ></BaseCrud>
     </div>
   </div>
 </template>
@@ -59,10 +62,14 @@ export default {
     handelEdit($row) {
       // eslint-disable-next-line no-console
       console.log($row);
-      this.$router.push({ path: "/message/announcementEdit" });
+      this.$router.push({
+        path: "/message/serviceAnnouncementList/detail"
+      });
     },
     onClick_addAnnouncement() {
-      this.$router.push({ path: "/message/announcementEdit" });
+      this.$router.push({
+        path: "/message/serviceAnnouncementList/detail"
+      });
     },
     getData() {
       this.testData = [

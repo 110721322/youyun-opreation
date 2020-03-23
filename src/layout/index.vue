@@ -15,11 +15,8 @@
       <menu2 :menu2-data="menuHoverData.children" :root-path="menuHoverData.path"></menu2>
     </div>
 
-    <div
-      v-if="menu2Data && rootPath"
-      class="menu2 menu22"
-    >
-      <menu2 :menu2-data="menu2Data" :root-path="rootPath"></menu2>
+    <div v-if="menu2Data && rootPath" class="menu2 menu22">
+      <menu3 :menu2-data="menu2Data" :root-path="rootPath"></menu3>
     </div>
 
     <div class="main-container" :class="[menu2Data && rootPath ? 'addMargin' : '']">
@@ -33,24 +30,28 @@
 import { AppMain, Sidebar, Navbar } from "./components";
 import { EventBus } from "./bus/event-bus.js";
 import menu2 from "./components/Sidebar/menu2";
+import menu3 from "./components/Sidebar/menu3";
+
 export default {
   name: "Layout",
   components: {
     AppMain,
     Navbar,
     Sidebar,
-    menu2
+    menu2,
+    menu3
   },
 
   data() {
     return {
-      activeName: '',
+      activeName: "",
       openSlider: 1,
       menu2Data: "",
       rootPath: "",
       showMenu2: false,
       currRouter: "",
-      menuHoverData: {}
+      menuHoverData: {},
+      isShowMenu: true
     };
   },
 
@@ -66,6 +67,11 @@ export default {
     $route(to, from) {
       this.matchMenu();
       this.getActiveName();
+      this.$nextTick();
+      this.isShowMenu = false;
+      setTimeout(() => {
+        this.isShowMenu = true;
+      }, 100);
     }
   },
 
@@ -128,7 +134,7 @@ export default {
       const menus = JSON.parse(localStorage.getItem("menus"));
       let currRouterName;
       if (this.$route.meta.fatherName) {
-        currRouterName = this.$route.meta.fatherName
+        currRouterName = this.$route.meta.fatherName;
       } else {
         currRouterName = this.$route.name;
       }
@@ -146,13 +152,13 @@ export default {
                     if (childItem2.name === currRouterName) {
                       this.activeName = item.name;
                     }
-                  })
+                  });
                 }
               }
-            })
+            });
           }
         }
-      })
+      });
       this.openSlider = localStorage.getItem("openSlider");
     },
     leave() {
@@ -186,12 +192,16 @@ export default {
   z-index: 1003;
   left: 133px;
 }
-.menu22{
-width:166px;height:100%;background-color:#fff;float:left;position: absolute;
-    font-size: 0px;
-    top: 0;
-    bottom: 0;
-    left: 133px;
-    z-index: 1001;
+.menu22 {
+  width: 166px;
+  height: 100%;
+  background-color: #fff;
+  float: left;
+  position: absolute;
+  font-size: 0px;
+  top: 0;
+  bottom: 0;
+  left: 133px;
+  z-index: 1001;
 }
 </style>

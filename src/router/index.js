@@ -15,12 +15,22 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   routes: [
     {
+      path: '/',
+      component: Layout,
+      children: [
+        {
+          path: '/',
+          component: () => import('@/page/work/workBench.vue')
+        }
+      ]
+    },
+    {
       path: '/index',
       component: Layout,
       children: [
         {
           path: '/index',
-          component: () => import('@/page/index/index.vue')
+          component: () => import('@/page/work/workBench.vue')
         }
       ]
     },
@@ -230,17 +240,6 @@ const menuItems = [
         meta: {
           title: '服务商公告',
           icon: 'serviceAnnouncementList'
-        }
-      },
-      {
-        type: 'ios-grid',
-        name: 'announcementEdit',
-        text: '编辑服务商公告',
-        path: 'announcementEdit',
-        isShow: false,
-        meta: {
-          title: '编辑服务商公告',
-          icon: 'announcementEdit'
         }
       }
     ]
