@@ -216,6 +216,85 @@ const menuItems = [
           title: '分润总览',
           icon: 'dividedOverview'
         }
+      },
+      {
+        type: 'ios-grid',
+        name: 'operationApprove',
+        text: '运营结算审核',
+        path: 'operationApprove',
+        isShow: true,
+        meta: {
+          title: '运营结算审核',
+          icon: 'operationApprove'
+        }
+      },
+      {
+        type: 'ios-grid',
+        name: 'orderManage',
+        text: '订单管理',
+        path: 'orderManage',
+        isShow: true,
+        meta: {
+          title: '订单管理',
+          icon: 'orderManage'
+        },
+        children: [{
+          type: 'ios-grid',
+          name: 'hardwareOrder',
+          text: '硬件订购订单',
+          path: 'hardwareOrder',
+          isShow: true,
+          meta: {
+            title: '硬件订购订单',
+            icon: 'hardwareOrder'
+          }
+        }]
+      },
+      {
+        type: 'ios-grid',
+        name: 'adManage',
+        text: '广告管理',
+        path: 'adManage',
+        isShow: true,
+        meta: {
+          title: '广告管理',
+          icon: 'adManage'
+        },
+        children: [
+          {
+            type: 'ios-grid',
+            name: 'adAuth',
+            text: '广告权限',
+            path: 'adAuth',
+            isShow: true,
+            meta: {
+              title: '广告权限',
+              icon: 'adAuth'
+            }
+          },
+          {
+            type: 'ios-grid',
+            name: 'platformAdList',
+            text: '平台广告列表',
+            path: 'platformAdList',
+            isShow: true,
+            meta: {
+              title: '平台广告列表',
+              icon: 'platformAdList'
+            }
+          },
+          {
+            type: 'ios-grid',
+            name: 'adPutList',
+            text: '平台广告投放列表',
+            path: 'adPutList',
+            isShow: true,
+            meta: {
+              title: '平台广告投放列表',
+              icon: 'adPutList'
+            }
+          }
+        ]
       }
     ]
   },
@@ -367,6 +446,17 @@ const menuItems = [
             meta: {
               title: '出库管理',
               icon: 'stockOut'
+            }
+          },
+          {
+            type: 'ios-grid',
+            name: 'authorized',
+            text: '设备授权激活',
+            path: 'authorized',
+            isShow: true,
+            meta: {
+              title: '设备授权激活',
+              icon: 'authorized'
             }
           }
         ]
@@ -671,6 +761,89 @@ const menuItems = [
           title: '参数设置',
           icon: 'paramSetting'
         }
+      }
+    ]
+  },
+  {
+    text: '风控管理',
+    type: 'ios-paper',
+    path: 'risk',
+    name: 'risk',
+    isShow: true,
+    meta: {
+      title: '风控管理',
+      icon: '风控管理'
+    },
+    children: [
+      {
+        type: 'ios-grid',
+        name: 'incomingRisk',
+        text: '入件风控',
+        path: 'incomingRisk',
+        isShow: true,
+        meta: {
+          title: '入件风控',
+          icon: 'incomingRisk'
+        },
+        children: [
+          {
+            text: '服务商入件风控',
+            type: 'ios-paper',
+            name: 'serviceIncomingRisk',
+            path: 'serviceIncomingRisk',
+            isShow: true,
+            meta: {
+              title: '服务商入件风控',
+              icon: 'serviceIncomingRisk'
+            }
+          },
+          {
+            text: '商户入件资料风控',
+            type: 'ios-paper',
+            name: 'merchantDataIncomingRisk',
+            path: 'merchantDataIncomingRisk',
+            isShow: true,
+            meta: {
+              title: '商户入件资料风控',
+              icon: 'merchantDataIncomingRisk'
+            }
+          }
+        ]
+      },
+      {
+        type: 'ios-grid',
+        name: 'riskAppeal',
+        text: '风控申诉管理',
+        path: 'riskAppeal',
+        isShow: true,
+        meta: {
+          title: '风控申诉管理',
+          icon: 'riskAppeal'
+        },
+        children: [
+          {
+            text: '乐刷风控',
+            type: 'ios-paper',
+            name: 'leRiskList',
+            path: 'leRiskList',
+            isShow: true,
+            meta: {
+              title: '乐刷风控',
+              icon: 'leRiskList'
+            }
+          },
+          {
+            text: '平台商户资料风控',
+            type: 'ios-paper',
+            name: 'merchantRiskList',
+            path: 'merchantRiskList',
+            isShow: true,
+            meta: {
+              title: '平台商户资料风控',
+              icon: 'merchantRiskList'
+            }
+          }
+        ]
       }
     ]
   }

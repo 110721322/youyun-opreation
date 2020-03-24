@@ -7,7 +7,7 @@
           <div>
             <img class="process-icon" :src="item.icon" />
           </div>
-          <div class="lable">{{ item.label }}</div>
+          <div class="label">{{ item.label }}</div>
           <div class="time">{{ item.time }}</div>
         </div>
         <img

@@ -301,5 +301,6 @@ export default {
   background-color: #ffe8e9;
   border: 1px solid #ff7f85;
   color: #f5222d;
+  width: auto;
 }
 </style>

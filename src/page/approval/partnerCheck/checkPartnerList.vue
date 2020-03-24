@@ -46,7 +46,7 @@ export default {
       configData: CHECKPARTNERLIST_CONFIG,
       testData: [],
       direction: "rtl",
-      searchHeight: "370"
+      searchHeight: "320"
     };
   },
   mounted() {

@@ -56,7 +56,7 @@ export default {
   components: { Search, BaseCrud, Form },
   data() {
     return {
-      searchMaxHeight: "320",
+      searchMaxHeight: "260",
       searchConfig: SEARCH_CONFIG,
       configData: USERLIST_CONFIG,
       fromConfigData: {},

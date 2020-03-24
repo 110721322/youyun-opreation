@@ -43,6 +43,9 @@ export const transFormType = typeNum => {
     case 'uploadFile':
       componentName = 'uploadFile'
       break
+    case 'show':
+      componentName = 'Show'
+      break
     default:
     // throwError("formType \"" + typeNum + "\" does not exist.open fn.js and add it");
   }

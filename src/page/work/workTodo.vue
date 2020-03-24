@@ -89,7 +89,7 @@
         </div>
       </div>
     </transition>
-    <el-drawer :visible.sync="drawer" :with-header="false">
+    <!-- <el-drawer :visible.sync="drawer" :with-header="false">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
         :form-base-data="fromConfigData.formData"
@@ -98,20 +98,20 @@
         @cancel="cancel"
         @confirm="confirm"
       ></Form>
-    </el-drawer>
+    </el-drawer>-->
   </div>
 </template>
 
 <script>
 import api from "@/api/api_workBench";
-import Form from "@/components/form/index.vue";
+// import Form from "@/components/form/index.vue";
 import taskList from "./components/taskList.vue";
 import { TASKLIST_CONFIG } from "./tableConfig/taskListConfig";
 import { FORM_CONFIG } from "./formConfig/workTodoConfig";
 
 export default {
   name: "WorkToDo",
-  components: { taskList, Form },
+  components: { taskList },
   // components: {  dataMode, BaseCrud },
 
   data() {

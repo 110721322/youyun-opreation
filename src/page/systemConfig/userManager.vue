@@ -50,7 +50,7 @@ export default {
   components: { Search, BaseCrud, PerfectPost },
   data() {
     return {
-      searchMaxHeight: "380",
+      searchMaxHeight: "320",
       searchConfig: SEARCH_CONFIG,
       configData: USERLIST_CONFIG,
       fromConfigData: {},
