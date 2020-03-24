@@ -7,6 +7,7 @@
         :open-height="searchMaxHeight"
         :form-base-data="searchConfig.formData"
         :show-foot-btn="searchConfig.showFootBtn"
+        @search="search"
       />
       <div class="data-list">
         <data-mode :config-data="overviewData" class="data-item"></data-mode>
@@ -23,6 +24,8 @@
           form-title="用户"
           :is-async="true"
           :is-select="false"
+          :params="params"
+          :api-service="api"
           @detail="handleDetail"
         />
       </div>
@@ -36,6 +39,7 @@ import dataMode from "@/components/dataMode/dataMode.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { USER_CONFIG } from "./tableConfig/dividedOverviewConfig";
 import { FORM_CONFIG } from "./formConfig/dividedOverviewSearch";
+import api from "@/api/api_agent.js"
 
 export default {
   name: "Theme",
@@ -71,11 +75,22 @@ export default {
           title: "平台活动奖励",
           data: "10000.00元"
         }
-      ]
+      ],
+      tradeMonth: '',
+      params: {},
+      api: api.agentCommission
     };
   },
+  created() {
+    this.params = {
+      "agentName": "008小老猪",
+      "agentNo": "王哈小5f",
+      "tradeMonth": "2020-03-17"
+    }
+  },
   mounted() {
-    this.getData();
+    // this.getData();
+    this.getTotalCommission();
   },
   methods: {
     handleDetail() {
@@ -111,6 +126,21 @@ export default {
           commissionIncrease: "150%"
         }
       ];
+    },
+    getTotalCommission() {
+      api.totalCommission({
+        tradeMonth: this.tradeMonth
+      }).then(res => {
+        console.log(res.object)
+      })
+    },
+    search($form) {
+      this.params = {
+        "agentName": "008小老猪",
+        "agentNo": "王哈小5f",
+        "tradeMonth": "2020-03-17"
+      }
+      this.params[$form.inputSelect] = $form.inputForm
     }
   }
 };

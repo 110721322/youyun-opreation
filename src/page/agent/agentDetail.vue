@@ -38,7 +38,7 @@
           @keyup.enter.native="handleInputConfirm"
           @blur="handleInputConfirm"
         ></el-input>
-        <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+        <el-button v-else class="button-new-tag" size="small" @click="showInput">+ 添加标签</el-button>
       </div>
     </div>
 
@@ -103,7 +103,7 @@
         <div class="bg_box" style="margin-left:0;margin-top:0;height:314px">
           <img class="title_img" src="@/assets/img/clock.png" alt />
           <div class="title">
-            待沟通3次
+            待沟通{{ planCount }}次
             <el-button type="primary" style="float:right;margin:10px 24px">添加沟通计划</el-button>
           </div>
 
@@ -117,6 +117,8 @@
             :table-height="212"
             form-title="用户"
             :is-async="false"
+            :params="params1"
+            :api-service="api1"
             style="margin:24px;border:1px solid #EBEEF5;height:212px;overflow:hidden"
           ></BaseCrud>
         </div>
@@ -139,6 +141,8 @@
         :table-height="309"
         form-title="用户"
         :is-async="false"
+        :params="params2"
+        :api-service="api2"
         style="margin:24px;border:1px solid #EBEEF5;height:309px;overflow:hidden"
       ></BaseCrud>
     </div>
@@ -156,6 +160,7 @@
 
 <script>
 import Form from "@/components/form/index.vue";
+import api from "@/api/api_agent.js"
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import detailMode from "@/components/detailMode/detailMode.vue";
 import { USER_CONFIG, USER_CONFIG2 } from "./tableConfig/config_communicate";
@@ -167,7 +172,7 @@ export default {
   data() {
     return {
       drawer: false,
-      dynamicTags: ["标签一", "标签二", "标签三"],
+      dynamicTags: [],
       inputVisible: false,
       inputValue: "",
       configData: {
@@ -417,7 +422,32 @@ export default {
         email: "12312312@163.com",
         pic:
           "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
-      }
+      },
+      params: {
+        "agentNo": ""
+      },
+      planCount: 0,
+      params1: {
+        "id": 1,
+        "addressBookId": 1,
+        "relateCode": "",
+        "remark": "",
+        "nextContactTime": "",
+        "remindTime": "",
+        "remindType": "",
+        "createTime": ""
+      },
+      api1: api.queryPlan,
+      params2: {
+        "id": 1,
+        "addressBookId": 1,
+        "relateCode": "",
+        "theme": "",
+        "way": "",
+        "content": "",
+        "createTime": ""
+      },
+      api2: api.queryPlanList
     };
   },
   mounted() {
@@ -503,8 +533,25 @@ export default {
         role: ["2"]
       }
     ];
+    this.getAgentDetail()
+    this.getPlanCount()
   },
   methods: {
+    getAgentDetail() {
+      api.getAgentDetail(this.params).then(res => {
+        console.log(res.object);
+        res.object.labelList.forEach(item => {
+          this.dynamicTags.push(item.name);
+        })
+      })
+    },
+    getPlanCount() {
+      api.planCount({
+        "relateCode": ""
+      }).then(res => {
+        this.planCount = res.object
+      })
+    },
     handleClose(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
     },
