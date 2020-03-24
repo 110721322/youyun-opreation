@@ -10,6 +10,7 @@
     <!-- <data-mode></data-mode> -->
     <div class="table_box">
       <BaseCrud
+        ref="child"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
         :grid-data="testData"
@@ -19,6 +20,8 @@
         form-title="用户"
         :is-async="true"
         :is-select="true"
+        :params="params"
+        :api-service="api"
         @reject="reject"
         @activation="activation"
         @adopt="adopt"
@@ -29,7 +32,7 @@
 
 <script>
 import search from "@/components/search/search.vue";
-
+import api from "@/api/api_agent.js"
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { USER_CONFIG } from "./tableConfig/agentCheckConfig";
 import { FORM_CONFIG } from "./formConfig/agentCheckListSearch";
@@ -42,11 +45,24 @@ export default {
       searchMaxHeight: "320",
       configData: USER_CONFIG,
       searchConfig: FORM_CONFIG,
-      testData: []
+      testData: [],
+      params: {},
+      api: api.agentExamineList
     };
   },
+  created() {
+    this.params = {
+      "agentNo": "",
+      "agentName": "",
+      "personName": "",
+      "personMobile": "",
+      "operateUserNo": "",
+      "contractStatus": "",
+      "contractStatusSet": ""
+    }
+  },
   mounted() {
-    this.getData();
+    // this.getData();
   },
   methods: {
     getData() {
@@ -74,11 +90,78 @@ export default {
       ];
     },
     search($form, $obj) {
-      this.getData();
+      this.params = {
+        "agentNo": "",
+        "agentName": "",
+        "personName": $form.personName,
+        "personMobile": $form.personMobile,
+        "operateUserNo": "",
+        "contractStatus": $form.contractStatus,
+        "contractStatusSet": ""
+      }
+      this.params[$form.inputSelect] = $form.inputForm
+      // this.$refs.child.getData()
     },
-    reject() {},
-    activation() {},
-    adopt() {}
+    reject() {
+      this.$confirm("是否要驳回该代理商？", "驳回代理商", {
+        distinguishCancelAndClose: true,
+        confirmButtonText: "确认驳回",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          api.reject({
+            "agentNo": ""
+          }).then((result) => {
+            this.$message({
+              type: "info",
+              message: "已驳回"
+            });
+          }).catch(err => {
+            console.error(err);
+          });
+        })
+        .catch(() => {});
+    },
+    activation() {
+      this.$confirm("是否要激活该代理商？", "激活代理商", {
+        distinguishCancelAndClose: true,
+        confirmButtonText: "确认激活",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          api.activate({
+            "agentNo": ""
+          }).then((result) => {
+            this.$message({
+              type: "info",
+              message: "已激活"
+            });
+          }).catch(err => {
+            console.error(err);
+          });
+        })
+        .catch(() => {});
+    },
+    adopt() {
+      this.$confirm("是否要通过该代理商？", "通过代理商", {
+        distinguishCancelAndClose: true,
+        confirmButtonText: "确认通过",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          api.pass({
+            "agentNo": ""
+          }).then((result) => {
+            this.$message({
+              type: "info",
+              message: "已通过"
+            });
+          }).catch(err => {
+            console.error(err);
+          });
+        })
+        .catch(() => {});
+    }
   }
 };
 </script>

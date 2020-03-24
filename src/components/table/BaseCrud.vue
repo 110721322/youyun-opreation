@@ -212,6 +212,9 @@ export default {
     // 防止表格预置数据不成功，涉及生命周期问题
     gridData() {
       this.showGridData = this.gridData;
+    },
+    params() {
+      this.getData();
     }
   },
   mounted() {

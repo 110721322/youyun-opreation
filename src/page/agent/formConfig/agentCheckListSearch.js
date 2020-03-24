@@ -19,11 +19,11 @@ export const FORM_CONFIG = {
         },
         {
           label: '法人姓名',
-          value: 'name'
+          value: 'personName'
         },
         {
           label: '法人手机号',
-          value: 'phone'
+          value: 'personMobile'
         }
       ],
       labelWidth: '100px'
@@ -51,7 +51,7 @@ export const FORM_CONFIG = {
     {
       type: 1,
       label: '状态',
-      key: 'status',
+      key: 'contractStatus',
       style: 'width:294px',
       labelWidth: '185px',
       options: [

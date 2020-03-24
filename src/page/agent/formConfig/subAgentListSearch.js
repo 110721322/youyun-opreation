@@ -16,11 +16,11 @@ export const FORM_CONFIG = {
       options: [
         {
           label: '服务商ID',
-          value: 'companyName'
+          value: 'agentNo'
         },
         {
           label: '服务商名称',
-          value: 'name'
+          value: 'agentName'
         }
       ],
       labelWidth: '100px'
@@ -98,7 +98,7 @@ export const FORM_CONFIG = {
     {
       type: 1,
       label: '所属运营',
-      key: 'oper',
+      key: 'operateUserNo',
       style: 'width:294px',
       class: "clear_both",
       options: [
@@ -119,7 +119,7 @@ export const FORM_CONFIG = {
     {
       type: 1,
       label: '状态',
-      key: 'status',
+      key: 'contractStatus',
       style: 'width:294px',
       labelWidth: '185px',
       options: [
