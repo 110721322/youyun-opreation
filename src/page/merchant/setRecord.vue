@@ -25,6 +25,7 @@
         <data-mode :config-data="modeConfigData" />
         <div class="table_box">
           <BaseCrud
+            ref="table"
             :grid-config="configData.gridConfig"
             :grid-btn-config="configData.gridBtnConfig"
             :grid-data="testData"
@@ -35,6 +36,8 @@
             :is-async="true"
             :is-select="false"
             :hide-edit-area="true"
+            :params="params"
+            :api-service="api"
             @selectionChange="selectionChange"
             @detail="go_detail"
           />
@@ -84,33 +87,38 @@ export default {
           title: "结算金额",
           data: "555个"
         }
-      ]
+      ],
+      params: {},
+      api: api.queryPageMerchantSettleByCondition
     };
   },
-  mounted() {
-    this.getData();
+  beforeCreate() {
+    this.params = {
+      beginDate: "2020-03-17",
+      offset: 0,
+      endDate: "2020-03-17",
+      channelMerchantNo: "li7",
+      channel: "vhu",
+      merchantNoList: [],
+      pageSize: 0,
+      currentPage: 0,
+      settleType: "yjh",
+      merchantNo: "1i2",
+      merchantName: "fa9"
+    };
   },
+  mounted() {},
   methods: {
-    getData() {
-      api
-        .queryPageMerchantSettleByCondition({
-          beginDate: "2020-03-17",
-          offset: 0,
-          endDate: "2020-03-17",
-          channelMerchantNo: "li7",
-          channel: "vhu",
-          merchantNoList: [],
-          pageSize: 0,
-          currentPage: 0,
-          settleType: "yjh",
-          merchantNo: "1i2",
-          merchantName: "fa9"
-        })
-        .then(res => {
-          // console.log(res.datas);
-          this.testData = res.datas;
-        })
-        .catch();
+    search($ruleForm) {
+      console.log($ruleForm);
+      const params = {
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
+        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        channel: $ruleForm.channel
+      };
+      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      this.params = params;
+      this.$refs.table.getData();
     },
     selectionChange($val) {},
     go_detail() {
@@ -137,10 +145,9 @@ export default {
       }, 500);
       // 模拟获取数据
       setTimeout(() => {
-        this.getData();
+        this.$refs.table.getData();
       }, 1000);
-    },
-    search($form, $obj) {}
+    }
   }
 };
 </script>

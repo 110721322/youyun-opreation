@@ -70,8 +70,8 @@ export default {
       searchMaxHeight: "380",
       searchConfig: FORM_CONFIG,
       configData: USER_CONFIG,
-      params: {},
       testData: [],
+      params: {},
       api: api.queryPageByCondition
     };
   },
@@ -111,12 +111,7 @@ export default {
         categoryCOde: $ruleForm.categoryCOde,
         operateNo: $ruleForm.operateNo
       };
-      if ($ruleForm.inputSelect === "agentId") {
-        params.agentId = $ruleForm.inputForm;
-      }
-      if ($ruleForm.inputSelect === "agentName") {
-        params.agentName = $ruleForm.inputForm;
-      }
+      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
       this.$refs.table.getData();
     },

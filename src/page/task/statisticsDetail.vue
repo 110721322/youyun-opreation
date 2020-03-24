@@ -24,6 +24,9 @@
         <data-mode :config-data="modeConfigData" />
         <div class="table_box">
           <BaseCrud
+            ref="table"
+            :params="params"
+            :api-service="api"
             :grid-config="configData.gridConfig"
             :grid-btn-config="configData.gridBtnConfig"
             :grid-data="testData"
@@ -36,7 +39,6 @@
             :row-key="'id'"
             :default-expand-all="false"
             :hide-edit-area="configData.hideEditArea"
-            @selectionChange="selectionChange"
           >
             <template v-slot="{ row }">
               <el-form label-position="left" inline class="demo-table-expand">
@@ -88,12 +90,23 @@ export default {
       activeIndex: "1",
       configData: UNFINISH_CONFIG,
       testData: [],
-      isChangeMode: true
+      isChangeMode: true,
+      params: {},
+      api: api.queryOperationTaskList
+    };
+  },
+  created() {
+    this.params = {
+      receiverId: 1,
+      undoType: 1,
+      taskType: 1,
+      pageSize: 1,
+      currentPage: 1,
+      status: ""
     };
   },
   mounted() {
     this.queryOperationAllTaskMenu();
-    this.getTableData();
   },
   methods: {
     queryOperationAllTaskMenu() {
@@ -102,7 +115,7 @@ export default {
           receiverId: 1,
           undoType: 1,
           taskType: 1,
-          status: "",
+          status: "undo",
           taskOwner: ""
         })
         .then(res => {
@@ -111,96 +124,37 @@ export default {
         })
         .catch();
     },
-    getTableData() {
-      api
-        .queryOperationTaskList({
-          receiverId: 1,
-          undoType: 1,
-          taskType: 1,
-          pageSize: 1,
-          currentPage: 1,
-          status: ""
-        })
-        .then(res => {
-          console.log(res.datas);
-          this.testData = res.datas;
-        })
-        .catch(err => {
-          console.error(err);
-        });
-      // this.testData = [
-      //   {
-      //     type: "日常任务",
-      //     taskName: "商户结算失败",
-      //     num: "4",
-      //     oper: "提醒",
-      //     name: "XXXX店铺",
-      //     time: "20:00:23",
-      //     amount: "222.22",
-      //     reason: "银行卡账号错误，服务商无法联系",
-      //     childrenData: [
-      //       {
-      //         id: 1,
-      //         name: "XXXX店铺",
-      //         amount: "222.22",
-      //         reason: "银行卡账号错误，服务商无法联系"
-      //       },
-      //       {
-      //         id: 2,
-      //         name: "XXXX店铺",
-      //         amount: "222.22",
-      //         reason: "银行卡账号错误，服务商无法联系"
-      //       }
-      //     ]
-      //   },
-      //   {
-      //     id: 2,
-      //     type: "日常任务",
-      //     taskName: "商户结算失败",
-      //     num: "4",
-      //     oper: "提醒",
-      //     name: "XXXX店铺",
-      //     time: "20:00:23",
-      //     amount: "222.22",
-      //     reason: "银行卡账号错误，服务商无法联系",
-      //     childrenData: [
-      //       {
-      //         id: 1,
-      //         name: "XXXX店铺",
-      //         amount: "222.22",
-      //         reason: "银行卡账号错误，服务商无法联系"
-      //       },
-      //       {
-      //         id: 2,
-      //         name: "XXXX店铺",
-      //         amount: "222.22",
-      //         reason: "银行卡账号错误，服务商无法联系"
-      //       }
-      //     ]
-      //   }
-      // ];
-    },
-    selectionChange($val) {
-      // eslint-disable-next-line no-console
-      console.log($val);
-    },
     handleSelect($item) {
       // eslint-disable-next-line no-console
       this.activeIndex = $item;
       switch ($item) {
         case "1":
           this.configData = UNFINISH_CONFIG;
+          this.params.status = "undo";
           break;
         case "2":
           this.configData = FINISH_CONFIG;
+          this.params.status = "done";
           break;
       }
 
-      this.getTableData();
+      this.$refs.table.getData();
     },
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
+    search($ruleForm) {
+      console.log($ruleForm);
+      const params = {
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
+        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        provinceCode: $ruleForm.address ? $ruleForm.address[0] : null,
+        cityCode: $ruleForm.address ? $ruleForm.address[1] : null,
+        useChannelCode: $ruleForm.useChannelCode,
+        channelStatus: $ruleForm.channelStatus,
+        categoryCOde: $ruleForm.categoryCOde,
+        operateNo: $ruleForm.operateNo
+      };
+      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      this.params = params;
+      this.$refs.table.getData();
     }
   }
 };

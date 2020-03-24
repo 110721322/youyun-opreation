@@ -32,7 +32,7 @@ export const ERR_CONFIG = {
     },
     {
       label: '手续费（元）',
-      prop: 'tradeCount',
+      prop: 'serviceFee',
       width: '150px'
     },
     {

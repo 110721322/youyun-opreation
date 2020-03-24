@@ -19,7 +19,7 @@ export const FORM_CONFIG = {
       {
         type: 1,
         label: '公告类型',
-        key: 'announcementType',
+        key: 'messageType',
         initVal: 0,
         options: [
           {
@@ -42,11 +42,11 @@ export const FORM_CONFIG = {
         type: 3,
         label: '显示日期',
         key: 'time',
-        initVal: null,
+        initVal: [],
         dateType: 'daterange',
         style: 'width:364px',
         isShow: ($item) => {
-          if ($item.announcementType === 1) {
+          if ($item.messageType === 1) {
             return true;
           } else {
             return false;
@@ -56,7 +56,7 @@ export const FORM_CONFIG = {
       {
         type: 1,
         label: '显示方式',
-        key: 'showType',
+        key: 'displayType',
         initVal: 0,
         options: [
           {
@@ -75,7 +75,7 @@ export const FORM_CONFIG = {
         placeholder: '请选择',
         style: 'width:364px',
         isShow: ($item) => {
-          if ($item.announcementType === 1) {
+          if ($item.messageType === 1) {
             return true;
           } else {
             return false;
@@ -85,7 +85,7 @@ export const FORM_CONFIG = {
       {
         type: 5,
         label: '强制阅读',
-        key: 'readForce',
+        key: 'isReadable',
         initVal: 0,
         options: [
           {
@@ -98,7 +98,7 @@ export const FORM_CONFIG = {
           }
         ],
         isShow: ($item) => {
-          if ($item.announcementType === 1) {
+          if ($item.messageType === 1) {
             return true;
           } else {
             return false;
@@ -108,7 +108,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '阅读时间',
-        key: 'readTime',
+        key: 'readableTime',
         initVal: '',
         rules: setRules('阅读时间').isRequired.get,
         inputType: "input",
@@ -120,14 +120,14 @@ export const FORM_CONFIG = {
         isShowSlot: true,
         showSlotName: '秒',
         isShow: ($item) => {
-          if ($item.announcementType === 1) {
+          if ($item.messageType === 1) {
             return true;
           } else {
             return false;
           }
         },
         isDisable: ($item) => {
-          if ($item.readForce === 1) {
+          if ($item.isReadable === 1) {
             return false;
           } else {
             return true;
@@ -142,7 +142,7 @@ export const FORM_CONFIG = {
         rules: setRules('公告内容').isRequired.get,
         style: 'width:364px',
         isShow: ($item) => {
-          if ($item.announcementType === 1) {
+          if ($item.messageType === 1) {
             return true;
           } else {
             return false;

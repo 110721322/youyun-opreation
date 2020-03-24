@@ -138,6 +138,7 @@ export default {
           formatFormData(formInfo, this.formKeys);
         }
       });
+      this.$emit("confirm", this.ruleForm);
     },
     resetForm() {
       // 初始化表单

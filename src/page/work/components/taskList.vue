@@ -25,7 +25,7 @@
         </div>
       </div>
       <div v-if="type===1" class="oper-box">
-        <el-button type="primary" class="btn">立即沟通</el-button>
+        <el-button type="primary" class="btn" @click="onClick_communication">立即沟通</el-button>
       </div>
       <div v-if="type===2" class="oper-box">
         <el-button type="primary" class="btn_agree">同意</el-button>
@@ -75,6 +75,9 @@ export default {
   },
   mounted() {},
   methods: {
+    onClick_communication($index) {
+      this.$emit("communication", $index);
+    },
     changeCheckList() {
       this.$emit("handleCheckList", this.checkList);
     }

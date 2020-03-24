@@ -39,8 +39,8 @@
         </el-form-item>
       </div>
       <div class="btn-box">
-        <el-button type="primary" class="btn">提交</el-button>
-        <el-button plain class="btn">取消</el-button>
+        <el-button type="primary" class="btn" @click="handleClick">提交</el-button>
+        <el-button plain class="btn" @click="onClick_cannel">取消</el-button>
       </div>
     </el-form>
   </div>
@@ -151,6 +151,7 @@ export default {
           formatFormData(formInfo, this.formKeys);
         }
       });
+      this.$emit("commit", this.ruleForm);
     },
     resetForm() {
       // 初始化表单
@@ -167,9 +168,10 @@ export default {
         this.$refs.formTep.clearValidate();
       });
     },
-    cancelForm() {
+    onClick_cannel() {
       // 初始化表单
-      this.$emit("cancel");
+      // this.$emit("cancel");
+      this.$router.back();
     },
     transType(value) {
       // 获取表单项类型

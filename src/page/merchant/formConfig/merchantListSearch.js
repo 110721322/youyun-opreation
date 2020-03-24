@@ -17,12 +17,24 @@ export const FORM_CONFIG = {
       placeholder: "请输入商户号",
       options: [
         {
-          label: '服务商ID',
-          value: 'agentId'
+          label: '商户ID',
+          value: 'merchantNo'
         },
         {
-          label: '服务商名称',
+          label: '商户名称',
+          value: 'merchantName'
+        },
+        {
+          label: '所属服务商名称',
           value: 'agentName'
+        },
+        {
+          label: '乐刷商户号',
+          value: 'leShuaMerchantNo'
+        },
+        {
+          label: '新大陆商户号',
+          value: 'newlandMerchantNo'
         }
       ],
       labelWidth: '100px'
@@ -30,29 +42,8 @@ export const FORM_CONFIG = {
     {
       type: 1,
       label: '使用通道',
-      key: 'useChannelCode',
-      style: 'width:294px',
-      options: [
-        {
-          label: '川菜',
-          value: "0"
-        },
-        {
-          label: '粤菜',
-          value: "1"
-        },
-        {
-          label: '杭帮菜',
-          value: "2"
-        }
-      ]
-    },
-    {
-      type: 1,
-      label: '通道情况',
       key: 'channelStatus',
       style: 'width:294px',
-      labelWidth: '185px',
       options: [
         {
           label: '川菜',
@@ -73,6 +64,7 @@ export const FORM_CONFIG = {
       label: '行业类目',
       key: 'categoryCOde',
       style: 'width:294px',
+      labelWidth: '185px',
       options: [
         {
           label: '川菜',
@@ -87,6 +79,14 @@ export const FORM_CONFIG = {
           value: "2"
         }
       ]
+    },
+    {
+      type: 8,
+      label: '地区',
+      key: 'address',
+      style: 'width:294px',
+      class: "clear_both",
+      options: areaData
     },
     {
       type: 8,
@@ -186,18 +186,11 @@ export const FORM_CONFIG = {
       ]
     },
     {
-      type: 8,
-      label: '地区',
-      key: 'address',
-      style: 'width:294px',
-      options: areaData
-    },
-    {
       type: 1,
       label: '所属运营',
       key: 'operateNo',
       style: 'width:294px',
-      labelWidth: '185px',
+      class: "clear_both",
       options: [
         {
           label: '川菜',

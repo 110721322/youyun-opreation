@@ -15,6 +15,9 @@
           <el-button type="primary" class="add_btn" @click="onClick_addAnnouncement">添加公告</el-button>
         </div>
         <BaseCrud
+          ref="table"
+          :params="params"
+          :api-service="api"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
           :grid-data="testData"
@@ -24,11 +27,9 @@
           form-title="用户"
           :is-async="true"
           :is-select="false"
-          @selectionChange="selectionChange"
           @detail="go_detail"
-          @openAgentManager="openAgentManager"
-          @openMerchantManager="openMerchantManager"
           @edit="handelEdit"
+          @delete="handelDelete"
         ></BaseCrud>
       </div>
     </div>
@@ -36,6 +37,7 @@
 </template>
 
 <script>
+import api from "@/api/api_message";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { USER_CONFIG } from "./tableConfig/announcementConfig";
 import search from "@/components/search/search.vue";
@@ -50,17 +52,20 @@ export default {
 
       configData: USER_CONFIG,
       testData: [],
-      searchConfig: SEARCH_CONFIG
+      searchConfig: SEARCH_CONFIG,
+      params: {},
+      api: api.queryByPage
     };
   },
-  mounted() {
-    // eslint-disable-next-line no-console
-    console.log(this.$route);
-    this.getData();
+  created() {
+    this.params = {
+      title: "",
+      messageType: 1
+    };
   },
+  mounted() {},
   methods: {
     handelEdit($row) {
-      // eslint-disable-next-line no-console
       console.log($row);
       this.$router.push({
         path: "/message/serviceAnnouncementList/detail"
@@ -71,37 +76,41 @@ export default {
         path: "/message/serviceAnnouncementList/detail"
       });
     },
-    getData() {
-      this.testData = [
-        {
-          id: "1",
-          title: "针对防范不法商户的公告，针对防范不法商户的公告…",
-          type: "宣传消息",
-          time: "42004-05-14 19:00:00"
-        },
-        {
-          id: "2",
-          title: "蓝湖行动-餐饮行业0费率扶持",
-          type: "公告消息",
-          time: "2017-02-10 21:00:23"
-        }
-      ];
-    },
-    selectionChange($val) {
-      // eslint-disable-next-line no-console
-      console.log($val);
-    },
     go_detail() {
-      // eslint-disable-next-line no-console
       this.$router.push("/merchant/list/detail");
     },
-    search() {
-      this.getData();
+    handelDelete() {
+      this.$confirm("确定删除该消息吗", "提示", {
+        distinguishCancelAndClose: true,
+        confirmButtonText: "确认删除",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          api
+            .delete({
+              id: "无",
+              deleted: true
+            })
+            .then(res => {
+              this.$message({
+                type: "info",
+                message: "已删除"
+              });
+            })
+            .catch();
+        })
+        .catch(() => {});
     },
-    openAgentManager() {},
-    openMerchantManager() {},
-    onClick_search() {},
-    onClick_reset() {}
+    search($ruleForm) {
+      console.log($ruleForm);
+      const params = {
+        title: $ruleForm.title,
+        messageType: $ruleForm.messageType
+      };
+      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      this.params = params;
+      this.$refs.table.getData();
+    }
   }
 };
 </script>

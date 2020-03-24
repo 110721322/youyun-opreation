@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import api from "@/api/api_workBench";
 import detailMode from "@/components/detailMode/detailMode3.vue";
 // import search from '@/components/search/search.vue';
 // import BaseCrud from '@/components/table/BaseCrud.vue';
@@ -102,8 +103,24 @@ export default {
       }
     };
   },
-  mounted() {},
-  methods: {}
+  mounted() {
+    this.getData();
+  },
+  methods: {
+    getData() {
+      api
+        .queryAllTaskMenu({
+          receiverId: 1,
+          undoType: 1,
+          taskType: 1,
+          status: ""
+        })
+        .then(res => {
+          console.log(res);
+        })
+        .catch();
+    }
+  }
 };
 </script>
 

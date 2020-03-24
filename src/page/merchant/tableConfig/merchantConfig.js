@@ -34,7 +34,7 @@ export const USER_CONFIG = {
     },
     {
       label: '所属运营',
-      prop: 'name',
+      prop: 'operateUserNo',
       width: '150px'
     }
 

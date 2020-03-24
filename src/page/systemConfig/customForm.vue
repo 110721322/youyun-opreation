@@ -24,7 +24,10 @@
       </div>
       <div class="right_box">
         <DetailBox title="自定义表单" :border="true">
-          <div class="mod_tips">表单位置：{{ selectMenu.formLoaction }}</div>
+          <div class="mod_tips">
+            <span>表单位置：{{ selectMenu.formLoaction }}</span>
+            <el-button type="primary" @click="onClick_Edit">编辑</el-button>
+          </div>
 
           <el-table :data="tableData" style="width: 100%">
             <el-table-column
@@ -42,6 +45,10 @@
             </el-table-column>
           </el-table>
         </DetailBox>
+        <div v-if="isEdit" class="btn-box">
+          <el-button size="medium" type="primary" @click="saveTableData">保存</el-button>
+          <el-button size="medium" @click="cancelEdit">取消</el-button>
+        </div>
       </div>
     </div>
 
@@ -58,6 +65,7 @@
   </div>
 </template>
 <script>
+import api from "@/api/api_params";
 import Form from "@/components/form/index.vue";
 import DetailBox from "@/components/detailMode/detailBox.vue";
 
@@ -73,56 +81,32 @@ export default {
       ruleForm: {
         name1: "2"
       },
+      isEdit: true,
       tableConfig: [
         {
           label: "名称",
-          prop: "name",
+          prop: "fieldNameCn",
           width: "90px"
         },
         {
           label: "类型",
-          prop: "type",
+          prop: "fieldTypeValue",
           width: "90px"
         },
         {
           label: "是否必填",
-          prop: "must",
+          prop: "isNeed",
           width: "90px",
           isShowCheckBox: true
         },
         {
           label: "列表显示",
-          prop: "showList",
+          prop: "isDisplay",
           width: "90px",
           isShowCheckBox: true
         }
       ],
-      tableData: [
-        {
-          type: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-          must: false
-        },
-        {
-          type: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄",
-          must: false
-        },
-        {
-          type: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄",
-          must: true
-        },
-        {
-          type: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄",
-          must: false
-        }
-      ],
+      tableData: [],
       menuList: [
         {
           name: "成员信息（编辑信息）",
@@ -140,7 +124,7 @@ export default {
   },
   mounted() {
     this.selectMenu = this.menuList[0];
-    this.getTableData();
+    this.getTableData({ type: "employee_edit" }); // employee_register
   },
   methods: {
     onClick_menuItem($item) {
@@ -153,7 +137,30 @@ export default {
       // eslint-disable-next-line no-console
       console.log(this.ruleForm);
     },
-    getTableData() {},
+    getTableData(params) {
+      api
+        .queryAllFormFieldsByType(params)
+        .then(res => {
+          console.log(res);
+          this.tableData = res.object;
+        })
+        .catch();
+    },
+    saveTableData() {
+      api
+        .batchSetFormFieldsProperty({ vos: this.tableData })
+        .then(res => {
+          console.log(res);
+          this.$message("保存成功");
+        })
+        .catch();
+    },
+    onClick_Edit() {
+      this.isEdit = true;
+    },
+    cancelEdit() {
+      this.isEdit = false;
+    },
     selectionChange($val) {
       // eslint-disable-next-line no-console
       console.log($val);
@@ -185,6 +192,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.btn-box {
+  padding: 30px 24px;
+  border-top: 1px solid #ededed;
+}
 .table_box {
   position: relative;
   margin: 24px;
@@ -237,12 +248,12 @@ export default {
   overflow: scroll;
   // margin: 24px;
   .mod_tips {
-    height: 22px;
+    display: flex;
+    justify-content: space-between;
     font-size: 14px;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
     color: rgba(25, 137, 250, 1);
-    line-height: 22px;
     margin: 16px 32px 16px;
   }
 }
