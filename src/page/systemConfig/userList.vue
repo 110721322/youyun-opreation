@@ -15,6 +15,7 @@
         <el-button class="btn" type="primary" @click="onClick_addUser">添加成员</el-button>
       </div>
       <BaseCrud
+        ref="child"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
         :grid-data="testData"
@@ -25,6 +26,8 @@
         :is-select="false"
         :is-expand="false"
         :row-key="'id'"
+        :params="params"
+        :api-service="api"
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
         @buy="onClick_buy"
@@ -63,38 +66,54 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl"
+      direction: "rtl",
+      params: {},
+      api: api.memberList
     };
+  },
+  created() {
+    this.params = {
+      "superiorName": "je8",
+      "offset": 0,
+      "nickName": "i58",
+      "sex": true,
+      "userName": "fm4",
+      "superiorId": 99328,
+      "realName": "dcj",
+      "id": 55267,
+      "position": "9pm",
+      "state": 348,
+      "jobNumber": "t6p",
+      "startTime": "yyyy-MM-dd HH:mm:ss",
+      "endTime": "yyyy-MM-dd HH:mm:ss"
+    }
   },
   mounted() {
     // this.getTableData();
     console.log(this.searchConfig.formData)
   },
   methods: {
-    search(result) {
-      // eslint-disable-next-line no-console
-      console.log(result);
-    },
-    getTableData() {
-      api.memberList({
+    search($ruleForm) {
+      console.log($ruleForm)
+      this.params = {
         "superiorName": "je8",
         "offset": 0,
         "nickName": "i58",
         "sex": true,
-        "pageSize": 0,
         "userName": "fm4",
         "superiorId": 99328,
         "realName": "dcj",
         "id": 55267,
         "position": "9pm",
         "state": 348,
-        "currentPage": 0,
         "jobNumber": "t6p",
-        "startTime": "yyyy-MM-dd HH:mm:ss",
-        "endTime": "yyyy-MM-dd HH:mm:ss"
-      }).then((result) => {
-
-      })
+        "startTime": $ruleForm.date[0],
+        "endTime": $ruleForm.date[1]
+      }
+      this.params[$ruleForm.inputSelect] = $ruleForm.inputForm
+      this.$refs.child.getData();
+    },
+    getTableData() {
       // this.testData = [
       //   {
       //     type: "日常任务",

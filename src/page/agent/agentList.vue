@@ -22,6 +22,7 @@
           <el-button class="btn" type="text">清空</el-button>
         </div>
         <BaseCrud
+          ref="child"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
           :grid-data="testData"
@@ -31,6 +32,8 @@
           form-title="用户"
           :is-async="true"
           :is-select="true"
+          :params="params"
+          :api-service="api"
           @selectionChange="selectionChange"
           @detail="openDetail"
           @thaw="thaw"
@@ -44,6 +47,7 @@
 </template>
 <script>
 import search from "@/components/search/search.vue";
+import api from "@/api/api_agent.js"
 // import dataMode from '@/components/dataMode/dataMode.vue'
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { USER_CONFIG } from "./tableConfig/agentConfig";
@@ -60,11 +64,35 @@ export default {
       configData: USER_CONFIG,
       searchConfig: FORM_CONFIG,
       testData: [],
-      selectData: []
+      selectData: [],
+      params: {},
+      api: api.agentList
     };
   },
+  created() {
+    this.params = {
+      "agentNo": "",
+      "businessType": "",
+      "agentName": "",
+      "personName": "",
+      "personMobile": "",
+      "contractType": "",
+      "activeScopeType": "",
+      "operateUserNo": "",
+      "parentAgentNo": "",
+      "activeDate": "",
+      "expireDate": "",
+      "contractStatus": "",
+      "contractStatusSet": "",
+      "isExpired": "",
+      "provinceCode": "",
+      "cityCode": "",
+      "areaCode": "",
+      "agentGrade": 1
+    }
+  },
   mounted() {
-    this.getData();
+    // this.getData();
   },
   methods: {
     getData() {
@@ -94,8 +122,35 @@ export default {
     selectionChange($val) {
       this.selectData = $val;
     },
-    search($form, $obj) {
-      this.getData();
+    search($form) {
+      console.log($form)
+      this.params = {
+        "agentNo": "",
+        "businessType": "",
+        "agentName": "",
+        "personName": "",
+        "personMobile": "",
+        "contractType": "",
+        "activeScopeType": $form.activeScopeType,
+        "operateUserNo": $form.operateUserNo,
+        "parentAgentNo": "",
+        "activeDate": "",
+        "expireDate": "",
+        "contractStatus": "",
+        "contractStatusSet": $form.contractStatusSet,
+        "isExpired": "",
+        "provinceCode": "",
+        "cityCode": "",
+        "areaCode": "",
+        "agentGrade": $form.agentGrade
+      }
+      if ($form.area) {
+        this.params.provinceCode = $form.area[0];
+        this.params.cityCode = $form.area[1];
+        this.params.areaCode = $form.area[2];
+      }
+      this.params[$form.inputSelect] = $form.inputForm
+      this.$refs.child.getData()
     },
     openDetail() {
       this.$router.push({
