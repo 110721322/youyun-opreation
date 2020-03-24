@@ -12,7 +12,7 @@
 
       <!-- <data-mode></data-mode> -->
       <div class="table_box">
-        <el-button>批量转移运营</el-button>
+        <el-button @click="transfer">批量转移运营</el-button>
         <div class="select_data">
           <span class="el-icon-info icon" />
           <span>
@@ -92,32 +92,33 @@ export default {
     }
   },
   mounted() {
-    // this.getData();
   },
   methods: {
-    getData() {
-      this.testData = [
-        {
-          id: "1两行两行两行两行",
-          tel: "15184318420",
-          name: "小白",
-          email: "412412@qq.com",
-          status: "1",
-          create_time: "2018-04-20",
-          expand: "扩展信息一",
-          role: ["2"]
-        },
-        {
-          id: "2两行两行两行两行",
-          tel: "13777369283",
-          name: "小红",
-          email: "456465@qq.com",
-          status: "0",
-          create_time: "2018-03-23",
-          expand: "hashashashas",
-          role: ["1"]
-        }
-      ];
+    transfer() {
+      if (this.selectData.length) {
+        this.$confirm("是否批量转移运营？", "转移运营", {
+          distinguishCancelAndClose: true,
+          confirmButtonText: "确认",
+          cancelButtonText: "取消"
+        })
+          .then(() => {
+            api.transferOperate({
+              "agentNos": [],
+              "operateUserNo": ""
+            }).then(res => {
+              this.$message({
+                type: "info",
+                message: "转移成功"
+              });
+            })
+          })
+          .catch(() => {});
+      } else {
+        this.$message({
+          type: "info",
+          message: "请选择代理商"
+        });
+      }
     },
     selectionChange($val) {
       this.selectData = $val;
@@ -150,7 +151,6 @@ export default {
         this.params.areaCode = $form.area[2];
       }
       this.params[$form.inputSelect] = $form.inputForm
-      this.$refs.child.getData()
     },
     openDetail() {
       this.$router.push({
@@ -164,10 +164,14 @@ export default {
         cancelButtonText: "取消"
       })
         .then(() => {
-          this.$message({
-            type: "info",
-            message: "已解冻"
-          });
+          api.unfrozen({
+            "agentNo": ""
+          }).then(res => {
+            this.$message({
+              type: "info",
+              message: "已解冻"
+            });
+          })
         })
         .catch(() => {});
     },
@@ -178,10 +182,14 @@ export default {
         cancelButtonText: "取消"
       })
         .then(() => {
-          this.$message({
-            type: "info",
-            message: "已冻结"
-          });
+          api.frozen({
+            "agentNo": ""
+          }).then(res => {
+            this.$message({
+              type: "info",
+              message: "已冻结"
+            });
+          })
         })
         .catch(() => {});
     },

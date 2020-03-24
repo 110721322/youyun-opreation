@@ -111,7 +111,7 @@ export default {
         "endTime": $ruleForm.date[1]
       }
       this.params[$ruleForm.inputSelect] = $ruleForm.inputForm
-      this.$refs.child.getData();
+      // this.$refs.child.getData();
     },
     getTableData() {
       // this.testData = [

@@ -102,9 +102,66 @@ export default {
       this.params[$form.inputSelect] = $form.inputForm
       // this.$refs.child.getData()
     },
-    reject() {},
-    activation() {},
-    adopt() {}
+    reject() {
+      this.$confirm("是否要驳回该代理商？", "驳回代理商", {
+        distinguishCancelAndClose: true,
+        confirmButtonText: "确认驳回",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          api.reject({
+            "agentNo": ""
+          }).then((result) => {
+            this.$message({
+              type: "info",
+              message: "已驳回"
+            });
+          }).catch(err => {
+            console.error(err);
+          });
+        })
+        .catch(() => {});
+    },
+    activation() {
+      this.$confirm("是否要激活该代理商？", "激活代理商", {
+        distinguishCancelAndClose: true,
+        confirmButtonText: "确认激活",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          api.activate({
+            "agentNo": ""
+          }).then((result) => {
+            this.$message({
+              type: "info",
+              message: "已激活"
+            });
+          }).catch(err => {
+            console.error(err);
+          });
+        })
+        .catch(() => {});
+    },
+    adopt() {
+      this.$confirm("是否要通过该代理商？", "通过代理商", {
+        distinguishCancelAndClose: true,
+        confirmButtonText: "确认通过",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          api.pass({
+            "agentNo": ""
+          }).then((result) => {
+            this.$message({
+              type: "info",
+              message: "已通过"
+            });
+          }).catch(err => {
+            console.error(err);
+          });
+        })
+        .catch(() => {});
+    }
   }
 };
 </script>

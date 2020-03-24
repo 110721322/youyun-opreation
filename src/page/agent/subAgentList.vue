@@ -21,6 +21,8 @@
           form-title="用户"
           :is-async="true"
           :is-select="false"
+          :params="params"
+          :api-service="api"
           @detail="openDetail"
           @thaw="thaw"
           @frozen="frozen"
@@ -34,6 +36,7 @@
 
 <script>
 import search from "@/components/search/search.vue";
+import api from "@/api/api_agent.js"
 // import dataMode from '@/components/dataMode/dataMode.vue'
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { USER_CONFIG } from "./tableConfig/subAgentConfig";
@@ -49,8 +52,21 @@ export default {
       searchMaxHeight: "380",
       configData: USER_CONFIG,
       searchConfig: FORM_CONFIG,
-      testData: []
+      testData: [],
+      params: {},
+      api: api.subagentExamineList
     };
+  },
+  created() {
+    this.params = {
+      "agentNo": "",
+      "agentName": "",
+      "personName": "",
+      "personMobile": "",
+      "operateUserNo": "",
+      "contractStatus": "",
+      "contractStatusSet": ""
+    }
   },
   mounted() {
     this.getData();
@@ -109,7 +125,17 @@ export default {
       ];
     },
     search($form, $obj) {
-      this.getData();
+      console.log($form)
+      this.params = {
+        "agentNo": "",
+        "agentName": "",
+        "personName": "",
+        "personMobile": "",
+        "operateUserNo": $form.operateUserNo,
+        "contractStatus": $form.contractStatus,
+        "contractStatusSet": ""
+      }
+      this.params[$form.inputSelect] = $form.inputForm
     },
     openDetail() {
       this.$router.push({
@@ -117,29 +143,43 @@ export default {
       });
     },
     thaw() {
-      this.$confirm("是否要解冻该代理商？", "解冻代理商", {
+      this.$confirm("是否要驳回该代理商？", "驳回代理商", {
         distinguishCancelAndClose: true,
-        confirmButtonText: "确认解冻",
+        confirmButtonText: "确认驳回",
         cancelButtonText: "取消"
       })
         .then(() => {
-          this.$message({
-            type: "info",
-            message: "已解冻"
+          api.subreject({
+            "agentNo": "",
+            "reason": ""
+          }).then((result) => {
+            this.$message({
+              type: "info",
+              message: "已驳回"
+            });
+          }).catch(err => {
+            console.error(err);
           });
         })
         .catch(() => {});
     },
     frozen() {
-      this.$confirm("是否要冻结该代理商？", "冻结代理商", {
+      this.$confirm("是否要通过该代理商？", "通过代理商", {
         distinguishCancelAndClose: true,
-        confirmButtonText: "确认冻结",
+        confirmButtonText: "确认通过",
         cancelButtonText: "取消"
       })
         .then(() => {
-          this.$message({
-            type: "info",
-            message: "已冻结"
+          api.subpass({
+            "agentNo": "",
+            "reason": ""
+          }).then((result) => {
+            this.$message({
+              type: "info",
+              message: "已通过"
+            });
+          }).catch(err => {
+            console.error(err);
           });
         })
         .catch(() => {});
