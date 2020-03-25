@@ -3,7 +3,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '广告类型',
-      key: 'area',
+      key: 'advertType',
       style: 'width:294px',
       options: [
         {
@@ -23,7 +23,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '投放范围',
-      key: 'useChannel',
+      key: 'distributeType',
       style: 'width:294px',
       labelWidth: '135px',
       options: [
@@ -44,7 +44,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '投放人',
-      key: 'channelStatus',
+      key: 'operationId',
       style: 'width:294px',
       class: "clear_both",
       options: [

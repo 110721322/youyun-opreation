@@ -19,5 +19,17 @@ export default {
   merchantCommission: (params) => API.GET('/operation/v1/commission/listMerchantCommission', params),
   planCount: (params) => API.GET('/operation/v1/talkPlan/queryWaitExecutePlanCount', params),
   queryPlan: (params) => API.GET('/operation/v1/talkPlan/queryByPage', params),
-  queryPlanList: (params) => API.GET('/operation/v1/talkLists/queryByPage', params)
+  queryPlanList: (params) => API.GET('/operation/v1/talkLists/queryByPage', params),
+  // 订单管理
+  hardwarePageOrder: (params) => API.GET('/operation/v1/deviceOrder/hardwarePageOrder', params),
+  hardwareDetail: (params) => API.GET('/operation/v1/deviceOrder/hardwareDetail', params),
+  // 广告权限
+  advertPrivilege: (params) => API.GET('/operation/v1/advertPrivilege/queryByPage', params),
+  advertPrivilegeUpdate: (params) => API.GET('/operation/v1/advertPrivilege/update', params),
+  queryAllPrivilege: (params) => API.GET('/operation/v1/advertPrivilege/queryAllPrivilege', params),
+  advertList: (params) => API.GET('/operation/v1/advert/queryByPage', params),
+  advertDelete: (params) => API.GET('/operation/v1/advert/delete', params),
+  advertAdd: (params) => API.GET('/operation/v1/advert/add', params),
+  advertUpdate: (params) => API.GET('/operation/v1/advert/update', params),
+  putList: (params) => API.GET('/operation/v1/advertDistribute/queryByPage', params)
 };
