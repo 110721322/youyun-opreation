@@ -27,6 +27,8 @@
               :row-key="'order'"
               :default-expand-all="false"
               :hide-edit-area="configData.hideEditArea"
+              :params="params"
+              :api-service="api"
               @detail="handleDetail"
             >
               <template v-slot="{ row }">
@@ -50,6 +52,7 @@ import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { SEARCH_CONFIG } from "../formConfig/hardwareOrderSearch";
 import { TABLE_CONFIG } from "../tableConfig/hardwareOrderConfig";
+import api from "@/api/api_agent.js"
 
 export default {
   name: "Theme",
@@ -60,11 +63,19 @@ export default {
       searchMaxHeight: "320",
       configData: TABLE_CONFIG,
       testData: [],
-      isChangeMode: true
+      isChangeMode: true,
+      params: {
+        "agentNo": "丽美",
+        "outputNo": "侠猪0丽侠猪c",
+        "outputType": 614,
+        "status": 611,
+        "beginTime": this.$g.utils.getToday(),
+        "endTime": this.$g.utils.getToday()
+      },
+      api: api.hardwarePageOrder
     };
   },
   mounted() {
-    this.getTableData();
   },
   methods: {
     handleDetail() {
@@ -120,9 +131,16 @@ export default {
         }
       ];
     },
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
+    search($ruleForm) {
+      this.params = {
+        "agentNo": "丽美",
+        "outputNo": "",
+        "outputType": $ruleForm.outputType,
+        "status": $ruleForm.status,
+        "beginTime": $ruleForm.date[0],
+        "endTime": $ruleForm.date[1]
+      }
+      this.params[$ruleForm.inputSelect] = $ruleForm.inputForm
     }
   }
 };

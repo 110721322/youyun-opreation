@@ -13,11 +13,11 @@ export const FORM_CONFIG = {
         options: [
           {
             label: '蜻蜓-开机广告',
-            value: 0
+            value: 1
           },
           {
             label: '青蛙-开机广告',
-            value: 1
+            value: 2
           }
         ]
       }

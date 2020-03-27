@@ -15,11 +15,11 @@ export const SEARCH_CONFIG = {
       options: [
         {
           label: '订单号',
-          value: 'id'
+          value: 'outputNo'
         },
         {
           label: '购买服务商',
-          value: 'name'
+          value: 'agentNo'
         }
       ],
       labelWidth: '100px'
@@ -27,7 +27,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '订单类型',
-      key: 'type',
+      key: 'outputType',
       style: 'width:294px',
       options: [
         {

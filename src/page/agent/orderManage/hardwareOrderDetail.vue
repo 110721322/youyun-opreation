@@ -55,7 +55,7 @@
 </template>
 <script>
 import detailMode from "@/components/detailMode/detailMode2.vue";
-
+import api from "@/api/api_agent.js"
 export default {
   name: "HardwareOrderDetail",
   components: { detailMode },
@@ -66,48 +66,7 @@ export default {
         showRejectTitle: false
       },
       currentType: "",
-      tableData: [
-        {
-          id: "12987122",
-          name:
-            "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-          amount1: "234",
-          amount2: "3.2",
-          amount3: 3560.0
-        },
-        {
-          id: "12987123",
-          name:
-            "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-          amount1: "165",
-          amount2: "4.43",
-          amount3: 12
-        },
-        {
-          id: "12987124",
-          name:
-            "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-          amount1: "324",
-          amount2: "1.9",
-          amount3: 9
-        },
-        {
-          id: "12987125",
-          name:
-            "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-          amount1: "621",
-          amount2: "2.2",
-          amount3: 17
-        },
-        {
-          id: "12987126",
-          name:
-            "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-          amount1: "539",
-          amount2: "4.1",
-          amount3: 15
-        }
-      ],
+      tableData: [],
       ruleForm: {
         name: "1",
         name1: "2",
@@ -181,6 +140,9 @@ export default {
             key: "name1"
           }
         ]
+      },
+      params: {
+        id: 0
       }
     };
   },
@@ -204,6 +166,7 @@ export default {
   },
   mounted() {
     this.currentType = "reject";
+    this.getHardDetail()
   },
   methods: {
     getSummaries(param) {
@@ -211,33 +174,17 @@ export default {
       const sums = [];
       sums[0] = "累计金额（元）";
       sums[3] = "3560.0";
-      // columns.forEach((column, index) => {
-      //   if (index === 0) {
-      //     sums[index] = "总价";
-      //     return;
-      //   }
-      //   const values = data.map(item => Number(item[column.property]));
-      //   if (!values.every(value => isNaN(value))) {
-      //     sums[index] = values.reduce((prev, curr) => {
-      //       const value = Number(curr);
-      //       if (!isNaN(value)) {
-      //         return prev + curr;
-      //       } else {
-      //         return prev;
-      //       }
-      //     }, 0);
-      //     sums[index] += " 元";
-      //   } else {
-      //     sums[index] = "N/A";
-      //   }
-      // });
-
       return sums;
     },
     arraySpanMethod({ row, column, rowIndex, columnIndex }) {
       if (columnIndex === 4) {
         return [this.tableData.length, 1];
       }
+    },
+    getHardDetail() {
+      api.hardwareDetail(this.params).then(res => {
+        this.tableData = res.object.infoVOList
+      })
     }
   }
 };

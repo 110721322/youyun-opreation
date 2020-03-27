@@ -25,6 +25,8 @@
           :row-key="'id'"
           :default-expand-all="false"
           :hide-edit-area="configData.hideEditArea"
+          :params="params"
+          :api-service="api"
           @remove="onClick_remove"
           @edit="onClick_edit"
         ></BaseCrud>
@@ -37,6 +39,7 @@ import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { SEARCH_CONFIG } from "../formConfig/adPutListSearch";
 import { TABLE_CONFIG } from "../tableConfig/adPutListConfig";
+import api from "@/api/api_agent.js"
 
 export default {
   name: "Theme",
@@ -48,16 +51,29 @@ export default {
       configData: TABLE_CONFIG,
       fromConfigData: {},
       testData: [],
-      direction: "rtl"
+      direction: "rtl",
+      params: {
+        "advertType": 0,
+        "distributeType": 0,
+        "operationId": 0,
+        "status": 0
+      },
+      api: api.putList
     };
   },
   mounted() {
-    this.getTableData();
+    // this.getTableData();
   },
   methods: {
-    search() {
+    search($ruleForm) {
       // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
+      console.log($ruleForm);
+      this.params = {
+        "advertType": $ruleForm.advertType || 0,
+        "distributeType": $ruleForm.distributeType || 0,
+        "operationId": $ruleForm.operationId || 0,
+        "status": $ruleForm.status || 0
+      }
     },
     getTableData() {
       this.testData = [
@@ -85,16 +101,20 @@ export default {
         }
       ];
     },
-    onClick_remove() {
+    onClick_remove(row) {
       this.$confirm("确认删除该广告投放吗", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
       })
         .then(() => {
-          this.$message({
-            type: "success",
-            message: "删除成功!"
-          });
+          api.advertDelete({
+            id: row.id
+          }).then(res => {
+            this.$message({
+              type: "success",
+              message: "删除成功!"
+            });
+          })
         })
         .catch(() => {
           this.$message({

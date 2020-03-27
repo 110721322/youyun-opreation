@@ -30,6 +30,8 @@
           :row-key="'id'"
           :default-expand-all="false"
           :hide-edit-area="configData.hideEditArea"
+          :params="params"
+          :api-service="api"
           @remove="onClick_remove"
           @edit="onClick_edit"
         ></BaseCrud>
@@ -42,6 +44,7 @@ import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { SEARCH_CONFIG } from "../formConfig/platformAdListSearch";
 import { TABLE_CONFIG } from "../tableConfig/platformAdListConfig";
+import api from "@/api/api_agent.js"
 
 export default {
   name: "Theme",
@@ -53,16 +56,21 @@ export default {
       configData: TABLE_CONFIG,
       fromConfigData: {},
       testData: [],
-      direction: "rtl"
+      direction: "rtl",
+      params: {
+        "advertType": 144
+      },
+      api: api.advertList
     };
   },
   mounted() {
-    this.getTableData();
+    // this.getTableData();
   },
   methods: {
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
+    search($ruleForm) {
+      this.params = {
+        advertType: $ruleForm.area
+      }
     },
     getTableData() {
       this.testData = [
@@ -90,16 +98,20 @@ export default {
         }
       ];
     },
-    onClick_remove() {
+    onClick_remove(row) {
       this.$confirm("确认删除该广告吗", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
       })
         .then(() => {
-          this.$message({
-            type: "success",
-            message: "删除成功!"
-          });
+          api.advertDelete({
+            id: row.id
+          }).then(res => {
+            this.$message({
+              type: "success",
+              message: "删除成功!"
+            });
+          })
         })
         .catch(() => {
           this.$message({
@@ -108,8 +120,13 @@ export default {
           });
         });
     },
-    onClick_edit() {
-      this.$router.push({ path: "/agent/adManage/platformAdList/detail" });
+    onClick_edit(row) {
+      this.$router.push({
+        path: "/agent/adManage/platformAdList/detail",
+        query: {
+          id: row.id
+        }
+      });
     },
     onClick_addAd() {
       this.$router.push({ path: "/agent/adManage/platformAdList/detail" });

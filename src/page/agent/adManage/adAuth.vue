@@ -19,6 +19,8 @@
         :row-key="'id'"
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
+        :params="params"
+        :api-service="api"
         @editAuth="handleEditAuth"
       ></BaseCrud>
     </div>
@@ -28,6 +30,7 @@
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
         label-width="130px"
+        @confirm="confirm"
         @cancel="cancel"
       ></Form>
     </el-drawer>
@@ -37,7 +40,7 @@
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import Form from "@/components/form/index.vue";
-
+import api from "@/api/api_agent.js"
 import { SEARCH_CONFIG } from "../formConfig/adAuthSearch";
 import { FORM_CONFIG } from "../formConfig/adAuthForm";
 import { TABLE_CONFIG } from "../tableConfig/adAuthConfig";
@@ -53,7 +56,16 @@ export default {
       testData: [],
       direction: "rtl",
       searchHeight: "260",
-      drawer: false
+      drawer: false,
+      params: {
+        "agentName": "",
+        "agentNo": "",
+        "cityCode": "",
+        "operationId": 0,
+        "privilege": 0,
+        "provinceCode": ""
+      },
+      api: api.advertPrivilege
     };
   },
   mounted() {
@@ -64,12 +76,31 @@ export default {
       this.drawer = true;
       this.fromConfigData = FORM_CONFIG.formData;
     },
-    cancel(done) {
-      done();
+    confirm($ruleForm) {
+      api.advertPrivilegeUpdate({
+        "agentNo": "",
+        "privilegeList": $ruleForm.baseData
+      }).then(res => {
+        this.drawer = false;
+      })
     },
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
+    cancel() {
+      this.drawer = false;
+    },
+    search($ruleForm) {
+      this.params = {
+        "agentName": "",
+        "agentNo": "",
+        "cityCode": "",
+        "operationId": $ruleForm.operationId,
+        "privilege": $ruleForm.privilege,
+        "provinceCode": ""
+      }
+      this.params[$ruleForm.inputSelect] = $ruleForm.inputForm
+      if ($ruleForm.area) {
+        this.params.cityCode = $ruleForm.area[1];
+        this.params.provinceCode = $ruleForm.area[0];
+      }
     },
     getTableData() {
       this.testData = [
