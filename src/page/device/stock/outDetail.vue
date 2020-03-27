@@ -1,7 +1,7 @@
 <template>
   <div class="main_page">
     <div class="tab_head">
-      <span class="title">任务统计详情</span>
+      <span class="title">发货信息</span>
       <el-menu
         :default-active="activeIndex"
         class="el-menu"
@@ -48,6 +48,9 @@
           </div>
           <div class="right_box">
             <BaseCrud
+              ref="table"
+              :params="params"
+              :api-service="api"
               :grid-config="tableConfigData.gridConfig"
               :grid-btn-config="tableConfigData.gridBtnConfig"
               :grid-data="testData"
@@ -69,6 +72,7 @@
   </div>
 </template>
 <script>
+import api from "@/api/api_device";
 import detailMode from "@/components/detailMode/detailMode2.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { OUTSHOP_CONFIG } from "./../tableConfig/outShopConfig";
@@ -187,7 +191,14 @@ export default {
           reason: "银行卡账号错误，服务商无法联系",
           edit: false
         }
-      ]
+      ],
+      params: {
+        currentPage: 0,
+        deviceIdentifier: "",
+        pageSize: 1,
+        detailIdList: []
+      },
+      api: api.queryOutputPage
     };
   },
   mounted() {},
@@ -294,7 +305,7 @@ export default {
 .device_list {
   margin-top: 20px;
   height: 392px;
-  overflow: scroll;
+  overflow: auto;
 }
 .device_item {
   width: 100%;

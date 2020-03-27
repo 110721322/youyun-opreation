@@ -2,22 +2,22 @@ export const WXDIRECTLIST_CONFIG = {
   gridConfig: [
     {
       label: '商户名称',
-      prop: [{ key: 'merchantName' }, { key: 'id', label: 'ID:' }],
+      prop: [{ key: 'merchantName' }, { key: 'merchantNo', label: 'ID:' }],
       width: '150px'
     },
     {
       label: '入件时间',
-      prop: 'time',
+      prop: 'createTime',
       width: '150px'
     },
     {
       label: '所属运营',
-      prop: 'oper',
+      prop: 'operationUserName',
       width: '150px'
     },
     {
       label: '状态',
-      prop: 'status',
+      prop: 'channel',
       width: '150px'
     }
   ],
@@ -46,38 +46,38 @@ export const WXDIRECTLIST_CONFIG = {
       {
         name: '预审核',
         emitName: 'preApprove',
-        type: 'text',
-        isShow: ($item) => {
-          if ($item.showPreApprove) {
-            return true;
-          } else {
-            return false
-          }
-        }
+        type: 'text'
+        // isShow: ($item) => {
+        //   if ($item.showPreApprove) {
+        //     return true;
+        //   } else {
+        //     return false
+        //   }
+        // }
       },
       {
         name: '通过',
         emitName: 'pass',
-        type: 'text',
-        isShow: ($item) => {
-          if ($item.showPass) {
-            return true;
-          } else {
-            return false
-          }
-        }
+        type: 'text'
+        // isShow: ($item) => {
+        //   if ($item.showPass) {
+        //     return true;
+        //   } else {
+        //     return false
+        //   }
+        // }
       },
       {
         name: '驳回',
         emitName: 'reject',
-        type: 'text',
-        isShow: ($item) => {
-          if ($item.showReject) {
-            return true;
-          } else {
-            return false
-          }
-        }
+        type: 'text'
+        // isShow: ($item) => {
+        //   if ($item.showReject) {
+        //     return true;
+        //   } else {
+        //     return false
+        //   }
+        // }
       },
       {
         name: '审核记录',

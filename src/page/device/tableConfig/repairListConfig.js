@@ -2,42 +2,42 @@ export const REPAIRLIST_CONFIG = {
   gridConfig: [
     {
       label: '单号',
-      prop: 'type',
+      prop: 'orderNo',
       width: '150px'
     },
     {
       label: '设备型号',
-      prop: 'type',
+      prop: 'deviceModel',
       width: '150px'
     },
     {
       label: '所属服务商',
-      prop: [{ key: 'taskName' }, { key: 'id', label: 'ID:' }],
+      prop: [{ key: 'agentName' }, { key: 'agentNo', label: 'ID:' }],
       width: '150px'
     },
     {
       label: '所属运营',
-      prop: 'taskName',
+      prop: 'operationName',
       width: '150px'
     },
     {
       label: '返修原因',
-      prop: 'time',
+      prop: 'maintainReason',
       width: '150px'
     },
     {
       label: '照片',
-      prop: 'time',
+      prop: 'img',
       width: '150px'
     },
     {
       label: '提交时间',
-      prop: 'time',
+      prop: 'createTime',
       width: '150px'
     },
     {
       label: '状态',
-      prop: 'time',
+      prop: 'status',
       width: '150px'
     }
   ],

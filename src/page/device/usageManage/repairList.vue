@@ -14,6 +14,9 @@
 
       <div class="table_box">
         <BaseCrud
+          ref="table"
+          :params="params"
+          :api-service="api"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
           :grid-data="testData"
@@ -29,6 +32,7 @@
   </div>
 </template>
 <script>
+import api from "@/api/api_device";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 
@@ -46,65 +50,34 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl"
+      direction: "rtl",
+      params: {
+        agentNo: "猪豆王g豆哈试",
+        currentPage: 0,
+        deviceId: 13579,
+        operationId: 63301,
+        orderNo: "小拉哈丽哈哈小试",
+        pageSize: 20,
+        status: 543,
+        beginTime: this.$g.utils.getToday(),
+        endTime: this.$g.utils.getToday()
+      },
+      api: api.deviceMaintainQueryByPage
     };
   },
-  mounted() {
-    this.getTableData();
-  },
+  mounted() {},
   methods: {
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
-    },
-    getTableData() {
-      this.testData = [
-        {
-          type: "日常任务",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          reason: "银行卡账号错误，服务商无法联系",
-          deviceList: [
-            {
-              name: "蜻蜓F4",
-              value: "10"
-            },
-            {
-              name: "青蛙pro",
-              value: "20"
-            }
-          ]
-        },
-        {
-          id: 2,
-          type: "日常任务",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系",
-          deviceList: [
-            {
-              name: "蜻蜓F4",
-              value: "10"
-            },
-            {
-              name: "青蛙pro",
-              value: "20"
-            }
-          ]
-        }
-      ];
+    search($ruleForm) {
+      console.log($ruleForm);
+      const params = {
+        beginTime: $ruleForm.date ? $ruleForm.date[0] : null,
+        endTime: $ruleForm.date ? $ruleForm.date[1] : null,
+        deviceId: $ruleForm.deviceId,
+        operationId: $ruleForm.operationId,
+        status: $ruleForm.status
+      };
+      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      this.params = params;
     },
     selectionChange($val) {
       // eslint-disable-next-line no-console

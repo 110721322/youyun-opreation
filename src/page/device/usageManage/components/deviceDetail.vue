@@ -9,6 +9,9 @@
 
     <div class="table_box">
       <BaseCrud
+        ref="table"
+        :params="params"
+        :api-service="api"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
         :grid-data="testData"
@@ -32,6 +35,7 @@
   </div>
 </template>
 <script>
+import api from "@/api/api_device";
 import iconRuku from "@/assets/img/ruku.png";
 import iconChuku from "@/assets/img/chuku.png";
 import iconBingMerchant from "@/assets/img/bingMerchant.png";
@@ -56,16 +60,30 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl"
+      direction: "rtl",
+      params: {
+        agentName: "",
+        beginDate: this.$g.utils.getToday(),
+        deviceId: 4199,
+        deviceIdentifier: "g拉哈侠",
+        endDate: this.$g.utils.getToday(),
+        merchantName: "72测豆8g2美"
+      },
+      api: api.queryDetail
     };
   },
-  mounted() {
-    this.getTableData();
-  },
+  mounted() {},
   methods: {
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
+    search($ruleForm) {
+      console.log($ruleForm);
+      const params = {
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
+        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        operateUserNo: $ruleForm.operateUserNo,
+        status: $ruleForm.status
+      };
+      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      this.params = params;
     },
     getTableData() {
       this.testData = [

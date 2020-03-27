@@ -16,11 +16,11 @@ export const SEARCH_CONFIG = {
       options: [
         {
           label: '服务商',
-          value: 'id'
+          value: 'agentName'
         },
         {
           label: '服务商ID',
-          value: 'name'
+          value: 'agentNo'
         }
       ],
       labelWidth: '100px'
@@ -28,7 +28,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '大区',
-      key: 'region',
+      key: 'regionCode',
       style: 'width:294px',
       options: [
         {
@@ -48,8 +48,9 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '设备型号',
-      key: 'type',
+      key: 'deviceId',
       style: 'width:294px',
+      labelWidth: '185px',
       options: [
         {
           label: '川菜',
@@ -68,8 +69,9 @@ export const SEARCH_CONFIG = {
     {
       type: 8,
       label: '地区',
-      key: 'area',
+      key: 'city',
       style: 'width:294px',
+      class: "clear_both",
       options: areaData
     }
   ]

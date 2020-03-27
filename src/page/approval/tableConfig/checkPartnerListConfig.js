@@ -7,22 +7,22 @@ export const CHECKPARTNERLIST_CONFIG = {
     },
     {
       label: '合伙人类型',
-      prop: 'type',
+      prop: 'jobType',
       width: '150px'
     },
     {
       label: '所属服务商',
-      prop: [{ key: 'serviceProvider' }, { key: 'id', label: 'ID:' }],
+      prop: [{ key: 'agentName' }, { key: 'agentNo', label: 'ID:' }],
       width: '150px'
     },
     {
       label: '创建时间',
-      prop: 'time',
+      prop: 'createTime',
       width: '150px'
     },
     {
       label: '所属运营',
-      prop: 'oper',
+      prop: 'operateUserNo',
       width: '150px'
     },
     {

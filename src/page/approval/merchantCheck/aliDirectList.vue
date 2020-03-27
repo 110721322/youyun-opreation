@@ -11,6 +11,9 @@
 
       <div class="table_box">
         <BaseCrud
+          ref="table"
+          :params="params"
+          :api-service="api"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
           :grid-data="testData"
@@ -37,12 +40,14 @@
           :show-foot-btn="fromConfigData.showFootBtn"
           label-width="130px"
           @cancel="cancel"
+          @confirm="confirm"
         ></Form>
       </el-drawer>
     </div>
   </div>
 </template>
 <script>
+import api from "@/api/api_merchantAudit";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import Form from "@/components/form/index.vue";
@@ -62,15 +67,61 @@ export default {
       testData: [],
       direction: "rtl",
       searchHeight: "260",
-      drawer: false
+      drawer: false,
+      formStatus: "",
+      params: {
+        beginDate: this.$g.utils.getToday(),
+        endDate: this.$g.utils.getToday(),
+        agentNo: "rn4",
+        agentName: "5ff",
+        pageSize: 0,
+        channelStatus: "u22",
+        operationUserNo: "mef",
+        currentPage: 0,
+        merchantNo: "iy7",
+        merchantName: "y6a"
+      },
+      api: api.queryAlipayAuditPageByCondition
     };
   },
-  mounted() {
-    this.getTableData();
-  },
+  mounted() {},
   methods: {
-    cancel(done) {
-      done();
+    confirm($data) {
+      console.log($data);
+      if (this.formStatus === "reject") {
+        api
+          .merchantUpdateAuditStatusOfReject({
+            merchantNo: "",
+            reason: $data["reason"],
+            channelCode: this.channelCode
+          })
+          .then(res => {
+            this.$message("已驳回");
+            this.drawer = false;
+          })
+          .catch(err => {
+            this.$message(err);
+          });
+      }
+      if (this.formStatus === "pass") {
+        api
+          .updateOthersInfo({
+            merchantNo: $data["merchantNo"],
+            channelCode: $data["channelCode"],
+            rate: $data["rate"],
+            appid: $data["appid"],
+            pid: $data["pid"]
+          })
+          .then(res => {
+            this.$message("已通过");
+          })
+          .catch(err => {
+            this.$message(err);
+          });
+      }
+    },
+    cancel() {
+      this.drawer = false;
     },
     handleDetail() {
       this.$router.push({
@@ -89,42 +140,24 @@ export default {
     },
     handlePass(data) {
       this.drawer = true;
+      this.formStatus = "pass";
       this.fromConfigData = FORM_CONFIG.passData;
     },
     handleReject() {
       this.drawer = true;
+      this.formStatus = "reject";
       this.fromConfigData = FORM_CONFIG.rejectData;
     },
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
-    },
-    getTableData() {
-      this.testData = [
-        {
-          merchantName: "紫菜网络科技有限公司,ID: 13293127119831938",
-          oper: "AA",
-          status: "待签约",
-          time: "2019/9/23 16:23:22",
-          showPreApprove: true
-        },
-        {
-          merchantName: "紫菜网络科技有限公司,ID: 13293127119831938",
-          oper: "AA",
-          status: "签约审核中",
-          time: "2019/9/23 16:23:22",
-          showDetail: true,
-          showPass: true,
-          showReject: true
-        },
-        {
-          merchantName: "紫菜网络科技有限公司,ID: 13293127119831938",
-          oper: "AA",
-          status: "签约审核中",
-          time: "2019/9/23 16:23:22",
-          showDetail: true
-        }
-      ];
+    search($ruleForm) {
+      console.log($ruleForm);
+      const params = {
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
+        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        channelStatus: $ruleForm.channelStatus,
+        operationUserNo: $ruleForm.operationUserNo
+      };
+      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      this.params = params;
     }
   }
 };

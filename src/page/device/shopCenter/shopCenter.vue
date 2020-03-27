@@ -12,6 +12,9 @@
           <el-button class="btn" type="primary" @click="onClick_addDevice">添加出售设备</el-button>
         </div>
         <BaseCrud
+          ref="table"
+          :params="params"
+          :api-service="api"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
           :grid-data="testData"
@@ -31,6 +34,7 @@
   </div>
 </template>
 <script>
+import api from "@/api/api_device";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 
@@ -47,45 +51,26 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl"
+      direction: "rtl",
+      params: {
+        currentPage: 0,
+        deviceId: 69528,
+        deviceType: 356,
+        pageSize: 20
+      },
+      api: api.deviceMallQueryByPage
     };
   },
-  mounted() {
-    this.getTableData();
-  },
+  mounted() {},
   methods: {
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
-    },
-    getTableData() {
-      this.testData = [
-        {
-          type: "日常任务",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          reason: "银行卡账号错误，服务商无法联系"
-        },
-        {
-          id: 2,
-          type: "日常任务",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系"
-        }
-      ];
+    search($ruleForm) {
+      console.log($ruleForm);
+      const params = {
+        deviceType: $ruleForm.deviceType,
+        deviceId: $ruleForm.deviceId
+      };
+      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      this.params = params;
     },
     selectionChange($val) {
       // eslint-disable-next-line no-console

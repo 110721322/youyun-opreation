@@ -8,7 +8,7 @@ export const FORM_CONFIG = {
       {
         type: 1,
         label: '信息类型',
-        key: 'messType',
+        key: 'banField',
         initVal: '0',
         options: [
           {
@@ -25,7 +25,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '内容',
-        key: 'name',
+        key: 'content',
         initVal: 'pdd',
         rules: setRules('内容').isRequired.get
       },

@@ -3,12 +3,15 @@
     <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
     <div v-else>
       <div class="tab_head">
-        <span class="title">商户资料风控</span>
+        <span class="title">平台商户资料风控</span>
       </div>
       <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
 
       <div class="table_box">
         <BaseCrud
+          ref="table"
+          :params="params"
+          :api-service="api"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
           :grid-data="testData"
@@ -29,6 +32,7 @@
   </div>
 </template>
 <script>
+import api from "@/api/api_risk";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 
@@ -46,15 +50,25 @@ export default {
       testData: [],
       direction: "rtl",
       searchHeight: "260",
-      drawer: false
+      drawer: false,
+      params: {
+        beginDate: this.$g.utils.getToday(),
+        endDate: this.$g.utils.getToday(),
+        merchantNo: "",
+        merchantName: "",
+        channelMerchantNo: "",
+        operateUserNo: "",
+        status: "",
+        currentPage: "",
+        pageSize: ""
+      },
+      api: api.midPlatformQueryByPage
     };
   },
-  mounted() {
-    this.getTableData();
-  },
+  mounted() {},
   methods: {
-    cancel(done) {
-      done();
+    cancel() {
+      this.drawer = false;
     },
     handleDetail() {
       this.$router.push({
@@ -66,55 +80,16 @@ export default {
         path: "/risk/riskAppeal/merchantRiskList/detail"
       });
     },
-    handlePass(data) {
-      this.$confirm("确认通过吗?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消"
-      })
-        .then(() => {
-          this.$message({
-            type: "success",
-            message: "成功通过!"
-          });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消"
-          });
-        });
-    },
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
-    },
-    getTableData() {
-      this.testData = [
-        {
-          service: "紫菜网络科技有限公司",
-          merchant: "AA",
-          status: "待签约",
-          time: "2019/9/23 16:23:22",
-          oper: "FFF",
-          showChecking: true
-        },
-        {
-          service: "紫菜网络科技有限公司",
-          merchant: "AA",
-          status: "待签约",
-          time: "2019/9/23 16:23:22",
-          oper: "FFF",
-          showDetail: true
-        },
-        {
-          service: "紫菜网络科技有限公司",
-          merchant: "AA",
-          status: "待签约",
-          time: "2019/9/23 16:23:22",
-          oper: "FFF",
-          showDetail: true
-        }
-      ];
+    search($ruleForm) {
+      console.log($ruleForm);
+      const params = {
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
+        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        operateUserNo: $ruleForm.operateUserNo,
+        status: $ruleForm.status
+      };
+      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      this.params = params;
     }
   }
 };

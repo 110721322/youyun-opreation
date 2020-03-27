@@ -14,6 +14,9 @@
           <el-button class="btn" type="primary" @click="onClick_addRiskMessage">新增风控信息</el-button>
         </div>
         <BaseCrud
+          ref="table"
+          :params="params"
+          :api-service="api"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
           :grid-data="testData"
@@ -39,12 +42,14 @@
           :foot-btn-label="'确定'"
           label-width="130px"
           @cancel="onClick_cancel"
+          @confirm="confirm"
         ></Form>
       </el-drawer>
     </div>
   </div>
 </template>
 <script>
+import api from "@/api/api_risk";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import Form from "@/components/form/index.vue";
@@ -64,12 +69,23 @@ export default {
       testData: [],
       drawer: false,
       direction: "rtl",
-      selectData: []
+      selectData: [],
+      params: {
+        beginDate: this.$g.utils.getToday(),
+        endDate: this.$g.utils.getToday(),
+        agentNo: "",
+        partnerName: "",
+        mobile: "",
+        contractStatus: "",
+        pageSize: 1,
+        currentPage: 1,
+        operateUserNo: "",
+        jobType: ""
+      },
+      api: api.merchantBanListQueryByPage
     };
   },
-  mounted() {
-    this.getTableData();
-  },
+  mounted() {},
   methods: {
     selectionChange($val) {
       this.selectData = $val;
@@ -82,38 +98,22 @@ export default {
       // eslint-disable-next-line no-console
       console.log(this.ruleForm);
     },
-    getTableData() {
-      this.testData = [
-        {
-          service: "日常任务",
-          serviceid: "商户结算失败",
-          superService: "4",
-          superid: "提醒",
-          merchantNum: "XXXX店铺",
-          oper: "20:00:23",
-          time: "20:00:23"
-        },
-        {
-          service: "日常任务",
-          serviceid: "商户结算失败",
-          superService: "4",
-          superid: "提醒",
-          merchantNum: "XXXX店铺",
-          oper: "20:00:23",
-          time: "20:00:23"
-        }
-      ];
-    },
     onClick_remove() {
       this.$confirm("确定将该商户移出黑名单吗?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
       })
         .then(() => {
-          this.$message({
-            type: "success",
-            message: "移出成功!"
-          });
+          api
+            .deleteById({
+              id: 1
+            })
+            .then(res => {
+              this.$message("移出成功");
+            })
+            .catch(err => {
+              this.$message(err);
+            });
         })
         .catch(() => {
           this.$message({
@@ -128,10 +128,16 @@ export default {
         cancelButtonText: "取消"
       })
         .then(() => {
-          this.$message({
-            type: "success",
-            message: "移入成功!"
-          });
+          api
+            .updateOfBlack({
+              id: 1
+            })
+            .then(res => {
+              this.$message("移入成功!");
+            })
+            .catch(err => {
+              this.$message(err);
+            });
         })
         .catch(() => {
           this.$message({
@@ -144,6 +150,20 @@ export default {
       this.$router.push({
         path: "/risk/incomingRisk/merchantDataIncomingRisk/detail"
       });
+    },
+    confirm($data) {
+      api
+        .merchantBanListAdd({
+          banField: $data["banField"],
+          content: $data["content"],
+          type: $data["type"]
+        })
+        .then(res => {
+          this.$message("加入成功");
+        })
+        .catch(err => {
+          this.$message(err);
+        });
     },
     onClick_cancel() {
       this.drawer = false;

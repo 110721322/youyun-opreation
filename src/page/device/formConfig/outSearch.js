@@ -15,11 +15,11 @@ export const SEARCH_CONFIG = {
       options: [
         {
           label: '购买服务商',
-          value: 'buyService'
+          value: 'agentNo'
         },
         {
           label: '订单号',
-          value: 'orderId'
+          value: 'outputNo'
         }
       ],
       labelWidth: '100px'
@@ -27,7 +27,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '设备型号',
-      key: 'type',
+      key: 'deviceId',
       style: 'width:294px',
       options: [
         {
@@ -68,7 +68,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '销售人员',
-      key: 'saleman',
+      key: 'saleUserId',
       style: 'width:294px',
       class: "clear_both",
       options: [
@@ -89,7 +89,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '出库人员',
-      key: 'outman',
+      key: 'outputUserId',
       style: 'width:294px',
       labelWidth: '185px',
       options: [

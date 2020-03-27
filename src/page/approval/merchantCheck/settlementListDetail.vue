@@ -14,18 +14,10 @@
           :closable="false"
           show-icon
         ></el-alert>
-        <detailMode
-          :img-width="4"
-          :rule-form="ruleForm.beforeData"
-          :config-data="configData.beforeData"
-        ></detailMode>
-        <detailMode
-          :img-width="4"
-          :rule-form="ruleForm.afterData"
-          :config-data="configData.afterData"
-        ></detailMode>
+        <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.beforeData"></detailMode>
+        <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.afterData"></detailMode>
         <div v-if="showComponents.showOperBtns" class="btn-box">
-          <div class="btn_pass">资料已检查并提交签约</div>
+          <div class="btn_pass" @click="onClick_pass">资料已检查并提交签约</div>
           <div class="btn-reject" @click="onClick_reject">驳回</div>
         </div>
       </div>
@@ -37,11 +29,13 @@
         :show-foot-btn="fromConfigData.showFootBtn"
         label-width="130px"
         @cancel="cancel"
+        @confirm="confirm"
       ></Form>
     </el-drawer>
   </div>
 </template>
 <script>
+import api from "@/api/api_merchantAudit";
 import detailMode from "@/components/detailMode/detailMode2.vue";
 import Form from "@/components/form/index.vue";
 import { FORM_CONFIG } from "./../formConfig/indirectDetailConfig";
@@ -103,52 +97,52 @@ export default {
           items: [
             {
               name: "结算人银行卡",
-              key: "pic",
+              key: "settlePersonBankCard",
               type: "image"
             },
             {
               name: "结算人身份证正面",
-              key: "pic2",
+              key: "settlePersonIdCardPortraitImg",
               type: "image"
             },
             {
               name: "结算人身份证反面",
-              key: "pic3",
+              key: "settlePersonIdCardEmblemImg",
               type: "image"
             },
             {
               name: "非法人授权书",
-              key: "pic4",
+              key: "nolegalAuthImg",
               type: "image"
             },
             {
               name: "结算卡类型",
-              key: "type"
+              key: "accountType"
             },
             {
-              name: "开户名：",
-              key: "name"
+              name: "开户名",
+              key: "openAccountName"
             },
             {
               name: "结算人身份证号",
-              key: "idcard"
+              key: "settlePersonIdCard"
             },
             {
               name: "银行卡号",
-              key: "bankid"
+              key: "bankCardNo"
             },
 
             {
               name: "开户支行地区",
-              key: "address"
+              key: "bankArea"
             },
             {
               name: "开户支行",
-              key: "bank"
+              key: "branchName"
             },
             {
               name: "银行预留手机号",
-              key: "phone"
+              key: "bankMobile"
             }
           ]
         },
@@ -157,53 +151,53 @@ export default {
           items: [
             {
               name: "结算人银行卡",
-              key: "pic",
+              key: "settlePersonBankCard",
               type: "image"
             },
             {
               name: "结算人身份证正面",
-              key: "pic2",
+              key: "settlePersonIdCardPortraitImg",
               type: "image"
             },
             {
               name: "结算人身份证反面",
-              key: "pic3",
+              key: "settlePersonIdCardEmblemImg",
               type: "image"
             },
             {
               name: "非法人授权书",
-              key: "pic4",
+              key: "nolegalAuthImg",
               type: "image"
             },
             {
               name: "结算卡类型",
-              key: "type"
+              key: "accountType"
             },
             {
               name: "开户名",
-              key: "name"
+              key: "openAccountName"
             },
             {
               name: "结算人身份证号",
-              key: "idcard"
+              key: "settlePersonIdCard"
             },
             {
               name: "银行卡号",
-              key: "bankid"
+              key: "bankCardNo"
             },
 
             {
               name: "开户支行地区",
-              key: "address",
-              hasIconTime: true
+              key: "bankArea"
             },
             {
               name: "开户支行",
-              key: "bank"
+              key: "branchName",
+              hasIconTime: true
             },
             {
               name: "银行预留手机号",
-              key: "phone"
+              key: "bankMobile"
             }
           ]
         }
@@ -244,14 +238,12 @@ export default {
     currentType: function($val) {
       switch ($val) {
         case "approval":
-          this.$set(this.showComponents, "showOperBtns", true);
-          this.$set(this.showComponents, "showRejectTitle", false);
+          this.showComponents.showOperBtns = true;
           break;
         case "checking":
           break;
         case "reject":
-          this.$set(this.showComponents, "showOperBtns", false);
-          this.$set(this.showComponents, "showRejectTitle", true);
+          this.showComponents.showRejectTitle = true;
           break;
 
         default:
@@ -261,44 +253,53 @@ export default {
   },
   mounted() {
     this.currentType = "approval";
+    this.getDetailByMerchantNo();
   },
   methods: {
-    cancel(done) {
-      done();
+    getDetailByMerchantNo() {
+      api
+        .getDetailByMerchantNo({ merchantNo: "", channelCode: "" })
+        .then(res => {
+          console.log(res);
+          this.ruleForm = res.data;
+        })
+        .catch();
+    },
+    onClick_pass() {
+      api
+        .settleCardUpdateAuditStatusOfPass({
+          merchantNo: "",
+          channelCode: this.channelCode
+        })
+        .then(res => {
+          this.$message("已通过");
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    confirm($data) {
+      console.log($data);
+      api
+        .settleCardUpdateAuditStatusOfReject({
+          merchantNo: "",
+          reason: $data["reason"],
+          channelCode: this.channelCode
+        })
+        .then(res => {
+          this.$message("已驳回");
+          this.drawer = false;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    cancel() {
+      this.drawer = false;
     },
     onClick_reject() {
       this.drawer = true;
       this.fromConfigData = FORM_CONFIG.rejectReason;
-    },
-    getTableData() {
-      this.testData = [
-        {
-          id: 0,
-          type: "设备品牌",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          reason: "银行卡账号错误，服务商无法联系"
-        },
-        {
-          id: 1,
-          type: "设备型号",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系"
-        }
-      ];
     },
     onClick_edit($item) {
       $item.edit = true;

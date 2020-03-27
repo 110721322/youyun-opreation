@@ -3,7 +3,7 @@ export const DEVICEDETAIL_CONFIG = {
   gridConfig: [
     {
       label: '设备型号',
-      prop: 'type',
+      prop: 'deviceModel',
       width: '150px',
       hasImg: true,
       imgUrl: icon,
@@ -19,27 +19,27 @@ export const DEVICEDETAIL_CONFIG = {
 
     {
       label: '设备标识',
-      prop: 'logo',
+      prop: 'deviceIdentifier',
       width: '150px'
     },
     {
       label: '所属商户',
-      prop: 'merchantProvider',
+      prop: 'merchantName',
       width: '150px'
     },
     {
       label: '所属服务商',
-      prop: 'serviceProvider',
+      prop: 'agentName',
       width: '150px'
     },
     {
       label: '订单数量（笔）',
-      prop: 'orderNum',
+      prop: 'tradeCount',
       width: '150px'
     },
     {
       label: '交易额（元）',
-      prop: 'amount',
+      prop: 'tradeAmount',
       width: '150px'
     }
   ],

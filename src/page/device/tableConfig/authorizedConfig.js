@@ -2,22 +2,22 @@ export const AUTHORIZED_CONFIG = {
   gridConfig: [
     {
       label: '设备型号',
-      prop: 'model',
+      prop: 'deviceModel',
       width: '150px'
     },
     {
       label: '设备标识',
-      prop: 'Identity',
+      prop: 'deviceIdentifier',
       width: '150px'
     },
     {
       label: '授权码',
-      prop: 'auth',
+      prop: 'authorizationCode',
       width: '250px',
       isEdit: true
     },
     {
-      label: '订单状态',
+      label: '状态',
       prop: 'status',
       width: '150px'
     }

@@ -2,23 +2,22 @@ export const LERISKLIST_CONFIG = {
   gridConfig: [
     {
       label: '服务商',
-      prop: 'service',
-      // prop: [{ key: 'service' }, { key: 'serviceid', label: "ID:" }],
+      prop: [{ key: 'agentName' }, { key: 'agentNo', label: "ID:" }],
       width: '150px'
     },
     {
       label: '商户名称',
-      prop: 'merchant',
+      prop: 'merchantName',
       width: '150px'
     },
     {
       label: '提交时间',
-      prop: 'time',
+      prop: 'createTime',
       width: '150px'
     },
     {
       label: '所属运营',
-      prop: 'oper',
+      prop: 'operateUserName',
       width: '150px'
     },
     {

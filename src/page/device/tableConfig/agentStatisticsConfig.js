@@ -2,37 +2,37 @@ export const AGENTSTA_CONFIG = {
   gridConfig: [
     {
       label: '服务商',
-      prop: [{ key: 'service' }, { key: 'id', label: 'ID:' }],
+      prop: [{ key: 'agentName' }, { key: 'agentNo', label: 'ID:' }],
       width: '150px'
     },
     {
       label: '设备型号',
-      prop: 'type',
+      prop: 'deviceModel',
       width: '150px'
     },
     {
       label: '购买数量（台）',
-      prop: 'buyNum',
+      prop: 'buyCount',
       width: '150px'
     },
     {
       label: '购买数量环比|同比',
-      prop: 'buyNumPerc',
+      prop: [{ key: 'buyCycleRatio', label: '环比:' }, { key: 'buyYearRatio', label: '同比:' }],
       width: '150px'
     },
     {
       label: '激活数量（台）',
-      prop: 'activeNum',
+      prop: 'activationCount',
       width: '150px'
     },
     {
       label: '激活数量环比|同比',
-      prop: 'activeNumPerc',
+      prop: [{ key: 'activationCycleRatio', label: '环比:' }, { key: 'activationYearRatio', label: '同比:' }],
       width: '150px'
     },
     {
       label: '交易金额环比|同比',
-      prop: 'amountPerc',
+      prop: [{ key: 'tradeAmountCycleRatio', label: '环比:' }, { key: 'tradeAmountYearRatio', label: '同比:' }],
       width: '150px',
       isFixed: "right"
     }

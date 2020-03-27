@@ -3,7 +3,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '设备型号',
-      key: 'type',
+      key: 'deviceId',
       style: 'width:294px',
       labelWidth: '100px',
       options: [
@@ -24,7 +24,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '设备类型',
-      key: 'name',
+      key: 'deviceType',
       style: 'width:294px',
       labelWidth: '100px', options: [
         {

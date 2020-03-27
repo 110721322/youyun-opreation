@@ -11,6 +11,9 @@
 
       <div class="table_box">
         <BaseCrud
+          ref="table"
+          :params="params"
+          :api-service="api"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
           :grid-data="testData"
@@ -31,6 +34,7 @@
   </div>
 </template>
 <script>
+import api from "@/api/api_merchantAudit";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 
@@ -46,12 +50,24 @@ export default {
       configData: CHECKSERVICELIST_CONFIG,
       testData: [],
       direction: "rtl",
-      searchHeight: "260"
+      searchHeight: "260",
+      params: {
+        beginDate: this.$g.utils.getToday(),
+        endDate: this.$g.utils.getToday(),
+        agentNo: "",
+        agentName: "",
+        personName: "",
+        personMobile: "",
+        operateUserNo: "",
+        contractStatus: "",
+        contractStatusSet: "",
+        pageSize: 1,
+        currentPage: 1
+      },
+      api: api.querySubAuditPageByCondition
     };
   },
-  mounted() {
-    this.getTableData();
-  },
+  mounted() {},
   methods: {
     handleDetail() {
       this.$router.push({
@@ -63,29 +79,16 @@ export default {
         path: "/approval/checkService/checkServiceList/detail"
       });
     },
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
-    },
-    getTableData() {
-      this.testData = [
-        {
-          serviceName: "紫菜网络科技有限公司,ID: 13293127119831938",
-          status: "驳回",
-          law: "乐刷",
-          time: "2014-02-15 16:00:23",
-          oper: "AA",
-          showDetail: true
-        },
-        {
-          serviceName: "紫菜网络科技有限公司,ID: 13293127119831938",
-          status: "驳回",
-          law: "乐刷",
-          time: "2014-02-15 16:00:23",
-          oper: "AA",
-          showPreApprove: true
-        }
-      ];
+    search($ruleForm) {
+      console.log($ruleForm);
+      const params = {
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
+        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        contractStatus: $ruleForm.contractStatus,
+        operateUserNo: $ruleForm.operateUserNo
+      };
+      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      this.params = params;
     }
   }
 };

@@ -2,12 +2,12 @@ export const RECORD_CONFIG = {
   gridConfig: [
     {
       label: '操作时间',
-      prop: 'time',
+      prop: 'createTime',
       width: '150px'
     },
     {
       label: '操作人',
-      prop: 'people',
+      prop: 'operateUserName',
       width: '150px'
     },
     {
@@ -17,7 +17,7 @@ export const RECORD_CONFIG = {
     },
     {
       label: '操作内容',
-      prop: 'content',
+      prop: 'auditStatus',
       width: '250px',
       isEdit: true
     }

@@ -15,11 +15,7 @@
           show-icon
         ></el-alert>
         <div>
-          <detailMode
-            :img-width="4"
-            :rule-form="ruleForm.baseData"
-            :config-data="configData.baseData"
-          ></detailMode>
+          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.baseData"></detailMode>
         </div>
         <div v-if="showComponents.showOperBtns" class="btn-box">
           <div class="btn_pass" @click="onClick_sign">通过</div>
@@ -35,11 +31,13 @@
         :foot-btn-label="'确定'"
         label-width="100px"
         @cancel="cancel"
+        @confirm="confirm"
       ></Form>
     </el-drawer>
   </div>
 </template>
 <script>
+import api from "@/api/api_merchantAudit";
 import detailMode from "@/components/detailMode/detailMode2.vue";
 import Form from "@/components/form/index.vue";
 import { FORM_CONFIG } from "./../formConfig/checkServiceDetailConfig";
@@ -84,22 +82,22 @@ export default {
           items: [
             {
               name: "身份证正面照",
-              key: "pic",
+              key: "idPortraitImg",
               type: "image"
             },
             {
               name: "身份证反面照",
-              key: "pic2",
+              key: "idEmblemImg",
               type: "image"
             },
             {
               name: "手持身份证照",
-              key: "pic3",
+              key: "withIdImg",
               type: "image"
             },
             {
               name: "人员类型",
-              key: "type"
+              key: "jobType"
             },
             {
               name: "合伙人姓名",
@@ -107,77 +105,47 @@ export default {
             },
             {
               name: "手机号码",
-              key: "phone"
+              key: "mobile"
             },
             {
               name: "登录密码",
-              key: "password"
+              key: "loginPassword"
             },
             {
               name: "支付宝/微信费率",
-              key: "aliwxPerc"
+              key: "aliweFeeRate"
             },
             {
               name: "云闪付费率（单笔≤1000元）",
-              key: "yunLessPerc"
+              key: "le1000"
             },
 
             {
               name: "云闪付费率（单笔＞1000元）",
-              key: "yunMorePerc"
+              key: "gt1000"
             },
             {
               name: "合伙人佣金提成",
-              key: "commissionPerc"
+              key: "kickbackPercent"
             }
           ]
         }
-      },
-      testData: [
-        {
-          id: 0,
-          type: "设备品牌",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          reason: "银行卡账号错误，服务商无法联系",
-          edit: false
-        },
-        {
-          id: 1,
-          type: "设备型号",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系",
-          edit: false
-        }
-      ]
+      }
     };
   },
   watch: {
     currentType: function($val) {
       switch ($val) {
         case "pass":
-          this.$set(this.showComponents, "showOtherEdit", true);
+          this.showComponents.showOtherEdit = true;
           break;
         case "preApproval":
-          this.$set(this.showComponents, "showOperBtns", true);
+          this.showComponents.showOperBtns = true;
           break;
         case "checking":
           break;
         case "reject":
-          this.$set(this.showComponents, "showRejectTitle", true);
+          this.showComponents.showRejectTitle = true;
           break;
 
         default:
@@ -187,57 +155,69 @@ export default {
   },
   mounted() {
     this.currentType = "preApproval";
+    this.getDetailByPartnerNo();
   },
   methods: {
-    onClick_sign() {},
-    cancel(done) {
-      done();
+    a() {},
+    getDetailByPartnerNo() {
+      api
+        .getDetailByPartnerNo({ agentPartnerNo: "" })
+        .then(res => {
+          // 数据解析
+          const expandkey = data => {
+            Object.keys(data).forEach(item => {
+              if (this.$g.utils.isObj(data[item])) {
+                Object.keys(data[item]).forEach(item1 => {
+                  data[item1] = data[item][item1];
+                  if (this.$g.utils.isObj(data[item][item1])) {
+                    Object.keys(data[item][item1]).forEach(item2 => {
+                      data[item2] = data[item][item1][item2];
+                    });
+                  }
+                });
+              }
+            });
+          };
+          expandkey(res.data);
+          console.log("expandKey");
+          console.log(res);
+          this.ruleForm = res.data;
+        })
+        .catch();
+    },
+    confirm($data) {
+      console.log($data);
+      api
+        .agentPartnerUpdateAuditStatusOfReject({
+          agentPartnerNo: "",
+          reason: $data["reason"]
+        })
+        .then(res => {
+          this.$message("已驳回");
+          this.drawer = false;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    onClick_sign() {
+      api
+        .agentPartnerUpdateAuditStatusOfPass({
+          agentPartnerNo: ""
+        })
+        .then(res => {
+          this.$message("已通过");
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    cancel() {
+      this.drawer = false;
     },
     onClick_reject() {
       this.drawer = true;
       this.fromConfigData = FORM_CONFIG.rejectReason;
-    },
-    getTableData() {
-      this.testData = [
-        {
-          id: 0,
-          type: "设备品牌",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          reason: "银行卡账号错误，服务商无法联系"
-        },
-        {
-          id: 1,
-          type: "设备型号",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系"
-        }
-      ];
-    },
-    onClick_edit($item) {
-      $item.edit = true;
-    },
-    onClick_okEdit($item) {
-      $item.edit = false;
-    },
-    onClick_cancelEdit($item) {
-      $item.edit = false;
-    },
-    getHeadClass() {
-      return "background:#EFEFEF";
     }
   }
 };

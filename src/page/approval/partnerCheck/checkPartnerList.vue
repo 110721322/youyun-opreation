@@ -11,6 +11,9 @@
 
       <div class="table_box">
         <BaseCrud
+          ref="table"
+          :params="params"
+          :api-service="api"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
           :grid-data="testData"
@@ -31,6 +34,7 @@
   </div>
 </template>
 <script>
+import api from "@/api/api_merchantAudit";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 
@@ -46,12 +50,23 @@ export default {
       configData: CHECKPARTNERLIST_CONFIG,
       testData: [],
       direction: "rtl",
-      searchHeight: "320"
+      searchHeight: "320",
+      params: {
+        beginDate: this.$g.utils.getToday(),
+        endDate: this.$g.utils.getToday(),
+        agentNo: "",
+        partnerName: "",
+        mobile: "",
+        contractStatus: "",
+        pageSize: 1,
+        currentPage: 1,
+        operateUserNo: "",
+        jobType: ""
+      },
+      api: api.queryAuditPageByCondition
     };
   },
-  mounted() {
-    this.getTableData();
-  },
+  mounted() {},
   methods: {
     handleDetail() {
       this.$router.push({
@@ -63,31 +78,16 @@ export default {
         path: "/approval/checkPartner/checkPartnerList/detail"
       });
     },
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
-    },
-    getTableData() {
-      this.testData = [
-        {
-          partnerName: "红莲12582215463",
-          type: "入件操作员",
-          serviceProvider: "紫菜网络科技有限公司,ID: 13293127119831938",
-          time: "2014-02-15 16:00:23",
-          oper: "AA",
-          status: "审核通过",
-          showDetail: true
-        },
-        {
-          partnerName: "红莲12582215463",
-          type: "入件操作员",
-          serviceProvider: "紫菜网络科技有限公司,ID: 13293127119831938",
-          time: "2014-02-15 16:00:23",
-          oper: "AA",
-          status: "审核中",
-          showPreApprove: true
-        }
-      ];
+    search($ruleForm) {
+      console.log($ruleForm);
+      const params = {
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
+        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        contractStatus: $ruleForm.contractStatus,
+        jobType: $ruleForm.jobType
+      };
+      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      this.params = params;
     }
   }
 };

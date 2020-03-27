@@ -38,7 +38,11 @@
             >
               <template slot-scope="scope">
                 <div v-if="item.isShowCheckBox">
-                  <el-checkbox v-model=" scope.row[item.prop]" @input="onInput_checkBox"></el-checkbox>
+                  <el-checkbox
+                    v-model=" scope.row[item.prop]"
+                    :disabled="!isEdit"
+                    @input="onInput_checkBox"
+                  ></el-checkbox>
                 </div>
                 <span v-else>{{ scope.row[item.prop] }}</span>
               </template>
@@ -260,7 +264,7 @@ export default {
 .device_list {
   margin-top: 20px;
   height: 392px;
-  overflow: scroll;
+  overflow: auto;
 }
 .select {
   background: rgba(236, 237, 241, 1);

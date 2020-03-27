@@ -16,11 +16,11 @@ export const SEARCH_CONFIG = {
       options: [
         {
           label: '设备标识',
-          value: 'identity'
+          value: 'deviceIdentifier'
         },
         {
           label: '所属服务商',
-          value: 'service'
+          value: 'agentName'
         }
       ],
       labelWidth: '100px'
@@ -28,7 +28,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '设备型号',
-      key: 'type',
+      key: 'deviceId',
       style: 'width:294px',
       options: [
         {

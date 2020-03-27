@@ -171,7 +171,7 @@ export default {
 .device_list {
   margin-top: 20px;
   height: 392px;
-  overflow: scroll;
+  overflow: auto;
 }
 .select {
   background: rgba(236, 237, 241, 1);

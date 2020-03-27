@@ -32,7 +32,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '其他原因',
-        key: 'name7',
+        key: 'reason',
         initVal: 'pdd',
         inputType: 'textarea'
       }

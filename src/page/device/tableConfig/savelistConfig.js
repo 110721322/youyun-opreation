@@ -2,22 +2,22 @@ export const SAVELIST_CONFIG = {
   gridConfig: [
     {
       label: '设备型号',
-      prop: 'type',
+      prop: 'deviceModel',
       width: '150px'
     },
     {
       label: '入库时间',
-      prop: 'taskName',
+      prop: 'inputTime',
       width: '150px'
     },
     {
-      label: '操作人员',
-      prop: 'time',
+      label: '入库数量（台）',
+      prop: 'count',
       width: '150px'
     },
     {
-      label: '设备标示',
-      prop: 'reason',
+      label: '操作人',
+      prop: 'nickName',
       width: '150px',
       isEdit: true
     }
@@ -70,12 +70,6 @@ export const SAVELIST_CONFIG = {
         name: '详情',
         emitName: 'detail',
         type: 'text'
-      },
-      {
-        name: '删除',
-        emitName: 'adopt',
-        type: 'text',
-        style: 'color:#F5222D'
       }
     ]
   },

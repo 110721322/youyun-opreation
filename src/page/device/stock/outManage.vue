@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div class>
     <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
     <div v-else>
       <div class="tab_head">
@@ -14,6 +14,9 @@
 
       <div class="table_box">
         <BaseCrud
+          ref="table"
+          :params="params"
+          :api-service="api"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
           :grid-data="testData"
@@ -33,9 +36,9 @@
         >
           <template v-slot="{ row }">
             <el-form label-position="left" inline class="demo-table-expand">
-              <div v-for="(item,index) in row.deviceList" :key="index">
-                <el-form-item :label="item.name + ':'">
-                  <span>{{ item.value+'台' }}</span>
+              <div v-for="(item,index) in row.infoVOList" :key="index">
+                <el-form-item :label="item.deviceModel + ':'">
+                  <span>{{ item.count+'台' }}</span>
                 </el-form-item>
               </div>
             </el-form>
@@ -50,12 +53,14 @@
           :show-foot-btn="fromConfigData.showFootBtn"
           label-width="130px"
           @cancel="cancel"
+          @confirm="confirm"
         ></Form>
       </el-drawer>
     </div>
   </div>
 </template>
 <script>
+import api from "@/api/api_device";
 import Search from "@/components/search/search.vue";
 import Form from "@/components/form/index.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
@@ -75,73 +80,57 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl"
+      direction: "rtl",
+      params: {
+        beginTime: this.$g.utils.getToday(),
+        endTime: this.$g.utils.getToday(),
+        agentNo: "",
+        currentPage: 0,
+        deviceId: "",
+        distributionUserId: 1,
+        outputNo: "",
+        outputUserId: 1,
+        pageSize: 1,
+        saleUserId: 1,
+        status: 1
+      },
+      api: api.deviceOutputQueryByPage
     };
   },
-  mounted() {
-    this.getTableData();
-  },
+  mounted() {},
   methods: {
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
-    },
-    getTableData() {
-      this.testData = [
-        {
-          type: "日常任务",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          reason: "银行卡账号错误，服务商无法联系",
-          deviceList: [
-            {
-              name: "蜻蜓F4",
-              value: "10"
-            },
-            {
-              name: "青蛙pro",
-              value: "20"
-            }
-          ]
-        },
-        {
-          id: 2,
-          type: "日常任务",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系",
-          deviceList: [
-            {
-              name: "蜻蜓F4",
-              value: "10"
-            },
-            {
-              name: "青蛙pro",
-              value: "20"
-            }
-          ]
-        }
-      ];
+    search($ruleForm) {
+      console.log($ruleForm);
+      const params = {
+        beginTime: $ruleForm.date ? $ruleForm.date[0] : null,
+        endTime: $ruleForm.date ? $ruleForm.date[1] : null,
+        deviceId: $ruleForm.deviceId,
+        status: $ruleForm.status,
+        saleUserId: $ruleForm.saleUserId,
+        outputUserId: $ruleForm.outputUserId
+      };
+      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      this.params = params;
     },
     selectionChange($val) {
       // eslint-disable-next-line no-console
       console.log($val);
     },
-
-    cancel(done) {
-      done();
+    confirm($data) {
+      // api
+      //   .leshuaUpdateOfReject({
+      //     id: 1,
+      //     reason: $data["reason"]
+      //   })
+      //   .then(res => {
+      //     this.$message("已驳回");
+      //   })
+      //   .catch(err => {
+      //     this.$message(err);
+      //   });
+    },
+    cancel() {
+      this.drawer = false;
     },
     onClick_buy() {
       this.fromConfigData = FORM_CONFIG.buyData;
