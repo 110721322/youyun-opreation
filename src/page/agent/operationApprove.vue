@@ -24,6 +24,8 @@
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
         :header-cell-style="headerCellStyle"
+        :api-service="api"
+        :params="params"
         @detail="onClick_detail"
         @reject="onClick_reject"
         @adopt="onClick_adopt"
@@ -80,6 +82,7 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import { FORM_CONFIG } from "./formConfig/operationApproveForm";
 import { SEARCH_CONFIG } from "./formConfig/operationApproveSearch";
 import { OPERATIONAPPROVE_CONFIG } from "./tableConfig/operationApproveConfig";
+import api from "@/api/api_agent.js"
 
 export default {
   name: "Theme",
@@ -94,16 +97,28 @@ export default {
       testData: [],
       drawer: false,
       direction: "rtl",
-      arrow: arrowImg
+      arrow: arrowImg,
+      params: {
+        "agentNo": "",
+        "agentName": "",
+        "settleStatus": ""
+      },
+      api: api.listOperationSettle
     };
   },
   mounted() {
     this.getTableData();
   },
   methods: {
-    search() {
+    search($ruleForm) {
       // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
+      console.log($ruleForm);
+      this.params = {
+        "agentNo": "",
+        "agentName": "",
+        "settleStatus": $ruleForm.status || ""
+      }
+      this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
     },
     getTableData() {
       this.testData = [

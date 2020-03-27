@@ -31,5 +31,7 @@ export default {
   advertDelete: (params) => API.GET('/operation/v1/advert/delete', params),
   advertAdd: (params) => API.GET('/operation/v1/advert/add', params),
   advertUpdate: (params) => API.GET('/operation/v1/advert/update', params),
-  putList: (params) => API.GET('/operation/v1/advertDistribute/queryByPage', params)
+  putList: (params) => API.GET('/operation/v1/advertDistribute/queryByPage', params),
+  // 运营结算审核
+  listOperationSettle: (params) => API.GET('/operation/v1/agentSettle/listOperationSettle', params)
 };

@@ -214,12 +214,16 @@ export default {
       this.showGridData = this.gridData;
     },
     params() {
-      this.getData();
+      if (this.apiService) {
+        this.getData();
+      }
     }
   },
   mounted() {
     // console.log(this.apiService);
-    this.getData();
+    if (this.apiService) {
+      this.getData();
+    }
   },
   methods: {
     onClick_handleToggle($row) {
