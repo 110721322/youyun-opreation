@@ -163,25 +163,8 @@ export default {
       api
         .getDetailByPartnerNo({ agentPartnerNo: "" })
         .then(res => {
-          // 数据解析
-          const expandkey = data => {
-            Object.keys(data).forEach(item => {
-              if (this.$g.utils.isObj(data[item])) {
-                Object.keys(data[item]).forEach(item1 => {
-                  data[item1] = data[item][item1];
-                  if (this.$g.utils.isObj(data[item][item1])) {
-                    Object.keys(data[item][item1]).forEach(item2 => {
-                      data[item2] = data[item][item1][item2];
-                    });
-                  }
-                });
-              }
-            });
-          };
-          expandkey(res.data);
-          console.log("expandKey");
-          console.log(res);
-          this.ruleForm = res.data;
+          // console.log(this.$g.utils.expandKeys(res.data));
+          console.log(this.$g.utils.cloneLoop(res.data));
         })
         .catch();
     },

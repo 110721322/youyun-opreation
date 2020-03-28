@@ -1,22 +1,22 @@
 <template>
   <div class>
-    <div class="p_head_detail">
+    <div class="p_head_detail" :class="[activeClass]">
       <div class="top">
         <span>杭州网络科技有限公司</span>
-        <el-dropdown trigger="click">
+        <el-dropdown trigger="click" @command="onClick_changeClientType">
           <div class="el-dropdown-link">
-            <div class="doit"></div>
+            <div class="doit" :class="[activeClass]"></div>
             <div>
-              下拉菜单
+              {{ activeValue }}
               <i class="el-icon-caret-bottom el-icon--right"></i>
             </div>
           </div>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>黄金糕</el-dropdown-item>
-            <el-dropdown-item>狮子头</el-dropdown-item>
-            <el-dropdown-item>螺蛳粉</el-dropdown-item>
-            <el-dropdown-item>双皮奶</el-dropdown-item>
-            <el-dropdown-item>蚵仔煎</el-dropdown-item>
+            <el-dropdown-item
+              v-for="(item,index) in clientList"
+              :key="index"
+              :command="item"
+            >{{ item.value }}</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -160,7 +160,7 @@
 
 <script>
 import Form from "@/components/form/index.vue";
-import api from "@/api/api_agent.js"
+import api from "@/api/api_agent.js";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import detailMode from "@/components/detailMode/detailMode.vue";
 import { USER_CONFIG, USER_CONFIG2 } from "./tableConfig/config_communicate";
@@ -424,30 +424,46 @@ export default {
           "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
       },
       params: {
-        "agentNo": ""
+        agentNo: ""
       },
       planCount: 0,
       params1: {
-        "id": 1,
-        "addressBookId": 1,
-        "relateCode": "",
-        "remark": "",
-        "nextContactTime": "",
-        "remindTime": "",
-        "remindType": "",
-        "createTime": ""
+        id: 1,
+        addressBookId: 1,
+        relateCode: "",
+        remark: "",
+        nextContactTime: "",
+        remindTime: "",
+        remindType: "",
+        createTime: ""
       },
       api1: api.queryPlan,
       params2: {
-        "id": 1,
-        "addressBookId": 1,
-        "relateCode": "",
-        "theme": "",
-        "way": "",
-        "content": "",
-        "createTime": ""
+        id: 1,
+        addressBookId: 1,
+        relateCode: "",
+        theme: "",
+        way: "",
+        content: "",
+        createTime: ""
       },
-      api2: api.queryPlanList
+      api2: api.queryPlanList,
+      clientList: [
+        {
+          value: "情绪客户",
+          colorName: "red"
+        },
+        {
+          value: "优质客户",
+          colorName: "green"
+        },
+        {
+          value: "普通客户",
+          colorName: "yellow"
+        }
+      ],
+      activeClass: "red",
+      activeValue: "情绪客户"
     };
   },
   mounted() {
@@ -533,24 +549,30 @@ export default {
         role: ["2"]
       }
     ];
-    this.getAgentDetail()
-    this.getPlanCount()
+    this.getAgentDetail();
+    this.getPlanCount();
   },
   methods: {
+    onClick_changeClientType($item) {
+      this.activeClass = $item.colorName;
+      this.activeValue = $item.value;
+    },
     getAgentDetail() {
       api.getAgentDetail(this.params).then(res => {
         console.log(res.object);
         res.object.labelList.forEach(item => {
           this.dynamicTags.push(item.name);
-        })
-      })
+        });
+      });
     },
     getPlanCount() {
-      api.planCount({
-        "relateCode": ""
-      }).then(res => {
-        this.planCount = res.object
-      })
+      api
+        .planCount({
+          relateCode: ""
+        })
+        .then(res => {
+          this.planCount = res.object;
+        });
     },
     handleClose(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
@@ -591,6 +613,15 @@ export default {
   height: 114px;
   background: rgba(255, 255, 255, 1);
   overflow: hidden;
+  &.red {
+    border-bottom: 2px solid #f5222d;
+  }
+  &.green {
+    border-bottom: 2px solid #30b08f;
+  }
+  &.yellow {
+    border-bottom: 2px solid #fec171;
+  }
   .top {
     margin: 24px 32px;
     font-size: 20px;
@@ -604,10 +635,18 @@ export default {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: red;
     float: left;
     margin-top: 5px;
     margin-right: 5px;
+    &.red {
+      background: #f5222d;
+    }
+    &.green {
+      background: #30b08f;
+    }
+    &.yellow {
+      background: #fec171;
+    }
   }
 
   .el-dropdown-link {

@@ -8,31 +8,31 @@ export const USER_CONFIG = {
     {
       label: '佣金总额（元）',
       prop: 'totalCommission',
-      width: '110px',
+      width: '150px',
       sortable: "custom"
     },
     {
       label: '服务商订单分润（元）',
       prop: 'orderDistribution',
-      width: '150px',
+      width: '170px',
       sortable: "custom"
     },
     {
       label: '官方活动奖励（元）',
       prop: 'officeReward',
-      width: '130px',
+      width: '170px',
       sortable: "custom"
     },
     {
       label: '平台活动奖励（元）',
       prop: 'platformReward',
-      width: '130px',
+      width: '170px',
       sortable: "custom"
     },
     {
       label: '佣金总额环比增长',
       prop: 'commissionIncrease',
-      width: '130px',
+      width: '170px',
       sortable: "custom"
     }
   ],
