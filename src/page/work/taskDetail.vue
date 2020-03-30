@@ -2,14 +2,19 @@
   <div class="main_page">
     <div class="p_head">日常任务详情</div>
 
-    <detailMode :rule-form="ruleForm" :config-data="configData" :is-show-call-btn="true" :span-width="24">
+    <detailMode :rule-form="ruleForm" :config-data="configData" :span-width="24">
       <template v-slot:taskDetail>
         <span class="task-time status">
           {{ status+":" }}
-          <transformTime :time="new Date(new Date().getTime()+3600*24*3*1000)"></transformTime>
+          <transformTime :time="new Date(new Date().getTime()-3600*24*3*1000)"></transformTime>
         </span>
       </template>
     </detailMode>
+    <div class="oper-btn">
+      <el-button type="primary" size="medium">立即沟通</el-button>
+      <el-button type="primary" size="medium">同意</el-button>
+      <el-button plain size="medium">拒绝</el-button>
+    </div>
   </div>
 </template>
 <script>
@@ -32,38 +37,34 @@ export default {
       },
       configData: {
         name: "商户结算失败",
-        models: [
+        items: [
           {
-            items: [
-              {
-                name: "时间",
-                key: "name1"
-              },
-              {
-                name: "商户名称",
-                key: "name"
-              },
-              {
-                name: "所属服务商",
-                key: "name"
-              },
-              {
-                name: "交易通道",
-                key: "name"
-              },
-              {
-                name: "金额",
-                key: "name"
-              },
-              {
-                name: "渠道商户号",
-                key: "name"
-              },
-              {
-                name: "失败原因",
-                key: "name"
-              }
-            ]
+            name: "时间",
+            key: "name1"
+          },
+          {
+            name: "商户名称",
+            key: "name"
+          },
+          {
+            name: "所属服务商",
+            key: "name"
+          },
+          {
+            name: "交易通道",
+            key: "name"
+          },
+          {
+            name: "金额",
+            key: "name"
+          },
+          {
+            name: "渠道商户号",
+            key: "name"
+          },
+          {
+            name: "失败原因",
+            key: "name"
           }
         ]
       }
@@ -72,11 +73,20 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.main_page {
+  .bg_box /deep/ {
+    margin: 24px 24px 0;
+  }
+}
+.oper-btn {
+  background: #fff;
+  margin: 0 24px;
+  padding: 0 24px 24px;
+}
 .task-time {
   display: inline-block;
-  // float:right;
   position: absolute;
-  right: 112px;
+  right: 24px;
   top: 17px;
 }
 .status {

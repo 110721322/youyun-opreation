@@ -2,7 +2,7 @@
   <div class="main_page">
     <div class="p_head">审批任务详情</div>
 
-    <detailMode :rule-form="ruleForm" :config-data="configData" :is-show-call-btn="true" :span-width="24">
+    <detailMode :rule-form="ruleForm" :config-data="configData" :span-width="24">
       <template v-slot:step>
         <div class="step-box">
           <el-steps :active="2" align-center>

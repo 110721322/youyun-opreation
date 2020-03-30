@@ -83,11 +83,20 @@ const asyncRoutes = {
     children: [
     ]
   },
-
+  agentService: {
+    path: '/agentService',
+    name: 'agentService',
+    component: Layout,
+    meta: {
+      title: '服务商服务',
+      icon: 'agentService'
+    },
+    children: []
+  },
   'orderManage': {
     path: 'orderManage',
     name: 'orderManage',
-    component: () => import('@/page/agent/orderManage/orderManage.vue'),
+    component: () => import('@/page/agentService/orderManage/orderManage.vue'),
     meta: {
       title: '订单管理',
       icon: 'orderManage'
@@ -101,7 +110,7 @@ const asyncRoutes = {
       title: '硬件订购订单',
       icon: 'hardwareOrder'
     },
-    component: () => import('@/page/agent/orderManage/hardwareOrder.vue'),
+    component: () => import('@/page/agentService/orderManage/hardwareOrder.vue'),
     children: [{
       path: 'detail',
       name: 'detail',
@@ -109,13 +118,13 @@ const asyncRoutes = {
         title: '详情',
         icon: 'detail'
       },
-      component: () => import('@/page/agent/orderManage/hardwareOrderDetail.vue')
+      component: () => import('@/page/agentService/orderManage/hardwareOrderDetail.vue')
     }]
   },
   'adManage': {
     path: 'adManage',
     name: 'adManage',
-    component: () => import('@/page/agent/adManage/adManage.vue'),
+    component: () => import('@/page/agentService/adManage/adManage.vue'),
     meta: {
       title: '广告管理',
       icon: 'adManage'
@@ -129,7 +138,7 @@ const asyncRoutes = {
       title: '广告权限',
       icon: 'adAuth'
     },
-    component: () => import('@/page/agent/adManage/adAuth.vue'),
+    component: () => import('@/page/agentService/adManage/adAuth.vue'),
     children: []
   },
   'adPutList': {
@@ -139,7 +148,7 @@ const asyncRoutes = {
       title: '平台广告投放列表',
       icon: 'adPutList'
     },
-    component: () => import('@/page/agent/adManage/adPutList.vue'),
+    component: () => import('@/page/agentService/adManage/adPutList.vue'),
     children: [
       {
         path: 'detail',
@@ -149,7 +158,7 @@ const asyncRoutes = {
           title: '详情',
           icon: 'adPutDetail'
         },
-        component: () => import('@/page/agent/adManage/adPutDetail.vue')
+        component: () => import('@/page/agentService/adManage/adPutDetail.vue')
       }
     ]
   },
@@ -160,7 +169,7 @@ const asyncRoutes = {
       title: '平台广告列表',
       icon: 'platformAdList'
     },
-    component: () => import('@/page/agent/adManage/platformAdList.vue'),
+    component: () => import('@/page/agentService/adManage/platformAdList.vue'),
     children: [
       {
         path: 'detail',
@@ -170,7 +179,7 @@ const asyncRoutes = {
           title: '详情',
           icon: 'platformAdDetail'
         },
-        component: () => import('@/page/agent/adManage/platformAdDetail.vue')
+        component: () => import('@/page/agentService/adManage/platformAdDetail.vue')
       }
     ]
   },

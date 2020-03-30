@@ -32,7 +32,7 @@
         </el-tree>
         <div class="content-box">
           <div class="form-box">
-            <el-form class="form">
+            <el-form v-if="showSearch" class="form">
               <el-form-item label="精准筛选：" label-width="100px">
                 <el-input
                   v-model="inputForm"
@@ -76,7 +76,21 @@
                 :is-check-all="isCheckAll"
                 @handleCheckList="handleCheckList"
                 @communication="handleCommunication"
+                @pass="handlePass"
+                @reject="handleReject"
               ></taskList>
+            </div>
+            <div class="crud-pagination">
+              <el-pagination
+                size="medium"
+                :current-page="currentPage"
+                :page-sizes="[10, 20, 30, 40]"
+                :page-size="currentPageSize"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="dataTotal"
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+              />
             </div>
           </div>
 
@@ -89,7 +103,7 @@
         </div>
       </div>
     </transition>
-    <!-- <el-drawer :visible.sync="drawer" :with-header="false">
+    <el-drawer :visible.sync="drawer" :with-header="false">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
         :form-base-data="fromConfigData.formData"
@@ -98,20 +112,20 @@
         @cancel="cancel"
         @confirm="confirm"
       ></Form>
-    </el-drawer>-->
+    </el-drawer>
   </div>
 </template>
 
 <script>
 import api from "@/api/api_workBench";
-// import Form from "@/components/form/index.vue";
+import Form from "@/components/form/index.vue";
 import taskList from "./components/taskList.vue";
 import { TASKLIST_CONFIG } from "./tableConfig/taskListConfig";
 import { FORM_CONFIG } from "./formConfig/workTodoConfig";
 
 export default {
   name: "WorkToDo",
-  components: { taskList },
+  components: { taskList, Form },
   // components: {  dataMode, BaseCrud },
 
   data() {
@@ -127,13 +141,20 @@ export default {
       isCheck: false,
       isCheckAll: false,
       canCheckAll: false,
+      showSearch: false,
       inputOptions: [
         {
           label: "服务商名称",
           value: "serviceName"
         }
       ],
-      fromConfigData: FORM_CONFIG.formData,
+      // 当前页码
+      currentPage: 1,
+      // 每页显示数量
+      currentPageSize: 10,
+      // 列表数据总数
+      dataTotal: 0,
+      fromConfigData: FORM_CONFIG.communicationData,
       status: "undo",
       listData: [],
       type: "",
@@ -187,24 +208,28 @@ export default {
           this.type = TASKLIST_CONFIG.dailyType;
           this.cssConfig = TASKLIST_CONFIG.dailyCssConfig;
           this.canCheckAll = true;
+          this.showSearch = true;
           break;
         case "dailyProcessed":
           this.listData = TASKLIST_CONFIG.handleListData;
           this.type = TASKLIST_CONFIG.handleType;
           this.cssConfig = TASKLIST_CONFIG.dailyCssConfig;
           this.canCheckAll = false;
+          this.showSearch = false;
           break;
         case "approvalPending":
           this.listData = TASKLIST_CONFIG.approvalListData;
           this.type = TASKLIST_CONFIG.approvalType;
           this.cssConfig = TASKLIST_CONFIG.approvalCssConfig;
           this.canCheckAll = false;
+          this.showSearch = false;
           break;
         case "approvalProcessed":
           this.listData = TASKLIST_CONFIG.handleListData;
           this.type = TASKLIST_CONFIG.handleType;
           this.cssConfig = TASKLIST_CONFIG.approvalCssConfig;
           this.canCheckAll = false;
+          this.showSearch = false;
           break;
         default:
           break;
@@ -216,15 +241,33 @@ export default {
     this.getTableData();
   },
   methods: {
+    cancel() {
+      this.drawer = false;
+    },
+    confirm() {
+      this.drawer = false;
+    },
+    handleCurrentChange(page) {
+      this.currentPage = page;
+      this.getTableData();
+    },
+    handleSizeChange(size) {
+      this.currentPageSize = size;
+      this.getTableData();
+    },
     handleCommunication() {
+      this.drawer = true;
+    },
+    handlePass() {
+      this.drawer = true;
+    },
+    handleReject() {
       this.drawer = true;
     },
     queryAllTaskMenu(params, fn) {
       api
         .queryAllTaskMenu({
           receiverId: 1,
-          undoType: 2,
-          // taskType: 1,
           status: ""
         })
         .then(fn)
@@ -396,6 +439,12 @@ export default {
 </script>
 
 <style scoped>
+.crud-pagination {
+  background: #fff;
+  padding: 16px 24px;
+  text-align: right;
+  margin-top: 25px;
+}
 .btn_list {
   margin-left: 24px;
   display: inline-block;
@@ -417,8 +466,6 @@ export default {
   padding: 0 16px;
 }
 .form {
-  width: calc(100% + 50px);
-  min-width: 992px;
   height: 88px;
   background: rgba(255, 255, 255, 1);
   padding: 24px;

@@ -10,7 +10,6 @@
         size="mini"
         @click="onClick_edit"
       >编辑</el-button>
-      <el-button v-show="isShowCallBtn" type="primary" class="edit_btn" size="mini">立即沟通</el-button>
     </div>
 
     <el-form
@@ -66,7 +65,6 @@ export default {
     ruleForm: Object,
     configData: Object,
     isShowEditBtn: Boolean,
-    isShowCallBtn: Boolean,
     spanWidth: Number,
     imgWidth: Number,
     currentType: String

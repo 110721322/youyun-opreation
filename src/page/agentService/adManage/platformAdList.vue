@@ -44,7 +44,7 @@ import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { SEARCH_CONFIG } from "../formConfig/platformAdListSearch";
 import { TABLE_CONFIG } from "../tableConfig/platformAdListConfig";
-import api from "@/api/api_agent.js"
+import api from "@/api/api_agent.js";
 
 export default {
   name: "Theme",
@@ -58,7 +58,7 @@ export default {
       testData: [],
       direction: "rtl",
       params: {
-        "advertType": 144
+        advertType: 144
       },
       api: api.advertList
     };
@@ -70,7 +70,7 @@ export default {
     search($ruleForm) {
       this.params = {
         advertType: $ruleForm.area
-      }
+      };
     },
     getTableData() {
       this.testData = [
@@ -104,14 +104,16 @@ export default {
         cancelButtonText: "取消"
       })
         .then(() => {
-          api.advertDelete({
-            id: row.id
-          }).then(res => {
-            this.$message({
-              type: "success",
-              message: "删除成功!"
+          api
+            .advertDelete({
+              id: row.id
+            })
+            .then(res => {
+              this.$message({
+                type: "success",
+                message: "删除成功!"
+              });
             });
-          })
         })
         .catch(() => {
           this.$message({
@@ -122,14 +124,16 @@ export default {
     },
     onClick_edit(row) {
       this.$router.push({
-        path: "/agent/adManage/platformAdList/detail",
+        path: "/agentService/adManage/platformAdList/detail",
         query: {
           id: row.id
         }
       });
     },
     onClick_addAd() {
-      this.$router.push({ path: "/agent/adManage/platformAdList/detail" });
+      this.$router.push({
+        path: "/agentService/adManage/platformAdList/detail"
+      });
     }
   }
 };

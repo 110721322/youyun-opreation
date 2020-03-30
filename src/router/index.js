@@ -227,7 +227,21 @@ const menuItems = [
           title: '运营结算审核',
           icon: 'operationApprove'
         }
-      },
+      }
+    ]
+  },
+
+  {
+    text: '服务商服务',
+    type: 'ios-paper',
+    path: 'agentService',
+    name: 'agentService',
+    isShow: true,
+    meta: {
+      title: '服务商服务',
+      icon: '服务商服务'
+    },
+    children: [
       {
         type: 'ios-grid',
         name: 'orderManage',
@@ -298,7 +312,6 @@ const menuItems = [
       }
     ]
   },
-
   {
     text: '消息管理',
     type: 'ios-paper',
