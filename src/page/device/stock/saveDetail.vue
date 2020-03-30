@@ -1,7 +1,7 @@
 <template>
   <div class="main_page">
     <div class="tab_head">
-      <span class="title">设备库存</span>
+      <span class="title">入库明细</span>
     </div>
     <Search :is-show-all="true" :form-base-data="searchConfig.formData" @search="search" />
 
@@ -91,17 +91,18 @@ export default {
       this.drawer = true;
     },
     confirm($data) {
-      // api
-      //   .leshuaUpdateOfReject({
-      //     id: 1,
-      //     reason: $data["reason"]
-      //   })
-      //   .then(res => {
-      //     this.$message("已驳回");
-      //   })
-      //   .catch(err => {
-      //     this.$message(err);
-      //   });
+      api
+        .deviceDetailUpdate({
+          id: 1,
+          deadline: $data["deadline"],
+          deviceIdentifier: $data["deviceIdentifier"]
+        })
+        .then(res => {
+          this.$message("保存成功");
+        })
+        .catch(err => {
+          this.$message(err);
+        });
     },
     cancel() {
       this.drawer = false;
@@ -109,8 +110,25 @@ export default {
     onClick_edit() {
       this.drawer = true;
     },
-    onClick_remove() {
-      this.drawer = true;
+    onClick_remove($row) {
+      this.$confirm("确定删除？", "提示", {
+        distinguishCancelAndClose: true,
+        confirmButtonText: "确认",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          api
+            .deviceDetailDelete({
+              id: $row.id
+            })
+            .then(result => {
+              this.$message("已删除");
+            })
+            .catch(err => {
+              console.error(err);
+            });
+        })
+        .catch(() => {});
     }
   }
 };

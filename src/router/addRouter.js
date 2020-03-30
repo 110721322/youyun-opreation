@@ -76,7 +76,7 @@ const asyncRoutes = {
     path: 'operationApprove',
     name: 'operationApprove',
     meta: {
-      title: 'operationApprove',
+      title: '运营结算审核',
       icon: 'operationApprove'
     },
     component: () => import('@/page/agent/operationApprove.vue'),
@@ -89,7 +89,7 @@ const asyncRoutes = {
     name: 'orderManage',
     component: () => import('@/page/agent/orderManage/orderManage.vue'),
     meta: {
-      title: 'orderManage',
+      title: '订单管理',
       icon: 'orderManage'
     },
     children: []
@@ -98,7 +98,7 @@ const asyncRoutes = {
     path: 'hardwareOrder',
     name: 'hardwareOrder',
     meta: {
-      title: 'hardwareOrder',
+      title: '硬件订购订单',
       icon: 'hardwareOrder'
     },
     component: () => import('@/page/agent/orderManage/hardwareOrder.vue'),
@@ -106,7 +106,7 @@ const asyncRoutes = {
       path: 'detail',
       name: 'detail',
       meta: {
-        title: 'detail',
+        title: '详情',
         icon: 'detail'
       },
       component: () => import('@/page/agent/orderManage/hardwareOrderDetail.vue')
@@ -117,7 +117,7 @@ const asyncRoutes = {
     name: 'adManage',
     component: () => import('@/page/agent/adManage/adManage.vue'),
     meta: {
-      title: 'adManage',
+      title: '广告管理',
       icon: 'adManage'
     },
     children: []
@@ -126,7 +126,7 @@ const asyncRoutes = {
     path: 'adAuth',
     name: 'adAuth',
     meta: {
-      title: 'adAuth',
+      title: '广告权限',
       icon: 'adAuth'
     },
     component: () => import('@/page/agent/adManage/adAuth.vue'),
@@ -136,7 +136,7 @@ const asyncRoutes = {
     path: 'adPutList',
     name: 'adPutList',
     meta: {
-      title: 'adPutList',
+      title: '平台广告投放列表',
       icon: 'adPutList'
     },
     component: () => import('@/page/agent/adManage/adPutList.vue'),
@@ -146,7 +146,7 @@ const asyncRoutes = {
         name: 'adPutDetail',
         meta: {
           fatherName: 'adPutList',
-          title: 'adPutDetail',
+          title: '详情',
           icon: 'adPutDetail'
         },
         component: () => import('@/page/agent/adManage/adPutDetail.vue')
@@ -157,7 +157,7 @@ const asyncRoutes = {
     path: 'platformAdList',
     name: 'platformAdList',
     meta: {
-      title: 'platformAdList',
+      title: '平台广告列表',
       icon: 'platformAdList'
     },
     component: () => import('@/page/agent/adManage/platformAdList.vue'),
@@ -167,7 +167,7 @@ const asyncRoutes = {
         name: 'platformAdDetail',
         meta: {
           fatherName: 'platformAdList',
-          title: 'platformAdDetail',
+          title: '详情',
           icon: 'platformAdDetail'
         },
         component: () => import('@/page/agent/adManage/platformAdDetail.vue')
@@ -928,7 +928,7 @@ const asyncRoutes = {
     name: 'risk',
     component: Layout,
     meta: {
-      title: 'risk',
+      title: '风控管理',
       icon: 'risk'
     },
     children: []
@@ -938,7 +938,7 @@ const asyncRoutes = {
     name: 'incomingRisk',
     component: () => import('@/page/risk/incomingRisk/incomingRisk.vue'),
     meta: {
-      title: 'incomingRisk',
+      title: '入件风控',
       icon: 'incomingRisk'
     },
     children: []
@@ -948,7 +948,7 @@ const asyncRoutes = {
     name: 'serviceIncomingRisk',
     component: () => import('@/page/risk/incomingRisk/serviceIncomingRisk.vue'),
     meta: {
-      title: 'serviceIncomingRisk',
+      title: '服务商入件风控',
       icon: 'serviceIncomingRisk'
     },
     children: []
@@ -958,7 +958,7 @@ const asyncRoutes = {
     name: 'merchantDataIncomingRisk',
     component: () => import('@/page/risk/incomingRisk/merchantDataIncomingRisk.vue'),
     meta: {
-      title: 'merchantDataIncomingRisk',
+      title: '商户入件资料风控',
       icon: 'merchantDataIncomingRisk'
     },
     children: [
@@ -967,7 +967,7 @@ const asyncRoutes = {
         name: 'blackListDetail',
         meta: {
           fatherName: 'merchantDataIncomingRisk',
-          title: 'blackListDetail',
+          title: '黑名单列表',
           icon: 'blackListDetail'
         },
         component: () => import('@/page/risk/incomingRisk/blackListDetail.vue')
@@ -979,7 +979,7 @@ const asyncRoutes = {
     name: 'riskAppeal',
     component: () => import('@/page/risk/riskAppeal/riskAppeal.vue'),
     meta: {
-      title: 'riskAppeal',
+      title: '风控申诉管理',
       icon: 'riskAppeal'
     },
     children: []
@@ -989,7 +989,7 @@ const asyncRoutes = {
     name: 'leRiskList',
     component: () => import('@/page/risk/riskAppeal/leRiskList.vue'),
     meta: {
-      title: 'leRiskList',
+      title: '乐刷风控',
       icon: 'leRiskList'
     },
     children: [
@@ -999,7 +999,7 @@ const asyncRoutes = {
         component: () => import('@/page/risk/riskAppeal/leRiskListDetail.vue'),
         meta: {
           fatherName: 'leRiskList',
-          title: 'detail',
+          title: '详情',
           icon: 'detail'
         }
       }
@@ -1010,7 +1010,7 @@ const asyncRoutes = {
     name: 'merchantRiskList',
     component: () => import('@/page/risk/riskAppeal/merchantRiskList.vue'),
     meta: {
-      title: 'merchantRiskList',
+      title: '平台商户资料风控',
       icon: 'merchantRiskList'
     },
     children: [
@@ -1020,7 +1020,7 @@ const asyncRoutes = {
         component: () => import('@/page/risk/riskAppeal/merchantRiskListDetail.vue'),
         meta: {
           fatherName: 'merchantRiskList',
-          title: 'detail',
+          title: '详情',
           icon: 'detail'
         }
       }

@@ -43,12 +43,12 @@ export const USAGELIST_CONFIG = {
     expands: [
       {
         name: '解绑',
-        emitName: 'distribution',
+        emitName: 'unbind',
         type: 'text'
       },
       {
         name: '恢复可用',
-        emitName: 'adopt',
+        emitName: 'unfreeze',
         type: 'text'
       }
     ]

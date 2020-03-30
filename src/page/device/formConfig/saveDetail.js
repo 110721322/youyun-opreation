@@ -8,8 +8,8 @@ export const FORM_CONFIG = {
       {
         type: 1,
         label: '设备型号',
-        key: 'food',
-        initVal: [],
+        key: 'deviceId',
+        initVal: "",
         // urlOptions: {
         //     url: './demo.js',
         //     keyName: 'records',
@@ -33,14 +33,14 @@ export const FORM_CONFIG = {
       {
         type: 3,
         label: '保修截止日期',
-        key: 'name7',
+        key: 'deadline',
         initVal: 'pdd',
         rules: setRules('邮箱').isRequired.get
       },
       {
         type: 3,
         label: '入库时间',
-        key: 'name6',
+        key: 'inputTime',
         initVal: 'pdd',
         rules: setRules('公司名称').isRequired.get
       },

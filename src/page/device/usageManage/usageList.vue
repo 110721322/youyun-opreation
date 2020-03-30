@@ -25,8 +25,8 @@
           :grid-edit-width="200"
           :is-async="true"
           :hide-edit-area="configData.hideEditArea"
-          @distribution="distribution"
-          @adopt="adopt"
+          @unbind="unbind"
+          @unfreeze="unfreeze"
         ></BaseCrud>
       </div>
     </div>
@@ -68,8 +68,46 @@ export default {
   },
   mounted() {},
   methods: {
-    distribution() {},
-    adopt() {},
+    unbind($row) {
+      this.$confirm("确定解绑该设备吗", "提示", {
+        distinguishCancelAndClose: true,
+        confirmButtonText: "确认",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          api
+            .unbind({
+              id: $row.id
+            })
+            .then(result => {
+              this.$message("已解绑");
+            })
+            .catch(err => {
+              console.error(err);
+            });
+        })
+        .catch(() => {});
+    },
+    unfreeze($row) {
+      this.$confirm("确定启用该设备吗", "提示", {
+        distinguishCancelAndClose: true,
+        confirmButtonText: "确认",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          api
+            .unfreeze({
+              id: $row.id
+            })
+            .then(result => {
+              this.$message("已启用");
+            })
+            .catch(err => {
+              console.error(err);
+            });
+        })
+        .catch(() => {});
+    },
     search($ruleForm) {
       console.log($ruleForm);
       const params = {

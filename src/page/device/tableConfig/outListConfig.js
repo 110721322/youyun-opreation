@@ -47,6 +47,11 @@ export const OUTLIST_CONFIG = {
     view: false,
     expands: [
       {
+        name: '查看',
+        emitName: 'check',
+        type: 'text'
+      },
+      {
         name: '详情',
         emitName: 'detail',
         type: 'text'
@@ -63,7 +68,7 @@ export const OUTLIST_CONFIG = {
       },
       {
         name: '驳回',
-        emitName: 'adopt',
+        emitName: 'reject',
         type: 'text',
         style: 'color:#F5222D'
       }

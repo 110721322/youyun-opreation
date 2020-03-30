@@ -53,31 +53,31 @@ export const REPAIRLIST_CONFIG = {
     expands: [
       {
         name: '通过',
-        emitName: 'distribution',
+        emitName: 'pass',
         type: 'text'
       },
       {
         name: '驳回',
-        emitName: 'adopt',
+        emitName: 'reject',
         type: 'text'
       },
       {
         name: '分配',
-        emitName: 'adopt',
+        emitName: 'distribution',
         type: 'text'
       }, {
         name: '发货',
-        emitName: 'adopt',
+        emitName: 'send',
         type: 'text'
       },
       {
         name: '完成',
-        emitName: 'adopt',
+        emitName: 'done',
         type: 'text'
       },
       {
         name: '确定收货',
-        emitName: 'adopt',
+        emitName: 'Receipt',
         type: 'text'
       },
       {

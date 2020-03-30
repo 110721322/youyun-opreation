@@ -27,6 +27,8 @@
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
         @buy="onClick_buy"
+        @edit="onClick_edit"
+        @remove="onClick_remove"
       ></BaseCrud>
     </div>
 
@@ -62,12 +64,15 @@ export default {
       testData: [],
       drawer: false,
       direction: "rtl",
+      // formStatus：add 新增设备 edit 编辑 buy 订购
+      formStatus: "",
       params: {
         pageSize: 65,
         currentPage: 44,
         deviceModel: "",
         deviceType: ""
       },
+      allApi: api,
       api: api.deviceQueryByPage
     };
   },
@@ -83,28 +88,122 @@ export default {
       this.params = params;
     },
     onClick_addDevice() {
+      this.formStatus = "add";
       this.fromConfigData = FORM_CONFIG.deviceData;
       this.drawer = true;
     },
     confirm($data) {
-      // api
-      //   .leshuaUpdateOfReject({
-      //     id: 1,
-      //     reason: $data["reason"]
-      //   })
-      //   .then(res => {
-      //     this.$message("已驳回");
-      //   })
-      //   .catch(err => {
-      //     this.$message(err);
-      //   });
+      switch (this.formStatus) {
+        case "add":
+          api
+            .deviceAdd({
+              costPrice: $data.costPrice,
+              deviceImg: $data.deviceImg,
+              deviceModel: $data.deviceModel,
+              deviceType: $data.deviceType,
+              id: $data.id,
+              salePrice: $data.salePrice,
+              sort: $data.sort
+            })
+            .then(res => {
+              this.$message("添加成功");
+            })
+            .catch(err => {
+              this.$message(err);
+            });
+          break;
+        case "edit":
+          api
+            .deviceUpdate({
+              costPrice: $data.costPrice,
+              deviceImg: $data.deviceImg,
+              deviceModel: $data.deviceModel,
+              deviceType: $data.deviceType,
+              id: $data.id,
+              salePrice: $data.salePrice,
+              sort: $data.sort
+            })
+            .then(res => {
+              this.$message("编辑成功");
+            })
+            .catch(err => {
+              this.$message(err);
+            });
+          break;
+        case "buy":
+          api
+            .deviceOutputAdd({
+              saleUserName: $data.saleUserName,
+              amount: $data.amount,
+              actualAmount: $data.actualAmount,
+              agentNo: $data.agentNo,
+              payType: $data.payType,
+              voucher: $data.voucher,
+              buyerRemark: $data.buyerRemark,
+              infoVOList: {
+                count: $data.count,
+                deviceId: $data.deviceId,
+                salePrice: $data.salePrice
+              }
+            })
+            .then(res => {
+              this.$message("订购成功");
+            })
+            .catch(err => {
+              this.$message(err);
+            });
+          break;
+
+        default:
+          break;
+      }
     },
     cancel() {
       this.drawer = false;
     },
     onClick_buy() {
+      this.formStatus = "buy";
       this.fromConfigData = FORM_CONFIG.buyData;
       this.drawer = true;
+    },
+    onClick_edit($row) {
+      // 对配置文件进行动态修改
+      const newFromConfigData = FORM_CONFIG.editData;
+      api
+        .deviceQueryById({
+          id: $row.id
+        })
+        .then(res => {
+          newFromConfigData.formData.forEach((item, index) => {
+            item.initVal = res.object[item.key];
+          });
+          this.fromConfigData = newFromConfigData;
+          this.formStatus = "edit";
+          this.drawer = true;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    onClick_remove($row) {
+      this.$confirm("删除后，该设备将不能再进行订购，请谨慎操作", "提示", {
+        distinguishCancelAndClose: true,
+        confirmButtonText: "确认",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          api
+            .deviceDelete({
+              id: $row.id
+            })
+            .then(result => {
+              this.$message("已删除");
+            })
+            .catch(err => {
+              console.error(err);
+            });
+        })
+        .catch(() => {});
     }
   }
 };

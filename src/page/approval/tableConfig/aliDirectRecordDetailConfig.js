@@ -18,8 +18,7 @@ export const RECORD_CONFIG = {
     {
       label: '操作内容',
       prop: 'auditStatus',
-      width: '250px',
-      isEdit: true
+      width: '250px'
     }
   ],
 

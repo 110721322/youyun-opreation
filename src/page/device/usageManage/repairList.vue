@@ -26,22 +26,40 @@
           :is-async="true"
           :hide-edit-area="configData.hideEditArea"
           @detail="onClick_detail"
+          @done="onClick_done"
+          @Receipt="onClick_Receipt"
+          @reject="onClick_reject"
+          @pass="onClick_pass"
+          @send="onClick_send"
+          @distribution="onClick_distribution"
         ></BaseCrud>
       </div>
     </div>
+    <el-drawer :visible.sync="drawer" :with-header="false">
+      <div class="p_head">{{ fromConfigData.title }}</div>
+      <Form
+        :form-base-data="fromConfigData.formData"
+        :show-foot-btn="fromConfigData.showFootBtn"
+        label-width="130px"
+        @cancel="cancel"
+        @confirm="confirm"
+      ></Form>
+    </el-drawer>
   </div>
 </template>
 <script>
 import api from "@/api/api_device";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
+import Form from "@/components/form/index.vue";
 
+import { FORM_CONFIG } from "./../formConfig/repairListForm";
 import { SEARCH_CONFIG } from "./../formConfig/repairListSearch";
 import { REPAIRLIST_CONFIG } from "./../tableConfig/repairListConfig";
 
 export default {
   name: "Theme",
-  components: { Search, BaseCrud },
+  components: { Search, BaseCrud, Form },
   data() {
     return {
       searchMaxHeight: "320",
@@ -51,6 +69,8 @@ export default {
       testData: [],
       drawer: false,
       direction: "rtl",
+      formStatus: "",
+      activityRow: {},
       params: {
         agentNo: "猪豆王g豆哈试",
         currentPage: 0,
@@ -67,6 +87,129 @@ export default {
   },
   mounted() {},
   methods: {
+    onClick_reject($row) {
+      this.formStatus = "reject";
+      this.activityRow = $row;
+      this.fromConfigData = FORM_CONFIG.rejectData;
+      this.drawer = true;
+    },
+    onClick_send($row) {
+      this.formStatus = "send";
+      this.activityRow = $row;
+      this.fromConfigData = FORM_CONFIG.sendData;
+      this.drawer = true;
+    },
+    onClick_distribution($row) {
+      this.formStatus = "distribution";
+      this.activityRow = $row;
+      this.fromConfigData = FORM_CONFIG.distributionData;
+      this.drawer = true;
+    },
+    onClick_done($row) {
+      this.formStatus = "done";
+      this.activityRow = $row;
+      this.fromConfigData = FORM_CONFIG.doneData;
+      this.drawer = true;
+    },
+    onClick_Receipt($row) {
+      this.$confirm("确定已收货吗", "提示", {
+        distinguishCancelAndClose: true,
+        confirmButtonText: "确认",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          api
+            .receive({
+              id: $row.id
+            })
+            .then(result => {
+              this.$message("收货成功");
+            })
+            .catch(err => {
+              console.error(err);
+            });
+        })
+        .catch(() => {});
+    },
+    onClick_pass($row) {
+      this.$confirm("确定通过该维修单吗", "提示", {
+        distinguishCancelAndClose: true,
+        confirmButtonText: "确认",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          api
+            .auditPass({
+              id: $row.id
+            })
+            .then(result => {
+              this.$message("通过成功");
+            })
+            .catch(err => {
+              console.error(err);
+            });
+        })
+        .catch(() => {});
+    },
+    confirm($data) {
+      switch (this.formStatus) {
+        case "reject":
+          api
+            .auditReject({
+              id: this.activityRow.id,
+              rejectRemark: $data.rejectRemark
+            })
+            .then(res => {
+              this.$message("已驳回");
+            })
+            .catch(err => {
+              this.$message(err);
+            });
+          break;
+        case "send":
+          api
+            .send({
+              id: this.activityRow.id,
+              expressNumberOut: $data.expressNumberOut
+            })
+            .then(res => {
+              this.$message("提交成功");
+            })
+            .catch(err => {
+              this.$message(err);
+            });
+          break;
+        case "distribution":
+          api
+            .deviceOutputAdd({
+              deviceOutputId: this.activityRow.deviceOutputId,
+              distributionUserId: $data.distributionUserId
+            })
+            .then(res => {
+              this.$message("分配成功");
+            })
+            .catch(err => {
+              this.$message(err);
+            });
+          break;
+        case "done":
+          api
+            .saveMoney({
+              id: this.activityRow.id,
+              amount: $data.amount
+            })
+            .then(res => {
+              this.$message("提交成功");
+            })
+            .catch(err => {
+              this.$message(err);
+            });
+          break;
+
+        default:
+          break;
+      }
+    },
     search($ruleForm) {
       console.log($ruleForm);
       const params = {
@@ -86,8 +229,8 @@ export default {
     onClick_detail() {
       this.$router.push("/deviceManage/usageManage/repairList/detail");
     },
-    cancel(done) {
-      done();
+    cancel() {
+      this.drawer = false;
     }
   }
 };

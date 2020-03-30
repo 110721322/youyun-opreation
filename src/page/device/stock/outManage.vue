@@ -29,7 +29,8 @@
           :row-key="'id'"
           :default-expand-all="false"
           :hide-edit-area="configData.hideEditArea"
-          @buy="onClick_buy"
+          @reject="onClick_reject"
+          @check="onClick_check"
           @detail="onClick_detail"
           @send="onClick_send"
           @distribution="onClick_distribution"
@@ -51,6 +52,7 @@
         <Form
           :form-base-data="fromConfigData.formData"
           :show-foot-btn="fromConfigData.showFootBtn"
+          :foot-btn-label="fromConfigData.footBtnLabel"
           label-width="130px"
           @cancel="cancel"
           @confirm="confirm"
@@ -81,6 +83,8 @@ export default {
       testData: [],
       drawer: false,
       direction: "rtl",
+      formStatus: "",
+      activityRow: {},
       params: {
         beginTime: this.$g.utils.getToday(),
         endTime: this.$g.utils.getToday(),
@@ -117,24 +121,85 @@ export default {
       console.log($val);
     },
     confirm($data) {
-      // api
-      //   .leshuaUpdateOfReject({
-      //     id: 1,
-      //     reason: $data["reason"]
-      //   })
-      //   .then(res => {
-      //     this.$message("已驳回");
-      //   })
-      //   .catch(err => {
-      //     this.$message(err);
-      //   });
+      switch (this.formStatus) {
+        case "reject":
+          api
+            .reject({
+              reason: $data.reason
+            })
+            .then(res => {
+              this.$message("已驳回");
+            })
+            .catch(err => {
+              this.$message(err);
+            });
+          break;
+        case "check":
+          this.drawer = false;
+          break;
+        case "send":
+          api
+            .finishOutput({
+              expressNo: $data.expressNo,
+              outputRemark: $data.outputRemark,
+              outputTime: $data.outputTime,
+              id: $data.id,
+              infoRequestVOList: {
+                deviceId: $data.deviceId,
+                deviceIdentifierList: $data.deviceIdentifierList
+              }
+            })
+            .then(res => {
+              this.$message("保存成功");
+            })
+            .catch(err => {
+              this.$message(err);
+            });
+          break;
+        case "distribution":
+          api
+            .deviceOutputAdd({
+              deviceOutputId: "",
+              distributionUserId: $data.distributionUserId
+            })
+            .then(res => {
+              this.$message("分配成功");
+            })
+            .catch(err => {
+              this.$message(err);
+            });
+          break;
+
+        default:
+          break;
+      }
     },
     cancel() {
       this.drawer = false;
     },
-    onClick_buy() {
-      this.fromConfigData = FORM_CONFIG.buyData;
+    onClick_reject() {
+      this.formStatus = "reject";
+      this.fromConfigData = FORM_CONFIG.rejectData;
       this.drawer = true;
+    },
+    onClick_check($row) {
+      const newFromConfigData = FORM_CONFIG.checkData;
+      api
+        .deviceOutputQueryById({
+          id: $row.id
+        })
+        .then(res => {
+          console.log(res.object);
+          newFromConfigData.formData.forEach((item, index) => {
+            item.initVal = res.object[item.key];
+          });
+          this.fromConfigData = newFromConfigData;
+          this.formStatus = "check";
+          this.drawer = true;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
     },
     onClick_detail($item) {
       this.$router.push({
@@ -142,10 +207,13 @@ export default {
       });
     },
     onClick_send() {
+      this.formStatus = "send";
       this.fromConfigData = FORM_CONFIG.sendData;
       this.drawer = true;
     },
-    onClick_distribution() {
+    onClick_distribution($row) {
+      this.formStatus = "distribution";
+      this.activityRow = $row;
       this.fromConfigData = FORM_CONFIG.distributionData;
       this.drawer = true;
     }

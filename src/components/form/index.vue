@@ -49,6 +49,7 @@ import Upload from "./components/Upload.vue";
 import Tinymce from "./components/Tinymce/index.vue";
 import Cascader from "./components/Cascader.vue";
 import UploadFile from "./components/UploadFile";
+import Show from "./components/Show";
 
 // import { isUndefined, deepClone } from '@/libs/lit/utils'
 
@@ -64,7 +65,8 @@ export default {
     Upload,
     Tinymce,
     Cascader,
-    UploadFile
+    UploadFile,
+    Show
   },
   props: {
     formBaseData: Array,
@@ -111,6 +113,11 @@ export default {
       ruleForm: {},
       formKeys: []
     };
+  },
+  watch: {
+    formBaseData: function($value, $old) {
+      this.init();
+    }
   },
   created() {
     this.init();

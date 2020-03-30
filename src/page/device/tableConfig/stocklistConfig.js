@@ -68,12 +68,12 @@ export const STOCKLIST_CONFIG = {
       },
       {
         name: '编辑',
-        emitName: 'adopt',
+        emitName: 'edit',
         type: 'text'
       },
       {
         name: '删除',
-        emitName: 'adopt',
+        emitName: 'remove',
         type: 'text',
         style: 'color:#F5222D'
       }

@@ -99,17 +99,18 @@ export default {
       this.drawer = true;
     },
     confirm($data) {
-      // api
-      //   .leshuaUpdateOfReject({
-      //     id: 1,
-      //     reason: $data["reason"]
-      //   })
-      //   .then(res => {
-      //     this.$message("已驳回");
-      //   })
-      //   .catch(err => {
-      //     this.$message(err);
-      //   });
+      api
+        .deviceInputAdd({
+          deadline: $data["deadline"],
+          deviceId: $data["deviceId"],
+          inputTime: $data["inputTime"]
+        })
+        .then(res => {
+          this.$message("入库成功");
+        })
+        .catch(err => {
+          this.$message(err);
+        });
     },
     cancel() {
       this.drawer = false;
