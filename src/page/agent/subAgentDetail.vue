@@ -8,32 +8,32 @@
 
 <script>
 import detailMode from "@/components/detailMode/detailMode2.vue";
-
+import api from "@/api/api_agent.js"
 export default {
   name: "Theme",
   components: { detailMode },
   data() {
     return {
       ruleForm: {
-        name: "1",
-        name1: "2",
-        name2: "3",
-        name3: "4",
+        parentAgentNo: "1",
+        businessType: "2",
+        name3: "3",
+        lawPerson: "4",
         email: "12312312@163.com",
-        pic:
-          "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
+        area: "",
+        detailAddress: ''
       },
       configData: {
         name: "基本信息",
         items: [
           {
             name: "所属上级服务商",
-            key: "name1",
+            key: "parentAgentNo",
             type: "edit"
           },
           {
             name: "账号类型",
-            key: "email"
+            key: "businessType"
           },
 
           {
@@ -42,23 +42,44 @@ export default {
           },
           {
             name: "法人姓名",
-            key: "name"
+            key: "lawPerson"
           },
           {
             name: "地区",
-            key: "pic"
+            key: "area"
           },
           {
             name: "详细地址",
-            key: "name"
+            key: "detailAddress"
           },
           {
             name: "邮箱",
-            key: "name"
+            key: "email"
           }
         ]
       }
     };
+  },
+  mounted() {
+    this.getDeatil()
+  },
+  methods: {
+    getDeatil() {
+      api.getAgentDetail({
+        agentNo: ''
+      }).then(res => {
+        var request = res.object;
+        this.ruleForm = {
+          parentAgentNo: request.parentAgentNo,
+          businessType: request.businessType,
+          name3: "",
+          lawPerson: request.lawPerson,
+          email: request.email,
+          area: "",
+          detailAddress: request.companyArea.detailAddress
+        }
+      })
+    }
   }
 };
 </script>

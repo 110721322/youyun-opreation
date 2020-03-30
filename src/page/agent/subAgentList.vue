@@ -69,61 +69,8 @@ export default {
     }
   },
   mounted() {
-    this.getData();
   },
-  // beforeRouteUpdate(to,from,next) {
-  //   this.testData = [
-  //     {
-  //       id: '1',
-  //       tel: '15184318420',
-  //       name: '小白',
-  //       email: '412412@qq.com',
-  //       status: '1',
-  //       create_time: '2018-04-20',
-  //       expand: '扩展信息一',
-  //       role: ['2']
-  //     },
-  //     {
-  //       id: '2',
-  //       tel: '13777369283',
-  //       name: '小红',
-  //       email: '456465@qq.com',
-  //       status: '0',
-  //       create_time: '2018-03-23',
-  //       expand: 'hashashashas',
-  //       role: ['1']
-  //     }
-  //   ]
-  //   next();
-
-  // },
   methods: {
-    getData() {
-      this.testData = [
-        {
-          serviceName: "1两行两行两行两行",
-          id: "1两行两行两行两行",
-          tel: "15184318420",
-          name: "小白",
-          email: "412412@qq.com",
-          status: "1",
-          create_time: "2018-04-20",
-          expand: "扩展信息一",
-          role: ["2"]
-        },
-        {
-          serviceName: "1两行两行两行两行",
-          id: "2两行两行两行两行",
-          tel: "13777369283",
-          name: "小红",
-          email: "456465@qq.com",
-          status: "0",
-          create_time: "2018-03-23",
-          expand: "hashashashas",
-          role: ["1"]
-        }
-      ];
-    },
     search($form, $obj) {
       console.log($form)
       this.params = {
@@ -142,45 +89,39 @@ export default {
         path: "/agent/subList/detail"
       });
     },
-    thaw() {
-      this.$confirm("是否要驳回该代理商？", "驳回代理商", {
+    thaw(row) {
+      this.$confirm("是否要解冻该代理商？", "解冻代理商", {
         distinguishCancelAndClose: true,
-        confirmButtonText: "确认驳回",
+        confirmButtonText: "确认解冻",
         cancelButtonText: "取消"
       })
         .then(() => {
-          api.subreject({
-            "agentNo": "",
-            "reason": ""
-          }).then((result) => {
+          api.unfrozen({
+            agentNo: row.agentNo
+          }).then(res => {
             this.$message({
               type: "info",
-              message: "已驳回"
+              message: "已解冻"
             });
-          }).catch(err => {
-            console.error(err);
-          });
+          })
         })
         .catch(() => {});
     },
-    frozen() {
-      this.$confirm("是否要通过该代理商？", "通过代理商", {
+    frozen(row) {
+      this.$confirm("是否要冻结该代理商？", "冻结代理商", {
         distinguishCancelAndClose: true,
-        confirmButtonText: "确认通过",
+        confirmButtonText: "确认冻结",
         cancelButtonText: "取消"
       })
         .then(() => {
-          api.subpass({
-            "agentNo": "",
-            "reason": ""
-          }).then((result) => {
+          api.frozen({
+            agentNo: row.agentNo
+          }).then(res => {
             this.$message({
               type: "info",
-              message: "已通过"
+              message: "已冻结"
             });
-          }).catch(err => {
-            console.error(err);
-          });
+          })
         })
         .catch(() => {});
     },

@@ -157,7 +157,7 @@ export default {
         path: "/agent/list/detail"
       });
     },
-    thaw() {
+    thaw(row) {
       this.$confirm("是否要解冻该代理商？", "解冻代理商", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认解冻",
@@ -165,7 +165,7 @@ export default {
       })
         .then(() => {
           api.unfrozen({
-            "agentNo": ""
+            "agentNo": row.agentNo
           }).then(res => {
             this.$message({
               type: "info",
@@ -181,9 +181,9 @@ export default {
         confirmButtonText: "确认冻结",
         cancelButtonText: "取消"
       })
-        .then(() => {
+        .then((row) => {
           api.frozen({
-            "agentNo": ""
+            "agentNo": row.agentNo
           }).then(res => {
             this.$message({
               type: "info",

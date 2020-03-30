@@ -102,7 +102,7 @@ export default {
       this.params[$form.inputSelect] = $form.inputForm
       // this.$refs.child.getData()
     },
-    reject() {
+    reject(row) {
       this.$confirm("是否要驳回该代理商？", "驳回代理商", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认驳回",
@@ -110,7 +110,7 @@ export default {
       })
         .then(() => {
           api.reject({
-            "agentNo": ""
+            "agentNo": row.agentNo
           }).then((result) => {
             this.$message({
               type: "info",
@@ -122,7 +122,7 @@ export default {
         })
         .catch(() => {});
     },
-    activation() {
+    activation(row) {
       this.$confirm("是否要激活该代理商？", "激活代理商", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认激活",
@@ -130,7 +130,7 @@ export default {
       })
         .then(() => {
           api.activate({
-            "agentNo": ""
+            "agentNo": row.agentNo
           }).then((result) => {
             this.$message({
               type: "info",
@@ -142,7 +142,7 @@ export default {
         })
         .catch(() => {});
     },
-    adopt() {
+    adopt(row) {
       this.$confirm("是否要通过该代理商？", "通过代理商", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认通过",
@@ -150,7 +150,7 @@ export default {
       })
         .then(() => {
           api.pass({
-            "agentNo": ""
+            "agentNo": row.agentNo
           }).then((result) => {
             this.$message({
               type: "info",

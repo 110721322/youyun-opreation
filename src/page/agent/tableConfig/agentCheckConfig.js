@@ -7,7 +7,7 @@ export const USER_CONFIG = {
     },
     {
       label: '法人',
-      prop: 'tel',
+      prop: 'lawPerson',
       width: '90px'
     },
     {
@@ -17,23 +17,23 @@ export const USER_CONFIG = {
     },
     {
       label: '服务商类型',
-      prop: 'name',
+      prop: 'businessType',
       width: '90px'
 
     },
     {
       label: '公司地址',
-      prop: 'name',
+      prop: 'companyArea',
       width: '90px'
     },
     {
       label: '创建时间',
-      prop: 'name',
+      prop: 'createTime',
       width: '90px'
     },
     {
       label: '状态',
-      prop: 'status',
+      prop: 'accountStatus',
 
       render: (h, params) => {
         if (params.row.status === '0') {
