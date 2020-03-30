@@ -2,32 +2,32 @@ export const USER_CONFIG = {
   gridConfig: [
     {
       label: '服务商',
-      prop: [{ key: 'serviceName' }, { key: 'id', label: 'ID:' }],
+      prop: [{ key: 'agentName' }, { key: 'agentNo', label: 'ID:' }],
       width: '150px'
     },
     {
       label: '所属顶级服务商',
-      prop: 'email',
+      prop: 'parentAgentNo',
       width: '150px'
     },
     {
       label: '开通时间',
-      prop: 'email',
+      prop: 'activeDate',
       width: '150px'
     },
     {
       label: '到期时间',
-      prop: 'email',
+      prop: 'expireDate',
       width: '150px'
     },
     {
       label: '商户数量',
-      prop: 'email',
+      prop: 'merchantCount',
       width: '150px'
     },
     {
       label: '状态',
-      prop: 'status',
+      prop: 'accountStatus',
 
       render: (h, params) => {
         if (params.row.status === '0') {
@@ -57,17 +57,17 @@ export const USER_CONFIG = {
     },
     {
       label: '所属大区',
-      prop: 'region',
+      prop: 'regionName',
       width: '150px'
     },
     {
       label: '服务地区',
-      prop: 'email',
+      prop: 'activeScopeType',
       width: '150px'
     },
     {
       label: '所属运营',
-      prop: 'email',
+      prop: 'operationName',
       width: '150px'
     }
 

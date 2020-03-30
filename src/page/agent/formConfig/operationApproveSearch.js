@@ -15,11 +15,11 @@ export const SEARCH_CONFIG = {
       options: [
         {
           label: '服务商ID',
-          value: 'id'
+          value: 'agentNo'
         },
         {
           label: '服务商名称',
-          value: 'name'
+          value: 'agentName'
         }
       ],
       labelWidth: '100px'

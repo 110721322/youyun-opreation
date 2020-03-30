@@ -186,11 +186,11 @@ export default {
                 items: [
                   {
                     name: "公司名称",
-                    key: "name1"
+                    key: ""
                   },
                   {
                     name: "法人手机号",
-                    key: "name"
+                    key: "lawMobile"
                   }
                 ]
               },
@@ -202,7 +202,7 @@ export default {
                   },
                   {
                     name: "营业执照图",
-                    key: "pic",
+                    key: "businessLicenseImg",
                     type: "img"
                   }
                 ]
@@ -211,11 +211,11 @@ export default {
                 items: [
                   {
                     name: "法人姓名",
-                    key: "name3"
+                    key: "lawPerson"
                   },
                   {
                     name: "公司地址",
-                    key: "name"
+                    key: "detailAddress"
                   }
                 ]
               }
@@ -229,11 +229,11 @@ export default {
                 items: [
                   {
                     name: "结算卡类型",
-                    key: "name1"
+                    key: "accountType"
                   },
                   {
                     name: "开户支行地区",
-                    key: "name"
+                    key: "bankArea"
                   }
                 ]
               },
@@ -245,8 +245,7 @@ export default {
                   },
                   {
                     name: "开户支行",
-                    key: "pic",
-                    type: "img"
+                    key: "branchName"
                   }
                 ]
               },
@@ -254,7 +253,7 @@ export default {
                 items: [
                   {
                     name: "银行卡号",
-                    key: "name3"
+                    key: "bankCardImg"
                   }
                 ]
               }
