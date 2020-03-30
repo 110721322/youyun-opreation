@@ -7,6 +7,7 @@ import VueRouter from 'vue-router'
 import Layout from '@/layout'
 
 import Login from '../page/login/login.vue'
+import PersonInfo from '../page/personInfo/personInfo.vue'
 import ErrorPage from '../page/404/404.vue'
 import noJurisdiction from '../page/401/401.vue'
 
@@ -28,6 +29,14 @@ const router = new VueRouter({
       path: '/login',
       name: '登录页',
       component: Login,
+      meta: {
+        requireLogin: false
+      }
+    },
+    {
+      path: '/personInfo',
+      name: '完善个人信息',
+      component: PersonInfo,
       meta: {
         requireLogin: false
       }
