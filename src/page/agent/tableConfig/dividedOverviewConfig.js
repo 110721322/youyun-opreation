@@ -2,7 +2,7 @@ export const USER_CONFIG = {
   gridConfig: [
     {
       label: '服务商',
-      prop: [{ key: 'serviceName' }, { key: 'id', label: 'ID:' }],
+      prop: [{ key: 'agentName' }, { key: 'agentNo', label: 'ID:' }],
       width: '150px'
     },
     {
@@ -19,19 +19,19 @@ export const USER_CONFIG = {
     },
     {
       label: '官方活动奖励（元）',
-      prop: 'officeReward',
+      prop: 'officeActivity',
       width: '170px',
       sortable: "custom"
     },
     {
       label: '平台活动奖励（元）',
-      prop: 'platformReward',
+      prop: 'platformActivity',
       width: '170px',
       sortable: "custom"
     },
     {
       label: '佣金总额环比增长',
-      prop: 'commissionIncrease',
+      prop: 'ratio',
       width: '170px',
       sortable: "custom"
     }

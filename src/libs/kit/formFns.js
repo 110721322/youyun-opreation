@@ -40,6 +40,9 @@ export const transFormType = typeNum => {
     case 10:
       componentName = 'SelectInput'
       break
+    case 11:
+        componentName = 'DatePicker'
+        break
     case 'uploadFile':
       componentName = 'uploadFile'
       break
