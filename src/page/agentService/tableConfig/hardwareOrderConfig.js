@@ -2,24 +2,24 @@ export const TABLE_CONFIG = {
   gridConfig: [
     {
       label: '订单号',
-      prop: 'order',
+      prop: 'outputNo',
       width: '90px'
     },
     {
       label: '创建时间',
-      prop: 'time',
+      prop: 'createTime',
       width: '90px'
     },
     {
       label: '购买服务商',
-      prop: 'buyService',
+      prop: 'agentName',
       // prop: [{ key: "buyService" }, { key: "id", label: "ID:" }],
       width: '90px'
 
     },
     {
       label: '联系人',
-      prop: 'contact',
+      prop: 'buyerJsonVO.buyerName',
       // prop: [{ key: "name" }, { key: "phone"}],
       width: '90px'
     },
@@ -35,7 +35,7 @@ export const TABLE_CONFIG = {
     },
     {
       label: '订单类型',
-      prop: 'type'
+      prop: 'outputType'
     }
   ],
   // crud的模态框表单配置，可配置表单类型，验证规则，是否必填,col-span布局可通过span参数配置
