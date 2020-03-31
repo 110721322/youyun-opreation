@@ -21,8 +21,9 @@
               <i class="el-icon-upload el-icon--left"></i>上传图片
             </el-button>
           </el-upload>
-          <div v-if="ruleForm.avatar">
+          <div v-if="ruleForm.avatar" class="avatar-box" style="position: relative">
             <img :src="ruleForm.avatar" alt class="avatar" />
+            <i class="el-icon-close avatar-close" @click="onClick_deleteAvater"></i>
           </div>
         </el-form-item>
         <el-form-item label="花名" prop="alias">
@@ -81,18 +82,15 @@ export default {
         jobNum: [{ required: true, message: "请输入工号", trigger: "blur" }],
         email: [{ required: true, message: "请输入邮箱", trigger: "blur" }],
         passwd: [{ required: true, message: "请输入密码", trigger: "blur" }],
-        birthday: [
-          {
-            required: true,
-            message: "请选择日期",
-            trigger: "change"
-          }
-        ]
+        birthday: [{ required: true, message: "请选择日期", trigger: "change" }]
       },
       fileList: []
     };
   },
   methods: {
+    onClick_deleteAvater() {
+      this.ruleForm.avatar = "";
+    },
     handleChange() {},
     onClick_submit() {
       this.$refs.ruleForm.validate(valid => {
@@ -108,6 +106,18 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.avatar-box {
+  width: 66px;
+  height: 66px;
+  position: relative;
+  .avatar-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #fff;
+    font-size: 8px;
+  }
+}
 .avatar {
   width: 66px;
   height: 66px;

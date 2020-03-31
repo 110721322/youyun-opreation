@@ -1,7 +1,7 @@
 <template>
   <div class="result-page">
     <div class="bg">
-      <img src alt class="bg-img" />
+      <img src="../../assets/img/personInfoBg.png" alt class="bg-img" />
     </div>
     <div class="tip">开通成功，请联系主管配置后进入后台哟</div>
   </div>

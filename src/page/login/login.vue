@@ -3,7 +3,7 @@
     <div class="login-box">
       <div class="left-box">
         <div class="logo">
-          <img src alt class="logo-img" />
+          <img src="../../assets/img/logo.png" alt class="logo-img" />
         </div>
         <div class="title">智慧办公系统</div>
         <div class="login-content">
@@ -137,7 +137,7 @@
           <template v-if="activeType==='contactSuper'">
             <div class="content-title">请联系主管补充资料</div>
             <div class="content-img">
-              <img src alt class="contact-img" />
+              <img src="../../assets/img/superBg.png" alt class="contact-img" />
             </div>
             <div class="content-box--btn">
               <el-button type="primary" class="content-btn">已补充</el-button>
@@ -146,7 +146,7 @@
         </div>
       </div>
       <div class="right-box">
-        <img src="../../assets/img/login-bg.png" alt class="right-img" />
+        <img src="../../assets/img/loginBg.png" alt class="right-img" />
       </div>
     </div>
   </div>
@@ -192,7 +192,7 @@ export default {
           }
         ]
       },
-      activeType: "contactSuper"
+      activeType: "accountLogin"
     };
   },
   watch: {},
@@ -254,8 +254,6 @@ export default {
 .page_box {
   width: 100%;
   height: 100%;
-  min-width: 1440px;
-  min-height: 860px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -263,19 +261,22 @@ export default {
 }
 .login-box {
   display: flex;
+  width: 100%;
+  height: 100%;
   .left-box {
-    width: 580px;
-    padding-left: 106px;
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    padding-left: 7.3%;
     background: #f0f3f7;
     .logo {
       width: 100px;
       height: 50px;
-      margin-top: 5px;
+      margin-top: 30px;
       .logo-img {
         display: inline-block;
-        background: #aaa;
-        width: 96px;
-        height: 32px;
+        width: 100%;
+        height: 100%;
       }
     }
     .title {
@@ -336,10 +337,8 @@ export default {
       color: rgba(51, 51, 51, 1);
       line-height: 18px;
       text-align: center;
-      margin-left: -100px;
     }
     .content-img {
-      margin-left: -100px;
       margin-top: 32px;
       text-align: center;
       .qrcode {
@@ -352,17 +351,22 @@ export default {
         display: inline-block;
         width: 217px;
         height: 166px;
-        background: #aaa;
       }
     }
     .content-box--btn {
-      margin-left: -100px;
       margin-top: 32px;
       text-align: center;
       .content-btn {
         width: 180px;
         line-height: 20px;
       }
+    }
+  }
+  .right-box {
+    width: 60%;
+    .right-img {
+      width: 100%;
+      height: 100%;
     }
   }
   .input-box {
@@ -384,12 +388,6 @@ export default {
       border: 0px solid rgba(25, 137, 250, 1);
       font-size: 16px;
       color: #333333;
-    }
-  }
-  .right-box {
-    .right-img {
-      width: 860px;
-      height: 750px;
     }
   }
 }
