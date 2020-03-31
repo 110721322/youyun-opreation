@@ -308,8 +308,7 @@ const menuItems = [
         meta: {
           title: '到期续费记录',
           icon: 'renewalRecord'
-        },
-        children: []
+        }
       }
     ]
   },

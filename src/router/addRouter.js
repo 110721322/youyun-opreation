@@ -179,9 +179,7 @@ const asyncRoutes = {
       title: '到期续费记录',
       icon: 'renewalRecord'
     },
-    component: () => import('@/page/agentService/renewalRecord.vue'),
-    children: [
-    ]
+    component: () => import('@/page/agentService/renewalRecord.vue')
   },
 
   'agentSubList': {
