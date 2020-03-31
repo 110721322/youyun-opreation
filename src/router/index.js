@@ -8,6 +8,7 @@ import Layout from '@/layout'
 
 import Login from '../page/login/login.vue'
 import PersonInfo from '../page/personInfo/personInfo.vue'
+import Result from '../page/personInfo/result.vue'
 import ErrorPage from '../page/404/404.vue'
 import noJurisdiction from '../page/401/401.vue'
 
@@ -37,6 +38,14 @@ const router = new VueRouter({
       path: '/personInfo',
       name: '完善个人信息',
       component: PersonInfo,
+      meta: {
+        requireLogin: false
+      }
+    },
+    {
+      path: '/result',
+      name: '完善个人信息',
+      component: Result,
       meta: {
         requireLogin: false
       }

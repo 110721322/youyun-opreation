@@ -10,15 +10,20 @@
       >
         <el-form-item label="头像" prop="avatar">
           <el-upload
+            v-if="!ruleForm.avatar"
             class="upload-demo"
             action="https://jsonplaceholder.typicode.com/posts/"
             :on-change="handleChange"
             :file-list="fileList"
             :show-file-list="false"
           >
-            <el-button size="small" type="primary">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+            <el-button class="upload-btn">
+              <i class="el-icon-upload el-icon--left"></i>上传图片
+            </el-button>
           </el-upload>
+          <div v-if="ruleForm.avatar">
+            <img :src="ruleForm.avatar" alt class="avatar" />
+          </div>
         </el-form-item>
         <el-form-item label="花名" prop="alias">
           <el-input v-model="ruleForm.alias"></el-input>
@@ -33,12 +38,10 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="工号" prop="jobNum">
-          <el-input v-model="ruleForm.name"></el-input>
+          <el-input v-model="ruleForm.jobNum"></el-input>
         </el-form-item>
         <el-form-item label="生日" prop="birthday">
-          <el-form-item prop="date1">
-            <el-date-picker v-model="ruleForm.date1" type="date" style="width: 100%;"></el-date-picker>
-          </el-form-item>
+          <el-date-picker v-model="ruleForm.birthday" type="date" style="width: 100%;"></el-date-picker>
         </el-form-item>
         <el-form-item label="邮箱" prop="email">
           <el-input v-model="ruleForm.email"></el-input>
@@ -48,7 +51,7 @@
         </el-form-item>
       </el-form>
       <div class="commit-box">
-        <el-button type="primary" class="commit-btn">提交</el-button>
+        <el-button type="primary" class="commit-btn" @click="onClick_submit">提交</el-button>
       </div>
     </div>
   </div>
@@ -65,7 +68,9 @@ export default {
         birthday: "",
         sex: "男",
         email: "",
-        avatar: "",
+        avatar:
+          "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+        // avatar: "",
         passwd: ""
       },
       rules: {
@@ -78,7 +83,6 @@ export default {
         passwd: [{ required: true, message: "请输入密码", trigger: "blur" }],
         birthday: [
           {
-            type: "data",
             required: true,
             message: "请选择日期",
             trigger: "change"
@@ -87,16 +91,40 @@ export default {
       },
       fileList: []
     };
+  },
+  methods: {
+    handleChange() {},
+    onClick_submit() {
+      this.$refs.ruleForm.validate(valid => {
+        if (valid) {
+          this.$router.push({ path: "/result" });
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    }
   }
 };
 </script>
 <style lang="scss" scoped>
+.avatar {
+  width: 66px;
+  height: 66px;
+}
 .person-box {
   background: #fbfbfb;
   height: 100%;
   .form-box {
     padding: 1rem;
   }
+}
+.upload-btn {
+  width: 119px;
+  height: 36px;
+  background: rgba(245, 245, 245, 1);
+  border-radius: 4px;
+  border: 1px solid rgba(199, 200, 205, 1);
 }
 .commit-box {
   margin-top: 50px;
