@@ -839,13 +839,43 @@ const asyncRoutes = {
     },
     children: []
   },
-  'menuManager': {
-    path: 'menuManager',
-    name: 'menuManager',
-    component: () => import('@/page/systemConfig/menuManager.vue'),
+  'menuManage': {
+    path: 'menuManage',
+    name: 'menuManage',
+    component: () => import('@/page/systemConfig/menuManage/menuManage.vue'),
     meta: {
       title: '菜单管理',
-      icon: 'menuManager'
+      icon: 'menuManage'
+    },
+    children: []
+  },
+  'operationMenu': {
+    path: 'operationMenu',
+    name: 'operationMenu',
+    component: () => import('@/page/systemConfig/menuManage/operationMenu.vue'),
+    meta: {
+      title: '运营后台菜单',
+      icon: 'operationMenu'
+    },
+    children: []
+  },
+  'agentMenu': {
+    path: 'agentMenu',
+    name: 'agentMenu',
+    component: () => import('@/page/systemConfig/menuManage/agentMenu.vue'),
+    meta: {
+      title: '服务商后台菜单',
+      icon: 'agentMenu'
+    },
+    children: []
+  },
+  'businessMenu': {
+    path: 'businessMenu',
+    name: 'businessMenu',
+    component: () => import('@/page/systemConfig/menuManage/businessMenu.vue'),
+    meta: {
+      title: '商应小程序菜单',
+      icon: 'businessMenu'
     },
     children: []
   },

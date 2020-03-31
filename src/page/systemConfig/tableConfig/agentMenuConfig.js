@@ -10,11 +10,6 @@ export const MENU_CONFIG = {
       label: '图标',
       prop: 'taskName',
       width: '150px'
-    },
-    {
-      label: '页面链接',
-      prop: 'image',
-      width: '150px'
     }
   ],
 

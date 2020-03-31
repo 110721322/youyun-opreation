@@ -688,13 +688,48 @@ const menuItems = [
       {
         text: '菜单管理',
         type: 'ios-paper',
-        name: 'menuManager',
-        path: 'menuManager',
+        name: 'menuManage',
+        path: 'menuManage',
         isShow: true,
         meta: {
           title: '菜单管理',
-          icon: 'menuManager'
-        }
+          icon: 'menuManage'
+        },
+        children: [
+          {
+            text: '运营后台菜单',
+            type: 'ios-paper',
+            name: 'operationMenu',
+            path: 'operationMenu',
+            isShow: true,
+            meta: {
+              title: '运营后台菜单',
+              icon: 'operationMenu'
+            }
+          },
+          {
+            text: '服务商后台菜单',
+            type: 'ios-paper',
+            name: 'agentMenu',
+            path: 'agentMenu',
+            isShow: true,
+            meta: {
+              title: '服务商后台菜单',
+              icon: 'agentMenu'
+            }
+          },
+          {
+            text: '商应小程序菜单',
+            type: 'ios-paper',
+            name: 'businessMenu',
+            path: 'businessMenu',
+            isShow: true,
+            meta: {
+              title: '商应小程序菜单',
+              icon: 'businessMenu'
+            }
+          }
+        ]
       },
       {
         text: '服务商产品权限',
