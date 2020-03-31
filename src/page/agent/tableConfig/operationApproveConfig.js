@@ -2,7 +2,7 @@ export const OPERATIONAPPROVE_CONFIG = {
   gridConfig: [
     {
       label: '服务商',
-      prop: 'service',
+      prop: 'agentName',
       width: '90px'
     },
     {
@@ -12,12 +12,12 @@ export const OPERATIONAPPROVE_CONFIG = {
     },
     {
       label: '结算类型',
-      prop: 'type',
+      prop: 'settleType',
       width: '90px'
     },
     {
       label: '审核状态',
-      prop: 'status',
+      prop: 'settleStatus',
       width: '90px'
 
     },
@@ -28,7 +28,7 @@ export const OPERATIONAPPROVE_CONFIG = {
     },
     {
       label: '操作时间',
-      prop: 'operTime',
+      prop: 'updateTime',
       width: '90px'
     }
   ],

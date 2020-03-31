@@ -8,7 +8,7 @@
     <div class="table_box">
       <div class="tabale_title_box">
         <div class="title">运营结算列表</div>
-        <el-button class="btn" type="primary" @click="onClick_addBlackList">新增入件黑名单</el-button>
+        <!-- <el-button class="btn" type="primary" @click="onClick_addBlackList">新增入件黑名单</el-button> -->
       </div>
       <BaseCrud
         :grid-config="configData.gridConfig"

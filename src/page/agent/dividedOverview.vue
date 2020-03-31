@@ -96,37 +96,6 @@ export default {
     handleDetail() {
       this.$router.push({ path: "/agent/dividedOverview/detail" });
     },
-    getData() {
-      this.testData = [
-        {
-          serviceName: "岳阳楼区戴斯酒店",
-          id: "岳阳楼区戴斯酒店",
-          totalCommission: "10000.00",
-          orderDistribution: "1000.00",
-          officeReward: "998.00",
-          platformReward: "998.00",
-          commissionIncrease: "100%"
-        },
-        {
-          serviceName: "岳阳楼区戴斯酒店",
-          id: "岳阳楼区戴斯酒店",
-          totalCommission: "20000.00",
-          orderDistribution: "600.00",
-          officeReward: "888.00",
-          platformReward: "18888.00",
-          commissionIncrease: "98%"
-        },
-        {
-          serviceName: "岳阳楼区戴斯酒店",
-          id: "岳阳楼区戴斯酒店",
-          totalCommission: "300.00",
-          orderDistribution: "200.00",
-          officeReward: "2888.00",
-          platformReward: "18.00",
-          commissionIncrease: "150%"
-        }
-      ];
-    },
     getTotalCommission() {
       api.totalCommission({
         tradeMonth: this.tradeMonth
