@@ -216,17 +216,6 @@ const menuItems = [
           title: '分润总览',
           icon: 'dividedOverview'
         }
-      },
-      {
-        type: 'ios-grid',
-        name: 'operationApprove',
-        text: '运营结算审核',
-        path: 'operationApprove',
-        isShow: true,
-        meta: {
-          title: '运营结算审核',
-          icon: 'operationApprove'
-        }
       }
     ]
   },
@@ -309,6 +298,18 @@ const menuItems = [
             }
           }
         ]
+      },
+      {
+        type: 'ios-grid',
+        name: 'renewalRecord',
+        text: '到期续费记录',
+        path: 'renewalRecord',
+        isShow: true,
+        meta: {
+          title: '到期续费记录',
+          icon: 'renewalRecord'
+        },
+        children: []
       }
     ]
   },
@@ -820,7 +821,7 @@ const menuItems = [
     isShow: true,
     meta: {
       title: '风控管理',
-      icon: '风控管理'
+      icon: 'risk'
     },
     children: [
       {
@@ -889,6 +890,76 @@ const menuItems = [
             meta: {
               title: '平台商户资料风控',
               icon: 'merchantRiskList'
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    text: '对公转账审核',
+    type: 'ios-paper',
+    path: 'transferReview',
+    name: 'transferReview',
+    isShow: true,
+    meta: {
+      title: '对公转账审核',
+      icon: 'transferReview'
+    },
+    children: [
+      {
+        type: 'ios-grid',
+        name: 'operationApprove',
+        text: '运营结算审核',
+        path: 'operationApprove',
+        isShow: true,
+        meta: {
+          title: '运营结算审核',
+          icon: 'operationApprove'
+        }
+      },
+      {
+        type: 'ios-grid',
+        name: 'financialAudit',
+        text: '财务审核',
+        path: 'financialAudit',
+        isShow: true,
+        meta: {
+          title: '财务审核',
+          icon: 'financialAudit'
+        },
+        children: [
+          {
+            text: '财务结算审核',
+            type: 'ios-paper',
+            name: 'financialSettlement',
+            path: 'financialSettlement',
+            isShow: true,
+            meta: {
+              title: '财务结算审核',
+              icon: 'financialSettlement'
+            }
+          },
+          {
+            text: '财务订购审核',
+            type: 'ios-paper',
+            name: 'financialOrder',
+            path: 'financialOrder',
+            isShow: true,
+            meta: {
+              title: '财务订购审核',
+              icon: 'financialOrder'
+            }
+          },
+          {
+            text: '财务续费审核',
+            type: 'ios-paper',
+            name: 'financialRenewal',
+            path: 'financialRenewal',
+            isShow: true,
+            meta: {
+              title: '财务续费审核',
+              icon: 'financialRenewal'
             }
           }
         ]

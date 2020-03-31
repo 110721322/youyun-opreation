@@ -49,38 +49,38 @@ export const OPERATIONAPPROVE_CONFIG = {
       {
         name: '驳回',
         emitName: 'reject',
-        type: 'text',
-        isShow: ($row) => {
-          if ($row.showReject === true) {
-            return true;
-          } else {
-            return false;
-          }
-        }
+        type: 'text'
+        // isShow: ($row) => {
+        //   if ($row.showReject === true) {
+        //     return true;
+        //   } else {
+        //     return false;
+        //   }
+        // }
       },
       {
         name: '审核通过',
         emitName: 'adopt',
-        type: 'text',
-        isShow: ($row) => {
-          if ($row.showAdopt === true) {
-            return true;
-          } else {
-            return false;
-          }
-        }
+        type: 'text'
+        // isShow: ($row) => {
+        //   if ($row.showAdopt === true) {
+        //     return true;
+        //   } else {
+        //     return false;
+        //   }
+        // }
       },
       {
         name: '审批中',
         emitName: 'reviewing',
-        type: 'text',
-        isShow: ($row) => {
-          if ($row.showReviewing === true) {
-            return true;
-          } else {
-            return false;
-          }
-        }
+        type: 'text'
+        // isShow: ($row) => {
+        //   if ($row.showReviewing === true) {
+        //     return true;
+        //   } else {
+        //     return false;
+        //   }
+        // }
       }
     ]
   },
