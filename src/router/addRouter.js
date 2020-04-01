@@ -181,6 +181,27 @@ const asyncRoutes = {
     },
     component: () => import('@/page/agentService/renewalRecord.vue')
   },
+  'thirdParty': {
+    path: 'thirdParty',
+    name: 'thirdParty',
+    meta: {
+      title: '第三方对接列表',
+      icon: 'thirdParty'
+    },
+    component: () => import('@/page/agentService/thirdParty.vue'),
+    children: [
+      {
+        path: 'detail',
+        name: 'detail',
+        meta: {
+          fatherName: 'thirdParty',
+          title: '第三方对接信息',
+          icon: 'thirdPartyDetail'
+        },
+        component: () => import('@/page/agentService/thirdPartyDetail.vue')
+      }
+    ]
+  },
 
   'agentSubList': {
     path: 'subList',

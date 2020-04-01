@@ -301,6 +301,17 @@ const menuItems = [
       },
       {
         type: 'ios-grid',
+        name: 'thirdParty',
+        text: '第三方对接列表',
+        path: 'thirdParty',
+        isShow: true,
+        meta: {
+          title: '第三方对接列表',
+          icon: 'thirdParty'
+        }
+      },
+      {
+        type: 'ios-grid',
         name: 'renewalRecord',
         text: '到期续费记录',
         path: 'renewalRecord',
