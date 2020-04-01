@@ -2,7 +2,7 @@ export const USER_CONFIG = {
   gridConfig: [
     {
       label: '商户',
-      prop: [{ key: 'merchantName' }, { key: 'id', label: 'ID:' }],
+      prop: [{ key: 'merchantName' }, { key: 'merchantNo', label: 'ID:' }],
       width: '150px'
     },
     {
@@ -12,22 +12,22 @@ export const USER_CONFIG = {
     },
     {
       label: '支付宝分润（元）',
-      prop: 'aliDivided',
+      prop: 'alipayCommission',
       width: '140px'
     },
     {
       label: '微信分润（元）',
-      prop: 'wxDivided',
+      prop: 'wechatCommission',
       width: '130px'
     },
     {
       label: '云闪付分润（元）',
-      prop: 'yunDivided',
+      prop: 'cloudPayCommission',
       width: '140px'
     },
     {
       label: '银联分润（元）',
-      prop: 'yinDivided',
+      prop: 'unionpayCommission',
       width: '130px'
     },
     {

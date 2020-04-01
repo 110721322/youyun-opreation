@@ -25,7 +25,7 @@
           size="medium"
           class="slot"
         >
-          <el-table-column prop="id" label="设备名称" width="180"></el-table-column>
+          <el-table-column prop="deviceId" label="设备名称" width="180"></el-table-column>
           <el-table-column prop="name" label="图片">
             <template slot-scope="scope">
               <el-image
@@ -35,8 +35,8 @@
               ></el-image>
             </template>
           </el-table-column>
-          <el-table-column prop="amount1" label="设备单价（元）"></el-table-column>
-          <el-table-column prop="amount2" label="设备数量（个）"></el-table-column>
+          <el-table-column prop="salePrice" label="设备单价（元）"></el-table-column>
+          <el-table-column prop="count" label="设备数量（个）"></el-table-column>
         </el-table>
       </div>
       <el-form class="form" label-position="left">
@@ -68,56 +68,57 @@ export default {
       currentType: "",
       tableData: [],
       ruleForm: {
-        name: "1",
-        name1: "2",
-        name2: "3"
+        buyerName: "1",
+        buyerMobile: "2",
+        buyerAddress: "3"
       },
       configData: {
         name: "邮寄信息",
         items: [
           {
             name: "联系人",
-            key: "name"
+            key: "buyerName"
           },
           {
             name: "联系人手机号",
-            key: "name1"
+            key: "buyerMobile"
           },
           {
             name: "邮寄地址",
-            key: "name2"
+            key: "buyerAddress"
           }
         ]
       },
       ruleForm2: {
-        name: "1",
-        name1: "2",
-        name2: "3"
+        actualAmount: "1",
+        payTypeDesc: "2"
       },
       configData2: {
         name: "付款信息",
         items: [
           {
             name: "付款金额",
-            key: "name"
+            key: "actualAmount"
           },
           {
             name: "付款方式",
-            key: "name1"
+            key: "payTypeDesc"
           }
         ]
       },
       ruleForm3: {
-        name: "1",
+        outputNo: "1",
         name1: "2",
-        name2: "3"
+        agentName: "3",
+        amount: "3",
+        statusDesc: "3"
       },
       configData3: {
         name: "订单信息",
         items: [
           {
             name: "订单号",
-            key: "name"
+            key: "outputNo"
           },
           {
             name: "创建时间",
@@ -125,15 +126,15 @@ export default {
           },
           {
             name: "购买服务商",
-            key: "name1"
+            key: "agentName"
           },
           {
             name: "订单金额",
-            key: "name1"
+            key: "amount"
           },
           {
             name: "订单状态",
-            key: "name1"
+            key: "statusDesc"
           },
           {
             name: "订单备注",
@@ -184,6 +185,28 @@ export default {
     getHardDetail() {
       api.hardwareDetail(this.params).then(res => {
         this.tableData = res.object.infoVOList
+        this.ruleForm = {
+          buyerName: res.object.buyerJsonVO.buyerName,
+          buyerMobile: res.object.buyerJsonVO.buyerMobile,
+          buyerAddress: res.object.buyerJsonVO.buyerAddress
+        }
+        this.ruleForm2 = {
+          actualAmount: res.object.actualAmount,
+          payTypeDesc: res.object.payTypeDesc
+        }
+        this.ruleForm3 = {
+          outputNo: res.object.outputNo,
+          name1: "2",
+          agentName: res.object.agentName,
+          amount: res.object.amount,
+          statusDesc: res.object.statusDesc
+        }
+        this.rejectTitle = res.object.rejectRemark
+        if (res.object.rejectRemark) {
+          this.showComponents.showRejectTitle = true
+        } else {
+          this.showComponents.showRejectTitle = false
+        }
       })
     }
   }

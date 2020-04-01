@@ -96,49 +96,43 @@ export default {
     handleDetail() {
       this.$router.push({ path: "/agent/dividedOverview/detail" });
     },
-    getData() {
-      this.testData = [
-        {
-          serviceName: "岳阳楼区戴斯酒店",
-          id: "岳阳楼区戴斯酒店",
-          totalCommission: "10000.00",
-          orderDistribution: "1000.00",
-          officeReward: "998.00",
-          platformReward: "998.00",
-          commissionIncrease: "100%"
-        },
-        {
-          serviceName: "岳阳楼区戴斯酒店",
-          id: "岳阳楼区戴斯酒店",
-          totalCommission: "20000.00",
-          orderDistribution: "600.00",
-          officeReward: "888.00",
-          platformReward: "18888.00",
-          commissionIncrease: "98%"
-        },
-        {
-          serviceName: "岳阳楼区戴斯酒店",
-          id: "岳阳楼区戴斯酒店",
-          totalCommission: "300.00",
-          orderDistribution: "200.00",
-          officeReward: "2888.00",
-          platformReward: "18.00",
-          commissionIncrease: "150%"
-        }
-      ];
-    },
     getTotalCommission() {
       api.totalCommission({
         tradeMonth: this.tradeMonth
       }).then(res => {
         console.log(res.object)
+        this.overviewData = [
+          {
+            title: "订单分润总额",
+            data: res.object.officeCommission + '元'
+          },
+          {
+            title: "服务商订单分润",
+            data: res.object.agentCommission + '元'
+          },
+          {
+            title: "平台订单分润",
+            data: res.object.platformCommission + '元'
+          }
+        ]
+        this.overviewData2 = [
+          {
+            title: "官方活动奖励",
+            data: res.object.officeActivityCommission + '元'
+          },
+          {
+            title: "平台活动奖励",
+            data: res.object.platformActivityCommission + '元'
+          }
+        ]
       })
     },
     search($form) {
+      console.log($form)
       this.params = {
-        "agentName": "008小老猪",
-        "agentNo": "王哈小5f",
-        "tradeMonth": "2020-03-17"
+        "agentName": "",
+        "agentNo": "",
+        "tradeMonth": $form.date || ""
       }
       this.params[$form.inputSelect] = $form.inputForm
     }

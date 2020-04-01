@@ -1,9 +1,12 @@
 export const FORM_CONFIG = {
   formData: [
     {
-      type: 9,
-      label: '筛选时间',
+      type: 11,
+      label: '选择月份',
       key: 'date',
+      datatype: 'month',
+      placeholder: '选择月份',
+      format: 'yyyy-MM',
       class: 'max-width',
       labelWidth: '100px'
     },
