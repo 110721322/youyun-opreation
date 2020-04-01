@@ -25,7 +25,6 @@
           :default-expand-all="false"
           :hide-edit-area="configData.hideEditArea"
           @detail="handleDetail"
-          @checking="handleChecking"
         ></BaseCrud>
       </div>
     </div>
@@ -72,12 +71,7 @@ export default {
     },
     handleDetail() {
       this.$router.push({
-        path: "/risk/riskAppeal/merchantRiskList/detail"
-      });
-    },
-    handleChecking() {
-      this.$router.push({
-        path: "/risk/riskAppeal/merchantRiskList/detail"
+        path: "/agent/list/detail"
       });
     },
     search($ruleForm) {

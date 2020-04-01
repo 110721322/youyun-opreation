@@ -6,24 +6,34 @@ export const TABLE_CONFIG = {
       width: '150px'
     },
     {
-      label: '商户名称',
+      label: '续费时间',
       prop: 'merchantName',
-      width: '150px'
+      width: '100px'
     },
     {
-      label: '提交时间',
+      label: '开通时间',
       prop: 'createTime',
-      width: '150px'
+      width: '100px'
     },
     {
-      label: '所属运营',
+      label: '最近到期时间',
       prop: 'operateUserName',
-      width: '150px'
+      width: '130px'
+    },
+    {
+      label: '续费时长（年）',
+      prop: 'status',
+      width: '130px'
+    },
+    {
+      label: '支付方式',
+      prop: 'status',
+      width: '100px'
     },
     {
       label: '状态',
       prop: 'status',
-      width: '150px'
+      width: '100px'
     }
   ],
 
@@ -37,28 +47,9 @@ export const TABLE_CONFIG = {
     view: false,
     expands: [
       {
-        name: '详情',
+        name: '服务商信息',
         emitName: 'detail',
-        type: 'text',
-        isShow: ($item) => {
-          if ($item.showDetail) {
-            return true;
-          } else {
-            return false
-          }
-        }
-      },
-      {
-        name: '审核',
-        emitName: 'checking',
-        type: 'text',
-        isShow: ($item) => {
-          if ($item.showChecking) {
-            return true;
-          } else {
-            return false
-          }
-        }
+        type: 'text'
       }
     ]
   },
