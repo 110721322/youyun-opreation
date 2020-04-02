@@ -137,6 +137,15 @@ export default {
       api
         .update($ruleForm)
         .then(res => {
+          api.update({
+            isTaskCountdown: $ruleForm.isTaskCountdown,
+            perCustomerTransaction: $ruleForm.perCustomerTransaction,
+            dingdingAddress: $ruleForm.dingdingAddress,
+            transactionNum: $ruleForm.transactionNum,
+            dataComparisonType: $ruleForm.dataComparisonType,
+            dataTransactionNum: $ruleForm.dataTransactionNum,
+            dataRatio: $ruleForm.dataRatio
+          });
           this.$message("修改成功");
         })
         .catch(err => {

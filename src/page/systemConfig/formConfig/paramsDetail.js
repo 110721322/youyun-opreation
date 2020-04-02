@@ -36,7 +36,7 @@ export const FORM_CONFIG = {
         rules: setRules('邮箱').isRequired.get,
         hideColon: true,
         isShowSlot: true,
-        showSlotName: '元'
+        showSlotName: '笔'
       }
     ]
   },
@@ -59,7 +59,7 @@ export const FORM_CONFIG = {
         rules: setRules('邮箱').isRequired.get,
         hideColon: true,
         isShowSlot: true,
-        showSlotName: '元'
+        showSlotName: '笔'
       },
       {
         type: 0,
@@ -69,7 +69,7 @@ export const FORM_CONFIG = {
         rules: setRules('邮箱').isRequired.get,
         hideColon: true,
         isShowSlot: true,
-        showSlotName: '元'
+        showSlotName: '%'
       }
     ]
   }

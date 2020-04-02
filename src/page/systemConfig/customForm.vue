@@ -85,7 +85,7 @@ export default {
       ruleForm: {
         name1: "2"
       },
-      isEdit: true,
+      isEdit: false,
       tableConfig: [
         {
           label: "名称",
@@ -114,25 +114,28 @@ export default {
       menuList: [
         {
           name: "成员信息（编辑信息）",
-          type: "editInfo",
+          type: "employee_edit",
           formLoaction: "系统配置-成员管理-操作-编辑"
         },
         {
           name: "成员信息（注册信息）",
-          type: "registerInfo",
+          type: "employee_register",
           formLoaction: "成员注册-完善个人信息"
         }
       ],
-      selectMenu: {}
+      selectMenu: {},
+      type: "employee_edit"
     };
   },
   mounted() {
     this.selectMenu = this.menuList[0];
-    this.getTableData({ type: "employee_edit" }); // employee_register
+    this.getTableData();
   },
   methods: {
     onClick_menuItem($item) {
       this.selectMenu = $item;
+      this.type = $item.type;
+      this.getTableData();
     },
     onInput_checkBox() {
       console.log(this.tableData);
@@ -143,7 +146,9 @@ export default {
     },
     getTableData(params) {
       api
-        .queryAllFormFieldsByType(params)
+        .queryAllFormFieldsByType({
+          type: this.type
+        })
         .then(res => {
           console.log(res);
           this.tableData = res.object;
@@ -156,6 +161,7 @@ export default {
         .then(res => {
           console.log(res);
           this.$message("保存成功");
+          this.isEdit = false;
         })
         .catch();
     },

@@ -202,7 +202,55 @@ const asyncRoutes = {
       }
     ]
   },
-
+  'ticketCenter': {
+    path: 'ticketCenter',
+    name: 'ticketCenter',
+    meta: {
+      title: '工单中心',
+      icon: 'ticketCenter'
+    },
+    component: () => import('@/page/agentService/ticketCenter/ticketCenter.vue'),
+    children: []
+  },
+  'ticketStatistics': {
+    path: 'ticketStatistics',
+    name: 'ticketStatistics',
+    meta: {
+      title: '工单统计',
+      icon: 'ticketStatistics'
+    },
+    component: () => import('@/page/agentService/ticketCenter/ticketStatistics.vue')
+  },
+  'ticketList': {
+    path: 'ticketList',
+    name: 'ticketList',
+    meta: {
+      title: '工单列表',
+      icon: 'ticketList'
+    },
+    component: () => import('@/page/agentService/ticketCenter/ticketList.vue'),
+    children: [
+      {
+        path: 'detail',
+        name: 'detail',
+        meta: {
+          fatherName: 'ticketList',
+          title: '工单详情',
+          icon: 'ticketListDetail'
+        },
+        component: () => import('@/page/agentService/ticketCenter/ticketListDetail.vue')
+      }
+    ]
+  },
+  'ticketKnowledge': {
+    path: 'ticketKnowledge',
+    name: 'ticketKnowledge',
+    meta: {
+      title: '工单知识库',
+      icon: 'ticketKnowledge'
+    },
+    component: () => import('@/page/agentService/ticketCenter/ticketKnowledge.vue')
+  },
   'agentSubList': {
     path: 'subList',
     name: 'agentSubList',

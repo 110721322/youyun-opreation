@@ -125,6 +125,7 @@ export default {
   methods: {
     init() {
       // 初始化 绑定初始值
+      this.ruleForm = {};
       if (this.formBaseData.length > 0) {
         for (const iterator of this.formBaseData) {
           let initVal = iterator.initVal;

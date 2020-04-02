@@ -320,6 +320,52 @@ const menuItems = [
           title: '到期续费记录',
           icon: 'renewalRecord'
         }
+      },
+      {
+        type: 'ios-grid',
+        name: 'ticketCenter',
+        text: '工单中心',
+        path: 'ticketCenter',
+        isShow: true,
+        meta: {
+          title: '工单中心',
+          icon: 'ticketCenter'
+        },
+        children: [
+          {
+            type: 'ios-grid',
+            name: 'ticketStatistics',
+            text: '工单统计',
+            path: 'ticketStatistics',
+            isShow: true,
+            meta: {
+              title: '工单统计',
+              icon: 'ticketStatistics'
+            }
+          },
+          {
+            type: 'ios-grid',
+            name: 'ticketList',
+            text: '工单列表',
+            path: 'ticketList',
+            isShow: true,
+            meta: {
+              title: '工单列表',
+              icon: 'ticketList'
+            }
+          },
+          {
+            type: 'ios-grid',
+            name: 'ticketKnowledge',
+            text: '工单知识库',
+            path: 'ticketKnowledge',
+            isShow: true,
+            meta: {
+              title: '工单知识库',
+              icon: 'ticketKnowledge'
+            }
+          }
+        ]
       }
     ]
   },
