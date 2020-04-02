@@ -97,6 +97,7 @@ const asyncRoutes = {
     name: 'hardwareOrder',
     meta: {
       title: '硬件订购订单',
+      subMenuName: 'orderManage',
       icon: 'hardwareOrder'
     },
     component: () => import('@/page/agentService/orderManage/hardwareOrder.vue'),
@@ -125,6 +126,7 @@ const asyncRoutes = {
     name: 'adAuth',
     meta: {
       title: '广告权限',
+      subMenuName: 'adManage',
       icon: 'adAuth'
     },
     component: () => import('@/page/agentService/adManage/adAuth.vue'),
@@ -135,6 +137,7 @@ const asyncRoutes = {
     name: 'adPutList',
     meta: {
       title: '平台广告投放列表',
+      subMenuName: 'adManage',
       icon: 'adPutList'
     },
     component: () => import('@/page/agentService/adManage/adPutList.vue'),
@@ -156,6 +159,7 @@ const asyncRoutes = {
     name: 'platformAdList',
     meta: {
       title: '平台广告列表',
+      subMenuName: 'adManage',
       icon: 'platformAdList'
     },
     component: () => import('@/page/agentService/adManage/platformAdList.vue'),
@@ -217,6 +221,7 @@ const asyncRoutes = {
     name: 'ticketStatistics',
     meta: {
       title: '工单统计',
+      subMenuName: 'ticketCenter',
       icon: 'ticketStatistics'
     },
     component: () => import('@/page/agentService/ticketCenter/ticketStatistics.vue')
@@ -226,6 +231,7 @@ const asyncRoutes = {
     name: 'ticketList',
     meta: {
       title: '工单列表',
+      subMenuName: 'ticketCenter',
       icon: 'ticketList'
     },
     component: () => import('@/page/agentService/ticketCenter/ticketList.vue'),
@@ -247,6 +253,7 @@ const asyncRoutes = {
     name: 'ticketKnowledge',
     meta: {
       title: '工单知识库',
+      subMenuName: 'ticketCenter',
       icon: 'ticketKnowledge'
     },
     component: () => import('@/page/agentService/ticketCenter/ticketKnowledge.vue')
@@ -571,7 +578,8 @@ const asyncRoutes = {
     name: 'authorized',
     component: () => import('@/page/device/stock/authorized.vue'),
     meta: {
-      title: 'authorized',
+      title: '设备授权激活',
+      subMenuName: 'stock',
       icon: 'authorized'
     },
     children: [
@@ -922,6 +930,7 @@ const asyncRoutes = {
     component: () => import('@/page/systemConfig/menuManage/operationMenu.vue'),
     meta: {
       title: '运营后台菜单',
+      subMenuName: 'menuManage',
       icon: 'operationMenu'
     },
     children: []
@@ -932,6 +941,7 @@ const asyncRoutes = {
     component: () => import('@/page/systemConfig/menuManage/agentMenu.vue'),
     meta: {
       title: '服务商后台菜单',
+      subMenuName: 'menuManage',
       icon: 'agentMenu'
     },
     children: []
@@ -942,6 +952,7 @@ const asyncRoutes = {
     component: () => import('@/page/systemConfig/menuManage/businessMenu.vue'),
     meta: {
       title: '商应小程序菜单',
+      subMenuName: 'menuManage',
       icon: 'businessMenu'
     },
     children: []
@@ -1055,7 +1066,8 @@ const asyncRoutes = {
     component: () => import('@/page/risk/incomingRisk/serviceIncomingRisk.vue'),
     meta: {
       title: '服务商入件风控',
-      icon: 'serviceIncomingRisk'
+      icon: 'serviceIncomingRisk',
+      subMenuName: 'incomingRisk'
     },
     children: []
   },
@@ -1065,7 +1077,8 @@ const asyncRoutes = {
     component: () => import('@/page/risk/incomingRisk/merchantDataIncomingRisk.vue'),
     meta: {
       title: '商户入件资料风控',
-      icon: 'merchantDataIncomingRisk'
+      icon: 'merchantDataIncomingRisk',
+      subMenuName: 'incomingRisk'
     },
     children: [
       {
@@ -1096,7 +1109,8 @@ const asyncRoutes = {
     component: () => import('@/page/risk/riskAppeal/leRiskList.vue'),
     meta: {
       title: '乐刷风控',
-      icon: 'leRiskList'
+      icon: 'leRiskList',
+      subMenuName: 'riskAppeal'
     },
     children: [
       {
@@ -1117,7 +1131,8 @@ const asyncRoutes = {
     component: () => import('@/page/risk/riskAppeal/merchantRiskList.vue'),
     meta: {
       title: '平台商户资料风控',
-      icon: 'merchantRiskList'
+      icon: 'merchantRiskList',
+      subMenuName: 'riskAppeal'
     },
     children: [
       {
@@ -1169,7 +1184,8 @@ const asyncRoutes = {
     component: () => import('@/page/transferReview/financialAudit/financialSettlement.vue'),
     meta: {
       title: '财务结算审核',
-      icon: 'financialSettlement'
+      icon: 'financialSettlement',
+      subMenuName: 'financialAudit'
     },
     children: [
       {
@@ -1189,7 +1205,8 @@ const asyncRoutes = {
     component: () => import('@/page/transferReview/financialAudit/financialOrder.vue'),
     meta: {
       title: '财务订购审核',
-      icon: 'financialOrder'
+      icon: 'financialOrder',
+      subMenuName: 'financialAudit'
     },
     children: []
   },
@@ -1199,7 +1216,8 @@ const asyncRoutes = {
     component: () => import('@/page/transferReview/financialAudit/financialRenewal.vue'),
     meta: {
       title: '财务续费审核',
-      icon: 'financialRenewal'
+      icon: 'financialRenewal',
+      subMenuName: 'financialAudit'
     },
     children: []
   }

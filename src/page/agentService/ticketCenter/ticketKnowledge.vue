@@ -20,9 +20,9 @@
           @node-click="handleNodeClick"
         >
           <template v-slot="{ node, data }">
-            <span class="custom-tree-node">
-              <span>{{ node.label }}</span>
-              <span>
+            <div class="custom-tree-node">
+              <span v-show="!data.isEdit" @click="onClick_editMenu(data)">{{ node.label }}</span>
+              <span v-show="!data.isEdit">
                 <el-button
                   v-if="data.children"
                   type="text"
@@ -31,7 +31,28 @@
                 >添加</el-button>
                 <el-button type="text" size="mini" @click="onClick_delete(node,data)">删除</el-button>
               </span>
-            </span>
+              <span v-show="data.isEdit">
+                <el-input
+                  :ref="'input'+data.id"
+                  v-model="data.label"
+                  size="mini"
+                  class="edit-input"
+                  @blur="onClick_complete(data)"
+                ></el-input>
+                <!-- <el-button
+                    class="cancel-btn"
+                    size="medium"
+                    type="text"
+                    @click="onClick_complete(data)"
+                  >完成</el-button>
+                  <el-button
+                    class="cancel-btn"
+                    size="medium"
+                    type="text"
+                    @click="onClick_cannel(data)"
+                >取消</el-button>-->
+              </span>
+            </div>
           </template>
         </el-tree>
       </div>
@@ -211,7 +232,8 @@ export default {
       ],
       selectTreeData: {
         label: "佣金提现"
-      }
+      },
+      selectedData: {}
     };
   },
   mounted() {
@@ -220,6 +242,23 @@ export default {
     this.transferQuestions();
   },
   methods: {
+    onClick_editMenu($data) {
+      if (this.selectedData === $data) {
+        this.$set($data, "isEdit", true);
+        this.$nextTick(() => {
+          this.$refs[`input${$data.id}`].focus();
+        });
+      } else {
+        this.selectedData = $data;
+      }
+    },
+    onClick_complete($data) {
+      // api.xxx()
+      this.$set($data, "isEdit", false);
+    },
+    onClick_cannel($data) {
+      this.$set($data, "isEdit", false);
+    },
     allowDrop(draggingNode, dropNode, type) {
       if (draggingNode.level === dropNode.level) {
         if (draggingNode.parent.id === dropNode.parent.id) {
@@ -251,11 +290,11 @@ export default {
       });
     },
     onClick_append($node, $data) {
-      const newChild = { id: this.id++, label: "testtest", children: [] };
+      const newChild = { id: this.id++, label: "testtest" };
       if (!$data.children) {
         this.$set($data, "children", []);
       }
-      this.data.children.push(newChild);
+      $data.children.push(newChild);
     },
     onClick_delete($node, $data) {
       this.$confirm("是否要删除该菜单？", "提示", {
@@ -395,6 +434,9 @@ export default {
     }
     .tree-box {
       margin-top: 25px;
+      /deep/ .el-tree-node__content {
+        height: 37px;
+      }
     }
     .custom-tree-node {
       flex: 1;
@@ -403,6 +445,7 @@ export default {
       justify-content: space-between;
       font-size: 14px;
       padding-right: 8px;
+      height: 40px;
     }
   }
   .right-box {
@@ -493,5 +536,8 @@ export default {
   padding: 16px;
   text-align: right;
   margin-top: 25px;
+}
+.edit-input {
+  width: 200px;
 }
 </style>
