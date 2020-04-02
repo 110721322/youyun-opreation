@@ -107,23 +107,9 @@ import ElImageViewer from "element-ui/packages/image/src/image-viewer";
 export default {
   components: { ElImageViewer },
   props: {
-    getupImgTokenUrl: {},
-    img: {
-      type: String,
-      default: ""
-    },
-    upType: {
-      type: Number,
-      default: 1
-    },
-    iDtext: {
-      type: String,
-      default: ""
-    },
-    type: {
-      type: String,
-      default: ""
-    }
+    ruleForm: Object,
+    formItem: Object,
+    remoteMethod: Function
   },
   data() {
     return {
@@ -136,8 +122,8 @@ export default {
   },
 
   created() {
-    if (this.img) {
-      this.dialogImageUrl = this.img;
+    if (this.formItem.initVal) {
+      this.dialogImageUrl = this.formItem.initVal;
     }
   },
 
@@ -195,10 +181,11 @@ export default {
           this.dialogImagePath = this.ossData.ossHost + "/";
           this.dialogImageUrl =
             this.ossData.objectKeyPrefix + "/" + this.ossData.objectKeys[0];
-          this.$emit("uploadSuccess", {
-            dialogImagePath: this.dialogImagePath,
-            dialogImageUrl: this.dialogImageUrl
-          });
+
+          this.ruleForm[this.formItem.key] = {
+            dialogImagePath: 111,
+            dialogImageUrl: 222
+          };
           this.loading = false;
         },
         error: () => {

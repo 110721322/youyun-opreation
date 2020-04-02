@@ -3,7 +3,7 @@
     <div class="title">
       {{ configData.name }}
       <slot name="operatingTop">
-        <span class="edit" @click="edit(child.modelName)">编辑</span>
+        <!-- <span class="edit" @click="edit(child.modelName)">编辑</span> -->
       </slot>
     </div>
     <slot name="step"></slot>
@@ -23,20 +23,20 @@
         label-position="left"
       >
         <el-row>
-          <el-col v-for="(item, key) of child.models" :key="key" :span="8">
+          <el-col v-for="(item, key1) of child.models" :key="key1" :span="8">
             <el-form-item
-              v-for="(item, key) of item.items"
-              :key="key"
-              :label="item.name + '：'"
+              v-for="(item2, key2) of item.items"
+              :key="key2"
+              :label="item2.name + '：'"
               prop="name"
             >
               <el-image
-                v-if="item.type === 'img'"
+                v-if="item2.type === 'img'"
                 style="width: 100px; height: 100px"
-                :src="ruleForm[item.key]"
-                :preview-src-list="[ruleForm[item.key]]"
+                :src="ruleForm[item2.key]"
+                :preview-src-list="[ruleForm[item2.key]]"
               ></el-image>
-              <span v-else class="item-value">{{ ruleForm[item.key] }}</span>
+              <span v-else class="item-value">{{ ruleForm[item2.key] }}</span>
             </el-form-item>
           </el-col>
         </el-row>

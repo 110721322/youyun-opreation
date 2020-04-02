@@ -266,6 +266,8 @@ export default {
       this.apiService(this.queryParams)
         .then(res => {
           this.showGridData = res.datas || [res.object];
+          // console.log(this.showGridData[0].edit);
+          // this.showGridData[0].edit = false;
           this.dataTotal = res.totalCount;
           this.listLoading = false;
         })
@@ -277,6 +279,10 @@ export default {
 
     // 处理相应父组件的事件方法
     handleEmit(emitName, row) {
+      if (emitName === "rowEdit") {
+        this.rowEdit(row);
+        return;
+      }
       this.$emit(emitName, row);
     },
     handleCurrentChange(page) {
@@ -307,6 +313,17 @@ export default {
     cancelEdit($item) {
       $item.edit = false;
       this.$emit("cancelEdit", $item);
+    },
+    rowEdit($item) {
+      this.$nextTick(() => {
+        const data = JSON.parse(JSON.stringify(this.showGridData));
+        for (const item of data) {
+          if (item.id === $item.id) {
+            item.edit = true;
+          }
+        }
+        this.showGridData = data;
+      });
     }
   }
 };
