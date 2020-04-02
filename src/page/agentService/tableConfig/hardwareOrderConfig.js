@@ -1,39 +1,41 @@
-export const USER_CONFIG = {
+export const TABLE_CONFIG = {
   gridConfig: [
     {
-      label: '服务商',
-      prop: [{ key: 'agentName' }, { key: 'agentNo', label: 'ID:' }],
-      width: '150px'
+      label: '订单号',
+      prop: 'outputNo',
+      width: '90px'
     },
     {
-      label: '佣金总额（元）',
-      prop: 'totalCommission',
-      width: '150px',
-      sortable: "custom"
+      label: '创建时间',
+      prop: 'createTime',
+      width: '90px'
     },
     {
-      label: '服务商订单分润（元）',
-      prop: 'orderDistribution',
-      width: '170px',
-      sortable: "custom"
+      label: '购买服务商',
+      prop: 'agentName',
+      // prop: [{ key: "buyService" }, { key: "id", label: "ID:" }],
+      width: '90px'
+
     },
     {
-      label: '官方活动奖励（元）',
-      prop: 'officeActivity',
-      width: '170px',
-      sortable: "custom"
+      label: '联系人',
+      prop: 'buyerJsonVO.buyerName',
+      // prop: [{ key: "name" }, { key: "phone"}],
+      width: '90px'
     },
     {
-      label: '平台活动奖励（元）',
-      prop: 'platformActivity',
-      width: '170px',
-      sortable: "custom"
+      label: '订单状态',
+      prop: 'status',
+      width: '90px'
     },
     {
-      label: '佣金总额环比增长',
-      prop: 'ratio',
-      width: '170px',
-      sortable: "custom"
+      label: '订单金额（元）',
+      prop: 'amount',
+      width: '90px'
+    },
+    {
+      label: '订单类型',
+      prop: 'outputType'
     }
   ],
   // crud的模态框表单配置，可配置表单类型，验证规则，是否必填,col-span布局可通过span参数配置

@@ -6,10 +6,6 @@
     <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
 
     <div class="table_box">
-      <div class="tabale_title_box">
-        <div class="title">运营结算列表</div>
-        <el-button class="btn" type="primary" @click="onClick_addBlackList">新增入件黑名单</el-button>
-      </div>
       <BaseCrud
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
@@ -82,7 +78,7 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import { FORM_CONFIG } from "./formConfig/operationApproveForm";
 import { SEARCH_CONFIG } from "./formConfig/operationApproveSearch";
 import { OPERATIONAPPROVE_CONFIG } from "./tableConfig/operationApproveConfig";
-import api from "@/api/api_agent.js"
+import api from "@/api/api_agent.js";
 
 export default {
   name: "Theme",
@@ -99,9 +95,9 @@ export default {
       direction: "rtl",
       arrow: arrowImg,
       params: {
-        "agentNo": "",
-        "agentName": "",
-        "settleStatus": ""
+        agentNo: "",
+        agentName: "",
+        settleStatus: ""
       },
       api: api.listOperationSettle
     };
@@ -114,10 +110,10 @@ export default {
       // eslint-disable-next-line no-console
       console.log($ruleForm);
       this.params = {
-        "agentNo": "",
-        "agentName": "",
-        "settleStatus": $ruleForm.status || ""
-      }
+        agentNo: "",
+        agentName: "",
+        settleStatus: $ruleForm.status || ""
+      };
       this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
     },
     getTableData() {
@@ -165,8 +161,7 @@ export default {
     },
     cancel() {
       this.drawer = false;
-    },
-    onClick_addBlackList() {}
+    }
   }
 };
 </script>

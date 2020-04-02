@@ -1,8 +1,8 @@
 // import { setRules } from '@/libs/kit/formFns.js'
 
 export const FORM_CONFIG = {
-  rejectReason: {
-    title: '驳回',
+  communicationData: {
+    title: '添加沟通小记',
     showFootBtn: true,
     formData: [
       {

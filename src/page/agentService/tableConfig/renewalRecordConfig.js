@@ -1,43 +1,42 @@
 export const TABLE_CONFIG = {
   gridConfig: [
     {
-      label: '订单号',
-      prop: 'order',
-      width: '90px'
+      label: '服务商',
+      prop: [{ key: 'agentName' }, { key: 'agentNo', label: "ID:" }],
+      width: '150px'
     },
     {
-      label: '创建时间',
-      prop: 'time',
-      width: '90px'
+      label: '续费时间',
+      prop: 'merchantName',
+      width: '100px'
     },
     {
-      label: '购买服务商',
-      prop: 'buyService',
-      // prop: [{ key: "buyService" }, { key: "id", label: "ID:" }],
-      width: '90px'
-
+      label: '开通时间',
+      prop: 'createTime',
+      width: '100px'
     },
     {
-      label: '联系人',
-      prop: 'contact',
-      // prop: [{ key: "name" }, { key: "phone"}],
-      width: '90px'
+      label: '最近到期时间',
+      prop: 'operateUserName',
+      width: '130px'
     },
     {
-      label: '订单状态',
+      label: '续费时长（年）',
       prop: 'status',
-      width: '90px'
+      width: '130px'
     },
     {
-      label: '订单金额（元）',
-      prop: 'amount',
-      width: '90px'
+      label: '支付方式',
+      prop: 'status',
+      width: '100px'
     },
     {
-      label: '订单类型',
-      prop: 'type'
+      label: '状态',
+      prop: 'status',
+      width: '100px'
     }
   ],
+
   // crud的模态框表单配置，可配置表单类型，验证规则，是否必填,col-span布局可通过span参数配置
 
   // crud的操作按钮配置，基础按钮有添加、修改、删除、查看，还可以配置扩展按钮
@@ -48,7 +47,7 @@ export const TABLE_CONFIG = {
     view: false,
     expands: [
       {
-        name: '详情',
+        name: '服务商信息',
         emitName: 'detail',
         type: 'text'
       }
@@ -64,5 +63,6 @@ export const TABLE_CONFIG = {
     create_time: '',
     expand: '',
     roleIdList: []
-  }
+  },
+  hideEditArea: false
 };

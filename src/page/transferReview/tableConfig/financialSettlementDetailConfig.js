@@ -1,19 +1,18 @@
-
-export const MENU_CONFIG = {
+export const RECORD_CONFIG = {
   gridConfig: [
     {
-      label: '菜单名称',
-      prop: 'type',
+      label: '返佣日期',
+      prop: 'createTime',
       width: '150px'
     },
     {
-      label: '图标',
-      prop: 'taskName',
+      label: '结算类型',
+      prop: 'operateUserName',
       width: '150px'
     },
     {
-      label: '页面链接',
-      prop: 'image',
+      label: '结算金额（元）',
+      prop: 'channel',
       width: '150px'
     }
   ],
@@ -26,23 +25,7 @@ export const MENU_CONFIG = {
     update: false,
     delete: false,
     view: false,
-    expands: [
-      {
-        name: '添加下级菜单',
-        emitName: 'addSubMenu',
-        type: 'text'
-      },
-      {
-        name: '编辑',
-        emitName: 'edit',
-        type: 'text'
-      },
-      {
-        name: '删除',
-        emitName: 'adopt',
-        type: 'text'
-      }
-    ]
+    expands: []
   },
   // 表单基础数据类型，需要预先赋值
   formModel: {
@@ -55,5 +38,5 @@ export const MENU_CONFIG = {
     expand: '',
     roleIdList: []
   },
-  hideEditArea: false
+  hideEditArea: true
 };

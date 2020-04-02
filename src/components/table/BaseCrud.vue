@@ -144,6 +144,7 @@
 
 <script>
 import Cell from "./expand";
+import * as g from "@/libs/global";
 
 export default {
   name: "BaseCrud",
@@ -265,9 +266,11 @@ export default {
       this.queryParams.pageSize = this.currentPageSize;
       this.apiService(this.queryParams)
         .then(res => {
-          this.showGridData = res.datas || [res.object];
-          // console.log(this.showGridData[0].edit);
-          // this.showGridData[0].edit = false;
+          if (g.utils.isArr(res.object)) {
+            this.showGridData = res.datas || res.object;
+          } else {
+            this.showGridData = res.datas || [res.object];
+          }
           this.dataTotal = res.totalCount;
           this.listLoading = false;
         })

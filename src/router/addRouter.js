@@ -72,22 +72,20 @@ const asyncRoutes = {
       }
     ]
   },
-  'operationApprove': {
-    path: 'operationApprove',
-    name: 'operationApprove',
+  agentService: {
+    path: '/agentService',
+    name: 'agentService',
+    component: Layout,
     meta: {
-      title: '运营结算审核',
-      icon: 'operationApprove'
+      title: '服务商服务',
+      icon: 'agentService'
     },
-    component: () => import('@/page/agent/operationApprove.vue'),
-    children: [
-    ]
+    children: []
   },
-
   'orderManage': {
     path: 'orderManage',
     name: 'orderManage',
-    component: () => import('@/page/agent/orderManage/orderManage.vue'),
+    component: () => import('@/page/agentService/orderManage/orderManage.vue'),
     meta: {
       title: '订单管理',
       icon: 'orderManage'
@@ -101,7 +99,7 @@ const asyncRoutes = {
       title: '硬件订购订单',
       icon: 'hardwareOrder'
     },
-    component: () => import('@/page/agent/orderManage/hardwareOrder.vue'),
+    component: () => import('@/page/agentService/orderManage/hardwareOrder.vue'),
     children: [{
       path: 'detail',
       name: 'detail',
@@ -109,13 +107,13 @@ const asyncRoutes = {
         title: '详情',
         icon: 'detail'
       },
-      component: () => import('@/page/agent/orderManage/hardwareOrderDetail.vue')
+      component: () => import('@/page/agentService/orderManage/hardwareOrderDetail.vue')
     }]
   },
   'adManage': {
     path: 'adManage',
     name: 'adManage',
-    component: () => import('@/page/agent/adManage/adManage.vue'),
+    component: () => import('@/page/agentService/adManage/adManage.vue'),
     meta: {
       title: '广告管理',
       icon: 'adManage'
@@ -129,7 +127,7 @@ const asyncRoutes = {
       title: '广告权限',
       icon: 'adAuth'
     },
-    component: () => import('@/page/agent/adManage/adAuth.vue'),
+    component: () => import('@/page/agentService/adManage/adAuth.vue'),
     children: []
   },
   'adPutList': {
@@ -139,7 +137,7 @@ const asyncRoutes = {
       title: '平台广告投放列表',
       icon: 'adPutList'
     },
-    component: () => import('@/page/agent/adManage/adPutList.vue'),
+    component: () => import('@/page/agentService/adManage/adPutList.vue'),
     children: [
       {
         path: 'detail',
@@ -149,7 +147,7 @@ const asyncRoutes = {
           title: '详情',
           icon: 'adPutDetail'
         },
-        component: () => import('@/page/agent/adManage/adPutDetail.vue')
+        component: () => import('@/page/agentService/adManage/adPutDetail.vue')
       }
     ]
   },
@@ -160,7 +158,7 @@ const asyncRoutes = {
       title: '平台广告列表',
       icon: 'platformAdList'
     },
-    component: () => import('@/page/agent/adManage/platformAdList.vue'),
+    component: () => import('@/page/agentService/adManage/platformAdList.vue'),
     children: [
       {
         path: 'detail',
@@ -170,9 +168,18 @@ const asyncRoutes = {
           title: '详情',
           icon: 'platformAdDetail'
         },
-        component: () => import('@/page/agent/adManage/platformAdDetail.vue')
+        component: () => import('@/page/agentService/adManage/platformAdDetail.vue')
       }
     ]
+  },
+  'renewalRecord': {
+    path: 'renewalRecord',
+    name: 'renewalRecord',
+    meta: {
+      title: '到期续费记录',
+      icon: 'renewalRecord'
+    },
+    component: () => import('@/page/agentService/renewalRecord.vue')
   },
 
   'agentSubList': {
@@ -830,13 +837,43 @@ const asyncRoutes = {
     },
     children: []
   },
-  'menuManager': {
-    path: 'menuManager',
-    name: 'menuManager',
-    component: () => import('@/page/systemConfig/menuManager.vue'),
+  'menuManage': {
+    path: 'menuManage',
+    name: 'menuManage',
+    component: () => import('@/page/systemConfig/menuManage/menuManage.vue'),
     meta: {
       title: '菜单管理',
-      icon: 'menuManager'
+      icon: 'menuManage'
+    },
+    children: []
+  },
+  'operationMenu': {
+    path: 'operationMenu',
+    name: 'operationMenu',
+    component: () => import('@/page/systemConfig/menuManage/operationMenu.vue'),
+    meta: {
+      title: '运营后台菜单',
+      icon: 'operationMenu'
+    },
+    children: []
+  },
+  'agentMenu': {
+    path: 'agentMenu',
+    name: 'agentMenu',
+    component: () => import('@/page/systemConfig/menuManage/agentMenu.vue'),
+    meta: {
+      title: '服务商后台菜单',
+      icon: 'agentMenu'
+    },
+    children: []
+  },
+  'businessMenu': {
+    path: 'businessMenu',
+    name: 'businessMenu',
+    component: () => import('@/page/systemConfig/menuManage/businessMenu.vue'),
+    meta: {
+      title: '商应小程序菜单',
+      icon: 'businessMenu'
     },
     children: []
   },
@@ -1005,7 +1042,7 @@ const asyncRoutes = {
       }
     ]
   },
-  "merchantRiskList": {
+  'merchantRiskList': {
     path: 'merchantRiskList',
     name: 'merchantRiskList',
     component: () => import('@/page/risk/riskAppeal/merchantRiskList.vue'),
@@ -1025,8 +1062,78 @@ const asyncRoutes = {
         }
       }
     ]
+  },
+  'transferReview': {
+    path: '/transferReview',
+    name: 'transferReview',
+    component: Layout,
+    meta: {
+      title: '对公转账审核',
+      icon: 'transferReview'
+    },
+    children: []
+  },
+  'operationApprove': {
+    path: 'operationApprove',
+    name: 'operationApprove',
+    meta: {
+      title: '运营结算审核',
+      icon: 'operationApprove'
+    },
+    component: () => import('@/page/transferReview/operationApprove.vue'),
+    children: [
+    ]
+  },
+  'financialAudit': {
+    path: 'financialAudit',
+    name: 'financialAudit',
+    component: () => import('@/page/transferReview/financialAudit/financialAudit.vue'),
+    meta: {
+      title: '财务审核',
+      icon: 'financialAudit'
+    },
+    children: []
+  },
+  "financialSettlement": {
+    path: 'financialSettlement',
+    name: 'financialSettlement',
+    component: () => import('@/page/transferReview/financialAudit/financialSettlement.vue'),
+    meta: {
+      title: '财务结算审核',
+      icon: 'financialSettlement'
+    },
+    children: [
+      {
+        path: 'detail',
+        name: 'detail',
+        component: () => import('@/page/transferReview/financialAudit/financialSettlementDetail.vue'),
+        meta: {
+          fatherName: 'financialSettlement',
+          title: '详情',
+          icon: 'detail'
+        }
+      }]
+  },
+  "financialOrder": {
+    path: 'financialOrder',
+    name: 'financialOrder',
+    component: () => import('@/page/transferReview/financialAudit/financialOrder.vue'),
+    meta: {
+      title: '财务订购审核',
+      icon: 'financialOrder'
+    },
+    children: []
+  },
+  "financialRenewal": {
+    path: 'financialRenewal',
+    name: 'financialRenewal',
+    component: () => import('@/page/transferReview/financialAudit/financialRenewal.vue'),
+    meta: {
+      title: '财务续费审核',
+      icon: 'financialRenewal'
+    },
+    children: []
   }
-
 }
 const routers = []
 const menusToRoutes = function (data) {

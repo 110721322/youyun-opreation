@@ -14,7 +14,7 @@
         :grid-data="testData"
         :form-config="configData.formConfig"
         :form-data="configData.formModel"
-        :grid-edit-width="150"
+        :grid-edit-width="200"
         :is-async="true"
         :is-select="false"
         :is-expand="false"
@@ -41,8 +41,8 @@
 import Form from "@/components/form/index.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 
-import { FORM_CONFIG } from "./formConfig/menuDetail";
-import { MENU_CONFIG } from "./tableConfig/menuManagerConfig";
+import { FORM_CONFIG } from "../formConfig/agentMenuDetail";
+import { MENU_CONFIG } from "../tableConfig/agentMenuConfig";
 
 export default {
   name: "Theme",

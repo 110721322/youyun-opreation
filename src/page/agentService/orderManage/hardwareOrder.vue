@@ -52,7 +52,7 @@ import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { SEARCH_CONFIG } from "../formConfig/hardwareOrderSearch";
 import { TABLE_CONFIG } from "../tableConfig/hardwareOrderConfig";
-import api from "@/api/api_agent.js"
+import api from "@/api/api_agent.js";
 
 export default {
   name: "Theme",
@@ -65,21 +65,22 @@ export default {
       testData: [],
       isChangeMode: true,
       params: {
-        "agentNo": "丽美",
-        "outputNo": "侠猪0丽侠猪c",
-        "outputType": 614,
-        "status": 611,
-        "beginTime": this.$g.utils.getToday(),
-        "endTime": this.$g.utils.getToday()
+        agentNo: "丽美",
+        outputNo: "侠猪0丽侠猪c",
+        outputType: 614,
+        status: 611,
+        beginTime: this.$g.utils.getToday(),
+        endTime: this.$g.utils.getToday()
       },
       api: api.hardwarePageOrder
     };
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     handleDetail() {
-      this.$router.push({ path: "/agent/orderManage/hardwareOrder/detail" });
+      this.$router.push({
+        path: "/agentService/orderManage/hardwareOrder/detail"
+      });
     },
     getTableData() {
       this.testData = [
@@ -133,14 +134,14 @@ export default {
     },
     search($ruleForm) {
       this.params = {
-        "agentNo": "丽美",
-        "outputNo": "",
-        "outputType": $ruleForm.outputType,
-        "status": $ruleForm.status,
-        "beginTime": $ruleForm.date[0],
-        "endTime": $ruleForm.date[1]
-      }
-      this.params[$ruleForm.inputSelect] = $ruleForm.inputForm
+        agentNo: "丽美",
+        outputNo: "",
+        outputType: $ruleForm.outputType,
+        status: $ruleForm.status,
+        beginTime: $ruleForm.date[0],
+        endTime: $ruleForm.date[1]
+      };
+      this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
     }
   }
 };

@@ -57,6 +57,7 @@ import Input from "./components/Input.vue";
 import Select from "./components/Select.vue";
 import Tinymce from "./components/Tinymce/index.vue";
 import DateSelect from "./components/DateSelect.vue";
+import DatePicker from "./components/DatePicker.vue";
 import SelectInput from "./components/SelectInput.vue";
 import Cascader from "./components/Cascader.vue";
 
@@ -69,7 +70,8 @@ export default {
     Tinymce,
     DateSelect,
     SelectInput,
-    Cascader
+    Cascader,
+    DatePicker
   },
   props: {
     isShowAll: {
@@ -129,6 +131,7 @@ export default {
   watch: {},
   created() {
     this.init();
+    console.log(this.formBaseData)
   },
   methods: {
     init() {

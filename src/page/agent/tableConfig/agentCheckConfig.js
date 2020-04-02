@@ -23,7 +23,7 @@ export const USER_CONFIG = {
     },
     {
       label: '公司地址',
-      prop: 'companyArea',
+      prop: 'companyArea.detailAddress',
       width: '90px'
     },
     {
