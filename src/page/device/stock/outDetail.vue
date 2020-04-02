@@ -61,7 +61,6 @@
               :border="true"
               :header-cell-style="getHeadClass"
               :is-async="true"
-              @edit="onClick_edit"
               @okEdit="onClick_okEdit"
               @cancelEdit="onClick_cancelEdit"
             />
@@ -241,6 +240,7 @@ export default {
     },
     onClick_okEdit($item) {
       $item.edit = false;
+      console.log($item);
     },
     onClick_cancelEdit($item) {
       $item.edit = false;

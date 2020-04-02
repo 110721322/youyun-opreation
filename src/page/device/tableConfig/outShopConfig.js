@@ -41,7 +41,7 @@ export const OUTSHOP_CONFIG = {
       },
       {
         name: '编辑',
-        emitName: 'edit',
+        emitName: 'rowEdit',
         type: 'text',
         style: 'color:#1989FA',
         isShow: ($item) => {
