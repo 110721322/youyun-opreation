@@ -283,6 +283,12 @@ export default {
     // 处理相应父组件的事件方法
     handleEmit(emitName, row) {
       if (emitName === "rowEdit") {
+        for (const item of this.gridConfig) {
+          if (item.isEdit) {
+            // 储存一个key唯一的编辑前数据
+            this[item.prop + row.id] = row[item.prop];
+          }
+        }
         this.rowEdit(row);
         return;
       }
@@ -313,9 +319,15 @@ export default {
     handleSelectionChange(val) {
       this.$emit("selectionChange", val);
     },
-    cancelEdit($item) {
-      $item.edit = false;
-      this.$emit("cancelEdit", $item);
+    cancelEdit($row) {
+      $row.edit = false;
+      for (const item of this.gridConfig) {
+        if (item.isEdit) {
+          // 获取之前储存的编辑前数据
+          $row[item.prop] = this[item.prop + $row.id];
+        }
+      }
+      this.$emit("cancelEdit", $row);
     },
     rowEdit($item) {
       this.$nextTick(() => {
