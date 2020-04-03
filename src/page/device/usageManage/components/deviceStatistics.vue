@@ -5,10 +5,17 @@
       :form-base-data="searchConfig.formData"
       :show-foot-btn="searchConfig.showFootBtn"
       :is-show-all="true"
+      :begin-date="beginDate"
+      :end-date="endDate"
+      @dataSelect="handleDataSelect"
       @search="search"
     />
     <div class="device-list">
-      <deviceList :device-list-data="deviceListData" :show-expand-btn="showExpandBtn"></deviceList>
+      <deviceList
+        :device-list-data="deviceListData"
+        :show-expand-btn="showExpandBtn"
+        @province="handleProvince"
+      ></deviceList>
     </div>
     <div class="title">全国主要省份设备使用数量</div>
     <div class="map-box">
@@ -33,7 +40,7 @@
       </div>
     </div>
     <div class="data_box">
-      <dataItem :radio="radioListData[0]" :title="titleList[0]"></dataItem>
+      <dataItem :radio="radioListData[0]" :title="titleList[0]" @radioChange="handleNumRadioChange"></dataItem>
 
       <div class="content-box">
         <div class="left">
@@ -60,7 +67,11 @@
       </div>
     </div>
     <div class="data_box">
-      <dataItem :radio="radioListData[1]" :title="titleList[1]"></dataItem>
+      <dataItem
+        :radio="radioListData[1]"
+        :title="titleList[1]"
+        @radioChange="handleTradeRadioChange"
+      ></dataItem>
 
       <div class="content-box">
         <div class="left">
@@ -89,6 +100,7 @@
   </div>
 </template>
 <script>
+import api from "@/api/api_device";
 import Search from "@/components/search/search.vue";
 
 import { SEARCH_CONFIG } from "./../../formConfig/deviceStatisticsSearch";
@@ -203,7 +215,6 @@ export default {
       searchConfig: SEARCH_CONFIG,
       configData: {},
       fromConfigData: {},
-      testData: [],
       drawer: false,
       direction: "rtl",
       mapData: [
@@ -219,17 +230,17 @@ export default {
       titleList: ["设备数量统计", "设备交易统计"],
       radioListData: [
         {
-          radio: "0",
+          radio: "region",
           namelist: [
-            { name: "大区数据", label: "0" },
-            { name: "行业数据", label: "1" }
+            { name: "大区数据", label: "region" },
+            { name: "行业数据", label: "industry" }
           ]
         },
         {
-          radio: "0",
+          radio: "region",
           namelist: [
-            { name: "大区数据", label: "0" },
-            { name: "行业数据", label: "1" }
+            { name: "大区数据", label: "region" },
+            { name: "行业数据", label: "industry" }
           ]
         }
       ],
@@ -363,7 +374,7 @@ export default {
             name: "交易金额",
             type: "bar",
             itemStyle: {
-              color: "#FAD337"
+              color: "#37CBCB"
             },
             data: [120, 132, 101, 134, 90]
           }
@@ -372,30 +383,30 @@ export default {
       detailTitle: [
         {
           label: "大区",
-          prop: "area",
+          prop: "regionCode",
           hasDot: false
         },
         {
           label: "销售量（台）",
-          prop: "saleNum",
+          prop: "saleCount",
           hasDot: true,
           dotColor: "#1989FA"
         },
         {
           label: "激活量（台）",
-          prop: "activeNum",
+          prop: "activationCount",
           hasDot: true,
           dotColor: "#FBD955"
         },
         {
           label: "动销量（台）",
-          prop: "runNum",
+          prop: "usingCount",
           hasDot: true,
           dotColor: "#37CBCB"
         },
         {
           label: "未动销量（台）",
-          prop: "unRunNum",
+          prop: "noUsingCount",
           hasDot: true,
           dotColor: "#F47A8F"
         }
@@ -433,20 +444,20 @@ export default {
       detailTitle2: [
         {
           label: "大区",
-          prop: "area",
+          prop: "regionName",
           hasDot: false
         },
         {
           label: "交易笔数（笔）",
-          prop: "transactionTimes",
+          prop: "tradeCount",
           hasDot: true,
           dotColor: "#1989FA"
         },
         {
           label: "交易金额（元）",
-          prop: "transactionAmount",
+          prop: "tradeAmount",
           hasDot: true,
-          dotColor: "#FBD955"
+          dotColor: "#37CBCB"
         }
       ],
       detailData2: [
@@ -475,16 +486,142 @@ export default {
           transactionTimes: "80",
           transactionAmount: "70"
         }
-      ]
+      ],
+      beginDate: null,
+      endDate: null
     };
   },
   mounted() {
-    this.getTableData();
     this.initMap();
     this.showBar();
     this.showBar2();
+    this.queryAllProvince();
+    this.queryRegion();
+    this.queryRegionTrade();
   },
   methods: {
+    handleNumRadioChange($data) {
+      $data === "region" ? this.queryRegion() : null;
+      $data === "industry" ? this.queryMcc() : null;
+    },
+    handleTradeRadioChange($data) {
+      $data === "region" ? this.queryRegionTrade() : null;
+      $data === "industry" ? this.queryMccTrade() : null;
+    },
+    // 大区设备数量使用情况
+    queryRegion($data) {
+      api
+        .queryRegion({
+          beginDate: this.beginDate,
+          endDate: this.endDate,
+          deviceId: ""
+        })
+        .then(res => {
+          this.detailTitle[0] = {
+            label: "大区",
+            prop: "regionCode",
+            hasDot: false
+          };
+          this.detailData = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 行业设备数量使用情况
+    queryMcc() {
+      api
+        .queryMcc({
+          beginDate: this.beginDate,
+          endDate: this.endDate,
+          deviceId: ""
+        })
+        .then(res => {
+          this.detailTitle[0] = {
+            label: "行业",
+            prop: "mccName",
+            hasDot: false
+          };
+          this.detailData = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 大区设备交易情况
+    queryRegionTrade() {
+      api
+        .queryRegionTrade({
+          beginDate: this.beginDate,
+          endDate: this.endDate,
+          deviceId: ""
+        })
+        .then(res => {
+          this.detailTitle2[0] = {
+            label: "大区",
+            prop: "regionCode",
+            hasDot: false
+          };
+          this.detailData2 = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 行业设备交易情况
+    queryMccTrade() {
+      api
+        .queryMccTrade({
+          beginDate: this.beginDate,
+          endDate: this.endDate,
+          deviceId: ""
+        })
+        .then(res => {
+          this.detailTitle2[0] = {
+            label: "行业",
+            prop: "mccName",
+            hasDot: false
+          };
+          this.detailData2 = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    handleProvince($itemData) {
+      this.queryAllProvince($itemData);
+    },
+    // 获取设备省份数据
+    queryAllProvince($data) {
+      api
+        .queryAllProvince({
+          beginDate: this.beginDate,
+          endDate: this.endDate,
+          deviceId: $data && $data.deviceId
+        })
+        .then(res => {
+          this.mapData = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    handleDataSelect($time) {
+      api
+        .queryUsing({
+          beginDate: $time[0],
+          endDate: $time[1],
+          deviceId: ""
+        })
+        .then(res => {
+          this.deviceListData = res.object;
+          this.beginDate = $time[0];
+          this.endDate = $time[1];
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
     showBar() {
       // 基于准备好的dom，初始化echarts实例
       const myChartBar = this.$echarts.init(this.$refs.echartsBar);
@@ -505,31 +642,21 @@ export default {
         myChartBar.resize();
       });
     },
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
-    },
-    getTableData() {
-      this.testData = [
-        {
-          service: "日常任务",
-          type: "商户结算失败",
-          buyNum: "4",
-          buyNumPerc: "提醒",
-          activeNum: "XXXX店铺",
-          activeNumPerc: "20:00:23",
-          amountPerc: "222.22"
-        },
-        {
-          service: "日常任务",
-          type: "商户结算失败",
-          buyNum: "4",
-          buyNumPerc: "提醒",
-          activeNum: "XXXX店铺",
-          activeNumPerc: "20:00:23",
-          amountPerc: "222.22"
-        }
-      ];
+    search($ruleForm) {
+      console.log($ruleForm);
+      debugger;
+      api
+        .queryUsing({
+          beginDate: $ruleForm.date[0],
+          endDate: $ruleForm.date[0],
+          deviceId: ""
+        })
+        .then(res => {
+          this.deviceListData = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
     },
     initMap() {
       const myChart = echarts.init(this.$refs.echartsMap);
@@ -807,7 +934,7 @@ export default {
 .left {
   padding-top: 16px;
   padding-left: 24px;
-  width: 55%;
+  width: 50%;
 }
 .right {
   width: 50%;

@@ -30,7 +30,6 @@
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
         :header-cell-style="headerCellStyle"
-        @edit="onClick_edit"
         @okEdit="onClick_okEdit"
         @cancelEdit="onClick_cancelEdit"
       ></BaseCrud>
@@ -88,10 +87,16 @@ export default {
     },
     onClick_addDevice() {},
     onClick_download() {},
-    onClick_edit($item) {
-      $item.edit = true;
-    },
     onClick_okEdit($item) {
+      api
+        .deviceActivationUpdate({
+          authorizationCode: $item.authorizationCode,
+          id: $item.id
+        })
+        .then(res => {})
+        .catch(err => {
+          this.$message(err);
+        });
       $item.edit = false;
     },
     onClick_cancelEdit($item) {

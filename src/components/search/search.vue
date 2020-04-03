@@ -28,6 +28,7 @@
           :rule-form="ruleForm"
           :form-item="formItem"
           :is-rest="isRest"
+          @dataSelect="handleDataSelect"
         />
       </el-form-item>
 
@@ -131,9 +132,12 @@ export default {
   watch: {},
   created() {
     this.init();
-    console.log(this.formBaseData)
+    console.log(this.formBaseData);
   },
   methods: {
+    handleDataSelect($time) {
+      this.$emit("dataSelect", $time);
+    },
     init() {
       if (this.formBaseData.length > 0) {
         for (const iterator of this.formBaseData) {

@@ -158,7 +158,7 @@ export default {
           break;
         case "distribution":
           api
-            .deviceOutputAdd({
+            .distribute({
               deviceOutputId: "",
               distributionUserId: $data.distributionUserId
             })

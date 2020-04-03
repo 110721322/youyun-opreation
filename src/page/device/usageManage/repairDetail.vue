@@ -25,19 +25,21 @@
       </el-steps>
 
       <detailMode :rule-form="ruleForm" :config-data="configData"></detailMode>
-      <detailMode :rule-form="ruleForm2" :config-data="configData2"></detailMode>
-      <detailMode :rule-form="ruleForm3" :config-data="configData3"></detailMode>
+      <detailMode :rule-form="ruleForm" :config-data="configData2"></detailMode>
+      <detailMode :rule-form="ruleForm" :config-data="configData3"></detailMode>
     </div>
   </div>
 </template>
 
 <script>
+import api from "@/api/api_device";
 import detailMode from "@/components/detailMode/detailMode2.vue";
 export default {
   name: "Theme",
   components: { detailMode },
   data() {
     return {
+      id: "",
       stepData: [
         {
           img:
@@ -95,15 +97,7 @@ export default {
           note: ""
         }
       ],
-      ruleForm: {
-        name: "1",
-        name1: "2",
-        name2: "3",
-        name3: "4",
-        email: "12312312@163.com",
-        pic:
-          "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
-      },
+      ruleForm: {},
       configData: {
         name: "服务商信息",
         border: true,
@@ -111,26 +105,17 @@ export default {
         items: [
           {
             name: "服务商ID",
-            key: "name1"
+            key: "agentNo"
           },
           {
             name: "服务商名称",
-            key: "email"
+            key: "agentName"
           },
           {
             name: "法人手机号",
-            key: "name3"
+            key: "agentMobile"
           }
         ]
-      },
-      ruleForm2: {
-        name: "1",
-        name1: "2",
-        name2: "3",
-        name3: "4",
-        email: "12312312@163.com",
-        pic:
-          "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
       },
       configData2: {
         name: "设备信息",
@@ -139,22 +124,13 @@ export default {
         items: [
           {
             name: "设备型号",
-            key: "name1"
+            key: "deviceModel"
           },
           {
             name: "设备标识",
-            key: "email"
+            key: "deviceIdentifier"
           }
         ]
-      },
-      ruleForm3: {
-        name: "1",
-        name1: "2",
-        name2: "3",
-        name3: "4",
-        email: "12312312@163.com",
-        pic:
-          "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
       },
       configData3: {
         name: " 返修信息",
@@ -163,24 +139,41 @@ export default {
         items: [
           {
             name: "提交时间",
-            key: "name1"
+            key: "time"
           },
           {
             name: "原因",
-            key: "email"
+            key: "maintainReason"
           },
           {
-            name: "设备标识",
-            key: "pic",
+            name: "照片补充",
+            key: "img",
             type: "image"
           },
           {
             name: "寄回快递单号",
-            key: "email"
+            key: "orderNo"
           }
         ]
       }
     };
+  },
+  mounted() {
+    this.deviceMaintainQueryById();
+  },
+  methods: {
+    deviceMaintainQueryById() {
+      api
+        .deviceMaintainQueryById({
+          id: this.id
+        })
+        .then(res => {
+          this.ruleForm = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    }
   }
 };
 </script>

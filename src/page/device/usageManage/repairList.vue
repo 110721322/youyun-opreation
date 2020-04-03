@@ -181,7 +181,7 @@ export default {
           break;
         case "distribution":
           api
-            .deviceOutputAdd({
+            .distribute({
               deviceOutputId: this.activityRow.deviceOutputId,
               distributionUserId: $data.distributionUserId
             })

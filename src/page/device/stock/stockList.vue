@@ -76,8 +76,18 @@ export default {
       api: api.deviceQueryByPage
     };
   },
-  mounted() {},
+  mounted() {
+    this.queryAllDeviceModel();
+  },
   methods: {
+    queryAllDeviceModel() {
+      api
+        .queryAllDeviceModel({})
+        .then(res => {})
+        .catch(err => {
+          this.$message(err);
+        });
+    },
     search($ruleForm) {
       console.log($ruleForm);
       const params = {
@@ -174,6 +184,7 @@ export default {
           id: $row.id
         })
         .then(res => {
+          // 编辑前重赋值
           newFromConfigData.formData.forEach((item, index) => {
             item.initVal = res.object[item.key];
           });

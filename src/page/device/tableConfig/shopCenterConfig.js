@@ -39,18 +39,18 @@ export const SHOPCENTER_CONFIG = {
       },
       {
         name: '删除',
-        emitName: 'adopt',
+        emitName: 'delete',
         type: 'text',
         style: 'color:#F5222D'
       },
       {
         name: '上架',
-        emitName: 'buy',
+        emitName: 'on',
         type: 'text'
       },
       {
         name: '下架',
-        emitName: 'buy',
+        emitName: 'off',
         type: 'text'
       }
     ]

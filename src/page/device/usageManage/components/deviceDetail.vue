@@ -36,11 +36,6 @@
 </template>
 <script>
 import api from "@/api/api_device";
-import iconRuku from "@/assets/img/ruku.png";
-import iconChuku from "@/assets/img/chuku.png";
-import iconBingMerchant from "@/assets/img/bingMerchant.png";
-import iconUnbing from "@/assets/img/unbing.png";
-import iconGenerateTransaction from "@/assets/img/generateTransaction.png";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 
@@ -85,114 +80,6 @@ export default {
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     },
-    getTableData() {
-      this.testData = [
-        {
-          type: 1,
-          id: "34534",
-          logo: "商户结算失败",
-          merchantProvider: "4",
-          serviceProvider: "提醒",
-          orderNum: "XXXX店铺",
-          amount: "20:00:23",
-          rowExpandCover: true,
-          processList: [
-            {
-              icon: iconRuku,
-              label: "入库",
-              time: "2016-12-12 "
-            },
-            {
-              icon: iconChuku,
-              label: "出库",
-              time: "2016-12-12 "
-            },
-            {
-              icon: iconBingMerchant,
-              label: "绑定商户",
-              time: "2016-12-12 "
-            },
-            {
-              icon: iconGenerateTransaction,
-              label: "产生交易",
-              time: "2016-12-12 "
-            },
-            {
-              icon: iconUnbing,
-              label: "解绑",
-              time: "2016-12-12 "
-            },
-            {
-              icon: iconBingMerchant,
-              label: "绑定商户",
-              time: "2016-12-12 "
-            },
-            {
-              icon: iconUnbing,
-              label: "解绑",
-              time: "2016-12-12 "
-            },
-            {
-              icon: iconBingMerchant,
-              label: "绑定商户",
-              time: "2016-12-12 "
-            },
-            {
-              icon: iconUnbing,
-              label: "解绑",
-              time: "2016-12-12 "
-            },
-            {
-              icon: iconBingMerchant,
-              label: "绑定商户",
-              time: "2016-12-12 "
-            }
-          ]
-        },
-        {
-          type: 1,
-          id: "344",
-          logo: "商户结算失败",
-          merchantProvider: "4",
-          serviceProvider: "提醒",
-          orderNum: "XXXX店铺",
-          amount: "20:00:23",
-          rowExpandCover: true,
-          processList: [
-            {
-              icon: iconRuku,
-              label: "入库",
-              time: "2016-12-12 "
-            },
-            {
-              icon: iconChuku,
-              label: "出库",
-              time: "2016-12-12 "
-            },
-            {
-              icon: iconBingMerchant,
-              label: "绑定商户",
-              time: "2016-12-12 "
-            },
-            {
-              icon: iconGenerateTransaction,
-              label: "产生交易",
-              time: "2016-12-12 "
-            },
-            {
-              icon: iconUnbing,
-              label: "解绑",
-              time: "2016-12-12 "
-            },
-            {
-              icon: iconBingMerchant,
-              label: "绑定商户",
-              time: "2016-12-12 "
-            }
-          ]
-        }
-      ];
-    },
     selectionChange($val) {
       // eslint-disable-next-line no-console
       console.log($val);
@@ -202,11 +89,16 @@ export default {
       done();
     },
     onClick_showLife($item, $table) {
-      console.log($table);
-      // console.log($item);
-      this.testData.map(item => {
-        item.expansion = !item.expansion;
-      });
+      api
+        .queryProcessLife({
+          deviceIdentifier: $item.deviceIdentifier
+        })
+        .then(res => {
+          this.$set($item, "processList", res.object);
+        })
+        .catch(err => {
+          this.$message(err);
+        });
       $table.toggleRowExpansion($item);
     }
   }

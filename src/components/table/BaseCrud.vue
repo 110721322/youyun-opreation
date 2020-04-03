@@ -67,7 +67,7 @@
               <img
                 :src="item.imgUrl"
                 :style="item.imgStyle"
-                @click="onClick_handleToggle(scope.row)"
+                @click="onClick_handleToggle(scope.row,item)"
               />
             </template>
           </span>
@@ -227,9 +227,9 @@ export default {
     }
   },
   methods: {
-    onClick_handleToggle($row) {
+    onClick_handleToggle($row, $item) {
       if (this.$refs[this.refName]) {
-        this.$refs[this.refName].toggleRowExpansion($row);
+        this.$emit($item.emitName, $row, this.$refs[this.refName]);
       }
     },
     sortDate: function(val) {

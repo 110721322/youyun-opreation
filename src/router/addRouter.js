@@ -621,7 +621,7 @@ const asyncRoutes = {
         name: 'repairDetail',
         meta: {
           fatherName: 'repairList',
-          title: 'repairDetail',
+          title: '详情',
           icon: 'repairDetail',
           subMenuName: 'usageManage'
         },

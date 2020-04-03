@@ -120,12 +120,11 @@ export default {
         timeArr = [g.utils.time($data[0]), g.utils.time($data[1])];
       }
 
-      this.$emit("select", timeArr);
+      this.$emit("dataSelect", timeArr);
       this.ruleForm[this.formItem.key] = timeArr;
     },
     onClick_item($item) {
       this.selectItem = $item;
-
       if (this.type === "daterange") {
         let start = "";
         let end = "";
@@ -150,7 +149,7 @@ export default {
         this.timeInterval = [start, end];
       }
 
-      this.$emit("select", this.timeInterval);
+      this.$emit("dataSelect", this.timeInterval);
       this.ruleForm[this.formItem.key] = this.timeInterval;
     },
     getDay(day) {
