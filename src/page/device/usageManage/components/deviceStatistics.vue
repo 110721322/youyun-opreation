@@ -30,10 +30,10 @@
         <div v-for="(item,index) in mapData" :key="index" class="data-item">
           <div class="data-left">
             <span :class="['index',index<=2?'hightlight':'normal']">{{ index+1 }}</span>
-            {{ item.name }}
+            {{ item.provinceCode }}
           </div>
           <div class="data-right">
-            <span>{{ item.num }}</span> |
+            <span>{{ item.usingCount }}</span> |
             <span class="perc">{{ item.perc }}</span>
           </div>
         </div>
@@ -287,10 +287,19 @@ export default {
           top: "40px",
           containLabel: true
         },
+        dataset: {
+          dimensions: [
+            "regionCode",
+            "saleCount",
+            "activationCount",
+            "usingCount",
+            "noUsingCount"
+          ],
+          source: []
+        },
         xAxis: [
           {
-            type: "category",
-            data: ["华东", "华中", "华北", "华南", "华西"]
+            type: "category"
           }
         ],
         yAxis: [
@@ -305,32 +314,28 @@ export default {
             barGap: 0,
             itemStyle: {
               color: "#3BA0FF"
-            },
-            data: [320, 332, 301, 334, 390]
+            }
           },
           {
             name: "激活量",
             type: "bar",
             itemStyle: {
               color: "#FAD337"
-            },
-            data: [120, 132, 101, 134, 90]
+            }
           },
           {
             name: "动销量",
             type: "bar",
             itemStyle: {
               color: "#37CBCB"
-            },
-            data: [220, 182, 191, 234, 290]
+            }
           },
           {
             name: "未动销量",
             type: "bar",
             itemStyle: {
               color: "#F47A8F"
-            },
-            data: [150, 232, 201, 154, 190]
+            }
           }
         ]
       },
@@ -342,6 +347,10 @@ export default {
             type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
           }
         },
+        dataset: {
+          dimensions: ["regionName", "tradeCount", "tradeAmount"],
+          source: []
+        },
         grid: {
           left: "0",
           right: "4%",
@@ -351,8 +360,7 @@ export default {
         },
         xAxis: [
           {
-            type: "category",
-            data: ["华东", "华中", "华北", "华南", "华西"]
+            type: "category"
           }
         ],
         yAxis: [
@@ -367,16 +375,14 @@ export default {
             barGap: 0,
             itemStyle: {
               color: "#3BA0FF"
-            },
-            data: [320, 332, 301, 334, 390]
+            }
           },
           {
             name: "交易金额",
             type: "bar",
             itemStyle: {
               color: "#37CBCB"
-            },
-            data: [120, 132, 101, 134, 90]
+            }
           }
         ]
       },
@@ -411,36 +417,6 @@ export default {
           dotColor: "#F47A8F"
         }
       ],
-      detailData: [
-        {
-          area: "华东",
-          saleNum: "80",
-          activeNum: "70",
-          runNum: "60",
-          unRunNum: "90"
-        },
-        {
-          area: "华中",
-          saleNum: "80",
-          activeNum: "70",
-          runNum: "60",
-          unRunNum: "90"
-        },
-        {
-          area: "华西",
-          saleNum: "80",
-          activeNum: "70",
-          runNum: "60",
-          unRunNum: "90"
-        },
-        {
-          area: "华南",
-          saleNum: "80",
-          activeNum: "70",
-          runNum: "60",
-          unRunNum: "100"
-        }
-      ],
       detailTitle2: [
         {
           label: "大区",
@@ -460,41 +436,13 @@ export default {
           dotColor: "#37CBCB"
         }
       ],
-      detailData2: [
-        {
-          area: "华东",
-          transactionTimes: "80",
-          transactionAmount: "70"
-        },
-        {
-          area: "华中",
-          transactionTimes: "80",
-          transactionAmount: "70"
-        },
-        {
-          area: "华中",
-          transactionTimes: "80",
-          transactionAmount: "70"
-        },
-        {
-          area: "华中",
-          transactionTimes: "80",
-          transactionAmount: "70"
-        },
-        {
-          area: "华中",
-          transactionTimes: "80",
-          transactionAmount: "70"
-        }
-      ],
+      detailData: [],
+      detailData2: [],
       beginDate: null,
       endDate: null
     };
   },
   mounted() {
-    this.initMap();
-    this.showBar();
-    this.showBar2();
     this.queryAllProvince();
     this.queryRegion();
     this.queryRegionTrade();
@@ -507,6 +455,11 @@ export default {
     handleTradeRadioChange($data) {
       $data === "region" ? this.queryRegionTrade() : null;
       $data === "industry" ? this.queryMccTrade() : null;
+    },
+    transferEchartsData($data, $option, $prop) {
+      console.log($data);
+      $option.dataset.source = $data;
+      if ($prop) $option.dataset.dimensions[0] = $prop;
     },
     // 大区设备数量使用情况
     queryRegion($data) {
@@ -523,6 +476,8 @@ export default {
             hasDot: false
           };
           this.detailData = res.object;
+          this.transferEchartsData(res.object, this.barOption, "regionCode");
+          this.showBar();
         })
         .catch(err => {
           this.$message(err);
@@ -543,6 +498,8 @@ export default {
             hasDot: false
           };
           this.detailData = res.object;
+          this.transferEchartsData(res.object, this.barOption, "mccName");
+          this.showBar();
         })
         .catch(err => {
           this.$message(err);
@@ -563,6 +520,8 @@ export default {
             hasDot: false
           };
           this.detailData2 = res.object;
+          this.transferEchartsData(res.object, this.barOption2, "regionCode");
+          this.showBar2();
         })
         .catch(err => {
           this.$message(err);
@@ -583,6 +542,8 @@ export default {
             hasDot: false
           };
           this.detailData2 = res.object;
+          this.transferEchartsData(res.object, this.barOption2, "mccName");
+          this.showBar2();
         })
         .catch(err => {
           this.$message(err);
@@ -601,6 +562,7 @@ export default {
         })
         .then(res => {
           this.mapData = res.object;
+          this.initMap();
         })
         .catch(err => {
           this.$message(err);
@@ -644,7 +606,6 @@ export default {
     },
     search($ruleForm) {
       console.log($ruleForm);
-      debugger;
       api
         .queryUsing({
           beginDate: $ruleForm.date[0],
@@ -660,6 +621,7 @@ export default {
     },
     initMap() {
       const myChart = echarts.init(this.$refs.echartsMap);
+      // eslint-disable-next-line no-unused-vars
       const dataList = [
         {
           name: "南海诸岛",
@@ -687,7 +649,7 @@ export default {
         },
         {
           name: "河南",
-          value: 83
+          value: 1183
         },
         {
           name: "云南",
@@ -723,7 +685,7 @@ export default {
         },
         {
           name: "浙江",
-          value: 104
+          value: 0
         },
         {
           name: "江西",
@@ -802,6 +764,14 @@ export default {
           value: 5
         }
       ];
+      const mapData = [];
+      this.mapData.forEach((item, index) => {
+        mapData[index] = {};
+        mapData[index].name = item.provinceCode;
+        mapData[index].value = item.usingCount;
+      });
+      console.log(mapData);
+      console.log(this.mapData);
       window.onresize = myChart.resize;
       myChart.setOption({
         tooltip: {
@@ -814,6 +784,7 @@ export default {
           bottom: 40,
           showLabel: !0,
           text: ["高", "低"],
+          // splitNumber: 5,
           pieces: [
             {
               gt: 100,
@@ -880,7 +851,7 @@ export default {
             name: "商户数量",
             type: "map",
             geoIndex: 0,
-            data: dataList
+            data: mapData
           }
         ]
       });

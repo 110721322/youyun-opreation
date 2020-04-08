@@ -7,17 +7,52 @@
         :is-show-all="true"
         :form-base-data="searchConfig.formData"
         :show-foot-btn="searchConfig.showFootBtn"
+        @dataSelect="handleDataSelect"
         @search="search"
       />
+      <div class="title2">新增商户数分布</div>
+      <div class="map-box">
+        <div class="chart-box">
+          <div ref="echartsMap" class="chart-panel"></div>
+        </div>
+        <div class="data-box">
+          <div class="data-title">
+            新增商户数省份排行榜
+            <span class="all-num">共33940个</span>
+          </div>
+          <div v-for="(item,index) in mapData" :key="index" class="data-item">
+            <div class="data-left">
+              <span :class="['index',index<=2?'hightlight':'normal']">{{ index+1 }}</span>
+              {{ item.provinceName }}
+            </div>
+            <div class="data-right">
+              <span>{{ item.count }}</span> |
+              <span class="perc">{{ item.ratio }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="pie-box">
-        <div v-for="(item, index) in pieOptionList" :key="index" class="pie-item">
+        <div class="pie-item">
           <dataItem
-            :radio="radioListData[index]"
-            :title="titleList[index].name"
-            :pie-option="pieOptionList[index]"
-            :piw-ref-name="`echartsPie${index}`"
-            :data-list="dataList[index]"
+            :radio="radioListData[0]"
+            :title="titleList[0].name"
+            :pie-option="pieOptionList[0]"
+            :piw-ref-name="`echartsPie${0}`"
+            :data-list="dataList[0]"
             :is-show-pie="true"
+            @radioChange="handleRegionRadioChange"
+          />
+        </div>
+        <div class="pie-item">
+          <dataItem
+            :radio="radioListData[1]"
+            :title="titleList[1].name"
+            :pie-option="pieOptionList[1]"
+            :piw-ref-name="`echartsPie${1}`"
+            :data-list="dataList[1]"
+            :is-show-pie="true"
+            @radioChange="handleCategoryRadioChange"
           />
         </div>
       </div>
@@ -28,7 +63,7 @@
         </div>
         <div class="data-box">
           <dataItem
-            :radio="radioListData2[0]"
+            :radio="radioListData2[3]"
             :is-show-table="true"
             :title="'总交易额排行榜'"
             :is-show-more="true"
@@ -37,19 +72,33 @@
             :is-show-line="false"
             :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
             @showMore="handleShowMore"
+            @radioChange="handleTradeTopChange"
           ></dataItem>
         </div>
       </div>
       <div class="pie-box">
-        <div v-for="(item, index) in pieOptionList2" :key="index" class="pie-item">
+        <div class="pie-item">
           <dataItem
-            :radio="radioListData2[index]"
-            :title="titleList2[index].name"
-            :pie-option="pieOptionList2[index]"
-            :piw-ref-name="`echartsPie2${index}`"
-            :data-list="dataList2[index]"
+            :radio="radioListData2[0]"
+            :title="titleList2[0].name"
+            :pie-option="pieOptionList2[0]"
+            :piw-ref-name="`echartsPie2${0}`"
+            :data-list="dataList2[0]"
             :is-show-pie="true"
             :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
+            @radioChange="handleTradeCountRatioChange"
+          />
+        </div>
+        <div class="pie-item">
+          <dataItem
+            :radio="radioListData2[1]"
+            :title="titleList2[1].name"
+            :pie-option="pieOptionList2[1]"
+            :piw-ref-name="`echartsPie2${1}`"
+            :data-list="dataList2[1]"
+            :is-show-pie="true"
+            :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
+            @radioChange="handleTradeRiseRatioChange"
           />
         </div>
       </div>
@@ -74,12 +123,14 @@
           :item-test-data="testData2"
           :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
           @showMore="handleShowMore"
+          @radioChange="handleTradeCountRatioChange2"
         />
       </div>
     </div>
   </div>
 </template>
 <script>
+import api from "@/api/api_dataMarket";
 import dataItem from "./components/dataItem.vue";
 import search from "@/components/search/search.vue";
 import {
@@ -88,6 +139,8 @@ import {
   MERCHANTDATACONFIG3
 } from "./tableConfig/merchantDataConfig";
 import { FORM_CONFIG2 } from "./formConfig/dataViewSearch";
+import echarts from "echarts";
+import "./../../libs/kit/china";
 
 export default {
   name: "MerchantData",
@@ -97,6 +150,16 @@ export default {
   },
   data() {
     return {
+      mapData: [
+        { name: "安徽省", num: "323,209", perc: "36%" },
+        { name: "甘肃省", num: "323,209", perc: "36%" },
+        { name: "安徽省", num: "323,209", perc: "36%" },
+        { name: "香港特别行政区", num: "323,209", perc: "36%" },
+        { name: "安徽省", num: "323,209", perc: "36%" },
+        { name: "山西省", num: "234", perc: "36%" },
+        { name: "山西省", num: "234", perc: "36%" },
+        { name: "山西省", num: "234", perc: "36%" }
+      ],
       searchConfig: FORM_CONFIG2,
       searchMaxHeight: "300",
       testData: [],
@@ -108,19 +171,19 @@ export default {
       titleList: [{ name: "商户数大区占比" }, { name: "商户数行业占比" }],
       radioListData: [
         {
-          radio: "0",
+          radio: "1",
           namelist: [
-            { name: "新增商户", label: "0" },
-            { name: "交易商户", label: "1" },
-            { name: "流失商户", label: "2" }
+            { name: "新增商户", label: "1" },
+            { name: "交易商户", label: "2" },
+            { name: "流失商户", label: "3" }
           ]
         },
         {
-          radio: "0",
+          radio: "1",
           namelist: [
-            { name: "新增商户", label: "0" },
-            { name: "交易商户", label: "1" },
-            { name: "流失商户", label: "2" }
+            { name: "新增商户", label: "1" },
+            { name: "交易商户", label: "2" },
+            { name: "流失商户", label: "3" }
           ]
         }
       ],
@@ -266,24 +329,31 @@ export default {
       ],
       radioListData2: [
         {
-          radio: "0",
+          radio: "1",
           namelist: [
-            { name: "新增商户", label: "0" },
-            { name: "交易商户", label: "1" }
+            { name: "新增商户", label: "1" },
+            { name: "交易商户", label: "2" }
           ]
         },
         {
-          radio: "0",
+          radio: "1",
           namelist: [
-            { name: "新增商户", label: "0" },
-            { name: "交易商户", label: "1" }
+            { name: "新增商户", label: "1" },
+            { name: "交易商户", label: "2" }
           ]
         },
         {
-          radio: "0",
+          radio: "1",
           namelist: [
-            { name: "涨幅排行", label: "0" },
-            { name: "跌幅排行", label: "1" }
+            { name: "涨幅排行", label: "1" },
+            { name: "跌幅排行", label: "2" }
+          ]
+        },
+        {
+          radio: "1",
+          namelist: [
+            { name: "新增商户", label: "1" },
+            { name: "交易商户", label: "2" }
           ]
         }
       ],
@@ -499,19 +569,202 @@ export default {
             data: [120, 132, 101, 134, 90, 230, 210, 101, 134, 90, 230, 330]
           }
         ]
-      }
+      },
+      beginDate: null,
+      endDate: null,
+      merchantType: 1,
+      merchantType2: 1,
+      merchantType3: 1,
+      merchantType4: 1,
+      merchantType5: 1,
+      merchantType6: null,
+      tradeType: 1
     };
   },
-  created() {
-    this.tableConfigData = MERCHANTDATACONFIG1;
-    this.tableConfigData2 = MERCHANTDATACONFIG2;
-    this.tableConfigData3 = MERCHANTDATACONFIG3;
-  },
+  created() {},
   mounted() {
     this.init();
-    this.getData();
+    this.initMap();
+    // 获取数据
+    this.queryRegionTradeSummaryByCondition();
+    this.queryCategoryTradeSummaryByCondition();
+    this.queryTradeTop5ByCondition();
+    this.selectNonTradeTop5ByCondition();
+    this.queryTradeRiseRatioTop5ByCondition();
   },
   methods: {
+    // 交易额涨跌排行
+    handleTradeCountRatioChange2($data) {
+      this.tradeType = $data;
+      this.queryTradeRiseRatioTop5ByCondition();
+    },
+    queryTradeRiseRatioTop5ByCondition() {
+      api
+        .queryTradeRiseRatioTop5ByCondition({
+          beginDate: this.beginDate,
+          endDate: this.endDate,
+          merchantType: this.merchantType6 || 1,
+          tradeType: this.tradeType
+        })
+        .then(res => {
+          this.testData2 = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 无交易商户上期排行
+    selectNonTradeTop5ByCondition() {
+      api
+        .selectNonTradeTop5ByCondition({
+          beginDate: this.beginDate,
+          endDate: this.endDate
+        })
+        .then(res => {
+          this.testData = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 第二行第一个饼图切换
+    handleTradeCountRatioChange($data) {
+      this.merchantType4 = $data;
+      this.queryTradeCountRatioByCondition();
+    },
+    queryTradeCountRatioByCondition() {
+      api
+        .queryTradeCountRatioByCondition({
+          beginDate: this.beginDate,
+          endDate: this.endDate,
+          merchantType: this.merchantType4
+        })
+        .then(res => {
+          // this.mapData = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 第二行第二个饼图切换
+    handleTradeRiseRatioChange($data) {
+      this.merchantType5 = $data;
+      this.selectTradeRiseRatioRoughByCondition();
+    },
+    selectTradeRiseRatioRoughByCondition() {
+      api
+        .selectTradeRiseRatioRoughByCondition({
+          beginDate: this.beginDate,
+          endDate: this.endDate,
+          merchantType: this.merchantType5
+        })
+        .then(res => {
+          // this.mapData = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 交易额排行
+    handleTradeTopChange($data) {
+      this.merchantType3 = $data;
+      this.queryTradeTop5ByCondition();
+    },
+    queryTradeTop5ByCondition() {
+      api
+        .queryTradeTop5ByCondition({
+          beginDate: this.beginDate,
+          endDate: this.endDate,
+          merchantType: this.merchantType3
+        })
+        .then(res => {
+          this.testData3 = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 商户平均交易额走势折线图数据获取
+    queryDailyTradeAvgByCondition() {
+      api
+        .queryDailyTradeAvgByCondition({
+          beginDate: this.beginDate,
+          endDate: this.endDate
+        })
+        .then(res => {
+          // this.mapData = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 第一行第一个饼图切换
+    handleRegionRadioChange($data) {
+      this.merchantType = $data;
+      this.queryRegionTradeSummaryByCondition();
+    },
+    queryRegionTradeSummaryByCondition() {
+      api
+        .queryRegionTradeSummaryByCondition({
+          beginDate: this.beginDate,
+          endDate: this.endDate,
+          merchantType: this.merchantType
+        })
+        .then(res => {
+          // this.mapData = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 第一行第二个饼图切换
+    handleCategoryRadioChange($data) {
+      this.merchantType2 = $data;
+      this.queryCategoryTradeSummaryByCondition();
+    },
+    queryCategoryTradeSummaryByCondition() {
+      api
+        .queryRegionTradeSummaryByCondition({
+          beginDate: this.beginDate,
+          endDate: this.endDate,
+          merchantType: this.merchantType2
+        })
+        .then(res => {
+          // this.mapData = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 地图数据分布与排行榜
+    merchantDataQueryAllProvinceCountAndRank() {
+      api
+        .merchantDataQueryAllProvinceCountAndRank({
+          beginDate: this.beginDate,
+          endDate: this.endDate
+        })
+        .then(res => {
+          this.mapData = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    handleDataSelect($time) {
+      this.beginDate = $time[0];
+      this.endDate = $time[1];
+      api
+        .merchantDataQueryAllProvinceCountAndRank({
+          beginDate: this.beginDate,
+          endDate: this.endDate
+        })
+        .then(res => {
+          this.mapData = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
     init() {
       this.showLine();
     },
@@ -530,70 +783,238 @@ export default {
         });
       }
     },
-    search() {
-      this.getData();
+    search($ruleForm) {
+      this.beginDate = $ruleForm.date ? $ruleForm.date[0] : null;
+      this.endDate = $ruleForm.date ? $ruleForm.date[1] : null;
+      this.merchantDataQueryAllProvinceCountAndRank();
     },
-    getData() {
-      this.testData = [
+    initMap() {
+      if (!this.$refs.echartsMap) return;
+      const myChart = echarts.init(this.$refs.echartsMap);
+      const dataList = [
         {
-          rank: "1",
-          name: "利郎男装有限公司",
-          times: "707",
-          amount: "¥ 206"
+          name: "南海诸岛",
+          value: 0
         },
         {
-          rank: "2",
-          name: "利郎男装有限公司",
-          times: "707",
-          amount: "¥ 206"
+          name: "北京",
+          value: 54
+        },
+        {
+          name: "天津",
+          value: 13
+        },
+        {
+          name: "上海",
+          value: 40
+        },
+        {
+          name: "重庆",
+          value: 75
+        },
+        {
+          name: "河北",
+          value: 13
+        },
+        {
+          name: "河南",
+          value: 83
+        },
+        {
+          name: "云南",
+          value: 11
+        },
+        {
+          name: "辽宁",
+          value: 19
+        },
+        {
+          name: "黑龙江",
+          value: 15
+        },
+        {
+          name: "湖南",
+          value: 69
+        },
+        {
+          name: "安徽",
+          value: 60
+        },
+        {
+          name: "山东",
+          value: 39
+        },
+        {
+          name: "新疆",
+          value: 4
+        },
+        {
+          name: "江苏",
+          value: 31
+        },
+        {
+          name: "浙江",
+          value: 104
+        },
+        {
+          name: "江西",
+          value: 36
+        },
+        {
+          name: "湖北",
+          value: 1052
+        },
+        {
+          name: "广西",
+          value: 33
+        },
+        {
+          name: "甘肃",
+          value: 7
+        },
+        {
+          name: "山西",
+          value: 9
+        },
+        {
+          name: "内蒙古",
+          value: 7
+        },
+        {
+          name: "陕西",
+          value: 22
+        },
+        {
+          name: "吉林",
+          value: 4
+        },
+        {
+          name: "福建",
+          value: 18
+        },
+        {
+          name: "贵州",
+          value: 5
+        },
+        {
+          name: "广东",
+          value: 98
+        },
+        {
+          name: "青海",
+          value: 1
+        },
+        {
+          name: "西藏",
+          value: 0
+        },
+        {
+          name: "四川",
+          value: 44
+        },
+        {
+          name: "宁夏",
+          value: 4
+        },
+        {
+          name: "海南",
+          value: 22
+        },
+        {
+          name: "台湾",
+          value: 3
+        },
+        {
+          name: "香港",
+          value: 5
+        },
+        {
+          name: "澳门",
+          value: 5
         }
       ];
-      this.testData2 = [
-        {
-          rank: "1",
-          name: "利郎男装有限公司",
-          increase: "128%",
-          amount: "¥ 206"
+      window.onresize = myChart.resize;
+      myChart.setOption({
+        tooltip: {
+          triggerOn: "mousemove"
         },
-        {
-          rank: "2",
-          name: "利郎男装有限公司",
-          increase: "128%",
-          amount: "¥ 206"
-        }
-      ];
-      this.testData3 = [
-        {
-          rank: "1",
-          name: "利郎男装有限公司",
-          amount: "¥ 206"
+        visualMap: {
+          min: 0,
+          max: 1000,
+          left: 56,
+          bottom: 40,
+          showLabel: !0,
+          text: ["高", "低"],
+          pieces: [
+            {
+              gt: 100,
+              label: "> 100 人",
+              color: "#0050B3"
+            },
+            {
+              gte: 10,
+              lte: 100,
+              label: "10 - 100 人",
+              color: "#1890FF"
+            },
+            {
+              gte: 1,
+              lt: 10,
+              label: "1 - 9 人",
+              color: "#69C0FF"
+            },
+            {
+              gt: 0,
+              lt: 1,
+              label: "1",
+              color: "#BAE7FF"
+            },
+            {
+              value: 0,
+              color: "#E1E9F0"
+            }
+          ],
+          show: !0
         },
-        {
-          rank: "2",
-          name: "利郎男装有限公司",
-          amount: "¥ 206"
+        geo: {
+          map: "china",
+          roam: !1,
+          scaleLimit: {
+            min: 1,
+            max: 2
+          },
+          zoom: 1.2,
+          top: 45,
+          label: {
+            emphasis: {
+              show: false
+            }
+          },
+          itemStyle: {
+            normal: {
+              borderColor: "#fff",
+              textStyle: {
+                show: false
+              }
+            },
+
+            emphasis: {
+              areaColor: "#FAD337",
+              shadowOffsetX: 0,
+              shadowOffsetY: 0,
+              borderWidth: 0
+            }
+          }
         },
-        {
-          rank: "1",
-          name: "利郎男装有限公司",
-          amount: "¥ 206"
-        },
-        {
-          rank: "2",
-          name: "利郎男装有限公司",
-          amount: "¥ 206"
-        },
-        {
-          rank: "1",
-          name: "利郎男装有限公司",
-          amount: "¥ 206"
-        },
-        {
-          rank: "2",
-          name: "利郎男装有限公司",
-          amount: "¥ 206"
-        }
-      ];
+        series: [
+          {
+            name: "商户数量",
+            type: "map",
+            geoIndex: 0,
+            data: dataList
+          }
+        ]
+      });
     }
   }
 };
@@ -644,5 +1065,80 @@ export default {
   .data-box {
     width: 30%;
   }
+}
+.map-box {
+  margin: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  background-color: #ffffff;
+  border-bottom: 1px solid #ebeef5;
+  .chart-box {
+    width: 70%;
+    height: 429px;
+    position: relative;
+    .chart-panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+  }
+  .data-box {
+    width: 30%;
+    padding: 28px 60px 0 0;
+    .data-title {
+      color: rgba(0, 0, 0, 0.85);
+      line-height: 22px;
+      padding-bottom: 7px;
+    }
+    .all-num {
+      color: #1989fa;
+    }
+    .data-item {
+      margin-top: 18px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .data-left {
+      color: rgba(0, 0, 0, 0.65);
+      line-height: 22px;
+      .index {
+        display: inline-block;
+        margin-right: 24px;
+        text-align: center;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        border-radius: 50%;
+      }
+      .hightlight {
+        background: rgba(24, 144, 255, 1);
+        color: #ffffff;
+      }
+      .normal {
+        background: #f0f2f5;
+        color: rgba(0, 0, 0, 0.65);
+      }
+    }
+    .data-right {
+      color: rgba(0, 0, 0, 0.65);
+      line-height: 22px;
+      .perc {
+        color: rgba(0, 0, 0, 0.45);
+      }
+    }
+  }
+}
+.title2 {
+  margin: 24px 24px 0;
+  height: 64px;
+  line-height: 64px;
+  padding-left: 32px;
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(51, 51, 53, 1);
+  border-bottom: 1px solid #ebeef5;
+  background-color: #ffffff;
 }
 </style>
