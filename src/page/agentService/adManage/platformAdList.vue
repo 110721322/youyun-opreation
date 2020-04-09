@@ -69,7 +69,7 @@ export default {
   methods: {
     search($ruleForm) {
       this.params = {
-        advertType: $ruleForm.area
+        advertType: $ruleForm.advertType
       };
     },
     getTableData() {

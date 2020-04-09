@@ -2,23 +2,17 @@ export const TABLE_CONFIG = {
   gridConfig: [
     {
       label: '服务商',
-      prop: 'service',
-      // prop: [{ key: 'service' }, { key: 'serviceid', label: "ID:" }],
+      prop: [{ key: 'agentName' }, { key: 'agentNo', label: "ID:" }],
       width: '150px'
     },
     {
       label: '开启权限',
-      prop: 'merchant',
+      prop: 'privilegeDesc',
       width: '150px'
     },
     {
       label: '所属运营',
-      prop: 'time',
-      width: '150px'
-    },
-    {
-      label: '修改时间',
-      prop: 'oper',
+      prop: 'operationName',
       width: '150px'
     }
   ],

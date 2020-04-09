@@ -40,7 +40,7 @@
   </div>
 </template>
 <script>
-import api from "@/api/api_device";
+import api from "@/api/api_agent.js";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 
@@ -60,12 +60,10 @@ export default {
       drawer: false,
       direction: "rtl",
       params: {
-        currentPage: 0,
-        deviceId: 69528,
-        deviceType: 356,
-        pageSize: 20
+        beginDate: this.$g.utils.getToday(),
+        endDate: this.$g.utils.getToday()
       },
-      api: api.deviceMallQueryByPage
+      api: api.queryByPage
     };
   },
   mounted() {},
@@ -73,8 +71,8 @@ export default {
     search($ruleForm) {
       console.log($ruleForm);
       const params = {
-        deviceType: $ruleForm.deviceType,
-        deviceId: $ruleForm.deviceId
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
+        endDate: $ruleForm.date ? $ruleForm.date[1] : null
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
@@ -87,8 +85,8 @@ export default {
       })
         .then(() => {
           api
-            .unfrozen({
-              agentNo: row.agentNo
+            .updateOfUnFrozen({
+              id: row.id
             })
             .then(res => {
               this.$message({
@@ -99,16 +97,16 @@ export default {
         })
         .catch(() => {});
     },
-    handleFreeze() {
+    handleFreeze(row) {
       this.$confirm("是否要冻结该代理商？", "冻结代理商", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认冻结",
         cancelButtonText: "取消"
       })
-        .then(row => {
+        .then(() => {
           api
-            .frozen({
-              agentNo: row.agentNo
+            .updateOfFrozen({
+              id: row.id
             })
             .then(res => {
               this.$message({
@@ -123,9 +121,10 @@ export default {
       // eslint-disable-next-line no-console
       console.log($val);
     },
-    handleDetail() {
+    handleDetail($row) {
       this.$router.push({
-        path: "/agentService/thirdParty/detail"
+        path: "/agentService/thirdParty/detail",
+        query: { id: $row.id }
       });
     },
     onClick_addDocker() {

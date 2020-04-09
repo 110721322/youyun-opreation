@@ -7,17 +7,17 @@ export const TABLE_CONFIG = {
     },
     {
       label: '对接商名称',
-      prop: 'merchantName',
+      prop: 'accessMerchantName',
       width: '100px'
     },
     {
       label: '对接秘钥',
-      prop: 'createTime',
+      prop: 'openSecret',
       width: '180px'
     },
     {
       label: '对接设备开头编码',
-      prop: 'operateUserName',
+      prop: 'deviceSecret',
       width: '150px'
     },
     {

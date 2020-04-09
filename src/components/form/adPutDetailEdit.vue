@@ -30,8 +30,8 @@
       </div>
       <slot :formItem="ruleForm"></slot>
       <div class="btn-box">
-        <el-button type="primary" class="btn">保存</el-button>
-        <el-button plain class="btn">取消</el-button>
+        <el-button type="primary" class="btn" @click="handleClick">保存</el-button>
+        <el-button plain class="btn" @click="cancelForm">取消</el-button>
       </div>
     </el-form>
   </div>
@@ -52,6 +52,7 @@ import iSwitch from "./components/Switch.vue";
 import Upload from "./components/Upload.vue";
 import Radio from "./components/Radio.vue";
 import Tinymce from "./components/Tinymce/index.vue";
+import Show from "./components/Show";
 // import { isUndefined, deepClone } from '@/libs/lit/utils'
 
 export default {
@@ -64,7 +65,8 @@ export default {
     iSwitch,
     Radio,
     Upload,
-    Tinymce
+    Tinymce,
+    Show
   },
   props: {
     formBaseData: Array,
@@ -149,6 +151,7 @@ export default {
           formatFormData(formInfo, this.formKeys);
         }
       });
+      this.$emit("confirm", this.ruleForm, this.formKeys);
     },
     resetForm() {
       // 初始化表单

@@ -25,13 +25,22 @@ export default {
   hardwareDetail: (params) => API.GET('/operation/v1/deviceOrder/hardwareDetail', params),
   // 广告权限
   advertPrivilege: (params) => API.GET('/operation/v1/advertPrivilege/queryByPage', params),
-  advertPrivilegeUpdate: (params) => API.GET('/operation/v1/advertPrivilege/update', params),
+  advertPrivilegeUpdate: (params) => API.POST('/operation/v1/advertPrivilege/update', params),
   queryAllPrivilege: (params) => API.GET('/operation/v1/advertPrivilege/queryAllPrivilege', params),
   advertList: (params) => API.GET('/operation/v1/advert/queryByPage', params),
   advertDelete: (params) => API.GET('/operation/v1/advert/delete', params),
   advertAdd: (params) => API.GET('/operation/v1/advert/add', params),
   advertUpdate: (params) => API.GET('/operation/v1/advert/update', params),
+  queryById: (params) => API.GET('operation/v1/advertDistribute/queryById', params),
   putList: (params) => API.GET('/operation/v1/advertDistribute/queryByPage', params),
+  advertDistributeAdd: (params) => API.GET('/operation/v1/advertDistribute/add', params),
+  advertDistributeUpdate: (params) => API.GET('/operation/v1/advertDistribute/update', params),
   // 运营结算审核
-  listOperationSettle: (params) => API.GET('/operation/v1/agentSettle/listOperationSettle', params)
+  listOperationSettle: (params) => API.GET('/operation/v1/agentSettle/listOperationSettle', params),
+  // 第三方对接列表
+  queryByPage: (params) => API.GET('/operation/v1/agentOpenConfig/queryByPage', params),
+  updateOfFrozen: (params) => API.GET('/operation/v1/agentOpenConfig/updateOfFrozen', params),
+  updateOfUnFrozen: (params) => API.GET('/operation/v1/agentOpenConfig/updateOfUnFrozen', params),
+  add: (params) => API.GET('/operation/v1/agentOpenConfig/add', params),
+  update: (params) => API.GET('/operation/v1/agentOpenConfig/update', params)
 };

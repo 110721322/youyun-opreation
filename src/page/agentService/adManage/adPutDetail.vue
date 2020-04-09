@@ -8,6 +8,7 @@
       :show-foot-btn="fromConfigData.showFootBtn"
       label-width="130px"
       @cancel="cancel"
+      @confirm="confirm"
     >
       <template v-slot="{ formItem } ">
         <div v-if="formItem.putService===3">
@@ -17,7 +18,7 @@
               已添加
               <span class="blue">{{ dynamicTags.length }}</span> 项目
             </span>
-            <el-button class="btn" type="text">清空</el-button>
+            <el-button class="btn" type="text" @click="onClick_clearAll">清空</el-button>
           </div>
           <div class="tag-box">
             <el-tag
@@ -102,6 +103,7 @@
 </template>
 
 <script>
+import api from "@/api/api_agent.js";
 import Form from "@/components/form/adPutDetailEdit.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { FORM_CONFIG } from "./../formConfig/adPutDetailForm";
@@ -112,7 +114,7 @@ export default {
   components: { Form, BaseCrud },
   data() {
     return {
-      fromConfigData: FORM_CONFIG.deviceData,
+      fromConfigData: FORM_CONFIG.addData,
       drawer: false,
       input: "",
       configData2: FORM_CONFIG2,
@@ -128,13 +130,36 @@ export default {
       testData: [],
       selectData: [],
       dynamicTags: ["标签一", "标签二", "标签三"],
-      drawerTitle: "添加投放的服务商"
+      drawerTitle: "添加投放的服务商",
+      id: this.$route.query.id
     };
   },
   mounted() {
     this.getTableData();
+    if (this.id) {
+      this.queryById();
+    }
   },
   methods: {
+    onClick_clearAll() {
+      this.dynamicTags = [];
+    },
+    queryById() {
+      api
+        .queryById({
+          id: this.id
+        })
+        .then(res => {
+          // 编辑前重赋值
+          FORM_CONFIG.editData.formData.forEach((item, index) => {
+            item.initVal = res.object[item.key];
+          });
+          this.fromConfigData = FORM_CONFIG.editData;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
     handleClose(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
     },
@@ -155,8 +180,8 @@ export default {
         }
       ];
     },
-    cancel(done) {
-      this.$router.back(-1);
+    cancel() {
+      this.$router.go(-1);
     },
     selectionChange($val) {
       this.selectData = $val;
@@ -173,6 +198,45 @@ export default {
     onClick_search() {},
     onClick_cancel() {
       this.drawer = false;
+    },
+    confirm($form) {
+      console.log($form);
+      if (this.id) {
+        api
+          .advertDistributeUpdate({
+            id: this.id,
+            agentNoList: ["123", "234"],
+            beginTime: $form.time[0],
+            endTime: $form.time[1]
+          })
+          .then(res => {
+            this.$alert("修改成功", "提示", {
+              confirmButtonText: "确定",
+              callback: action => {
+                this.$router.back(-1);
+              }
+            });
+          });
+      } else {
+        api
+          .advertDistributeAdd({
+            advertId: $form.advertId,
+            agentNoList: ["123", "234"],
+            distributeType: $form.distributeType,
+            operationId: $form.operationId,
+            sort: $form.sort,
+            beginTime: $form.time[0],
+            endTime: $form.time[1]
+          })
+          .then(res => {
+            this.$alert("添加成功", "提示", {
+              confirmButtonText: "确定",
+              callback: action => {
+                this.$router.back(-1);
+              }
+            });
+          });
+      }
     }
   }
 };

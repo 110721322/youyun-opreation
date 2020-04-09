@@ -3,7 +3,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '广告类型',
-      key: 'area',
+      key: 'advertType',
       style: 'width:294px',
       options: [
         {

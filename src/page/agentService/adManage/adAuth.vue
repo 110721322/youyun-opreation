@@ -40,7 +40,7 @@
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import Form from "@/components/form/index.vue";
-import api from "@/api/api_agent.js"
+import api from "@/api/api_agent.js";
 import { SEARCH_CONFIG } from "../formConfig/adAuthSearch";
 import { FORM_CONFIG } from "../formConfig/adAuthForm";
 import { TABLE_CONFIG } from "../tableConfig/adAuthConfig";
@@ -58,12 +58,12 @@ export default {
       searchHeight: "260",
       drawer: false,
       params: {
-        "agentName": "",
-        "agentNo": "",
-        "cityCode": "",
-        "operationId": 0,
-        "privilege": 0,
-        "provinceCode": ""
+        agentName: "",
+        agentNo: "",
+        cityCode: "",
+        operationId: 0,
+        privilege: 0,
+        provinceCode: ""
       },
       api: api.advertPrivilege
     };
@@ -77,26 +77,28 @@ export default {
       this.fromConfigData = FORM_CONFIG.formData;
     },
     confirm($ruleForm) {
-      api.advertPrivilegeUpdate({
-        "agentNo": "",
-        "privilegeList": $ruleForm.baseData
-      }).then(res => {
-        this.drawer = false;
-      })
+      api
+        .advertPrivilegeUpdate({
+          agentNo: "",
+          privilegeList: $ruleForm.baseData
+        })
+        .then(res => {
+          this.drawer = false;
+        });
     },
     cancel() {
       this.drawer = false;
     },
     search($ruleForm) {
       this.params = {
-        "agentName": "",
-        "agentNo": "",
-        "cityCode": "",
-        "operationId": $ruleForm.operationId,
-        "privilege": $ruleForm.privilege,
-        "provinceCode": ""
-      }
-      this.params[$ruleForm.inputSelect] = $ruleForm.inputForm
+        agentName: "",
+        agentNo: "",
+        cityCode: "",
+        operationId: $ruleForm.operationId,
+        privilege: $ruleForm.privilege,
+        provinceCode: ""
+      };
+      this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       if ($ruleForm.area) {
         this.params.cityCode = $ruleForm.area[1];
         this.params.provinceCode = $ruleForm.area[0];

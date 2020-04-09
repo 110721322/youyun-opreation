@@ -9,7 +9,7 @@ export const FORM_CONFIG = {
         type: 2,
         label: '广告权限',
         key: 'baseData',
-        initVal: ['蜻蜓-开机广告'],
+        initVal: [1],
         options: [
           {
             label: '蜻蜓-开机广告',

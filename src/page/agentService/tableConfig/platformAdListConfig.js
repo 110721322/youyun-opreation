@@ -2,26 +2,26 @@ export const TABLE_CONFIG = {
   gridConfig: [
     {
       label: '广告名称',
-      prop: 'service',
+      prop: 'advertName',
       width: '150px'
     },
     {
       label: '广告类型',
-      prop: 'merchant',
+      prop: 'advertType',
       width: '150px'
     },
     {
       label: '尺寸',
-      prop: 'time',
+      prop: 'advertSize',
       width: '150px'
     },
     {
       label: '广告图片',
-      prop: 'image',
+      prop: 'advertImg',
       width: '150px',
       type: 'img',
       render: (h, params) => {
-        const imgUrl = params.row.image;
+        const imgUrl = params.row.advertImg;
         return h('el-image', {
           props: {
             src: imgUrl,
@@ -32,7 +32,7 @@ export const TABLE_CONFIG = {
     },
     {
       label: '修改时间',
-      prop: 'service',
+      prop: 'modifyTime',
       width: '150px'
     }
   ],

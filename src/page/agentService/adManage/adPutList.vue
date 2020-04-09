@@ -61,9 +61,7 @@ export default {
       api: api.putList
     };
   },
-  mounted() {
-    // this.getTableData();
-  },
+  mounted() {},
   methods: {
     search($ruleForm) {
       // eslint-disable-next-line no-console
@@ -74,32 +72,6 @@ export default {
         operationId: $ruleForm.operationId || 0,
         status: $ruleForm.status || 0
       };
-    },
-    getTableData() {
-      this.testData = [
-        {
-          service: "日常任务",
-          serviceid: "商户结算失败",
-          superService: "4",
-          superid: "提醒",
-          merchantNum: "XXXX店铺",
-          oper: "20:00:23",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg"
-        },
-        {
-          service: "日常任务",
-          serviceid: "商户结算失败",
-          superService: "4",
-          superid: "提醒",
-          merchantNum: "XXXX店铺",
-          oper: "20:00:23",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg"
-        }
-      ];
     },
     onClick_remove(row) {
       this.$confirm("确认删除该广告投放吗", "提示", {
@@ -125,8 +97,11 @@ export default {
           });
         });
     },
-    onClick_edit() {
-      this.$router.push({ path: "/agentService/adManage/adPutList/detail" });
+    onClick_edit($row) {
+      this.$router.push({
+        path: "/agentService/adManage/adPutList/detail",
+        query: { id: $row.advertId }
+      });
     },
     onClick_addAd() {
       this.$router.push({ path: "/agentService/adManage/adPutList/detail" });

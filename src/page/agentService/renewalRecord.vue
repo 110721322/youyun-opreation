@@ -31,7 +31,7 @@
   </div>
 </template>
 <script>
-import api from "@/api/api_risk";
+import api from "@/api/api_agent.js";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 
@@ -61,7 +61,7 @@ export default {
         currentPage: "",
         pageSize: ""
       },
-      api: api.midPlatformQueryByPage
+      api: api.xxx
     };
   },
   mounted() {},
