@@ -31,7 +31,7 @@
   </div>
 </template>
 <script>
-import api from "@/api/api_risk";
+import api from "@/api/api_ticketCenter";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 
@@ -51,17 +51,11 @@ export default {
       searchHeight: "260",
       drawer: false,
       params: {
-        beginDate: this.$g.utils.getToday(),
-        endDate: this.$g.utils.getToday(),
-        merchantNo: "",
-        merchantName: "",
-        channelMerchantNo: "",
-        operateUserNo: "",
-        status: "",
-        currentPage: "",
-        pageSize: ""
+        operatorId: "",
+        startTime: this.$g.utils.getToday(),
+        endTime: this.$g.utils.getToday()
       },
-      api: api.midPlatformQueryByPage
+      api: api.workerOrderStatisticQueryByPage
     };
   },
   mounted() {},
@@ -69,18 +63,18 @@ export default {
     cancel() {
       this.drawer = false;
     },
-    handleDetail() {
+    handleDetail($data) {
       this.$router.push({
-        path: "/agentService/ticketCenter/ticketList"
+        path: "/agentService/ticketList",
+        query: { id: $data.operatorId }
       });
     },
     search($ruleForm) {
       console.log($ruleForm);
       const params = {
-        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
-        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
-        operateUserNo: $ruleForm.operateUserNo,
-        status: $ruleForm.status
+        startTime: $ruleForm.date ? $ruleForm.date[0] : null,
+        endTime: $ruleForm.date ? $ruleForm.date[1] : null,
+        operatorId: $ruleForm.operatorId
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;

@@ -222,7 +222,7 @@ export default {
   },
   mounted() {
     // console.log(this.apiService);
-    if (this.apiService) {
+    if (this.apiService && this.params !== null) {
       this.getData();
     }
   },

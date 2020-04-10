@@ -9,7 +9,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '解决方案',
-        key: 'name4',
+        key: 'checkSolution',
         initVal: '',
         inputType: 'textarea',
         rules: setRules('解决方案').isRequired.get
@@ -23,7 +23,7 @@ export const FORM_CONFIG = {
       {
         type: 1,
         label: '处理人员',
-        key: 'type',
+        key: 'operatorId',
         initVal: "0",
         options: [
           {
@@ -44,13 +44,13 @@ export const FORM_CONFIG = {
     ]
   },
   checkReplyData: {
-    title: '工单回复',
+    title: '查看工单回复',
     showFootBtn: true,
     formData: [
       {
         type: 'show',
         label: '解决方案',
-        key: 'outputNo',
+        key: 'solution',
         initVal: "佣金为0，请佣金达到500后进行结算"
       }
     ]

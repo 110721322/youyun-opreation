@@ -2,36 +2,36 @@ export const TABLE_CONFIG = {
   gridConfig: [
     {
       label: '成员',
-      prop: 'merchantName',
+      prop: 'operatorName',
       width: '100px'
     },
     {
       label: '工单数量',
-      prop: 'merchantName',
+      prop: 'orderNum',
       width: '100px',
       sortable: "custom"
     },
     {
       label: '工单完成数量',
-      prop: 'createTime',
+      prop: 'orderSuccessNum',
       width: '150px',
       sortable: "custom"
     },
     {
       label: '完成率',
-      prop: 'operateUserName',
+      prop: 'completionRate',
       width: '130px',
       sortable: "custom"
     },
     {
       label: '平均完成时长',
-      prop: 'status',
+      prop: 'completionAvgTime',
       width: '150px',
       sortable: "custom"
     },
     {
       label: '评分',
-      prop: 'status',
+      prop: 'score',
       width: '150px',
       sortable: "custom"
     }

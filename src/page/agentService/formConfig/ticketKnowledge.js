@@ -29,7 +29,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '问题',
-        key: 'answer',
+        key: 'questionContent',
         initVal: '',
         inputType: 'textarea',
         rules: setRules('问题').isRequired.get
@@ -37,7 +37,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '答案',
-        key: 'question',
+        key: 'answerContent',
         initVal: '',
         inputType: 'textarea',
         rules: setRules('答案').isRequired.get
@@ -51,7 +51,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '菜单名称',
-        key: 'type',
+        key: 'menuName',
         initVal: "",
         rules: setRules('菜单名称').isRequired.get
       }
@@ -85,7 +85,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '问题',
-        key: 'answer',
+        key: 'questionContent',
         initVal: '',
         inputType: 'textarea',
         rules: setRules('问题').isRequired.get
@@ -93,7 +93,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '答案',
-        key: 'question',
+        key: 'answerContent',
         initVal: '',
         inputType: 'textarea',
         rules: setRules('答案').isRequired.get

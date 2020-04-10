@@ -21,7 +21,6 @@
           :is-async="true"
           :is-select="false"
           :is-expand="false"
-          :row-key="'id'"
           :default-expand-all="false"
           :hide-edit-area="configData.hideEditArea"
           @detail="handleDetail"
@@ -44,7 +43,7 @@
   </div>
 </template>
 <script>
-import api from "@/api/api_risk";
+import api from "@/api/api_ticketCenter";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import Form from "@/components/form/index.vue";
@@ -63,20 +62,19 @@ export default {
       configData: TABLE_CONFIG,
       testData: [],
       direction: "rtl",
-      searchHeight: "260",
+      searchHeight: "320",
       drawer: false,
+      id: this.$route.query.id,
       params: {
-        beginDate: this.$g.utils.getToday(),
-        endDate: this.$g.utils.getToday(),
-        merchantNo: "",
-        merchantName: "",
-        channelMerchantNo: "",
-        operateUserNo: "",
-        status: "",
-        currentPage: "",
-        pageSize: ""
+        startTime: this.$g.utils.getToday(),
+        endTime: this.$g.utils.getToday(),
+        // startTime: "yyyy-MM-dd HH:mm:ss",
+        // endTime: "yyyy-MM-dd HH:mm:ss",
+        operatorId: this.$route.query.id
       },
-      api: api.midPlatformQueryByPage
+      api: api.workerOrderQueryByPage,
+      formStatus: "",
+      activityRow: {}
     };
   },
   mounted() {},
@@ -84,30 +82,93 @@ export default {
     cancel() {
       this.drawer = false;
     },
-    confirm() {},
-    handleDetail() {
+    confirm($data) {
+      switch (this.formStatus) {
+        case "distribution":
+          api
+            .designate({
+              id: this.activityRow.id,
+              operatorId: $data.operatorId
+            })
+            .then(res => {
+              this.$message("已分配");
+              this.drawer = false;
+            })
+            .catch(err => {
+              this.$message(err);
+            });
+          break;
+        case "reply":
+          api
+            .reply({
+              id: this.activityRow.id,
+              solution: $data.checkSolution
+            })
+            .then(res => {
+              this.$message("已回复");
+              this.drawer = false;
+            })
+            .catch(err => {
+              this.$message(err);
+            });
+          break;
+        case "checkReply":
+          this.drawer = false;
+          break;
+
+        default:
+          break;
+      }
+    },
+    handleDetail($row) {
       this.$router.push({
-        path: "/agentService/ticketCenter/ticketList/detail"
+        path: "/agentService/ticketList/detail",
+        query: { id: $row.id }
       });
     },
-    handleDistribution() {
-      this.fromConfigData = FORM_CONFIG.distributionData;
+    handleDistribution($row) {
+      const FormData = JSON.parse(JSON.stringify(FORM_CONFIG.distributionData));
+      this.activityRow = $row;
+      this.formStatus = "distribution";
+      this.fromConfigData = FormData;
       this.drawer = true;
     },
-    handleReply() {
-      this.fromConfigData = FORM_CONFIG.replyData;
+    handleReply($row) {
+      const FormData = JSON.parse(JSON.stringify(FORM_CONFIG.replyData));
+      this.activityRow = $row;
+      this.formStatus = "reply";
+      this.fromConfigData = FormData;
       this.drawer = true;
     },
-    handleCheckReply() {
-      this.fromConfigData = FORM_CONFIG.checkReplyData;
-      this.drawer = true;
+    handleCheckReply($row) {
+      api
+        .detail({
+          id: $row.id
+        })
+        .then(res => {
+          const FormData = JSON.parse(
+            JSON.stringify(FORM_CONFIG.checkReplyData)
+          );
+          FormData.formData.forEach((item, index) => {
+            item.initVal = res.object[item.key];
+          });
+          this.activityRow = $row;
+          this.formStatus = "checkReply";
+          this.fromConfigData = FormData;
+          this.drawer = true;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
     },
     search($ruleForm) {
       console.log($ruleForm);
       const params = {
-        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
-        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
-        operateUserNo: $ruleForm.operateUserNo,
+        startTime: $ruleForm.date ? $ruleForm.date[0] : null,
+        endTime: $ruleForm.date ? $ruleForm.date[1] : null,
+        questionModule: $ruleForm.questionModule,
+        questionType: $ruleForm.questionType,
+        operatorId: $ruleForm.operatorId,
         status: $ruleForm.status
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;

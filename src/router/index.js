@@ -323,6 +323,17 @@ const menuItems = [
       },
       {
         type: 'ios-grid',
+        name: 'ticketList',
+        text: '工单列表',
+        path: 'ticketList',
+        isShow: false,
+        meta: {
+          title: '工单列表',
+          icon: 'ticketList'
+        }
+      },
+      {
+        type: 'ios-grid',
         name: 'ticketCenter',
         text: '工单中心',
         path: 'ticketCenter',
@@ -341,17 +352,6 @@ const menuItems = [
             meta: {
               title: '工单统计',
               icon: 'ticketStatistics'
-            }
-          },
-          {
-            type: 'ios-grid',
-            name: 'ticketList',
-            text: '工单列表',
-            path: 'ticketList',
-            isShow: true,
-            meta: {
-              title: '工单列表',
-              icon: 'ticketList'
             }
           },
           {

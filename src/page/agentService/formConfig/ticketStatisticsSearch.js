@@ -10,7 +10,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '成员',
-      key: 'status',
+      key: 'operatorId',
       style: 'width:294px',
       options: [
         {

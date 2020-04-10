@@ -7,31 +7,19 @@
     <transition name="fade">
       <div>
         <div>
-          <detailMode
-            :img-width="4"
-            :rule-form="ruleForm.baseData"
-            :config-data="configData.orderData"
-          ></detailMode>
-          <detailMode
-            :img-width="4"
-            :rule-form="ruleForm.serviceSetupData"
-            :config-data="configData.agentData"
-          ></detailMode>
-          <detailMode
-            :img-width="4"
-            :rule-form="ruleForm.serviceSetupData"
-            :config-data="configData.questionData"
-          ></detailMode>
+          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.orderData"></detailMode>
+          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.agentData"></detailMode>
+          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.questionData"></detailMode>
           <detailMode
             v-if="showComponents.showDealData"
             :img-width="4"
-            :rule-form="ruleForm.serviceSetupData"
+            :rule-form="ruleForm"
             :config-data="configData.dealData"
           ></detailMode>
           <detailMode
             v-if="showComponents.showEvaluationData"
             :img-width="4"
-            :rule-form="ruleForm.serviceSetupData"
+            :rule-form="ruleForm"
             :config-data="configData.evaluationData"
           ></detailMode>
         </div>
@@ -55,7 +43,7 @@
   </div>
 </template>
 <script>
-import api from "@/api/api_merchantAudit";
+import api from "@/api/api_ticketCenter";
 import detailMode from "@/components/detailMode/detailMode2.vue";
 import Form from "@/components/form/index.vue";
 import { FORM_CONFIG } from "./../formConfig/ticketListDetailForm";
@@ -74,43 +62,18 @@ export default {
         showEvaluationData: false
       },
       currentType: "",
-      ruleForm: {
-        baseData: {
-          superService: "32943098094",
-          type: "浙江省杭州市西湖区黄姑山路工专路交叉路口",
-          pic:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic2:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic3:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          company: "3310281995",
-          name: "3310281995",
-          phone: "3310281995009208899",
-          address: "3310281995009208899",
-          detailAddress: "3310281995009208899",
-          email: "33102819908899"
-        },
-        serviceSetupData: {
-          address: "企业",
-          way: "山东紫菜",
-          aliWxPerc: "2019-03-10",
-          yunLessPerc: "3428947394238",
-          yunMorePerc: "18503892300",
-          endTime: "2019-03-10"
-        }
-      },
+      ruleForm: {},
       configData: {
         orderData: {
           name: "订单信息",
           items: [
             {
               name: "工单编号",
-              key: "superService"
+              key: "workerOrderNo"
             },
             {
               name: "提交时间",
-              key: "type"
+              key: "createTime"
             }
           ]
         },
@@ -119,19 +82,19 @@ export default {
           items: [
             {
               name: "服务商ID",
-              key: "address"
+              key: "agentNo"
             },
             {
               name: "服务商名称",
-              key: "way"
+              key: "agentName"
             },
             {
               name: "手机号",
-              key: "aliWxPerc"
+              key: "agentPhone"
             },
             {
               name: "电话可接通时间",
-              key: "yunLessPerc"
+              key: "phoneOpenTime"
             }
           ]
         },
@@ -160,23 +123,23 @@ export default {
             },
             {
               name: "问题模块",
-              key: "address"
+              key: "questionModule"
             },
             {
               name: "问题类型",
-              key: "way"
+              key: "questionType"
             },
             {
               name: "问题内容",
-              key: "aliWxPerc"
+              key: "questionContent"
             },
             {
               name: "优先级",
-              key: "yunLessPerc"
+              key: "priority"
             },
             {
               name: "高优先级原因",
-              key: "aa"
+              key: "hightPriorityReason"
             }
           ]
         },
@@ -185,11 +148,11 @@ export default {
           items: [
             {
               name: "处理人员",
-              key: "address"
+              key: "operatorName"
             },
             {
               name: "解决方案",
-              key: "way"
+              key: "solution"
             }
           ]
         },
@@ -198,27 +161,29 @@ export default {
           items: [
             {
               name: "总体评分",
-              key: "address"
+              key: "grade"
             },
             {
               name: "业务能力",
-              key: "way"
+              key: "abilityGrade"
             },
             {
               name: "解决时效",
-              key: "aliWxPerc"
+              key: "agingGrade"
             },
             {
               name: "问题是否解决",
-              key: "yunLessPerc"
+              key: "isSolution"
             },
             {
               name: "评价内容",
-              key: "evaluation"
+              key: "evaluationContent"
             }
           ]
         }
-      }
+      },
+      id: this.$route.query.id,
+      formStatus: ""
     };
   },
   watch: {
@@ -242,33 +207,73 @@ export default {
   },
   mounted() {
     this.currentType = "undo";
+    this.getDetail();
   },
   methods: {
-    confirm($data) {
-      console.log($data);
+    getDetail() {
       api
-        .updateSubAuditStatusOfReject({
-          agentNo: "",
-          reason: $data["reason"]
+        .detail({
+          id: this.id
         })
         .then(res => {
-          this.$message("已驳回");
-          this.drawer = false;
+          this.ruleForm = res.object;
         })
         .catch(err => {
           this.$message(err);
         });
     },
+    confirm($data) {
+      switch (this.formStatus) {
+        case "distribution":
+          api
+            .designate({
+              id: this.id,
+              operatorId: $data.operatorId
+            })
+            .then(res => {
+              this.$message("已分配");
+              this.drawer = false;
+            })
+            .catch(err => {
+              this.$message(err);
+            });
+          break;
+        case "reply":
+          api
+            .reply({
+              id: this.id,
+              solution: $data.checkSolution
+            })
+            .then(res => {
+              this.$message("已回复");
+              this.drawer = false;
+            })
+            .catch(err => {
+              this.$message(err);
+            });
+          break;
+        case "checkReply":
+          this.drawer = false;
+          break;
+
+        default:
+          break;
+      }
+    },
     onClick_distribution() {
+      const FormData = JSON.parse(JSON.stringify(FORM_CONFIG.distributionData));
+      this.formStatus = "distribution";
+      this.fromConfigData = FormData;
       this.drawer = true;
-      this.fromConfigData = FORM_CONFIG.distributionData;
     },
     cancel() {
       this.drawer = false;
     },
     onClick_reply() {
+      const FormData = JSON.parse(JSON.stringify(FORM_CONFIG.replyData));
+      this.formStatus = "reply";
+      this.fromConfigData = FormData;
       this.drawer = true;
-      this.fromConfigData = FORM_CONFIG.replyData;
     }
   }
 };

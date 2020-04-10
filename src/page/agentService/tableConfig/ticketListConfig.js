@@ -2,7 +2,7 @@ export const TABLE_CONFIG = {
   gridConfig: [
     {
       label: '工单编号',
-      prop: 'merchantName',
+      prop: 'workerOrderNo',
       width: '100px'
     },
     {
@@ -12,17 +12,17 @@ export const TABLE_CONFIG = {
     },
     {
       label: '问题模块',
-      prop: 'createTime',
+      prop: 'questionModule',
       width: '130px'
     },
     {
       label: '问题类型',
-      prop: 'operateUserName',
+      prop: 'questionType',
       width: '130px'
     },
     {
       label: '问题内容',
-      prop: 'status',
+      prop: 'questionContent',
       width: '150px'
     },
     {
@@ -32,27 +32,27 @@ export const TABLE_CONFIG = {
     },
     {
       label: '优先级',
-      prop: 'status',
+      prop: 'priority',
       width: '80px'
     },
     {
       label: '处理人员',
-      prop: 'status',
+      prop: 'operatorName',
       width: '80px'
     },
     {
       label: '提交时间',
-      prop: 'status',
+      prop: 'createTime',
       width: '150px'
     },
     {
       label: '处理时长',
-      prop: 'status',
+      prop: 'disposeTime',
       width: '100px'
     },
     {
       label: '评分',
-      prop: 'status',
+      prop: 'grade',
       width: '150px'
     }
   ],

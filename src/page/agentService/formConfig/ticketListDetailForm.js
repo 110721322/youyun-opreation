@@ -9,7 +9,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '解决方案',
-        key: 'name4',
+        key: 'checkSolution',
         initVal: '',
         inputType: 'textarea',
         rules: setRules('解决方案').isRequired.get
@@ -23,7 +23,7 @@ export const FORM_CONFIG = {
       {
         type: 1,
         label: '处理人员',
-        key: 'type',
+        key: 'operatorId',
         initVal: "0",
         options: [
           {
