@@ -266,6 +266,7 @@ export default {
       this.queryParams.pageSize = this.currentPageSize;
       this.apiService(this.queryParams)
         .then(res => {
+          // debugger;
           if (g.utils.isArr(res.object)) {
             this.showGridData = res.datas || res.object;
           } else {

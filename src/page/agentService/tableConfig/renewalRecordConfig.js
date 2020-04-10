@@ -7,7 +7,7 @@ export const TABLE_CONFIG = {
     },
     {
       label: '续费时间',
-      prop: 'merchantName',
+      prop: 'createTime',
       width: '100px'
     },
     {
@@ -17,22 +17,22 @@ export const TABLE_CONFIG = {
     },
     {
       label: '最近到期时间',
-      prop: 'operateUserName',
+      prop: 'createTime',
       width: '130px'
     },
     {
       label: '续费时长（年）',
-      prop: 'status',
+      prop: 'renewYear',
       width: '130px'
     },
     {
       label: '支付方式',
-      prop: 'status',
+      prop: 'pay',
       width: '100px'
     },
     {
       label: '状态',
-      prop: 'status',
+      prop: 'auditStatus',
       width: '100px'
     }
   ],

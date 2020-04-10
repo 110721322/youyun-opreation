@@ -2,12 +2,12 @@ export const OPERATIONAPPROVE_CONFIG = {
   gridConfig: [
     {
       label: '服务商',
-      prop: 'agentName',
+      prop: [{ key: 'agentName' }, { key: 'agentNo', label: 'ID:' }],
       width: '90px'
     },
     {
       label: '结算金额(元) | 实际结算金额(元)',
-      prop: 'amount',
+      prop: [{ key: 'settleCommission', label: '结算金额:' }, { key: 'actualSettleCommission', label: '实际结算金额:' }],
       width: '250px'
     },
     {

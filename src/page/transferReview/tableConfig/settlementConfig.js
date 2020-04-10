@@ -2,33 +2,33 @@ export const TABLE_CONFIG = {
   gridConfig: [
     {
       label: '服务商',
-      prop: 'service',
+      prop: [{ key: 'agentName' }, { key: 'agentNo', label: 'ID:' }],
       width: '90px'
     },
     {
       label: '结算金额(元) | 实际结算金额(元)',
-      prop: 'amount',
+      prop: [{ key: 'settleAccount' }, { key: 'actualSettleCommission' }],
       width: '250px'
     },
     {
       label: '结算卡号',
-      prop: 'type',
+      prop: 'settleAccount',
       width: '90px'
     },
     {
       label: '结算类型',
-      prop: 'type1',
+      prop: 'settleType',
       width: '90px'
     },
     {
       label: '审核状态',
-      prop: 'status',
+      prop: 'settleStatus',
       width: '90px'
 
     },
     {
       label: '法人',
-      prop: 'createTime',
+      prop: 'settleName',
       width: '90px'
     },
     {
@@ -38,7 +38,7 @@ export const TABLE_CONFIG = {
     },
     {
       label: '操作时间',
-      prop: 'operTime',
+      prop: 'updateTime',
       width: '90px'
     }
   ],

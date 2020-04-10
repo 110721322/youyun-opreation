@@ -14,7 +14,7 @@ export const USER_CONFIG = {
     {
       label: '服务商订单分润（元）',
       prop: 'orderDistribution',
-      width: '170px',
+      width: '190px',
       sortable: "custom"
     },
     {

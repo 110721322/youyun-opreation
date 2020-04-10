@@ -138,8 +138,8 @@ export default {
         outputNo: "",
         outputType: $ruleForm.outputType,
         status: $ruleForm.status,
-        beginTime: $ruleForm.date[0],
-        endTime: $ruleForm.date[1]
+        beginTime: $ruleForm.date ? $ruleForm.date[0] : null,
+        endTime: $ruleForm.date ? $ruleForm.date[1] : null
       };
       this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
     }

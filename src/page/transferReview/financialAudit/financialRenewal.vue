@@ -38,6 +38,7 @@
           label-width="130px"
           :foot-btn-label="fromConfigData.footBtnLabel"
           @cancel="cancel"
+          @confirm="confirm"
         ></Form>
       </el-drawer>
     </div>
@@ -50,7 +51,7 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import { FORM_CONFIG } from "../formConfig/renewalForm";
 import { SEARCH_CONFIG } from "../formConfig/renewalSearch";
 import { TABLE_CONFIG } from "../tableConfig/renewalConfig";
-import api from "@/api/api_agent.js";
+import api from "@/api/api_financialAudit.js";
 
 export default {
   name: "Theme",
@@ -64,61 +65,43 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      params: {
-        agentNo: "",
-        agentName: "",
-        settleStatus: ""
-      },
-      api: api.listOperationSettle
+      params: {},
+      api: api.queryByPage,
+      activeRow: null
     };
   },
-  mounted() {
-    this.getTableData();
-  },
+  mounted() {},
   methods: {
+    confirm($ruleForm) {
+      api
+        .updateAuditStatusOfReject({
+          id: this.activeRow.id,
+          reason: $ruleForm.reason
+        })
+        .then(result => {
+          this.$message({
+            type: "info",
+            message: "已驳回"
+          });
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    },
     search($ruleForm) {
-      // eslint-disable-next-line no-console
-      console.log($ruleForm);
       this.params = {
-        agentNo: "",
-        agentName: "",
-        settleStatus: $ruleForm.status || ""
+        auditStatus: $ruleForm.auditStatus
       };
       this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
     },
-    getTableData() {
-      this.testData = [
-        {
-          service: "日常任务",
-          amount: "商户结算失败",
-          type: "4",
-          status: "提醒",
-          createTime: "XXXX店铺",
-          operTime: "20:00:23",
-          showAdopt: true,
-          showReject: true
-        },
-        {
-          service: "日常任务",
-          amount: "商户结算失败",
-          type: "4",
-          status: "提醒",
-          createTime: "XXXX店铺",
-          operTime: "20:00:23",
-          showReviewing: true
-        }
-      ];
-    },
-    selectionChange($val) {
-      // eslint-disable-next-line no-console
-      console.log($val);
-    },
-    onClick_detail() {
+    onClick_detail($row) {
       this.$router.push({
-        path: "/agentService/renewalRecord"
+        path: "/agentService/renewalRecord",
+        query: { id: $row.id }
       });
     },
-    onClick_reject() {
+    onClick_reject($row) {
+      this.activeRow = $row;
       this.fromConfigData = FORM_CONFIG.rejectData;
       this.drawer = true;
     },
@@ -130,13 +113,13 @@ export default {
       })
         .then(() => {
           api
-            .reject({
-              agentNo: $row.agentNo
+            .updateAuditStatusOfPass({
+              id: $row.id
             })
             .then(result => {
               this.$message({
                 type: "info",
-                message: "已驳回"
+                message: "已通过"
               });
             })
             .catch(err => {

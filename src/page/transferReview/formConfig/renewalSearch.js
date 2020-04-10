@@ -27,7 +27,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '审核状态',
-      key: 'status',
+      key: 'auditStatus',
       style: 'width:294px',
       labelWidth: '100px',
       options: [

@@ -31,7 +31,7 @@
   </div>
 </template>
 <script>
-import api from "@/api/api_agent.js";
+import api from "@/api/api_financialAudit.js";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 
@@ -50,18 +50,11 @@ export default {
       direction: "rtl",
       searchHeight: "260",
       drawer: false,
+      id: this.$route.query.id,
       params: {
-        beginDate: this.$g.utils.getToday(),
-        endDate: this.$g.utils.getToday(),
-        merchantNo: "",
-        merchantName: "",
-        channelMerchantNo: "",
-        operateUserNo: "",
-        status: "",
-        currentPage: "",
-        pageSize: ""
+        id: this.$route.query.id
       },
-      api: api.xxx
+      api: api.getById
     };
   },
   mounted() {},
@@ -69,9 +62,10 @@ export default {
     cancel() {
       this.drawer = false;
     },
-    handleDetail() {
+    handleDetail($row) {
       this.$router.push({
-        path: "/agent/list/detail"
+        path: "/agent/list/detail",
+        query: { id: $row.id }
       });
     },
     search($ruleForm) {

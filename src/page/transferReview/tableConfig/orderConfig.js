@@ -7,23 +7,23 @@ export const TABLE_CONFIG = {
     },
     {
       label: '订单号',
-      prop: 'amount',
+      prop: 'outputNo',
       width: '200px'
     },
     {
       label: '订单类型',
-      prop: 'type',
+      prop: 'payType',
       width: '90px'
     },
     {
       label: '订单金额（元）',
-      prop: 'status',
+      prop: 'amount',
       width: '130px'
 
     },
     {
       label: '审核状态',
-      prop: 'createTime',
+      prop: 'status',
       // render: (h, params) => {
       //   const status = params.row.status;
       //   return h('el-tooltip', {
@@ -37,11 +37,11 @@ export const TABLE_CONFIG = {
     },
     {
       label: '打款凭证',
-      prop: 'image',
+      prop: 'voucher',
       width: '150px',
       type: 'img',
       render: (h, params) => {
-        const imgUrl = params.row.image;
+        const imgUrl = params.row.voucher;
         return h('el-image', {
           props: {
             src: imgUrl,
@@ -52,12 +52,12 @@ export const TABLE_CONFIG = {
     },
     {
       label: '联系人',
-      prop: [{ key: 'agentName' }, { key: 'agentNo', label: 'ID:' }],
+      prop: [{ key: 'buyerName' }, { key: 'buyerPhone' }],
       width: '90px'
     },
     {
       label: '创建时间',
-      prop: 'operTime',
+      prop: 'createTime',
       width: '90px'
     }
   ],
@@ -70,11 +70,6 @@ export const TABLE_CONFIG = {
     delete: false,
     view: false,
     expands: [
-      {
-        name: '详情',
-        emitName: 'detail',
-        type: 'text'
-      },
       {
         name: '驳回',
         emitName: 'reject',

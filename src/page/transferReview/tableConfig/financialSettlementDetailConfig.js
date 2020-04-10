@@ -2,17 +2,17 @@ export const RECORD_CONFIG = {
   gridConfig: [
     {
       label: '返佣日期',
-      prop: 'createTime',
+      prop: 'tradeMonth',
       width: '150px'
     },
     {
       label: '结算类型',
-      prop: 'operateUserName',
+      prop: 'settleType',
       width: '150px'
     },
     {
       label: '结算金额（元）',
-      prop: 'channel',
+      prop: 'settleAmount',
       width: '150px'
     }
   ],

@@ -7,23 +7,23 @@ export const TABLE_CONFIG = {
     },
     {
       label: '服务商区域等级',
-      prop: 'amount',
+      prop: 'activeScopeType',
       width: '130px'
     },
     {
       label: '续费时长（年）',
-      prop: 'type',
+      prop: 'renewYear',
       width: '130px'
     },
     {
       label: '订单金额（元）',
-      prop: 'status',
+      prop: 'renewMoney',
       width: '130px'
 
     },
     {
       label: '审核状态',
-      prop: 'status',
+      prop: 'auditStatus',
       // render: (h, params) => {
       //   const status = params.row.status;
       //   return h('el-tooltip', {
@@ -37,11 +37,11 @@ export const TABLE_CONFIG = {
     },
     {
       label: '打款凭证',
-      prop: 'image',
+      prop: 'renewImg',
       width: '150px',
       type: 'img',
       render: (h, params) => {
-        const imgUrl = params.row.image;
+        const imgUrl = params.row.renewImg;
         return h('el-image', {
           props: {
             src: imgUrl,
@@ -52,7 +52,7 @@ export const TABLE_CONFIG = {
     },
     {
       label: '创建时间',
-      prop: 'operTime',
+      prop: 'createTime',
       width: '130px'
     }
   ],

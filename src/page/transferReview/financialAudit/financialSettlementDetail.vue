@@ -17,7 +17,6 @@
         :is-async="false"
         :is-select="false"
         :is-expand="false"
-        :row-key="'id'"
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
       ></BaseCrud>
@@ -25,13 +24,13 @@
   </div>
 </template>
 <script>
-import api from "@/api/api_merchantAudit";
+import api from "@/api/api_financialAudit.js";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 
 import { RECORD_CONFIG } from "./../tableConfig/financialSettlementDetailConfig";
 
 export default {
-  name: "AliRecordDetail",
+  name: "SettlementDetail",
   components: { BaseCrud },
   data() {
     return {
@@ -39,12 +38,9 @@ export default {
       testData: [],
       direction: "rtl",
       params: {
-        channel: "ol7",
-        pageSize: 0,
-        currentPage: 0,
-        merchantNo: "anw"
+        statisticsNoList: 1
       },
-      api: api.preAuditRecordQueryByPage
+      api: api.queryTypeMonthDetail
     };
   },
   mounted() {},
@@ -59,36 +55,6 @@ export default {
   padding: 24px;
   overflow: hidden;
   background: #fff;
-}
-.form_item {
-  float: left !important;
-}
-.clear_both {
-  clear: both !important;
-}
-.btn_list {
-  /* background: rebeccapurple; */
-  position: absolute;
-  right: 0;
-  bottom: 21px;
-  right: 24px;
-}
-
-.demo-table-expand {
-  font-size: 0;
-}
-.demo-table-expand label {
-  width: 90px;
-  color: #99a9bf;
-}
-.demo-table-expand .el-form-item {
-  margin-right: 0;
-  margin-bottom: 0;
-  /* width: 25%; */
-}
-.form-box {
-  display: flex;
-  justify-content: space-between;
 }
 </style>
 <style>

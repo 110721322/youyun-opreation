@@ -68,6 +68,7 @@
           label-width="130px"
           :foot-btn-label="fromConfigData.footBtnLabel"
           @cancel="cancel"
+          @confirm="confirm"
         ></Form>
       </el-drawer>
     </div>
@@ -81,7 +82,7 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import { FORM_CONFIG } from "../formConfig/settlementForm";
 import { SEARCH_CONFIG } from "../formConfig/settlementSearch";
 import { TABLE_CONFIG } from "../tableConfig/settlementConfig";
-import api from "@/api/api_agent.js";
+import api from "@/api/api_financialAudit.js";
 
 export default {
   name: "Theme",
@@ -97,66 +98,72 @@ export default {
       drawer: false,
       direction: "rtl",
       arrow: arrowImg,
-      params: {
-        agentNo: "",
-        agentName: "",
-        settleStatus: ""
-      },
-      api: api.listOperationSettle
+      params: {},
+      api: api.listFinanceSettle,
+      formStatus: null,
+      activeRow: {}
     };
   },
-  mounted() {
-    this.getTableData();
-  },
+  mounted() {},
   methods: {
+    confirm($data) {
+      switch (this.formStatus) {
+        case "reject":
+          api
+            .financeReject({
+              recordId: this.activeRow.recordId,
+              rejectReason: $data.reason,
+              userId: this.activeRow.userId
+            })
+            .then(res => {
+              this.$message("已驳回");
+              this.drawer = false;
+            })
+            .catch(err => {
+              this.$message(err);
+            });
+          break;
+        case "adopt":
+          api
+            .financeSuccess({
+              recordId: this.activeRow.recordId,
+              adviseCommission: $data.adviseCommission,
+              operationRemark: $data.operationRemark,
+              userId: this.activeRow.userId
+            })
+            .then(res => {
+              this.$message("已通过");
+              this.drawer = false;
+            })
+            .catch(err => {
+              this.$message(err);
+            });
+          break;
+
+        default:
+          break;
+      }
+    },
     search($ruleForm) {
-      // eslint-disable-next-line no-console
-      console.log($ruleForm);
       this.params = {
-        agentNo: "",
-        agentName: "",
-        settleStatus: $ruleForm.status || ""
+        settleStatus: $ruleForm.settleStatus
       };
       this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
     },
-    getTableData() {
-      this.testData = [
-        {
-          service: "日常任务",
-          amount: "商户结算失败",
-          type: "4",
-          status: "提醒",
-          createTime: "XXXX店铺",
-          operTime: "20:00:23",
-          showAdopt: true,
-          showReject: true
-        },
-        {
-          service: "日常任务",
-          amount: "商户结算失败",
-          type: "4",
-          status: "提醒",
-          createTime: "XXXX店铺",
-          operTime: "20:00:23",
-          showReviewing: true
-        }
-      ];
-    },
-    selectionChange($val) {
-      // eslint-disable-next-line no-console
-      console.log($val);
-    },
-    onClick_detail() {
+    onClick_detail($row) {
       this.$router.push({
-        path: "/transferReview/financialAudit/financialSettlement/detail"
+        path: "/transferReview/financialAudit/financialSettlement/detail",
+        query: { id: $row.id }
       });
     },
     onClick_reject() {
+      this.formStatus = "reject";
       this.fromConfigData = FORM_CONFIG.rejectData;
       this.drawer = true;
     },
     onClick_adopt() {
-      this.fromConfigData = FORM_CONFIG.rejectData2;
+      this.formStatus = "adopt";
+      this.fromConfigData = FORM_CONFIG.adoptData;
       this.drawer = true;
     },
     onClick_reviewing() {

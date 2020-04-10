@@ -23,32 +23,32 @@ export const FORM_CONFIG = {
       {
         type: 'show',
         label: '发票照片',
-        key: 'food',
+        key: 'expressImg',
         isImage: true,
         initVal: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
       },
       {
         type: 'show',
         label: '发票快递单号',
-        key: 'name7',
+        key: 'expressNumber',
         initVal: '321341423273528268276'
       },
       {
         type: 'show',
         label: '结算账户',
-        key: 'name6',
+        key: 'settleAccount',
         initVal: '293092019209399929'
       },
       {
         type: 'show',
         label: '备用联系方式',
-        key: 'name1',
+        key: 'alternatePhone',
         initVal: 'pdd'
       },
       {
         type: 'show',
         label: '服务商备注',
-        key: 'name2',
+        key: 'settleRemark',
         initVal: 'pdd',
         isShowSlot: true,
         showSlotName: '元'
@@ -56,20 +56,20 @@ export const FORM_CONFIG = {
       {
         type: 'show',
         label: '结算金额',
-        key: 'name3',
+        key: 'actualAmount',
         initVal: 'pdd'
       },
       {
         type: 0,
         label: '驳回原因',
-        key: 'name4',
+        key: 'reason',
         initVal: '',
         inputType: 'textarea',
         rules: setRules('驳回原因').isRequired.get
       }
     ]
   },
-  rejectData2: {
+  adoptData: {
     title: '驳回',
     showFootBtn: true,
     processData: [{
@@ -90,32 +90,32 @@ export const FORM_CONFIG = {
       {
         type: 'show',
         label: '发票照片',
-        key: 'food2',
+        key: 'expressImg',
         isImage: true,
         initVal: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
       },
       {
         type: 'show',
         label: '发票快递单号',
-        key: 'name72',
+        key: 'expressNumber',
         initVal: '321341423273528268276'
       },
       {
         type: 'show',
         label: '结算账户',
-        key: 'name62',
+        key: 'settleAccount',
         initVal: '293092019209399929'
       },
       {
         type: 'show',
         label: '备用联系方式',
-        key: 'name12',
+        key: 'alternatePhone',
         initVal: 'pdd'
       },
       {
         type: 'show',
         label: '服务商备注',
-        key: 'name22',
+        key: 'settleRemark',
         initVal: 'pdd',
         isShowSlot: true,
         showSlotName: '元'
@@ -123,13 +123,25 @@ export const FORM_CONFIG = {
       {
         type: 'show',
         label: '结算金额',
-        key: 'name32',
+        key: 'actualAmount',
+        initVal: 'pdd'
+      },
+      {
+        type: 'show',
+        label: '实际结算金额',
+        key: 'actualSettleCommission',
+        initVal: 'pdd'
+      },
+      {
+        type: 'show',
+        label: '建议结算金额',
+        key: 'adviseCommission',
         initVal: 'pdd'
       },
       {
         type: 'show',
         label: '运营备注',
-        key: 'name42',
+        key: 'operationRemark',
         initVal: '按服务商要求结算500元'
       }
     ]
