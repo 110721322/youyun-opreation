@@ -9,14 +9,14 @@
           closable
           :disable-transitions="false"
           @close="handleClose(tag,formData.agentTags)"
-        >{{ tag }}</el-tag>
+        >{{ tag.labelName }}</el-tag>
         <el-input
           v-if="formData.agentTags.inputVisible"
           ref="saveTagInput"
           v-model="formData.agentTags.inputValue"
           class="input-new-tag"
           size="small"
-          @keyup.enter.native="handleInputConfirm($event,formData.agentTags)"
+          @keyup.enter.native="$event.target.blur"
           @blur="handleInputConfirm($event,formData.agentTags)"
         ></el-input>
         <el-button
@@ -30,24 +30,28 @@
 
     <DetailBox title="服务商顶部颜色条" :border="true" :is-show-edit-btn="true" @edit="onClick_editColor">
       <div>
-        <div class="color_item">
+        <!-- <div class="color_item">
           <div class="color_box"></div>
           <div class="item_text">{{ formData.agentColor.red }}</div>
         </div>
 
         <div class="color_item">
-          <div class="color_box"></div>
+          <div class="color_box green"></div>
           <div class="item_text">{{ formData.agentColor.green }}</div>
         </div>
 
         <div class="color_item">
-          <div class="color_box"></div>
+          <div class="color_box yellow"></div>
           <div class="item_text">{{ formData.agentColor.yellow }}</div>
+        </div>-->
+        <div v-for="(item,index) in formData.moodColor" :key="index" class="color_item">
+          <div class="color_box" :style="{background: item.color}"></div>
+          <div class="item_text">{{ item.mean }}</div>
         </div>
       </div>
     </DetailBox>
 
-    <DetailBox title="成员职位标签标签" :border="true">
+    <DetailBox title="成员职位标签" :border="true">
       <div class="tag-box">
         <el-tag
           v-for="(tag,key) in formData.positionTags.tags"
@@ -55,14 +59,14 @@
           closable
           :disable-transitions="false"
           @close="handleClose(tag,formData.positionTags)"
-        >{{ tag }}</el-tag>
+        >{{ tag.labelName }}</el-tag>
         <el-input
           v-if="formData.positionTags.inputVisible"
           ref="saveTagInput"
           v-model="formData.positionTags.inputValue"
           class="input-new-tag"
           size="small"
-          @keyup.enter.native="handleInputConfirm($event,formData.positionTags)"
+          @keyup.enter.native="$event.target.blur"
           @blur="handleInputConfirm($event,formData.positionTags)"
         ></el-input>
         <el-button
@@ -74,35 +78,56 @@
       </div>
     </DetailBox>
 
-    <el-drawer :visible.sync="drawer" :with-header="false">
+    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
       <div class="p_head">{{ fromConfigData.title }}</div>
-      <Form
+      <div class="color-input">
+        <div class="color_box" style="width: 250px;"></div>
+        <el-input v-model="inputRed" placeholder="请输入文案"></el-input>
+      </div>
+      <div class="color-input">
+        <div class="color_box green" style="width: 250px;"></div>
+        <el-input v-model="inputGreen" placeholder="请输入文案"></el-input>
+      </div>
+      <div class="color-input">
+        <div class="color_box yellow" style="width: 250px;"></div>
+        <el-input v-model="inputYellow" placeholder="请输入文案"></el-input>
+      </div>
+
+      <div class="foot_btn_box">
+        <el-button class="foot_btn" type="primary" @click="handleClick">保存</el-button>
+        <el-button class="foot_btn" @click="cancelForm">取消</el-button>
+      </div>
+      <!-- <Form
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
         label-width="130px"
         @cancel="cancel"
-      ></Form>
+      ></Form>-->
     </el-drawer>
   </div>
 </template>
 <script>
-import Form from "@/components/form/index.vue";
+import api from "@/api/api_systemConfig";
 import DetailBox from "@/components/detailMode/detailBox.vue";
 export default {
   name: "Theme",
-  components: { Form, DetailBox },
+  components: { DetailBox },
   data() {
     return {
       drawer: false,
-      ruleForm: {
-        name1: "2"
+      fromConfigData: {
+        title: "服务商顶部颜色条编辑"
       },
-      fromConfigData: {},
       inputVisible: false,
       inputValue: "",
       formData: {
         agentTags: {
-          tags: ["标签一", "标签一", "标签一"],
+          type: "agent",
+          tags: [
+            { labelName: "标签一", labelId: "1" },
+            { labelName: "标签一", labelId: "2" },
+            { labelName: "标签一", labelId: "3" }
+          ],
           inputVisible: false,
           inputValue: ""
         },
@@ -111,18 +136,116 @@ export default {
           green: "优质客户",
           yellow: "普通客户"
         },
+        moodColor: [
+          {
+            id: 1,
+            color: "#f5222d",
+            mean: "情绪客户"
+          },
+          {
+            id: 2,
+            color: "#3abd2d",
+            mean: "优质客户"
+          },
+          {
+            id: 3,
+            color: "#ffae00",
+            mean: "普通客户"
+          }
+        ],
         positionTags: {
-          tags: ["标签二", "标签二"],
+          type: "user",
+          tags: [
+            { labelName: "标签一", labelId: "1" },
+            { labelName: "标签一", labelId: "2" },
+            { labelName: "标签一", labelId: "3" }
+          ],
           inputVisible: false,
           inputValue: ""
         }
-      }
+      },
+      inputRed: "",
+      inputGreen: "",
+      inputYellow: ""
     };
   },
-  mounted() {},
+  mounted() {
+    this.labelQueryByConditionAgent();
+    this.labelQueryByConditionUser();
+    this.moodColorQueryByConditionAgent();
+  },
   methods: {
+    // 查询情绪色
+    moodColorQueryByConditionAgent() {
+      api
+        .moodColorQueryByConditionAgent({})
+        .then(res => {
+          // this.formData.moodColor = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 查询服务商标签
+    labelQueryByConditionAgent() {
+      api
+        .labelQueryByConditionAgent({})
+        .then(res => {
+          // this.formData.agentTags.tags = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 查询成员职位标签
+    labelQueryByConditionUser() {
+      api
+        .labelQueryByConditionUser({})
+        .then(res => {
+          // this.formData.positionTags.tags = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    handleClick() {
+      api
+        .moodColorUpdateAgent({
+          color: "",
+          mean: "",
+          id: 1
+        })
+        .then(res => {
+          this.$message("已保存");
+          this.drawer = false;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    cancelForm() {
+      this.drawer = false;
+    },
     handleClose(tag, $item) {
-      $item.tags.splice($item.tags.indexOf(tag), 1);
+      if ($item.type === "user") {
+        api
+          .labelDeleteUser({ labelId: tag.labelId })
+          .then(res => {
+            $item.tags.splice($item.tags.indexOf(tag), 1);
+          })
+          .catch(err => {
+            this.$message(err);
+          });
+      } else if ($item.type === "agent") {
+        api
+          .labelDeleteAgent({ labelId: tag.labelId })
+          .then(res => {
+            $item.tags.splice($item.tags.indexOf(tag), 1);
+          })
+          .catch(err => {
+            this.$message(err);
+          });
+      }
     },
 
     showInput($item) {
@@ -130,23 +253,48 @@ export default {
     },
     handleInputConfirm($event, $item) {
       if ($event.target.value) {
-        $item.tags.push($event.target.value);
+        if ($item.type === "user") {
+          api
+            .labelAddUser({ labelName: $event.target.value, sort: 1 })
+            .then(res => {
+              $item.tags.push({ labelName: $event.target.value, labelId: "1" });
+              $item.inputVisible = false;
+              $item.inputValue = "";
+            })
+            .catch(err => {
+              this.$message(err);
+            });
+        } else if ($item.type === "agent") {
+          api
+            .labelAddAgent({ labelName: $event.target.value, sort: 1 })
+            .then(res => {
+              $item.tags.push({ labelName: $event.target.value, labelId: "1" });
+              $item.inputVisible = false;
+              $item.inputValue = "";
+            })
+            .catch(err => {
+              this.$message(err);
+            });
+        }
       }
-      $item.inputVisible = false;
-      $item.inputValue = "";
     },
     cancel(done) {
       done();
     },
     onClick_editColor() {
       this.drawer = true;
-      this.fromConfigData = "";
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+.color-input {
+  display: flex;
+  align-items: center;
+  margin-top: 24px;
+  padding: 0 24px;
+}
 .area_box {
   border-bottom: 1px solid #ebeef5;
 }
@@ -172,36 +320,6 @@ export default {
   background: #fff;
   height: calc(100% - 48px - 76px);
 }
-.form_item {
-  float: left !important;
-}
-.clear_both {
-  clear: both !important;
-}
-.btn_list {
-  /* background: rebeccapurple; */
-  position: absolute;
-  right: 0;
-  bottom: 21px;
-  right: 24px;
-}
-
-.demo-table-expand {
-  font-size: 0;
-}
-.demo-table-expand label {
-  width: 90px;
-  color: #99a9bf;
-}
-.demo-table-expand .el-form-item {
-  margin-right: 0;
-  margin-bottom: 0;
-  /* width: 25%; */
-}
-.form-box {
-  display: flex;
-  justify-content: space-between;
-}
 .left_box {
   width: 290px;
   background: rgba(255, 255, 255, 1);
@@ -213,7 +331,7 @@ export default {
   float: left;
   width: calc(100% - 290px - 48px);
   height: 100%;
-  overflow: scroll;
+  overflow: auto;
   // margin: 24px;
   .tag-box {
     margin: 24px;
@@ -223,19 +341,28 @@ export default {
     width: 230px;
     margin: 24px;
     float: left;
-    .color_box {
-      width: 140px;
-      height: 20px;
-      background: rgba(245, 34, 45, 1);
-      float: left;
-      margin-right: 16px;
-    }
     .item_text {
       font-size: 14px;
       font-weight: 400;
       color: rgba(51, 51, 53, 1);
       line-height: 20px;
     }
+  }
+}
+.color_box {
+  width: 140px;
+  height: 20px;
+  background: #f5222d;
+  float: left;
+  margin-right: 16px;
+  &.red {
+    background: #f5222d;
+  }
+  &.green {
+    background: #3abd2d;
+  }
+  &.yellow {
+    background: #ffae00;
   }
 }
 .device_list {
@@ -289,5 +416,26 @@ export default {
   vertical-align: bottom;
   position: relative;
   top: 3px;
+}
+.foot_btn_box {
+  width: 100%;
+  height: 96px;
+  border-top: 1px solid #ebeef5;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  .foot_btn {
+    width: 113px;
+    height: 40px;
+    margin-top: 28px;
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+  .form_box {
+    margin: 0 59px;
+  }
 }
 </style>
