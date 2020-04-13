@@ -7,6 +7,8 @@ import VueRouter from 'vue-router'
 import Layout from '@/layout'
 
 import Login from '../page/login/login.vue'
+import PersonInfo from '../page/personInfo/personInfo.vue'
+import Result from '../page/personInfo/result.vue'
 import ErrorPage from '../page/404/404.vue'
 import noJurisdiction from '../page/401/401.vue'
 
@@ -38,6 +40,22 @@ const router = new VueRouter({
       path: '/login',
       name: '登录页',
       component: Login,
+      meta: {
+        requireLogin: false
+      }
+    },
+    {
+      path: '/personInfo',
+      name: '完善个人信息',
+      component: PersonInfo,
+      meta: {
+        requireLogin: false
+      }
+    },
+    {
+      path: '/result',
+      name: '完善个人信息',
+      component: Result,
       meta: {
         requireLogin: false
       }
@@ -216,6 +234,85 @@ const menuItems = [
           title: '分润总览',
           icon: 'dividedOverview'
         }
+      },
+      {
+        type: 'ios-grid',
+        name: 'operationApprove',
+        text: '运营结算审核',
+        path: 'operationApprove',
+        isShow: true,
+        meta: {
+          title: '运营结算审核',
+          icon: 'operationApprove'
+        }
+      },
+      {
+        type: 'ios-grid',
+        name: 'orderManage',
+        text: '订单管理',
+        path: 'orderManage',
+        isShow: true,
+        meta: {
+          title: '订单管理',
+          icon: 'orderManage'
+        },
+        children: [{
+          type: 'ios-grid',
+          name: 'hardwareOrder',
+          text: '硬件订购订单',
+          path: 'hardwareOrder',
+          isShow: true,
+          meta: {
+            title: '硬件订购订单',
+            icon: 'hardwareOrder'
+          }
+        }]
+      },
+      {
+        type: 'ios-grid',
+        name: 'adManage',
+        text: '广告管理',
+        path: 'adManage',
+        isShow: true,
+        meta: {
+          title: '广告管理',
+          icon: 'adManage'
+        },
+        children: [
+          {
+            type: 'ios-grid',
+            name: 'adAuth',
+            text: '广告权限',
+            path: 'adAuth',
+            isShow: true,
+            meta: {
+              title: '广告权限',
+              icon: 'adAuth'
+            }
+          },
+          {
+            type: 'ios-grid',
+            name: 'platformAdList',
+            text: '平台广告列表',
+            path: 'platformAdList',
+            isShow: true,
+            meta: {
+              title: '平台广告列表',
+              icon: 'platformAdList'
+            }
+          },
+          {
+            type: 'ios-grid',
+            name: 'adPutList',
+            text: '平台广告投放列表',
+            path: 'adPutList',
+            isShow: true,
+            meta: {
+              title: '平台广告投放列表',
+              icon: 'adPutList'
+            }
+          }
+        ]
       }
     ]
   },

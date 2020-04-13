@@ -47,7 +47,7 @@
 </template>
 <script>
 import search from "@/components/search/search.vue";
-import api from "@/api/api_agent.js"
+import api from "@/api/api_agent.js";
 // import dataMode from '@/components/dataMode/dataMode.vue'
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { USER_CONFIG } from "./tableConfig/agentConfig";
@@ -71,28 +71,27 @@ export default {
   },
   created() {
     this.params = {
-      "agentNo": "",
-      "businessType": "",
-      "agentName": "",
-      "personName": "",
-      "personMobile": "",
-      "contractType": "",
-      "activeScopeType": "",
-      "operateUserNo": "",
-      "parentAgentNo": "",
-      "activeDate": "",
-      "expireDate": "",
-      "contractStatus": "",
-      "contractStatusSet": "",
-      "isExpired": "",
-      "provinceCode": "",
-      "cityCode": "",
-      "areaCode": "",
-      "agentGrade": 1
-    }
+      agentNo: "",
+      businessType: "",
+      agentName: "",
+      personName: "",
+      personMobile: "",
+      contractType: "",
+      activeScopeType: "",
+      operateUserNo: "",
+      parentAgentNo: "",
+      activeDate: "",
+      expireDate: "",
+      contractStatus: "",
+      contractStatusSet: "",
+      isExpired: "",
+      provinceCode: "",
+      cityCode: "",
+      areaCode: "",
+      agentGrade: 1
+    };
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     transfer() {
       if (this.selectData.length) {
@@ -102,15 +101,17 @@ export default {
           cancelButtonText: "取消"
         })
           .then(() => {
-            api.transferOperate({
-              "agentNos": [],
-              "operateUserNo": ""
-            }).then(res => {
-              this.$message({
-                type: "info",
-                message: "转移成功"
+            api
+              .transferOperate({
+                agentNos: [],
+                operateUserNo: ""
+              })
+              .then(res => {
+                this.$message({
+                  type: "info",
+                  message: "转移成功"
+                });
               });
-            })
           })
           .catch(() => {});
       } else {
@@ -124,33 +125,33 @@ export default {
       this.selectData = $val;
     },
     search($form) {
-      console.log($form)
+      console.log($form);
       this.params = {
-        "agentNo": "",
-        "businessType": "",
-        "agentName": "",
-        "personName": "",
-        "personMobile": "",
-        "contractType": "",
-        "activeScopeType": $form.activeScopeType,
-        "operateUserNo": $form.operateUserNo,
-        "parentAgentNo": "",
-        "activeDate": "",
-        "expireDate": "",
-        "contractStatus": "",
-        "contractStatusSet": $form.contractStatusSet,
-        "isExpired": "",
-        "provinceCode": "",
-        "cityCode": "",
-        "areaCode": "",
-        "agentGrade": $form.agentGrade
-      }
+        agentNo: "",
+        businessType: "",
+        agentName: "",
+        personName: "",
+        personMobile: "",
+        contractType: "",
+        activeScopeType: $form.activeScopeType,
+        operateUserNo: $form.operateUserNo,
+        parentAgentNo: "",
+        activeDate: "",
+        expireDate: "",
+        contractStatus: "",
+        contractStatusSet: $form.contractStatusSet,
+        isExpired: "",
+        provinceCode: "",
+        cityCode: "",
+        areaCode: "",
+        agentGrade: $form.agentGrade
+      };
       if ($form.area) {
         this.params.provinceCode = $form.area[0];
         this.params.cityCode = $form.area[1];
         this.params.areaCode = $form.area[2];
       }
-      this.params[$form.inputSelect] = $form.inputForm
+      this.params[$form.inputSelect] = $form.inputForm;
     },
     openDetail() {
       this.$router.push({
@@ -164,14 +165,16 @@ export default {
         cancelButtonText: "取消"
       })
         .then(() => {
-          api.unfrozen({
-            "agentNo": row.agentNo
-          }).then(res => {
-            this.$message({
-              type: "info",
-              message: "已解冻"
+          api
+            .unfrozen({
+              agentNo: row.agentNo
+            })
+            .then(res => {
+              this.$message({
+                type: "info",
+                message: "已解冻"
+              });
             });
-          })
         })
         .catch(() => {});
     },
@@ -181,15 +184,17 @@ export default {
         confirmButtonText: "确认冻结",
         cancelButtonText: "取消"
       })
-        .then((row) => {
-          api.frozen({
-            "agentNo": row.agentNo
-          }).then(res => {
-            this.$message({
-              type: "info",
-              message: "已冻结"
+        .then(row => {
+          api
+            .frozen({
+              agentNo: row.agentNo
+            })
+            .then(res => {
+              this.$message({
+                type: "info",
+                message: "已冻结"
+              });
             });
-          })
         })
         .catch(() => {});
     },

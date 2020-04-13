@@ -186,8 +186,8 @@ export default {
           this.$message(err);
         });
     },
-    cancel(done) {
-      done();
+    cancel() {
+      this.drawer = false;
     }
   }
 };
