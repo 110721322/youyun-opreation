@@ -8,6 +8,8 @@
 
       <div class="table_box">
         <BaseCrud
+          :params="params"
+          :api-service="api"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
           :grid-data="testData"
@@ -26,6 +28,7 @@
   </div>
 </template>
 <script>
+import api from "@/api/api_merchantAudit";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 
 import { RECORD_CONFIG } from "./../tableConfig/indirectRecordDetailConfig";
@@ -37,7 +40,14 @@ export default {
     return {
       configData: RECORD_CONFIG,
       testData: [],
-      direction: "rtl"
+      direction: "rtl",
+      params: {
+        channel: "ol7",
+        pageSize: 0,
+        currentPage: 0,
+        merchantNo: "anw"
+      },
+      api: api.preAuditRecordQueryByPage
     };
   },
   mounted() {

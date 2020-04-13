@@ -2,21 +2,21 @@ export const STOCKLIST_CONFIG = {
   gridConfig: [
     {
       label: '设备类型',
-      prop: 'type',
+      prop: 'deviceType',
       width: '150px'
     },
     {
       label: '设备型号',
-      prop: 'taskName',
+      prop: 'deviceModel',
       width: '150px'
     },
     {
       label: '图片',
-      prop: 'image',
+      prop: 'deviceImg',
       width: '150px',
       type: 'img',
       render: (h, params) => {
-        const imgUrl = params.row.image;
+        const imgUrl = params.row.deviceImg;
         return h('el-image', {
           props: {
             src: imgUrl,
@@ -27,27 +27,27 @@ export const STOCKLIST_CONFIG = {
     },
     {
       label: '单台设备成本价(元)',
-      prop: 'time',
+      prop: 'costPrice',
       width: '150px'
     },
     {
       label: '单台设备售卖价(元)',
-      prop: 'time',
+      prop: 'salePrice',
       width: '150px'
     },
     {
       label: '剩余库存（台）',
-      prop: 'time',
+      prop: 'surplusCount',
       width: '150px'
     },
     {
       label: '总库存（台）',
-      prop: 'time',
+      prop: 'totalCount',
       width: '150px'
     },
     {
       label: '排序',
-      prop: 'time',
+      prop: 'sort',
       width: '150px'
     }
   ],
@@ -68,12 +68,12 @@ export const STOCKLIST_CONFIG = {
       },
       {
         name: '编辑',
-        emitName: 'adopt',
+        emitName: 'edit',
         type: 'text'
       },
       {
         name: '删除',
-        emitName: 'adopt',
+        emitName: 'remove',
         type: 'text',
         style: 'color:#F5222D'
       }

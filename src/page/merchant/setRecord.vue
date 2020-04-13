@@ -25,6 +25,7 @@
         <data-mode :config-data="modeConfigData" />
         <div class="table_box">
           <BaseCrud
+            ref="table"
             :grid-config="configData.gridConfig"
             :grid-btn-config="configData.gridBtnConfig"
             :grid-data="testData"
@@ -35,6 +36,8 @@
             :is-async="true"
             :is-select="false"
             :hide-edit-area="true"
+            :params="params"
+            :api-service="api"
             @selectionChange="selectionChange"
             @detail="go_detail"
           />
@@ -45,6 +48,7 @@
 </template>
 
 <script>
+import api from "@/api/api_merchant";
 import search from "@/components/search/search.vue";
 import dataMode from "@/components/dataMode/dataMode.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
@@ -83,36 +87,38 @@ export default {
           title: "结算金额",
           data: "555个"
         }
-      ]
+      ],
+      params: {},
+      api: api.queryPageMerchantSettleByCondition
     };
   },
-  mounted() {
-    this.getTableData();
+  beforeCreate() {
+    this.params = {
+      beginDate: "2020-03-17",
+      offset: 0,
+      endDate: "2020-03-17",
+      channelMerchantNo: "li7",
+      channel: "vhu",
+      merchantNoList: [],
+      pageSize: 0,
+      currentPage: 0,
+      settleType: "yjh",
+      merchantNo: "1i2",
+      merchantName: "fa9"
+    };
   },
+  mounted() {},
   methods: {
-    getTableData() {
-      this.testData = [
-        {
-          id: "1两行两行两行两行两行",
-          tel: "15184318420",
-          name: "小白",
-          email: "412412@qq.com",
-          status: "1",
-          create_time: "2018-04-20",
-          expand: "扩展信息一",
-          role: ["2"]
-        },
-        {
-          id: "2两行两行两行两行两行",
-          tel: "13777369283",
-          name: "小红",
-          email: "456465@qq.com",
-          status: "0",
-          create_time: "2018-03-23",
-          expand: "hashashashas",
-          role: ["1"]
-        }
-      ];
+    search($ruleForm) {
+      console.log($ruleForm);
+      const params = {
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
+        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        channel: $ruleForm.channel
+      };
+      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      this.params = params;
+      this.$refs.table.getData();
     },
     selectionChange($val) {},
     go_detail() {
@@ -139,10 +145,9 @@ export default {
       }, 500);
       // 模拟获取数据
       setTimeout(() => {
-        this.getTableData();
+        this.$refs.table.getData();
       }, 1000);
-    },
-    search($form, $obj) {}
+    }
   }
 };
 </script>

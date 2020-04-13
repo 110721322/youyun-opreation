@@ -21,10 +21,20 @@
         default-expand-all
         :expand-on-click-node="false"
       >
-        <span slot-scope="{node,data}" class="custom-tree-node">
+        <span slot-scope="{node,itemData}" class="custom-tree-node">
           <span>
-            <img v-if="data.type=='page'" class="trre_icon" src="@/assets/img/page_icon.png" alt />
-            <img v-if="data.type=='button'" class="trre_icon" src="@/assets/img/btn_icon.png" alt />
+            <img
+              v-if="itemData.type=='page'"
+              class="trre_icon"
+              src="@/assets/img/page_icon.png"
+              alt
+            />
+            <img
+              v-if="itemData.type=='button'"
+              class="trre_icon"
+              src="@/assets/img/btn_icon.png"
+              alt
+            />
           </span>
           <span>
             <i :class="node.icon"></i>

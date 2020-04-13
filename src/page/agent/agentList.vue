@@ -12,7 +12,7 @@
 
       <!-- <data-mode></data-mode> -->
       <div class="table_box">
-        <el-button>批量转移运营</el-button>
+        <el-button @click="transfer">批量转移运营</el-button>
         <div class="select_data">
           <span class="el-icon-info icon" />
           <span>
@@ -22,6 +22,7 @@
           <el-button class="btn" type="text">清空</el-button>
         </div>
         <BaseCrud
+          ref="child"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
           :grid-data="testData"
@@ -31,6 +32,8 @@
           form-title="用户"
           :is-async="true"
           :is-select="true"
+          :params="params"
+          :api-service="api"
           @selectionChange="selectionChange"
           @detail="openDetail"
           @thaw="thaw"
@@ -44,6 +47,7 @@
 </template>
 <script>
 import search from "@/components/search/search.vue";
+import api from "@/api/api_agent.js";
 // import dataMode from '@/components/dataMode/dataMode.vue'
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { USER_CONFIG } from "./tableConfig/agentConfig";
@@ -60,59 +64,117 @@ export default {
       configData: USER_CONFIG,
       searchConfig: FORM_CONFIG,
       testData: [],
-      selectData: []
+      selectData: [],
+      params: {},
+      api: api.agentList
     };
   },
-  mounted() {
-    this.getData();
+  created() {
+    this.params = {
+      agentNo: "",
+      businessType: "",
+      agentName: "",
+      personName: "",
+      personMobile: "",
+      contractType: "",
+      activeScopeType: "",
+      operateUserNo: "",
+      parentAgentNo: "",
+      activeDate: "",
+      expireDate: "",
+      contractStatus: "",
+      contractStatusSet: "",
+      isExpired: "",
+      provinceCode: "",
+      cityCode: "",
+      areaCode: "",
+      agentGrade: 1
+    };
   },
+  mounted() {},
   methods: {
-    getData() {
-      this.testData = [
-        {
-          id: "1两行两行两行两行",
-          tel: "15184318420",
-          name: "小白",
-          email: "412412@qq.com",
-          status: "1",
-          create_time: "2018-04-20",
-          expand: "扩展信息一",
-          role: ["2"]
-        },
-        {
-          id: "2两行两行两行两行",
-          tel: "13777369283",
-          name: "小红",
-          email: "456465@qq.com",
-          status: "0",
-          create_time: "2018-03-23",
-          expand: "hashashashas",
-          role: ["1"]
-        }
-      ];
+    transfer() {
+      if (this.selectData.length) {
+        this.$confirm("是否批量转移运营？", "转移运营", {
+          distinguishCancelAndClose: true,
+          confirmButtonText: "确认",
+          cancelButtonText: "取消"
+        })
+          .then(() => {
+            api
+              .transferOperate({
+                agentNos: [],
+                operateUserNo: ""
+              })
+              .then(res => {
+                this.$message({
+                  type: "info",
+                  message: "转移成功"
+                });
+              });
+          })
+          .catch(() => {});
+      } else {
+        this.$message({
+          type: "info",
+          message: "请选择代理商"
+        });
+      }
     },
     selectionChange($val) {
       this.selectData = $val;
     },
-    search($form, $obj) {
-      this.getData();
+    search($form) {
+      console.log($form);
+      this.params = {
+        agentNo: "",
+        businessType: "",
+        agentName: "",
+        personName: "",
+        personMobile: "",
+        contractType: "",
+        activeScopeType: $form.activeScopeType,
+        operateUserNo: $form.operateUserNo,
+        parentAgentNo: "",
+        activeDate: "",
+        expireDate: "",
+        contractStatus: "",
+        contractStatusSet: $form.contractStatusSet,
+        isExpired: "",
+        provinceCode: "",
+        cityCode: "",
+        areaCode: "",
+        agentGrade: $form.agentGrade
+      };
+      if ($form.area) {
+        this.params.provinceCode = $form.area[0];
+        this.params.cityCode = $form.area[1];
+        this.params.areaCode = $form.area[2];
+      }
+      this.params[$form.inputSelect] = $form.inputForm;
     },
     openDetail() {
       this.$router.push({
         path: "/agent/list/detail"
       });
     },
-    thaw() {
+    thaw(row) {
       this.$confirm("是否要解冻该代理商？", "解冻代理商", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认解冻",
         cancelButtonText: "取消"
       })
         .then(() => {
-          this.$message({
-            type: "info",
-            message: "已解冻"
-          });
+          api
+            .unfrozen({
+              agentNo: row.agentNo
+            })
+            .then(res => {
+              this.$message({
+                type: "info",
+                message: "已解冻"
+              });
+            });
         })
         .catch(() => {});
     },
@@ -122,11 +184,17 @@ export default {
         confirmButtonText: "确认冻结",
         cancelButtonText: "取消"
       })
-        .then(() => {
-          this.$message({
-            type: "info",
-            message: "已冻结"
-          });
+        .then(row => {
+          api
+            .frozen({
+              agentNo: row.agentNo
+            })
+            .then(res => {
+              this.$message({
+                type: "info",
+                message: "已冻结"
+              });
+            });
         })
         .catch(() => {});
     },

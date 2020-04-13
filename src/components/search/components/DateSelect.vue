@@ -19,184 +19,189 @@
       class="date-item"
       :class="item.value == selectItem.value ? 'select' : ''"
       @click="onClick_item(item)"
-    >
-      {{ item.label }}
-    </div>
+    >{{ item.label }}</div>
     <!--    <span class="date-item" v-for="item of dateList" :class="item.value == selectItem.value?'select':''"  @click="onClick_item(item)">{{item.label}}</span>-->
   </div>
 </template>
 <script type="text/ecmascript-6">
-import * as g from '@/libs/global'
+import * as g from "@/libs/global";
 
 export default {
   components: {},
   props: {
     type: {
       type: String,
-      default: 'daterange'
+      default: "daterange"
     },
     ruleForm: Object,
     formItem: Object,
     pickerOptions: {
       type: Object,
       default() {
-        return {}
+        return {};
       }
     },
     clearable: {
       type: Boolean,
       default() {
-        return false
-      }
-    },
-    isSelectToday: {
-      type: Boolean,
-      default() {
-        return false
+        return false;
       }
     },
     isRest: {
       type: Boolean,
       default() {
-        return false
+        return false;
       }
     }
   },
   data() {
     return {
       defaultTime: [],
-      timeInterval: '',
+      timeInterval: "",
       dateList: [
         {
-          label: '昨天',
+          label: "昨天",
           value: 1
         },
         {
-          label: '近3天',
+          label: "近3天",
           value: 3
-        }, {
-          label: '近7天',
+        },
+        {
+          label: "近7天",
           value: 7
-        }, {
-          label: '近30天',
+        },
+        {
+          label: "近30天",
           value: 30
         }
       ],
       selectItem: {
-        label: '近7天',
+        label: "近7天",
         value: 7
       }
-    }
+    };
   },
   watch: {
     isRest: function($new) {
       if ($new) {
-        if (this.isSelectToday) {
-          this.dateList[0].label = '今天'
+        if (this.formItem.isSelectToday) {
+          this.dateList[0].label = "今天";
         }
 
-        if (this.type === 'datetimerange') {
-          this.defaultTime = ['00:00:00', '23:59:59']
+        if (this.type === "datetimerange") {
+          this.defaultTime = ["00:00:00", "23:59:59"];
         }
-        this.onClick_item(this.dateList[0])
+        this.onClick_item(this.dateList[0]);
       }
     }
   },
   created() {
-    if (this.isSelectToday) {
-      this.dateList[0].label = '今天'
+    if (this.formItem.isSelectToday) {
+      this.dateList[0].label = "今天";
     }
 
-    if (this.type === 'datetimerange') {
-      this.defaultTime = ['00:00:00', '23:59:59']
+    if (this.type === "datetimerange") {
+      this.defaultTime = ["00:00:00", "23:59:59"];
     }
-    this.onClick_item(this.dateList[0])
+    this.onClick_item(this.dateList[0]);
   },
   methods: {
     onChage($data) {
       if ($data === null) {
-        this.onClick_item(this.dateList[0])
-        return
+        this.onClick_item(this.dateList[0]);
+        return;
       }
-      this.selectItem = {}
-      let timeArr = []
-      if (this.type === 'daterange') {
-        timeArr = [g.utils.date($data[0]), g.utils.date($data[1])]
-      } else if (this.type === 'datetimerange') {
-        timeArr = [g.utils.time($data[0]), g.utils.time($data[1])]
+      this.selectItem = {};
+      let timeArr = [];
+      if (this.type === "daterange") {
+        timeArr = [g.utils.date($data[0]), g.utils.date($data[1])];
+      } else if (this.type === "datetimerange") {
+        timeArr = [g.utils.time($data[0]), g.utils.time($data[1])];
       }
 
-      this.$emit('select', timeArr)
-      this.ruleForm[this.formItem.key] = timeArr
+      this.$emit("dataSelect", timeArr);
+      this.ruleForm[this.formItem.key] = timeArr;
     },
     onClick_item($item) {
-      this.selectItem = $item
-
-      if (this.type === 'daterange') {
-        let start = ''
-        let end = ''
-        if ($item.label === '今天') {
-          end = this.getDay(0)
-          start = this.getDay(-$item.value + 1)
+      this.selectItem = $item;
+      if (this.type === "daterange") {
+        let start = "";
+        let end = "";
+        if ($item.label === "今天") {
+          end = this.getDay(0);
+          start = this.getDay(-$item.value + 1);
         } else {
-          end = this.getDay(-1)
-          start = this.getDay(-$item.value)
+          end = this.getDay(-1);
+          start = this.getDay(-$item.value);
         }
-        this.timeInterval = [start, end]
-      } else if (this.type === 'datetimerange') {
-        let start = ''
-        let end = ''
-        if ($item.label === '今天') {
-          end = this.getDay(0) + ' 23:59:59'
-          start = this.getDay(-($item.value - 1)) + ' 00:00:00'
+        this.timeInterval = [start, end];
+      } else if (this.type === "datetimerange") {
+        let start = "";
+        let end = "";
+        if ($item.label === "今天") {
+          end = this.getDay(0) + " 23:59:59";
+          start = this.getDay(-($item.value - 1)) + " 00:00:00";
         } else {
-          end = this.getDay(-1) + ' 23:59:59'
-          start = this.getDay(-$item.value) + ' 00:00:00'
+          end = this.getDay(-1) + " 23:59:59";
+          start = this.getDay(-$item.value) + " 00:00:00";
         }
-        this.timeInterval = [start, end]
+        this.timeInterval = [start, end];
       }
 
-      this.$emit('select', this.timeInterval)
-      this.ruleForm[this.formItem.key] = this.timeInterval
+      this.$emit("dataSelect", this.timeInterval);
+      this.ruleForm[this.formItem.key] = this.timeInterval;
     },
     getDay(day) {
-      var today = new Date()
-      const targetdayMilliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day
-      today.setTime(targetdayMilliseconds) // 注意，这行是关键代码
-      var tYear = today.getFullYear()
-      var tMonth = today.getMonth()
-      var tDate = today.getDate()
-      tMonth = this.doHandleMonth(tMonth + 1)
-      tDate = this.doHandleMonth(tDate)
-      return tYear + '-' + tMonth + '-' + tDate
+      var today = new Date();
+      const targetdayMilliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day;
+      today.setTime(targetdayMilliseconds); // 注意，这行是关键代码
+      var tYear = today.getFullYear();
+      var tMonth = today.getMonth();
+      var tDate = today.getDate();
+      tMonth = this.doHandleMonth(tMonth + 1);
+      tDate = this.doHandleMonth(tDate);
+      return tYear + "-" + tMonth + "-" + tDate;
     },
     getTime(day) {
-      var today = new Date()
-      const targetdayMilliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day
-      today.setTime(targetdayMilliseconds) // 注意，这行是关键代码
-      var tYear = today.getFullYear()
-      var tMonth = today.getMonth()
-      var tDate = today.getDate()
-      var tHour = today.getHours()
-      var tMinute = today.getMinutes()
-      var tsecond = today.getSeconds()
+      var today = new Date();
+      const targetdayMilliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day;
+      today.setTime(targetdayMilliseconds); // 注意，这行是关键代码
+      var tYear = today.getFullYear();
+      var tMonth = today.getMonth();
+      var tDate = today.getDate();
+      var tHour = today.getHours();
+      var tMinute = today.getMinutes();
+      var tsecond = today.getSeconds();
 
-      tMonth = this.doHandleMonth(tMonth + 1)
-      tDate = this.doHandleMonth(tDate)
-      tHour = this.doHandleMonth(tHour)
-      tMinute = this.doHandleMonth(tMinute)
-      tsecond = this.doHandleMonth(tsecond)
-      return tYear + '-' + tMonth + '-' + tDate + ' ' + tHour + ':' + tMinute + ':' + tsecond
+      tMonth = this.doHandleMonth(tMonth + 1);
+      tDate = this.doHandleMonth(tDate);
+      tHour = this.doHandleMonth(tHour);
+      tMinute = this.doHandleMonth(tMinute);
+      tsecond = this.doHandleMonth(tsecond);
+      return (
+        tYear +
+        "-" +
+        tMonth +
+        "-" +
+        tDate +
+        " " +
+        tHour +
+        ":" +
+        tMinute +
+        ":" +
+        tsecond
+      );
     },
     doHandleMonth(month) {
-      var m = month
+      var m = month;
       if (month.toString().length === 1) {
-        m = '0' + month
+        m = "0" + month;
       }
-      return m
+      return m;
     }
   }
-}
+};
 </script>
 <style type="text/css" lang="scss" rel="stylesheet/scss" scoped>
 .date-item {

@@ -2,27 +2,27 @@ export const TABLE_CONFIG = {
   gridConfig: [
     {
       label: '信息类型',
-      prop: 'service',
+      prop: 'banField',
       width: '150px'
     },
     {
       label: '内容',
-      prop: 'superService',
+      prop: 'content',
       width: '150px'
     },
     {
       label: '加入人员',
-      prop: 'merchantNum',
+      prop: 'operateUserName',
       width: '150px'
     },
     {
       label: '加入时间',
-      prop: 'oper',
+      prop: 'createTime',
       width: '150px'
     },
     {
       label: '类型',
-      prop: 'time',
+      prop: 'type',
       width: '150px'
     }
   ],

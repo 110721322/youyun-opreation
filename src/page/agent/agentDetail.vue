@@ -1,22 +1,22 @@
 <template>
   <div class>
-    <div class="p_head_detail">
+    <div class="p_head_detail" :class="[activeClass]">
       <div class="top">
         <span>杭州网络科技有限公司</span>
-        <el-dropdown trigger="click">
+        <el-dropdown trigger="click" @command="onClick_changeClientType">
           <div class="el-dropdown-link">
-            <div class="doit"></div>
+            <div class="doit" :class="[activeClass]"></div>
             <div>
-              下拉菜单
+              {{ activeValue }}
               <i class="el-icon-caret-bottom el-icon--right"></i>
             </div>
           </div>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>黄金糕</el-dropdown-item>
-            <el-dropdown-item>狮子头</el-dropdown-item>
-            <el-dropdown-item>螺蛳粉</el-dropdown-item>
-            <el-dropdown-item>双皮奶</el-dropdown-item>
-            <el-dropdown-item>蚵仔煎</el-dropdown-item>
+            <el-dropdown-item
+              v-for="(item,index) in clientList"
+              :key="index"
+              :command="item"
+            >{{ item.value }}</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -38,7 +38,7 @@
           @keyup.enter.native="handleInputConfirm"
           @blur="handleInputConfirm"
         ></el-input>
-        <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+        <el-button v-else class="button-new-tag" size="small" @click="showInput">+ 添加标签</el-button>
       </div>
     </div>
 
@@ -103,7 +103,7 @@
         <div class="bg_box" style="margin-left:0;margin-top:0;height:314px">
           <img class="title_img" src="@/assets/img/clock.png" alt />
           <div class="title">
-            待沟通3次
+            待沟通{{ planCount }}次
             <el-button type="primary" style="float:right;margin:10px 24px">添加沟通计划</el-button>
           </div>
 
@@ -117,6 +117,8 @@
             :table-height="212"
             form-title="用户"
             :is-async="false"
+            :params="params1"
+            :api-service="api1"
             style="margin:24px;border:1px solid #EBEEF5;height:212px;overflow:hidden"
           ></BaseCrud>
         </div>
@@ -139,6 +141,8 @@
         :table-height="309"
         form-title="用户"
         :is-async="false"
+        :params="params2"
+        :api-service="api2"
         style="margin:24px;border:1px solid #EBEEF5;height:309px;overflow:hidden"
       ></BaseCrud>
     </div>
@@ -156,6 +160,7 @@
 
 <script>
 import Form from "@/components/form/index.vue";
+import api from "@/api/api_agent.js";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import detailMode from "@/components/detailMode/detailMode.vue";
 import { USER_CONFIG, USER_CONFIG2 } from "./tableConfig/config_communicate";
@@ -167,7 +172,7 @@ export default {
   data() {
     return {
       drawer: false,
-      dynamicTags: ["标签一", "标签二", "标签三"],
+      dynamicTags: [],
       inputVisible: false,
       inputValue: "",
       configData: {
@@ -181,11 +186,11 @@ export default {
                 items: [
                   {
                     name: "公司名称",
-                    key: "name1"
+                    key: ""
                   },
                   {
                     name: "法人手机号",
-                    key: "name"
+                    key: "lawMobile"
                   }
                 ]
               },
@@ -197,7 +202,7 @@ export default {
                   },
                   {
                     name: "营业执照图",
-                    key: "pic",
+                    key: "businessLicenseImg",
                     type: "img"
                   }
                 ]
@@ -206,11 +211,11 @@ export default {
                 items: [
                   {
                     name: "法人姓名",
-                    key: "name3"
+                    key: "lawPerson"
                   },
                   {
                     name: "公司地址",
-                    key: "name"
+                    key: "detailAddress"
                   }
                 ]
               }
@@ -224,11 +229,11 @@ export default {
                 items: [
                   {
                     name: "结算卡类型",
-                    key: "name1"
+                    key: "accountType"
                   },
                   {
                     name: "开户支行地区",
-                    key: "name"
+                    key: "bankArea"
                   }
                 ]
               },
@@ -240,8 +245,7 @@ export default {
                   },
                   {
                     name: "开户支行",
-                    key: "pic",
-                    type: "img"
+                    key: "branchName"
                   }
                 ]
               },
@@ -249,7 +253,7 @@ export default {
                 items: [
                   {
                     name: "银行卡号",
-                    key: "name3"
+                    key: "bankCardImg"
                   }
                 ]
               }
@@ -417,7 +421,48 @@ export default {
         email: "12312312@163.com",
         pic:
           "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
-      }
+      },
+      params: {
+        agentNo: ""
+      },
+      planCount: 0,
+      params1: {
+        id: 1,
+        addressBookId: 1,
+        relateCode: "",
+        remark: "",
+        nextContactTime: "",
+        remindTime: "",
+        remindType: "",
+        createTime: ""
+      },
+      api1: api.queryPlan,
+      params2: {
+        id: 1,
+        addressBookId: 1,
+        relateCode: "",
+        theme: "",
+        way: "",
+        content: "",
+        createTime: ""
+      },
+      api2: api.queryPlanList,
+      clientList: [
+        {
+          value: "情绪客户",
+          colorName: "red"
+        },
+        {
+          value: "优质客户",
+          colorName: "green"
+        },
+        {
+          value: "普通客户",
+          colorName: "yellow"
+        }
+      ],
+      activeClass: "red",
+      activeValue: "情绪客户"
     };
   },
   mounted() {
@@ -503,8 +548,31 @@ export default {
         role: ["2"]
       }
     ];
+    this.getAgentDetail();
+    this.getPlanCount();
   },
   methods: {
+    onClick_changeClientType($item) {
+      this.activeClass = $item.colorName;
+      this.activeValue = $item.value;
+    },
+    getAgentDetail() {
+      api.getAgentDetail(this.params).then(res => {
+        console.log(res.object);
+        res.object.labelList.forEach(item => {
+          this.dynamicTags.push(item.name);
+        });
+      });
+    },
+    getPlanCount() {
+      api
+        .planCount({
+          relateCode: ""
+        })
+        .then(res => {
+          this.planCount = res.object;
+        });
+    },
     handleClose(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
     },
@@ -544,6 +612,15 @@ export default {
   height: 114px;
   background: rgba(255, 255, 255, 1);
   overflow: hidden;
+  &.red {
+    border-bottom: 2px solid #f5222d;
+  }
+  &.green {
+    border-bottom: 2px solid #30b08f;
+  }
+  &.yellow {
+    border-bottom: 2px solid #fec171;
+  }
   .top {
     margin: 24px 32px;
     font-size: 20px;
@@ -557,10 +634,18 @@ export default {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: red;
     float: left;
     margin-top: 5px;
     margin-right: 5px;
+    &.red {
+      background: #f5222d;
+    }
+    &.green {
+      background: #30b08f;
+    }
+    &.yellow {
+      background: #fec171;
+    }
   }
 
   .el-dropdown-link {

@@ -7,8 +7,8 @@
           <div>
             <img class="process-icon" :src="item.icon" />
           </div>
-          <div class="label">{{ item.label }}</div>
-          <div class="time">{{ item.time }}</div>
+          <div class="label">{{ item.actionType }}</div>
+          <div class="time">{{ item.date }}</div>
         </div>
         <img
           v-if="!(index===row.processList.length-1)"
@@ -23,12 +23,22 @@
 </template>
 <script>
 import arrowImg from "@/assets/img/arrow.png";
+import iconRuku from "@/assets/img/ruku.png";
+import iconChuku from "@/assets/img/chuku.png";
+import iconBingMerchant from "@/assets/img/bingMerchant.png";
+import iconUnbing from "@/assets/img/unbing.png";
+import iconGenerateTransaction from "@/assets/img/generateTransaction.png";
 export default {
   name: "DeviceDetailProcess",
   props: ["row"],
   data() {
     return {
-      arrow: arrowImg
+      arrow: arrowImg,
+      iconRuku: iconRuku,
+      iconChuku: iconChuku,
+      iconBingMerchant: iconBingMerchant,
+      iconUnbing: iconUnbing,
+      iconGenerateTransaction: iconGenerateTransaction
     };
   },
   methods: {

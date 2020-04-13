@@ -7,6 +7,9 @@
 
     <div class="table_box">
       <BaseCrud
+        ref="table"
+        :params="params"
+        :api-service="api"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
         :grid-data="testData"
@@ -24,6 +27,7 @@
   </div>
 </template>
 <script>
+import api from "@/api/api_risk";
 import Search from "@/components/search/search.vue";
 
 import BaseCrud from "@/components/table/BaseCrud.vue";
@@ -42,12 +46,23 @@ export default {
       testData: [],
       direction: "rtl",
       searchHeight: "260",
-      drawer: false
+      drawer: false,
+      params: {
+        beginDate: this.$g.utils.getToday(),
+        endDate: this.$g.utils.getToday(),
+        agentNo: "",
+        partnerName: "",
+        mobile: "",
+        contractStatus: "",
+        pageSize: 1,
+        currentPage: 1,
+        operateUserNo: "",
+        jobType: ""
+      },
+      api: api.merchantBanFilterLogQueryByPage
     };
   },
-  mounted() {
-    this.getTableData();
-  },
+  mounted() {},
   methods: {
     cancel(done) {
       done();
@@ -55,34 +70,6 @@ export default {
     search() {
       // eslint-disable-next-line no-console
       console.log(this.ruleForm);
-    },
-    getTableData() {
-      this.testData = [
-        {
-          service: "紫菜网络科技有限公司",
-          merchant: "AA",
-          status: "待签约",
-          time: "2019/9/23 16:23:22",
-          oper: "FFF",
-          showChecking: true
-        },
-        {
-          service: "紫菜网络科技有限公司",
-          merchant: "AA",
-          status: "待签约",
-          time: "2019/9/23 16:23:22",
-          oper: "FFF",
-          showDetail: true
-        },
-        {
-          service: "紫菜网络科技有限公司",
-          merchant: "AA",
-          status: "待签约",
-          time: "2019/9/23 16:23:22",
-          oper: "FFF",
-          showDetail: true
-        }
-      ];
     }
   }
 };

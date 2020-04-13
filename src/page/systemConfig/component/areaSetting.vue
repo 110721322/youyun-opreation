@@ -3,17 +3,21 @@
     <DetailBox title="大区" :border="true">
       <div v-for="(item,key) of areaList" :key="key" class="area_box">
         <div class="area_box_title">
-          {{ item.title }}
-          <el-button type="primary" style="float:right;margin-top:16px">编辑</el-button>
+          {{ item.regionName }}
+          <el-button
+            type="primary"
+            style="float:right;margin-top:16px"
+            @click="onClick_editArea(item)"
+          >编辑</el-button>
         </div>
         <div class="tag-box">
           <el-tag
-            v-for="tag in item.dynamicTags"
-            :key="tag"
+            v-for="tag in item.citys"
+            :key="tag.regionCode"
             closable
             :disable-transitions="false"
-            @close="handleClose(tag)"
-          >{{ tag }}</el-tag>
+            @close="handleClose(tag,item)"
+          >{{ tag.regionName }}</el-tag>
           <el-cascader
             v-if="item.isShowSelect"
             :options="areaDate"
@@ -24,7 +28,7 @@
         </div>
       </div>
 
-      <el-button type="primary" class="add_area">添加大区类型</el-button>
+      <el-button type="primary" class="add_area" @click="onClick_addArea">添加大区类型</el-button>
     </DetailBox>
 
     <el-drawer :visible.sync="drawer" :with-header="false">
@@ -34,14 +38,17 @@
         :show-foot-btn="fromConfigData.showFootBtn"
         label-width="130px"
         @cancel="cancel"
+        @confirm="confirm"
       ></Form>
     </el-drawer>
   </div>
 </template>
 <script>
+import api from "@/api/api_systemConfig";
 import Form from "@/components/form/index.vue";
 import DetailBox from "@/components/detailMode/detailBox.vue";
 import areaDate from "@/assets/data/areaData";
+import { FORM_CONFIG } from "../formConfig/areaSettingForm";
 
 export default {
   name: "Theme",
@@ -56,21 +63,96 @@ export default {
           id: 1,
           title: "华中",
           isShowSelect: false,
-          dynamicTags: ["标签一", "标签二"]
+          citys: ["标签一", "标签二"]
         },
         {
           id: 2,
           title: "华东",
           isShowSelect: false,
-          dynamicTags: ["标签一"]
+          citys: ["标签一"]
         }
-      ]
+      ],
+      formStatus: ""
     };
   },
-  mounted() {},
+  mounted() {
+    this.queryAllRegion();
+  },
   methods: {
+    confirm($ruleform) {
+      switch (this.formStatus) {
+        case "edit":
+          api
+            .update({
+              regionCode: this.activeRow.regionCode,
+              regionName: $ruleform.regionName
+            })
+            .then(res => {
+              this.$message("保存成功");
+              this.drawer = false;
+            })
+            .catch(err => {
+              this.$message(err);
+            });
+          break;
+        case "add":
+          api
+            .saveRegion({ regionCode: "", regionName: $ruleform.regionName })
+            .then(res => {
+              this.$message("添加成功");
+              this.drawer = false;
+            })
+            .catch(err => {
+              this.$message(err);
+            });
+          break;
+
+        default:
+          break;
+      }
+    },
+    queryAllRegion() {
+      api.queryAllRegion({}).then(res => {
+        res.object.forEach((item, index) => {
+          item.citys = [];
+        });
+        this.areaList = res.object;
+        res.object.forEach((item, index) => {
+          api.queryRegionProvince({}).then(res2 => {
+            this.areaList[index].citys = res2.object;
+          });
+        });
+      });
+    },
+    onClick_editArea($row) {
+      this.formStatus = "edit";
+      this.activeRow = $row;
+      FORM_CONFIG.editData.formData[0].initVal = $row.regionName;
+      this.fromConfigData = FORM_CONFIG.editData;
+      this.drawer = true;
+    },
+    onClick_addArea($row) {
+      this.formStatus = "add";
+      this.activeRow = $row;
+      this.fromConfigData = FORM_CONFIG.addData;
+      this.drawer = true;
+    },
+    handleClose(tag, $item) {
+      api
+        .deleteProvince({
+          regionCode: $item.regionCode,
+          provinceCode: tag.regionCode
+        })
+        .then(res => {
+          $item.citys.splice($item.citys.indexOf(tag), 1);
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
     areaSelect($item) {
-      $item.isShowSelect = true;
+      this.$set($item, "isShowSelect", true);
+      // $item.isShowSelect = true;
     },
     areaSelectConfirm($value, $item) {
       const options = JSON.parse(JSON.stringify(this.areaDate));
@@ -87,13 +169,25 @@ export default {
       obj.forEach(item => {
         delete item.children;
       });
-      $item.dynamicTags.push(
-        obj[0].label + "," + obj[1].label + "," + obj[2].label
-      );
-      $item.isShowSelect = false;
+      // $item.citys.push(obj[0].label + "," + obj[1].label + "," + obj[2].label);
+      api
+        .saveRegionProvinceSet({
+          regionCode: $item.regionCode,
+          provinceCode: ""
+        })
+        .then(res => {
+          $item.citys.push({
+            regionCode: obj[2].value,
+            regionName: obj[2].label
+          });
+          $item.isShowSelect = false;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
     },
-    cancel(done) {
-      done();
+    cancel() {
+      this.drawer = false;
     }
   }
 };
@@ -194,7 +288,7 @@ export default {
 .device_list {
   margin-top: 20px;
   height: 392px;
-  overflow: scroll;
+  overflow: auto;
 }
 .select {
   background: rgba(236, 237, 241, 1);

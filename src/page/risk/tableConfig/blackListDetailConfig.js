@@ -2,33 +2,32 @@ export const TABLE_CONFIG = {
   gridConfig: [
     {
       label: '信息类型',
-      prop: 'service',
+      prop: 'banField',
       width: '150px'
     },
     {
       label: '内容',
-      prop: 'merchant',
+      prop: 'content',
       width: '150px'
     },
     {
       label: '加入人员',
-      prop: 'time',
+      prop: 'operateUserName',
       width: '150px'
     },
     {
       label: '加入黑名单时间',
-      prop: 'oper',
+      prop: 'banCreateTime',
       width: '150px'
     },
     {
       label: '被拦截服务商',
-      prop: 'status',
-      // prop: [{ key: 'service' }, { key: 'serviceid', label: "ID:" }],
+      prop: [{ key: 'agentName' }, { key: 'agentNo', label: "ID:" }],
       width: '150px'
     },
     {
       label: '拦截时间',
-      prop: 'status',
+      prop: 'banFilterTime',
       width: '150px'
     }
   ],

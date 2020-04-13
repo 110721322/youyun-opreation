@@ -9,6 +9,9 @@
 
     <div class="table_box">
       <BaseCrud
+        ref="table"
+        :params="params"
+        :api-service="api"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
         :grid-data="testData"
@@ -22,6 +25,7 @@
   </div>
 </template>
 <script>
+import api from "@/api/api_device";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 
@@ -39,38 +43,34 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl"
+      direction: "rtl",
+      params: {
+        beginDate: this.$g.utils.getToday(),
+        endDate: this.$g.utils.getToday(),
+        agentNo: "新美3拉老豆",
+        cityCode: "haha",
+        currentPage: 0,
+        deviceId: 64204,
+        pageSize: 20,
+        provinceCode: "哈拉0冬85数",
+        regionCode: "d6猪美3"
+      },
+      api: api.deviceAgentQueryByPage
     };
   },
-  mounted() {
-    this.getTableData();
-  },
+  mounted() {},
   methods: {
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
-    },
-    getTableData() {
-      this.testData = [
-        {
-          service: "日常任务",
-          type: "商户结算失败",
-          buyNum: "4",
-          buyNumPerc: "提醒",
-          activeNum: "XXXX店铺",
-          activeNumPerc: "20:00:23",
-          amountPerc: "222.22"
-        },
-        {
-          service: "日常任务",
-          type: "商户结算失败",
-          buyNum: "4",
-          buyNumPerc: "提醒",
-          activeNum: "XXXX店铺",
-          activeNumPerc: "20:00:23",
-          amountPerc: "222.22"
-        }
-      ];
+    search($ruleForm) {
+      console.log($ruleForm);
+      const params = {
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
+        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        regionCode: $ruleForm.regionCode,
+        city: $ruleForm.city,
+        deviceId: $ruleForm.deviceId
+      };
+      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      this.params = params;
     },
     selectionChange($val) {
       // eslint-disable-next-line no-console

@@ -1,7 +1,7 @@
 <template>
   <div class="main_page">
     <div class="tab_head">
-      <span class="title">设备库存</span>
+      <span class="title">入库明细</span>
     </div>
     <Search :is-show-all="true" :form-base-data="searchConfig.formData" @search="search" />
 
@@ -10,6 +10,9 @@
         <div class="title">库存列表</div>
       </div>
       <BaseCrud
+        ref="table"
+        :params="params"
+        :api-service="api"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
         :grid-data="testData"
@@ -23,6 +26,7 @@
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
         @edit="onClick_edit"
+        @remove="onClick_remove"
       ></BaseCrud>
     </div>
 
@@ -33,11 +37,13 @@
         :show-foot-btn="fromConfigData.showFootBtn"
         label-width="130px"
         @cancel="cancel"
+        @confirm="confirm"
       ></Form>
     </el-drawer>
   </div>
 </template>
 <script>
+import api from "@/api/api_device";
 import Search from "@/components/search/search.vue";
 import Form from "@/components/form/index.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
@@ -56,45 +62,25 @@ export default {
       fromConfigData: FORM_CONFIG.formData,
       testData: [],
       drawer: false,
-      direction: "rtl"
+      direction: "rtl",
+      params: {
+        currentPage: 0,
+        deviceIdentifier: "",
+        deviceInputId: 1,
+        pageSize: 1
+      },
+      api: api.queryInputPage
     };
   },
-  mounted() {
-    this.getTableData();
-  },
+  mounted() {},
   methods: {
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
-    },
-    getTableData() {
-      this.testData = [
-        {
-          type: "日常任务",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          reason: "银行卡账号错误，服务商无法联系"
-        },
-        {
-          id: 2,
-          type: "日常任务",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系"
-        }
-      ];
+    search($ruleForm) {
+      console.log($ruleForm);
+      const params = {
+        deviceIdentifier: $ruleForm.deviceIdentifier
+      };
+      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      this.params = params;
     },
     selectionChange($val) {
       // eslint-disable-next-line no-console
@@ -104,11 +90,45 @@ export default {
       this.fromConfigData = FORM_CONFIG.deviceData;
       this.drawer = true;
     },
-    cancel(done) {
-      done();
+    confirm($data) {
+      api
+        .deviceDetailUpdate({
+          id: 1,
+          deadline: $data["deadline"],
+          deviceIdentifier: $data["deviceIdentifier"]
+        })
+        .then(res => {
+          this.$message("保存成功");
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    cancel() {
+      this.drawer = false;
     },
     onClick_edit() {
       this.drawer = true;
+    },
+    onClick_remove($row) {
+      this.$confirm("确定删除？", "提示", {
+        distinguishCancelAndClose: true,
+        confirmButtonText: "确认",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          api
+            .deviceDetailDelete({
+              id: $row.id
+            })
+            .then(result => {
+              this.$message("已删除");
+            })
+            .catch(err => {
+              console.error(err);
+            });
+        })
+        .catch(() => {});
     }
   }
 };

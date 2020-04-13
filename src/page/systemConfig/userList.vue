@@ -15,6 +15,7 @@
         <el-button class="btn" type="primary" @click="onClick_addUser">添加成员</el-button>
       </div>
       <BaseCrud
+        ref="child"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
         :grid-data="testData"
@@ -25,6 +26,8 @@
         :is-select="false"
         :is-expand="false"
         :row-key="'id'"
+        :params="params"
+        :api-service="api"
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
         @buy="onClick_buy"
@@ -46,6 +49,7 @@
 import Search from "@/components/search/search.vue";
 import Form from "@/components/form/index.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
+import api from "@/api/api_memberManage.js"
 
 import { FORM_CONFIG } from "./formConfig/deviceDetail";
 import { SEARCH_CONFIG } from "./formConfig/userListSearch";
@@ -62,45 +66,81 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl"
+      direction: "rtl",
+      params: {},
+      api: api.memberList
     };
   },
+  created() {
+    this.params = {
+      "superiorName": "je8",
+      "offset": 0,
+      "nickName": "i58",
+      "sex": true,
+      "userName": "fm4",
+      "superiorId": 99328,
+      "realName": "dcj",
+      "id": 55267,
+      "position": "9pm",
+      "state": 348,
+      "jobNumber": "t6p",
+      "startTime": "yyyy-MM-dd HH:mm:ss",
+      "endTime": "yyyy-MM-dd HH:mm:ss"
+    }
+  },
   mounted() {
-    this.getTableData();
+    // this.getTableData();
+    console.log(this.searchConfig.formData)
   },
   methods: {
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
+    search($ruleForm) {
+      console.log($ruleForm)
+      this.params = {
+        "superiorName": "je8",
+        "offset": 0,
+        "nickName": "i58",
+        "sex": true,
+        "userName": "fm4",
+        "superiorId": 99328,
+        "realName": "dcj",
+        "id": 55267,
+        "position": "9pm",
+        "state": 348,
+        "jobNumber": "t6p",
+        "startTime": $ruleForm.date[0],
+        "endTime": $ruleForm.date[1]
+      }
+      this.params[$ruleForm.inputSelect] = $ruleForm.inputForm
+      // this.$refs.child.getData();
     },
     getTableData() {
-      this.testData = [
-        {
-          type: "日常任务",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          reason: "银行卡账号错误，服务商无法联系"
-        },
-        {
-          id: 2,
-          type: "日常任务",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系"
-        }
-      ];
+      // this.testData = [
+      //   {
+      //     type: "日常任务",
+      //     taskName: "商户结算失败",
+      //     num: "4",
+      //     oper: "提醒",
+      //     name: "XXXX店铺",
+      //     time: "20:00:23",
+      //     amount: "222.22",
+      //     image:
+      //       "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
+      //     reason: "银行卡账号错误，服务商无法联系"
+      //   },
+      //   {
+      //     id: 2,
+      //     type: "日常任务",
+      //     taskName: "商户结算失败",
+      //     num: "4",
+      //     oper: "提醒",
+      //     name: "XXXX店铺",
+      //     time: "20:00:23",
+      //     image:
+      //       "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
+      //     amount: "222.22",
+      //     reason: "银行卡账号错误，服务商无法联系"
+      //   }
+      // ];
     },
     selectionChange($val) {
       // eslint-disable-next-line no-console

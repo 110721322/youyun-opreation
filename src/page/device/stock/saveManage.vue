@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div class>
     <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
     <div v-else>
       <div class="tab_head">
@@ -17,6 +17,9 @@
           <el-button class="btn" type="primary" @click="onClick_addDevice">新增入库</el-button>
         </div>
         <BaseCrud
+          ref="table"
+          :params="params"
+          :api-service="api"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
           :grid-data="testData"
@@ -38,12 +41,14 @@
           :show-foot-btn="fromConfigData.showFootBtn"
           label-width="130px"
           @cancel="cancel"
+          @confirm="confirm"
         ></Form>
       </el-drawer>
     </div>
   </div>
 </template>
 <script>
+import api from "@/api/api_device";
 import Search from "@/components/search/search.vue";
 import Form from "@/components/form/index.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
@@ -62,46 +67,28 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl"
+      direction: "rtl",
+      params: {
+        currentPage: 0,
+        deviceId: 1,
+        pageSize: 1,
+        beginTime: this.$g.utils.getToday(),
+        endTime: this.$g.utils.getToday()
+      },
+      api: api.deviceInputQueryByPage
     };
   },
-  mounted() {
-    this.getTableData();
-  },
+  mounted() {},
   methods: {
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
-    },
-    getTableData() {
-      this.testData = [
-        {
-          id: 1,
-          type: "日常任务1",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          reason: "-"
-        },
-        {
-          id: 2,
-          type: "日常任务2",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          amount: "222.22",
-          reason: "-"
-        }
-      ];
+    search($ruleForm) {
+      console.log($ruleForm);
+      const params = {
+        beginTime: $ruleForm.date ? $ruleForm.date[0] : null,
+        endTime: $ruleForm.date ? $ruleForm.date[1] : null,
+        deviceId: $ruleForm.deviceId
+      };
+      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      this.params = params;
     },
     selectionChange($val) {
       // eslint-disable-next-line no-console
@@ -111,8 +98,22 @@ export default {
       this.fromConfigData = FORM_CONFIG.deviceData;
       this.drawer = true;
     },
-    cancel(done) {
-      done();
+    confirm($data) {
+      api
+        .deviceInputAdd({
+          deadline: $data["deadline"],
+          deviceId: $data["deviceId"],
+          inputTime: $data["inputTime"]
+        })
+        .then(res => {
+          this.$message("入库成功");
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    cancel() {
+      this.drawer = false;
     },
     onClick_detail($item) {
       this.$router.push({

@@ -2,7 +2,13 @@
   <div :class="[border?'border bg_box':'bg_box']">
     <div class="title">
       {{ title }}
-      <el-button v-show="isShowEditBtn" type="primary" class="edit_btn" size="mini">编辑</el-button>
+      <el-button
+        v-show="isShowEditBtn"
+        type="primary"
+        class="edit_btn"
+        size="mini"
+        @click="onClick_edit"
+      >编辑</el-button>
     </div>
 
     <slot></slot>
@@ -28,7 +34,11 @@ export default {
   },
   computed: {},
 
-  methods: {}
+  methods: {
+    onClick_edit() {
+      this.$emit("edit");
+    }
+  }
 };
 </script>
 

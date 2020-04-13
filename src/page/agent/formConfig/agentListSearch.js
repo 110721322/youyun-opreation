@@ -1,3 +1,4 @@
+import areaData from "@/assets/data/areaData";
 export const FORM_CONFIG = {
   formData: [
     {
@@ -15,11 +16,11 @@ export const FORM_CONFIG = {
       options: [
         {
           label: '服务商ID',
-          value: 'serviceId'
+          value: 'agentNo'
         },
         {
           label: '服务商名称',
-          value: 'serviceName'
+          value: 'agentName'
         }
       ],
       labelWidth: '100px'
@@ -47,7 +48,7 @@ export const FORM_CONFIG = {
     {
       type: 1,
       label: '所属大区',
-      key: 'area',
+      key: 'activeScopeType',
       style: 'width:294px',
       labelWidth: '185px',
       options: [
@@ -68,7 +69,7 @@ export const FORM_CONFIG = {
     {
       type: 1,
       label: '服务商等级',
-      key: 'level',
+      key: 'agentGrade',
       style: 'width:294px',
       class: "clear_both",
       options: [
@@ -87,31 +88,17 @@ export const FORM_CONFIG = {
       ]
     },
     {
-      // cascader
-      type: 1,
+      type: 8,
       label: '服务地区',
-      key: 'address',
+      key: 'area',
       style: 'width:294px',
       labelWidth: '185px',
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
+      options: areaData
     },
     {
       type: 1,
       label: '所属运营',
-      key: 'oper',
+      key: 'operateUserNo',
       style: 'width:294px',
       class: "clear_both",
       options: [
@@ -132,7 +119,7 @@ export const FORM_CONFIG = {
     {
       type: 1,
       label: '状态',
-      key: 'status',
+      key: 'contractStatusSet',
       style: 'width:294px',
       labelWidth: '185px',
       options: [

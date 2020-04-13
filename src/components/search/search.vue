@@ -28,6 +28,7 @@
           :rule-form="ruleForm"
           :form-item="formItem"
           :is-rest="isRest"
+          @dataSelect="handleDataSelect"
         />
       </el-form-item>
 
@@ -57,7 +58,9 @@ import Input from "./components/Input.vue";
 import Select from "./components/Select.vue";
 import Tinymce from "./components/Tinymce/index.vue";
 import DateSelect from "./components/DateSelect.vue";
+import DatePicker from "./components/DatePicker.vue";
 import SelectInput from "./components/SelectInput.vue";
+import Cascader from "./components/Cascader.vue";
 
 export default {
   name: "Search",
@@ -67,7 +70,9 @@ export default {
     Date,
     Tinymce,
     DateSelect,
-    SelectInput
+    SelectInput,
+    Cascader,
+    DatePicker
   },
   props: {
     isShowAll: {
@@ -124,10 +129,15 @@ export default {
       isRest: false
     };
   },
+  watch: {},
   created() {
     this.init();
+    console.log(this.formBaseData);
   },
   methods: {
+    handleDataSelect($time) {
+      this.$emit("dataSelect", $time);
+    },
     init() {
       if (this.formBaseData.length > 0) {
         for (const iterator of this.formBaseData) {
@@ -149,6 +159,7 @@ export default {
           formatFormData(formInfo, this.formKeys);
         }
       });
+      this.$emit("search", this.ruleForm);
     },
     resetForm() {
       // 初始化表单

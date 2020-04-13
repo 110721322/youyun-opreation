@@ -11,6 +11,9 @@
 
       <div class="table_box">
         <BaseCrud
+          ref="table"
+          :params="params"
+          :api-service="api"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
           :grid-data="testData"
@@ -26,12 +29,34 @@
           @detail="handleDetail"
           @preApprove="handlePreApprove"
           @record="handleRecord"
-        ></BaseCrud>
+        >
+          <div slot="head" slot-scope="item">
+            <span>{{ item.item.label }}</span>
+            <el-tooltip class="item" effect="dark" content="Top Center 提示文字" placement="top">
+              <div slot="content">
+                <div>
+                  <span class="dot opened"></span>已开通
+                </div>
+                <div>
+                  <span class="dot review"></span>审核中
+                </div>
+                <div>
+                  <span class="dot reject"></span>驳回
+                </div>
+                <div>
+                  <span class="dot unused"></span>未审核
+                </div>
+              </div>
+              <i class="el-icon-info" />
+            </el-tooltip>
+          </div>
+        </BaseCrud>
       </div>
     </div>
   </div>
 </template>
 <script>
+import api from "@/api/api_merchantAudit";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 
@@ -47,13 +72,37 @@ export default {
       configData: INDIRECTLIST_CONFIG,
       testData: [],
       direction: "rtl",
-      searchHeight: "260"
+      searchHeight: "320",
+      params: {
+        beginDate: this.$g.utils.getToday(),
+        endDate: this.$g.utils.getToday(),
+        agentNo: "rn4",
+        agentName: "5ff",
+        pageSize: 0,
+        channelStatus: "u22",
+        operationUserNo: "mef",
+        currentPage: 0,
+        merchantNo: "iy7",
+        merchantName: "y6a"
+      },
+      api: api.queryLeshuaAuditPageByCondition
     };
   },
   mounted() {
-    this.getTableData();
+    // this.search();
   },
   methods: {
+    search($ruleForm) {
+      console.log($ruleForm);
+      const params = {
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
+        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        channelStatus: $ruleForm.channelStatus,
+        operationUserNo: $ruleForm.operationUserNo
+      };
+      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      this.params = params;
+    },
     handleDetail() {
       this.$router.push({
         path: "/approval/checkMerchant/indirectList/detail"
@@ -68,10 +117,6 @@ export default {
       this.$router.push({
         path: "/approval/checkMerchant/indirectList/recordDetail"
       });
-    },
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
     },
     getTableData() {
       this.testData = [
@@ -143,6 +188,25 @@ export default {
   display: flex;
   justify-content: space-between;
 }
-</style>
-<style>
+.dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #52c41a;
+  vertical-align: middle;
+  margin: 0 5px;
+  &.opened {
+    background-color: #52c41a;
+  }
+  &.review {
+    background-color: #ffc620;
+  }
+  &.reject {
+    background-color: #f5222d;
+  }
+  &.unused {
+    background-color: #9c9c9c;
+  }
+}
 </style>

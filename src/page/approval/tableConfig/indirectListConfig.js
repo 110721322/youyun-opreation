@@ -2,33 +2,34 @@ export const INDIRECTLIST_CONFIG = {
   gridConfig: [
     {
       label: '商户',
-      prop: 'merchantName',
+      prop: [{ key: 'merchantName' }, { key: 'merchantNo', label: 'ID:' }],
       width: '150px'
     },
     {
       label: '所属服务商名称',
-      prop: 'serviceName',
+      prop: [{ key: 'agentName' }, { key: 'agentNo', label: 'ID:' }],
       width: '150px'
     },
     {
-      label: '通道情况',
-      // prop: 'status', basecrud v-if v-else重复显示
-      width: '150px',
-      render: (h, params) => {
-        const status = params.row.statusList;
-        return h('div', {
-          'class': "status-box"
-        }, [status.map(function ($item) {
-          return [h('span', {
-            'class': "dot " + $item.status
-          }), $item.name]
-        })]
-        );
-      }
+      label: '通道情况 ',
+      width: '200px',
+      customHead: true,
+      prop: "channel"
+      // render: (h, params) => {
+      //   const status = params.row.channel;
+      //   return h('div', {
+      //     'class': "status-box"
+      //   }, [status.map(function ($item) {
+      //     return [h('span', {
+      //       'class': "dot " + $item.status
+      //     }), $item.name]
+      //   })]
+      //   );
+      // }
     },
     {
       label: '入件时间',
-      prop: 'time',
+      prop: 'createTime',
       width: '150px'
     }
   ],

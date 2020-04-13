@@ -8,6 +8,8 @@
 
       <div class="table_box">
         <BaseCrud
+          :params="params"
+          :api-service="api"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
           :grid-data="testData"
@@ -26,6 +28,7 @@
   </div>
 </template>
 <script>
+import api from "@/api/api_merchantAudit";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 
 import { RECORD_CONFIG } from "./../tableConfig/aliDirectRecordDetailConfig";
@@ -37,30 +40,18 @@ export default {
     return {
       configData: RECORD_CONFIG,
       testData: [],
-      direction: "rtl"
+      direction: "rtl",
+      params: {
+        channel: "ol7",
+        pageSize: 0,
+        currentPage: 0,
+        merchantNo: "anw"
+      },
+      api: api.preAuditRecordQueryByPage
     };
   },
-  mounted() {
-    this.getTableData();
-  },
-  methods: {
-    getTableData() {
-      this.testData = [
-        {
-          time: "紫菜网络科技有限公司,ID: 13293127119831938",
-          people: "紫菜网络科技有限公司,ID: 13293127119831938",
-          channel: ["乐刷", "新大陆", "网商"],
-          content: "2014-02-15 16:00:23"
-        },
-        {
-          time: "紫菜网络科技有限公司,ID: 13293127119831938",
-          people: "紫菜网络科技有限公司,ID: 13293127119831938",
-          channel: ["乐刷", "新大陆", "网商"],
-          content: "2014-02-15 16:00:23"
-        }
-      ];
-    }
-  }
+  mounted() {},
+  methods: {}
 };
 </script>
 

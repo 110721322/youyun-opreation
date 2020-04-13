@@ -8,16 +8,16 @@ export const USER_CONFIG = {
     {
       label: '标题',
       prop: 'title',
-      width: '406px'
+      width: '300px'
     },
     {
       label: '消息类型',
-      prop: 'type',
+      prop: 'messageType',
       width: '150px'
     },
     {
       label: '提交时间',
-      prop: 'time',
+      prop: 'createTime',
       width: '227px'
     }
 

@@ -2,23 +2,23 @@ export const SHOPCENTER_CONFIG = {
   gridConfig: [
     {
       label: '设备类型',
-      prop: 'type',
+      prop: 'deviceType',
       width: '150px'
     },
     {
       label: '设备型号',
-      prop: 'taskName',
+      prop: 'deviceModel',
       width: '150px'
     },
 
     {
       label: '排序',
-      prop: 'time',
+      prop: 'sort',
       width: '150px'
     },
     {
       label: '更新时间',
-      prop: 'time',
+      prop: 'updateTime',
       width: '150px'
     }
   ],
@@ -32,7 +32,6 @@ export const SHOPCENTER_CONFIG = {
     delete: false,
     view: false,
     expands: [
-
       {
         name: '编辑',
         emitName: 'edit',
@@ -40,18 +39,18 @@ export const SHOPCENTER_CONFIG = {
       },
       {
         name: '删除',
-        emitName: 'adopt',
+        emitName: 'delete',
         type: 'text',
         style: 'color:#F5222D'
       },
       {
         name: '上架',
-        emitName: 'buy',
+        emitName: 'on',
         type: 'text'
       },
       {
         name: '下架',
-        emitName: 'buy',
+        emitName: 'off',
         type: 'text'
       }
     ]

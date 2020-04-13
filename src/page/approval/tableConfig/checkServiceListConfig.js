@@ -2,27 +2,27 @@ export const CHECKSERVICELIST_CONFIG = {
   gridConfig: [
     {
       label: '服务商',
-      prop: 'serviceName',
+      prop: [{ key: 'agentName' }, { key: 'agentNo', label: 'ID:' }],
       width: '150px'
     },
     {
       label: '法人',
-      prop: 'law',
+      prop: [{ key: 'lawPerson' }, { key: 'lawMobile' }],
       width: '150px'
     },
     {
       label: '创建时间',
-      prop: 'time',
+      prop: 'createTime',
       width: '150px'
     },
     {
       label: '所属运营',
-      prop: 'oper',
+      prop: 'operationName',
       width: '150px'
     },
     {
       label: '审核状态',
-      prop: 'status',
+      prop: 'accountStatus',
       width: '150px'
     }
   ],

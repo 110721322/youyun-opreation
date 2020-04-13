@@ -14,6 +14,9 @@
         <el-button class="btn" type="primary" @click="onClick_addDevice">导入设备信息</el-button>
       </div>
       <BaseCrud
+        ref="table"
+        :params="params"
+        :api-service="api"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
         :grid-data="testData"
@@ -27,7 +30,6 @@
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
         :header-cell-style="headerCellStyle"
-        @edit="onClick_edit"
         @okEdit="onClick_okEdit"
         @cancelEdit="onClick_cancelEdit"
       ></BaseCrud>
@@ -35,6 +37,7 @@
   </div>
 </template>
 <script>
+import api from "@/api/api_device";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { SEARCH_CONFIG } from "../formConfig/authorizedSearch";
@@ -52,34 +55,31 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl"
+      direction: "rtl",
+      params: {
+        beginDate: this.$g.utils.getToday(),
+        endDate: this.$g.utils.getToday(),
+        currentPage: 0,
+        deviceId: 1,
+        deviceIdentifier: "",
+        pageSize: 1,
+        status: 1
+      },
+      api: api.deviceActivationQueryByPage
     };
   },
-  mounted() {
-    this.getTableData();
-  },
+  mounted() {},
   methods: {
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
-    },
-    getTableData() {
-      this.testData = [
-        {
-          model: 0,
-          Identity: "设备品牌",
-          auth: "商户结算失败",
-          status: "提醒",
-          edit: false
-        },
-        {
-          model: 0,
-          Identity: "设备品牌",
-          auth: "商户结算失败",
-          status: "提醒",
-          edit: false
-        }
-      ];
+    search($ruleForm) {
+      console.log($ruleForm);
+      const params = {
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
+        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        deviceId: $ruleForm.deviceId,
+        status: $ruleForm.status
+      };
+      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      this.params = params;
     },
     selectionChange($val) {
       // eslint-disable-next-line no-console
@@ -87,10 +87,16 @@ export default {
     },
     onClick_addDevice() {},
     onClick_download() {},
-    onClick_edit($item) {
-      $item.edit = true;
-    },
     onClick_okEdit($item) {
+      api
+        .deviceActivationUpdate({
+          authorizationCode: $item.authorizationCode,
+          id: $item.id
+        })
+        .then(res => {})
+        .catch(err => {
+          this.$message(err);
+        });
       $item.edit = false;
     },
     onClick_cancelEdit($item) {

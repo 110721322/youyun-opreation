@@ -8,7 +8,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '钉钉通讯地址',
-        key: 'name9',
+        key: 'dingdingAddress',
         initVal: 'pdd',
         rules: setRules('邮箱').isRequired.get
       }
@@ -21,7 +21,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '客单价≥',
-        key: 'name8',
+        key: 'perCustomerTransaction',
         initVal: 'pdd',
         rules: setRules('邮箱').isRequired.get,
         hideColon: true,
@@ -30,13 +30,13 @@ export const FORM_CONFIG = {
       },
       {
         type: 0,
-        label: '客单价≥',
-        key: 'name9',
+        label: '交易笔数≥',
+        key: 'transactionNum',
         initVal: 'pdd',
         rules: setRules('邮箱').isRequired.get,
         hideColon: true,
         isShowSlot: true,
-        showSlotName: '元'
+        showSlotName: '笔'
       }
     ]
   },
@@ -47,29 +47,29 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '比较类型',
-        key: 'name9',
+        key: 'dataComparisonType',
         initVal: 'pdd',
         rules: setRules('邮箱').isRequired.get
       },
       {
         type: 0,
-        label: '客单价≥',
-        key: 'name9',
+        label: '交易笔数≥',
+        key: 'dataTransactionNum',
         initVal: 'pdd',
         rules: setRules('邮箱').isRequired.get,
         hideColon: true,
         isShowSlot: true,
-        showSlotName: '元'
+        showSlotName: '笔'
       },
       {
         type: 0,
         label: '比例≥',
-        key: 'name9',
+        key: 'dataRatio',
         initVal: 'pdd',
         rules: setRules('邮箱').isRequired.get,
         hideColon: true,
         isShowSlot: true,
-        showSlotName: '元'
+        showSlotName: '%'
       }
     ]
   }

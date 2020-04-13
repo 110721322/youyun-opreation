@@ -4,13 +4,18 @@
     <div class="content-box">
       <div class="title">{{ fromConfigData.title }}</div>
 
-      <announcementEdit :form-base-data="fromConfigData.formData" :label-width="'auto'"></announcementEdit>
+      <announcementEdit
+        :form-base-data="fromConfigData.formData"
+        :label-width="'auto'"
+        @commit="handleCommit"
+      ></announcementEdit>
     </div>
   </div>
 </template>
 
 <script>
-import announcementEdit from "@/components/form/announcementEdit.vue";
+import api from "@/api/api_message";
+import announcementEdit from "@/components/form/announcementEditForm.vue";
 import { FORM_CONFIG } from "./formConfig/announcementConfig";
 
 export default {
@@ -20,6 +25,50 @@ export default {
     return {
       fromConfigData: FORM_CONFIG.sendMessageData
     };
+  },
+  created() {
+    // 如果是查询编辑
+    api
+      .queryNoticeByPrimaryId({ id: 1 })
+      .then(res => {
+        this.fromConfigData.formData.forEach((item, index) => {
+          item.key === "time"
+            ? (item.initVal[0] = res.object["displayStartDate"]) &&
+              (item.initVal[1] = res.object["displayEndDate"])
+            : (item.initVal = res.object[item.key]);
+          // this.$set(item, item.initVal, res.object[item.key]);
+        });
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  },
+  methods: {
+    handleCommit($ruleForm) {
+      console.log($ruleForm);
+      api
+        .update({
+          title: $ruleForm.title,
+          messageType: $ruleForm.messageType,
+          content: $ruleForm.content,
+          displayStartDate: $ruleForm.time[0],
+          displayEndDate: $ruleForm.time[1],
+          displayType: $ruleForm.displayType,
+          isReadable: $ruleForm.isReadable,
+          readableTime: $ruleForm.readableTime,
+          from: "''",
+          to: "''",
+          isAlreadyRead: false,
+          id: "无"
+        })
+        .then(res => {
+          if (res.data.status === 1) {
+            this.$alert("修改成功");
+            this.$router.push({ path: "/message/serviceAnnouncementList" });
+          }
+        })
+        .catch();
+    }
   }
 };
 </script>

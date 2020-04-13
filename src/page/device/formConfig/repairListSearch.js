@@ -15,15 +15,15 @@ export const SEARCH_CONFIG = {
       options: [
         {
           label: '单号',
-          value: 'order'
+          value: 'orderNo'
         },
         {
           label: '所属服务商ID',
-          value: 'serviceProviderId'
+          value: 'agentNo'
         },
         {
           label: '所属服务商',
-          value: 'serviceProvider'
+          value: 'agentName'
         }
       ],
       labelWidth: '100px'
@@ -31,7 +31,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '设备名称',
-      key: 'name',
+      key: 'deviceId',
       style: 'width:294px',
       labelWidth: '100px',
       options: [
@@ -73,7 +73,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '所属运营',
-      key: 'oper',
+      key: 'operationId',
       style: 'width:294px',
       labelWidth: '100px',
       class: "clear_both",

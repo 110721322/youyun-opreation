@@ -7,12 +7,12 @@ export const FORM_CONFIG = {
       class: 'max-width',
       options: [
         {
-          label: '服务商',
-          value: 'id'
+          label: '服务商ID',
+          value: 'agentNo'
         },
         {
-          label: '服务商ID',
-          value: 'name'
+          label: '服务商',
+          value: 'agentName'
         }
       ],
       labelWidth: '85px'

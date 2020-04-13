@@ -8,18 +8,19 @@
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
     <div class="right-menu">
       <template>
-        <screenfull id="screenfull" class="right-menu-item hover-effect" />
+
+        <search id="header-search" class="right-menu-item" />
+        <img src="@/assets/img/ding.png" class="search_img" @click.stop="click" />
+
+        <!-- <screenfull id="screenfull" class="right-menu-item hover-effect" />-->
       </template>
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
           <img src="https://avatars1.githubusercontent.com/u/23054546?s=64&v=4" class="user-avatar" />
-          <i class="el-icon-caret-bottom" />
+          <span class="name">伯温</span>
         </div>
         <el-dropdown-menu slot="dropdown">
-          <router-link to="/index">
-            <el-dropdown-item>Profile</el-dropdown-item>
-          </router-link>
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">Log Out</span>
           </el-dropdown-item>
@@ -32,14 +33,14 @@
 <script>
 // import Hamburger from './Head/index.vue'
 import Breadcrumb from "./breadcrumb.vue";
-import Screenfull from "./Screenfull/index.vue";
+// import Screenfull from "./Screenfull/index.vue";
 import { EventBus } from "../bus/event-bus.js";
-
+import Search from "./headSearch.vue";
 export default {
   components: {
     // Hamburger,
     Breadcrumb,
-    Screenfull
+    Search
   },
   computed: {},
   methods: {
@@ -95,7 +96,11 @@ export default {
     &:focus {
       outline: none;
     }
-
+    .search_img{
+      margin:15px 15px 0 0;
+      width:22px;
+      float:left
+    }
     .right-menu-item {
       display: inline-block;
       padding: 0 8px;
@@ -103,7 +108,7 @@ export default {
       font-size: 18px;
       color: #5a5e66;
       vertical-align: text-bottom;
-
+      float:left;
       &.hover-effect {
         cursor: pointer;
         transition: background 0.3s;
@@ -120,12 +125,21 @@ export default {
       .avatar-wrapper {
         margin-top: 5px;
         position: relative;
-
+        margin-right:20px;
+      .name{
+          width: 40px;
+          height: 40px;
+          display: inline-block;
+          line-height: 40px;
+          margin-top: 0;
+          position: absolute;
+        }
         .user-avatar {
           cursor: pointer;
           width: 40px;
           height: 40px;
           border-radius: 10px;
+          margin-right:10px
         }
 
         .el-icon-caret-bottom {

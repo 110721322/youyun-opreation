@@ -1,3 +1,4 @@
+import areaData from "@/assets/data/areaData";
 export const FORM_CONFIG = {
   formData: [
     {
@@ -5,7 +6,8 @@ export const FORM_CONFIG = {
       label: '筛选时间',
       key: 'date',
       class: 'max-width',
-      labelWidth: '100px'
+      labelWidth: '100px',
+      isSelectToday: true
     },
     {
       type: 10,
@@ -15,12 +17,24 @@ export const FORM_CONFIG = {
       placeholder: "请输入商户号",
       options: [
         {
-          label: '服务商ID',
-          value: 'id'
+          label: '商户ID',
+          value: 'merchantNo'
         },
         {
-          label: '服务商名称',
-          value: 'name'
+          label: '商户名称',
+          value: 'merchantName'
+        },
+        {
+          label: '所属服务商名称',
+          value: 'agentName'
+        },
+        {
+          label: '乐刷商户号',
+          value: 'leShuaMerchantNo'
+        },
+        {
+          label: '新大陆商户号',
+          value: 'newlandMerchantNo'
         }
       ],
       labelWidth: '100px'
@@ -28,91 +42,153 @@ export const FORM_CONFIG = {
     {
       type: 1,
       label: '使用通道',
-      key: 'useChannel',
-      style: 'width:294px',
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
-    },
-    {
-      type: 1,
-      label: '通道情况',
       key: 'channelStatus',
       style: 'width:294px',
-      labelWidth: '185px',
       options: [
         {
           label: '川菜',
-          value: 0
+          value: "0"
         },
         {
           label: '粤菜',
-          value: 1
+          value: "1"
         },
         {
           label: '杭帮菜',
-          value: 2
+          value: "2"
         }
       ]
     },
     {
       type: 1,
       label: '行业类目',
-      key: 'industryKind',
-      style: 'width:294px',
-      class: "clear_both",
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
-    },
-    {
-      // cascader
-      type: 1,
-      label: '地区',
-      key: 'area',
+      key: 'categoryCOde',
       style: 'width:294px',
       labelWidth: '185px',
       options: [
         {
           label: '川菜',
-          value: 0
+          value: "0"
         },
         {
           label: '粤菜',
-          value: 1
+          value: "1"
         },
         {
           label: '杭帮菜',
-          value: 2
+          value: "2"
+        }
+      ]
+    },
+    {
+      type: 8,
+      label: '地区',
+      key: 'address',
+      style: 'width:294px',
+      class: "clear_both",
+      options: areaData
+    },
+    {
+      type: 8,
+      label: '开通通道详情',
+      key: 'channelCode',
+      style: 'width:294px',
+      labelWidth: '185px',
+      options: [
+        {
+          'value': '1',
+          'label': '乐刷',
+          'children': [
+            {
+              'value': '1',
+              'label': '已开通'
+            },
+            {
+              'value': '2',
+              'label': '审核中'
+            },
+            {
+              'value': '3',
+              'label': '驳回'
+            },
+            {
+              'value': '4',
+              'label': '未开通'
+            }
+          ]
+        },
+        {
+          'value': '1',
+          'label': '新大陆',
+          'children': [
+            {
+              'value': '1',
+              'label': '已开通'
+            },
+            {
+              'value': '2',
+              'label': '审核中'
+            },
+            {
+              'value': '3',
+              'label': '驳回'
+            },
+            {
+              'value': '4',
+              'label': '未开通'
+            }
+          ]
+        },
+        {
+          'value': '1',
+          'label': '支付宝直连',
+          'children': [
+            {
+              'value': '1',
+              'label': '已开通'
+            },
+            {
+              'value': '2',
+              'label': '审核中'
+            },
+            {
+              'value': '3',
+              'label': '驳回'
+            },
+            {
+              'value': '4',
+              'label': '未开通'
+            }
+          ]
+        },
+        {
+          'value': '2',
+          'label': '微信直连',
+          'children': [
+            {
+              'value': '1',
+              'label': '已开通'
+            },
+            {
+              'value': '2',
+              'label': '审核中'
+            },
+            {
+              'value': '3',
+              'label': '驳回'
+            },
+            {
+              'value': '4',
+              'label': '未开通'
+            }
+          ]
         }
       ]
     },
     {
       type: 1,
       label: '所属运营',
-      key: 'oper',
+      key: 'operateNo',
       style: 'width:294px',
       class: "clear_both",
       options: [

@@ -16,7 +16,7 @@
         ></el-alert>
         <detailMode
           :img-width="4"
-          :rule-form="ruleForm.baseData"
+          :rule-form="ruleForm"
           :config-data="configData.baseData"
           :current-type="currentType"
         >
@@ -34,19 +34,15 @@
             </div>
           </template>
         </detailMode>
-        <detailMode
-          :img-width="4"
-          :rule-form="ruleForm.appealData"
-          :config-data="configData.appealData"
-        ></detailMode>
+        <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.appealData"></detailMode>
         <div class="table_box">
           <div class="title">审核记录</div>
           <div v-for="(item,index) in appealData" :key="index" class="item">
-            <div class="time">{{ item.time }}</div>
-            <div class="channel">{{ item.channel }}</div>
+            <div class="time">{{ item.createTime }}</div>
+            <div class="channel">{{ item.operateUserName }}</div>
             <div class="status">
               <span class="dot" :class="item.dotName"></span>
-              {{ item.status }}
+              {{ item.auditStatus }}
             </div>
             <div class="reason">{{ item.reason?'原因：' + item.reason:"" }}</div>
           </div>
@@ -73,11 +69,13 @@
         :foot-btn-label="'确定'"
         label-width="130px"
         @cancel="cancel"
+        @confirm="confirm"
       ></Form>
     </el-drawer>
   </div>
 </template>
 <script>
+import api from "@/api/api_risk";
 import passImg from "@/assets/img/pass.png";
 import refuseImg from "@/assets/img/refuse.png";
 import approvalImg from "@/assets/img/approval.png";
@@ -94,7 +92,6 @@ export default {
       passImg: passImg,
       refuseImg: refuseImg,
       approvalImg: approvalImg,
-      isAlrealyDownload: false,
       fromConfigData: {},
       drawer: false,
       rejectTitle: "驳回原因：商户名称与营业执照不符合",
@@ -143,28 +140,28 @@ export default {
           items: [
             {
               name: "商户ID",
-              key: "merName"
+              key: "merhantNo"
             },
             {
               name: "商户名称",
-              key: "address"
+              key: "merchantName"
             },
             {
               name: "乐刷商户号",
-              key: "kind"
+              key: "channelMerchantNo"
             },
             {
               name: "所属服务商ID",
-              key: "peopleName"
+              key: "agentNo"
             },
 
             {
               name: "所属服务商名称",
-              key: "phone"
+              key: "agentName"
             },
             {
               name: "商户经营情况",
-              key: "idCard"
+              key: "remark"
             }
           ]
         },
@@ -173,47 +170,47 @@ export default {
           items: [
             {
               name: "法人手持营业执照",
-              key: "pic",
+              key: "shopLicenseImg",
               type: "image"
             },
             {
               name: "法人手持身份证正面",
-              key: "pic2",
+              key: "idCardHandImg",
               type: "image"
             },
             {
               name: "法人身份证原件正面",
-              key: "pic3",
+              key: "idCardPortraitImg",
               type: "image"
             },
             {
               name: "手持银行卡原件正面",
-              key: "pic4",
+              key: "bankCardImg",
               type: "image"
             },
             {
               name: "商户门店照片",
-              key: "pic5",
+              key: "shopFaceImg",
               type: "image"
             },
             {
               name: "其他照片",
-              key: "pic6",
+              key: "otherImg",
               type: "image"
             },
             {
               name: "商户机打指定小票照片1",
-              key: "pic7",
+              key: "machineTicketImg1",
               type: "image"
             },
             {
               name: "商户机打指定小票照片2",
-              key: "pic8",
+              key: "machineTicketImg2",
               type: "image"
             },
             {
               name: "商户机打指定小票照片3",
-              key: "pic9",
+              key: "machineTicketImg3",
               type: "image"
             },
             {
@@ -227,15 +224,15 @@ export default {
       testData: [],
       appealData: [
         {
-          time: "AAAAAA",
-          channel: "AAAAAA",
-          status: "AAAAAA",
+          createTime: "AAAAAA",
+          operateUserName: "AAAAAA",
+          auditStatus: "AAAAAA",
           dotName: "pass"
         },
         {
-          time: "AAAAAA",
-          channel: "AAAAAA",
-          status: "AAAAAA",
+          createTime: "AAAAAA",
+          operateUserName: "AAAAAA",
+          auditStatus: "AAAAAA",
           reason: "AAAAAA",
           dotName: "unused"
         }
@@ -264,90 +261,81 @@ export default {
     }
   },
   mounted() {
-    this.currentType = "pass";
+    this.currentType = "preApproval";
+    this.getDetail();
+    this.queryByCondition();
   },
   methods: {
+    queryByCondition() {
+      api
+        .queryByCondition({
+          banAppealId: 1
+        })
+        .then(res => {
+          this.appealData = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    confirm($data) {
+      api
+        .updateOfPreReject({
+          id: 1,
+          reason: $data.reason
+        })
+        .then(res => {
+          this.$message("已驳回");
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    getDetail() {
+      api
+        .leshuaGetDetail({
+          id: 1
+        })
+        .then(res => {
+          this.ruleForm = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
     handleEdit($ruleForm) {
       console.log($ruleForm);
       this.drawer = true;
       this.fromConfigData = FORM_CONFIG.detailEdit;
     },
     onClick_sign() {
-      if (!this.isAlrealyDownload) {
-        this.$confirm(
-          "未打包下载资料，确定已提交资料到支付宝开发平台了吗?",
-          "提示",
-          {
-            confirmButtonText: "确定",
-            cancelButtonText: "取消"
-          }
-        )
-          .then(() => {
-            this.$message({
-              type: "success",
-              message: "删除成功!"
-            });
-          })
-          .catch(() => {
-            this.$message({
-              type: "info",
-              message: "已取消删除"
-            });
-          });
-      }
+      api
+        .updateOfPrePass({
+          id: 1
+        })
+        .then(res => {
+          this.$message("成功通过!");
+        })
+        .catch(err => {
+          this.$message(err);
+        });
     },
     onClick_download() {
-      this.isAlrealyDownload = true;
-      // 然后下载操作
+      api
+        .getDownloadUrl({
+          id: 1
+        })
+        .then(res => {
+          window.open(res.object);
+        })
+        .catch();
     },
-    cancel(done) {
-      done();
+    cancel() {
+      this.drawer = false;
     },
     onClick_reject() {
       this.drawer = true;
       this.fromConfigData = FORM_CONFIG.rejectData;
-    },
-    getTableData() {
-      this.testData = [
-        {
-          id: 0,
-          type: "设备品牌",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          reason: "银行卡账号错误，服务商无法联系"
-        },
-        {
-          id: 1,
-          type: "设备型号",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系"
-        }
-      ];
-    },
-    onClick_edit($item) {
-      $item.edit = true;
-    },
-    onClick_okEdit($item) {
-      $item.edit = false;
-    },
-    onClick_cancelEdit($item) {
-      $item.edit = false;
-    },
-    getHeadClass() {
-      return "background:#EFEFEF";
     }
   }
 };

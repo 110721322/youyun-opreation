@@ -17,12 +17,22 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   routes: [
     {
+      path: '/',
+      component: Layout,
+      children: [
+        {
+          path: '/',
+          component: () => import('@/page/work/workBench.vue')
+        }
+      ]
+    },
+    {
       path: '/index',
       component: Layout,
       children: [
         {
           path: '/index',
-          component: () => import('@/page/index/index.vue')
+          component: () => import('@/page/work/workBench.vue')
         }
       ]
     },
@@ -91,35 +101,24 @@ const menuItems = [
     children: [
       {
         type: 'ios-grid',
-        name: 'work-bench',
-        text: '工作台',
-        path: 'bench',
-        isShow: false,
-        meta: {
-          title: '工作台',
-          icon: 'work-bench'
-        }
-      },
-      {
-        type: 'ios-grid',
-        name: 'work-todo',
+        name: 'workTodo',
         text: '待办事项',
         path: 'Todo',
         isShow: false,
         meta: {
           title: '待办事项',
-          icon: 'work-todo'
+          icon: 'workTodo'
         }
       },
       {
         type: 'ios-grid',
-        name: 'work-sentMessage',
+        name: 'workSentMessage',
         text: '短信群发',
         path: 'sentMessage',
         isShow: false,
         meta: {
           title: '短信群发',
-          icon: 'work-sentMessage'
+          icon: 'workSentMessage'
         }
       },
       {
@@ -319,6 +318,155 @@ const menuItems = [
   },
 
   {
+    text: '服务商服务',
+    type: 'ios-paper',
+    path: 'agentService',
+    name: 'agentService',
+    isShow: true,
+    meta: {
+      title: '服务商服务',
+      icon: '服务商服务'
+    },
+    children: [
+      {
+        type: 'ios-grid',
+        name: 'orderManage',
+        text: '订单管理',
+        path: 'orderManage',
+        isShow: true,
+        meta: {
+          title: '订单管理',
+          icon: 'orderManage'
+        },
+        children: [{
+          type: 'ios-grid',
+          name: 'hardwareOrder',
+          text: '硬件订购订单',
+          path: 'hardwareOrder',
+          isShow: true,
+          meta: {
+            title: '硬件订购订单',
+            icon: 'hardwareOrder'
+          }
+        }]
+      },
+      {
+        type: 'ios-grid',
+        name: 'adManage',
+        text: '广告管理',
+        path: 'adManage',
+        isShow: true,
+        meta: {
+          title: '广告管理',
+          icon: 'adManage'
+        },
+        children: [
+          {
+            type: 'ios-grid',
+            name: 'adAuth',
+            text: '广告权限',
+            path: 'adAuth',
+            isShow: true,
+            meta: {
+              title: '广告权限',
+              icon: 'adAuth'
+            }
+          },
+          {
+            type: 'ios-grid',
+            name: 'platformAdList',
+            text: '平台广告列表',
+            path: 'platformAdList',
+            isShow: true,
+            meta: {
+              title: '平台广告列表',
+              icon: 'platformAdList'
+            }
+          },
+          {
+            type: 'ios-grid',
+            name: 'adPutList',
+            text: '平台广告投放列表',
+            path: 'adPutList',
+            isShow: true,
+            meta: {
+              title: '平台广告投放列表',
+              icon: 'adPutList'
+            }
+          }
+        ]
+      },
+      {
+        type: 'ios-grid',
+        name: 'thirdParty',
+        text: '第三方对接列表',
+        path: 'thirdParty',
+        isShow: true,
+        meta: {
+          title: '第三方对接列表',
+          icon: 'thirdParty'
+        }
+      },
+      {
+        type: 'ios-grid',
+        name: 'renewalRecord',
+        text: '到期续费记录',
+        path: 'renewalRecord',
+        isShow: true,
+        meta: {
+          title: '到期续费记录',
+          icon: 'renewalRecord'
+        }
+      },
+      {
+        type: 'ios-grid',
+        name: 'ticketList',
+        text: '工单列表',
+        path: 'ticketList',
+        isShow: false,
+        meta: {
+          title: '工单列表',
+          icon: 'ticketList'
+        }
+      },
+      {
+        type: 'ios-grid',
+        name: 'ticketCenter',
+        text: '工单中心',
+        path: 'ticketCenter',
+        isShow: true,
+        meta: {
+          title: '工单中心',
+          icon: 'ticketCenter'
+        },
+        children: [
+          {
+            type: 'ios-grid',
+            name: 'ticketStatistics',
+            text: '工单统计',
+            path: 'ticketStatistics',
+            isShow: true,
+            meta: {
+              title: '工单统计',
+              icon: 'ticketStatistics'
+            }
+          },
+          {
+            type: 'ios-grid',
+            name: 'ticketKnowledge',
+            text: '工单知识库',
+            path: 'ticketKnowledge',
+            isShow: true,
+            meta: {
+              title: '工单知识库',
+              icon: 'ticketKnowledge'
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
     text: '消息管理',
     type: 'ios-paper',
     path: 'message',
@@ -339,17 +487,6 @@ const menuItems = [
           title: '服务商公告',
           icon: 'serviceAnnouncementList'
         }
-      },
-      {
-        type: 'ios-grid',
-        name: 'announcementEdit',
-        text: '编辑服务商公告',
-        path: 'announcementEdit',
-        isShow: false,
-        meta: {
-          title: '编辑服务商公告',
-          icon: 'announcementEdit'
-        }
       }
     ]
   },
@@ -361,7 +498,7 @@ const menuItems = [
     isShow: true,
     meta: {
       title: '运营数据',
-      icon: '运营数据'
+      icon: 'task'
     },
     children: [
       {
@@ -705,13 +842,48 @@ const menuItems = [
       {
         text: '菜单管理',
         type: 'ios-paper',
-        name: 'menuManager',
-        path: 'menuManager',
+        name: 'menuManage',
+        path: 'menuManage',
         isShow: true,
         meta: {
           title: '菜单管理',
-          icon: 'menuManager'
-        }
+          icon: 'menuManage'
+        },
+        children: [
+          {
+            text: '运营后台菜单',
+            type: 'ios-paper',
+            name: 'operationMenu',
+            path: 'operationMenu',
+            isShow: true,
+            meta: {
+              title: '运营后台菜单',
+              icon: 'operationMenu'
+            }
+          },
+          {
+            text: '服务商后台菜单',
+            type: 'ios-paper',
+            name: 'agentMenu',
+            path: 'agentMenu',
+            isShow: true,
+            meta: {
+              title: '服务商后台菜单',
+              icon: 'agentMenu'
+            }
+          },
+          {
+            text: '商应小程序菜单',
+            type: 'ios-paper',
+            name: 'businessMenu',
+            path: 'businessMenu',
+            isShow: true,
+            meta: {
+              title: '商应小程序菜单',
+              icon: 'businessMenu'
+            }
+          }
+        ]
       },
       {
         text: '服务商产品权限',
@@ -802,7 +974,7 @@ const menuItems = [
     isShow: true,
     meta: {
       title: '风控管理',
-      icon: '风控管理'
+      icon: 'risk'
     },
     children: [
       {
@@ -876,6 +1048,76 @@ const menuItems = [
         ]
       }
     ]
+  },
+  {
+    text: '对公转账审核',
+    type: 'ios-paper',
+    path: 'transferReview',
+    name: 'transferReview',
+    isShow: true,
+    meta: {
+      title: '对公转账审核',
+      icon: 'transferReview'
+    },
+    children: [
+      {
+        type: 'ios-grid',
+        name: 'operationApprove',
+        text: '运营结算审核',
+        path: 'operationApprove',
+        isShow: true,
+        meta: {
+          title: '运营结算审核',
+          icon: 'operationApprove'
+        }
+      },
+      {
+        type: 'ios-grid',
+        name: 'financialAudit',
+        text: '财务审核',
+        path: 'financialAudit',
+        isShow: true,
+        meta: {
+          title: '财务审核',
+          icon: 'financialAudit'
+        },
+        children: [
+          {
+            text: '财务结算审核',
+            type: 'ios-paper',
+            name: 'financialSettlement',
+            path: 'financialSettlement',
+            isShow: true,
+            meta: {
+              title: '财务结算审核',
+              icon: 'financialSettlement'
+            }
+          },
+          {
+            text: '财务订购审核',
+            type: 'ios-paper',
+            name: 'financialOrder',
+            path: 'financialOrder',
+            isShow: true,
+            meta: {
+              title: '财务订购审核',
+              icon: 'financialOrder'
+            }
+          },
+          {
+            text: '财务续费审核',
+            type: 'ios-paper',
+            name: 'financialRenewal',
+            path: 'financialRenewal',
+            isShow: true,
+            meta: {
+              title: '财务续费审核',
+              icon: 'financialRenewal'
+            }
+          }
+        ]
+      }
+    ]
   }
   //   {
   //     text: 'index2',
@@ -901,10 +1143,10 @@ const menuItems = [
 localStorage.setItem('menus', JSON.stringify(menuItems))
 
 // console.log(currRouter.menusToRoutes(menuItems));
-router.addRoutes(currRouter.menusToRoutes(menuItems))
+const routerList = currRouter.menusToRoutes(menuItems);
+localStorage.setItem('routers', JSON.stringify(routerList));
+router.addRoutes(routerList);
 router.beforeEach((to, from, next) => {
-  document.title = '商家管理系统'
-
   if (to.meta.requireLogin) {
     next()
   } else {

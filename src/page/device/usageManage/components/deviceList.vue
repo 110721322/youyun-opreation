@@ -5,19 +5,19 @@
         <el-form-item
           v-for="(item,index) in deviceListData"
           :key="index"
-          :label="item.label+':'"
+          :label="item.deviceType+':'"
           :label-width="item.labelWidth"
         >
           <div class="device-list">
             <div
-              v-for="(item1,index1) in item.deviceList"
+              v-for="(item1,index1) in item.usingList"
               :key="index1"
               class="device-item"
               @click="onClick_selectItem(item1)"
             >
-              <img class="device-img" :src="item1.imgUrl" />
-              <div class="nums">{{ item1.nums }}</div>
-              <div class="name">{{ item1.name }}</div>
+              <img class="device-img" :src="item1.deviceImg" />
+              <div class="nums">{{ item1.usingCount }}</div>
+              <div class="name">{{ item1.deviceModel }}</div>
             </div>
           </div>
         </el-form-item>
@@ -42,7 +42,7 @@
 <script>
 export default {
   name: "DeviceList",
-  props: ["deviceListData", "showExpandBtn"],
+  props: ["deviceListData", "showExpandBtn", "beginDate", "endDate"],
   data() {
     return {
       ruleForm: {},
@@ -59,6 +59,7 @@ export default {
     onClick_selectItem($itemData) {
       this.selectItem = $itemData;
       this.hasSelectOne = true;
+      this.$emit("province", $itemData);
     },
     onClick_openOrClose() {
       this.isOpen = !this.isOpen;

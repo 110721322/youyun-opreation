@@ -2,7 +2,7 @@ export const SETTELMENTLIST_CONFIG = {
   gridConfig: [
     {
       label: '商户',
-      prop: 'merchantName',
+      prop: [{ key: 'merchantName' }, { key: 'merchantNo', label: 'ID:' }],
       width: '150px'
     },
     {
@@ -12,17 +12,17 @@ export const SETTELMENTLIST_CONFIG = {
     },
     {
       label: '提交时间',
-      prop: 'time',
+      prop: 'createTime',
       width: '150px'
     },
     {
       label: '所属运营',
-      prop: 'oper',
+      prop: 'operateUserName',
       width: '150px'
     },
     {
       label: '状态',
-      prop: 'status',
+      prop: 'auditStatus',
       width: '150px'
     }
   ],

@@ -16,11 +16,11 @@
           <div v-for="(item,index) in mapData" :key="index" class="data-item">
             <div class="data-left">
               <span :class="['index',index<=2?'hightlight':'normal']">{{ index+1 }}</span>
-              {{ item.name }}
+              {{ item.provinceName }}
             </div>
             <div class="data-right">
-              <span>{{ item.num }}</span> |
-              <span class="perc">{{ item.perc }}</span>
+              <span>{{ item.count }}</span> |
+              <span class="perc">{{ item.ratio }}</span>
             </div>
           </div>
         </div>
@@ -49,6 +49,7 @@
         :is-show-all="true"
         :form-base-data="searchConfig.formData"
         :show-foot-btn="searchConfig.showFootBtn"
+        @dataSelect="handleDataSelect"
         @search="search"
       />
       <div class="title">商户平均交易额走势</div>
@@ -79,10 +80,11 @@
           :is-show-table="true"
           :item-test-data="testData"
           :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
+          @radioChange="handleTradeAmountChange"
         />
         <dataItem
           class="pie-item"
-          :title="'交易额涨跌排行'"
+          :title="'新增商户数量排行'"
           :config-data="tableConfigData2"
           :is-show-more="true"
           :is-show-table="true"
@@ -95,30 +97,33 @@
         <dataItem
           class="pie-item"
           :radio="radioListData[1]"
-          :title="'无交易商户上期排行'"
+          :title="'会员商户排行'"
           :config-data="tableConfigData3"
           :is-show-more="true"
           :is-show-table="true"
           :item-test-data="testData3"
           :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
           @showMore="handleShowMore"
+          @radioChange="handleTradeAmountChange"
         />
         <dataItem
           class="pie-item"
           :radio="radioListData[2]"
-          :title="'无交易商户上期排行'"
+          :title="'刷脸订单排行'"
           :config-data="tableConfigData4"
           :is-show-more="true"
           :is-show-table="true"
           :item-test-data="testData4"
           :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
           @showMore="handleShowMore"
+          @radioChange="handleTradeAmountChange"
         />
       </div>
     </div>
   </div>
 </template>
 <script>
+import api from "@/api/api_dataMarket";
 import pie from "./components/pie.vue";
 import dataItem from "./components/dataItem.vue";
 import search from "@/components/search/search.vue";
@@ -169,24 +174,24 @@ export default {
       },
       radioListData: [
         {
-          radio: "0",
+          radio: "1",
           namelist: [
-            { name: "涨幅排行", label: "0" },
-            { name: "跌幅排行", label: "1" }
+            { name: "涨幅排行", label: "1" },
+            { name: "跌幅排行", label: "2" }
           ]
         },
         {
-          radio: "0",
+          radio: "1",
           namelist: [
-            { name: "新增数量", label: "0" },
-            { name: "会员交易", label: "1" }
+            { name: "新增数量", label: "1" },
+            { name: "会员交易", label: "2" }
           ]
         },
         {
-          radio: "0",
+          radio: "1",
           namelist: [
-            { name: "金额", label: "0" },
-            { name: "笔数", label: "1" }
+            { name: "金额", label: "1" },
+            { name: "笔数", label: "2" }
           ]
         }
       ],
@@ -424,7 +429,12 @@ export default {
             data: [120, 132, 101, 134, 90, 230, 210, 101, 134, 90, 230, 330]
           }
         ]
-      }
+      },
+      beginDate: null,
+      endDate: null,
+      agentType: 1,
+      agentType2: 1,
+      agentType3: 1
     };
   },
   created() {},
@@ -432,8 +442,184 @@ export default {
     this.init();
     this.getData();
     this.initMap();
+    // 获取数据
+    this.queryProvinceRank();
+    this.queryRegionRatio();
+    this.queryGradeRatio();
+    this.queryTypeRatio();
   },
   methods: {
+    // 交易额涨跌排行切换
+    handleTradeAmountChange($data) {
+      this.agentType = $data;
+      this.queryAgentTradeAmountPerRank();
+    },
+    queryAgentTradeAmountPerRank() {
+      api
+        .queryAgentTradeAmountPerRank({
+          beginDate: this.beginDate,
+          endDate: this.endDate,
+          top: 216,
+          type: this.agentType
+        })
+        .then(res => {
+          this.testData = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 新增商户数量排行
+    queryNewMerchantRank() {
+      api
+        .queryNewMerchantRank({
+          beginDate: this.beginDate,
+          endDate: this.endDate,
+          top: 216,
+          type: this.agentType2
+        })
+        .then(res => {
+          this.testData2 = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 会员商户排行切换
+    // handleAgentFaceChange($data) {
+    //   this.agentType = $data;
+    //   this.queryAgentFaceTradeAmountRank();
+    // },
+    // queryAgentFaceTradeAmountRank() {
+    //   api
+    //     .queryAgentFaceTradeAmountRank({
+    //       beginDate: this.beginDate,
+    //       endDate: this.endDate,
+    //       top: 216,
+    //       type: this.agentType
+    //     })
+    //     .then(res => {
+    //       // this.mapData = res.object;
+    //     })
+    //     .catch(err => {
+    //       this.$message(err);
+    //     });
+    // },
+    // 刷脸订单排行
+    handleAgentFaceChange($data) {
+      this.agentType = $data;
+      this.queryAgentFaceTradeAmountRank();
+    },
+    queryAgentFaceTradeAmountRank() {
+      api
+        .queryAgentFaceTradeAmountRank({
+          beginDate: this.beginDate,
+          endDate: this.endDate,
+          top: 216,
+          type: this.agentType
+        })
+        .then(res => {
+          // this.mapData = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 服务商平均交易额走势
+    queryAgentDailyAverageTrade() {
+      api
+        .queryAgentDailyAverageTrade({
+          beginDate: this.beginDate,
+          endDate: this.endDate
+          // top: 216,
+          // type: 528
+        })
+        .then(res => {
+          // this.mapData = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 总交易排行榜
+    queryAgentTradeAmountRank() {
+      api
+        .queryAgentTradeAmountRank({
+          beginDate: this.beginDate,
+          endDate: this.endDate,
+          top: 216,
+          type: 528
+        })
+        .then(res => {
+          this.testData5 = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 地图服务商数据
+    queryAllProvinceCount($ruleForm) {
+      api
+        .queryAllProvinceCount({})
+        .then(res => {
+          // this.mapData = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 大区占比
+    queryRegionRatio($ruleForm) {
+      api
+        .queryRegionRatio({})
+        .then(res => {
+          // this.mapData = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 等级占比
+    queryGradeRatio($ruleForm) {
+      api
+        .queryGradeRatio({})
+        .then(res => {
+          // this.mapData = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 类型占比
+    queryTypeRatio($ruleForm) {
+      api
+        .queryTypeRatio({})
+        .then(res => {
+          // this.mapData = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 省份分布排行榜
+    queryProvinceRank($ruleForm) {
+      api
+        .queryProvinceRank({})
+        .then(res => {
+          this.mapData = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    handleDataSelect($time) {
+      this.beginDate = $time[0];
+      this.endDate = $time[1];
+      this.queryAgentDailyAverageTrade();
+      this.queryAgentTradeAmountRank();
+      this.queryAgentTradeAmountPerRank();
+      this.queryNewMerchantRank();
+    },
     init() {
       this.showLine();
     },
@@ -455,32 +641,6 @@ export default {
       this.getData();
     },
     getData() {
-      this.testData = [
-        {
-          rank: "1",
-          name: "利郎男装有限公司",
-          amount: "707",
-          increase: "¥ 206"
-        },
-        {
-          rank: "2",
-          name: "利郎男装有限公司",
-          amount: "707",
-          increase: "¥ 206"
-        }
-      ];
-      this.testData2 = [
-        {
-          rank: "1",
-          name: "利郎男装有限公司",
-          new: "128%"
-        },
-        {
-          rank: "2",
-          name: "利郎男装有限公司",
-          new: "128%"
-        }
-      ];
       this.testData3 = [
         {
           rank: "1",
@@ -493,52 +653,6 @@ export default {
           name: "利郎男装有限公司",
           new: "128%",
           perc: "128%"
-        }
-      ];
-      this.testData4 = [
-        {
-          rank: "1",
-          name: "利郎男装有限公司",
-          amount: "128%",
-          perc: "128%"
-        },
-        {
-          rank: "2",
-          name: "利郎男装有限公司",
-          amount: "128%",
-          perc: "128%"
-        }
-      ];
-      this.testData5 = [
-        {
-          rank: "1",
-          name: "利郎男装有限公司",
-          amount: "¥ 206"
-        },
-        {
-          rank: "2",
-          name: "利郎男装有限公司",
-          amount: "¥ 206"
-        },
-        {
-          rank: "1",
-          name: "利郎男装有限公司",
-          amount: "¥ 206"
-        },
-        {
-          rank: "2",
-          name: "利郎男装有限公司",
-          amount: "¥ 206"
-        },
-        {
-          rank: "1",
-          name: "利郎男装有限公司",
-          amount: "¥ 206"
-        },
-        {
-          rank: "2",
-          name: "利郎男装有限公司",
-          amount: "¥ 206"
         }
       ];
     },

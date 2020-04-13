@@ -15,12 +15,16 @@ export const FORM_CONFIG = {
       placeholder: "请输入商户号",
       options: [
         {
-          label: '服务商ID',
-          value: 'id'
+          label: '商户ID',
+          value: 'merchantNo'
         },
         {
-          label: '服务商名称',
-          value: 'name'
+          label: '商户名称',
+          value: 'merchantName'
+        },
+        {
+          label: '渠道商户号',
+          value: 'channelMerchantNo'
         }
       ],
       labelWidth: '100px'
@@ -28,7 +32,7 @@ export const FORM_CONFIG = {
     {
       type: 1,
       label: '交易通道',
-      key: 'useChannel',
+      key: 'channel',
       style: 'width:294px',
       options: [
         {

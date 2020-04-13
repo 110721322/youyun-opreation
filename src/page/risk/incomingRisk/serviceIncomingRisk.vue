@@ -11,6 +11,9 @@
         <el-button class="btn" type="primary" @click="onClick_addBlackList">新增入件黑名单</el-button>
       </div>
       <BaseCrud
+        ref="table"
+        :params="params"
+        :api-service="api"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
         :grid-data="testData"
@@ -72,6 +75,7 @@
   </div>
 </template>
 <script>
+import api from "@/api/api_risk";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { SEARCH_CONFIG } from "../formConfig/serviceIncomingSearch";
@@ -96,12 +100,20 @@ export default {
       testData2: [],
       drawer: false,
       direction: "rtl",
-      selectData: []
+      selectData: [],
+      params: {
+        beginDate: this.$g.utils.getToday(),
+        endDate: this.$g.utils.getToday(),
+        agentNo: "",
+        agentName: "",
+        operateUserNo: "",
+        pageSize: "",
+        currentPage: ""
+      },
+      api: api.agentBanListQueryByPage
     };
   },
-  mounted() {
-    this.getTableData();
-  },
+  mounted() {},
   methods: {
     selectionChange($val) {
       this.selectData = $val;
@@ -111,43 +123,15 @@ export default {
       this.select = "";
     },
     onClick_search() {},
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
-    },
-    getTableData() {
-      this.testData = [
-        {
-          service: "日常任务",
-          serviceid: "商户结算失败",
-          superService: "4",
-          superid: "提醒",
-          merchantNum: "XXXX店铺",
-          oper: "20:00:23",
-          time: "20:00:23"
-        },
-        {
-          service: "日常任务",
-          serviceid: "商户结算失败",
-          superService: "4",
-          superid: "提醒",
-          merchantNum: "XXXX店铺",
-          oper: "20:00:23",
-          time: "20:00:23"
-        }
-      ];
-      this.testData2 = [
-        {
-          index: "111",
-          serviceId: "商户结算失败",
-          serviceName: "4"
-        },
-        {
-          index: "111",
-          serviceId: "商户结算失败",
-          serviceName: "4"
-        }
-      ];
+    search($ruleForm) {
+      console.log($ruleForm);
+      const params = {
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
+        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        contractStatus: $ruleForm.operateUserNo
+      };
+      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      this.params = params;
     },
     onClick_remove() {
       this.$confirm("确定将该服务商移出黑名单吗?", "提示", {
@@ -155,10 +139,13 @@ export default {
         cancelButtonText: "取消"
       })
         .then(() => {
-          this.$message({
-            type: "success",
-            message: "移出成功!"
-          });
+          api
+            .deleteByAgentNo({
+              agentNo: ""
+            })
+            .then(res => {
+              this.$message("移出成功");
+            });
         })
         .catch(() => {
           this.$message({
@@ -169,6 +156,20 @@ export default {
     },
     onClick_confirm() {
       this.drawer = false;
+      api
+        .agentBanListAdd({
+          agentNos: [
+            {
+              agentNo: ""
+            }
+          ]
+        })
+        .then(res => {
+          this.$message("添加成功");
+        })
+        .catch(err => {
+          this.$message(err);
+        });
     },
     onClick_cancel() {
       this.drawer = false;

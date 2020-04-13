@@ -10,7 +10,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '消息类型',
-      key: 'type',
+      key: 'messageType',
       style: 'width:294px',
       labelWidth: '100px',
       options: [

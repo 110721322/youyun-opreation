@@ -10,7 +10,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '设备型号',
-      key: 'tag',
+      key: 'deviceId',
       style: 'width:294px',
       options: [
         {

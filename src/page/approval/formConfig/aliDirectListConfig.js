@@ -8,7 +8,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '驳回原因',
-        key: 'rejectReason',
+        key: 'reason',
         initVal: 'pdd',
         inputType: 'textarea'
       }

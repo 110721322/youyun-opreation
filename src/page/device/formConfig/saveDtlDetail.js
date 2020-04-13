@@ -1,4 +1,3 @@
-import { setRules } from '@/libs/kit/formFns.js'
 
 export const FORM_CONFIG = {
   formData: {
@@ -8,30 +7,26 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '设备型号',
-        key: 'name7',
-        initVal: 'pdd',
-        rules: setRules('邮箱').isRequired.get
+        key: 'deviceModel',
+        initVal: 'pdd'
       },
       {
         type: 3,
         label: '保修截止日期',
-        key: 'name7',
-        initVal: 'pdd',
-        rules: setRules('邮箱').isRequired.get
+        key: 'deadline',
+        initVal: ''
       },
       {
         type: 3,
         label: '入库时间',
-        key: 'name6',
-        initVal: 'pdd',
-        rules: setRules('公司名称').isRequired.get
+        key: 'inputTime',
+        initVal: ''
       },
       {
         type: 0,
         label: '设备标识',
-        key: 'name6',
-        initVal: 'pdd',
-        rules: setRules('公司名称').isRequired.get
+        key: 'deviceIdentifier',
+        initVal: 'pdd'
       }
     ]
   }

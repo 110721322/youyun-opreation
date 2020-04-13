@@ -4,6 +4,9 @@
 
     <div class="table_box">
       <BaseCrud
+        ref="table"
+        :params="params"
+        :api-service="api"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
         :grid-data="testData"
@@ -21,6 +24,7 @@
   </div>
 </template>
 <script>
+import api from "@/api/api_dataMarket";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 
@@ -34,29 +38,34 @@ export default {
       searchConfig: FORM_CONFIG,
       configData: MERCHANTDATADETAILCONFIG,
       testData: [],
-      searchHeight: "320"
+      searchHeight: "320",
+      params: {
+        beginDate: this.$g.utils.getToday(),
+        endDate: this.$g.utils.getToday(),
+        agentNo: "",
+        agentName: "强",
+        currentPage: 0,
+        pageSize: 20,
+        region: ""
+      },
+      api: api.queryAgentTradeList
     };
   },
-  mounted() {
-    this.getData();
-  },
+  mounted() {},
   methods: {
-    search() {},
-    getData() {
-      this.testData = [
-        {
-          service: "1",
-          inMerchantNum: "利郎男装有限公司",
-          outMerchantNum: "707",
-          amount: "¥ 206",
-          times: "¥ 206",
-          timesPerc: "¥ 206",
-          everyPrice: "¥ 206",
-          amountPerc: "¥ 206",
-          memberAmount: "¥ 206",
-          memberTimes: "¥ 206"
-        }
-      ];
+    search($ruleForm) {
+      const params = {
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
+        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        category: $ruleForm.category,
+        provinceCode: $ruleForm.addressObj
+          ? $ruleForm.addressObj[0].value
+          : null,
+        cityCode: $ruleForm.addressObj ? $ruleForm.addressObj[1].value : null
+        // 是否开通会员
+      };
+      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      this.params = params;
     }
   }
 };

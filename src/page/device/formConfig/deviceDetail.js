@@ -8,8 +8,8 @@ export const FORM_CONFIG = {
       {
         type: 1,
         label: '设备类型',
-        key: 'food',
-        initVal: [],
+        key: 'deviceType',
+        initVal: "",
         // urlOptions: {
         //     url: './demo.js',
         //     keyName: 'records',
@@ -33,21 +33,21 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '设备型号',
-        key: 'name7',
+        key: 'deviceModel',
         initVal: 'pdd',
         rules: setRules('邮箱').isRequired.get
       },
       {
         type: 6,
         label: '图片',
-        key: 'name6',
+        key: 'deviceImg',
         initVal: 'pdd',
         rules: setRules('公司名称').isRequired.get
       },
       {
         type: 0,
         label: '单台设备成本价',
-        key: 'name1',
+        key: 'costPrice',
         initVal: 'pdd',
         isShowSlot: true,
         showSlotName: '元',
@@ -56,7 +56,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '单台设备售卖价',
-        key: 'name2',
+        key: 'salePrice',
         initVal: 'pdd',
         isShowSlot: true,
         showSlotName: '元',
@@ -65,7 +65,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '排序',
-        key: 'name3',
+        key: 'sort',
         initVal: 'pdd',
         rules: setRules('法人手机号').isRequired.get
       }
@@ -78,7 +78,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '销售人员',
-        key: 'name7',
+        key: 'saleUserName',
         initVal: 'pdd',
         isDisable: () => {
           return true;
@@ -88,7 +88,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '设备型号',
-        key: 'name8',
+        key: 'deviceId',
         initVal: 'pdd',
         isDisable: () => {
           return true;
@@ -98,7 +98,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '订购数量',
-        key: 'namea',
+        key: 'count',
         initVal: 'pdd',
         isShowSlot: true,
         showSlotName: '台',
@@ -107,7 +107,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '订单金额',
-        key: 'namev',
+        key: 'amount',
         initVal: 'pdd',
         isDisable: () => {
           return true;
@@ -119,7 +119,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '实付金额',
-        key: 'names',
+        key: 'actualAmount',
         initVal: 'pdd',
 
         isShowSlot: true,
@@ -129,8 +129,8 @@ export const FORM_CONFIG = {
       {
         type: 1,
         label: '购买服务商',
-        key: 'food',
-        initVal: [],
+        key: 'agentNo',
+        initVal: "",
         // urlOptions: {
         //     url: './demo.js',
         //     keyName: 'records',
@@ -154,8 +154,8 @@ export const FORM_CONFIG = {
       {
         type: 1,
         label: '支付方式',
-        key: 'food1',
-        initVal: [],
+        key: 'payType',
+        initVal: "",
         // urlOptions: {
         //     url: './demo.js',
         //     keyName: 'records',
@@ -179,23 +179,93 @@ export const FORM_CONFIG = {
       {
         type: 6,
         label: '打款凭证',
-        key: 'name6',
+        key: 'voucher',
         initVal: 'pdd',
         rules: setRules('公司名称').isRequired.get
       },
       {
         type: 0,
         label: '邮寄地址',
-        key: 'name1',
+        key: 'buyerAddress',
         initVal: 'pdd',
         rules: setRules('公司地址').isRequired.get
       },
       {
         type: 0,
         label: '备注',
-        key: 'name3',
+        key: 'buyerRemark',
         initVal: 'pdd',
         inputType: 'textarea',
+        rules: setRules('法人手机号').isRequired.get
+      }
+    ]
+  },
+  editData: {
+    title: '设备',
+    showFootBtn: true,
+    formData: [
+      {
+        type: 1,
+        label: '设备类型',
+        key: 'deviceType',
+        initVal: "",
+        // urlOptions: {
+        //     url: './demo.js',
+        //     keyName: 'records',
+        //     method: 'get'
+        // }
+        options: [
+          {
+            label: '川菜',
+            value: 0
+          },
+          {
+            label: '粤菜',
+            value: 1
+          },
+          {
+            label: '杭帮菜',
+            value: 2
+          }
+        ]
+      },
+      {
+        type: 0,
+        label: '设备型号',
+        key: 'deviceModel',
+        initVal: 'pdd',
+        rules: setRules('邮箱').isRequired.get
+      },
+      {
+        type: 6,
+        label: '图片',
+        key: 'deviceImg',
+        initVal: 'pdd',
+        rules: setRules('公司名称').isRequired.get
+      },
+      {
+        type: 0,
+        label: '单台设备成本价',
+        key: 'costPrice',
+        initVal: 'pdd',
+        isShowSlot: true,
+        showSlotName: '元',
+        rules: setRules('公司地址').isRequired.get
+      },
+      {
+        type: 0,
+        label: '单台设备售卖价',
+        key: 'salePrice',
+        initVal: 'pdd',
+        isShowSlot: true,
+        showSlotName: '元',
+        rules: setRules('法人姓名').isRequired.get
+      },
+      {
+        type: 0,
+        label: '排序',
+        key: 'sort',
+        initVal: 'pdd',
         rules: setRules('法人手机号').isRequired.get
       }
     ]

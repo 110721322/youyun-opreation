@@ -25,11 +25,11 @@
         </div>
       </div>
       <div v-if="type===1" class="oper-box">
-        <el-button type="primary" class="btn">立即沟通</el-button>
+        <el-button type="primary" class="btn" @click="onClick_communication(listData[index])">立即沟通</el-button>
       </div>
       <div v-if="type===2" class="oper-box">
-        <el-button type="primary" class="btn_agree">同意</el-button>
-        <el-button plain class="btn_refuse">拒绝</el-button>
+        <el-button type="primary" class="btn_agree" @click="onClick_pass(listData[index])">同意</el-button>
+        <el-button plain class="btn_refuse" @click="onClick_reject(listData[index])">拒绝</el-button>
       </div>
 
       <div v-if="type===3" class="oper-box">
@@ -75,6 +75,15 @@ export default {
   },
   mounted() {},
   methods: {
+    onClick_communication($data) {
+      this.$emit("communication", $data);
+    },
+    onClick_pass($data) {
+      this.$emit("pass", $data);
+    },
+    onClick_reject($data) {
+      this.$emit("reject", $data);
+    },
     changeCheckList() {
       this.$emit("handleCheckList", this.checkList);
     }

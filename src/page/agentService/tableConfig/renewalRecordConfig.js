@@ -1,20 +1,39 @@
-
-export const MENU_CONFIG = {
+export const TABLE_CONFIG = {
   gridConfig: [
     {
-      label: '菜单名称',
-      prop: 'type',
+      label: '服务商',
+      prop: [{ key: 'agentName' }, { key: 'agentNo', label: "ID:" }],
       width: '150px'
     },
     {
-      label: '图标',
-      prop: 'taskName',
-      width: '150px'
+      label: '续费时间',
+      prop: 'createTime',
+      width: '100px'
     },
     {
-      label: '页面链接',
-      prop: 'image',
-      width: '150px'
+      label: '开通时间',
+      prop: 'createTime',
+      width: '100px'
+    },
+    {
+      label: '最近到期时间',
+      prop: 'createTime',
+      width: '130px'
+    },
+    {
+      label: '续费时长（年）',
+      prop: 'renewYear',
+      width: '130px'
+    },
+    {
+      label: '支付方式',
+      prop: 'pay',
+      width: '100px'
+    },
+    {
+      label: '状态',
+      prop: 'auditStatus',
+      width: '100px'
     }
   ],
 
@@ -28,18 +47,8 @@ export const MENU_CONFIG = {
     view: false,
     expands: [
       {
-        name: '添加下级菜单',
-        emitName: 'addSubMenu',
-        type: 'text'
-      },
-      {
-        name: '编辑',
-        emitName: 'edit',
-        type: 'text'
-      },
-      {
-        name: '删除',
-        emitName: 'adopt',
+        name: '服务商信息',
+        emitName: 'detail',
         type: 'text'
       }
     ]

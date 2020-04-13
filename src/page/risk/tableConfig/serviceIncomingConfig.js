@@ -2,29 +2,27 @@ export const SERVICEINCOMING_CONFIG = {
   gridConfig: [
     {
       label: '服务商',
-      prop: 'service',
-      // prop: [{ key: 'service' }, { key: 'serviceid', label: "ID:" }],
+      prop: [{ key: 'agentName' }, { key: 'agentNo', label: "ID:" }],
       width: '150px'
     },
     {
       label: '所属顶级服务商',
-      prop: 'superService',
-      // prop: [{ key: 'superService' }, { key: 'superid', label: "ID:" }],
+      prop: [{ key: 'parentAgentName' }, { key: 'parentAgentNo', label: "ID:" }],
       width: '150px'
     },
     {
       label: '商户数量（个）',
-      prop: 'merchantNum',
+      prop: 'merchantCount',
       width: '150px'
     },
     {
       label: '所属运营',
-      prop: 'oper',
+      prop: 'operateUserName',
       width: '150px'
     },
     {
       label: '加入时间',
-      prop: 'time',
+      prop: 'createTime',
       width: '150px'
     }
   ],

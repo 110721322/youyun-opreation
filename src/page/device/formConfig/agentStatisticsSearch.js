@@ -1,3 +1,4 @@
+import areaData from "@/assets/data/areaData";
 export const SEARCH_CONFIG = {
   formData: [
     {
@@ -15,11 +16,11 @@ export const SEARCH_CONFIG = {
       options: [
         {
           label: '服务商',
-          value: 'id'
+          value: 'agentName'
         },
         {
           label: '服务商ID',
-          value: 'name'
+          value: 'agentNo'
         }
       ],
       labelWidth: '100px'
@@ -27,7 +28,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '大区',
-      key: 'area',
+      key: 'regionCode',
       style: 'width:294px',
       options: [
         {
@@ -47,7 +48,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '设备型号',
-      key: 'type',
+      key: 'deviceId',
       style: 'width:294px',
       labelWidth: '185px',
       options: [
@@ -66,26 +67,12 @@ export const SEARCH_CONFIG = {
       ]
     },
     {
-      // cascader
-      type: 1,
+      type: 8,
       label: '地区',
-      key: 'address',
+      key: 'city',
       style: 'width:294px',
       class: "clear_both",
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
+      options: areaData
     }
   ]
 }

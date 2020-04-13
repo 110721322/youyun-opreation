@@ -2,42 +2,37 @@ export const OUTLIST_CONFIG = {
   gridConfig: [
     {
       label: '订单号',
-      prop: 'type',
+      prop: 'outputNo',
       width: '150px'
     },
     {
       label: '订购时间',
-      prop: 'taskName',
+      prop: 'createTime',
+      width: '150px'
+    },
+    {
+      label: '出库时间',
+      prop: 'outputTime',
       width: '150px'
     },
     {
       label: '购买服务商',
-      prop: 'taskName',
+      prop: 'agentName',
       width: '150px'
     },
     {
       label: '状态',
-      prop: 'time',
+      prop: 'status',
       width: '150px'
     },
     {
       label: '销售人员',
-      prop: 'time',
+      prop: 'saleUserName',
       width: '150px'
     },
     {
       label: '出库人员',
-      prop: 'time',
-      width: '150px'
-    },
-    {
-      label: '设备型号',
-      prop: 'time',
-      width: '150px'
-    },
-    {
-      label: '订购（台）',
-      prop: 'time',
+      prop: 'outputUserName',
       width: '150px'
     }
   ],
@@ -51,6 +46,11 @@ export const OUTLIST_CONFIG = {
     delete: false,
     view: false,
     expands: [
+      {
+        name: '查看',
+        emitName: 'check',
+        type: 'text'
+      },
       {
         name: '详情',
         emitName: 'detail',
@@ -68,7 +68,7 @@ export const OUTLIST_CONFIG = {
       },
       {
         name: '驳回',
-        emitName: 'adopt',
+        emitName: 'reject',
         type: 'text',
         style: 'color:#F5222D'
       }

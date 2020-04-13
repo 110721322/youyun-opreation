@@ -102,36 +102,6 @@ export default {
   background: #fff;
   height: calc(100% - 48px - 76px);
 }
-.form_item {
-  float: left !important;
-}
-.clear_both {
-  clear: both !important;
-}
-.btn_list {
-  /* background: rebeccapurple; */
-  position: absolute;
-  right: 0;
-  bottom: 21px;
-  right: 24px;
-}
-
-.demo-table-expand {
-  font-size: 0;
-}
-.demo-table-expand label {
-  width: 90px;
-  color: #99a9bf;
-}
-.demo-table-expand .el-form-item {
-  margin-right: 0;
-  margin-bottom: 0;
-  /* width: 25%; */
-}
-.form-box {
-  display: flex;
-  justify-content: space-between;
-}
 .left_box {
   width: 290px;
   background: rgba(255, 255, 255, 1);
@@ -171,7 +141,7 @@ export default {
 .device_list {
   margin-top: 20px;
   height: 392px;
-  overflow: scroll;
+  overflow: auto;
 }
 .select {
   background: rgba(236, 237, 241, 1);

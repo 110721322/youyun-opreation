@@ -5,7 +5,7 @@
       <span v-if="isShowMore" class="show-more" @click="onClick_showMore">查看更多</span>
     </div>
     <div v-if="radio" class="tags">
-      <el-radio-group v-model="radio.radio">
+      <el-radio-group v-model="radio.radio" @change="handleChange">
         <el-radio-button
           v-for="(item,index) in radio.namelist"
           :key="index"
@@ -65,6 +65,9 @@ export default {
     return {};
   },
   methods: {
+    handleChange($value) {
+      this.$emit("radioChange", $value);
+    },
     onClick_showMore() {
       this.$emit("showMore");
     }

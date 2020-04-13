@@ -15,15 +15,15 @@ export const SEARCH_CONFIG = {
       options: [
         {
           label: '商户ID',
-          value: 'id'
+          value: 'merchantNo'
         },
         {
           label: '商户名称',
-          value: 'name'
+          value: 'merchantName'
         },
         {
           label: '乐刷商户号',
-          value: 'leId'
+          value: 'channelMerchantNo'
         }
       ],
       labelWidth: '100px'
@@ -51,7 +51,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '所属运营',
-      key: 'oper',
+      key: 'operateUserNo',
       style: 'width:294px',
       labelWidth: '185px',
       options: [

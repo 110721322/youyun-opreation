@@ -16,19 +16,19 @@ export const SEARCH_CONFIG = {
       options: [
         {
           label: '合伙人姓名',
-          value: 'name'
+          value: 'partnerName'
         },
         {
           label: '合伙人手机号',
-          value: 'phone'
+          value: 'mobile'
         },
         {
           label: '所属服务商ID',
-          value: 'serviceid'
+          value: 'agentNo'
         },
         {
           label: '所属服务商名称',
-          value: 'servicename'
+          value: 'agentName'
         }
       ],
       labelWidth: '100px'
@@ -36,7 +36,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '合伙人类型',
-      key: 'type',
+      key: 'jobType',
       style: 'width:294px',
       options: [
         {
@@ -52,7 +52,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '审核状态',
-      key: 'status',
+      key: 'contractStatus',
       style: 'width:294px',
       labelWidth: '185px',
       options: [

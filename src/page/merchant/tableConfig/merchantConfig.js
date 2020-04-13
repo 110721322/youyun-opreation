@@ -1,33 +1,40 @@
 export const USER_CONFIG = {
   gridConfig: [
     {
-      label: '商户ID',
-      prop: 'id',
-      width: '150px'
-    },
-    {
-      label: '商户名称',
-      prop: 'tel',
+      label: '商户',
+      prop: [{ key: 'merchantName' }, { key: 'merchantNo', label: 'ID:' }],
       width: '150px'
     },
     {
       label: '所属服务商',
-      prop: 'email',
+      prop: [{ key: 'agentName' }, { key: 'agentNo', label: 'ID:' }],
       width: '150px'
     },
     {
       label: '开通通道情况',
-      prop: 'name',
-      width: '150px'
+      width: '200px',
+      customHead: true,
+      prop: 'channelList'
+      // render: (h, params) => {
+      //   const status = params.row.channelList;
+      //   return h('div', {
+      //     'class': "status-box"
+      //   }, [status.map(function ($item) {
+      //     return [h('span', {
+      //       'class': "dot " + $item.status
+      //     }), $item.name]
+      //   })]
+      //   );
+      // }
     },
     {
       label: '创建时间',
-      prop: 'name',
+      prop: 'createTime',
       width: '150px'
     },
     {
       label: '所属运营',
-      prop: 'name',
+      prop: 'operateUserNo',
       width: '150px'
     }
 

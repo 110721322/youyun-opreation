@@ -26,11 +26,13 @@
         :show-foot-btn="fromConfigData.showFootBtn"
         label-width="130px"
         @cancel="cancel"
+        @confirm="confirm"
       ></Form>
     </el-drawer>
   </div>
 </template>
 <script>
+import api from "@/api/api_params";
 import Form from "@/components/form/index.vue";
 import DetailMod from "@/components/detailMode/detailMode2.vue";
 import { FORM_CONFIG } from "./../formConfig/paramsDetail";
@@ -51,12 +53,12 @@ export default {
         items: [
           {
             name: "任务倒计时",
-            key: "name1",
+            key: "isTaskCountdown",
             type: "switch"
           },
           {
             name: "钉钉通讯地址",
-            key: "name1"
+            key: "dingdingAddress"
           }
         ]
       },
@@ -67,12 +69,12 @@ export default {
         items: [
           {
             name: "客单价≥",
-            key: "name1",
+            key: "perCustomerTransaction",
             hideColon: true
           },
           {
             name: "交易笔数≥",
-            key: "name1",
+            key: "transactionNum",
             hideColon: true
           }
         ]
@@ -84,27 +86,71 @@ export default {
         items: [
           {
             name: "比较类型",
-            key: "name1"
+            key: "dataComparisonType"
           },
 
           {
-            name: "客单价≥",
-            key: "name1",
+            name: "交易笔数≥",
+            key: "dataTransactionNum",
             hideColon: true
           },
           {
             name: "比例≥",
-            key: "name1",
+            key: "dataRatio",
             hideColon: true
           }
         ]
       }
     };
   },
-  mounted() {},
+  mounted() {
+    this.getData();
+  },
   methods: {
+    getData() {
+      api
+        .details({})
+        .then(res => {
+          Object.keys(res.object).forEach((item, index) => {
+            if (item === "isTaskCountdown") {
+              this.$set(this.ruleForm, "isTaskCountdown", !!res.object[item]);
+              return;
+            }
+            if (item === "dataComparisonType") {
+              this.$set(
+                this.ruleForm,
+                "dataComparisonType",
+                res.object[item] ? "环比" : "同比"
+              );
+              return;
+            }
+            this.$set(this.ruleForm, item, res.object[item]);
+          });
+        })
+        .catch();
+    },
     cancel(done) {
-      done();
+      this.drawer = false;
+    },
+    confirm($ruleForm) {
+      console.log($ruleForm);
+      api
+        .update($ruleForm)
+        .then(res => {
+          api.update({
+            isTaskCountdown: $ruleForm.isTaskCountdown,
+            perCustomerTransaction: $ruleForm.perCustomerTransaction,
+            dingdingAddress: $ruleForm.dingdingAddress,
+            transactionNum: $ruleForm.transactionNum,
+            dataComparisonType: $ruleForm.dataComparisonType,
+            dataTransactionNum: $ruleForm.dataTransactionNum,
+            dataRatio: $ruleForm.dataRatio
+          });
+          this.$message("修改成功");
+        })
+        .catch(err => {
+          console.error(err);
+        });
     },
     onClick_edit($formName) {
       this.fromConfigData = FORM_CONFIG[$formName];

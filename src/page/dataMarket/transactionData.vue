@@ -5,6 +5,7 @@
       :open-height="searchMaxHeight"
       :form-base-data="searchConfig.formData"
       :show-foot-btn="searchConfig.showFootBtn"
+      @dataSelect="handleDataSelect"
       @search="search"
     />
     <div class="d-box">
@@ -70,7 +71,12 @@
         </div>
       </div>
     </div>
-    <search :is-show-all="true" :form-base-data="searchConfig2.formData" @search="search" />
+    <search
+      :is-show-all="true"
+      :form-base-data="searchConfig2.formData"
+      @search="search2"
+      @dataSelect="handleDataSelect2"
+    />
     <div class="pie-box">
       <div v-for="(item, index) in pieOptionList" :key="index" class="pie-item">
         <dataItem
@@ -87,6 +93,7 @@
 </template>
 
 <script>
+import api from "@/api/api_dataMarket";
 import dataItem from "./components/dataItem.vue";
 import search from "@/components/search/search.vue";
 // import BaseCrud from '@/components/table/BaseCrud.vue';
@@ -104,7 +111,6 @@ export default {
       searchConfig2: FORM_CONFIG2,
       searchMaxHeight: "380",
       activeIndex: "1",
-      testData: [],
       payWay: "all",
       radio: 0,
       isLineShow: true,
@@ -554,13 +560,101 @@ export default {
             }
           ]
         }
-      ]
+      ],
+      beginDate: null,
+      endDate: null,
+      beginDate2: null,
+      endDate2: null,
+      tradeByTypeData: {},
+      tradeByBrokenLineData: {}
     };
   },
   mounted() {
     this.init();
   },
   methods: {
+    // 每日订单交易额/交易笔数折线图
+    queryDailyTradeBrokenLine($ruleForm) {
+      api
+        .queryDailyTradeBrokenLine({
+          beginDate: $ruleForm.date[0],
+          endDate: $ruleForm.date[0]
+        })
+        .then(res => {
+          this.tradeByBrokenLineData = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 各支付方式的总交易额/交易笔数
+    queryTradeByType($ruleForm) {
+      api
+        .queryTradeByType({
+          beginDate: $ruleForm.date[0],
+          endDate: $ruleForm.date[0]
+        })
+        .then(res => {
+          this.tradeByTypeData = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 第一行第一个饼图切换
+    handleDataSelect($time) {
+      this.beginDate = $time[0];
+      this.endDate = $time[1];
+      api
+        .queryTradeByType({
+          beginDate: $time[0],
+          endDate: $time[1]
+        })
+        .then(res => {
+          this.tradeByTypeData = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+      api
+        .queryDailyTradeBrokenLine({
+          beginDate: $time[0],
+          endDate: $time[1]
+        })
+        .then(res => {
+          this.tradeByBrokenLineData = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 第一行第二个饼图切换
+    handleDataSelect2($time) {
+      this.beginDate2 = $time[0];
+      this.endDate2 = $time[1];
+      api
+        .tradeDataQueryRegionTradeSummaryByCondition({
+          beginDate: $time[0],
+          endDate: $time[1]
+        })
+        .then(res => {
+          // this.tradeByTypeData = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+      api
+        .tradeData({
+          beginDate: $time[0],
+          endDate: $time[1]
+        })
+        .then(res => {
+          // this.tradeByTypeData = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
     init() {
       this.showLine();
       //   this.showBar();
@@ -592,31 +686,10 @@ export default {
         myChartBar.resize();
       });
     },
-    getData() {
-      this.testData = [
-        {
-          id: "1",
-          tel: "15184318420",
-          name: "小白",
-          email: "412412@qq.com",
-          status: "1",
-          create_time: "2018-04-20",
-          expand: "扩展信息一",
-          role: ["2"]
-        },
-        {
-          id: "2",
-          tel: "13777369283",
-          name: "小红",
-          email: "456465@qq.com",
-          status: "0",
-          create_time: "2018-03-23",
-          expand: "hashashashas",
-          role: ["1"]
-        }
-      ];
+    search($ruleForm) {
+      this.queryTradeByType($ruleForm);
     },
-    search() {
+    search2() {
       this.getData();
     },
     handleSelect($index) {

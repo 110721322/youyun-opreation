@@ -18,7 +18,7 @@
       @selection-change="handleSelectionChange"
       @sort-change="sortDate"
     >
-      <el-table-column v-if="isSelect" type="selection" width="55" />
+      <el-table-column v-if="isSelect" type="selection" width="55"></el-table-column>
       <el-table-column
         v-if="isExpand"
         type="expand"
@@ -29,16 +29,20 @@
           <slot :row="scope.row" />
         </template>
       </el-table-column>
+
       <el-table-column
         v-for="(item, index) in gridConfig"
         :key="index"
-        :prop="item.prop"
+        :prop="item.prop instanceof Array ?'': item.prop"
         :label="item.label"
         show-overflow-tooltip
         :min-width="item.width ? item.width : ''"
         :fixed="item.isFixed || false"
         :sortable="item.sortable"
       >
+        <template v-if="item.customHead" slot="header">
+          <slot name="head" :item="item"></slot>
+        </template>
         <template slot-scope="scope">
           <i v-if="item.hasIcon" class="el-icon-caret-top icon-increase"></i>
           <Cell
@@ -48,7 +52,7 @@
             :index="scope.$index"
             :render="item.render"
           />
-          <span v-else>
+          <span v-if="!item.render">
             <template v-if="scope.row.edit&&item.isEdit">
               <el-input v-model="scope.row[item.prop]" class="edit-input" size="small" />
               <el-button
@@ -63,9 +67,16 @@
               <img
                 :src="item.imgUrl"
                 :style="item.imgStyle"
-                @click="onClick_handleToggle(scope.row)"
+                @click="onClick_handleToggle(scope.row,item)"
               />
             </template>
+          </span>
+
+          <span v-if="(item.prop instanceof Array)">
+            <div
+              v-for="(propItem,propKey) of item.prop"
+              :key="propKey"
+            >{{ (propItem.label||'') + scope.row[propItem.key] }}</div>
           </span>
         </template>
       </el-table-column>
@@ -133,6 +144,7 @@
 
 <script>
 import Cell from "./expand";
+import * as g from "@/libs/global";
 
 export default {
   name: "BaseCrud",
@@ -174,7 +186,8 @@ export default {
     "border",
     "expands",
     "refName",
-    "hideExpendColumn"
+    "hideExpendColumn",
+    "params"
   ],
   data() {
     return {
@@ -191,7 +204,8 @@ export default {
       // 表单数据
       formModel: {},
       //  表格加载状态
-      listLoading: false
+      listLoading: false,
+      queryParams: {}
     };
   },
 
@@ -199,15 +213,23 @@ export default {
     // 防止表格预置数据不成功，涉及生命周期问题
     gridData() {
       this.showGridData = this.gridData;
+    },
+    params() {
+      if (this.apiService) {
+        this.getData();
+      }
     }
   },
   mounted() {
-    this.getData();
+    // console.log(this.apiService);
+    if (this.apiService && this.params !== null) {
+      this.getData();
+    }
   },
   methods: {
-    onClick_handleToggle($row) {
+    onClick_handleToggle($row, $item) {
       if (this.$refs[this.refName]) {
-        this.$refs[this.refName].toggleRowExpansion($row);
+        this.$emit($item.emitName, $row, this.$refs[this.refName]);
       }
     },
     sortDate: function(val) {
@@ -239,29 +261,38 @@ export default {
     // 获取列表数据
     getData() {
       this.listLoading = true;
-      // let params = {
-      //   page: this.currentPage,
-      //   limit: this.currentPageSize
-      // }
-
-      this.showGridData = [];
-      this.showGridData = this.gridData;
-      this.dataTotal = 0;
-      this.listLoading = false;
-      // this.apiService.list(params).then(
-      //   res => {
-      //     this.showGridData = res.data.list
-      //     this.dataTotal = res.data.total
-      //     this.listLoading = false
-      //   },
-      //   err => {
-      //     this.listLoading = false
-      //   }
-      // )
+      this.queryParams = Object.assign({}, this.params);
+      this.queryParams.currentPage = this.currentPage;
+      this.queryParams.pageSize = this.currentPageSize;
+      this.apiService(this.queryParams)
+        .then(res => {
+          // debugger;
+          if (g.utils.isArr(res.object)) {
+            this.showGridData = res.datas || res.object;
+          } else {
+            this.showGridData = res.datas || [res.object];
+          }
+          this.dataTotal = res.totalCount;
+          this.listLoading = false;
+        })
+        .catch(err => {
+          this.listLoading = false;
+          console.error(err);
+        });
     },
 
     // 处理相应父组件的事件方法
     handleEmit(emitName, row) {
+      if (emitName === "rowEdit") {
+        for (const item of this.gridConfig) {
+          if (item.isEdit) {
+            // 储存一个key唯一的编辑前数据
+            this[item.prop + row.id] = row[item.prop];
+          }
+        }
+        this.rowEdit(row);
+        return;
+      }
       this.$emit(emitName, row);
     },
     handleCurrentChange(page) {
@@ -289,9 +320,26 @@ export default {
     handleSelectionChange(val) {
       this.$emit("selectionChange", val);
     },
-    cancelEdit($item) {
-      $item.edit = false;
-      this.$emit("cancelEdit", $item);
+    cancelEdit($row) {
+      $row.edit = false;
+      for (const item of this.gridConfig) {
+        if (item.isEdit) {
+          // 获取之前储存的编辑前数据
+          $row[item.prop] = this[item.prop + $row.id];
+        }
+      }
+      this.$emit("cancelEdit", $row);
+    },
+    rowEdit($item) {
+      this.$nextTick(() => {
+        const data = JSON.parse(JSON.stringify(this.showGridData));
+        for (const item of data) {
+          if (item.id === $item.id) {
+            item.edit = true;
+          }
+        }
+        this.showGridData = data;
+      });
     }
   }
 };

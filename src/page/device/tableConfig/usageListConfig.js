@@ -2,32 +2,32 @@ export const USAGELIST_CONFIG = {
   gridConfig: [
     {
       label: '设备型号',
-      prop: 'type',
+      prop: 'deviceModel',
       width: '150px'
     },
     {
       label: '设备标识',
-      prop: 'taskName',
+      prop: 'deviceIdentifier',
       width: '150px'
     },
     {
       label: '所属商户',
-      prop: 'taskName',
+      prop: 'merchantName',
       width: '150px'
     },
     {
       label: '所属服务商',
-      prop: 'time',
+      prop: 'agentName',
       width: '150px'
     },
     {
       label: '创建时间',
-      prop: 'time',
+      prop: 'bindTime',
       width: '150px'
     },
     {
       label: '设备状态',
-      prop: 'time',
+      prop: 'freezeStatus',
       width: '150px'
     }
   ],
@@ -43,12 +43,12 @@ export const USAGELIST_CONFIG = {
     expands: [
       {
         name: '解绑',
-        emitName: 'distribution',
+        emitName: 'unbind',
         type: 'text'
       },
       {
         name: '恢复可用',
-        emitName: 'adopt',
+        emitName: 'unfreeze',
         type: 'text'
       }
     ]

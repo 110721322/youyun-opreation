@@ -15,19 +15,19 @@ export const SEARCH_CONFIG = {
       options: [
         {
           label: '营业执照编号',
-          value: 'id1'
+          value: 'banField'
         },
         {
           label: '法人身份证号',
-          value: 'id2'
+          value: 'banField'
         },
         {
           label: '法人手机号',
-          value: 'id3'
+          value: 'banField'
         },
         {
           label: '银行卡号',
-          value: 'name'
+          value: 'banField'
         }
       ],
       labelWidth: '100px'
@@ -35,7 +35,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '加入人员',
-      key: 'status',
+      key: 'operationId',
       style: 'width:294px',
       options: [
         {
@@ -55,7 +55,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '类型',
-      key: 'oper',
+      key: 'type',
       style: 'width:294px',
       labelWidth: '185px',
       options: [

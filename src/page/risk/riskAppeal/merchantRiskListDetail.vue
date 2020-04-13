@@ -1,7 +1,7 @@
 <template>
   <div class>
     <div class="tab_head">
-      <span class="title">乐刷风控详情</span>
+      <span class="title">平台风控详情</span>
     </div>
 
     <transition name="fade">
@@ -16,7 +16,7 @@
         ></el-alert>
         <detailMode
           :img-width="4"
-          :rule-form="ruleForm.baseData"
+          :rule-form="ruleForm"
           :config-data="configData.baseData"
           :current-type="currentType"
         >
@@ -34,11 +34,7 @@
             </div>
           </template>
         </detailMode>
-        <detailMode
-          :img-width="4"
-          :rule-form="ruleForm.appealData"
-          :config-data="configData.appealData"
-        ></detailMode>
+        <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.appealData"></detailMode>
         <div v-if="showComponents.showOperBtns" class="btn-box">
           <div class="btn_pass" @click="onClick_sign">资料已检查，通过</div>
           <div class="btn-reject" @click="onClick_reject">驳回</div>
@@ -53,11 +49,13 @@
         :foot-btn-label="'确定'"
         label-width="130px"
         @cancel="cancel"
+        @confirm="confirm"
       ></Form>
     </el-drawer>
   </div>
 </template>
 <script>
+import api from "@/api/api_risk";
 import passImg from "@/assets/img/pass.png";
 import refuseImg from "@/assets/img/refuse.png";
 import approvalImg from "@/assets/img/approval.png";
@@ -74,7 +72,6 @@ export default {
       passImg: passImg,
       refuseImg: refuseImg,
       approvalImg: approvalImg,
-      isAlrealyDownload: false,
       fromConfigData: {},
       drawer: false,
       rejectTitle: "驳回原因：商户名称与营业执照不符合",
@@ -123,28 +120,28 @@ export default {
           items: [
             {
               name: "商户ID",
-              key: "merName"
+              key: "merhantNo"
             },
             {
               name: "商户名称",
-              key: "address"
+              key: "merchantName"
             },
             {
               name: "乐刷商户号",
-              key: "kind"
+              key: "channelMerchantNo"
             },
             {
               name: "所属服务商ID",
-              key: "peopleName"
+              key: "agentNo"
             },
 
             {
               name: "所属服务商名称",
-              key: "phone"
+              key: "agentName"
             },
             {
               name: "商户经营情况",
-              key: "idCard"
+              key: "remark"
             }
           ]
         },
@@ -153,47 +150,47 @@ export default {
           items: [
             {
               name: "法人手持营业执照",
-              key: "pic",
+              key: "shopLicenseImg",
               type: "image"
             },
             {
               name: "法人手持身份证正面",
-              key: "pic2",
+              key: "idCardHandImg",
               type: "image"
             },
             {
               name: "法人身份证原件正面",
-              key: "pic3",
+              key: "idCardPortraitImg",
               type: "image"
             },
             {
               name: "手持银行卡原件正面",
-              key: "pic4",
+              key: "bankCardImg",
               type: "image"
             },
             {
               name: "商户门店照片",
-              key: "pic5",
+              key: "shopFaceImg",
               type: "image"
             },
             {
               name: "其他照片",
-              key: "pic6",
+              key: "otherImg",
               type: "image"
             },
             {
               name: "商户机打指定小票照片1",
-              key: "pic7",
+              key: "machineTicketImg1",
               type: "image"
             },
             {
               name: "商户机打指定小票照片2",
-              key: "pic8",
+              key: "machineTicketImg2",
               type: "image"
             },
             {
               name: "商户机打指定小票照片3",
-              key: "pic9",
+              key: "machineTicketImg3",
               type: "image"
             },
             {
@@ -228,8 +225,34 @@ export default {
   },
   mounted() {
     this.currentType = "checking";
+    this.getDetail();
   },
   methods: {
+    confirm($data) {
+      api
+        .midPlatformUpdateOfReject({
+          id: 1,
+          reason: $data.reason
+        })
+        .then(res => {
+          this.$message("已驳回");
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    getDetail() {
+      api
+        .midPlatformGetDetail({
+          id: 1
+        })
+        .then(res => {
+          this.ruleForm = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
     handleEdit($ruleForm) {
       console.log($ruleForm);
       this.drawer = true;
@@ -248,66 +271,30 @@ export default {
         }
       )
         .then(() => {
-          this.$message({
-            type: "success",
-            message: "删除成功!"
-          });
+          api
+            .midPlatformUpdateOfPass({
+              id: 1
+            })
+            .then(res => {
+              this.$message("删除成功!");
+            })
+            .catch(err => {
+              this.$message(err);
+            });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消"
           });
         });
     },
-    cancel(done) {
-      done();
+    cancel() {
+      this.drawer = false;
     },
     onClick_reject() {
       this.drawer = true;
       this.fromConfigData = FORM_CONFIG.rejectData;
-    },
-    getTableData() {
-      this.testData = [
-        {
-          id: 0,
-          type: "设备品牌",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          reason: "银行卡账号错误，服务商无法联系"
-        },
-        {
-          id: 1,
-          type: "设备型号",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系"
-        }
-      ];
-    },
-    onClick_edit($item) {
-      $item.edit = true;
-    },
-    onClick_okEdit($item) {
-      $item.edit = false;
-    },
-    onClick_cancelEdit($item) {
-      $item.edit = false;
-    },
-    getHeadClass() {
-      return "background:#EFEFEF";
     }
   }
 };

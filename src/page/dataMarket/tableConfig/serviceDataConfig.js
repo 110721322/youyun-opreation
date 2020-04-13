@@ -3,21 +3,24 @@ export const MERCHANTDATACONFIG1 = {
     {
       label: "排名",
       prop: "rank",
-      width: "72px"
+      width: "72px",
+      render: (h, params) => {
+        return h('span', params.index + 1);
+      }
     },
     {
       label: "服务商名称",
-      prop: "name",
+      prop: "agentName",
       width: "176px"
     },
     {
       label: "交易额",
-      prop: "amount",
+      prop: "actualAmount",
       width: "120px"
     },
     {
       label: "环比涨幅",
-      prop: "increase",
+      prop: "ratio",
       width: "100px",
       hasIcon: true
     }
@@ -28,16 +31,19 @@ export const MERCHANTDATACONFIG2 = {
     {
       label: "排名",
       prop: "rank",
-      width: "72px"
+      width: "72px",
+      render: (h, params) => {
+        return h('span', params.index + 1);
+      }
     },
     {
       label: "服务商名称",
-      prop: "name",
+      prop: "agentName",
       width: "196px"
     },
     {
       label: "新增商户数",
-      prop: "new",
+      prop: "newMerchantCount",
       width: "112px"
     }
   ]
@@ -47,7 +53,10 @@ export const MERCHANTDATACONFIG3 = {
     {
       label: "排名",
       prop: "rank",
-      width: "52px"
+      width: "52px",
+      render: (h, params) => {
+        return h('span', params.index + 1);
+      }
     },
     {
       label: "服务商名称",
@@ -71,7 +80,10 @@ export const MERCHANTDATACONFIG4 = {
     {
       label: "排名",
       prop: "rank",
-      width: "52px"
+      width: "52px",
+      render: (h, params) => {
+        return h('span', params.index + 1);
+      }
     },
     {
       label: "服务商名称",
@@ -95,16 +107,19 @@ export const MERCHANTDATACONFIG5 = {
     {
       label: "排名",
       prop: "rank",
-      width: "52px"
+      width: "52px",
+      render: (h, params) => {
+        return h('span', params.index + 1);
+      }
     },
     {
       label: "服务商名称",
-      prop: "name",
+      prop: "agentName",
       width: "176px"
     },
     {
       label: "交易额",
-      prop: "amount",
+      prop: "actualAmount",
       width: "70px"
     }
   ]

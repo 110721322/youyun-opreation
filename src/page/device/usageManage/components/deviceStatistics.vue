@@ -5,10 +5,17 @@
       :form-base-data="searchConfig.formData"
       :show-foot-btn="searchConfig.showFootBtn"
       :is-show-all="true"
+      :begin-date="beginDate"
+      :end-date="endDate"
+      @dataSelect="handleDataSelect"
       @search="search"
     />
     <div class="device-list">
-      <deviceList :device-list-data="deviceListData" :show-expand-btn="showExpandBtn"></deviceList>
+      <deviceList
+        :device-list-data="deviceListData"
+        :show-expand-btn="showExpandBtn"
+        @province="handleProvince"
+      ></deviceList>
     </div>
     <div class="title">全国主要省份设备使用数量</div>
     <div class="map-box">
@@ -23,17 +30,17 @@
         <div v-for="(item,index) in mapData" :key="index" class="data-item">
           <div class="data-left">
             <span :class="['index',index<=2?'hightlight':'normal']">{{ index+1 }}</span>
-            {{ item.name }}
+            {{ item.provinceCode }}
           </div>
           <div class="data-right">
-            <span>{{ item.num }}</span> |
+            <span>{{ item.usingCount }}</span> |
             <span class="perc">{{ item.perc }}</span>
           </div>
         </div>
       </div>
     </div>
     <div class="data_box">
-      <dataItem :radio="radioListData[0]" :title="titleList[0]"></dataItem>
+      <dataItem :radio="radioListData[0]" :title="titleList[0]" @radioChange="handleNumRadioChange"></dataItem>
 
       <div class="content-box">
         <div class="left">
@@ -60,7 +67,11 @@
       </div>
     </div>
     <div class="data_box">
-      <dataItem :radio="radioListData[1]" :title="titleList[1]"></dataItem>
+      <dataItem
+        :radio="radioListData[1]"
+        :title="titleList[1]"
+        @radioChange="handleTradeRadioChange"
+      ></dataItem>
 
       <div class="content-box">
         <div class="left">
@@ -89,6 +100,7 @@
   </div>
 </template>
 <script>
+import api from "@/api/api_device";
 import Search from "@/components/search/search.vue";
 
 import { SEARCH_CONFIG } from "./../../formConfig/deviceStatisticsSearch";
@@ -203,7 +215,6 @@ export default {
       searchConfig: SEARCH_CONFIG,
       configData: {},
       fromConfigData: {},
-      testData: [],
       drawer: false,
       direction: "rtl",
       mapData: [
@@ -219,17 +230,17 @@ export default {
       titleList: ["设备数量统计", "设备交易统计"],
       radioListData: [
         {
-          radio: "0",
+          radio: "region",
           namelist: [
-            { name: "大区数据", label: "0" },
-            { name: "行业数据", label: "1" }
+            { name: "大区数据", label: "region" },
+            { name: "行业数据", label: "industry" }
           ]
         },
         {
-          radio: "0",
+          radio: "region",
           namelist: [
-            { name: "大区数据", label: "0" },
-            { name: "行业数据", label: "1" }
+            { name: "大区数据", label: "region" },
+            { name: "行业数据", label: "industry" }
           ]
         }
       ],
@@ -276,10 +287,19 @@ export default {
           top: "40px",
           containLabel: true
         },
+        dataset: {
+          dimensions: [
+            "regionCode",
+            "saleCount",
+            "activationCount",
+            "usingCount",
+            "noUsingCount"
+          ],
+          source: []
+        },
         xAxis: [
           {
-            type: "category",
-            data: ["华东", "华中", "华北", "华南", "华西"]
+            type: "category"
           }
         ],
         yAxis: [
@@ -294,32 +314,28 @@ export default {
             barGap: 0,
             itemStyle: {
               color: "#3BA0FF"
-            },
-            data: [320, 332, 301, 334, 390]
+            }
           },
           {
             name: "激活量",
             type: "bar",
             itemStyle: {
               color: "#FAD337"
-            },
-            data: [120, 132, 101, 134, 90]
+            }
           },
           {
             name: "动销量",
             type: "bar",
             itemStyle: {
               color: "#37CBCB"
-            },
-            data: [220, 182, 191, 234, 290]
+            }
           },
           {
             name: "未动销量",
             type: "bar",
             itemStyle: {
               color: "#F47A8F"
-            },
-            data: [150, 232, 201, 154, 190]
+            }
           }
         ]
       },
@@ -331,6 +347,10 @@ export default {
             type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
           }
         },
+        dataset: {
+          dimensions: ["regionName", "tradeCount", "tradeAmount"],
+          source: []
+        },
         grid: {
           left: "0",
           right: "4%",
@@ -340,8 +360,7 @@ export default {
         },
         xAxis: [
           {
-            type: "category",
-            data: ["华东", "华中", "华北", "华南", "华西"]
+            type: "category"
           }
         ],
         yAxis: [
@@ -356,135 +375,215 @@ export default {
             barGap: 0,
             itemStyle: {
               color: "#3BA0FF"
-            },
-            data: [320, 332, 301, 334, 390]
+            }
           },
           {
             name: "交易金额",
             type: "bar",
             itemStyle: {
-              color: "#FAD337"
-            },
-            data: [120, 132, 101, 134, 90]
+              color: "#37CBCB"
+            }
           }
         ]
       },
       detailTitle: [
         {
           label: "大区",
-          prop: "area",
+          prop: "regionCode",
           hasDot: false
         },
         {
           label: "销售量（台）",
-          prop: "saleNum",
+          prop: "saleCount",
           hasDot: true,
           dotColor: "#1989FA"
         },
         {
           label: "激活量（台）",
-          prop: "activeNum",
+          prop: "activationCount",
           hasDot: true,
           dotColor: "#FBD955"
         },
         {
           label: "动销量（台）",
-          prop: "runNum",
+          prop: "usingCount",
           hasDot: true,
           dotColor: "#37CBCB"
         },
         {
           label: "未动销量（台）",
-          prop: "unRunNum",
+          prop: "noUsingCount",
           hasDot: true,
           dotColor: "#F47A8F"
-        }
-      ],
-      detailData: [
-        {
-          area: "华东",
-          saleNum: "80",
-          activeNum: "70",
-          runNum: "60",
-          unRunNum: "90"
-        },
-        {
-          area: "华中",
-          saleNum: "80",
-          activeNum: "70",
-          runNum: "60",
-          unRunNum: "90"
-        },
-        {
-          area: "华西",
-          saleNum: "80",
-          activeNum: "70",
-          runNum: "60",
-          unRunNum: "90"
-        },
-        {
-          area: "华南",
-          saleNum: "80",
-          activeNum: "70",
-          runNum: "60",
-          unRunNum: "100"
         }
       ],
       detailTitle2: [
         {
           label: "大区",
-          prop: "area",
+          prop: "regionName",
           hasDot: false
         },
         {
           label: "交易笔数（笔）",
-          prop: "transactionTimes",
+          prop: "tradeCount",
           hasDot: true,
           dotColor: "#1989FA"
         },
         {
           label: "交易金额（元）",
-          prop: "transactionAmount",
+          prop: "tradeAmount",
           hasDot: true,
-          dotColor: "#FBD955"
+          dotColor: "#37CBCB"
         }
       ],
-      detailData2: [
-        {
-          area: "华东",
-          transactionTimes: "80",
-          transactionAmount: "70"
-        },
-        {
-          area: "华中",
-          transactionTimes: "80",
-          transactionAmount: "70"
-        },
-        {
-          area: "华中",
-          transactionTimes: "80",
-          transactionAmount: "70"
-        },
-        {
-          area: "华中",
-          transactionTimes: "80",
-          transactionAmount: "70"
-        },
-        {
-          area: "华中",
-          transactionTimes: "80",
-          transactionAmount: "70"
-        }
-      ]
+      detailData: [],
+      detailData2: [],
+      beginDate: null,
+      endDate: null
     };
   },
   mounted() {
-    this.getTableData();
-    this.initMap();
-    this.showBar();
-    this.showBar2();
+    this.queryAllProvince();
+    this.queryRegion();
+    this.queryRegionTrade();
   },
   methods: {
+    handleNumRadioChange($data) {
+      $data === "region" ? this.queryRegion() : null;
+      $data === "industry" ? this.queryMcc() : null;
+    },
+    handleTradeRadioChange($data) {
+      $data === "region" ? this.queryRegionTrade() : null;
+      $data === "industry" ? this.queryMccTrade() : null;
+    },
+    transferEchartsData($data, $option, $prop) {
+      console.log($data);
+      $option.dataset.source = $data;
+      if ($prop) $option.dataset.dimensions[0] = $prop;
+    },
+    // 大区设备数量使用情况
+    queryRegion($data) {
+      api
+        .queryRegion({
+          beginDate: this.beginDate,
+          endDate: this.endDate,
+          deviceId: ""
+        })
+        .then(res => {
+          this.detailTitle[0] = {
+            label: "大区",
+            prop: "regionCode",
+            hasDot: false
+          };
+          this.detailData = res.object;
+          this.transferEchartsData(res.object, this.barOption, "regionCode");
+          this.showBar();
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 行业设备数量使用情况
+    queryMcc() {
+      api
+        .queryMcc({
+          beginDate: this.beginDate,
+          endDate: this.endDate,
+          deviceId: ""
+        })
+        .then(res => {
+          this.detailTitle[0] = {
+            label: "行业",
+            prop: "mccName",
+            hasDot: false
+          };
+          this.detailData = res.object;
+          this.transferEchartsData(res.object, this.barOption, "mccName");
+          this.showBar();
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 大区设备交易情况
+    queryRegionTrade() {
+      api
+        .queryRegionTrade({
+          beginDate: this.beginDate,
+          endDate: this.endDate,
+          deviceId: ""
+        })
+        .then(res => {
+          this.detailTitle2[0] = {
+            label: "大区",
+            prop: "regionCode",
+            hasDot: false
+          };
+          this.detailData2 = res.object;
+          this.transferEchartsData(res.object, this.barOption2, "regionCode");
+          this.showBar2();
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 行业设备交易情况
+    queryMccTrade() {
+      api
+        .queryMccTrade({
+          beginDate: this.beginDate,
+          endDate: this.endDate,
+          deviceId: ""
+        })
+        .then(res => {
+          this.detailTitle2[0] = {
+            label: "行业",
+            prop: "mccName",
+            hasDot: false
+          };
+          this.detailData2 = res.object;
+          this.transferEchartsData(res.object, this.barOption2, "mccName");
+          this.showBar2();
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    handleProvince($itemData) {
+      this.queryAllProvince($itemData);
+    },
+    // 获取设备省份数据
+    queryAllProvince($data) {
+      api
+        .queryAllProvince({
+          beginDate: this.beginDate,
+          endDate: this.endDate,
+          deviceId: $data && $data.deviceId
+        })
+        .then(res => {
+          this.mapData = res.object;
+          this.initMap();
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    handleDataSelect($time) {
+      api
+        .queryUsing({
+          beginDate: $time[0],
+          endDate: $time[1],
+          deviceId: ""
+        })
+        .then(res => {
+          this.deviceListData = res.object;
+          this.beginDate = $time[0];
+          this.endDate = $time[1];
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
     showBar() {
       // 基于准备好的dom，初始化echarts实例
       const myChartBar = this.$echarts.init(this.$refs.echartsBar);
@@ -505,34 +604,24 @@ export default {
         myChartBar.resize();
       });
     },
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
-    },
-    getTableData() {
-      this.testData = [
-        {
-          service: "日常任务",
-          type: "商户结算失败",
-          buyNum: "4",
-          buyNumPerc: "提醒",
-          activeNum: "XXXX店铺",
-          activeNumPerc: "20:00:23",
-          amountPerc: "222.22"
-        },
-        {
-          service: "日常任务",
-          type: "商户结算失败",
-          buyNum: "4",
-          buyNumPerc: "提醒",
-          activeNum: "XXXX店铺",
-          activeNumPerc: "20:00:23",
-          amountPerc: "222.22"
-        }
-      ];
+    search($ruleForm) {
+      console.log($ruleForm);
+      api
+        .queryUsing({
+          beginDate: $ruleForm.date[0],
+          endDate: $ruleForm.date[0],
+          deviceId: ""
+        })
+        .then(res => {
+          this.deviceListData = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
     },
     initMap() {
       const myChart = echarts.init(this.$refs.echartsMap);
+      // eslint-disable-next-line no-unused-vars
       const dataList = [
         {
           name: "南海诸岛",
@@ -560,7 +649,7 @@ export default {
         },
         {
           name: "河南",
-          value: 83
+          value: 1183
         },
         {
           name: "云南",
@@ -596,7 +685,7 @@ export default {
         },
         {
           name: "浙江",
-          value: 104
+          value: 0
         },
         {
           name: "江西",
@@ -675,6 +764,14 @@ export default {
           value: 5
         }
       ];
+      const mapData = [];
+      this.mapData.forEach((item, index) => {
+        mapData[index] = {};
+        mapData[index].name = item.provinceCode;
+        mapData[index].value = item.usingCount;
+      });
+      console.log(mapData);
+      console.log(this.mapData);
       window.onresize = myChart.resize;
       myChart.setOption({
         tooltip: {
@@ -687,6 +784,7 @@ export default {
           bottom: 40,
           showLabel: !0,
           text: ["高", "低"],
+          // splitNumber: 5,
           pieces: [
             {
               gt: 100,
@@ -753,7 +851,7 @@ export default {
             name: "商户数量",
             type: "map",
             geoIndex: 0,
-            data: dataList
+            data: mapData
           }
         ]
       });
@@ -807,7 +905,7 @@ export default {
 .left {
   padding-top: 16px;
   padding-left: 24px;
-  width: 55%;
+  width: 50%;
 }
 .right {
   width: 50%;

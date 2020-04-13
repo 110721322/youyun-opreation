@@ -16,11 +16,11 @@ export const SEARCH_CONFIG = {
       options: [
         {
           label: '服务商ID',
-          value: 'id'
+          value: 'agentNo'
         },
         {
           label: '服务商名称',
-          value: 'name'
+          value: 'agentName'
         }
       ],
       labelWidth: '100px'
@@ -28,7 +28,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '所属运营',
-      key: 'oper',
+      key: 'operateUserNo',
       style: 'width:294px',
       class: "clear_both",
       options: [

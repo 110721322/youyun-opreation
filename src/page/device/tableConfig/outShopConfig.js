@@ -1,23 +1,13 @@
 export const OUTSHOP_CONFIG = {
   gridConfig: [
     {
-      label: '设备品牌',
-      prop: 'type',
-      width: '150px'
-    },
-    {
-      label: '设备型号',
-      prop: 'taskName',
-      width: '150px'
-    },
-    {
-      label: '设备台数（台）',
-      prop: 'taskName',
+      label: '状态',
+      prop: 'bindStatusDesc',
       width: '150px'
     },
     {
       label: '设备标识',
-      prop: 'time',
+      prop: 'deviceIdentifier',
       width: '250px',
       isEdit: true
     }
@@ -51,7 +41,7 @@ export const OUTSHOP_CONFIG = {
       },
       {
         name: '编辑',
-        emitName: 'edit',
+        emitName: 'rowEdit',
         type: 'text',
         style: 'color:#1989FA',
         isShow: ($item) => {

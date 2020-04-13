@@ -4,6 +4,9 @@
 
     <div class="table_box">
       <BaseCrud
+        ref="table"
+        :params="params"
+        :api-service="api"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
         :grid-data="testData"
@@ -21,6 +24,7 @@
   </div>
 </template>
 <script>
+import api from "@/api/api_dataMarket";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 
@@ -34,29 +38,39 @@ export default {
       searchConfig: FORM_CONFIG,
       configData: MERCHANTDATADETAILCONFIG,
       testData: [],
-      searchHeight: "380"
+      searchHeight: "380",
+      params: {
+        beginDate: this.$g.utils.getToday(),
+        endDate: this.$g.utils.getToday(),
+        agentNo: "6cw",
+        provinceCode: "xvf",
+        cityCode: "wd3",
+        agentName: "fjd",
+        pageSize: 0,
+        merchantName: "tnj",
+        channelAgentCode: "u1u",
+        category: "y76",
+        currentPage: 0,
+        merchantNo: "x2b"
+      },
+      api: api.queryTradeSummaryAndCycleByCondition
     };
   },
-  mounted() {
-    this.getData();
-  },
+  mounted() {},
   methods: {
-    search() {},
-    getData() {
-      this.testData = [
-        {
-          merchantName: "1",
-          serviceProvider: "利郎男装有限公司",
-          shopNum: "707",
-          amount: "¥ 206",
-          times: "¥ 206",
-          timesPerc: "¥ 206",
-          everyPrice: "¥ 206",
-          amountPerc: "¥ 206",
-          memberAmount: "¥ 206",
-          memberTimes: "¥ 206"
-        }
-      ];
+    search($ruleForm) {
+      const params = {
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
+        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        category: $ruleForm.category,
+        provinceCode: $ruleForm.addressObj
+          ? $ruleForm.addressObj[0].value
+          : null,
+        cityCode: $ruleForm.addressObj ? $ruleForm.addressObj[1].value : null
+        // 是否开通会员
+      };
+      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      this.params = params;
     }
   }
 };

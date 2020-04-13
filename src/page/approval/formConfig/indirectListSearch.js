@@ -16,19 +16,19 @@ export const SEARCH_CONFIG = {
       options: [
         {
           label: '商户ID',
-          value: 'id'
+          value: 'merchantNo'
         },
         {
           label: '商户名称',
-          value: 'name'
+          value: 'merchantName'
         },
         {
           label: '服务商ID',
-          value: 'serviceId'
+          value: 'agentNo'
         },
         {
           label: '服务商名称',
-          value: 'serviceName'
+          value: 'agentName'
         }
       ],
       labelWidth: '100px'
@@ -36,7 +36,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '通道状态',
-      key: 'status',
+      key: 'channelStatus',
       style: 'width:294px',
       options: [
         {
@@ -56,7 +56,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '所属运营',
-      key: 'oper',
+      key: 'operationUserNo',
       style: 'width:294px',
       labelWidth: '185px',
       options: [

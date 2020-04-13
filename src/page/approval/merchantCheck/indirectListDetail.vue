@@ -31,61 +31,33 @@
           show-icon
         ></el-alert>
         <div v-if="activeIndex == '1'" :key="1">
-          <detailMode
-            :img-width="4"
-            :rule-form="ruleForm.baseData"
-            :config-data="configData.baseData"
-          ></detailMode>
-          <detailMode
-            :img-width="4"
-            :rule-form="ruleForm.merchantData"
-            :config-data="configData.merchantData"
-          ></detailMode>
-          <detailMode
-            :img-width="4"
-            :rule-form="ruleForm.merchantSettle"
-            :config-data="configData.merchantSettle"
-          ></detailMode>
-          <detailMode :img-width="4" :rule-form="ruleForm.other" :config-data="configData.other"></detailMode>
+          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.baseData"></detailMode>
+          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.merchantData"></detailMode>
+          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.merchantSettle"></detailMode>
+          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.other"></detailMode>
         </div>
         <div v-if="activeIndex == '2'" :key="2">
+          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData2.baseData"></detailMode>
+          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData2.merchantData"></detailMode>
           <detailMode
             :img-width="4"
-            :rule-form="ruleForm2.baseData"
-            :config-data="configData2.baseData"
-          ></detailMode>
-          <detailMode
-            :img-width="4"
-            :rule-form="ruleForm2.merchantData"
-            :config-data="configData2.merchantData"
-          ></detailMode>
-          <detailMode
-            :img-width="4"
-            :rule-form="ruleForm2.merchantSettle"
+            :rule-form="ruleForm"
             :config-data="configData2.merchantSettle"
           ></detailMode>
-          <detailMode :img-width="4" :rule-form="ruleForm2.other" :config-data="configData2.other"></detailMode>
+          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData2.other"></detailMode>
         </div>
         <div v-if="activeIndex == '3'" :key="3">
+          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData3.baseData"></detailMode>
+          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData3.merchantData"></detailMode>
           <detailMode
             :img-width="4"
-            :rule-form="ruleForm3.baseData"
-            :config-data="configData3.baseData"
-          ></detailMode>
-          <detailMode
-            :img-width="4"
-            :rule-form="ruleForm3.merchantData"
-            :config-data="configData3.merchantData"
-          ></detailMode>
-          <detailMode
-            :img-width="4"
-            :rule-form="ruleForm3.merchantSettle"
+            :rule-form="ruleForm"
             :config-data="configData3.merchantSettle"
           ></detailMode>
-          <detailMode :img-width="4" :rule-form="ruleForm3.other" :config-data="configData3.other"></detailMode>
+          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData3.other"></detailMode>
         </div>
         <div v-if="showComponents.showOperBtns" class="btn-box">
-          <div class="btn_pass">资料已检查并提交签约</div>
+          <div class="btn_pass" @click="onClick_pass">资料已检查并提交签约</div>
           <div class="btn-reject" @click="onClick_reject">驳回</div>
         </div>
       </div>
@@ -97,11 +69,13 @@
         :show-foot-btn="fromConfigData.showFootBtn"
         label-width="130px"
         @cancel="cancel"
+        @confirm="confirm"
       ></Form>
     </el-drawer>
   </div>
 </template>
 <script>
+import api from "@/api/api_merchantAudit";
 import detailMode from "@/components/detailMode/detailMode2.vue";
 import Form from "@/components/form/index.vue";
 import { FORM_CONFIG } from "./../formConfig/indirectDetailConfig";
@@ -120,150 +94,17 @@ export default {
         showRejectTitle: false,
         showOperBtns: false
       },
+      channelCode: "1",
       // approval通过 checking审核中 reject驳回
       currentType: "",
-      ruleForm: {
-        baseData: {
-          merName: "329438980213098094",
-          address: "浙江省杭州市西湖区黄姑山路工专路交叉路口",
-          kind: "餐饮类",
-          peopleName: "金柒柒",
-          phone: "18409098920",
-          idCard: "3310281995009208899"
-        },
-        merchantData: {
-          kind: "企业",
-          name: "山东紫菜",
-          startTime: "2019-03-10",
-          number: "3428947394238",
-          phone: "18503892300",
-          endTime: "2019-03-10",
-          pic:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic2:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic3:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic4:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic5:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic6:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
-        },
-        merchantSettle: {
-          type: "对公",
-          cardId: "622023204284902384320984",
-          address: "浙江省 杭州市 西湖区",
-          bank: "招商银行股份有限公司杭州保交支行",
-          phone: "15820908766   ",
-          pic:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
-        },
-        other: {
-          aliwxPerc: "2.8 ‰",
-          yunLessPerc: "2.8 ‰",
-          yunMorePerc: "5.6 ‰",
-          email: "3133427948@sina.com"
-        }
-      },
-      ruleForm2: {
-        baseData: {
-          merName: "329438980213098094",
-          address: "浙江省杭州市西湖区黄姑山路工专路交叉路口",
-          kind: "餐饮类",
-          peopleName: "金柒柒",
-          phone: "18409098920",
-          idCard: "3310281995009208899"
-        },
-        merchantData: {
-          kind: "企业",
-          name: "山东紫菜",
-          startTime: "2019-03-10",
-          number: "3428947394238",
-          phone: "18503892300",
-          endTime: "2019-03-10",
-          pic:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic2:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic3:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic4:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic5:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic6:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
-        },
-        merchantSettle: {
-          type: "对公",
-          cardId: "622023204284902384320984",
-          address: "浙江省 杭州市 西湖区",
-          bank: "招商银行股份有限公司杭州保交支行",
-          phone: "15820908766   ",
-          pic:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
-        },
-        other: {
-          aliwxPerc: "2.8 ‰",
-          yunLessPerc: "2.8 ‰",
-          yunMorePerc: "5.6 ‰",
-          email: "3133427948@sina.com"
-        }
-      },
-      ruleForm3: {
-        baseData: {
-          merName: "329438980213098094",
-          address: "浙江省杭州市西湖区黄姑山路工专路交叉路口",
-          kind: "餐饮类",
-          peopleName: "金柒柒",
-          phone: "18409098920",
-          idCard: "3310281995009208899"
-        },
-        merchantData: {
-          kind: "企业",
-          name: "山东紫菜",
-          startTime: "2019-03-10",
-          number: "3428947394238",
-          phone: "18503892300",
-          endTime: "2019-03-10",
-          pic:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic2:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic3:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic4:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic5:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic6:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
-        },
-        merchantSettle: {
-          type: "对公",
-          cardId: "622023204284902384320984",
-          address: "浙江省 杭州市 西湖区",
-          bank: "招商银行股份有限公司杭州保交支行",
-          phone: "15820908766   ",
-          pic:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
-        },
-        other: {
-          aliwxPerc: "2.8 ‰",
-          yunLessPerc: "2.8 ‰",
-          yunMorePerc: "5.6 ‰",
-          email: "3133427948@sina.com"
-        }
-      },
+      ruleForm: {},
       configData: {
         baseData: {
           name: "基本信息",
           items: [
             {
               name: "商户全称",
-              key: "merName"
+              key: "fullName"
             },
             {
               name: "公司地址",
@@ -271,20 +112,20 @@ export default {
             },
             {
               name: "经营类目",
-              key: "kind"
+              key: "category"
             },
             {
               name: "法人姓名",
-              key: "peopleName"
+              key: "lawPerson"
             },
 
             {
               name: "法人手机号",
-              key: "phone"
+              key: "lawMobile"
             },
             {
               name: "法人身份证",
-              key: "idCard"
+              key: "lawIdCard"
             }
           ]
         },
@@ -293,57 +134,57 @@ export default {
           items: [
             {
               name: "营业执照",
-              key: "pic",
+              key: "shopLicenseImg",
               type: "image"
             },
             {
               name: "门头照",
-              key: "pic2",
+              key: "shopFaceImg",
               type: "image"
             },
             {
               name: "内景照",
-              key: "pic3",
+              key: "shopInnerImg",
               type: "image"
             },
             {
               name: "收银台照",
-              key: "pic4",
+              key: "shopCashdeskImg",
               type: "image"
             },
             {
               name: "法人身份证正面",
-              key: "pic5",
+              key: "idCardPortraitImg",
               type: "image"
             },
             {
               name: "结算人身份证反面",
-              key: "pic6",
+              key: "idCardEmblemImg",
               type: "image"
             },
             {
               name: "商户类型",
-              key: "kind"
+              key: "merchantType"
             },
             {
               name: "商户简称",
-              key: "name"
+              key: "shortName"
             },
             {
               name: "营业执照开始日期",
-              key: "startTime"
+              key: "shopLicenseBegDate"
             },
             {
               name: "营业执照编号",
-              key: "number"
+              key: "shopLicenseNo"
             },
             {
               name: "客服手机号",
-              key: "phone"
+              key: "serviceTel"
             },
             {
               name: "法人身份证到期日",
-              key: "endTime"
+              key: "idCardExpireDate"
             }
           ]
         },
@@ -352,28 +193,28 @@ export default {
           items: [
             {
               name: "营业执照",
-              key: "pic",
+              key: "shopLicenseImg",
               type: "image"
             },
             {
               name: "结算卡类型",
-              key: "type"
+              key: "accountType"
             },
             {
               name: "银行卡号",
-              key: "cardId"
+              key: "bankCardNo"
             },
             {
               name: "开户支行地区",
-              key: "address"
+              key: "bankArea"
             },
             {
               name: "开户支行",
-              key: "bank"
+              key: "branchName"
             },
             {
               name: "银行预留手机号",
-              key: "phone"
+              key: "bankMobile"
             }
           ]
         },
@@ -382,15 +223,15 @@ export default {
           items: [
             {
               name: "支付宝/微信费率",
-              key: "aliwxPerc"
+              key: "wechatAlipayRate"
             },
             {
               name: "云闪付费率（单笔≤1000元)",
-              key: "yunLessPerc"
+              key: "cloudPayGt1000Rate"
             },
             {
               name: "云闪付费率（单笔＞1000元)",
-              key: "yunMorePerc"
+              key: "cloudPayLt1000Rate"
             },
             {
               name: "邮箱",
@@ -405,7 +246,7 @@ export default {
           items: [
             {
               name: "商户全称",
-              key: "merName"
+              key: "fullName"
             },
             {
               name: "公司地址",
@@ -413,20 +254,20 @@ export default {
             },
             {
               name: "经营类目",
-              key: "kind"
+              key: "category"
             },
             {
               name: "法人姓名",
-              key: "peopleName"
+              key: "lawPerson"
             },
 
             {
               name: "法人手机号",
-              key: "phone"
+              key: "lawMobile"
             },
             {
               name: "法人身份证",
-              key: "idCard"
+              key: "lawIdCard"
             }
           ]
         },
@@ -435,57 +276,57 @@ export default {
           items: [
             {
               name: "营业执照",
-              key: "pic",
+              key: "shopLicenseImg",
               type: "image"
             },
             {
               name: "门头照",
-              key: "pic2",
+              key: "shopFaceImg",
               type: "image"
             },
             {
               name: "内景照",
-              key: "pic3",
+              key: "shopInnerImg",
               type: "image"
             },
             {
               name: "收银台照",
-              key: "pic4",
+              key: "shopCashdeskImg",
               type: "image"
             },
             {
               name: "法人身份证正面",
-              key: "pic5",
+              key: "idCardPortraitImg",
               type: "image"
             },
             {
               name: "结算人身份证反面",
-              key: "pic6",
+              key: "idCardEmblemImg",
               type: "image"
             },
             {
               name: "商户类型",
-              key: "kind"
+              key: "merchantType"
             },
             {
               name: "商户简称",
-              key: "name"
+              key: "shortName"
             },
             {
               name: "营业执照开始日期",
-              key: "startTime"
+              key: "shopLicenseBegDate"
             },
             {
               name: "营业执照编号",
-              key: "number"
+              key: "shopLicenseNo"
             },
             {
               name: "客服手机号",
-              key: "phone"
+              key: "serviceTel"
             },
             {
               name: "法人身份证到期日",
-              key: "endTime"
+              key: "idCardExpireDate"
             }
           ]
         },
@@ -494,28 +335,28 @@ export default {
           items: [
             {
               name: "营业执照",
-              key: "pic",
+              key: "shopLicenseImg",
               type: "image"
             },
             {
               name: "结算卡类型",
-              key: "type"
+              key: "accountType"
             },
             {
               name: "银行卡号",
-              key: "cardId"
+              key: "bankCardNo"
             },
             {
               name: "开户支行地区",
-              key: "address"
+              key: "bankArea"
             },
             {
               name: "开户支行",
-              key: "bank"
+              key: "branchName"
             },
             {
               name: "银行预留手机号",
-              key: "phone"
+              key: "bankMobile"
             }
           ]
         },
@@ -524,15 +365,15 @@ export default {
           items: [
             {
               name: "支付宝/微信费率",
-              key: "aliwxPerc"
+              key: "wechatAlipayRate"
             },
             {
               name: "云闪付费率（单笔≤1000元)",
-              key: "yunLessPerc"
+              key: "cloudPayGt1000Rate"
             },
             {
               name: "云闪付费率（单笔＞1000元)",
-              key: "yunMorePerc"
+              key: "cloudPayLt1000Rate"
             },
             {
               name: "邮箱",
@@ -547,7 +388,7 @@ export default {
           items: [
             {
               name: "商户全称",
-              key: "merName"
+              key: "fullName"
             },
             {
               name: "公司地址",
@@ -555,20 +396,20 @@ export default {
             },
             {
               name: "经营类目",
-              key: "kind"
+              key: "category"
             },
             {
               name: "法人姓名",
-              key: "peopleName"
+              key: "lawPerson"
             },
 
             {
               name: "法人手机号",
-              key: "phone"
+              key: "lawMobile"
             },
             {
               name: "法人身份证",
-              key: "idCard"
+              key: "lawIdCard"
             }
           ]
         },
@@ -577,57 +418,57 @@ export default {
           items: [
             {
               name: "营业执照",
-              key: "pic",
+              key: "shopLicenseImg",
               type: "image"
             },
             {
               name: "门头照",
-              key: "pic2",
+              key: "shopFaceImg",
               type: "image"
             },
             {
               name: "内景照",
-              key: "pic3",
+              key: "shopInnerImg",
               type: "image"
             },
             {
               name: "收银台照",
-              key: "pic4",
+              key: "shopCashdeskImg",
               type: "image"
             },
             {
               name: "法人身份证正面",
-              key: "pic5",
+              key: "idCardPortraitImg",
               type: "image"
             },
             {
               name: "结算人身份证反面",
-              key: "pic6",
+              key: "idCardEmblemImg",
               type: "image"
             },
             {
               name: "商户类型",
-              key: "kind"
+              key: "merchantType"
             },
             {
               name: "商户简称",
-              key: "name"
+              key: "shortName"
             },
             {
               name: "营业执照开始日期",
-              key: "startTime"
+              key: "shopLicenseBegDate"
             },
             {
               name: "营业执照编号",
-              key: "number"
+              key: "shopLicenseNo"
             },
             {
               name: "客服手机号",
-              key: "phone"
+              key: "serviceTel"
             },
             {
               name: "法人身份证到期日",
-              key: "endTime"
+              key: "idCardExpireDate"
             }
           ]
         },
@@ -636,28 +477,28 @@ export default {
           items: [
             {
               name: "营业执照",
-              key: "pic",
+              key: "shopLicenseImg",
               type: "image"
             },
             {
               name: "结算卡类型",
-              key: "type"
+              key: "accountType"
             },
             {
               name: "银行卡号",
-              key: "cardId"
+              key: "bankCardNo"
             },
             {
               name: "开户支行地区",
-              key: "address"
+              key: "bankArea"
             },
             {
               name: "开户支行",
-              key: "bank"
+              key: "branchName"
             },
             {
               name: "银行预留手机号",
-              key: "phone"
+              key: "bankMobile"
             }
           ]
         },
@@ -666,15 +507,15 @@ export default {
           items: [
             {
               name: "支付宝/微信费率",
-              key: "aliwxPerc"
+              key: "wechatAlipayRate"
             },
             {
               name: "云闪付费率（单笔≤1000元)",
-              key: "yunLessPerc"
+              key: "cloudPayGt1000Rate"
             },
             {
               name: "云闪付费率（单笔＞1000元)",
-              key: "yunMorePerc"
+              key: "cloudPayLt1000Rate"
             },
             {
               name: "邮箱",
@@ -719,14 +560,12 @@ export default {
     currentType: function($val) {
       switch ($val) {
         case "approval":
-          this.$set(this.showComponents, "showOperBtns", true);
-          this.$set(this.showComponents, "showRejectTitle", false);
+          this.showComponents.showOperBtns = true;
           break;
         case "checking":
           break;
         case "reject":
-          this.$set(this.showComponents, "showOperBtns", false);
-          this.$set(this.showComponents, "showRejectTitle", true);
+          this.showComponents.showRejectTitle = true;
           break;
 
         default:
@@ -736,10 +575,49 @@ export default {
   },
   mounted() {
     this.currentType = "approval";
+    this.getDetailByMerchantNo();
   },
   methods: {
-    cancel(done) {
-      done();
+    getDetailByMerchantNo() {
+      api
+        .getDetailByMerchantNo({ merchantNo: "", channelCode: "" })
+        .then(res => {
+          console.log(res);
+          this.ruleForm = res.data;
+        })
+        .catch();
+    },
+    onClick_pass() {
+      api
+        .merchantUpdateAuditStatusOfPass({
+          merchantNo: "",
+          channelCode: this.channelCode
+        })
+        .then(res => {
+          this.$message("已通过");
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    confirm($data) {
+      console.log($data);
+      api
+        .merchantUpdateAuditStatusOfReject({
+          merchantNo: "",
+          reason: $data["reason"],
+          channelCode: this.channelCode
+        })
+        .then(res => {
+          this.$message("已驳回");
+          this.drawer = false;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    cancel() {
+      this.drawer = false;
     },
     onClick_reject() {
       this.drawer = true;
@@ -777,6 +655,7 @@ export default {
     },
     handleSelect($index) {
       this.activeIndex = $index;
+      this.channelCode = $index;
     },
     onClick_edit($item) {
       $item.edit = true;

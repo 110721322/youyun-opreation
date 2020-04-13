@@ -14,6 +14,9 @@
 
       <div class="table_box">
         <BaseCrud
+          ref="table"
+          :params="params"
+          :api-service="api"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
           :grid-data="testData"
@@ -23,21 +26,40 @@
           :is-async="true"
           :hide-edit-area="configData.hideEditArea"
           @detail="onClick_detail"
+          @done="onClick_done"
+          @Receipt="onClick_Receipt"
+          @reject="onClick_reject"
+          @pass="onClick_pass"
+          @send="onClick_send"
+          @distribution="onClick_distribution"
         ></BaseCrud>
       </div>
     </div>
+    <el-drawer :visible.sync="drawer" :with-header="false">
+      <div class="p_head">{{ fromConfigData.title }}</div>
+      <Form
+        :form-base-data="fromConfigData.formData"
+        :show-foot-btn="fromConfigData.showFootBtn"
+        label-width="130px"
+        @cancel="cancel"
+        @confirm="confirm"
+      ></Form>
+    </el-drawer>
   </div>
 </template>
 <script>
+import api from "@/api/api_device";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
+import Form from "@/components/form/index.vue";
 
+import { FORM_CONFIG } from "./../formConfig/repairListForm";
 import { SEARCH_CONFIG } from "./../formConfig/repairListSearch";
 import { REPAIRLIST_CONFIG } from "./../tableConfig/repairListConfig";
 
 export default {
   name: "Theme",
-  components: { Search, BaseCrud },
+  components: { Search, BaseCrud, Form },
   data() {
     return {
       searchMaxHeight: "320",
@@ -46,65 +68,159 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl"
+      direction: "rtl",
+      formStatus: "",
+      activityRow: {},
+      params: {
+        agentNo: "猪豆王g豆哈试",
+        currentPage: 0,
+        deviceId: 13579,
+        operationId: 63301,
+        orderNo: "小拉哈丽哈哈小试",
+        pageSize: 20,
+        status: 543,
+        beginTime: this.$g.utils.getToday(),
+        endTime: this.$g.utils.getToday()
+      },
+      api: api.deviceMaintainQueryByPage
     };
   },
-  mounted() {
-    this.getTableData();
-  },
+  mounted() {},
   methods: {
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
+    onClick_reject($row) {
+      this.formStatus = "reject";
+      this.activityRow = $row;
+      this.fromConfigData = FORM_CONFIG.rejectData;
+      this.drawer = true;
     },
-    getTableData() {
-      this.testData = [
-        {
-          type: "日常任务",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          reason: "银行卡账号错误，服务商无法联系",
-          deviceList: [
-            {
-              name: "蜻蜓F4",
-              value: "10"
-            },
-            {
-              name: "青蛙pro",
-              value: "20"
-            }
-          ]
-        },
-        {
-          id: 2,
-          type: "日常任务",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系",
-          deviceList: [
-            {
-              name: "蜻蜓F4",
-              value: "10"
-            },
-            {
-              name: "青蛙pro",
-              value: "20"
-            }
-          ]
-        }
-      ];
+    onClick_send($row) {
+      this.formStatus = "send";
+      this.activityRow = $row;
+      this.fromConfigData = FORM_CONFIG.sendData;
+      this.drawer = true;
+    },
+    onClick_distribution($row) {
+      this.formStatus = "distribution";
+      this.activityRow = $row;
+      this.fromConfigData = FORM_CONFIG.distributionData;
+      this.drawer = true;
+    },
+    onClick_done($row) {
+      this.formStatus = "done";
+      this.activityRow = $row;
+      this.fromConfigData = FORM_CONFIG.doneData;
+      this.drawer = true;
+    },
+    onClick_Receipt($row) {
+      this.$confirm("确定已收货吗", "提示", {
+        distinguishCancelAndClose: true,
+        confirmButtonText: "确认",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          api
+            .receive({
+              id: $row.id
+            })
+            .then(result => {
+              this.$message("收货成功");
+            })
+            .catch(err => {
+              console.error(err);
+            });
+        })
+        .catch(() => {});
+    },
+    onClick_pass($row) {
+      this.$confirm("确定通过该维修单吗", "提示", {
+        distinguishCancelAndClose: true,
+        confirmButtonText: "确认",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
+          api
+            .auditPass({
+              id: $row.id
+            })
+            .then(result => {
+              this.$message("通过成功");
+            })
+            .catch(err => {
+              console.error(err);
+            });
+        })
+        .catch(() => {});
+    },
+    confirm($data) {
+      switch (this.formStatus) {
+        case "reject":
+          api
+            .auditReject({
+              id: this.activityRow.id,
+              rejectRemark: $data.rejectRemark
+            })
+            .then(res => {
+              this.$message("已驳回");
+            })
+            .catch(err => {
+              this.$message(err);
+            });
+          break;
+        case "send":
+          api
+            .send({
+              id: this.activityRow.id,
+              expressNumberOut: $data.expressNumberOut
+            })
+            .then(res => {
+              this.$message("提交成功");
+            })
+            .catch(err => {
+              this.$message(err);
+            });
+          break;
+        case "distribution":
+          api
+            .distribute({
+              deviceOutputId: this.activityRow.deviceOutputId,
+              distributionUserId: $data.distributionUserId
+            })
+            .then(res => {
+              this.$message("分配成功");
+            })
+            .catch(err => {
+              this.$message(err);
+            });
+          break;
+        case "done":
+          api
+            .saveMoney({
+              id: this.activityRow.id,
+              amount: $data.amount
+            })
+            .then(res => {
+              this.$message("提交成功");
+            })
+            .catch(err => {
+              this.$message(err);
+            });
+          break;
+
+        default:
+          break;
+      }
+    },
+    search($ruleForm) {
+      console.log($ruleForm);
+      const params = {
+        beginTime: $ruleForm.date ? $ruleForm.date[0] : null,
+        endTime: $ruleForm.date ? $ruleForm.date[1] : null,
+        deviceId: $ruleForm.deviceId,
+        operationId: $ruleForm.operationId,
+        status: $ruleForm.status
+      };
+      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      this.params = params;
     },
     selectionChange($val) {
       // eslint-disable-next-line no-console
@@ -113,8 +229,8 @@ export default {
     onClick_detail() {
       this.$router.push("/deviceManage/usageManage/repairList/detail");
     },
-    cancel(done) {
-      done();
+    cancel() {
+      this.drawer = false;
     }
   }
 };

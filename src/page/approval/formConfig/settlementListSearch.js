@@ -16,11 +16,11 @@ export const SEARCH_CONFIG = {
       options: [
         {
           label: '商户ID',
-          value: 'id'
+          value: 'merchantNo'
         },
         {
           label: '商户名称',
-          value: 'name'
+          value: 'merchantName'
         }
       ],
       labelWidth: '100px'
@@ -28,7 +28,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '状态',
-      key: 'status',
+      key: 'auditStatus',
       style: 'width:294px',
       options: [
         {
@@ -48,7 +48,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '所属运营',
-      key: 'oper',
+      key: 'operateUserNo',
       style: 'width:294px',
       labelWidth: '185px',
       options: [

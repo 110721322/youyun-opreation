@@ -1,7 +1,7 @@
 <template>
   <div class="main_page">
     <div class="tab_head">
-      <span class="title">任务统计详情</span>
+      <span class="title">发货信息</span>
       <el-menu
         :default-active="activeIndex"
         class="el-menu"
@@ -15,10 +15,10 @@
 
     <transition name="fade">
       <div v-if="activeIndex == '1'">
-        <detailMode :rule-form="ruleForm" :config-data="configData"></detailMode>
+        <detailMode :key="1" :rule-form="ruleForm" :config-data="configData"></detailMode>
       </div>
       <div v-if="activeIndex == '2'">
-        <detailMode :rule-form="ruleForm2" :config-data="configData2"></detailMode>
+        <detailMode :key="2" :rule-form="ruleForm" :config-data="configData2"></detailMode>
 
         <!-- <detailBox title="商品信息">
           <div class="table_box">
@@ -40,14 +40,22 @@
               <span class="title">设备型号</span>
             </div>
             <div class="device_list">
-              <div v-for="(item,key) of 10" :key="key" class="device_item">
-                <div class="device_name">设备001</div>
-                <div class="device_num">30台</div>
+              <div
+                v-for="(item,key) of deviceModelList"
+                :key="key"
+                class="device_item"
+                @click="onClick_getData(item)"
+              >
+                <div class="device_name">{{ item.deviceModel }}</div>
+                <div class="device_num">{{ item.count }}</div>
               </div>
             </div>
           </div>
           <div class="right_box">
             <BaseCrud
+              ref="table"
+              :params="params"
+              :api-service="api"
               :grid-config="tableConfigData.gridConfig"
               :grid-btn-config="tableConfigData.gridBtnConfig"
               :grid-data="testData"
@@ -58,7 +66,6 @@
               :border="true"
               :header-cell-style="getHeadClass"
               :is-async="true"
-              @edit="onClick_edit"
               @okEdit="onClick_okEdit"
               @cancelEdit="onClick_cancelEdit"
             />
@@ -69,6 +76,7 @@
   </div>
 </template>
 <script>
+import api from "@/api/api_device";
 import detailMode from "@/components/detailMode/detailMode2.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { OUTSHOP_CONFIG } from "./../tableConfig/outShopConfig";
@@ -146,15 +154,15 @@ export default {
         items: [
           {
             name: "出库时间",
-            key: "name1"
+            key: "outputTime"
           },
           {
             name: "快递单号",
-            key: "name1"
+            key: "expressNo"
           },
           {
             name: "库管备注",
-            key: "name1"
+            key: "outputRemark"
           }
         ]
       },
@@ -187,40 +195,34 @@ export default {
           reason: "银行卡账号错误，服务商无法联系",
           edit: false
         }
-      ]
+      ],
+      params: {
+        currentPage: 0,
+        deviceIdentifier: "",
+        pageSize: 1,
+        detailIdList: []
+      },
+      deviceModelList: [],
+      api: api.queryOutputPage
     };
   },
-  mounted() {},
+  mounted() {
+    this.finishOutputInfo();
+  },
   methods: {
-    getTableData() {
-      this.testData = [
-        {
-          id: 0,
-          type: "设备品牌",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          reason: "银行卡账号错误，服务商无法联系"
-        },
-        {
-          id: 1,
-          type: "设备型号",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系"
-        }
-      ];
+    finishOutputInfo() {
+      api.finishOutputInfo({ outputId: 1 }).then(res => {
+        this.deviceModelList = res.infoResponseVOList;
+        this.ruleForm = res;
+      });
+    },
+    onClick_getData($item) {
+      this.params = {
+        currentPage: 0,
+        deviceIdentifier: $item.deviceId,
+        pageSize: 1,
+        detailIdList: $item.deviceIdentifierList
+      };
     },
     handleSelect($index) {
       this.activeIndex = $index;
@@ -230,6 +232,7 @@ export default {
     },
     onClick_okEdit($item) {
       $item.edit = false;
+      console.log($item);
     },
     onClick_cancelEdit($item) {
       $item.edit = false;
@@ -294,7 +297,7 @@ export default {
 .device_list {
   margin-top: 20px;
   height: 392px;
-  overflow: scroll;
+  overflow: auto;
 }
 .device_item {
   width: 100%;

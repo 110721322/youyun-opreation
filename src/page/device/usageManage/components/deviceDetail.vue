@@ -9,6 +9,9 @@
 
     <div class="table_box">
       <BaseCrud
+        ref="table"
+        :params="params"
+        :api-service="api"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
         :grid-data="testData"
@@ -32,11 +35,7 @@
   </div>
 </template>
 <script>
-import iconRuku from "@/assets/img/ruku.png";
-import iconChuku from "@/assets/img/chuku.png";
-import iconBingMerchant from "@/assets/img/bingMerchant.png";
-import iconUnbing from "@/assets/img/unbing.png";
-import iconGenerateTransaction from "@/assets/img/generateTransaction.png";
+import api from "@/api/api_device";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 
@@ -56,124 +55,30 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl"
+      direction: "rtl",
+      params: {
+        agentName: "",
+        beginDate: this.$g.utils.getToday(),
+        deviceId: 4199,
+        deviceIdentifier: "g拉哈侠",
+        endDate: this.$g.utils.getToday(),
+        merchantName: "72测豆8g2美"
+      },
+      api: api.queryDetail
     };
   },
-  mounted() {
-    this.getTableData();
-  },
+  mounted() {},
   methods: {
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
-    },
-    getTableData() {
-      this.testData = [
-        {
-          type: 1,
-          id: "34534",
-          logo: "商户结算失败",
-          merchantProvider: "4",
-          serviceProvider: "提醒",
-          orderNum: "XXXX店铺",
-          amount: "20:00:23",
-          rowExpandCover: true,
-          processList: [
-            {
-              icon: iconRuku,
-              label: "入库",
-              time: "2016-12-12 "
-            },
-            {
-              icon: iconChuku,
-              label: "出库",
-              time: "2016-12-12 "
-            },
-            {
-              icon: iconBingMerchant,
-              label: "绑定商户",
-              time: "2016-12-12 "
-            },
-            {
-              icon: iconGenerateTransaction,
-              label: "产生交易",
-              time: "2016-12-12 "
-            },
-            {
-              icon: iconUnbing,
-              label: "解绑",
-              time: "2016-12-12 "
-            },
-            {
-              icon: iconBingMerchant,
-              label: "绑定商户",
-              time: "2016-12-12 "
-            },
-            {
-              icon: iconUnbing,
-              label: "解绑",
-              time: "2016-12-12 "
-            },
-            {
-              icon: iconBingMerchant,
-              label: "绑定商户",
-              time: "2016-12-12 "
-            },
-            {
-              icon: iconUnbing,
-              label: "解绑",
-              time: "2016-12-12 "
-            },
-            {
-              icon: iconBingMerchant,
-              label: "绑定商户",
-              time: "2016-12-12 "
-            }
-          ]
-        },
-        {
-          type: 1,
-          id: "344",
-          logo: "商户结算失败",
-          merchantProvider: "4",
-          serviceProvider: "提醒",
-          orderNum: "XXXX店铺",
-          amount: "20:00:23",
-          rowExpandCover: true,
-          processList: [
-            {
-              icon: iconRuku,
-              label: "入库",
-              time: "2016-12-12 "
-            },
-            {
-              icon: iconChuku,
-              label: "出库",
-              time: "2016-12-12 "
-            },
-            {
-              icon: iconBingMerchant,
-              label: "绑定商户",
-              time: "2016-12-12 "
-            },
-            {
-              icon: iconGenerateTransaction,
-              label: "产生交易",
-              time: "2016-12-12 "
-            },
-            {
-              icon: iconUnbing,
-              label: "解绑",
-              time: "2016-12-12 "
-            },
-            {
-              icon: iconBingMerchant,
-              label: "绑定商户",
-              time: "2016-12-12 "
-            }
-          ]
-        }
-      ];
+    search($ruleForm) {
+      console.log($ruleForm);
+      const params = {
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
+        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        operateUserNo: $ruleForm.operateUserNo,
+        status: $ruleForm.status
+      };
+      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      this.params = params;
     },
     selectionChange($val) {
       // eslint-disable-next-line no-console
@@ -184,11 +89,16 @@ export default {
       done();
     },
     onClick_showLife($item, $table) {
-      console.log($table);
-      // console.log($item);
-      this.testData.map(item => {
-        item.expansion = !item.expansion;
-      });
+      api
+        .queryProcessLife({
+          deviceIdentifier: $item.deviceIdentifier
+        })
+        .then(res => {
+          this.$set($item, "processList", res.object);
+        })
+        .catch(err => {
+          this.$message(err);
+        });
       $table.toggleRowExpansion($item);
     }
   }

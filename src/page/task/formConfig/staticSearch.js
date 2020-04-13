@@ -3,7 +3,7 @@ export const FORM_CONFIG = {
     {
       type: 1,
       label: '任务类型',
-      key: 'type',
+      key: 'taskType',
       style: 'width:294px',
       labelWidth: '100px',
       options: [

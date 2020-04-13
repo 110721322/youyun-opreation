@@ -15,25 +15,13 @@
           show-icon
         ></el-alert>
         <div>
-          <detailMode
-            :img-width="4"
-            :rule-form="ruleForm.baseData"
-            :config-data="configData.baseData"
-          ></detailMode>
-          <detailMode
-            :img-width="4"
-            :rule-form="ruleForm.merchantData"
-            :config-data="configData.merchantData"
-          ></detailMode>
-          <detailMode
-            :img-width="4"
-            :rule-form="ruleForm.merchantSettle"
-            :config-data="configData.merchantSettle"
-          ></detailMode>
+          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.baseData"></detailMode>
+          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.merchantData"></detailMode>
+          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.merchantSettle"></detailMode>
           <detailMode
             :is-show-edit-btn="showComponents.showOtherEdit"
             :img-width="4"
-            :rule-form="ruleForm.other"
+            :rule-form="ruleForm"
             :config-data="configData.other"
             @edit="handleEdit"
           ></detailMode>
@@ -55,11 +43,13 @@
         :foot-btn-label="'确定'"
         label-width="130px"
         @cancel="cancel"
+        @confirm="confirm"
       ></Form>
     </el-drawer>
   </div>
 </template>
 <script>
+import api from "@/api/api_merchantAudit";
 import detailMode from "@/components/detailMode/detailMode2.vue";
 import Form from "@/components/form/index.vue";
 import { FORM_CONFIG } from "./../formConfig/wxDirectListConfig";
@@ -74,6 +64,7 @@ export default {
       fromConfigData: {},
       drawer: false,
       rejectTitle: "驳回原因：商户名称与营业执照不符合",
+      formStatus: "",
       showComponents: {
         showRejectTitle: false,
         showOperBtns: false,
@@ -132,7 +123,7 @@ export default {
           items: [
             {
               name: "商户全称",
-              key: "merName"
+              key: "fullName"
             },
             {
               name: "公司地址",
@@ -140,20 +131,20 @@ export default {
             },
             {
               name: "经营类目",
-              key: "kind"
+              key: "category"
             },
             {
               name: "法人姓名",
-              key: "peopleName"
+              key: "lawPerson"
             },
 
             {
               name: "法人手机号",
-              key: "phone"
+              key: "lawMobile"
             },
             {
               name: "法人身份证",
-              key: "idCard"
+              key: "lawIdCard"
             }
           ]
         },
@@ -162,57 +153,57 @@ export default {
           items: [
             {
               name: "营业执照",
-              key: "pic",
+              key: "shopLicenseImg",
               type: "image"
             },
             {
               name: "门头照",
-              key: "pic2",
+              key: "shopFaceImg",
               type: "image"
             },
             {
               name: "内景照",
-              key: "pic3",
+              key: "shopInnerImg",
               type: "image"
             },
             {
               name: "收银台照",
-              key: "pic4",
+              key: "shopCashdeskImg",
               type: "image"
             },
             {
               name: "法人身份证正面",
-              key: "pic5",
+              key: "idCardPortraitImg",
               type: "image"
             },
             {
               name: "结算人身份证反面",
-              key: "pic6",
+              key: "idCardEmblemImg",
               type: "image"
             },
             {
               name: "商户类型",
-              key: "kind"
+              key: "merchantType"
             },
             {
               name: "商户简称",
-              key: "name"
+              key: "shortName"
             },
             {
               name: "营业执照开始日期",
-              key: "startTime"
+              key: "shopLicenseBegDate"
             },
             {
               name: "营业执照编号",
-              key: "number"
+              key: "shopLicenseNo"
             },
             {
               name: "客服手机号",
-              key: "phone"
+              key: "serviceTel"
             },
             {
               name: "法人身份证到期日",
-              key: "endTime"
+              key: "idCardExpireDate"
             }
           ]
         },
@@ -221,28 +212,28 @@ export default {
           items: [
             {
               name: "营业执照",
-              key: "pic",
+              key: "shopLicenseImg",
               type: "image"
             },
             {
               name: "结算卡类型",
-              key: "type"
+              key: "accountType"
             },
             {
               name: "银行卡号",
-              key: "cardId"
+              key: "bankCardNo"
             },
             {
               name: "开户支行地区",
-              key: "address"
+              key: "bankArea"
             },
             {
               name: "开户支行",
-              key: "bank"
+              key: "branchName"
             },
             {
               name: "银行预留手机号",
-              key: "phone"
+              key: "bankMobile"
             }
           ]
         },
@@ -251,7 +242,7 @@ export default {
           items: [
             {
               name: "费率",
-              key: "perc"
+              key: "rate"
             },
             {
               name: "邮箱",
@@ -259,7 +250,7 @@ export default {
             },
             {
               name: "APPID",
-              key: "appid"
+              key: "appId"
             },
             {
               name: "PID",
@@ -304,15 +295,15 @@ export default {
     currentType: function($val) {
       switch ($val) {
         case "pass":
-          this.$set(this.showComponents, "showOtherEdit", true);
+          this.showComponents.showOtherEdit = true;
           break;
         case "preApproval":
-          this.$set(this.showComponents, "showOperBtns", true);
+          this.showComponents.showOperBtns = true;
           break;
         case "checking":
           break;
         case "reject":
-          this.$set(this.showComponents, "showRejectTitle", true);
+          this.showComponents.showRejectTitle = true;
           break;
 
         default:
@@ -322,17 +313,63 @@ export default {
   },
   mounted() {
     this.currentType = "pass";
+    this.getDetailByMerchantNo();
   },
   methods: {
+    getDetailByMerchantNo() {
+      api
+        .getDetailByMerchantNo({ merchantNo: "", channelCode: "" })
+        .then(res => {
+          console.log(res);
+          this.ruleForm = res.data;
+        })
+        .catch();
+    },
+    confirm($data) {
+      console.log($data);
+      if (this.formStatus === "reject") {
+        api
+          .merchantUpdateAuditStatusOfReject({
+            merchantNo: "",
+            reason: $data["reason"],
+            channelCode: this.channelCode
+          })
+          .then(res => {
+            this.$message("已驳回");
+            this.drawer = false;
+          })
+          .catch(err => {
+            this.$message(err);
+          });
+      }
+      if (this.formStatus === "edit") {
+        api
+          .updateOthersInfo({
+            merchantNo: $data["merchantNo"],
+            channelCode: $data["channelCode"],
+            rate: $data["rate"],
+            appid: $data["appid"],
+            pid: $data["pid"]
+          })
+          .then(res => {
+            this.$message("已修改");
+            this.drawer = false;
+          })
+          .catch(err => {
+            this.$message(err);
+          });
+      }
+    },
     handleEdit($ruleForm) {
       console.log($ruleForm);
       this.drawer = true;
+      this.formStatus = "edit";
       this.fromConfigData = FORM_CONFIG.detailEdit;
     },
     onClick_sign() {
       if (!this.isAlrealyDownload) {
         this.$confirm(
-          "未打包下载资料，确定已提交资料到支付宝开发平台了吗?",
+          "未打包下载资料，确定已提交资料到微信开发平台了吗?",
           "提示",
           {
             confirmButtonText: "确定",
@@ -340,59 +377,55 @@ export default {
           }
         )
           .then(() => {
-            this.$message({
-              type: "success",
-              message: "删除成功!"
-            });
+            api
+              .merchantUpdateAuditStatusOfPass({
+                merchantNo: "",
+                channelCode: this.channelCode
+              })
+              .then(res => {
+                this.$message("已通过");
+              })
+              .catch(err => {
+                this.$message(err);
+              });
           })
           .catch(() => {
             this.$message({
               type: "info",
-              message: "已取消删除"
+              message: "已取消"
             });
+          });
+      } else {
+        api
+          .merchantUpdateAuditStatusOfPass({
+            merchantNo: "",
+            channelCode: this.channelCode
+          })
+          .then(res => {
+            this.$message("已通过");
+          })
+          .catch(err => {
+            this.$message(err);
           });
       }
     },
     onClick_download() {
       this.isAlrealyDownload = true;
       // 然后下载操作
+      api
+        .getDownloadUrl({ merchantNo: "", channelCode: "" })
+        .then(res => {
+          window.open(res.object);
+        })
+        .catch();
     },
-    cancel(done) {
-      done();
+    cancel() {
+      this.drawer = false;
     },
     onClick_reject() {
       this.drawer = true;
+      this.formStatus = "reject";
       this.fromConfigData = FORM_CONFIG.rejectData;
-    },
-    getTableData() {
-      this.testData = [
-        {
-          id: 0,
-          type: "设备品牌",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          reason: "银行卡账号错误，服务商无法联系"
-        },
-        {
-          id: 1,
-          type: "设备型号",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系"
-        }
-      ];
     },
     onClick_edit($item) {
       $item.edit = true;
