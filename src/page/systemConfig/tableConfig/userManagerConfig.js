@@ -3,52 +3,52 @@ export const USERLIST_CONFIG = {
   gridConfig: [
     {
       label: '花名',
-      prop: 'type',
+      prop: 'nickName',
       width: '150px'
     },
     {
       label: '工号',
-      prop: 'taskName',
+      prop: 'jobNumber',
       width: '150px'
     },
     {
       label: '姓名',
-      prop: 'image',
+      prop: 'realName',
       width: '150px'
     },
     {
       label: '职位',
-      prop: 'image',
+      prop: 'position',
       width: '150px'
     },
     {
       label: '上级',
-      prop: 'image',
+      prop: 'superiorId',
       width: '150px'
     },
     {
       label: '手机号',
-      prop: 'time',
+      prop: 'userName',
       width: '150px'
     },
     {
       label: '性别',
-      prop: 'time',
+      prop: 'sex',
       width: '150px'
     },
     {
       label: '创建时间',
-      prop: 'time',
+      prop: 'createTime',
       width: '150px'
     },
     {
       label: '邮箱',
-      prop: 'time',
+      prop: 'email',
       width: '150px'
     },
     {
       label: '状态',
-      prop: 'time',
+      prop: 'status',
       width: '150px'
     }
   ],

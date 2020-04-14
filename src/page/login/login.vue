@@ -308,7 +308,7 @@ export default {
       api
         .forgetPassword({
           loginType: 1,
-          代码: this.ruleForm3.verification,
+          code: this.ruleForm3.verification,
           id: 40290,
           userName: this.ruleForm3.phone
         })
@@ -370,7 +370,7 @@ export default {
       api
         .login({
           loginType: 2,
-          代码: this.ruleForm2.verification,
+          code: this.ruleForm2.verification,
           id: 40290,
           userName: this.ruleForm2.phone
         })

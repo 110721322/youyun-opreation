@@ -2,37 +2,37 @@ export const USERLIST_CONFIG = {
   gridConfig: [
     {
       label: '花名',
-      prop: 'type',
+      prop: 'nickName',
       width: '150px'
     },
     {
       label: '工号',
-      prop: 'taskName',
+      prop: 'jobNumber',
       width: '150px'
     },
     {
       label: '姓名',
-      prop: 'image',
+      prop: 'realName',
       width: '150px'
     },
     {
       label: '手机号',
-      prop: 'time',
+      prop: 'userName',
       width: '150px'
     },
     {
       label: '性别',
-      prop: 'time',
+      prop: 'sex',
       width: '150px'
     },
     {
       label: '创建时间',
-      prop: 'time',
+      prop: 'createTime',
       width: '150px'
     },
     {
       label: '邮箱',
-      prop: 'time',
+      prop: 'email',
       width: '150px'
     }
   ],
@@ -48,12 +48,12 @@ export const USERLIST_CONFIG = {
     expands: [
       {
         name: '编辑',
-        emitName: 'adopt',
+        emitName: 'edit',
         type: 'text'
       },
       {
         name: '删除',
-        emitName: 'adopt',
+        emitName: 'remove',
         type: 'text',
         style: 'color:#F5222D'
       }

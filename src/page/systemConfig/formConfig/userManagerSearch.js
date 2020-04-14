@@ -19,15 +19,15 @@ export const SEARCH_CONFIG = {
         },
         {
           label: '成员花名',
-          value: 'alias'
+          value: 'nickName'
         },
         {
           label: '成员姓名',
-          value: 'name'
+          value: 'realName'
         },
         {
           label: '手机号',
-          value: 'phone'
+          value: 'userName'
         }
       ],
       labelWidth: '100px'
@@ -77,7 +77,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '上级',
-      key: 'super',
+      key: 'superiorName',
       style: 'width:294px',
       labelWidth: '100px',
       class: "clear_both",

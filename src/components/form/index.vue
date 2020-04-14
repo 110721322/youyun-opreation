@@ -50,6 +50,7 @@ import Tinymce from "./components/Tinymce/index.vue";
 import Cascader from "./components/Cascader.vue";
 import UploadFile from "./components/UploadFile";
 import Show from "./components/Show";
+import DatePicker from "./components/DatePicker.vue";
 
 // import { isUndefined, deepClone } from '@/libs/lit/utils'
 
@@ -66,7 +67,8 @@ export default {
     Tinymce,
     Cascader,
     UploadFile,
-    Show
+    Show,
+    DatePicker
   },
   props: {
     formBaseData: Array,

@@ -26,7 +26,7 @@
       </div>
 
       <div class="foot_btn_box">
-        <el-button type="primary" class="foot_btn">确定</el-button>
+        <el-button type="primary" class="foot_btn" @click="onClick_saveJobInformation">确定</el-button>
         <el-button class="foot_btn">取消</el-button>
       </div>
     </el-form>
@@ -36,6 +36,7 @@
   </div>
 </template>
 <script>
+import api from "@/api/api_memberManage.js";
 import PowerSet from "./powerSet.vue";
 
 export default {
@@ -53,6 +54,9 @@ export default {
   },
   mounted() {},
   methods: {
+    onClick_saveJobInformation() {
+      api.saveJobInformation();
+    },
     onClick_setPower() {
       this.innerDrawer = true;
     }

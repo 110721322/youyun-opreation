@@ -11,8 +11,12 @@
     />
 
     <div class="table_box">
-      <div class="tabale_title_box"></div>
+      <div class="tabale_title_box">
+        <el-button class="btn" type="primary" @click="onClick_showOrganization">组织架构</el-button>
+      </div>
       <BaseCrud
+        :params="params"
+        :api-service="null"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
         :grid-data="testData"
@@ -31,23 +35,54 @@
       ></BaseCrud>
     </div>
 
-    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
+    <el-drawer :visible.sync="drawer" :with-header="false">
+      <div class="p_head">{{ fromConfigData.title }}</div>
+      <Form
+        :form-base-data="fromConfigData.formData"
+        :show-foot-btn="fromConfigData.showFootBtn"
+        label-width="130px"
+        @cancel="cancel"
+        @confirm="confirm"
+      ></Form>
+    </el-drawer>
+    <el-drawer :visible.sync="drawerPersonInfo" :with-header="false" size="40%">
       <PerfectPost></PerfectPost>
+    </el-drawer>
+    <el-drawer :visible.sync="drawerOrganization" :with-header="false">
+      <div class="p_head">组织架构</div>
+      <el-tree
+        :data="dataItem"
+        node-key="id"
+        default-expand-all
+        draggable
+        @node-drag-start="handleDragStart"
+        @node-drag-enter="handleDragEnter"
+        @node-drag-leave="handleDragLeave"
+        @node-drag-over="handleDragOver"
+        @node-drag-end="handleDragEnd"
+        @node-drop="handleDrop"
+      ></el-tree>
+      <div class="foot_btn_box">
+        <el-button class="foot_btn" type="primary" @click="handleClick">确定</el-button>
+        <el-button class="foot_btn" @click="cancelForm">取消</el-button>
+      </div>
     </el-drawer>
   </div>
 </template>
 <script>
+import api from "@/api/api_memberManage.js";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
+import Form from "@/components/form/index.vue";
 import PerfectPost from "./component/perfectPost.vue";
 
-import { FORM_CONFIG } from "./formConfig/deviceDetail";
+import { FORM_CONFIG } from "./formConfig/userManager";
 import { SEARCH_CONFIG } from "./formConfig/userManagerSearch";
 import { USERLIST_CONFIG } from "./tableConfig/userManagerConfig";
 
 export default {
   name: "Theme",
-  components: { Search, BaseCrud, PerfectPost },
+  components: { Search, BaseCrud, PerfectPost, Form },
   data() {
     return {
       searchMaxHeight: "320",
@@ -56,28 +91,105 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
+      drawerPersonInfo: false,
+      drawerOrganization: false,
       innerDrawer: false,
       direction: "rtl",
       form: {},
       defaultProps: {
         children: "children",
         label: "label"
-      }
+      },
+      params: {
+        offset: 0,
+        id: 55267,
+        state: 1,
+        startTime: this.$g.utils.getToday(),
+        endTime: this.$g.utils.getToday()
+        // startTime: "yyyy-MM-dd HH:mm:ss",
+        // endTime: "yyyy-MM-dd HH:mm:ss"
+      },
+      api: api.queryEmployeeList,
+      activityRow: {},
+      dataItem: [
+        {
+          id: 1,
+          label: "一级 1",
+          icon: "el-icon-delete",
+          type: "page",
+          children: [
+            {
+              id: 4,
+              label: "二级 1-1",
+              type: "page",
+              children: [
+                {
+                  id: 9,
+                  label: "三级 1-1-1",
+                  type: "page"
+                },
+                {
+                  id: 10,
+                  label: "三级 1-1-2",
+                  type: "page",
+                  children: [
+                    {
+                      id: 5,
+                      label: "三级 1-1-1",
+                      type: "page"
+                    },
+                    {
+                      id: 60,
+                      label: "三级 1-1-2",
+                      type: "page"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     };
   },
   mounted() {
     this.getTableData();
   },
   methods: {
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
+    handleClick() {
+      api
+        .addMember({
+          phoneList: this.addPhoneList
+        })
+        .then(res => {
+          this.addPhoneList = [""];
+          this.$message("已添加");
+          this.drawerAddPhone = false;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    cancelForm() {
+      this.drawerOrganization = false;
+    },
+    search($ruleForm) {
+      this.params = {
+        sex: $ruleForm.sex,
+        position: $ruleForm.position,
+        superiorName: $ruleForm.superiorName,
+        state: null,
+        startTime: $ruleForm.date[0],
+        endTime: $ruleForm.date[1]
+      };
+      this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
     },
     getTableData() {
       this.testData = [
         {
+          id: 21,
           type: "日常任务",
-          taskName: "商户结算失败",
+          nickName: "商户结算失败",
           num: "4",
           oper: "提醒",
           name: "XXXX店铺",
@@ -90,7 +202,7 @@ export default {
         {
           id: 2,
           type: "日常任务",
-          taskName: "商户结算失败",
+          nickName: "商户结算失败",
           num: "4",
           oper: "提醒",
           name: "XXXX店铺",
@@ -106,16 +218,35 @@ export default {
       // eslint-disable-next-line no-console
       console.log($val);
     },
-    onClick_addUser() {
-      this.fromConfigData = FORM_CONFIG.deviceData;
-      this.drawer = true;
+    confirm($ruleForm) {
+      api
+        .fillUserInfo({
+          id: this.activityRow.id,
+          system: "operation",
+          name: $ruleForm.name,
+          phone: $ruleForm.phone,
+          password: $ruleForm.password,
+          email: $ruleForm.email,
+          sex: $ruleForm.sex,
+          jobName: $ruleForm.jobName,
+          img: $ruleForm.img,
+          jobNumber: $ruleForm.jobNumber,
+          birthday: $ruleForm.birthday,
+          nickName: $ruleForm.nickName
+        })
+        .then(res => {
+          this.drawer = false;
+          this.$message("已保存");
+        })
+        .catch(err => {
+          this.$message(err);
+        });
     },
-    cancel(done) {
-      done();
+    cancel() {
+      this.drawer = false;
     },
     onClick_perfect() {
-      this.fromConfigData = FORM_CONFIG.buyData;
-      this.drawer = true;
+      this.drawerPersonInfo = true;
     },
     handleClose(done) {
       this.$confirm("还有未保存的工作哦确定关闭吗？")
@@ -127,8 +258,61 @@ export default {
     onClick_setPower() {
       this.innerDrawer = true;
     },
-    onClick_editPost() {},
-    onClick_editBasics() {}
+    onClick_editPost() {
+      this.drawerPersonInfo = true;
+    },
+    onClick_showOrganization($row) {
+      api
+        .employeeOrganization({
+          id: $row.id
+        })
+        .then(res => {
+          // FORM_CONFIG.editData.formData.forEach((item, index) => {
+          //   item.initVal = res.object[item.key];
+          // });
+          // this.activityRow = $row;
+          this.drawerOrganization = true;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    onClick_editBasics($row) {
+      api
+        .queryUserById({
+          id: $row.id
+        })
+        .then(res => {
+          FORM_CONFIG.editData.formData.forEach((item, index) => {
+            item.initVal = res.object[item.key];
+          });
+          this.activityRow = $row;
+          this.fromConfigData = FORM_CONFIG.editData;
+          this.drawer = true;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    handleDragStart(node, ev) {
+      console.log("drag start", node);
+    },
+    handleDragEnter(draggingNode, dropNode, ev) {
+      console.log("tree drag enter: ", dropNode.label);
+    },
+    handleDragLeave(draggingNode, dropNode, ev) {
+      console.log("tree drag leave: ", dropNode.label);
+    },
+    handleDragOver(draggingNode, dropNode, ev) {
+      console.log("tree drag over: ", dropNode.label);
+    },
+    handleDragEnd(draggingNode, dropNode, dropType, ev) {
+      debugger;
+      console.log("tree drag end: ", dropNode && dropNode.label, dropType);
+    },
+    handleDrop(draggingNode, dropNode, dropType, ev) {
+      console.log("tree drop: ", dropNode.label, dropType);
+    }
   }
 };
 </script>
