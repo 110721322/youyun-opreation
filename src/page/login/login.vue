@@ -3,7 +3,7 @@
     <div class="login-box">
       <div class="left-box">
         <div class="logo">
-          <img src="../../assets/img/logo.png" alt class="logo-img" />
+          <img src="../../assets/img/loginLogo.png" alt class="logo-img" />
         </div>
         <div class="title">智慧办公系统</div>
         <div class="login-content">
@@ -14,9 +14,9 @@
             </div>
             <div class="input-box">
               <el-input
-                v-model="ruleForm.account"
+                v-model="ruleForm.phone"
                 class="login-input"
-                placeholder="请输入账号"
+                placeholder="请输入手机号"
                 size="large"
               >
                 <i slot="prefix" class="el-input__icon el-icon-user"></i>
@@ -33,7 +33,7 @@
             </div>
             <div class="forget-box" @click="toChangePasswd">忘记密码</div>
             <div class="btn-box">
-              <el-button type="primary" class="login-btn">登录</el-button>
+              <el-button type="primary" class="login-btn" @click="onClick_passwdLogin">登录</el-button>
             </div>
           </template>
           <template v-if="activeType==='verificationLogin'">
@@ -59,13 +59,18 @@
               >
                 <i slot="prefix" class="el-input__icon el-icon-lock"></i>
                 <template slot="append">
-                  <span class="verification-btn">获取验证码</span>
+                  <span
+                    v-if="countLoginTime<=0"
+                    class="verification-btn"
+                    @click="onClick_sendLoginCode"
+                  >获取验证码</span>
+                  <span v-if="countLoginTime>0" class="verification-btn">{{ countLoginTime + " s" }}</span>
                 </template>
               </el-input>
             </div>
             <div class="forget-box" @click="toChangePasswd">忘记密码</div>
             <div class="btn-box">
-              <el-button type="primary" class="login-btn">登录</el-button>
+              <el-button type="primary" class="login-btn" @click="onClick_codeLogin">登录</el-button>
             </div>
           </template>
           <template v-if="activeType==='changePasswd'">
@@ -90,7 +95,15 @@
               >
                 <i slot="prefix" class="el-input__icon el-icon-lock"></i>
                 <template slot="append">
-                  <span class="verification-btn">获取验证码</span>
+                  <span
+                    v-if="countChangeTime<=0"
+                    class="verification-btn"
+                    @click="onClick_sendChangeCode"
+                  >获取验证码</span>
+                  <span
+                    v-if="countChangeTime>0"
+                    class="verification-btn"
+                  >{{ countChangeTime + " s" }}</span>
                 </template>
               </el-input>
             </div>
@@ -122,7 +135,7 @@
               </el-input>
             </div>
             <div class="btn-box">
-              <el-button type="primary" class="login-btn">确定</el-button>
+              <el-button type="primary" class="login-btn" @click="onClick_changePassword">确定</el-button>
             </div>
           </template>
           <template v-if="activeType==='wxScan'">
@@ -152,7 +165,7 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
-// import api from '@/api/api_login';
+import api from "@/api/api_login";
 // import * as g from '@/libs/global';
 
 export default {
@@ -161,7 +174,7 @@ export default {
     return {
       loading: false,
       ruleForm: {
-        account: "",
+        phone: "",
         password: ""
       },
       ruleForm2: {
@@ -177,7 +190,7 @@ export default {
         newPasswdAgain: ""
       },
       rules: {
-        account: [
+        phone: [
           {
             required: true,
             message: "请输入账号",
@@ -192,13 +205,121 @@ export default {
           }
         ]
       },
-      activeType: "accountLogin"
+      activeType: "accountLogin",
+      countLoginTime: 0,
+      countChangeTime: 0
     };
   },
   watch: {},
   created() {},
   methods: {
+    onClick_changePassword() {
+      if (!this.ruleForm4.newPasswd) {
+        this.$alert("请输入新密码");
+        return;
+      }
+      if (!this.ruleForm4.newPasswdAgain) {
+        this.$alert("请再次输入新密码");
+        return;
+      }
+      if (this.ruleForm4.newPasswd.length < 6) {
+        this.$alert("密码长度不能小于6位");
+        return;
+      }
+      if (this.ruleForm4.newPasswd !== this.ruleForm4.newPasswdagain) {
+        this.$alert("两次密码输入不一致");
+        return;
+      }
+      api
+        .changePassword({
+          newPassword: this.ruleForm4.newPasswd,
+          confirmPassword: this.ruleForm4.newPasswdAgain
+        })
+        .then(res => {
+          this.toAccountLogin();
+        })
+        .catch(err => {
+          this.$alert(err);
+        });
+    },
+    onClick_sendLoginCode() {
+      if (!this.ruleForm2.phone) {
+        this.$alert("请输入手机号");
+        return;
+      }
+      this.countLoginTime = 60;
+      const interval = setInterval(() => {
+        if (this.countLoginTime > 0) {
+          this.countLoginTime--;
+        } else {
+          clearInterval(interval);
+        }
+      }, 1000);
+
+      api
+        .getSmsCode({
+          userName: this.ruleForm2.phone
+        })
+        .then(res => {
+          this.$message("已发送");
+        })
+        .catch(err => {
+          this.countLoginTime = 0;
+          clearInterval(interval);
+          this.$message(err);
+        });
+    },
+    onClick_sendChangeCode() {
+      if (!this.ruleForm3.phone) {
+        this.$alert("请输入手机号");
+        return;
+      }
+      this.countChangeTime = 60;
+      const interval = setInterval(() => {
+        if (this.countChangeTime > 0) {
+          this.countChangeTime--;
+        } else {
+          clearInterval(interval);
+        }
+      }, 1000);
+
+      api
+        .getSmsCode({
+          userName: this.ruleForm3.phone
+        })
+        .then(res => {
+          this.$message("已发送");
+        })
+        .catch(err => {
+          this.countChangeTime = 0;
+          clearInterval(interval);
+          this.$message(err);
+        });
+    },
     setNewPasswd() {
+      if (!this.ruleForm3.phone) {
+        this.$alert("请输入手机号");
+        return;
+      }
+      if (!this.ruleForm3.verification) {
+        this.$alert("请输入验证码");
+        return;
+      }
+      api
+        .forgetPassword({
+          loginType: 1,
+          代码: this.ruleForm3.verification,
+          id: 40290,
+          userName: this.ruleForm3.phone
+        })
+        .then(res => {
+          this.toSetNewPasswd();
+        })
+        .catch(err => {
+          this.$alert(err);
+        });
+    },
+    toSetNewPasswd() {
       this.activeType = "setNewPasswd";
     },
     toChangePasswd() {
@@ -210,42 +331,105 @@ export default {
     toVerificationLogin() {
       this.activeType = "verificationLogin";
     },
-    onClick_login(formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          this.loading = true;
-          // api.login({
-          //     loginAccount: this.ruleForm.account,
-          //     loginPassword: this.ruleForm.password,
-          // }).then((result) => {
-          //     this.loading = false;
-          //     window.localStorage.setItem('token-merchant', result.object.userToken);
-          //     let merchantUser = JSON.stringify(result.object.merchantUser);
-          //     window.localStorage.setItem('userInfo-merchant', merchantUser);
-
-          //     g.fun.getMenuList(() => {
-
-          //         this.$router.replace({
-          //             path: g.menuModel.list[0].url,
-          //             query: {
-          //                 roleType: g.menuModel.list[0].menuName.indexOf('-') !== -1
-          //                     ? g.menuModel.list[0].menuName.substring(g.menuModel.list[0].menuName.length - 1, g.menuModel.list[0].menuName.length) : '',
-          //             },
-          //         });
-          //     });
-
-          // }).catch(() => {
-          //     this.loading = false;
-          //     this.ruleForm = {
-          //         account: '',
-          //         password: '',
-          //     };
-          // });
-        } else {
-          return false;
-        }
-      });
+    onClick_passwdLogin() {
+      if (!this.ruleForm.phone) {
+        this.$alert("请输入账号");
+        return;
+      }
+      if (!this.ruleForm.password) {
+        this.$alert("请输入密码");
+        return;
+      }
+      api
+        .login({
+          password: this.ruleForm.password,
+          loginType: 1,
+          id: 40290,
+          userName: this.ruleForm.phone
+        })
+        .then(res => {
+          if (this.$route.query.redirect) {
+            this.$router.push({ path: `${this.$route.query.redirect}` });
+          } else {
+            this.$router.push(`/index`);
+          }
+        })
+        .catch(err => {
+          this.$alert(err);
+        });
+    },
+    onClick_codeLogin() {
+      if (!this.ruleForm2.phone) {
+        this.$alert("请输入手机号");
+        return;
+      }
+      if (!this.ruleForm2.verification) {
+        this.$alert("请输入验证码");
+        return;
+      }
+      api
+        .login({
+          loginType: 2,
+          代码: this.ruleForm2.verification,
+          id: 40290,
+          userName: this.ruleForm2.phone
+        })
+        .then(res => {
+          if (this.$route.query.redirect) {
+            this.$router.push({ path: `${this.$route.query.redirect}` });
+          } else {
+            this.$router.push(`/index`);
+          }
+        })
+        .catch(err => {
+          this.$alert(err);
+        });
     }
+    // onClick_login(formName) {
+    //   this.$refs[formName].validate(valid => {
+    //     if (valid) {
+    //       this.loading = true;
+    //       api
+    //         .login({
+    //           loginAccount: this.ruleForm.account,
+    //           loginPassword: this.ruleForm.password
+    //         })
+    //         .then(result => {
+    //           this.loading = false;
+    //           window.localStorage.setItem(
+    //             "token-merchant",
+    //             result.object.userToken
+    //           );
+    //           let merchantUser = JSON.stringify(result.object.merchantUser);
+    //           window.localStorage.setItem("userInfo-merchant", merchantUser);
+
+    //           g.fun.getMenuList(() => {
+    //             this.$router.replace({
+    //               path: g.menuModel.list[0].url,
+    //               query: {
+    //                 roleType:
+    //                   g.menuModel.list[0].menuName.indexOf("-") !== -1
+    //                     ? g.menuModel.list[0].menuName.substring(
+    //                         g.menuModel.list[0].menuName.length - 1,
+    //                         g.menuModel.list[0].menuName.length
+    //                       )
+    //                     : ""
+    //               }
+    //             });
+    //           });
+    //         })
+    //         .catch(() => {
+    //           this.loading = false;
+    //           this.ruleForm = {
+    //             account: "",
+    //             password: ""
+    //           };
+    //         });
+    //     } else {
+    //       return false;
+    //     }
+    //   });
+    // }
   }
 };
 </script>

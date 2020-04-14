@@ -1,7 +1,7 @@
 <template>
   <div class="main_page">
     <div class="tab_head">
-      <span class="title">菜单管理</span>
+      <span class="title">商应小程序菜单</span>
     </div>
 
     <div class="table_box">

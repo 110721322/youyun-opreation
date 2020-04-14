@@ -8,7 +8,6 @@
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
     <div class="right-menu">
       <template>
-
         <search id="header-search" class="right-menu-item" />
         <img src="@/assets/img/ding.png" class="search_img" @click.stop="click" />
 
@@ -31,6 +30,7 @@
 </template>
 
 <script>
+import api from "@/api/api_login";
 // import Hamburger from './Head/index.vue'
 import Breadcrumb from "./breadcrumb.vue";
 // import Screenfull from "./Screenfull/index.vue";
@@ -51,8 +51,17 @@ export default {
       EventBus.$emit("decreased", {});
     },
     async logout() {
-      await this.$store.dispatch("user/logout");
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+      // await this.$store.dispatch("user/logout");
+      api
+        .out({
+          userToken: localStorage.getItem("token-merchant")
+        })
+        .then(res => {
+          this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+        })
+        .catch(err => {
+          this.$message(err);
+        });
     }
   }
 };
@@ -71,7 +80,7 @@ export default {
     height: 100%;
     float: left;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background-color 0.3s;
     -webkit-tap-highlight-color: transparent;
 
     &:hover {
@@ -96,19 +105,19 @@ export default {
     &:focus {
       outline: none;
     }
-    .search_img{
-      margin:15px 15px 0 0;
-      width:22px;
-      float:left
+    .search_img {
+      margin: 15px 15px 0 0;
+      width: 22px;
+      float: left;
     }
     .right-menu-item {
-      display: inline-block;
+      // display: inline-block;
       padding: 0 8px;
       height: 100%;
       font-size: 18px;
       color: #5a5e66;
       vertical-align: text-bottom;
-      float:left;
+      float: left;
       &.hover-effect {
         cursor: pointer;
         transition: background 0.3s;
@@ -125,8 +134,8 @@ export default {
       .avatar-wrapper {
         margin-top: 5px;
         position: relative;
-        margin-right:20px;
-      .name{
+        margin-right: 20px;
+        .name {
           width: 40px;
           height: 40px;
           display: inline-block;
@@ -139,7 +148,7 @@ export default {
           width: 40px;
           height: 40px;
           border-radius: 10px;
-          margin-right:10px
+          margin-right: 10px;
         }
 
         .el-icon-caret-bottom {
