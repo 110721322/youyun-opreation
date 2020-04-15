@@ -12,7 +12,7 @@
       </div>
       <div class="title">{{ item.title }}</div>
       <div class="detail" :style="{width:cssConfig.detailWidth}">
-        <div v-for="(item1,index1) in listData[index].detail" :key="index1">
+        <div v-for="(item1,index1) in item.detail" :key="index1">
           <div
             v-if="item1.label==='失败原因'"
             class="reason ellipsis"
@@ -25,11 +25,11 @@
         </div>
       </div>
       <div v-if="type===1" class="oper-box">
-        <el-button type="primary" class="btn" @click="onClick_communication(listData[index])">立即沟通</el-button>
+        <el-button type="primary" class="btn" @click="onClick_communication(item)">立即沟通</el-button>
       </div>
       <div v-if="type===2" class="oper-box">
-        <el-button type="primary" class="btn_agree" @click="onClick_pass(listData[index])">同意</el-button>
-        <el-button plain class="btn_refuse" @click="onClick_reject(listData[index])">拒绝</el-button>
+        <el-button type="primary" class="btn_agree" @click="onClick_pass(item)">同意</el-button>
+        <el-button plain class="btn_refuse" @click="onClick_reject(item)">拒绝</el-button>
       </div>
 
       <div v-if="type===3" class="oper-box">
@@ -94,11 +94,14 @@ export default {
 .list-box {
   display: flex;
   flex-wrap: wrap;
+  height: 500px;
+  align-content: flex-start;
+  overflow: auto;
   .item {
     position: relative;
-    margin-top: 24px;
+    margin-bottom: 24px;
     padding: 16px 24px;
-    width: 484px;
+    width: 48%;
     height: 236px;
     background: rgba(255, 255, 255, 1);
     border-radius: 2px;
@@ -131,10 +134,10 @@ export default {
       color: rgba(144, 147, 153, 1);
       line-height: 22px;
       .reason {
-        width: 270px;
+        width: 80%;
       }
       .note {
-        width: 225px;
+        width: 80%;
       }
     }
     .oper-box {

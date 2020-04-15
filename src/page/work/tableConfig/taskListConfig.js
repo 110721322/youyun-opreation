@@ -5,7 +5,7 @@ export const TASKLIST_CONFIG = {
   handleType: 3,
   dailyCssConfig: {
     itemHeight: "236px",
-    detailWidth: "357px"
+    detailWidth: "90%"
   },
   approvalCssConfig: {
     itemHeight: "192px",

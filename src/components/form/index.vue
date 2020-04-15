@@ -12,16 +12,18 @@
     >
       <slot name="form-item"></slot>
       <slot name="btn"></slot>
-      <el-form-item
-        v-for="formItem in formBaseData"
-        :key="formItem.key"
-        class="formTemplate-item"
-        :prop="formItem.key"
-        :label="formItem.label+(formItem.hideColon?'':':')"
-        :rules="formItem.rules"
-      >
-        <components :is="transType(formItem.type)" :rule-form="ruleForm" :form-item="formItem"></components>
-      </el-form-item>
+      <template v-for="formItem in formBaseData">
+        <el-form-item
+          v-if="formItem.isShow?formItem.isShow(ruleForm):true"
+          :key="formItem.key"
+          class="formTemplate-item"
+          :prop="formItem.key"
+          :label="formItem.label+(formItem.hideColon?'':':')"
+          :rules="formItem.rules"
+        >
+          <components :is="transType(formItem.type)" :rule-form="ruleForm" :form-item="formItem"></components>
+        </el-form-item>
+      </template>
     </el-form>
     <div v-if="showFootBtn" class="foot_btn_box">
       <el-button class="foot_btn" type="primary" @click="handleClick">{{ footBtnLabel }}</el-button>

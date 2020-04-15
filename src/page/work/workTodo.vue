@@ -54,7 +54,7 @@
                     ></el-option>
                   </el-select>
                 </el-input>
-                <div class="btn_list" style="margin-bottom:0">
+                <div class="btn_list">
                   <el-button type="primary" size="large" @click="onClick_search">搜索</el-button>
                   <el-button plain size="large" @click="onClick_reset">重置</el-button>
                   <el-button
@@ -96,7 +96,7 @@
 
           <div v-if="isCheck" class="check-bottom">
             <span class="confim_text">请选择要批量沟通的任务（已选 {{ checkedListLength }} 个任务）</span>
-            <el-button plain class="confim_btn">确定</el-button>
+            <el-button plain class="confim_btn" @click="onClick_multiCommunacation">确定</el-button>
             <span class="cancel_btn" @click="onClick_cancelCheckAll">取消</span>
             <span class="checkall_btn" @click="onClick_doCheckAll">全选</span>
           </div>
@@ -108,7 +108,8 @@
       <Form
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
-        label-width="130px"
+        label-width="110px"
+        :foot-btn-label="fromConfigData.footBtnLabel"
         @cancel="cancel"
         @confirm="confirm"
       ></Form>
@@ -196,7 +197,11 @@ export default {
       defaultProps: {
         children: "children",
         taskValue: "taskValue"
-      }
+      },
+      activityRow: {},
+      formStatus: null,
+      // 待办事项类型，1日常任务2审批任务
+      undo_type: 1
     };
   },
   watch: {
@@ -245,6 +250,59 @@ export default {
       this.drawer = false;
     },
     confirm() {
+      switch (this.formStatus) {
+        case "insertTalkPlan":
+          api
+            .insertTalkPlan({
+              addressBookId: 1,
+              type: "",
+              taskIds: [
+                {
+                  taskId: "",
+                  taskOwner: ""
+                }
+              ],
+              remark: "",
+              nextContactTime: "",
+              remindTime: "",
+              remindType: "",
+              operationId: 1,
+              undoType: 1,
+              taskType: 1
+            })
+            .then(res => {
+              console.log(res);
+            })
+            .catch();
+          break;
+        case "insertMultiTalkPlan":
+          api
+            .insertTalkPlan({
+              addressBookId: 1,
+              type: "",
+              taskIds: [
+                {
+                  taskId: "",
+                  taskOwner: ""
+                }
+              ],
+              remark: "",
+              nextContactTime: "",
+              remindTime: "",
+              remindType: "",
+              operationId: 1,
+              undoType: 1,
+              taskType: 1
+            })
+            .then(res => {
+              console.log(res);
+            })
+            .catch();
+          break;
+
+        default:
+          break;
+      }
       this.drawer = false;
     },
     handleCurrentChange(page) {
@@ -255,13 +313,23 @@ export default {
       this.currentPageSize = size;
       this.getTableData();
     },
-    handleCommunication() {
+    handleCommunication($data) {
+      this.activityRow = $data;
+      this.formStatus = "insertTalkPlan";
       this.drawer = true;
     },
-    handlePass() {
+    onClick_multiCommunacation($data) {
+      if (this.checkList.length === 0) {
+        return;
+      }
+      this.activityRow = this.checkList;
+      this.formStatus = "insertMultiTalkPlan";
       this.drawer = true;
     },
-    handleReject() {
+    handlePass($data) {
+      this.drawer = true;
+    },
+    handleReject($data) {
       this.drawer = true;
     },
     queryAllTaskMenu(params, fn) {
@@ -276,30 +344,6 @@ export default {
     queryAllTaskTypeList() {
       api
         .queryAllTaskTypeList({})
-        .then(res => {
-          console.log(res);
-        })
-        .catch();
-    },
-    insertTalkPlan() {
-      api
-        .insertTalkPlan({
-          addressBookId: 1,
-          type: "",
-          taskIds: [
-            {
-              taskId: "",
-              taskOwner: ""
-            }
-          ],
-          remark: "",
-          nextContactTime: "",
-          remindTime: "",
-          remindType: "",
-          operationId: 1,
-          undoType: 1,
-          taskType: 1
-        })
         .then(res => {
           console.log(res);
         })
@@ -362,13 +406,10 @@ export default {
         },
         res => {
           this.menuConfig[1].children = res.object.datas;
+          this.dataTotal = res.object.totalCount;
           console.log(res);
         }
       );
-    },
-    go_detail() {
-      // eslint-disable-next-line no-console
-      this.$router.push("/agent/list/detail");
     },
     onClick_search() {},
     handleSelect($item) {
@@ -379,7 +420,7 @@ export default {
           this.currentStatus = "dailyPending";
           break;
         case "2":
-          this.status = "undo";
+          this.status = "done";
           this.currentStatus = "dailyProcessed";
           break;
         case "3":
@@ -426,14 +467,12 @@ export default {
           status: ""
         })
         .then(res => {
-          debugger;
           this.listData = res.datas;
         })
         .catch(err => {
           console.error(err);
         });
-    },
-    search($form, $obj) {}
+    }
   }
 };
 </script>
@@ -446,8 +485,9 @@ export default {
   margin-top: 25px;
 }
 .btn_list {
-  margin-left: 24px;
-  display: inline-block;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 .input-with-select {
   width: 490px;
@@ -469,12 +509,14 @@ export default {
   height: 88px;
   background: rgba(255, 255, 255, 1);
   padding: 24px;
+  margin-bottom: 24px;
 }
 .content-box {
   position: relative;
+  width: 100%;
 }
 .form-box {
-  padding: 24px;
+  padding: 24px 24px 0;
 }
 .check-bottom {
   position: absolute;
