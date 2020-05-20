@@ -58,6 +58,7 @@ export const SEARCH_CONFIG = {
       urlOptions: {
         url: api.queryAllPrivilege,
         keyName: 'privilege',
+        valueName: 'privilegeDesc',
         method: 'get'
       }
     }

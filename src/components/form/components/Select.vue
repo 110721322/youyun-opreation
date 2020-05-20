@@ -3,9 +3,9 @@
     <el-select
       v-model="ruleForm[formItem.key]"
       :multiple="isArray(formItem.initVal)"
-      :filterable="!formItem.options"
+      :filterable="formItem.isSearch"
       :clearable="selectClearable"
-      :remote="!formItem.options"
+      :remote="formItem.isSearch"
       :placeholder="placeholder"
       :remote-method="remoteMethod"
       :style="selectStyle"
@@ -21,9 +21,7 @@
 </template>
 
 <script>
-// import { isArr } from '@/utils'
 import * as g from "@/libs/global";
-import { getOptionsByUrl } from "@/libs/kit/formFns";
 
 export default {
   name: "",
@@ -33,31 +31,19 @@ export default {
     remoteMethod: Function
   },
   data() {
-    return {};
+    return {
+      selectOptions: []
+    };
   },
   computed: {
     selectStyle() {
       const item = this.formItem;
       return item.style ? item.style : "";
     },
-    selectOptions() {
-      const { options, urlOptions } = this.formItem;
-      if (!options && !urlOptions) {
-        throw new ReferenceError(
-          'options or urlOptions" does not exist.open fn.js and add it'
-        );
-      }
-      if (options) {
-        return options;
-      } else {
-        const data = getOptionsByUrl(urlOptions);
-        return data;
-        // jiekouna
-      }
-    },
+
     placeholder() {
       const item = this.formItem;
-      return item.placeholder ? item.placeholder : `请输入${item.label}`;
+      return item.placeholder ? item.placeholder : `请选择${item.label}`;
     },
     selectClass() {
       const item = this.formItem;
@@ -68,11 +54,41 @@ export default {
       return item.clearable ? item.clearable : false;
     }
   },
-  created() {},
+  created() {
+    this.selectOptionsFun();
+  },
 
   methods: {
     isArray(value) {
       return g.utils.isArr(value);
+    },
+    selectOptionsFun() {
+      const { options, urlOptions } = this.formItem;
+      if (!options && !urlOptions) {
+        throw new ReferenceError(
+          'options or urlOptions" does not exist.open fn.js and add it'
+        );
+      }
+      if (options) {
+        this.selectOptions = options;
+      } else {
+        urlOptions
+          .url({})
+          .then(res => {
+            const newArr = [];
+            for (const item of res.object) {
+              newArr.push({
+                value: item[urlOptions.keyName],
+                label: item[urlOptions.valueName]
+              });
+            }
+            console.log(newArr);
+            this.selectOptions = newArr;
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
     }
   }
 };
