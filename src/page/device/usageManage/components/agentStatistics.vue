@@ -55,7 +55,7 @@ export default {
         provinceCode: "哈拉0冬85数",
         regionCode: "d6猪美3"
       },
-      api: api.deviceAgentQueryByPage
+      api: api.deviceDataQueryByPage
     };
   },
   mounted() {},

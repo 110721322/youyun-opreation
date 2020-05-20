@@ -27,7 +27,6 @@
           :grid-edit-width="150"
           :is-async="true"
           :is-select="false"
-          :is-expand="false"
           :row-key="'id'"
           :default-expand-all="false"
           :hide-edit-area="configData.hideEditArea"

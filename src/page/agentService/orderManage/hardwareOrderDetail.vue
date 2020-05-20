@@ -108,7 +108,7 @@ export default {
       },
       ruleForm3: {
         outputNo: "1",
-        name1: "2",
+        createTime: "2020-01-11",
         agentName: "3",
         amount: "3",
         statusDesc: "3"
@@ -122,7 +122,7 @@ export default {
           },
           {
             name: "创建时间",
-            key: "name1"
+            key: "createTime"
           },
           {
             name: "购买服务商",
@@ -138,7 +138,7 @@ export default {
           },
           {
             name: "订单备注",
-            key: "name1"
+            key: "createTime"
           }
         ]
       },
@@ -196,7 +196,7 @@ export default {
         }
         this.ruleForm3 = {
           outputNo: res.object.outputNo,
-          name1: "2",
+          createTime: "2020-01-12",
           agentName: res.object.agentName,
           amount: res.object.amount,
           statusDesc: res.object.statusDesc

@@ -285,26 +285,26 @@ export default {
      * 获取深层次的数组
      * keyName需要为a.b.c 对应data[a][b][c]
      */
-  // getDeepArr(data, keyName) {
-  // if (isUndefined(keyName) || isNull(keyName)) {
-  //     // 没有对象数组键名
-  //     // 直接返回data数组
-  //     if (this.isArr(data)) return data
-  //     throwError("the data is not an Array, please provide the keyName to match correct Array");
-  // } else {
-  //     const keyList = keyName.split(',')
-  //     let value = data
-  //     for (const iterator of keyList) {
-  //         if (!value.hasOwnProperty(iterator) || isUndefined(value)) {
-  //             throwError("please check the keyName's level")
-  //         }
-  //         value = value[iterator]
-  //     }
-  //     if (this.isArr(value)) return value
-  //     throwError("the data is not an Array, please provide the keyName to match correct Array");
-  // }
-
-  // },
+  getDeepArr(data, keyName) {
+    // debugger;
+    if (isUndefined(keyName) || isNull(keyName)) {
+        // 没有对象数组键名
+        // 直接返回data数组
+        if (this.isArr(data)) return data
+        throwError("the data is not an Array, please provide the keyName to match correct Array");
+    } else {
+        const keyList = keyName.split(',')
+        let value = data
+        for (const iterator of keyList) {
+            if (!value.hasOwnProperty(iterator) || isUndefined(value)) {
+                throwError("please check the keyName's level")
+            }
+            value = value[iterator]
+        }
+        if (this.isArr(value)) return value
+        throwError("the data is not an Array, please provide the keyName to match correct Array");
+    }
+  },
 
   throwError(msg) {
     throw new ReferenceError(msg);

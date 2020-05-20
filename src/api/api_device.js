@@ -30,7 +30,7 @@ export default {
   queryMccTrade: (params) => API.GET('/operation/v1/deviceData/queryMccTrade', params),
   queryDetail: (params) => API.GET('/operation/v1/deviceData/queryDetail', params),
   queryProcessLife: (params) => API.GET('/operation/v1/deviceData/queryProcessLife', params),
-  deviceAgentQueryByPage: (params) => API.GET('/operation/v1/deviceAgent/queryByPage', params),
+  deviceDataQueryByPage: (params) => API.GET('/operation/v1/deviceData/queryByPage', params),
   deviceMerchantQueryByPage: (params) => API.GET('/operation/v1/deviceMerchant/queryByPage', params),
   unbind: (params) => API.POST('/operation/v1/deviceMerchant/unbind', params),
   unfreeze: (params) => API.POST('/operation/v1/deviceMerchant/unfreeze', params),

@@ -5,6 +5,7 @@ export const SEARCH_CONFIG = {
       label: '广告类型',
       key: 'advertType',
       style: 'width:294px',
+      // 下拉列表请求数据接口
       options: [
         {
           label: '川菜',

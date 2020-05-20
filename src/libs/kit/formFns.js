@@ -125,19 +125,33 @@ export const clearFormData = (obj, keys) => {
 /**
  * 通过请求获取选项列表
  */
-export const getOptionsByUrl = urlOptions => {
-  const { url, method, keyName } = urlOptions
-  const p = () =>
-    axios({
-      url,
-      method
-    })
-  return p()
-    .then(res => {
-      const data = res.data.data
-      const result = g.utils.getDeepArr(data, keyName)
-      return result
-    })
-    .catch(() => {
-    })
-}
+// export const getOptionsByUrl = urlOptions => {
+//   const { url, method, keyName } = urlOptions;
+
+
+
+//   url({}).then(res => {
+//     return res.object;
+//   })
+//   .catch(err => {
+//     console.error(err);
+//   });
+//   // const p = () =>
+//   //   axios({
+//   //     url,
+//   //     method
+//   //   })
+
+//   // return p()
+//   //   .then(res => {
+//   //     debugger;
+//   //     // const data = res.data.data
+//   //     // debugger;
+//   //     // const result = g.utils.getDeepArr(data, keyName)
+//   //     // console.log('result', result);
+//   //     // return result
+//   //   })
+//   //   .catch((res) => {
+//   //     debugger
+//   //   })
+// }

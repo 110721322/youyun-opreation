@@ -42,5 +42,7 @@ export default {
   updateOfFrozen: (params) => API.GET('/operation/v1/agentOpenConfig/updateOfFrozen', params),
   updateOfUnFrozen: (params) => API.GET('/operation/v1/agentOpenConfig/updateOfUnFrozen', params),
   add: (params) => API.GET('/operation/v1/agentOpenConfig/add', params),
-  update: (params) => API.GET('/operation/v1/agentOpenConfig/update', params)
+  update: (params) => API.GET('/operation/v1/agentOpenConfig/update', params),
+  // 平台广告列表-广告类型下拉列表接口
+  queryAllAdvertType: (params) => API.GET('/operation/v1/advert/queryAllAdvertType', params)
 };

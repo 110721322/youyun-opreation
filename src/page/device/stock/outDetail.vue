@@ -18,7 +18,7 @@
         <detailMode :key="1" :rule-form="ruleForm" :config-data="configData"></detailMode>
       </div>
       <div v-if="activeIndex == '2'">
-        <detailMode :key="2" :rule-form="ruleForm" :config-data="configData2"></detailMode>
+        <detailMode :key="2" :rule-form="ruleForm2" :config-data="configData2"></detailMode>
 
         <!-- <detailBox title="商品信息">
           <div class="table_box">
