@@ -30,7 +30,7 @@
         <el-button class="foot_btn">取消</el-button>
       </div>
     </el-form>
-    <el-drawer :append-to-body="true" :visible.sync="innerDrawer" :with-header="false" size="30%">
+    <el-drawer :append-to-body="true" :visible.sync="innerDrawer" :with-header="false" size="40%">
       <power-set></power-set>
     </el-drawer>
   </div>

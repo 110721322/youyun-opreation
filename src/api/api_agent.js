@@ -29,11 +29,17 @@ export default {
   queryAllPrivilege: (params) => API.GET('/operation/v1/advertPrivilege/queryAllPrivilege', params),
   advertList: (params) => API.GET('/operation/v1/advert/queryByPage', params),
   advertDelete: (params) => API.GET('/operation/v1/advert/delete', params),
-  advertAdd: (params) => API.GET('/operation/v1/advert/add', params),
-  advertUpdate: (params) => API.GET('/operation/v1/advert/update', params),
+  advertAdd: (params) => API.POST('/operation/v1/advert/add', params),
+  advertUpdate: (params) => API.POST('/operation/v1/advert/update', params),
   queryById: (params) => API.GET('operation/v1/advertDistribute/queryById', params),
-  putList: (params) => API.GET('/operation/v1/advertDistribute/queryByPage', params),
-  advertDistributeAdd: (params) => API.GET('/operation/v1/advertDistribute/add', params),
+  queryAllDistributeName: (params) => API.GET('operation/v1/advertDistribute/queryAllDistributeName', params),
+  queryAllPrivilegeType: (params) => API.GET('/operation/v1/advertDistribute/queryAllPrivilegeType', params),
+  queryAllDistributeAgent: (params) => API.GET('/operation/v1/advertDistribute/queryAllDistributeAgent', params),
+  queryAllAdvertDistributeType: (params) => API.GET('/operation/v1/advertDistribute/queryAllAdvertDistributeType', params),
+
+  advertQueryById: (params) => API.GET('operation/v1/advert/queryById', params),
+  putList: (params) => API.POST('/operation/v1/advertDistribute/queryByPage', params),
+  advertDistributeAdd: (params) => API.POST('/operation/v1/advertDistribute/add', params),
   advertDistributeUpdate: (params) => API.GET('/operation/v1/advertDistribute/update', params),
   // 运营结算审核
   listOperationSettle: (params) => API.GET('/operation/v1/agentSettle/listOperationSettle', params),
@@ -44,5 +50,6 @@ export default {
   add: (params) => API.GET('/operation/v1/agentOpenConfig/add', params),
   update: (params) => API.GET('/operation/v1/agentOpenConfig/update', params),
   // 平台广告列表-广告类型下拉列表接口
-  queryAllAdvertType: (params) => API.GET('/operation/v1/advert/queryAllAdvertType', params)
+  queryAllAdvertType: (params) => API.GET('/operation/v1/advert/queryAllAdvertType', params),
+  queryAllOperation: (params) => API.GET('/operation/v1/advertPrivilege/queryAllOperation', params)
 };

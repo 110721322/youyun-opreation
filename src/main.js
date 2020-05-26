@@ -3,8 +3,6 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'babel-polyfill';
 
-// import animated from 'animate.css';
-// import './assets/img/icon-font/iconfont.css'; // icon图
 import VueQrcode from '@chenfengyuan/vue-qrcode';
 import router from './router';
 import App from './App.vue';
@@ -51,6 +49,7 @@ function setWindowAttribute ($attr, $value) {
   }
 
   if (process.env.NODE_ENV === 'development') {
+    console.log('进入', process.env.NODE_ENV);
     window[$attr] = $value;
   }
 }

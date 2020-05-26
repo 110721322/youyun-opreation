@@ -31,7 +31,7 @@
       <el-button type="primary" class="add_area" @click="onClick_addArea">添加大区类型</el-button>
     </DetailBox>
 
-    <el-drawer :visible.sync="drawer" :with-header="false">
+    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
         :form-base-data="fromConfigData.formData"

@@ -1,5 +1,5 @@
 <template>
-  <div class>
+  <div class="">
     <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
     <div v-else>
       <div class="tab_head">
@@ -11,13 +11,13 @@
         :form-base-data="searchConfig.formData"
         @search="search"
       />
-
       <div class="table_box">
         <div class="tabale_title_box">
           <div class="title">广告列表</div>
           <el-button class="btn" type="primary" @click="onClick_addAd">新增广告</el-button>
         </div>
         <BaseCrud
+          ref="table"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
           :grid-data="testData"
@@ -58,7 +58,7 @@ export default {
       testData: [],
       direction: "rtl",
       params: {
-        advertType: 144
+        advertType: null
       },
       api: api.advertList
     };
@@ -73,30 +73,7 @@ export default {
       };
     },
     getTableData() {
-      this.testData = [
-        {
-          service: "日常任务",
-          serviceid: "商户结算失败",
-          superService: "4",
-          superid: "提醒",
-          merchantNum: "XXXX店铺",
-          oper: "20:00:23",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg"
-        },
-        {
-          service: "日常任务",
-          serviceid: "商户结算失败",
-          superService: "4",
-          superid: "提醒",
-          merchantNum: "XXXX店铺",
-          oper: "20:00:23",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg"
-        }
-      ];
+      this.testData = [];
     },
     onClick_remove(row) {
       this.$confirm("确认删除该广告吗", "提示", {
@@ -109,6 +86,7 @@ export default {
               id: row.id
             })
             .then(res => {
+              this.$refs.table.getData();
               this.$message({
                 type: "success",
                 message: "删除成功!"

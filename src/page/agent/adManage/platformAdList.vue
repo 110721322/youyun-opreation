@@ -65,30 +65,7 @@ export default {
       console.log(this.ruleForm);
     },
     getTableData() {
-      this.testData = [
-        {
-          service: "日常任务",
-          serviceid: "商户结算失败",
-          superService: "4",
-          superid: "提醒",
-          merchantNum: "XXXX店铺",
-          oper: "20:00:23",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg"
-        },
-        {
-          service: "日常任务",
-          serviceid: "商户结算失败",
-          superService: "4",
-          superid: "提醒",
-          merchantNum: "XXXX店铺",
-          oper: "20:00:23",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg"
-        }
-      ];
+      this.testData = [];
     },
     onClick_remove() {
       this.$confirm("确认删除该广告吗", "提示", {

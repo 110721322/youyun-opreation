@@ -1,12 +1,16 @@
 <template>
-  <div class>
+  <div class="">
     <div class="tab_head">
       <span class="title">广告权限</span>
     </div>
-    <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
-
+    <Search
+      :open-height="searchHeight"
+      :form-base-data="searchConfig.formData"
+      @search="search"
+    />
     <div class="table_box">
       <BaseCrud
+        ref="table"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
         :grid-data="testData"
@@ -24,9 +28,10 @@
         @editAuth="handleEditAuth"
       ></BaseCrud>
     </div>
-    <el-drawer :visible.sync="drawer" :with-header="false">
+    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
+        v-if="drawer"
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
         label-width="130px"
@@ -54,36 +59,45 @@ export default {
       searchConfig: SEARCH_CONFIG,
       configData: TABLE_CONFIG,
       testData: [],
-      direction: "rtl",
       searchHeight: "260",
       drawer: false,
+      rowAgentNo: "",
       params: {
-        agentName: "",
         agentNo: "",
+        agentName: "",
         cityCode: "",
-        operationId: 0,
-        privilege: 0,
+        operationId: null,
+        privilege: null,
         provinceCode: ""
       },
       api: api.advertPrivilege
     };
   },
   mounted() {
-    this.getTableData();
   },
   methods: {
-    handleEditAuth() {
+    handleEditAuth($row) {
+      console.log('$rowww', $row);
+      this.rowAgentNo = $row.agentNo;
       this.drawer = true;
+      // 编辑前重赋值
+      FORM_CONFIG.formData.formData.forEach((item, index) => {
+        item.initVal = $row.privilege;
+      });
       this.fromConfigData = FORM_CONFIG.formData;
     },
     confirm($ruleForm) {
+      console.log("ruleForm值", $ruleForm);
       api
         .advertPrivilegeUpdate({
-          agentNo: "",
+          agentNo: this.rowAgentNo,
           privilegeList: $ruleForm.baseData
         })
         .then(res => {
-          this.drawer = false;
+          if (res.object) {
+            this.$refs.table.getData();
+            this.drawer = false;
+          }
         });
     },
     cancel() {
@@ -98,41 +112,13 @@ export default {
         privilege: $ruleForm.privilege,
         provinceCode: ""
       };
+      console.log("查询", $ruleForm);
       this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      console.log("1233", this.params);
       if ($ruleForm.area) {
         this.params.cityCode = $ruleForm.area[1];
         this.params.provinceCode = $ruleForm.area[0];
       }
-    },
-    getTableData() {
-      this.testData = [
-        {
-          service: "紫菜网络科技有限公司",
-          merchant: "AA",
-          status: "待签约",
-          time: "2019/9/23 16:23:22",
-          oper: "FFF",
-          showPreApprove: true
-        },
-        {
-          service: "紫菜网络科技有限公司",
-          merchant: "AA",
-          status: "待签约",
-          time: "2019/9/23 16:23:22",
-          oper: "FFF",
-          showDetail: true,
-          showPass: true,
-          showReject: true
-        },
-        {
-          service: "紫菜网络科技有限公司",
-          merchant: "AA",
-          status: "待签约",
-          time: "2019/9/23 16:23:22",
-          oper: "FFF",
-          showDetail: true
-        }
-      ];
     }
   }
 };

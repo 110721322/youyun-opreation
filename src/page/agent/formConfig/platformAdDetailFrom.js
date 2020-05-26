@@ -9,7 +9,6 @@ export const FORM_CONFIG = {
         type: 0,
         label: '广告名称',
         key: 'name7',
-        initVal: 'pdd',
         style: 'width:364px',
         rules: setRules('广告名称').isRequired.get
       },
@@ -17,7 +16,6 @@ export const FORM_CONFIG = {
         type: 1,
         label: '广告类型',
         key: 'food',
-        initVal: [],
         options: [
           {
             label: '川菜',
@@ -37,7 +35,6 @@ export const FORM_CONFIG = {
         type: 6,
         label: '广告图片',
         key: 'name8',
-        initVal: 'pdd',
         rules: setRules('广告图片').isRequired.get
       }
     ]

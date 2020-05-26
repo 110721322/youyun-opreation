@@ -147,7 +147,7 @@
       ></BaseCrud>
     </div>
 
-    <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false">
+    <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size="40%">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
         :form-base-data="fromConfigData.formData"

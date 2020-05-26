@@ -22,7 +22,7 @@
       ></BaseCrud>
     </div>
 
-    <el-drawer :visible.sync="drawer" :with-header="false">
+    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
       <div class="p_head">小程序角色权限</div>
       <el-tree
         :data="data"

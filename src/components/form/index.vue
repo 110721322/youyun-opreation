@@ -1,9 +1,9 @@
 <template>
-  <div class>
+  <div class="">
     <el-form
       ref="formTep"
       class="formTemplate"
-      size
+      size=""
       :inline="false"
       :label-position="labelPosition"
       :model="ruleForm"
@@ -129,9 +129,10 @@ export default {
   methods: {
     init() {
       // 初始化 绑定初始值
-      this.ruleForm = {};
+      this.ruleForm = {}
       if (this.formBaseData.length > 0) {
         for (const iterator of this.formBaseData) {
+          console.log("iterator", iterator);
           let initVal = iterator.initVal;
           if (g.utils.isUndefined(initVal)) {
             initVal = null;

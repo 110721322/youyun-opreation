@@ -1,4 +1,5 @@
 import { setRules } from '@/libs/kit/formFns.js'
+import apiAgent from "@/api/api_agent.js";
 
 export const FORM_CONFIG = {
   addData: {
@@ -8,44 +9,24 @@ export const FORM_CONFIG = {
       {
         type: 1,
         label: '投放广告类型',
-        key: 'type',
-        initVal: "0",
-        options: [
-          {
-            label: '川菜',
-            value: '0'
-          },
-          {
-            label: '粤菜',
-            value: '1'
-          },
-          {
-            label: '杭帮菜',
-            value: '2'
-          }
-        ],
-        rules: setRules('广告名称').isRequired.get
+        key: 'advertType',
+        urlOptions: {
+          url: apiAgent.queryAllAdvertType,
+          keyName: 'advertType',
+          valueName: 'advertTypeDesc',
+          method: 'get'
+        }
       },
       {
         type: 1,
         label: '投放广告名称',
-        key: 'name',
-        initVal: "0",
-        options: [
-          {
-            label: '川菜',
-            value: '0'
-          },
-          {
-            label: '粤菜',
-            value: '1'
-          },
-          {
-            label: '杭帮菜',
-            value: '2'
-          }
-        ],
-        rules: setRules('广告名称').isRequired.get
+        key: 'id',
+        urlOptions: {
+          url: apiAgent.queryAllDistributeName,
+          keyName: 'id',
+          valueName: 'advertName',
+          method: 'get'
+        }
       },
       {
         type: 3,
@@ -74,26 +55,12 @@ export const FORM_CONFIG = {
         type: 5,
         label: '投放服务商',
         key: 'putService',
-        initVal: 0,
-        options: [
-          {
-            label: '所有服务商',
-            value: 0
-          },
-          {
-            label: '有权限服务商',
-            value: 1
-          },
-          {
-            label: '无权限服务商',
-            value: 2
-          },
-          {
-            label: '其他服务商',
-            value: 3
-          }
-        ],
-        rules: setRules('投放服务商').isRequired.get
+        urlOptions: {
+          url: apiAgent.queryAllAdvertDistributeType,
+          keyName: 'status',
+          valueName: 'statusDesc',
+          method: 'get'
+        }
       }
     ]
   },
@@ -102,46 +69,28 @@ export const FORM_CONFIG = {
     showFootBtn: true,
     formData: [
       {
-        type: "show",
+        type: 1,
         label: '投放广告类型',
-        key: 'type',
-        initVal: "0",
-        options: [
-          {
-            label: '川菜',
-            value: '0'
-          },
-          {
-            label: '粤菜',
-            value: '1'
-          },
-          {
-            label: '杭帮菜',
-            value: '2'
-          }
-        ],
-        rules: setRules('广告名称').isRequired.get
+        key: 'advertType',
+        isDisabled: true,
+        urlOptions: {
+          url: apiAgent.queryAllAdvertType,
+          keyName: 'advertType',
+          valueName: 'advertTypeDesc',
+          method: 'get'
+        }
       },
       {
-        type: "show",
+        type: 1,
         label: '投放广告名称',
-        key: 'name',
-        initVal: "0",
-        options: [
-          {
-            label: '川菜',
-            value: '0'
-          },
-          {
-            label: '粤菜',
-            value: '1'
-          },
-          {
-            label: '杭帮菜',
-            value: '2'
-          }
-        ],
-        rules: setRules('广告名称').isRequired.get
+        key: 'advertName',
+        isDisabled: true,
+        urlOptions: {
+          url: apiAgent.queryAllDistributeName,
+          keyName: 'id',
+          valueName: 'advertName',
+          method: 'get'
+        }
       },
       {
         type: 3,

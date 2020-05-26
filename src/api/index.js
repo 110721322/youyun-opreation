@@ -23,7 +23,7 @@ axios.interceptors.request.use((config) => {
     config.data.merchantNo = localStorage.getItem('userInfo-merchant') ? JSON.parse(localStorage.getItem('userInfo-merchant')).merchantNo : '';
     config.data = qs.stringify(config.data);
   } else if (config.method === 'get') {
-    config.params.merchantNo = localStorage.getItem('userInfo-merchant') ? JSON.parse(localStorage.getItem('userInfo-merchant')).merchantNo : '';
+    // config.params.merchantNo = localStorage.getItem('userInfo-merchant') ? JSON.parse(localStorage.getItem('userInfo-merchant')).merchantNo : '';
   }
   return config;
 }, (error) => {

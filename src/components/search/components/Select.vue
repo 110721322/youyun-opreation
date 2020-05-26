@@ -75,7 +75,9 @@ export default {
         this.selectOptions = options;
       } else {
         urlOptions
-          .url({})
+          .url(
+            urlOptions.params || {}
+          )
           .then(res => {
             const newArr = [];
             for (const item of res.object) {

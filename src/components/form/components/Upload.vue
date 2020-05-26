@@ -22,14 +22,11 @@
     <el-image-viewer v-if="showViewer" :on-close="closeViewer" :url-list="[dialogImageUrl]" />
   </div>
 </template>
+
 <style lang="scss" scoped>
-.avatar-uploader2 {
-  width: 178px;
-  height: 89px;
-}
 
 .avatar-uploader {
-  width: 178px;
+  width: 294px;
   min-height: 178px;
   float: left;
   .avatar {
@@ -44,7 +41,7 @@
 }
 
 .el-upload img {
-  max-width: 178px;
+  max-width: 294px;
 }
 
 .el-upload i {
@@ -122,6 +119,7 @@ export default {
   },
 
   created() {
+    console.log('this.formItem.initVal', this.formItem);
     if (this.formItem.initVal) {
       this.dialogImageUrl = this.formItem.initVal;
     }
@@ -169,7 +167,7 @@ export default {
       formData.append("success_action_status", 200); // 成功后返回的操作码
       this.loading = true;
       // eslint-disable-next-line no-undef
-      $.ajax({
+      jquery.ajax({
         url: this.ossData.ossHost,
         type: "POST",
         data: formData,
@@ -183,8 +181,8 @@ export default {
             this.ossData.objectKeyPrefix + "/" + this.ossData.objectKeys[0];
 
           this.ruleForm[this.formItem.key] = {
-            dialogImagePath: 111,
-            dialogImageUrl: 222
+            dialogImagePath: this.dialogImagePath,
+            dialogImageUrl: this.dialogImageUrl
           };
           this.loading = false;
         },

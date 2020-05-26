@@ -1,5 +1,4 @@
 import utils from '@/libs/kit/utils.js';
-// import fun from './kit/fun';
 
 import devConfig from './config/devConfig';
 import testConfig from './config/testConfig';

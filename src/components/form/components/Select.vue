@@ -8,6 +8,7 @@
       :remote="formItem.isSearch"
       :placeholder="placeholder"
       :remote-method="remoteMethod"
+      :disabled="formItem.isDisabled"
       :style="selectStyle"
     >
       <el-option
@@ -38,7 +39,7 @@ export default {
   computed: {
     selectStyle() {
       const item = this.formItem;
-      return item.style ? item.style : "";
+      return item.style ? item.style : "width:294px";
     },
 
     placeholder() {

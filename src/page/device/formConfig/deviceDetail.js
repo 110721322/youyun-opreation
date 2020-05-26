@@ -1,4 +1,5 @@
 import { setRules } from '@/libs/kit/formFns.js'
+import apiDevice from "@/api/api_device";
 
 export const FORM_CONFIG = {
   deviceData: {
@@ -9,65 +10,49 @@ export const FORM_CONFIG = {
         type: 1,
         label: '设备类型',
         key: 'deviceType',
-        initVal: "",
-        // urlOptions: {
-        //     url: './demo.js',
-        //     keyName: 'records',
-        //     method: 'get'
-        // }
-        options: [
-          {
-            label: '川菜',
-            value: 0
-          },
-          {
-            label: '粤菜',
-            value: 1
-          },
-          {
-            label: '杭帮菜',
-            value: 2
+        urlOptions: {
+          url: apiDevice.queryAllDeviceModel,
+          keyName: 'deviceId',
+          valueName: 'deviceType',
+          method: 'get',
+          params: {
+            classification: 1
           }
-        ]
+        }
       },
       {
         type: 0,
         label: '设备型号',
         key: 'deviceModel',
-        initVal: 'pdd',
-        rules: setRules('邮箱').isRequired.get
+        rules: setRules('设备型号').isRequired.get
       },
       {
         type: 6,
         label: '图片',
         key: 'deviceImg',
-        initVal: 'pdd',
-        rules: setRules('公司名称').isRequired.get
+        rules: setRules('图片').isRequired.get
       },
       {
         type: 0,
         label: '单台设备成本价',
         key: 'costPrice',
-        initVal: 'pdd',
         isShowSlot: true,
         showSlotName: '元',
-        rules: setRules('公司地址').isRequired.get
+        rules: setRules('单台设备成本价').isRequired.get
       },
       {
         type: 0,
         label: '单台设备售卖价',
         key: 'salePrice',
-        initVal: 'pdd',
         isShowSlot: true,
         showSlotName: '元',
-        rules: setRules('法人姓名').isRequired.get
+        rules: setRules('单台设备售卖价').isRequired.get
       },
       {
         type: 0,
         label: '排序',
         key: 'sort',
-        initVal: 'pdd',
-        rules: setRules('法人手机号').isRequired.get
+        rules: setRules('排序').isRequired.get
       }
     ]
   },
@@ -208,26 +193,15 @@ export const FORM_CONFIG = {
         type: 1,
         label: '设备类型',
         key: 'deviceType',
-        initVal: "",
-        // urlOptions: {
-        //     url: './demo.js',
-        //     keyName: 'records',
-        //     method: 'get'
-        // }
-        options: [
-          {
-            label: '川菜',
-            value: 0
-          },
-          {
-            label: '粤菜',
-            value: 1
-          },
-          {
-            label: '杭帮菜',
-            value: 2
+        urlOptions: {
+          url: apiDevice.queryAllDeviceModel,
+          keyName: 'deviceId',
+          valueName: 'deviceType',
+          method: 'get',
+          params: {
+            classification: 1
           }
-        ]
+        }
       },
       {
         type: 0,

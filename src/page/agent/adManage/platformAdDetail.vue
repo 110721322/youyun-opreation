@@ -1,7 +1,7 @@
 <template>
   <div class="ad-detail-box">
     <div class="tab_head">
-      <span class="title">编辑广告</span>
+      <span class="title">编辑广告123</span>
     </div>
     <Form
       :form-base-data="fromConfigData.formData"

@@ -1,7 +1,7 @@
 <template>
   <div class="ad-detail-box">
     <div class="tab_head">
-      <span class="title">编辑广告</span>
+      <span class="title">投放广告</span>
     </div>
     <Form
       :form-base-data="fromConfigData.formData"
@@ -11,7 +11,7 @@
       @confirm="confirm"
     >
       <template v-slot="{ formItem } ">
-        <div v-if="formItem.putService===3">
+        <div v-if="formItem.putService===4">
           <div class="select_data">
             <span class="el-icon-info icon" />
             <span>
@@ -35,7 +35,7 @@
         </div>
       </template>
     </Form>
-    <el-drawer :visible.sync="drawer" :with-header="false">
+    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
       <div class="p_head">{{ drawerTitle }}</div>
       <div class="search-box">
         <span class="label">精准筛选:</span>
@@ -48,23 +48,19 @@
       </div>
       <div class="search-box">
         <span class="label">服务地区:</span>
-        <el-select v-model="select2" placeholder="请选择">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
+        <el-cascader
+          v-model="select2"
+          :options="areaData"
+        ></el-cascader>
       </div>
       <div class="search-box">
         <span class="label">服务商类型:</span>
         <el-select v-model="select3" placeholder="请选择">
           <el-option
             v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+            :key="item.status"
+            :label="item.statusDesc"
+            :value="item.status"
           ></el-option>
         </el-select>
       </div>
@@ -82,6 +78,7 @@
           <el-button class="btn" type="text">清空</el-button>
         </div>
         <BaseCrud
+          v-if="drawer"
           :grid-config="configData2.gridConfig"
           :grid-btn-config="configData2.gridBtnConfig"
           :grid-data="testData"
@@ -91,6 +88,7 @@
           :is-async="true"
           :is-select="true"
           :hide-edit-area="true"
+          :api-service="api"
           @selectionChange="selectionChange"
         />
       </div>
@@ -108,6 +106,7 @@ import Form from "@/components/form/adPutDetailEdit.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { FORM_CONFIG } from "./../formConfig/adPutDetailForm";
 import { FORM_CONFIG2 } from "./../formConfig/adPutDetailInnerForm";
+import areaData from "@/assets/data/areaData";
 
 export default {
   name: "AdPutDetail",
@@ -118,6 +117,7 @@ export default {
       drawer: false,
       input: "",
       configData2: FORM_CONFIG2,
+      areaData: areaData,
       select: "",
       select2: "",
       select3: "",
@@ -129,13 +129,20 @@ export default {
       ],
       testData: [],
       selectData: [],
-      dynamicTags: ["标签一", "标签二", "标签三"],
+      dynamicTags: [],
+      myDynamicTags: [],
       drawerTitle: "添加投放的服务商",
-      id: this.$route.query.id
+      id: this.$route.query.id,
+      api: api.queryAllDistributeAgent
     };
   },
+  watch: {
+    fromConfigData: function($value, $old) {
+      console.log('改变值', $value);
+    }
+  },
   mounted() {
-    this.getTableData();
+    this.queryAllPrivilegeType();
     if (this.id) {
       this.queryById();
     }
@@ -143,6 +150,17 @@ export default {
   methods: {
     onClick_clearAll() {
       this.dynamicTags = [];
+    },
+    queryAllPrivilegeType() {
+      api
+        .queryAllPrivilegeType({
+        })
+        .then(res => {
+          this.options = res.object;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
     },
     queryById() {
       api
@@ -160,6 +178,9 @@ export default {
           this.$message(err);
         });
     },
+    onChange($val) {
+      console.log('$val', $val);
+    },
     handleClose(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
     },
@@ -167,26 +188,34 @@ export default {
       this.drawer = true;
     },
     getTableData() {
-      this.testData = [
-        {
-          index: "111",
-          serviceId: "商户结算失败",
-          serviceName: "4"
-        },
-        {
-          index: "111",
-          serviceId: "商户结算失败",
-          serviceName: "4"
-        }
-      ];
+      api
+        .queryAllDistributeAgent({
+          agentNo: this.input,
+          provinceCode: this.select2[0],
+          cityCode: this.select2[1],
+          businessType: this.select3
+        })
+        .then(res => {
+          this.testData = res.datas;
+        });
     },
     cancel() {
       this.$router.go(-1);
     },
     selectionChange($val) {
-      this.selectData = $val;
+      var dynamicTags = [];
+      var selectData = [];
+      $val.forEach(item => {
+        dynamicTags.push(item.agentName);
+      })
+      this.myDynamicTags = dynamicTags;
+      $val.forEach(item => {
+        selectData.push(item.agentNo);
+      })
+      this.selectData = selectData;
     },
     onClick_confirm() {
+      this.dynamicTags = this.myDynamicTags;
       this.drawer = false;
     },
     onClick_reset() {
@@ -194,8 +223,11 @@ export default {
       this.select = "";
       this.select2 = "";
       this.select3 = "";
+      // this.getTableData();
     },
-    onClick_search() {},
+    onClick_search() {
+      this.getTableData();
+    },
     onClick_cancel() {
       this.drawer = false;
     },
@@ -204,8 +236,7 @@ export default {
       if (this.id) {
         api
           .advertDistributeUpdate({
-            id: this.id,
-            agentNoList: ["123", "234"],
+            agentNoList: this.selectData,
             beginTime: $form.time[0],
             endTime: $form.time[1]
           })
@@ -220,11 +251,11 @@ export default {
       } else {
         api
           .advertDistributeAdd({
-            advertId: $form.advertId,
-            agentNoList: ["123", "234"],
-            distributeType: $form.distributeType,
+            advertId: $form.id,
+            agentNoList: this.selectData,
+            distributeType: $form.putService,
             operationId: $form.operationId,
-            sort: $form.sort,
+            sort: Number($form.sort),
             beginTime: $form.time[0],
             endTime: $form.time[1]
           })

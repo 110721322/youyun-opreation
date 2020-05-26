@@ -35,7 +35,7 @@
       ></BaseCrud>
     </div>
 
-    <el-drawer :visible.sync="drawer" :with-header="false">
+    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
         :form-base-data="fromConfigData.formData"
@@ -48,7 +48,7 @@
     <el-drawer :visible.sync="drawerPersonInfo" :with-header="false" size="40%">
       <PerfectPost></PerfectPost>
     </el-drawer>
-    <el-drawer :visible.sync="drawerOrganization" :with-header="false">
+    <el-drawer :visible.sync="drawerOrganization" :with-header="false" size="40%">
       <div class="p_head">组织架构</div>
       <el-tree
         :data="dataItem"

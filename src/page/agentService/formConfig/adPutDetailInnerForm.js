@@ -3,16 +3,19 @@ export const FORM_CONFIG2 = {
     {
       label: '序号',
       prop: 'index',
-      width: '50px'
+      width: '50px',
+      render: (h, params) => {
+        return h('span', params.index + 1);
+      }
     },
     {
       label: '服务商ID',
-      prop: 'serviceId',
+      prop: 'agentNo',
       width: '130px'
     },
     {
       label: '服务商名称',
-      prop: 'serviceName',
+      prop: 'agentName',
       width: '130px'
     }
   ],

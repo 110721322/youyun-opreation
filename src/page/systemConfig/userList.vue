@@ -34,7 +34,7 @@
       ></BaseCrud>
     </div>
 
-    <el-drawer :visible.sync="drawer" :with-header="false">
+    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
         :form-base-data="fromConfigData.formData"
@@ -44,7 +44,7 @@
         @confirm="confirm"
       ></Form>
     </el-drawer>
-    <el-drawer :visible.sync="drawerAddPhone" :with-header="false">
+    <el-drawer :visible.sync="drawerAddPhone" :with-header="false" size="40%">
       <div class="p_head">添加成员</div>
       <div class="scroll-box">
         <div class="add-phone-box">

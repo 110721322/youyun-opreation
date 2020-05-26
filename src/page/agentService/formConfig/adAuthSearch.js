@@ -1,5 +1,5 @@
 import areaData from "@/assets/data/areaData";
-import api from "@/api/api_agent.js";
+import apiAgent from "@/api/api_agent.js";
 export const SEARCH_CONFIG = {
   formData: [
     {
@@ -34,20 +34,12 @@ export const SEARCH_CONFIG = {
       key: 'operationId',
       style: 'width:294px',
       labelWidth: '185px',
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
+      urlOptions: {
+        url: apiAgent.queryAllOperation,
+        keyName: 'operationId',
+        valueName: 'operationName',
+        method: 'get'
+      }
     },
     {
       type: 1,
@@ -56,7 +48,7 @@ export const SEARCH_CONFIG = {
       style: 'width:294px',
       class: "clear_both",
       urlOptions: {
-        url: api.queryAllPrivilege,
+        url: apiAgent.queryAllPrivilege,
         keyName: 'privilege',
         valueName: 'privilegeDesc',
         method: 'get'

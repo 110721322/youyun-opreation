@@ -18,21 +18,38 @@ export default {
     remoteMethod: Function
   },
   data() {
-    return {};
+    return {
+      radioOptions: []
+    };
   },
-  computed: {
-    radioOptions() {
+  created() {
+    this.newArr();
+  },
+  methods: {
+    newArr() {
       const options = this.formItem.options;
       if (options) {
-        return options;
+        this.radioOptions = options;
       } else {
-        // 请求接口
-        return [];
+        const urlOptions = this.formItem.urlOptions;
+        urlOptions.url({})
+          .then(res => {
+            const newArr = [];
+            for (const item of res.object) {
+              newArr.push({
+                value: item[urlOptions.keyName],
+                label: item[urlOptions.valueName]
+              });
+            }
+            console.log(newArr);
+            this.radioOptions = newArr;
+          })
+          .catch(err => {
+            console.log(err);
+          });
       }
     }
-  },
-
-  methods: {}
+  }
 };
 </script>
 

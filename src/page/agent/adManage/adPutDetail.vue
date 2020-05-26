@@ -34,7 +34,7 @@
         </div>
       </template>
     </Form>
-    <el-drawer :visible.sync="drawer" :with-header="false">
+    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
       <div class="p_head">{{ drawerTitle }}</div>
       <div class="search-box">
         <span class="label">精准筛选:</span>

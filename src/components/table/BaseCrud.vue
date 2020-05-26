@@ -1,8 +1,5 @@
 <template>
   <div class="crud">
-    <!--crud头部，包含可操作按钮-->
-
-    <!--crud主体内容区，展示表格内容-->
     <el-table
       :ref="refName"
       v-loading="listLoading"
@@ -18,7 +15,9 @@
       @selection-change="handleSelectionChange"
       @sort-change="sortDate"
     >
+      <!-- 多选框 -->
       <el-table-column v-if="isSelect" type="selection" width="55"></el-table-column>
+      <!-- 表格拓展箭头 -->
       <el-table-column
         v-if="isExpand"
         type="expand"
@@ -29,7 +28,7 @@
           <slot :row="scope.row" />
         </template>
       </el-table-column>
-
+      <!-- table内容 -->
       <el-table-column
         v-for="(item, index) in gridConfig"
         :key="index"
@@ -40,6 +39,7 @@
         :fixed="item.isFixed || false"
         :sortable="item.sortable"
       >
+        <!-- 通道状态 -->
         <template v-if="item.customHead" slot="header">
           <slot name="head" :item="item"></slot>
         </template>
@@ -68,10 +68,9 @@
                 :src="item.imgUrl"
                 :style="item.imgStyle"
                 @click="onClick_handleToggle(scope.row,item)"
-              />
+              >
             </template>
           </span>
-
           <span v-if="(item.prop instanceof Array)">
             <div
               v-for="(propItem,propKey) of item.prop"
@@ -80,6 +79,7 @@
           </span>
         </template>
       </el-table-column>
+      <!-- 操作 -->
       <el-table-column
         v-if="!hideEditArea"
         fixed="right"
@@ -87,24 +87,6 @@
         :width="gridEditWidth ? gridEditWidth : 200"
       >
         <template slot-scope="scope">
-          <el-button
-            v-if="gridBtnConfig.update"
-            size="medium"
-            type="primary"
-            @click="createOrUpdate(scope.row)"
-          >修改</el-button>
-          <el-button
-            v-if="gridBtnConfig.delete"
-            size="medium"
-            type="danger"
-            @click="remove(scope.row)"
-          >删除</el-button>
-          <el-button
-            v-if="gridBtnConfig.view"
-            size="medium"
-            type="primary"
-            @click="view(scope.row)"
-          >查看</el-button>
           <!--扩展按钮-->
           <span v-for="(item, index) in gridBtnConfig.expands" :key="index">
             <span v-if="isShowFun(item, scope)">
@@ -123,7 +105,6 @@
         </template>
       </el-table-column>
     </el-table>
-
     <!--crud的分页组件-->
     <div class="crud-pagination">
       <!--如果不是异步请求展示数据，需要隐藏分页-->
@@ -229,6 +210,7 @@ export default {
   methods: {
     onClick_handleToggle($row, $item) {
       if (this.$refs[this.refName]) {
+        console.log("$item.emitName,", $item.emitName);
         this.$emit($item.emitName, $row, this.$refs[this.refName]);
       }
     },
@@ -270,8 +252,12 @@ export default {
           if (g.utils.isArr(res.object)) {
             this.showGridData = res.datas || res.object;
           } else {
-            this.showGridData = res.datas || [res.object];
+            this.showGridData =
+              res.datas === null || res.object === null
+                ? []
+                : res.datas || res.object;
           }
+          console.log("总数据", this.showGridData);
           this.dataTotal = res.totalCount;
           this.listLoading = false;
         })
@@ -318,9 +304,11 @@ export default {
       }
     },
     handleSelectionChange(val) {
+      console.log('多选选中的值', val);
       this.$emit("selectionChange", val);
     },
     cancelEdit($row) {
+      console.log("取消");
       $row.edit = false;
       for (const item of this.gridConfig) {
         if (item.isEdit) {
@@ -331,6 +319,7 @@ export default {
       this.$emit("cancelEdit", $row);
     },
     rowEdit($item) {
+      console.log("编辑");
       this.$nextTick(() => {
         const data = JSON.parse(JSON.stringify(this.showGridData));
         for (const item of data) {

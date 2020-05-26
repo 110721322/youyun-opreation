@@ -1,10 +1,9 @@
 <template>
-  <div class>
+  <div class="">
     <div class="tab_head">
       <span class="title">设备库存</span>
     </div>
     <Search :is-show-all="true" :form-base-data="searchConfig.formData" @search="search" />
-
     <div class="table_box">
       <div class="tabale_title_box">
         <div class="title">库存列表</div>
@@ -31,8 +30,7 @@
         @remove="onClick_remove"
       ></BaseCrud>
     </div>
-
-    <el-drawer :visible.sync="drawer" :with-header="false">
+    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
         :form-base-data="fromConfigData.formData"
@@ -63,31 +61,18 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl",
-      // formStatus：add 新增设备 edit 编辑 buy 订购
       formStatus: "",
       params: {
-        pageSize: 65,
-        currentPage: 44,
         deviceModel: "",
-        deviceType: ""
+        deviceType: "",
+        classification: 1
       },
       allApi: api,
       api: api.deviceQueryByPage
     };
   },
-  mounted() {
-    this.queryAllDeviceModel();
-  },
+  mounted() {},
   methods: {
-    queryAllDeviceModel() {
-      api
-        .queryAllDeviceModel({})
-        .then(res => {})
-        .catch(err => {
-          this.$message(err);
-        });
-    },
     search($ruleForm) {
       console.log($ruleForm);
       const params = {
@@ -108,7 +93,7 @@ export default {
           api
             .deviceAdd({
               costPrice: $data.costPrice,
-              deviceImg: $data.deviceImg,
+              deviceImg: $data.deviceImg.dialogImageUrl,
               deviceModel: $data.deviceModel,
               deviceType: $data.deviceType,
               id: $data.id,

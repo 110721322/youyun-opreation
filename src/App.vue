@@ -19,7 +19,6 @@ export default {
   methods: {}
 };
 </script>
-
 <style lang="scss" rel="stylesheet/scss" type="text/scss">
 #app {
     width: 100%;
