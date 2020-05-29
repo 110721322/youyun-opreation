@@ -65,19 +65,22 @@ export default {
       direction: "rtl",
       params: {
         currentPage: 0,
-        deviceIdentifier: "",
-        deviceInputId: 1,
+        deviceIdentifier: '',
+        deviceInputId: this.$route.query.id,
         pageSize: 1
       },
+      rowId: '',
       api: api.queryInputPage
     };
   },
-  mounted() {},
+  mounted() {
+  },
   methods: {
     search($ruleForm) {
       console.log($ruleForm);
       const params = {
-        deviceIdentifier: $ruleForm.deviceIdentifier
+        deviceIdentifier: $ruleForm.deviceIdentifier,
+        deviceInputId: this.$route.query.id
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
@@ -93,11 +96,13 @@ export default {
     confirm($data) {
       api
         .deviceDetailUpdate({
-          id: 1,
-          deadline: $data["deadline"],
-          deviceIdentifier: $data["deviceIdentifier"]
+          id: this.rowId,
+          deadline: $data.deadline,
+          deviceIdentifier: $data.deviceIdentifier
         })
         .then(res => {
+          this.drawer = false;
+          this.$refs.table.getData();
           this.$message("保存成功");
         })
         .catch(err => {
@@ -107,7 +112,16 @@ export default {
     cancel() {
       this.drawer = false;
     },
-    onClick_edit() {
+    onClick_edit($row) {
+      this.rowId = $row.id;
+      console.log('$row', $row);
+      // 对配置文件进行动态修改
+      const newFromConfigData = FORM_CONFIG.formData;
+      // 编辑前重赋值
+      newFromConfigData.formData.forEach((item, index) => {
+        item.initVal = $row[item.key];
+      });
+      this.fromConfigData = newFromConfigData;
       this.drawer = true;
     },
     onClick_remove($row) {
@@ -122,6 +136,7 @@ export default {
               id: $row.id
             })
             .then(result => {
+              this.$refs.table.getData();
               this.$message("已删除");
             })
             .catch(err => {

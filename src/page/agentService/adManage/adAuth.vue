@@ -48,7 +48,7 @@ import Form from "@/components/form/index.vue";
 import api from "@/api/api_agent.js";
 import { SEARCH_CONFIG } from "../formConfig/adAuthSearch";
 import { FORM_CONFIG } from "../formConfig/adAuthForm";
-import { TABLE_CONFIG } from "../tableConfig/adAuthConfig";
+import { TABLE_CONFIG } from "../tableConfig/adAuthTable";
 
 export default {
   name: "AdAuth",

@@ -1,4 +1,5 @@
 import { setRules } from '@/libs/kit/formFns.js'
+import apiDevice from "@/api/api_device";
 
 export const FORM_CONFIG = {
   deviceData: {
@@ -9,47 +10,37 @@ export const FORM_CONFIG = {
         type: 1,
         label: '设备型号',
         key: 'deviceId',
-        initVal: "",
-        // urlOptions: {
-        //     url: './demo.js',
-        //     keyName: 'records',
-        //     method: 'get'
-        // }
-        options: [
-          {
-            label: '川菜',
-            value: 0
-          },
-          {
-            label: '粤菜',
-            value: 1
-          },
-          {
-            label: '杭帮菜',
-            value: 2
+        urlOptions: {
+          url: apiDevice.queryAllDeviceModel,
+          keyName: 'deviceId',
+          valueName: 'deviceType',
+          method: 'get',
+          params: {
+            classification: 1
           }
-        ]
+        }
       },
       {
-        type: 3,
+        type: 11,
         label: '保修截止日期',
+        format: "yyyy-MM-dd",
+        // datatype: "date",
         key: 'deadline',
-        initVal: 'pdd',
         rules: setRules('邮箱').isRequired.get
       },
       {
-        type: 3,
+        type: 11,
         label: '入库时间',
+        format: "yyyy-MM-dd",
+        // datatype: "date",
         key: 'inputTime',
-        initVal: 'pdd',
         rules: setRules('公司名称').isRequired.get
       },
       {
         type: 'uploadFile',
         label: '设备标识',
-        key: 'name6',
-        initVal: 'pdd',
-        rules: setRules('公司名称').isRequired.get
+        key: 'count',
+        rules: setRules('设备标识').isRequired.get
       }
     ]
   }

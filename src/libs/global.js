@@ -10,6 +10,8 @@ window.trace = utils.trace;
 
 function getConfig () {
   let config;
+  console.log('dev', process.env.NODE_ENV);
+
   if (process.env.VUE_APP_ENV_CONFIG === 'dev') {
     config = devConfig;
   } else if (process.env.VUE_APP_ENV_CONFIG === 'test') {

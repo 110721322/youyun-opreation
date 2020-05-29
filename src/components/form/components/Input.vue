@@ -10,7 +10,7 @@
       :show-password="showPsd"
       clearable
       :style="inputStyle"
-      :disabled="formItem.isDisable?formItem.isDisable(ruleForm):false"
+      :disabled="formItem.isDisabled"
     >
       <template v-if="formItem.isShowSlot" slot="append">
         <span>{{ formItem.showSlotName }}</span>

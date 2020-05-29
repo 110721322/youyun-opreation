@@ -1,5 +1,5 @@
 <template>
-  <div class>
+  <div class="">
     <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
     <div v-else>
       <div class="tab_head">
@@ -33,10 +33,10 @@
           @detail="onClick_detail"
         ></BaseCrud>
       </div>
-
       <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
         <div class="p_head">{{ fromConfigData.title }}</div>
         <Form
+          v-if="drawer"
           :form-base-data="fromConfigData.formData"
           :show-foot-btn="fromConfigData.showFootBtn"
           label-width="130px"
@@ -49,6 +49,7 @@
 </template>
 <script>
 import api from "@/api/api_device";
+import apiComm from "@/api/api_common";
 import Search from "@/components/search/search.vue";
 import Form from "@/components/form/index.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
@@ -68,9 +69,10 @@ export default {
       testData: [],
       drawer: false,
       direction: "rtl",
+      count: 0,
       params: {
-        currentPage: 0,
-        deviceId: 1,
+        currentPage: 1,
+        deviceId: 2,
         pageSize: 1,
         beginTime: this.$g.utils.getToday(),
         endTime: this.$g.utils.getToday()
@@ -99,13 +101,35 @@ export default {
       this.drawer = true;
     },
     confirm($data) {
-      api
-        .deviceInputAdd({
-          deadline: $data["deadline"],
-          deviceId: $data["deviceId"],
-          inputTime: $data["inputTime"]
+      console.log("data值", $data);
+      // exelc解析
+      apiComm
+        .excelUploadPic({
+          url: $data.count.dialogImageUrl,
+          type: "deviceInput"
         })
         .then(res => {
+          this.count = res.object;
+          this.deviceInputAdd($data);
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
+    // 新增
+    deviceInputAdd($data) {
+      api
+        .deviceInputAdd({
+          employeeId: 2,
+          count: this.count.length,
+          deadline: $data.deadline,
+          deviceId: $data.deviceId,
+          inputTime: $data.inputTime,
+          deviceIdentifierList: this.count
+        })
+        .then(res => {
+          this.$refs.table.getData();
+          this.drawer = false;
           this.$message("入库成功");
         })
         .catch(err => {
@@ -117,7 +141,10 @@ export default {
     },
     onClick_detail($item) {
       this.$router.push({
-        path: "/deviceManage/stock/stockSave/detail"
+        path: "/deviceManage/stock/stockSave/detail",
+        query: {
+          id: $item.id
+        }
       });
     }
   }

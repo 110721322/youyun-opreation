@@ -1,5 +1,5 @@
 <template>
-  <div class>
+  <div class="">
     <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
     <div v-else>
       <div class="tab_head">
@@ -11,7 +11,6 @@
         :show-foot-btn="searchConfig.showFootBtn"
         @search="search"
       />
-
       <div class="table_box">
         <BaseCrud
           ref="table"
@@ -46,10 +45,10 @@
           </template>
         </BaseCrud>
       </div>
-
       <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
         <div class="p_head">{{ fromConfigData.title }}</div>
         <Form
+          v-if="drawer"
           :form-base-data="fromConfigData.formData"
           :show-foot-btn="fromConfigData.showFootBtn"
           :foot-btn-label="fromConfigData.footBtnLabel"
@@ -65,6 +64,7 @@
 import api from "@/api/api_device";
 import Search from "@/components/search/search.vue";
 import Form from "@/components/form/index.vue";
+import apiComm from "@/api/api_common";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 
 import { FORM_CONFIG } from "./../formConfig/outForm";
@@ -85,6 +85,8 @@ export default {
       direction: "rtl",
       formStatus: "",
       activityRow: {},
+      tableId: "",
+      tableDeviceId: "",
       params: {
         beginTime: this.$g.utils.getToday(),
         endTime: this.$g.utils.getToday(),
@@ -98,6 +100,7 @@ export default {
         saleUserId: 1,
         status: 1
       },
+      device: {},
       api: api.deviceOutputQueryByPage
     };
   },
@@ -111,7 +114,8 @@ export default {
         deviceId: $ruleForm.deviceId,
         status: $ruleForm.status,
         saleUserId: $ruleForm.saleUserId,
-        outputUserId: $ruleForm.outputUserId
+        outputUserId: $ruleForm.outputUserId,
+        distributionUserId: 1
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
@@ -121,63 +125,81 @@ export default {
       console.log($val);
     },
     confirm($data) {
-      switch (this.formStatus) {
-        case "reject":
-          api
-            .reject({
-              reason: $data.reason
-            })
-            .then(res => {
-              this.$message("已驳回");
-            })
-            .catch(err => {
-              this.$message(err);
-            });
-          break;
-        case "check":
-          this.drawer = false;
-          break;
-        case "send":
-          api
-            .finishOutput({
-              expressNo: $data.expressNo,
-              outputRemark: $data.outputRemark,
-              outputTime: $data.outputTime,
-              id: $data.id,
-              infoRequestVOList: {
-                deviceId: $data.deviceId,
-                deviceIdentifierList: $data.deviceIdentifierList
-              }
-            })
-            .then(res => {
-              this.$message("保存成功");
-            })
-            .catch(err => {
-              this.$message(err);
-            });
-          break;
-        case "distribution":
-          api
-            .distribute({
-              deviceOutputId: "",
-              distributionUserId: $data.distributionUserId
-            })
-            .then(res => {
-              this.$message("分配成功");
-            })
-            .catch(err => {
-              this.$message(err);
-            });
-          break;
-
-        default:
-          break;
+      // exelc解析
+      if (this.formStatus === "send") {
+        apiComm
+          .excelUploadPic({
+            url: $data.deviceIdentifierList.dialogImageUrl,
+            type: "deviceOutput"
+          })
+          .then(res => {
+            this.device = res.object;
+            api
+              .finishOutput({
+                expressNo: $data.expressNo,
+                outputRemark: $data.outputRemark,
+                outputTime: $data.outputTime,
+                id: this.tableDate.id,
+                infoRequestVOList: [
+                  {
+                    deviceId: this.tableDeviceId,
+                    deviceIdentifierList: this.device
+                  }
+                ]
+              })
+              .then(res => {
+                this.$refs.table.getData();
+                this.drawer = false;
+                this.$message("保存成功");
+              })
+              .catch(err => {
+                this.$message(err);
+              });
+          })
+          .catch(err => {
+            this.$message(err);
+          });
+      } else {
+        switch (this.formStatus) {
+          case "reject":
+            api
+              .reject({
+                reason: $data.reason,
+                id: this.tableId
+              })
+              .then(res => {
+                this.$message("已驳回");
+              })
+              .catch(err => {
+                this.$message(err);
+              });
+            break;
+          case "check":
+            this.drawer = false;
+            break;
+          case "distribution":
+            api
+              .distribute({
+                deviceOutputId: "",
+                distributionUserId: $data.distributionUserId
+              })
+              .then(res => {
+                this.$message("分配成功");
+              })
+              .catch(err => {
+                this.$message(err);
+              });
+            break;
+          default:
+            break;
+        }
       }
     },
     cancel() {
       this.drawer = false;
     },
-    onClick_reject() {
+    onClick_reject($data) {
+      this.tableId = $data.id;
       this.formStatus = "reject";
       this.fromConfigData = FORM_CONFIG.rejectData;
       this.drawer = true;
@@ -206,7 +228,9 @@ export default {
         path: "/deviceManage/stock/stockOut/detail"
       });
     },
-    onClick_send() {
+    onClick_send($data) {
+      this.tableId = $data.id;
+      this.tableDeviceId = $data.infoVOList[0].deviceId;
       this.formStatus = "send";
       this.fromConfigData = FORM_CONFIG.sendData;
       this.drawer = true;

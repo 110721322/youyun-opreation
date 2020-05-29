@@ -1,3 +1,6 @@
+import apiDevice from "@/api/api_device";
+import apiAgent from "@/api/api_agent.js";
+
 export const SEARCH_CONFIG = {
   formData: [
     {
@@ -27,22 +30,17 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '设备型号',
-      key: 'deviceId',
-      style: 'width:294px',
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
+      key: 'deviceModel',
+      isDisabled: true,
+      urlOptions: {
+        url: apiDevice.queryAllDeviceModel,
+        keyName: 'deviceId',
+        valueName: 'deviceType',
+        method: 'get',
+        params: {
+          classification: 1
         }
-      ]
+      }
     },
     {
       type: 1,
@@ -52,16 +50,16 @@ export const SEARCH_CONFIG = {
       labelWidth: '185px',
       options: [
         {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
+          label: '未激活',
           value: 1
         },
         {
-          label: '杭帮菜',
+          label: '激活成功',
           value: 2
+        },
+        {
+          label: '激活失败',
+          value: 3
         }
       ]
     },
@@ -71,20 +69,12 @@ export const SEARCH_CONFIG = {
       key: 'saleUserId',
       style: 'width:294px',
       class: "clear_both",
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
+      urlOptions: {
+        url: apiAgent.queryAllOperation,
+        keyName: 'operationId',
+        valueName: 'operationName',
+        method: 'get'
+      }
     },
     {
       type: 1,
@@ -92,20 +82,12 @@ export const SEARCH_CONFIG = {
       key: 'outputUserId',
       style: 'width:294px',
       labelWidth: '185px',
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
+      urlOptions: {
+        url: apiAgent.queryAllOperation,
+        keyName: 'operationId',
+        valueName: 'operationName',
+        method: 'get'
+      }
     }
   ]
 }

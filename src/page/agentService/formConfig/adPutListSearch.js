@@ -1,3 +1,5 @@
+import apiAgent from "@/api/api_agent.js";
+
 export const SEARCH_CONFIG = {
   formData: [
     {
@@ -5,20 +7,12 @@ export const SEARCH_CONFIG = {
       label: '广告类型',
       key: 'advertType',
       style: 'width:294px',
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
+      urlOptions: {
+        url: apiAgent.queryAllAdvertType,
+        keyName: 'advertType',
+        valueName: 'advertTypeDesc',
+        method: 'get'
+      }
     },
     {
       type: 1,
@@ -26,20 +20,12 @@ export const SEARCH_CONFIG = {
       key: 'distributeType',
       style: 'width:294px',
       labelWidth: '135px',
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
+      urlOptions: {
+        url: apiAgent.queryAllAdvertDistributeType,
+        keyName: 'status',
+        valueName: 'statusDesc',
+        method: 'get'
+      }
     },
     {
       type: 1,

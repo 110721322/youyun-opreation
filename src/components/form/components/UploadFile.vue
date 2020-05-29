@@ -1,31 +1,32 @@
 <template>
   <div>
     <el-upload
+      action="OSS上传路径，必填"
       class="upload-demo"
-      action="https://jsonplaceholder.typicode.com/posts/"
-      :on-preview="handlePreview"
       :on-remove="handleRemove"
       :before-remove="beforeRemove"
+      :before-upload="beforeUpload"
+      :http-request="upLoad"
       multiple
-      :limit="3"
-      :on-exceed="handleExceed"
+      :limit="1"
       :file-list="fileList"
     >
       <el-button size="small" type="primary">
         导入文件
         <i class="el-icon-upload el-icon--right"></i>
       </el-button>
-      <div slot="tip" class="el-upload__tip">
-        只能导入excel文件，点击
-        <el-button type="text">下载模版</el-button>
+      <div slot="tip" class="el-upload__tip">只能导入excel文件，点击
+        <el-button type="text" @click="download">下载模版</el-button>
       </div>
     </el-upload>
   </div>
 </template>
+<script type="text/ecmascript-6">
+import api from "@/api/api_common";
+import * as g from '@/libs/global';
 
-<script>
 export default {
-  name: "",
+  name: "UploadFile",
   props: {
     ruleForm: Object,
     formItem: Object,
@@ -33,35 +34,72 @@ export default {
   },
   data() {
     return {
-      fileList: [
-        {
-          name: "food.jpeg",
-          url:
-            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
-        },
-        {
-          name: "food2.jpeg",
-          url:
-            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
-        }
-      ]
+      dialogImageUrl: "",
+      dialogImagePath: "",
+      ossData: {},
+      fileList: []
     };
   },
   computed: {},
+
+  cretae() {},
 
   methods: {
     handleRemove(file, fileList) {
       console.log(file, fileList);
     },
-    handlePreview(file) {
-      console.log(file);
+    beforeUpload(file) {
+      return new Promise(resolve => {
+        api
+          .uploadPicExcel({ count: 1 })
+          .then(result => {
+            this.ossData = result.object;
+
+            resolve(true);
+          })
+          .catch();
+      });
     },
-    handleExceed(files, fileList) {
-      this.$message.warning(
-        `当前限制选择 3 个文件，本次选择了 ${
-          files.length
-        } 个文件，共选择了 ${files.length + fileList.length} 个文件`
-      );
+    upLoad(file) {
+      const formData = new FormData();
+      formData.append(
+        "key",
+        this.ossData.objectKeyPrefix + "/" + this.ossData.objectKeys[0]
+      ); // 存储在oss的文件路径
+      formData.append("OSSAccessKeyId", this.ossData.accessKeyId); // accessKeyId
+      formData.append("policy", this.ossData.policy); // policy
+      formData.append("signature", this.ossData.signature); // 签名
+      formData.append("file", file.file);
+      formData.append("success_action_status", 200); // 成功后返回的操作码
+      this.loading = true;
+      // eslint-disable-next-line no-undef
+      jquery.ajax({
+        url: this.ossData.ossHost,
+        type: "POST",
+        data: formData,
+        // async: false,
+        cache: false,
+        processData: false,
+        contentType: false,
+        success: () => {
+          this.dialogImagePath = this.ossData.ossHost + "/";
+          this.dialogImageUrl =
+            this.ossData.objectKeyPrefix + "/" + this.ossData.objectKeys[0];
+
+          this.ruleForm[this.formItem.key] = {
+            dialogImagePath: this.dialogImagePath,
+            dialogImageUrl: this.dialogImageUrl
+          };
+          this.loading = false;
+        },
+        error: () => {
+          this.loading = false;
+        }
+      });
+    },
+    download() {
+      console.log('下载', g.config.server)
+      window.location.href = g.config.server + "operation/v1/excelTemplate/download?url=excel/device_input.xlsx";
     },
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`);

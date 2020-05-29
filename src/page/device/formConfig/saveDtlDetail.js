@@ -1,3 +1,4 @@
+import apiDevice from "@/api/api_device";
 
 export const FORM_CONFIG = {
   formData: {
@@ -5,22 +6,29 @@ export const FORM_CONFIG = {
     showFootBtn: true,
     formData: [
       {
-        type: 0,
+        type: 1,
         label: '设备型号',
         key: 'deviceModel',
-        initVal: 'pdd'
+        isDisabled: true,
+        urlOptions: {
+          url: apiDevice.queryAllDeviceModel,
+          keyName: 'deviceId',
+          valueName: 'deviceType',
+          method: 'get',
+          params: {
+            classification: 1
+          }
+        }
       },
       {
-        type: 3,
+        type: 11,
         label: '保修截止日期',
-        key: 'deadline',
-        initVal: ''
+        key: 'deadline'
       },
       {
-        type: 3,
+        type: 11,
         label: '入库时间',
-        key: 'inputTime',
-        initVal: ''
+        key: 'inputTime'
       },
       {
         type: 0,

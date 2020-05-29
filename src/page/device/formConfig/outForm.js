@@ -1,4 +1,5 @@
 import { setRules } from '@/libs/kit/formFns.js'
+import apiAgent from "@/api/api_agent.js";
 
 export const FORM_CONFIG = {
   sendData: {
@@ -6,33 +7,30 @@ export const FORM_CONFIG = {
     showFootBtn: true,
     formData: [
       {
-        type: 3,
+        type: 11,
         label: '选择出库时间',
         key: 'outputTime',
-        initVal: 'pdd',
-        rules: setRules('邮箱').isRequired.get
+        format: 'yyyy-MM-dd hh:mm:ss',
+        datatype: "datetime"
       },
       {
         type: 0,
         label: '快递单号',
         key: 'expressNo',
-        initVal: 'pdd',
-        rules: setRules('邮箱').isRequired.get
+        rules: setRules('快递单号').isRequired.get
       },
       {
         type: 0,
         label: '备注',
         key: 'outputRemark',
-        initVal: 'pdd',
         inputType: 'textarea',
-        rules: setRules('邮箱').isRequired.get
+        rules: setRules('备注').isRequired.get
       },
       {
         type: 'uploadFile',
         label: '设备标识',
         key: 'deviceIdentifierList',
-        initVal: 'pdd',
-        rules: setRules('公司名称').isRequired.get
+        rules: setRules('设备标识').isRequired.get
       }
     ]
   },
@@ -44,63 +42,53 @@ export const FORM_CONFIG = {
       {
         type: 'show',
         label: '销售人员',
-        key: 'saleUserName',
-        initVal: "XXXX"
+        key: 'saleUserName'
       },
       {
         type: 'show',
         label: '订单号',
-        key: 'outputNo',
-        initVal: "XXXX"
+        key: 'outputNo'
       },
       {
         type: 'show',
         label: '订单类型',
-        key: 'outputType',
-        initVal: "XXXX"
+        key: 'outputType'
       },
       {
         type: 'show',
         label: '订单金额',
-        key: 'amount',
-        initVal: "XXXX"
+        key: 'amount'
       },
       {
         type: 'show',
         label: '实付金额',
-        key: 'actualAmount',
-        initVal: "XXXX"
+        key: 'actualAmount'
       },
       {
         type: 'show',
         label: '购买服务商',
-        key: 'agentName',
-        initVal: "XXXX"
+        key: 'agentName'
       },
       {
         type: 'show',
         label: '支付方式',
-        key: 'payType',
-        initVal: "XXXX"
+        key: 'payType'
       },
       {
         type: 'show',
         label: '打款凭证',
         key: 'voucher',
-        isImage: true,
-        initVal: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+        isImage: true
       },
       {
         type: 'show',
         label: '运营备注',
-        key: 'financeRemark',
-        initVal: "XXXX"
+        key: 'financeRemark'
       },
       {
         type: 'show',
         label: '驳回原因',
-        key: 'rejectRemark',
-        initVal: "XXXX"
+        key: 'rejectRemark'
       }
     ]
   },
@@ -112,26 +100,12 @@ export const FORM_CONFIG = {
         type: 1,
         label: '出库人员',
         key: 'distributionUserId',
-        initVal: [],
-        // urlOptions: {
-        //     url: './demo.js',
-        //     keyName: 'records',
-        //     method: 'get'
-        // }
-        options: [
-          {
-            label: '川菜',
-            value: 0
-          },
-          {
-            label: '粤菜',
-            value: 1
-          },
-          {
-            label: '杭帮菜',
-            value: 2
-          }
-        ]
+        urlOptions: {
+          url: apiAgent.queryAllOperation,
+          keyName: 'operationId',
+          valueName: 'operationName',
+          method: 'get'
+        }
       }
     ]
   },

@@ -29,12 +29,12 @@ export default {
   queryAllPrivilege: (params) => API.GET('/operation/v1/advertPrivilege/queryAllPrivilege', params),
   advertList: (params) => API.GET('/operation/v1/advert/queryByPage', params),
   advertDelete: (params) => API.GET('/operation/v1/advert/delete', params),
+  advertDistribute: (params) => API.GET('/operation/v1/advertDistribute/delete', params),
   advertAdd: (params) => API.POST('/operation/v1/advert/add', params),
   advertUpdate: (params) => API.POST('/operation/v1/advert/update', params),
   queryById: (params) => API.GET('operation/v1/advertDistribute/queryById', params),
   queryAllDistributeName: (params) => API.GET('operation/v1/advertDistribute/queryAllDistributeName', params),
   queryAllPrivilegeType: (params) => API.GET('/operation/v1/advertDistribute/queryAllPrivilegeType', params),
-  queryAllDistributeAgent: (params) => API.GET('/operation/v1/advertDistribute/queryAllDistributeAgent', params),
   queryAllAdvertDistributeType: (params) => API.GET('/operation/v1/advertDistribute/queryAllAdvertDistributeType', params),
 
   advertQueryById: (params) => API.GET('operation/v1/advert/queryById', params),

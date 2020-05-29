@@ -1,4 +1,5 @@
 import { setRules } from '@/libs/kit/formFns.js'
+import apiAgent from "@/api/api_agent.js";
 
 export const FORM_CONFIG = {
   deviceData: {
@@ -17,22 +18,12 @@ export const FORM_CONFIG = {
         type: 1,
         label: '广告类型',
         key: 'type',
-        initVal: "0",
-        options: [
-          {
-            label: '川菜',
-            value: '0'
-          },
-          {
-            label: '粤菜',
-            value: '1'
-          },
-          {
-            label: '杭帮菜',
-            value: '2'
-          }
-        ],
-        rules: setRules('广告名称').isRequired.get
+        urlOptions: {
+          url: apiAgent.queryAllAdvertType,
+          keyName: 'advertType',
+          valueName: 'advertTypeDesc',
+          method: 'get'
+        }
       },
       {
         type: 3,

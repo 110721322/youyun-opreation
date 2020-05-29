@@ -13,6 +13,7 @@
           <el-button class="btn" type="primary" @click="onClick_addAd">新增投放</el-button>
         </div>
         <BaseCrud
+          ref="table"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
           :grid-data="testData"
@@ -80,10 +81,11 @@ export default {
       })
         .then(() => {
           api
-            .advertDelete({
+            .advertDistribute({
               id: row.id
             })
             .then(res => {
+              this.$refs.table.getData();
               this.$message({
                 type: "success",
                 message: "删除成功!"

@@ -33,6 +33,7 @@
     <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
+        v-if="drawer"
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
         label-width="130px"
@@ -62,6 +63,8 @@ export default {
       testData: [],
       drawer: false,
       formStatus: "",
+      stockId: '',
+      deviceId: '',
       params: {
         deviceModel: "",
         deviceType: "",
@@ -88,6 +91,7 @@ export default {
       this.drawer = true;
     },
     confirm($data) {
+      console.log('#data', $data);
       switch (this.formStatus) {
         case "add":
           api
@@ -98,9 +102,12 @@ export default {
               deviceType: $data.deviceType,
               id: $data.id,
               salePrice: $data.salePrice,
-              sort: $data.sort
+              sort: $data.sort,
+              classification: 1
             })
             .then(res => {
+              this.$refs.table.getData();
+              this.drawer = false;
               this.$message("添加成功");
             })
             .catch(err => {
@@ -111,14 +118,17 @@ export default {
           api
             .deviceUpdate({
               costPrice: $data.costPrice,
-              deviceImg: $data.deviceImg,
+              deviceImg: $data.deviceImg.dialogImageUrl || $data.deviceImg.split('com/')[1],
               deviceModel: $data.deviceModel,
               deviceType: $data.deviceType,
-              id: $data.id,
+              id: this.stockId,
               salePrice: $data.salePrice,
-              sort: $data.sort
+              sort: $data.sort,
+              classification: 1
             })
             .then(res => {
+              this.$refs.table.getData();
+              this.drawer = false;
               this.$message("编辑成功");
             })
             .catch(err => {
@@ -128,20 +138,25 @@ export default {
         case "buy":
           api
             .deviceOutputAdd({
-              saleUserName: $data.saleUserName,
+              // saleUserName: $data.saleUserName,fffxxx
+              saleUserId: 1,
+              saleUserName: '123',
               amount: $data.amount,
               actualAmount: $data.actualAmount,
               agentNo: $data.agentNo,
               payType: $data.payType,
-              voucher: $data.voucher,
+              voucher: $data.voucher.dialogImageUrl,
               buyerRemark: $data.buyerRemark,
-              infoVOList: {
+              infoVOList: [{
                 count: $data.count,
-                deviceId: $data.deviceId,
-                salePrice: $data.salePrice
-              }
+                deviceModel: $data.deviceModel,
+                deviceId: this.deviceId,
+                salePrice: $data.actualAmount
+              }]
             })
             .then(res => {
+              this.$refs.table.getData();
+              this.drawer = false;
               this.$message("订购成功");
             })
             .catch(err => {
@@ -156,30 +171,28 @@ export default {
     cancel() {
       this.drawer = false;
     },
-    onClick_buy() {
+    onClick_buy($row) {
+      this.deviceId = $row.id;
+      const buyDataFromConfigData = FORM_CONFIG.buyData;
+      buyDataFromConfigData.formData.forEach((item, index) => {
+        item.initVal = $row[item.key];
+      });
+      this.fromConfigData = buyDataFromConfigData;
       this.formStatus = "buy";
-      this.fromConfigData = FORM_CONFIG.buyData;
       this.drawer = true;
     },
     onClick_edit($row) {
+      console.log('编辑', $row);
+      this.stockId = $row.id;
       // 对配置文件进行动态修改
       const newFromConfigData = FORM_CONFIG.editData;
-      api
-        .deviceQueryById({
-          id: $row.id
-        })
-        .then(res => {
-          // 编辑前重赋值
-          newFromConfigData.formData.forEach((item, index) => {
-            item.initVal = res.object[item.key];
-          });
-          this.fromConfigData = newFromConfigData;
-          this.formStatus = "edit";
-          this.drawer = true;
-        })
-        .catch(err => {
-          this.$message(err);
-        });
+      // 编辑前重赋值
+      newFromConfigData.formData.forEach((item, index) => {
+        item.initVal = $row[item.key];
+      });
+      this.fromConfigData = newFromConfigData;
+      this.formStatus = "edit";
+      this.drawer = true;
     },
     onClick_remove($row) {
       this.$confirm("删除后，该设备将不能再进行订购，请谨慎操作", "提示", {
@@ -193,6 +206,7 @@ export default {
               id: $row.id
             })
             .then(result => {
+              this.$refs.table.getData();
               this.$message("已删除");
             })
             .catch(err => {
