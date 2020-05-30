@@ -23,7 +23,7 @@ export default {
   computed: {
     selectStyle() {
       const item = this.formItem;
-      return item.style ? item.style : "";
+      return item.style ? item.style : "width:294px";
     }
   },
   created() {},

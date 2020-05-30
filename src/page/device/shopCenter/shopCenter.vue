@@ -54,12 +54,9 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl",
       params: {
-        currentPage: 0,
-        deviceId: 69528,
-        deviceType: 356,
-        pageSize: 20
+        deviceId: "",
+        deviceType: ""
       },
       api: api.deviceMallQueryByPage
     };

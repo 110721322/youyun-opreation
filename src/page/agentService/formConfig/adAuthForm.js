@@ -1,4 +1,4 @@
-// import { setRules } from '@/libs/kit/formFns.js'
+import apiAgent from "@/api/api_agent.js";
 
 export const FORM_CONFIG = {
   formData: {
@@ -9,16 +9,12 @@ export const FORM_CONFIG = {
         type: 2,
         label: '广告权限',
         key: 'baseData',
-        options: [
-          {
-            label: '蜻蜓-开机广告',
-            value: 1
-          },
-          {
-            label: '青蛙-开机广告',
-            value: 2
-          }
-        ]
+        urlOptions: {
+          url: apiAgent.queryAllAdvertType,
+          keyName: 'advertType',
+          valueName: 'advertTypeDesc',
+          method: 'get'
+        }
       }
     ]
   }

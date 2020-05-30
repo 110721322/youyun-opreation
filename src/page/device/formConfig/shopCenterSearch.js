@@ -1,45 +1,36 @@
+import apiDevice from "@/api/api_device";
+
 export const SEARCH_CONFIG = {
   formData: [
     {
       type: 1,
       label: '设备型号',
       key: 'deviceId',
-      style: 'width:294px',
       labelWidth: '100px',
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
+      urlOptions: {
+        url: apiDevice.queryAllDeviceModel,
+        keyName: 'deviceId',
+        valueName: 'deviceType',
+        method: 'get',
+        params: {
+          classification: 1
         }
-      ]
+      }
     },
     {
       type: 1,
       label: '设备类型',
       key: 'deviceType',
-      style: 'width:294px',
-      labelWidth: '100px', options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
+      labelWidth: '100px',
+      urlOptions: {
+        url: apiDevice.queryAllDeviceModel,
+        keyName: 'deviceId',
+        valueName: 'deviceType',
+        method: 'get',
+        params: {
+          classification: 1
         }
-      ]
+      }
     }
   ]
 }

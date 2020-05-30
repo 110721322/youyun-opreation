@@ -96,7 +96,6 @@ export const FORM_CONFIG = {
         type: 3,
         label: '广告有效期',
         key: 'time',
-        initVal: null,
         dateType: 'daterange',
         style: 'width:364px',
         rules: setRules('广告有效期').isRequired.get,
@@ -106,7 +105,6 @@ export const FORM_CONFIG = {
         type: "show",
         label: '优先级',
         key: 'sort',
-        initVal: '',
         rules: setRules('优先级').isRequired.get,
         inputType: "input",
         row: 1,
@@ -117,26 +115,12 @@ export const FORM_CONFIG = {
         type: 5,
         label: '投放服务商',
         key: 'distributeType',
-        initVal: 0,
-        options: [
-          {
-            label: '所有服务商',
-            value: 0
-          },
-          {
-            label: '有权限服务商',
-            value: 1
-          },
-          {
-            label: '无权限服务商',
-            value: 2
-          },
-          {
-            label: '其他服务商',
-            value: 3
-          }
-        ],
-        rules: setRules('投放服务商').isRequired.get
+        urlOptions: {
+          url: apiAgent.queryAllAdvertDistributeType,
+          keyName: 'status',
+          valueName: 'statusDesc',
+          method: 'get'
+        }
       }
     ]
   }

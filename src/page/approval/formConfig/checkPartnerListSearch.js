@@ -1,4 +1,6 @@
 // import areaData from "@/assets/data/areaData"
+import apiAgent from "@/api/api_agent.js";
+
 export const SEARCH_CONFIG = {
   formData: [
     {
@@ -74,16 +76,14 @@ export const SEARCH_CONFIG = {
       type: 1,
       label: '所属运营',
       key: 'oper',
-      style: 'width:294px',
       labelWidth: '100px',
       class: "clear_both",
-      initVal: "全部",
-      options: [
-        {
-          label: '全部',
-          value: 0
-        }
-      ]
+      urlOptions: {
+        url: apiAgent.queryAllOperation,
+        keyName: 'operationId',
+        valueName: 'operationName',
+        method: 'get'
+      }
     }
   ]
 }

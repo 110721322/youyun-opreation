@@ -73,22 +73,19 @@ export default {
       if (options) {
         this.selectOptions = options;
       } else {
-        urlOptions
-          .url({})
-          .then(res => {
-            const newArr = [];
-            for (const item of res.object) {
-              newArr.push({
-                value: item[urlOptions.keyName],
-                label: item[urlOptions.valueName]
-              });
-            }
-            console.log(newArr);
-            this.selectOptions = newArr;
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        urlOptions.url({}).then(res => {
+          const newArr = [];
+          for (const item of res.object) {
+            newArr.push({
+              value: item[urlOptions.keyName],
+              label: item[urlOptions.valueName]
+            });
+          }
+          console.log(newArr);
+          this.selectOptions = newArr;
+        }).catch(err => {
+          console.log(err);
+        });
       }
     }
   }

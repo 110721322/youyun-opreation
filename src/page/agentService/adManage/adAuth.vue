@@ -42,10 +42,11 @@
   </div>
 </template>
 <script>
+
+import apiAgent from "@/api/api_agent.js";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import Form from "@/components/form/index.vue";
-import api from "@/api/api_agent.js";
 import { SEARCH_CONFIG } from "../formConfig/adAuthSearch";
 import { FORM_CONFIG } from "../formConfig/adAuthForm";
 import { TABLE_CONFIG } from "../tableConfig/adAuthTable";
@@ -55,22 +56,22 @@ export default {
   components: { Search, BaseCrud, Form },
   data() {
     return {
-      fromConfigData: {},
       searchConfig: SEARCH_CONFIG,
       configData: TABLE_CONFIG,
-      testData: [],
-      searchHeight: "260",
       drawer: false,
+      searchHeight: "200",
       rowAgentNo: "",
+      testData: [],
+      fromConfigData: {},
       params: {
         agentNo: "",
         agentName: "",
         cityCode: "",
+        provinceCode: "",
         operationId: null,
-        privilege: null,
-        provinceCode: ""
+        privilege: null
       },
-      api: api.advertPrivilege
+      api: apiAgent.advertPrivilege
     };
   },
   mounted() {
@@ -79,46 +80,41 @@ export default {
     handleEditAuth($row) {
       console.log('$rowww', $row);
       this.rowAgentNo = $row.agentNo;
-      this.drawer = true;
       // 编辑前重赋值
       FORM_CONFIG.formData.formData.forEach((item, index) => {
         item.initVal = $row.privilege;
       });
       this.fromConfigData = FORM_CONFIG.formData;
+      this.drawer = true;
     },
     confirm($ruleForm) {
       console.log("ruleForm值", $ruleForm);
-      api
-        .advertPrivilegeUpdate({
-          agentNo: this.rowAgentNo,
-          privilegeList: $ruleForm.baseData
-        })
-        .then(res => {
-          if (res.object) {
-            this.$refs.table.getData();
-            this.drawer = false;
-          }
-        });
+      apiAgent.advertPrivilegeUpdate({
+        agentNo: this.rowAgentNo,
+        privilegeList: $ruleForm.baseData
+      }).then(res => {
+        if (res.object) {
+          this.$refs.table.getData();
+          this.drawer = false;
+        }
+      }).catch(err => {
+        console.log(err);
+      });
     },
     cancel() {
       this.drawer = false;
     },
     search($ruleForm) {
+      console.log('$ruleForm', $ruleForm);
       this.params = {
-        agentName: "",
-        agentNo: "",
-        cityCode: "",
+        cityCode: $ruleForm.area ? $ruleForm.area[1] : '',
+        provinceCode: $ruleForm.area ? $ruleForm.area[0] : '',
         operationId: $ruleForm.operationId,
-        privilege: $ruleForm.privilege,
-        provinceCode: ""
+        privilege: $ruleForm.privilege
       };
-      console.log("查询", $ruleForm);
+      // SelectInput联合输入框赋值
       this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
-      console.log("1233", this.params);
-      if ($ruleForm.area) {
-        this.params.cityCode = $ruleForm.area[1];
-        this.params.provinceCode = $ruleForm.area[0];
-      }
+      console.log('ruleForm', $ruleForm.inputForm);
     }
   }
 };

@@ -1,4 +1,5 @@
 import { setRules } from '@/libs/kit/formFns.js'
+import apiAgent from "@/api/api_agent.js";
 
 export const FORM_CONFIG = {
   sendData: {
@@ -23,7 +24,6 @@ export const FORM_CONFIG = {
         type: 0,
         label: '维修费用',
         key: 'amount',
-        initVal: '',
         rules: setRules('邮箱').isRequired.get
       }
     ]
@@ -36,26 +36,12 @@ export const FORM_CONFIG = {
         type: 1,
         label: '发货人员',
         key: 'distributionUserId',
-        initVal: [],
-        // urlOptions: {
-        //     url: './demo.js',
-        //     keyName: 'records',
-        //     method: 'get'
-        // }
-        options: [
-          {
-            label: '川菜',
-            value: 0
-          },
-          {
-            label: '粤菜',
-            value: 1
-          },
-          {
-            label: '杭帮菜',
-            value: 2
-          }
-        ]
+        urlOptions: {
+          url: apiAgent.queryAllOperation,
+          keyName: 'operationId',
+          valueName: 'operationName',
+          method: 'get'
+        }
       }
     ]
   },
@@ -67,7 +53,6 @@ export const FORM_CONFIG = {
         type: 0,
         label: '驳回原因',
         key: 'rejectRemark',
-        initVal: 'pdd',
         inputType: 'textarea',
         rules: setRules('邮箱').isRequired.get
       }

@@ -38,6 +38,7 @@
     <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
+        v-if="drawer"
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
         label-width="130px"
@@ -123,6 +124,7 @@ export default {
               id: $row.id
             })
             .then(result => {
+              this.$refs.table.getData();
               this.$message("收货成功");
             })
             .catch(err => {
@@ -136,20 +138,20 @@ export default {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认",
         cancelButtonText: "取消"
-      })
-        .then(() => {
-          api
-            .auditPass({
-              id: $row.id
-            })
-            .then(result => {
-              this.$message("通过成功");
-            })
-            .catch(err => {
-              console.error(err);
-            });
-        })
-        .catch(() => {});
+      }).then(() => {
+        api.auditPass({
+          id: $row.id
+        }).then(result => {
+          if (result.object) {
+            this.$refs.table.getData();
+            this.$message("通过成功");
+          } else {
+            this.$message(result.errorMessage);
+          }
+        }).catch(err => {
+          console.error(err);
+        });
+      }).catch(() => {});
     },
     confirm($data) {
       switch (this.formStatus) {
@@ -160,6 +162,8 @@ export default {
               rejectRemark: $data.rejectRemark
             })
             .then(res => {
+              this.$refs.table.getData();
+              this.drawer = false;
               this.$message("已驳回");
             })
             .catch(err => {
@@ -173,6 +177,8 @@ export default {
               expressNumberOut: $data.expressNumberOut
             })
             .then(res => {
+              this.$refs.table.getData();
+              this.drawer = false;
               this.$message("提交成功");
             })
             .catch(err => {
@@ -182,10 +188,13 @@ export default {
         case "distribution":
           api
             .distribute({
-              deviceOutputId: this.activityRow.deviceOutputId,
+              type: "maintain",
+              typeNo: this.activityRow.id,
               distributionUserId: $data.distributionUserId
             })
             .then(res => {
+              this.$refs.table.getData();
+              this.drawer = false;
               this.$message("分配成功");
             })
             .catch(err => {
@@ -199,6 +208,8 @@ export default {
               amount: $data.amount
             })
             .then(res => {
+              this.$refs.table.getData();
+              this.drawer = false;
               this.$message("提交成功");
             })
             .catch(err => {
@@ -226,8 +237,11 @@ export default {
       // eslint-disable-next-line no-console
       console.log($val);
     },
-    onClick_detail() {
-      this.$router.push("/deviceManage/usageManage/repairList/detail");
+    onClick_detail($row) {
+      this.$router.push({
+        path: "/deviceManage/usageManage/repairList/detail",
+        query: { id: $row.id }
+      })
     },
     cancel() {
       this.drawer = false;

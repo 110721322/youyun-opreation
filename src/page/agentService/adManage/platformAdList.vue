@@ -40,14 +40,14 @@
   </div>
 </template>
 <script>
+import api from "@/api/api_agent.js";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { SEARCH_CONFIG } from "../formConfig/platformAdListSearch";
-import { TABLE_CONFIG } from "../tableConfig/platformAdListConfig";
-import api from "@/api/api_agent.js";
+import { TABLE_CONFIG } from "../tableConfig/platformAdListTable";
 
 export default {
-  name: "Theme",
+  name: "PlatformAdList",
   components: { Search, BaseCrud },
   data() {
     return {

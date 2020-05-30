@@ -1,4 +1,6 @@
 import areaData from "@/assets/data/areaData";
+import apiAgent from "@/api/api_agent.js";
+
 export const FORM_CONFIG = {
   formData: [
     {
@@ -189,22 +191,13 @@ export const FORM_CONFIG = {
       type: 1,
       label: '所属运营',
       key: 'operateNo',
-      style: 'width:294px',
       class: "clear_both",
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
+      urlOptions: {
+        url: apiAgent.queryAllOperation,
+        keyName: 'operationId',
+        valueName: 'operationName',
+        method: 'get'
+      }
     }
   ]
 }

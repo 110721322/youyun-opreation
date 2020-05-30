@@ -116,8 +116,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '驳回原因',
-        key: 'reason',
-        initVal: 'pdd',
+        key: 'rejectRemark',
         inputType: 'textarea',
         rules: setRules('邮箱').isRequired.get
       }

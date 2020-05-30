@@ -38,6 +38,7 @@
 </template>
 <script>
 import api from "@/api/api_device";
+import * as g from '@/libs/global';
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { SEARCH_CONFIG } from "../formConfig/authorizedSearch";
@@ -86,7 +87,9 @@ export default {
       console.log($val);
     },
     onClick_addDevice() {},
-    onClick_download() {},
+    onClick_download() {
+      window.location.href = g.config.server + "operation/v1/excelTemplate/download?url=excel/device_input.xlsx";
+    },
     onClick_okEdit($item) {
       api
         .deviceActivationUpdate({

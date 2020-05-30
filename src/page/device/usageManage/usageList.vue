@@ -55,13 +55,11 @@ export default {
       params: {
         beginDate: this.$g.utils.getToday(),
         endDate: this.$g.utils.getToday(),
-        agentNo: "84试据b",
-        currentPage: 0,
-        deviceId: 9089,
-        deviceIdentifier: 97220,
-        freezeStatus: 656,
-        merchantNo: "haha",
-        pageSize: 20
+        agentNo: "",
+        deviceId: "",
+        deviceIdentifier: "",
+        freezeStatus: "",
+        merchantNo: ""
       },
       api: api.deviceMerchantQueryByPage
     };
@@ -73,40 +71,30 @@ export default {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认",
         cancelButtonText: "取消"
-      })
-        .then(() => {
-          api
-            .unbind({
-              id: $row.id
-            })
-            .then(result => {
-              this.$message("已解绑");
-            })
-            .catch(err => {
-              console.error(err);
-            });
-        })
-        .catch(() => {});
+      }).then(() => {
+        api.unbind({ id: $row.deviceId}).then(result => {
+          this.$refs.table.getData();
+          this.$message("已解绑");
+        }).catch(err => {
+          console.error(err);
+        });
+      }).catch((e) => {});
     },
     unfreeze($row) {
       this.$confirm("确定启用该设备吗", "提示", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认",
         cancelButtonText: "取消"
-      })
-        .then(() => {
-          api
-            .unfreeze({
-              id: $row.id
-            })
-            .then(result => {
-              this.$message("已启用");
-            })
-            .catch(err => {
-              console.error(err);
-            });
-        })
-        .catch(() => {});
+      }).then(() => {
+        api.unfreeze({
+          id: $row.deviceId
+        }).then(result => {
+          this.$refs.table.getData();
+          this.$message("已启用");
+        }).catch(err => {
+          console.error(err);
+        });
+      }).catch(() => {});
     },
     search($ruleForm) {
       console.log($ruleForm);

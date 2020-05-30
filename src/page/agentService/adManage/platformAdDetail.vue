@@ -15,9 +15,9 @@
 </template>
 
 <script>
+import apiAgent from "@/api/api_agent.js";
 import Form from "@/components/form/index.vue";
 import { FORM_CONFIG } from "./../formConfig/platformAdDetailFrom";
-import api from "@/api/api_agent.js";
 export default {
   name: "PlatformAdDetail",
   components: { Form },
@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     queryById() {
-      api.advertQueryById({ id: this.id }).then(res => {
+      apiAgent.advertQueryById({ id: this.id }).then(res => {
         // 编辑前重赋值
         FORM_CONFIG.editData.formData.forEach((item, index) => {
           item.initVal = res.object[item.key];
@@ -52,32 +52,22 @@ export default {
     },
     confirm($form) {
       if (this.id) {
-        api.advertUpdate({
+        apiAgent.advertUpdate({
           advertImg: $form.advertImg.dialogImageUrl,
           advertName: $form.advertName,
           advertSize: "",
           id: this.id
         }).then(res => {
-          this.$alert("修改成功", "编辑广告", {
-            confirmButtonText: "确定",
-            callback: action => {
-              this.$router.back(-1);
-            }
-          });
+          this.$router.back(-1);
         });
       } else {
-        api.advertAdd({
+        apiAgent.advertAdd({
           advertImg: $form.advertImg.dialogImageUrl,
           advertName: $form.advertName,
           advertSize: "",
           advertType: $form.advertType
         }).then(res => {
-          this.$alert("添加成功", "编辑广告", {
-            confirmButtonText: "确定",
-            callback: action => {
-              this.$router.back(-1);
-            }
-          });
+          this.$router.back(-1);
         });
       }
     }

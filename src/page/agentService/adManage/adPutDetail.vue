@@ -41,8 +41,8 @@
         <span class="label">精准筛选:</span>
         <el-input v-model="input" placeholder="请输入内容" class="input-with-select" size="40%">
           <el-select slot="prepend" v-model="select" style="width:130px" placeholder="请选择">
-            <el-option label="服务商名称" value="1"></el-option>
-            <el-option label="服务商ID" value="2"></el-option>
+            <el-option label="服务商ID" value="1"></el-option>
+            <el-option label="服务商名称" value="2"></el-option>
           </el-select>
         </el-input>
       </div>
@@ -101,7 +101,7 @@
 </template>
 
 <script>
-import api from "@/api/api_agent.js";
+import apiAgent from "@/api/api_agent.js";
 import Form from "@/components/form/adPutDetailEdit.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { FORM_CONFIG } from "./../formConfig/adPutDetailForm";
@@ -121,25 +121,16 @@ export default {
       select: "",
       select2: "",
       select3: "",
-      options: [
-        {
-          value: "选项1",
-          label: "黄金糕"
-        }
-      ],
+      par: {},
+      options: [],
       testData: [],
       selectData: [],
       dynamicTags: [],
       myDynamicTags: [],
       drawerTitle: "添加投放的服务商",
       id: this.$route.query.id,
-      api: api.queryAllDistributeAgent
+      api: apiAgent.queryAllDistributeAgent
     };
-  },
-  watch: {
-    fromConfigData: function($value, $old) {
-      console.log('改变值', $value);
-    }
   },
   mounted() {
     this.queryAllPrivilegeType();
@@ -152,34 +143,22 @@ export default {
       this.dynamicTags = [];
     },
     queryAllPrivilegeType() {
-      api
-        .queryAllPrivilegeType({
-        })
-        .then(res => {
-          this.options = res.object;
-        })
-        .catch(err => {
-          this.$message(err);
-        });
+      apiAgent.queryAllPrivilegeType({}).then(res => {
+        this.options = res.object;
+      }).catch(err => {
+        this.$message(err);
+      });
     },
     queryById() {
-      api
-        .queryById({
-          id: this.id
-        })
-        .then(res => {
-          // 编辑前重赋值
-          FORM_CONFIG.editData.formData.forEach((item, index) => {
-            item.initVal = res.object[item.key];
-          });
-          this.fromConfigData = FORM_CONFIG.editData;
-        })
-        .catch(err => {
-          this.$message(err);
+      apiAgent.queryById({ id: this.id }).then(res => {
+        // 编辑前重赋值
+        FORM_CONFIG.editData.formData.forEach((item, index) => {
+          item.initVal = res.object[item.key];
         });
-    },
-    onChange($val) {
-      console.log('$val', $val);
+        this.fromConfigData = FORM_CONFIG.editData;
+      }).catch(err => {
+        this.$message(err);
+      });
     },
     handleClose(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
@@ -188,16 +167,21 @@ export default {
       this.drawer = true;
     },
     getTableData() {
-      api
-        .queryAllDistributeAgent({
-          agentNo: this.input,
-          provinceCode: this.select2[0],
-          cityCode: this.select2[1],
-          businessType: this.select3
-        })
-        .then(res => {
-          this.testData = res.datas;
-        });
+      this.par = {
+        provinceCode: this.select2[0],
+        cityCode: this.select2[1],
+        businessType: this.select3
+      };
+      if (this.select === '1') {
+        this.par.agentNo = this.input;
+      } else if (this.select === '2') {
+        this.par.agentName = this.input;
+      }
+      apiAgent.queryAllDistributeAgent(this.par).then(res => {
+        this.testData = res.datas;
+      }).catch(err => {
+        this.$message(err);
+      })
     },
     cancel() {
       this.$router.go(-1);
@@ -223,7 +207,6 @@ export default {
       this.select = "";
       this.select2 = "";
       this.select3 = "";
-      // this.getTableData();
     },
     onClick_search() {
       this.getTableData();
@@ -234,39 +217,29 @@ export default {
     confirm($form) {
       console.log($form);
       if (this.id) {
-        api
-          .advertDistributeUpdate({
-            agentNoList: this.selectData,
-            beginTime: $form.time[0],
-            endTime: $form.time[1]
-          })
-          .then(res => {
-            this.$alert("修改成功", "提示", {
-              confirmButtonText: "确定",
-              callback: action => {
-                this.$router.back(-1);
-              }
-            });
-          });
+        apiAgent.advertDistributeUpdate({
+          agentNoList: this.selectData,
+          beginTime: $form.time[0],
+          endTime: $form.time[1]
+        }).then(res => {
+          this.$router.back(-1);
+        }).catch(err => {
+          this.$message(err);
+        })
       } else {
-        api
-          .advertDistributeAdd({
-            advertId: $form.id,
-            agentNoList: this.selectData,
-            distributeType: $form.putService,
-            operationId: $form.operationId,
-            sort: Number($form.sort),
-            beginTime: $form.time[0],
-            endTime: $form.time[1]
-          })
-          .then(res => {
-            this.$alert("添加成功", "提示", {
-              confirmButtonText: "确定",
-              callback: action => {
-                this.$router.back(-1);
-              }
-            });
-          });
+        apiAgent.advertDistributeAdd({
+          advertId: $form.id,
+          agentNoList: this.selectData,
+          distributeType: $form.putService,
+          operationId: $form.operationId,
+          sort: Number($form.sort),
+          beginTime: $form.time[0],
+          endTime: $form.time[1]
+        }).then(res => {
+          this.$router.back(-1);
+        }).catch(err => {
+          this.$message(err);
+        })
       }
     }
   }

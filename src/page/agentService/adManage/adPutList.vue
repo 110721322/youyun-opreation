@@ -36,14 +36,14 @@
   </div>
 </template>
 <script>
+import apiAgent from "@/api/api_agent.js";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { SEARCH_CONFIG } from "../formConfig/adPutListSearch";
-import { TABLE_CONFIG } from "../tableConfig/adPutListConfig";
-import api from "@/api/api_agent.js";
+import { TABLE_CONFIG } from "../tableConfig/adPutListTable";
 
 export default {
-  name: "Theme",
+  name: "AdPutList",
   components: { Search, BaseCrud },
   data() {
     return {
@@ -52,52 +52,39 @@ export default {
       configData: TABLE_CONFIG,
       fromConfigData: {},
       testData: [],
-      direction: "rtl",
       params: {
-        advertType: 0,
-        distributeType: 0,
-        operationId: 0,
-        status: 0
+        advertType: "",
+        distributeType: "",
+        operationId: "",
+        status: ""
       },
-      api: api.putList
+      api: apiAgent.putList
     };
   },
   mounted() {},
   methods: {
     search($ruleForm) {
-      // eslint-disable-next-line no-console
-      console.log($ruleForm);
       this.params = {
-        advertType: $ruleForm.advertType || 0,
-        distributeType: $ruleForm.distributeType || 0,
-        operationId: $ruleForm.operationId || 0,
-        status: $ruleForm.status || 0
+        advertType: $ruleForm.advertType,
+        distributeType: $ruleForm.distributeType,
+        operationId: $ruleForm.operationId,
+        status: $ruleForm.status
       };
     },
     onClick_remove(row) {
       this.$confirm("确认删除该广告投放吗", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
-      })
-        .then(() => {
-          api
-            .advertDistribute({
-              id: row.id
-            })
-            .then(res => {
-              this.$refs.table.getData();
-              this.$message({
-                type: "success",
-                message: "删除成功!"
-              });
-            });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消"
-          });
+      }).then(() => {
+        apiAgent.advertDistribute({
+          id: row.id
+        }).then(res => {
+          this.$refs.table.getData();
+          this.$message({ type: "success", message: "删除成功!"});
         });
+      }).catch(() => {
+        this.$message({ type: "info", message: "已取消" });
+      });
     },
     onClick_edit($row) {
       this.$router.push({

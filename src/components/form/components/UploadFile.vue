@@ -98,7 +98,6 @@ export default {
       });
     },
     download() {
-      console.log('下载', g.config.server)
       window.location.href = g.config.server + "operation/v1/excelTemplate/download?url=excel/device_input.xlsx";
     },
     beforeRemove(file, fileList) {

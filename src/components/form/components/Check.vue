@@ -13,28 +13,43 @@
 
 <script>
 export default {
-  name: "",
+  name: "Check",
   props: {
     ruleForm: Object,
     formItem: Object
   },
   data() {
-    return {};
+    return {
+      checkOptions: []
+    };
   },
-  computed: {
-    // eslint-disable-next-line vue/return-in-computed-property
-    checkOptions() {
+  computed: {},
+  created() {
+    this.checkOptionsFun();
+  },
+  methods: {
+    checkOptionsFun() {
       const options = this.formItem.options;
       if (options) {
-        return options;
+        this.checkOptions = options;
       } else {
-        // jiekouna
+        const urlOptions = this.formItem.urlOptions;
+        urlOptions.url({}).then(res => {
+          const newArr = [];
+          res.object.forEach(item => {
+            newArr.push({
+              value: item[urlOptions.keyName],
+              label: item[urlOptions.valueName]
+            });
+          });
+          console.log('newArr', newArr);
+          this.checkOptions = newArr;
+        }).catch(err => {
+          console.log(err);
+        });
       }
     }
-  },
-
-  methods: {}
+  }
 };
 </script>
-
 <style lang="scss"></style>

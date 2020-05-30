@@ -12,7 +12,7 @@
       :rules="rules"
       :label-width="labelWidth"
       :class="['form-inline', isShowAll ? 'is_show_all' : '']"
-      :style="isOpen ? 'height:' + (Number(openHeight) + 40) + 'px' : ''"
+      :style="isOpen ? 'height:' + (Number(openHeight) - 40) + 'px' : ''"
     >
       <el-form-item
         v-for="formItem in formBaseData"
@@ -51,7 +51,6 @@
 import * as g from "@/libs/global";
 import {
   transFormType,
-  clearFormData,
   formatFormData
 } from "@/libs/kit/formFns.js";
 import Input from "./components/Input.vue";
@@ -167,23 +166,7 @@ export default {
       setTimeout(() => {
         this.isRest = false;
       }, 500);
-
       this.$refs.formTep.resetFields();
-    },
-    clearForm() {
-      // 清空表单
-      const p = () =>
-        new Promise(resolve => {
-          clearFormData(this.ruleForm, this.formKeys);
-          resolve();
-        });
-      p().then(() => {
-        this.$refs.formTep.clearValidate();
-      });
-    },
-    cancelForm() {
-      // 初始化表单
-      this.$emit("cancel");
     },
     transType(value) {
       // 获取表单项类型

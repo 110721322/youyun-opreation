@@ -161,6 +161,7 @@ export default {
   },
   created() {
     this.init();
+    console.log('敕书');
   },
   methods: {
     init() {

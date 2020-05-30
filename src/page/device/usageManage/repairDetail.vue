@@ -39,7 +39,7 @@ export default {
   components: { detailMode },
   data() {
     return {
-      id: "",
+      id: this.$route.query.id,
       stepData: [
         {
           img:
@@ -160,6 +160,7 @@ export default {
   },
   mounted() {
     this.deviceMaintainQueryById();
+    console.log('提交事实上', this.$route);
   },
   methods: {
     deviceMaintainQueryById() {

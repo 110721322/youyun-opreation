@@ -51,5 +51,7 @@ export default {
   update: (params) => API.GET('/operation/v1/agentOpenConfig/update', params),
   // 平台广告列表-广告类型下拉列表接口
   queryAllAdvertType: (params) => API.GET('/operation/v1/advert/queryAllAdvertType', params),
-  queryAllOperation: (params) => API.GET('/operation/v1/advertPrivilege/queryAllOperation', params)
+  queryAllOperation: (params) => API.GET('/operation/v1/advertPrivilege/queryAllOperation', params),
+  queryAllDistributeStatus: (params) => API.GET('/operation/v1/advertDistribute/queryAllDistributeStatus', params),
+  queryAllDistributeAgent: (params) => API.GET('/operation/v1/advertDistribute/queryAllDistributeAgent', params)
 };

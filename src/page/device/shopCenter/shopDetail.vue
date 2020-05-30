@@ -21,7 +21,7 @@ export default {
   data() {
     return {
       fromConfigData: FORM_CONFIG.addData,
-      id: ""
+      id: this.$route.query.id
     };
   },
   created() {
@@ -33,11 +33,13 @@ export default {
       api
         .selectById({ id: this.id })
         .then(res => {
+          console.log('res', res);
           const newFromConfigData = FORM_CONFIG.editData;
           newFromConfigData.formData.forEach((item, index) => {
-            item.initVal = res[item.key];
+            item.initVal = res.object[item.key];
           });
           this.fromConfigData = newFromConfigData;
+          console.log('升级', this.fromConfigData);
         })
         .catch(err => {
           this.$message(err);
@@ -50,12 +52,13 @@ export default {
       if (this.id) {
         api
           .deviceMallUpdate({
+            id: this.id,
             desc: $ruleForm.desc,
             deviceId: $ruleForm.deviceId,
             deviceType: $ruleForm.deviceType,
-            img: $ruleForm.img,
+            img: $ruleForm.img.dialogImageUrl,
             sort: $ruleForm.sort,
-            video: $ruleForm.video
+            video: $ruleForm.video.dialogImageUrl
           })
           .then(res => {
             this.$message("保存成功");
@@ -67,10 +70,12 @@ export default {
       } else {
         api
           .deviceMallAdd({
+            deviceId: $ruleForm.deviceId,
+            deviceType: $ruleForm.deviceType,
             desc: $ruleForm.desc,
-            img: $ruleForm.img,
+            img: $ruleForm.img.dialogImageUrl,
             sort: $ruleForm.sort,
-            video: $ruleForm.video
+            video: $ruleForm.video.dialogImageUrl
           })
           .then(res => {
             this.$message("添加成功");

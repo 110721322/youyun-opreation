@@ -82,7 +82,6 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl",
       formStatus: "",
       activityRow: {},
       tableId: "",
@@ -91,12 +90,10 @@ export default {
         beginTime: this.$g.utils.getToday(),
         endTime: this.$g.utils.getToday(),
         agentNo: "",
-        currentPage: 0,
         deviceId: "",
         distributionUserId: 1,
         outputNo: "",
         outputUserId: 1,
-        pageSize: 1,
         saleUserId: 1,
         status: 1
       },
@@ -107,7 +104,6 @@ export default {
   mounted() {},
   methods: {
     search($ruleForm) {
-      console.log($ruleForm);
       const params = {
         beginTime: $ruleForm.date ? $ruleForm.date[0] : null,
         endTime: $ruleForm.date ? $ruleForm.date[1] : null,
@@ -115,80 +111,70 @@ export default {
         status: $ruleForm.status,
         saleUserId: $ruleForm.saleUserId,
         outputUserId: $ruleForm.outputUserId,
-        distributionUserId: 1
+        distributionUserId: '1'
+        // 1415
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     },
-    selectionChange($val) {
-      // eslint-disable-next-line no-console
-      console.log($val);
-    },
     confirm($data) {
       // exelc解析
       if (this.formStatus === "send") {
-        apiComm
-          .excelUploadPic({
-            url: $data.deviceIdentifierList.dialogImageUrl,
-            type: "deviceOutput"
-          })
-          .then(res => {
-            this.device = res.object;
-            api
-              .finishOutput({
-                expressNo: $data.expressNo,
-                outputRemark: $data.outputRemark,
-                outputTime: $data.outputTime,
-                id: this.tableDate.id,
-                infoRequestVOList: [
-                  {
-                    deviceId: this.tableDeviceId,
-                    deviceIdentifierList: this.device
-                  }
-                ]
-              })
-              .then(res => {
-                this.$refs.table.getData();
-                this.drawer = false;
-                this.$message("保存成功");
-              })
-              .catch(err => {
-                this.$message(err);
-              });
-          })
-          .catch(err => {
+        apiComm.excelUploadPic({
+          url: $data.deviceIdentifierList.dialogImageUrl,
+          type: "deviceOutput"
+        }).then(res => {
+          this.device = res.object;
+          api.finishOutput({
+            expressNo: $data.expressNo,
+            outputRemark: $data.outputRemark,
+            outputTime: $data.outputTime,
+            id: this.tableDate.id,
+            infoRequestVOList: [
+              {
+                deviceId: this.tableDeviceId,
+                deviceIdentifierList: this.device
+              }
+            ]
+          }).then(res => {
+            this.$refs.table.getData();
+            this.drawer = false;
+            this.$message("保存成功");
+          }).catch(err => {
             this.$message(err);
           });
+        }).catch(err => {
+          this.$message(err);
+        });
       } else {
         switch (this.formStatus) {
           case "reject":
-            api
-              .reject({
-                reason: $data.reason,
-                id: this.tableId
-              })
-              .then(res => {
-                this.$message("已驳回");
-              })
-              .catch(err => {
-                this.$message(err);
-              });
+            api.reject({
+              rejectRemark: $data.rejectRemark,
+              id: this.tableId
+            }).then(res => {
+              this.$refs.table.getData();
+              this.drawer = false;
+              this.$message("已驳回");
+            }).catch(err => {
+              this.$message(err);
+            });
             break;
           case "check":
             this.drawer = false;
             break;
           case "distribution":
-            api
-              .distribute({
-                deviceOutputId: "",
-                distributionUserId: $data.distributionUserId
-              })
-              .then(res => {
-                this.$message("分配成功");
-              })
-              .catch(err => {
-                this.$message(err);
-              });
+            api.distribute({
+              type: "facility",
+              typeNo: this.tableId,
+              distributionUserId: $data.distributionUserId
+            }).then(res => {
+              this.$refs.table.getData();
+              this.drawer = false;
+              this.$message("分配成功");
+            }).catch(err => {
+              this.$message(err);
+            });
             break;
           default:
             break;
@@ -206,22 +192,16 @@ export default {
     },
     onClick_check($row) {
       const newFromConfigData = FORM_CONFIG.checkData;
-      api
-        .deviceOutputQueryById({
-          id: $row.id
-        })
-        .then(res => {
-          console.log(res.object);
-          newFromConfigData.formData.forEach((item, index) => {
-            item.initVal = res.object[item.key];
-          });
-          this.fromConfigData = newFromConfigData;
-          this.formStatus = "check";
-          this.drawer = true;
-        })
-        .catch(err => {
-          this.$message(err);
+      api.deviceOutputQueryById({ id: $row.id }).then(res => {
+        newFromConfigData.formData.forEach((item, index) => {
+          item.initVal = res.object[item.key];
         });
+        this.fromConfigData = newFromConfigData;
+        this.formStatus = "check";
+        this.drawer = true;
+      }).catch(err => {
+        this.$message(err);
+      });
     },
     onClick_detail($item) {
       this.$router.push({
@@ -236,6 +216,7 @@ export default {
       this.drawer = true;
     },
     onClick_distribution($row) {
+      this.tableId = $row.id;
       this.formStatus = "distribution";
       this.activityRow = $row;
       this.fromConfigData = FORM_CONFIG.distributionData;
