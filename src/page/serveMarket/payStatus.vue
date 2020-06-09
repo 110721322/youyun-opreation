@@ -24,6 +24,16 @@
         </div>
       </ul>
     </div>
+    <div class="status">
+      <div class="order_pohto">
+        <img src="../../assets/img/order_success.png" alt="">
+        <img src="../../assets/img/order_fail.png" alt="" style="display: none;">
+      </div>
+      <p class="title">恭喜你，成功订购 【小马哥代理】服务</p>
+      <p class="title" style="display: none;">订购失败，请重新进行订购</p>
+      <button class="sure_btn">确定</button>
+      <button class="sure_btn" style="display: none;">重新订购</button>
+    </div>
   </div>
 </template>
 
@@ -35,34 +45,34 @@ export default {
 
 <style scoped>
   .main_page {
-      width: 100%;
-      padding: 24px 24px 0 24px;
-      box-sizing: border-box;
+    width: 100%;
+    padding: 24px 24px 40px 24px;
+    box-sizing: border-box;
   }
   .top {
-      width: 100%;
-      background: #ffffff;
-      height: 88px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 32px;
-      box-sizing: border-box;
+    width: 100%;
+    background: #ffffff;
+    height: 88px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 32px;
+    box-sizing: border-box;
   }
   .el-steps--horizontal {
-      width: 70%;
+    width: 70%;
   }
   .top span {
-      color: #000000;
-      font-size: 16px;
-      font-weight: 500;
+    color: #000000;
+    font-size: 16px;
+    font-weight: 500;
   }
-    .content {
-        width: 100%;
-        background: #ffffff;
-        padding: 48px 0;
-        margin-top: 24px;
-    }
+  .content {
+    width: 100%;
+    background: #ffffff;
+    padding: 48px 0;
+    margin-top: 24px;
+  }
   .order_pohto {
     width: 80px;
     height: 80px;
@@ -74,12 +84,12 @@ export default {
   }
   .title {
     text-align: center;
-    margin-top: 16px;
     font-size: 20px;
     line-height: 32px;
     color: #606266;
     font-weight: 500;
     margin-bottom: 36px;
+    margin-top: 16px;
   }
   .card {
     width: 454px;
@@ -129,6 +139,25 @@ export default {
     height: 100px;
     border-radius: 4px;
     border: 1px dashed #DCDFE6;
+  }
+  .status {
+    width: 100%;
+    padding: 210px 0 260px 0;
+    box-sizing: border-box;
+    background: #ffffff;
+    margin-top: 24px;
+  }
+  .sure_btn {
+    display: block;
+    width: 114px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    color: #ffffff;
+    font-size: 14px;
+    background: #1989FA;
+    border-radius: 4px;
+    margin: 0 auto;
   }
 </style>
 

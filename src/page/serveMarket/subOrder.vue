@@ -41,6 +41,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      input: ''
+    }
+  },
   methods: {
     onClick_submit() {
       this.$router.push({

@@ -60,6 +60,55 @@
         </ul>
       </div>
     </div>
+    <div class="handle">
+      <div class="handel_title">oem贴牌定制</div>
+      <div class="upimg">
+        <span>服务商后台logo：</span>
+        <div class="photo">
+          <el-upload
+            class="avatar-uploader"
+            action="https://jsonplaceholder.typicode.com/posts/"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload"
+          >
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
+        </div>
+      </div>
+      <div class="upimg">
+        <span>商户后台logo：</span>
+        <div class="photo">
+          <el-upload
+                  class="avatar-uploader"
+                  action="https://jsonplaceholder.typicode.com/posts/"
+                  :show-file-list="false"
+                  :on-success="handleAvatarSuccess"
+                  :before-upload="beforeAvatarUpload"
+          >
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
+        </div>
+      </div>
+      <div class="upimg">
+        <span></span>
+        <button @click="onClick_submit">提交</button>
+      </div>
+    </div>
+    <el-dialog
+      title="操作成功"
+      :visible.sync="centerDialogVisible"
+      width="455px"
+      height="305px"
+      border-radius="8px"
+      center>
+      <div style="color: #606266; font-size: 20px; font-weight: 500; text-align: center; line-height: 32px;">贴牌定制成功</div>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -81,12 +130,32 @@ export default {
           value: 3
         }
       ],
-      selectIndex: 0
+      selectIndex: 0,
+      imageUrl: '',
+      centerDialogVisible: false
     }
   },
   methods: {
     onclick_selectDate(index) {
       this.selectIndex = index
+    },
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw);
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!');
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!');
+      }
+      return isJPG && isLt2M;
+    },
+    onClick_submit() {
+      this.centerDialogVisible = true
     }
   }
 }
@@ -294,5 +363,63 @@ export default {
     width: 70px;
     line-height: 18px;
     margin-bottom: 8px;
+  }
+  .handle {
+    width: 100%;
+    background: #ffffff;
+    padding-bottom: 216px;
+  }
+  .handel_title {
+    width: 100%;
+    height: 70px;
+    font-size: 16px;
+    line-height: 70px;
+    padding-left: 32px;
+    color: #000000;
+    font-weight: 500;
+    border-bottom: 1px solid #EBEEF5;
+    margin-top: 24px;
+  }
+  .upimg {
+    margin-top: 24px;
+    display: flex;
+    padding-left: 32px;
+  }
+  .upimg span {
+    display: block;
+    width: 112px;
+    text-align: right;
+  }
+  .photo {
+    width: 100px;
+    height: 100px;
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .photo .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+  }
+  .photo .avatar {
+    width: 100px;
+    height: 100px;
+    display: block;
+  }
+  .upimg button {
+    width: 114px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    color: #ffffff;
+    font-size: 14px;
+    background: #1989FA;
+    border-radius: 4px;
   }
 </style>
