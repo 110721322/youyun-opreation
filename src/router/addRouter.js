@@ -392,6 +392,132 @@ const asyncRoutes = {
     },
     children: []
   },
+  'serveMarket': {
+    path: '/serveMarket',
+    name: 'serveMarket',
+    component: Layout,
+    meta: {
+      title: '服务市场',
+      icon: 'serveMarket'
+    },
+    children: []
+  },
+  'businessModel': {
+    path: 'businessModel',
+    name: 'businessModel',
+    meta: {
+      title: '业务模式',
+      icon: 'businessModel'
+    },
+    component: () => import('@/page/serveMarket/businessModel.vue'),
+    children: [
+      {
+        path: 'detail',
+        name: 'detail',
+        meta: {
+          title: '小马哥代理',
+          icon: 'xmgAgent',
+          fatherName: 'businessModel'
+        },
+        component: () => import('@/page/serveMarket/xmgAgent.vue')
+      },
+      {
+        path: 'omedetail',
+        name: 'omedetail',
+        meta: {
+          title: 'OEM贴牌',
+          icon: 'omeAgent',
+          fatherName: 'businessModel'
+        },
+        component: () => import('@/page/serveMarket/omeAgent.vue')
+      },
+      {
+        path: 'newdetail',
+        name: 'newdetail',
+        meta: {
+          title: '新源码',
+          icon: 'newAgent',
+          fatherName: 'businessModel'
+        },
+        component: () => import('@/page/serveMarket/newAgent.vue')
+      },
+      {
+        path: 'subOrder',
+        name: 'subOrder',
+        meta: {
+          title: '下单页面',
+          icon: 'newAgent',
+          fatherName: 'businessModel'
+        },
+        component: () => import('@/page/serveMarket/subOrder.vue')
+      },
+      {
+        path: 'payAmount',
+        name: 'payAmount',
+        meta: {
+          title: '下单页面',
+          icon: 'newAgent',
+          fatherName: 'businessModel'
+        },
+        component: () => import('@/page/serveMarket/payAmount.vue')
+      },
+      {
+        path: 'payStatus',
+        name: 'payStatus',
+        meta: {
+          title: '下单页面',
+          icon: 'newAgent',
+          fatherName: 'businessModel'
+        },
+        component: () => import('@/page/serveMarket/payStatus.vue')
+      }
+    ]
+  },
+  'tradingChannel': {
+    path: 'tradingChannel',
+    name: 'tradingChannel',
+    meta: {
+      title: '交易通道',
+      icon: 'tradingChannel'
+    },
+    component: () => import('@/page/serveMarket/tradingChannel.vue')
+  },
+  'brandCustomization': {
+    path: 'brandCustomization',
+    name: 'brandCustomization',
+    meta: {
+      title: '品牌定制',
+      icon: 'brandCustomization'
+    },
+    component: () => import('@/page/serveMarket/brandCustomization.vue')
+  },
+  'applicationCenter': {
+    path: 'applicationCenter',
+    name: 'applicationCenter',
+    meta: {
+      title: '应用中心',
+      icon: 'applicationCenter'
+    },
+    component: () => import('@/page/serveMarket/applicationCenter.vue')
+  },
+  'equipmentMall': {
+    path: 'equipmentMall',
+    name: 'equipmentMall',
+    meta: {
+      title: '设备商城',
+      icon: 'equipmentMall'
+    },
+    component: () => import('@/page/serveMarket/equipmentMall.vue')
+  },
+  'purchasedItems': {
+    path: 'purchasedItems',
+    name: 'purchasedItems',
+    meta: {
+      title: '已购项目',
+      icon: 'purchasedItems'
+    },
+    component: () => import('@/page/serveMarket/purchasedItems.vue')
+  },
   'serviceAnnouncementList': {
     path: 'serviceAnnouncementList',
     name: 'serviceAnnouncementList',

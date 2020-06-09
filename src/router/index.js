@@ -388,6 +388,85 @@ const menuItems = [
     ]
   },
   {
+    text: '服务市场',
+    type: 'ios-paper',
+    path: 'serveMarket',
+    name: 'serveMarket',
+    isShow: true,
+    meta: {
+      title: '服务市场',
+      icon: '服务市场'
+    },
+    children: [
+      {
+        type: 'ios-grid',
+        name: 'businessModel',
+        text: '业务模式',
+        path: 'businessModel',
+        isShow: true,
+        meta: {
+          title: '业务模式',
+          icon: 'businessModel'
+        }
+      },
+      {
+        type: 'ios-grid',
+        name: 'tradingChannel',
+        text: '交易通道',
+        path: 'tradingChannel',
+        isShow: true,
+        meta: {
+          title: '交易通道',
+          icon: 'tradingChannel'
+        }
+      },
+      {
+        type: 'ios-grid',
+        name: 'brandCustomization',
+        text: '品牌定制',
+        path: 'brandCustomization',
+        isShow: true,
+        meta: {
+          title: '品牌定制',
+          icon: 'brandCustomization'
+        }
+      },
+      {
+        type: 'ios-grid',
+        name: 'applicationCenter',
+        text: '应用中心',
+        path: 'applicationCenter',
+        isShow: true,
+        meta: {
+          title: '应用中心',
+          icon: 'applicationCenter'
+        }
+      },
+      {
+        type: 'ios-grid',
+        name: 'equipmentMall',
+        text: '设备商城',
+        path: 'equipmentMall',
+        isShow: true,
+        meta: {
+          title: '设备商城',
+          icon: 'equipmentMall'
+        }
+      },
+      {
+        type: 'ios-grid',
+        name: 'purchasedItems',
+        text: '已购项目',
+        path: 'purchasedItems',
+        isShow: true,
+        meta: {
+          title: '已购项目',
+          icon: 'purchasedItems'
+        }
+      }
+    ]
+  },
+  {
     text: '消息管理',
     type: 'ios-paper',
     path: 'message',
