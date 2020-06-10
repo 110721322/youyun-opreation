@@ -522,7 +522,19 @@ const asyncRoutes = {
       title: '应用中心',
       icon: 'applicationCenter'
     },
-    component: () => import('@/page/serveMarket/applicationCenter.vue')
+    component: () => import('@/page/serveMarket/applicationCenter.vue'),
+    children: [
+      {
+        path: 'messageCustomer',
+        name: 'messageCustomer',
+        meta: {
+          title: '短信充值',
+          icon: 'messageCustomer',
+          fatherName: 'applicationCenter'
+        },
+        component: () => import('@/page/serveMarket/messageCustomer.vue')
+      }
+    ]
   },
   'equipmentMall': {
     path: 'equipmentMall',
