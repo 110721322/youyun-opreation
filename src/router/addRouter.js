@@ -480,7 +480,19 @@ const asyncRoutes = {
       title: '交易通道',
       icon: 'tradingChannel'
     },
-    component: () => import('@/page/serveMarket/tradingChannel.vue')
+    component: () => import('@/page/serveMarket/tradingChannel.vue'),
+    children: [
+      {
+        path: 'lsBuyIndex',
+        name: 'lsBuyIndex',
+        meta: {
+          title: '乐刷通道',
+          icon: 'lsBuyIndex',
+          fatherName: 'tradingChannel'
+        },
+        component: () => import('@/page/serveMarket/lsBuyIndex.vue')
+      }
+    ]
   },
   'brandCustomization': {
     path: 'brandCustomization',

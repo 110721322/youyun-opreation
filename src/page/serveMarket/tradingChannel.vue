@@ -1,6 +1,7 @@
 <template>
   <div class="main_page">
-    <div class="content">
+    <router-view v-if=" this.$route.path.indexOf('/lsBuyIndex') !== -1 "/>
+    <div v-else class="content">
       <div class="card">
         <div class="top">
           <div class="left_img">
@@ -16,7 +17,7 @@
           <li><img src="" alt=""><span>通道方直接结算</span></li>
           <li><img src="" alt=""><span>万千商户选择</span></li>
         </ul>
-        <button class="btn">已接入</button>
+        <button class="btn" @click="onclick_buy">立即购买</button>
       </div>
       <div class="more">
         <img src="../../assets/img/more_icon.png" alt="">
@@ -28,7 +29,13 @@
 
 <script>
 export default {
-
+  methods: {
+    onclick_buy() {
+      this.$router.push({
+        path: "/serveMarket/tradingChannel/lsBuyIndex"
+      })
+    }
+  }
 }
 </script>
 
