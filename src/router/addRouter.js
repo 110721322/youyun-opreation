@@ -501,7 +501,19 @@ const asyncRoutes = {
       title: '品牌定制',
       icon: 'brandCustomization'
     },
-    component: () => import('@/page/serveMarket/brandCustomization.vue')
+    component: () => import('@/page/serveMarket/brandCustomization.vue'),
+    children: [
+      {
+        path: 'domainCustomer',
+        name: 'domainCustomer',
+        meta: {
+          title: '域名定制',
+          icon: 'domainCustomer',
+          fatherName: 'brandCustomization'
+        },
+        component: () => import('@/page/serveMarket/domainCustomer.vue')
+      }
+    ]
   },
   'applicationCenter': {
     path: 'applicationCenter',

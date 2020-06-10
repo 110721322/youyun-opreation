@@ -1,7 +1,7 @@
 <template>
   <div class="main_page">
     <router-view
-      v-if=" this.$route.path.indexOf('/detail') !== -1 || this.$route.path.indexOf('/omedetail') !== -1 || this.$route.path.indexOf('/newdetail') !== -1 || this.$route.path.indexOf('/subOrder') !== -1 || this.$route.path.indexOf('/payAmount') !== -1 ||
+      v-if="this.$route.path.indexOf('/detail') !== -1 || this.$route.path.indexOf('/omedetail') !== -1 || this.$route.path.indexOf('/newdetail') !== -1 || this.$route.path.indexOf('/subOrder') !== -1 || this.$route.path.indexOf('/payAmount') !== -1 ||
         this.$route.path.indexOf('/payStatus') !== -1 "
     />
     <div v-else>
