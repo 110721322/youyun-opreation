@@ -15,7 +15,7 @@
           <span>{{item.value}}</span>
         </div>
       </div>
-      <div class="message_recharge">
+      <div class="message_recharge" v-if="selectIndex===0">
         <div class="relize">当前剩余短信：<span style="color: #1989FA; font-size: 20px">10</span>条</div>
         <div class="select_package">
           <div class="package_label">短信套餐:</div>
@@ -61,12 +61,51 @@
           <button>提交</button>
         </div>
       </div>
+      <div class="table_box" v-if="selectIndex===1">
+        <BaseCrud
+          ref="table"
+          :grid-config="configData.gridConfig"
+          :grid-data="testData"
+          :grid-edit-width="300"
+          form-title="用户"
+          :is-async="true"
+          :is-select="false"
+          :hide-edit-area="true"
+          :params="params"
+        >
+          <div slot="head" slot-scope="item">
+            <span>{{ item.item.label }}</span>
+            <el-tooltip class="item" effect="dark" content="Top Center 提示文字" placement="top">
+              <div slot="content">
+                <div>
+                  <span class="dot opened"></span>已开通
+                </div>
+                <div>
+                  <span class="dot review"></span>审核中
+                </div>
+                <div>
+                  <span class="dot reject"></span>驳回
+                </div>
+                <div>
+                  <span class="dot unused"></span>未审核
+                </div>
+              </div>
+              <i class="el-icon-info" />
+            </el-tooltip>
+          </div>
+        </BaseCrud>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+// import api from "@/api/api_merchant";
+import { USER_CONFIG } from "./tableConfig/messageConfig";
+import BaseCrud from "@/components/table/BaseCrud.vue";
+
 export default {
+  components: { BaseCrud },
   data() {
     return {
       menu: [
@@ -102,8 +141,20 @@ export default {
       selectIndex: 0,
       packageIndex: 0,
       wayIndex: 0,
-      imageUrl: ''
+      imageUrl: '',
+      configData: USER_CONFIG,
+      // api: api.queryPageByCondition,
+      testData: [
+        {
+          id: '1',
+          createTime: "2020-06-10"
+        }
+      ],
+      params: {}
     }
+  },
+  mounted() {
+    this.getTableData();
   },
   methods: {
     onclick_head(index) {
@@ -129,6 +180,14 @@ export default {
         this.$message.error('上传头像图片大小不能超过 2MB!');
       }
       return isJPG && isLt2M;
+    },
+    getTableData() {
+      this.testData = [
+        {
+          id: '1',
+          createTime: "2020-06-10"
+        }
+      ]
     }
   }
 }
@@ -375,6 +434,9 @@ export default {
     color: #ffffff;
     background: #1989FA;
     border-radius: 4px;
+  }
+  .table_box {
+    padding-top: 24px;
   }
 </style>
 

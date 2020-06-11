@@ -543,7 +543,40 @@ const asyncRoutes = {
       title: '设备商城',
       icon: 'equipmentMall'
     },
-    component: () => import('@/page/serveMarket/equipmentMall.vue')
+    component: () => import('@/page/serveMarket/equipmentMall.vue'),
+    children: [
+      {
+        path: 'equimentDetail',
+        name: 'equimentDetail',
+        meta: {
+          title: '设备详情',
+          icon: 'equimentDetail',
+          fatherName: 'equipmentMall'
+        },
+        component: () => import('@/page/serveMarket/equimentDetail.vue')
+      },
+      {
+        path: 'shoppingCart',
+        name: 'shoppingCart',
+        meta: {
+          title: '购物车',
+          icon: 'shoppingCart',
+          fatherName: 'equipmentMall'
+        },
+        component: () => import('@/page/serveMarket/shoppingCart.vue')
+      },
+      {
+        path: 'equimentOrder',
+        name: 'equimentOrder',
+        meta: {
+          title: '下单',
+          icon: 'equimentOrder',
+          fatherName: 'equipmentMall'
+        },
+        component: () => import('@/page/serveMarket/equimentOrder.vue')
+      }
+    ]
+
   },
   'purchasedItems': {
     path: 'purchasedItems',
