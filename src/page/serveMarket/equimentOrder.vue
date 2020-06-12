@@ -51,7 +51,7 @@
     <div class="bottom-btn">
       <div class="bottom-area">
         <div class="area">
-          <button>提交订单</button>
+          <button @click="onClick_topay">提交订单</button>
           <button>取消</button>
         </div>
       </div>
@@ -103,6 +103,11 @@ export default {
   methods: {
     getRadioVal() {
       this.selectIndex = this.addressSelect
+    },
+    onClick_topay() {
+      this.$router.push({
+        path: '/serveMarket/equipmentMall/equimentPay'
+      })
     }
   }
 }
@@ -228,9 +233,9 @@ export default {
   .left-list {
     display: flex;
     height: 92px;
-    border-left: 1px solid #F5F7FA;
-    border-right: 1px solid #F5F7FA;
-    border-bottom: 1px solid #F5F7FA;
+    border-left: 1px solid #E9E9E9;
+    border-right: 1px solid #E9E9E9;
+    border-bottom: 1px solid #E9E9E9;
     padding-left: 44px;
   }
   .left-list li {
@@ -257,31 +262,31 @@ export default {
   }
   .right-amount {
     position: absolute;
-    width: 20%;
-    border-left: 1px solid #F5F7FA;
     right: 0;
     top: 0;
     z-index: 100;
     background: #ffffff;
-    border-bottom: 1px solid #F5F7FA;
-    border-right: 1px solid #F5F7FA;
     text-align: center;
     color: #F64D4C;
     font-size: 20px;
     font-weight: 500;
+    width: 20%;
+    border-bottom: 1px solid #E9E9E9;
+    border-right: 1px solid #E9E9E9;
+    border-left: 1px solid #E9E9E9;
   }
   .bottom-btn {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      padding: 0 24px 0 324px;
-      width: 100%;
-      height: 120px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 0 24px 0 324px;
+    width: 100%;
+    height: 120px;
   }
   .bottom-area {
-      height: 120px;
-      padding-top: 40px;
-      background: #ffffff;
+    height: 120px;
+    padding-top: 40px;
+    background: #ffffff;
   }
   .area {
     width: 260px;

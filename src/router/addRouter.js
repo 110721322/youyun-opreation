@@ -574,6 +574,36 @@ const asyncRoutes = {
           fatherName: 'equipmentMall'
         },
         component: () => import('@/page/serveMarket/equimentOrder.vue')
+      },
+      {
+        path: 'equimentPay',
+        name: 'equimentPay',
+        meta: {
+          title: '支付',
+          icon: 'equimentPay',
+          fatherName: 'equipmentMall'
+        },
+        component: () => import('@/page/serveMarket/equimentPay.vue')
+      },
+      {
+        path: 'orderRecords',
+        name: 'orderRecords',
+        meta: {
+          title: '订单记录',
+          icon: 'orderRecords',
+          fatherName: 'equipmentMall'
+        },
+        component: () => import('@/page/serveMarket/orderRecords.vue')
+      },
+      {
+        path: 'equimentOrderDetail',
+        name: 'equimentOrderDetail',
+        meta: {
+          title: '订单详情',
+          icon: 'equimentOrderDetail',
+          fatherName: 'equipmentMall'
+        },
+        component: () => import('@/page/serveMarket/equimentOrderDetail.vue')
       }
     ]
 

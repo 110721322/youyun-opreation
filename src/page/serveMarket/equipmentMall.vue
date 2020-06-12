@@ -1,7 +1,8 @@
 <template>
   <div class="main_page">
     <router-view
-      v-if="this.$route.path.indexOf('/equimentDetail') !== -1 || this.$route.path.indexOf('/shoppingCart') !== -1 || this.$route.path.indexOf('/equimentOrder') !== -1" />
+      v-if="this.$route.path.indexOf('/equimentDetail') !== -1 || this.$route.path.indexOf('/shoppingCart') !== -1 || this.$route.path.indexOf('/equimentOrder') !== -1 || this.$route.path.indexOf('/equimentPay') !== -1 ||
+      this.$route.path.indexOf('/orderRecords') !== -1 || this.$route.path.indexOf('/equimentOrderDetail') !== -1" />
     <div v-else>
       <div class="equiment">
         <span>刷脸设备</span>
@@ -49,7 +50,7 @@
             <img src="../../assets/img/cart_icon.png" alt="">
           </el-badge>
         </div>
-        <div class="btn1">
+        <div class="btn1" @click="onClick_torecords">
           <img style="width: 18px; height: 18px;" src="../../assets/img/order_icon.png" alt="">
         </div>
         <div class="btn2">
@@ -126,6 +127,11 @@ export default {
       this.$router.push({
         path: '/serveMarket/equipmentMall/shoppingCart'
       })
+    },
+    onClick_torecords() {
+      this.$router.push({
+        path: '/serveMarket/equipmentMall/orderRecords'
+      })
     }
   }
 }
@@ -134,7 +140,7 @@ export default {
 <style scoped>
   .main_page {
     width: 100%;
-    padding: 44px 24px 40px 24px;
+    padding: 24px 24px 40px 24px;
   }
   .equiment {
     padding-left: 26px;
