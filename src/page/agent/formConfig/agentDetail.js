@@ -130,5 +130,84 @@ export const FORM_CONFIG = {
         rules: setRules('开户支行').isRequired.get
       }
     ]
+  },
+  rateInfo: {
+    title: '通道及费率',
+    showFootBtn: true,
+    formData: [
+      {
+        type: 0,
+        label: '支付宝/微信费率',
+        key: 'name',
+        initVal: '',
+        rules: setRules('请输入').isRequired.get
+      },
+      {
+        type: 0,
+        label: '云闪付(单笔<=1000)',
+        key: 'name',
+        initVal: 'pdd',
+        rules: setRules('请输入').isRequired.get
+      },
+      {
+        type: 0,
+        label: '云闪付(单笔>1000)',
+        key: 'name',
+        initVal: '',
+        rules: setRules('请输入').isRequired.get
+      }
+    ]
+  },
+  mailAddress: {
+    title: '编辑权限',
+    showFootBtn: true,
+    formData: [
+      {
+        type: 1,
+        label: '服务地区',
+        key: 'name',
+        initVal: '',
+        placeholder: '请选择'
+      },
+      {
+        type: 5,
+        label: '是否开通下级',
+        key: 'name',
+        initVal: '',
+        options: [
+          {
+            label: '否',
+            value: 0
+          },
+          {
+            label: '是',
+            value: 1
+          }
+        ]
+      },
+      {
+        type: 5,
+        label: '服务类型',
+        key: 'name',
+        initVal: '',
+        options: [
+          {
+            label: '产品代理',
+            value: 0
+          },
+          {
+            label: 'OEM贴牌代理',
+            value: 1
+          }
+        ]
+      },
+      {
+        type: 0,
+        label: '平台分润抽成',
+        key: 'name',
+        initVal: '',
+        placeholder: '请输入'
+      }
+    ]
   }
 }

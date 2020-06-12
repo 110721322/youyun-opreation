@@ -44,7 +44,7 @@
 
     <detailMode :rule-form="ruleForm" :config-data="configData" @edit="itemEdit"></detailMode>
 
-    <detailMode :rule-form="ruleForm" :config-data="configData2"></detailMode>
+    <detailMode :rule-form="ruleForm" :config-data="configData2" @edit="rateEdit"></detailMode>
 
     <div class="bg_box">
       <div class="title">应用</div>
@@ -300,7 +300,7 @@ export default {
         child: [
           {
             name: "费率",
-            modelName: "basicData",
+            modelName: "rateInfo",
             models: [
               {
                 items: [
@@ -597,6 +597,10 @@ export default {
       this.$router.push("/agent/list/detail");
     },
     itemEdit($model) {
+      this.drawer = true;
+      this.fromConfigData = FORM_CONFIG[$model];
+    },
+    rateEdit($model) {
       this.drawer = true;
       this.fromConfigData = FORM_CONFIG[$model];
     },

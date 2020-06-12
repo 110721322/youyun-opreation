@@ -21,5 +21,19 @@ export const SHOPPING_CONFIG = {
       label: '小计',
       prop: 'amount'
     }
-  ]
+  ],
+  gridBtnConfig: {
+    create: false,
+    update: false,
+    delete: false,
+    view: false,
+    expands: [
+      {
+        name: '删除',
+        emitName: 'delete',
+        type: 'text'
+      }
+    ]
+  },
+  hideEditArea: false
 }

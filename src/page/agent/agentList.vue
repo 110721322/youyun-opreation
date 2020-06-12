@@ -1,6 +1,6 @@
 <template>
   <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
+    <router-view v-if="this.$route.path.indexOf('/detail') !== -1 || this.$route.path.indexOf('/addAgent') !== -1" />
     <div v-else>
       <div class="p_head">服务商列表</div>
       <search
@@ -12,7 +12,10 @@
 
       <!-- <data-mode></data-mode> -->
       <div class="table_box">
-        <el-button @click="transfer">批量转移运营</el-button>
+        <div class="two-btn">
+          <el-button @click="transfer">批量转移运营</el-button>
+          <el-button @click="onClick_addServe" type="primary">添加服务商</el-button>
+        </div>
         <div class="select_data">
           <span class="el-icon-info icon" />
           <span>
@@ -33,7 +36,7 @@
           :is-async="true"
           :is-select="true"
           :params="params"
-          :api-service="api"
+          :api-service="null"
           @selectionChange="selectionChange"
           @detail="openDetail"
           @thaw="thaw"
@@ -203,6 +206,11 @@ export default {
       this.$router.push({
         path: "/merchant/list"
       });
+    },
+    onClick_addServe() {
+      this.$router.push({
+        path: "/agent/list/addAgent"
+      })
     }
   }
 };
@@ -214,6 +222,10 @@ export default {
   padding: 24px;
   overflow: hidden;
   background: #fff;
+}
+.two-btn {
+  display: flex;
+  justify-content: space-between;
 }
 .select_data {
   width: 100%;

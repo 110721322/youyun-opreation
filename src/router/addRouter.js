@@ -69,6 +69,16 @@ const asyncRoutes = {
           icon: 'agentDetail'
         },
         component: () => import('@/page/agent/agentDetail.vue')
+      },
+      {
+        path: 'addAgent',
+        name: 'addAgent',
+        meta: {
+          fatherName: 'agentList',
+          title: '添加服务商',
+          icon: 'addAgent'
+        },
+        component: () => import('@/page/agent/addAgent.vue')
       }
     ]
   },

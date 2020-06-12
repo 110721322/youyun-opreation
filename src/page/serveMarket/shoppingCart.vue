@@ -8,16 +8,14 @@
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
         :grid-data="testData"
-        :grid-edit-width="150"
+        :grid-edit-width="300"
+        form-title="用户"
         :is-async="true"
         :is-select="false"
-        :is-expand="false"
-        :row-key="'id'"
-        :default-expand-all="false"
-        :hide-edit-area="configData.hideEditArea"
         :api-service="null"
-        @remove="onClice_remove"
-        ></BaseCrud>
+        :hide-edit-area="false"
+      >
+      </BaseCrud>
     </div>
     <div class="bottom">
       <div class="bottom-area">
