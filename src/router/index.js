@@ -1162,6 +1162,17 @@ const menuItems = [
           title: '服务商审核列表',
           icon: 'examineList'
         }
+      },
+      {
+        text: '服务器部署',
+        type: 'ios-paper',
+        name: 'agentDeploy',
+        path: 'agentDeploy',
+        isShow: true,
+        meta: {
+          title: '服务器部署',
+          icon: 'agentDeploy'
+        }
       }
     ]
   }

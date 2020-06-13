@@ -87,6 +87,15 @@ const asyncRoutes = {
     },
     component: () => import('@/page/topAgent/examineList.vue')
   },
+  'agentDeploy': {
+    path: 'agentDeploy',
+    name: 'agentDeploy',
+    meta: {
+      title: '服务器部署',
+      icon: 'agentDeploy'
+    },
+    component: () => import('@/page/topAgent/agentDeploy.vue')
+  },
   'agentList': {
     path: 'list',
     name: 'agentList',

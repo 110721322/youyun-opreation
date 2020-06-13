@@ -1,6 +1,6 @@
 <template>
   <div class="main_page">
-    <div class="p_head">服务商审核列表</div>
+    <div class="p_head">服务器部署</div>
     <search
       :open-height="searchMaxHeight"
       :form-base-data="searchConfig.formData"
@@ -34,7 +34,7 @@
 import search from "@/components/search/search.vue";
 import api from "@/api/api_agent.js"
 import BaseCrud from "@/components/table/BaseCrud.vue";
-import { USER_CONFIG } from "./tableConfig/agentCheckListConfig";
+import { USER_CONFIG } from "./tableConfig/agentDeployConfig";
 import { FORM_CONFIG } from "./formConfig/agentCheckListSearch";
 export default {
   name: "Theme",
@@ -90,75 +90,12 @@ export default {
         }
       ]
     },
-    search($form, $obj) {
-      this.params = {
-        "agentNo": "",
-        "agentName": "",
-        "personName": $form.personName,
-        "personMobile": $form.personMobile,
-        "operateUserNo": "",
-        "contractStatus": $form.contractStatus,
-        "contractStatusSet": ""
-      }
-      this.params[$form.inputSelect] = $form.inputForm
-      // this.$refs.child.getData()
-    },
-    reject(row) {
-      this.$confirm("是否要驳回该代理商？", "驳回代理商", {
-        distinguishCancelAndClose: true,
-        confirmButtonText: "确认驳回",
-        cancelButtonText: "取消"
-      }).then(() => {
-        api.reject({
-          "agentNo": row.agentNo
-        }).then((result) => {
-          this.$message({
-            type: "info",
-            message: "已驳回"
-          });
-        }).catch(err => {
-          console.error(err);
-        });
-      }).catch(() => {});
-    },
-    activation(row) {
-      this.$confirm("是否要激活该代理商？", "激活代理商", {
-        distinguishCancelAndClose: true,
-        confirmButtonText: "确认激活",
-        cancelButtonText: "取消"
-      }).then(() => {
-        api.activate({
-          "agentNo": row.agentNo
-        }).then((result) => {
-          this.$message({
-            type: "info",
-            message: "已激活"
-          });
-        }).catch(err => {
-          console.error(err);
-        });
-      }).catch(() => {});
-    },
-    adopt(row) {
-      this.$confirm("是否要通过该代理商？", "通过代理商", {
-        distinguishCancelAndClose: true,
-        confirmButtonText: "确认通过",
-        cancelButtonText: "取消"
-      }).then(() => {
-        api.pass({
-          "agentNo": row.agentNo
-        }).then((result) => {
-          this.$message({
-            type: "info",
-            message: "已通过"
-          });
-        }).catch(err => {
-          console.error(err);
-        });
-      }).catch(() => {});
-    }
+    search() {},
+    reject() {},
+    activation() {},
+    adopt() {}
   }
-};
+}
 </script>
 
 <style scoped>
