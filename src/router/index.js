@@ -1103,19 +1103,43 @@ const menuItems = [
               title: '财务订购审核',
               icon: 'financialOrder'
             }
-          },
-          {
-            text: '财务续费审核',
-            type: 'ios-paper',
-            name: 'financialRenewal',
-            path: 'financialRenewal',
-            isShow: true,
-            meta: {
-              title: '财务续费审核',
-              icon: 'financialRenewal'
-            }
           }
+          // {
+          //   text: '财务续费审核',
+          //   type: 'ios-paper',
+          //   name: 'financialRenewal',
+          //   path: 'financialRenewal',
+          //   isShow: true,
+          //   meta: {
+          //     title: '财务续费审核',
+          //     icon: 'financialRenewal'
+          //   }
+          // }
         ]
+      }
+    ]
+  },
+  {
+    text: '顶级服务商管理',
+    type: 'ios-paper',
+    path: 'topAgent',
+    name: 'topAgent',
+    isShow: true,
+    meta: {
+      title: '顶级服务商管理',
+      icon: 'topAgent'
+    },
+    children: [
+      {
+        text: '数据大盘',
+        type: 'ios-paper',
+        name: 'topDataMarket',
+        path: 'topDataMarket',
+        isShow: true,
+        meta: {
+          title: '财务结算审核',
+          icon: 'topDataMarket'
+        }
       }
     ]
   }

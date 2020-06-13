@@ -1,38 +1,18 @@
 export const TABLE_CONFIG = {
   gridConfig: [
     {
-      label: '服务商',
-      prop: [{ key: 'agentName' }, { key: 'agentNo', label: 'ID:' }],
-      width: '90px'
+      label: '创建时间',
+      prop: 'createTime',
+      width: '150px'
     },
     {
-      label: '订单号',
+      label: '购买项目',
       prop: 'outputNo',
       width: '200px'
     },
     {
-      label: '订单类型',
-      prop: 'payType',
-      width: '90px'
-    },
-    {
-      label: '订单金额（元）',
-      prop: 'amount',
-      width: '130px'
-
-    },
-    {
-      label: '审核状态',
-      prop: 'status',
-      // render: (h, params) => {
-      //   const status = params.row.status;
-      //   return h('el-tooltip', {
-      //     attrs: {
-      //       content: status,
-      //       placement: "top"
-      //     }
-      //   }, status);
-      // },
+      label: '打款金额（元）',
+      prop: 'payPrice',
       width: '90px'
     },
     {
@@ -51,13 +31,27 @@ export const TABLE_CONFIG = {
       }
     },
     {
-      label: '联系人',
-      prop: [{ key: 'buyerName' }, { key: 'buyerPhone' }],
+      label: '服务商ID',
+      prop: 'ID',
+      // render: (h, params) => {
+      //   const status = params.row.status;
+      //   return h('el-tooltip', {
+      //     attrs: {
+      //       content: status,
+      //       placement: "top"
+      //     }
+      //   }, status);
+      // },
       width: '90px'
     },
     {
-      label: '创建时间',
-      prop: 'createTime',
+      label: '服务商名称',
+      prop: 'serviceName',
+      width: '90px'
+    },
+    {
+      label: '状态',
+      prop: 'status',
       width: '90px'
     }
   ],

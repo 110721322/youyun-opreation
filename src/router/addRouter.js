@@ -40,6 +40,16 @@ const asyncRoutes = {
     },
     component: () => import('@/page/merchant/setRecord.vue')
   },
+  topAgent: {
+    path: '/topAgent',
+    name: 'topAgent',
+    component: Layout,
+    meta: {
+      title: '顶级服务商管理',
+      icon: 'agent'
+    },
+    children: []
+  },
   agent: {
     path: '/agent',
     name: 'agent',
@@ -50,7 +60,15 @@ const asyncRoutes = {
     },
     children: []
   },
-
+  'topDataMarket': {
+    path: 'topDataMarket',
+    name: 'topDataMarket',
+    meta: {
+      title: '数据大盘',
+      icon: 'topDataMarket'
+    },
+    component: () => import('@/page/topAgent/topDataMarket.vue')
+  },
   'agentList': {
     path: 'list',
     name: 'agentList',

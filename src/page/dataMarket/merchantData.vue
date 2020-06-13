@@ -2,7 +2,13 @@
   <div class="main_page">
     <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
     <div v-else>
-      <div class="p_head">商户数据</div>
+      <div class="p_head">
+        <span class="left-title">商户数据</span>
+        <div class="right-area" @click="showRightbar">
+          <img src="../../assets/img/menu_icon.png" alt="">
+          <span>自定义设置</span>
+        </div>
+      </div>
       <search
         :is-show-all="true"
         :form-base-data="searchConfig.formData"
@@ -126,6 +132,30 @@
           @radioChange="handleTradeCountRatioChange2"
         />
       </div>
+      <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size="40%">
+        <div class="draw-title">权限设置</div>
+        <div class="draw-content">
+          <div class="draw-wran">
+            <div class="draw-wranleft">
+              <span>i</span>
+              <span>该功能用于配置服务商数据页面的图表</span>
+            </div>
+            <img src="../../assets/img/cancle.png" alt="">
+          </div>
+          <div class="draw-checkbox">
+            <el-checkbox-group v-model="checkedSelect" @change="handleChecked">
+              <el-checkbox v-for="(item, index) in checkIndex" :label="item" :key="index">{{item}}</el-checkbox>
+            </el-checkbox-group>
+          </div>
+          <div class="bottom-btn">
+            <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+            <div class="btn">
+              <button>确定</button>
+              <button @click="cancleClose">取消</button>
+            </div>
+          </div>
+        </div>
+      </el-drawer>
     </div>
   </div>
 </template>
@@ -150,6 +180,11 @@ export default {
   },
   data() {
     return {
+      isIndeterminate: true,
+      checkAll: false,
+      checkedSelect: [],
+      checkIndex: ['商户数大区占比', '商户交易涨跌概况占比', '商户数行业占比', '无交易商户上期排行', '商户平均交易额走势', '交易额涨跌排行'],
+      drawer: false,
       mapData: [
         { name: "安徽省", num: "323,209", perc: "36%" },
         { name: "甘肃省", num: "323,209", perc: "36%" },
@@ -593,6 +628,14 @@ export default {
     this.queryTradeRiseRatioTop5ByCondition();
   },
   methods: {
+    handleCheckAllChange() {},
+    handleChecked() {},
+    showRightbar() {
+      this.drawer = true
+    },
+    cancleClose() {
+      this.drawer = false
+    },
     // 交易额涨跌排行
     handleTradeCountRatioChange2($data) {
       this.tradeType = $data;
@@ -1020,6 +1063,28 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.p_head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+  background: #ffffff;
+  height: 76px;
+  .right-area {
+    display: flex;
+    align-items: center;
+    height: 76px;
+    line-height: 24px;
+    color: #1989FA;
+    font-size: 14px;
+    img {
+      display: block;
+      width: 24px;
+      height: 24px;
+      margin-right: 6px;
+    }
+  }
+}
 .pie-box {
   overflow: hidden;
   margin: 24px;
@@ -1140,5 +1205,100 @@ export default {
   color: rgba(51, 51, 53, 1);
   border-bottom: 1px solid #ebeef5;
   background-color: #ffffff;
+}
+.draw-title {
+  width: 100%;
+  height: 76px;
+  border-bottom: 1px solid #EBEEF5;
+  padding-left: 32px;
+  line-height: 76px;
+  font-size: 20px;
+  font-weight: 500;
+  color: #333335;
+}
+.draw-content {
+  width: 100%;
+  height: 100%;
+  padding: 118px 32px 0 32px;
+  position: relative;
+  top: -76px;
+  left: 0;
+  .draw-wran {
+    width: 100%;
+    background: #E6F7FF;
+    border: 1px solid #91D5FF;
+    border-radius: 2px;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 9px 0 16px;
+    margin-bottom: 45px;
+    .draw-wranleft {
+      display: flex;
+      height: 40px;
+      align-items: center;
+      span:nth-child(1) {
+        display: block;
+        width: 14px;
+        height: 14px;
+        color: #ffffff;
+        background: #1890FF;
+        border-radius: 50%;
+        font-size: 12px;
+        text-align: center;
+        line-height: 14px;
+        margin-right: 8px;
+      }
+      span:nth-child(2) {
+        color: #000000;
+        font-size: 14px;
+      }
+    }
+    img {
+      display: block;
+      width: 10px;
+      height: 10px;
+    }
+  }
+  .bottom-btn {
+    display: flex;
+    align-items: center;
+    padding-left: 36px;
+    width: 100%;
+    height: 92px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    border-top: 1px solid #EBEEF5;
+    .btn {
+      width: 300px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      button:nth-child(1) {
+        width: 114px;
+        height: 40px;
+        color: #ffffff;
+        background: #1989FA;
+        border-radius: 4px;
+        text-align: center;
+        line-height: 40px;
+        font-size: 14px;
+      }
+      button:nth-child(2) {
+        width: 114px;
+        height: 40px;
+        color: #606266;
+        border-radius: 4px;
+        text-align: center;
+        line-height: 40px;
+        border: 1px solid #C7C8CD;
+      }
+    }
+  }
+}
+.draw-checkbox .el-checkbox {
+  margin-bottom: 30px;
 }
 </style>
