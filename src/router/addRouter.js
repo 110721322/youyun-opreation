@@ -69,6 +69,24 @@ const asyncRoutes = {
     },
     component: () => import('@/page/topAgent/topDataMarket.vue')
   },
+  'topAgentList': {
+    path: 'topAgentList',
+    name: 'topAgentList',
+    meta: {
+      title: '服务商列表',
+      icon: 'topAgentList'
+    },
+    component: () => import('@/page/topAgent/topAgentList.vue')
+  },
+  'examineList': {
+    path: 'examineList',
+    name: 'examineList',
+    meta: {
+      title: '服务商审核列表',
+      icon: 'examineList'
+    },
+    component: () => import('@/page/topAgent/examineList.vue')
+  },
   'agentList': {
     path: 'list',
     name: 'agentList',

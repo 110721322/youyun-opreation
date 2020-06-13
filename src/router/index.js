@@ -1137,8 +1137,30 @@ const menuItems = [
         path: 'topDataMarket',
         isShow: true,
         meta: {
-          title: '财务结算审核',
+          title: '数据大盘',
           icon: 'topDataMarket'
+        }
+      },
+      {
+        text: '服务商列表',
+        type: 'ios-paper',
+        name: 'topAgentList',
+        path: 'topAgentList',
+        isShow: true,
+        meta: {
+          title: '服务商列表',
+          icon: 'topAgentList'
+        }
+      },
+      {
+        text: '服务商审核列表',
+        type: 'ios-paper',
+        name: 'examineList',
+        path: 'examineList',
+        isShow: true,
+        meta: {
+          title: '服务商审核列表',
+          icon: 'examineList'
         }
       }
     ]
