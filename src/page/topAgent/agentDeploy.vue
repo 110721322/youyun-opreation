@@ -1,31 +1,34 @@
 <template>
   <div class="main_page">
-    <div class="p_head">服务器部署</div>
-    <search
-      :open-height="searchMaxHeight"
-      :form-base-data="searchConfig.formData"
-      :show-foot-btn="searchConfig.showFootBtn"
-      @search="search"
-    />
-    <!-- <data-mode></data-mode> -->
-    <div class="table_box">
-      <BaseCrud
-        ref="child"
-        :grid-config="configData.gridConfig"
-        :grid-btn-config="configData.gridBtnConfig"
-        :grid-data="testData"
-        :form-config="configData.formConfig"
-        :form-data="configData.formModel"
-        :grid-edit-width="300"
-        form-title="用户"
-        :is-async="true"
-        :is-select="false"
-        :params="params"
-        :api-service="null"
-        @reject="reject"
-        @activation="activation"
-        @adopt="adopt"
+    <router-view v-if="this.$route.path.indexOf('/deployDetail') !== -1" />
+    <div v-else>
+      <div class="p_head">服务器部署</div>
+      <search
+              :open-height="searchMaxHeight"
+              :form-base-data="searchConfig.formData"
+              :show-foot-btn="searchConfig.showFootBtn"
+              @search="search"
       />
+      <!-- <data-mode></data-mode> -->
+      <div class="table_box">
+        <BaseCrud
+                ref="child"
+                :grid-config="configData.gridConfig"
+                :grid-btn-config="configData.gridBtnConfig"
+                :grid-data="testData"
+                :form-config="configData.formConfig"
+                :form-data="configData.formModel"
+                :grid-edit-width="300"
+                form-title="用户"
+                :is-async="true"
+                :is-select="false"
+                :params="params"
+                :api-service="null"
+                @reject="reject"
+                @activation="activation"
+                @adopt="adopt"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -67,23 +70,25 @@ export default {
     getData() {
       this.testData = [
         {
-          id: "1",
+          sort: "1",
+          ID: '123333',
           tel: "15184318420",
           name: "小白",
           email: "412412@qq.com",
           status: "1",
-          expand: "扩展信息一",
+          people: "扩展信息一",
           role: ["2"],
           createTime: '2020-06-20',
           lawPerson: '啦啦啦'
         },
         {
-          id: "2",
+          sort: "2",
+          ID: '1223',
           tel: "13777369283",
           name: "小红",
           email: "456465@qq.com",
           status: "0",
-          expand: "hashashashas",
+          people: "hashashashas",
           role: ["1"],
           createTime: '2020-06-20',
           lawPerson: '啦啦啦'
@@ -92,7 +97,11 @@ export default {
     },
     search() {},
     reject() {},
-    activation() {},
+    activation() {
+      this.$router.push({
+        path: "/topAgent/agentDeploy/deployDetail"
+      })
+    },
     adopt() {}
   }
 }

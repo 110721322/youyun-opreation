@@ -38,7 +38,18 @@ export const USER_CONFIG = {
                 type: 'warning'
               }
             },
-            '已驳回'
+            '待部署'
+          );
+        } else if (params.row.status === '1') {
+          return h(
+            'el-tag',
+            {
+              props: {
+                size: 'medium ',
+                type: 'success'
+              }
+            },
+            '部署中'
           );
         } else {
           return h(
@@ -49,7 +60,7 @@ export const USER_CONFIG = {
                 type: 'success'
               }
             },
-            '待审核'
+            '已完成'
           );
         }
       }
@@ -62,10 +73,9 @@ export const USER_CONFIG = {
     view: false,
     expands: [
       {
-        name: '驳回',
+        name: '立即部署',
         emitName: 'reject',
         type: 'text',
-        style: 'color:#F5222D',
         isShow: ($row) => {
           if ($row.id === '1') {
             return true;
@@ -75,12 +85,12 @@ export const USER_CONFIG = {
         }
       },
       {
-        name: '激活',
+        name: '查看详情',
         emitName: 'activation',
         type: 'text'
       },
       {
-        name: '通过',
+        name: '部署完成',
         emitName: 'adopt',
         type: 'text'
       }

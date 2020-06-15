@@ -1,52 +1,30 @@
 export const FORM_CONFIG = {
   formData: [
     {
+      type: 0,
+      label: '服务商名称/ID',
+      key: 'ID',
+      labelWidth: '140px',
+      placeholder: '请输入'
+    },
+    {
       type: 9,
-      label: '筛选时间',
-      key: 'date',
+      label: '创建时间',
+      key: 'data',
       class: 'max-width',
       labelWidth: '100px'
     },
     {
-      type: 10,
-      label: '精准筛选',
-      key: '',
-      class: 'max-width',
-      options: [
-        {
-          label: '公司名称',
-          value: 'companyName'
-        },
-        {
-          label: '法人姓名',
-          value: 'personName'
-        },
-        {
-          label: '法人手机号',
-          value: 'personMobile'
-        }
-      ],
-      labelWidth: '100px'
+      type: 0,
+      label: '法人姓名',
+      key: 'people',
+      style: 'width:294px'
     },
     {
-      type: 1,
-      label: '服务商类型',
-      key: 'type',
-      style: 'width:294px',
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
+      type: 0,
+      label: '法人电话',
+      key: 'mobile',
+      style: 'width:294px'
     },
     {
       type: 1,
@@ -56,15 +34,15 @@ export const FORM_CONFIG = {
       labelWidth: '185px',
       options: [
         {
-          label: '川菜',
+          label: '待部署',
           value: 0
         },
         {
-          label: '粤菜',
+          label: '部署中',
           value: 1
         },
         {
-          label: '杭帮菜',
+          label: '已完成',
           value: 2
         }
       ]
