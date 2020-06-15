@@ -1,6 +1,6 @@
 <template>
   <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1 || this.$route.path.indexOf('/addAgent') !== -1" />
+    <router-view v-if="this.$route.path.indexOf('/addTopAgent') !== -1 || this.$route.path.indexOf('/topAgentDetail') !== -1" />
     <div v-else>
       <div class="p_head">服务商列表</div>
       <search
@@ -162,7 +162,12 @@ export default {
       }
       this.params[$form.inputSelect] = $form.inputForm;
     },
-    openDetail() {},
+    openDetail() {
+      alert('1111')
+      this.$router.push({
+        path: "/topAgent/topAgentList/topAgentDetail"
+      })
+    },
     thaw(row) {
       this.$confirm("是否要解冻该代理商？", "解冻代理商", {
         distinguishCancelAndClose: true,
@@ -197,7 +202,11 @@ export default {
     },
     openAgentManager() {},
     goMerchantList() {},
-    onClick_addServe() {}
+    onClick_addServe() {
+      this.$router.push({
+        path: "/topAgent/topAgentList/addTopAgent"
+      })
+    }
   }
 };
 </script>

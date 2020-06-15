@@ -76,7 +76,29 @@ const asyncRoutes = {
       title: '服务商列表',
       icon: 'topAgentList'
     },
-    component: () => import('@/page/topAgent/topAgentList.vue')
+    component: () => import('@/page/topAgent/topAgentList.vue'),
+    children: [
+      {
+        path: 'addTopAgent',
+        name: 'addTopAgent',
+        meta: {
+          title: '添加服务商',
+          icon: 'addTopAgent',
+          fatherName: 'topAgentList'
+        },
+        component: () => import('@/page/topAgent/addTopAgent.vue')
+      },
+      {
+        path: 'topAgentDetail',
+        name: 'topAgentDetail',
+        meta: {
+          title: '服务商详情',
+          icon: 'topAgentDetail',
+          fatherName: 'topAgentList'
+        },
+        component: () => import('@/page/topAgent/topAgentDetail.vue')
+      }
+    ]
   },
   'examineList': {
     path: 'examineList',
@@ -158,6 +180,38 @@ const asyncRoutes = {
       icon: 'orderManage'
     },
     children: []
+  },
+  marketing: {
+    path: '/marketing',
+    name: 'marketing',
+    component: Layout,
+    meta: {
+      title: '服务商管理',
+      icon: 'agent'
+    },
+    children: []
+  },
+  'coupon': {
+    path: 'coupon',
+    name: 'coupon',
+    meta: {
+      title: '优惠券',
+      subMenuName: '',
+      icon: 'coupon'
+    },
+    component: () => import('@/page/marketing/coupon.vue'),
+    children: [
+      {
+        path: 'addCoupon',
+        name: 'addCoupon',
+        meta: {
+          fatherName: 'coupon',
+          title: '添加优惠券',
+          icon: 'addCoupon'
+        },
+        component: () => import('@/page/marketing/addCoupon.vue')
+      }
+    ]
   },
   'hardwareOrder': {
     path: 'hardwareOrder',

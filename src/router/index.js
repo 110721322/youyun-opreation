@@ -1175,6 +1175,30 @@ const menuItems = [
         }
       }
     ]
+  },
+  {
+    text: '营销管理',
+    type: 'ios-paper',
+    name: 'marketing',
+    path: 'marketing',
+    isShow: true,
+    meta: {
+      title: '营销管理',
+      icon: 'marketing'
+    },
+    children: [
+      {
+        text: '优惠券',
+        type: 'ios-paper',
+        name: 'coupon',
+        path: 'coupon',
+        isShow: true,
+        meta: {
+          title: '优惠券',
+          icon: 'coupon'
+        }
+      }
+    ]
   }
   //   {
   //     text: 'index2',
