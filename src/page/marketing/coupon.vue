@@ -26,11 +26,36 @@
           :is-select="false"
           :params="params"
           :api-service="null"
-          @reject="reject"
+          @extension="extension"
           @activation="activation"
           @adopt="adopt"
         />
       </div>
+      <el-dialog
+        title="领取优惠码"
+        :visible.sync="dialogVisible"
+        width="420px"
+        height="394px"
+        :before-close="handleClose">
+        <div class="dialog_code">
+          <img src="../../assets/img/qr_code.jpg" alt="">
+        </div>
+        <div class="option-btn">
+          <div class="copy-btn">
+            <img src="../../assets/img/copy_icon.png" alt="">
+            <div>复制链接</div>
+          </div>
+          <span></span>
+          <div class="down-btn">
+            <img src="../../assets/img/down_icon.png" alt="">
+            <div>点击下载</div>
+          </div>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -50,7 +75,8 @@ export default {
       searchConfig: FORM_CONFIG,
       testData: [],
       params: {},
-      api: api.agentExamineList
+      api: api.agentExamineList,
+      dialogVisible: false
     }
   },
   created() {
@@ -85,7 +111,10 @@ export default {
       ]
     },
     search() {},
-    reject() {},
+    extension() {
+      this.dialogVisible = true
+    },
+    handleClose() {},
     activation() {},
     adopt() {},
     onClick_add() {
@@ -117,6 +146,45 @@ export default {
         border-radius: 4px;
         font-size: 14px;
       }
+    }
+  }
+  .el-dialog__wrapper .el-dialog .el-dialog__body {
+    padding: 0 0;
+  }
+  .dialog_code {
+    width: 100%;
+    img {
+      display: block;
+      width: 164px;
+      height: 164px;
+      margin: 0 auto;
+    }
+  }
+  .option-btn {
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-around;
+    .copy-btn,.down-btn {
+      display: flex;
+      img {
+        width: 16px;
+        height: 16px;
+        display: block;
+        margin-right: 2px;
+      }
+    }
+    .copy-btn {
+      margin-left: 90px;
+      color: #1989FA;
+    }
+    .down-btn {
+      margin-right: 90px;
+    }
+    span {
+      display: block;
+      width: 1px;
+      height: 16px;
+      background: #DCDFE6;
     }
   }
 </style>
