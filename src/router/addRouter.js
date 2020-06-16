@@ -210,6 +210,16 @@ const asyncRoutes = {
           icon: 'addCoupon'
         },
         component: () => import('@/page/marketing/addCoupon.vue')
+      },
+      {
+        path: 'couponDetail',
+        name: 'couponDetail',
+        meta: {
+          fatherName: 'coupon',
+          title: '优惠券详情',
+          icon: 'couponDetail'
+        },
+        component: () => import('@/page/marketing/couponDetail.vue')
       }
     ]
   },

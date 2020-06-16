@@ -1,6 +1,6 @@
 <template>
   <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/addCoupon') !== -1" />
+    <router-view v-if="this.$route.path.indexOf('/addCoupon') !== -1 || this.$route.path.indexOf('/couponDetail') !== -1" />
     <div v-else>
       <search
         :open-height="searchMaxHeight"
@@ -27,8 +27,8 @@
           :params="params"
           :api-service="null"
           @extension="extension"
-          @activation="activation"
-          @adopt="adopt"
+          @detail="goDetail"
+          @stopAcitive="stopAcitive"
         />
       </div>
       <el-dialog
@@ -114,9 +114,15 @@ export default {
     extension() {
       this.dialogVisible = true
     },
-    handleClose() {},
-    activation() {},
-    adopt() {},
+    handleClose() {
+      this.dialogVisible = false
+    },
+    goDetail() {
+      this.$router.push({
+        path: "/marketing/coupon/couponDetail"
+      })
+    },
+    stopAcitive() {},
     onClick_add() {
       this.$router.push({
         path: "/marketing/coupon/addCoupon"
