@@ -6,7 +6,7 @@
           <img src="../../assets/img/loginLogo.png" alt class="logo-img" />
         </div>
         <div class="title">智慧办公系统</div>
-        <div class="login-content">
+        <div class="login-content" v-show="false">
           <template v-if="activeType==='accountLogin'">
             <div class="type-box">
               <span class="active-type" @click="toAccountLogin">账号密码登录</span>
@@ -156,6 +156,122 @@
               <el-button type="primary" class="content-btn">已补充</el-button>
             </div>
           </template>
+          <div class="bottom-box">没有账号？<span @click="onClick_register">立即注册</span></div>
+        </div>
+        <div class="regist-content" v-show="false">
+          <template>
+            <div class="regist-title">服务商账户注册</div>
+            <div class="input-box">
+              <el-input
+                      v-model="ruleForm.phone"
+                      class="login-input"
+                      placeholder="请输入手机号"
+                      size="large"
+              >
+                <i slot="prefix" class="el-input__icon el-icon-user"></i>
+              </el-input>
+              <el-input
+                      v-model="ruleForm.password"
+                      type="password"
+                      class="login-input"
+                      placeholder="请输入验证码"
+                      size="large"
+              >
+                <i slot="prefix" class="el-input__icon el-icon-lock"></i>
+                <template slot="append">
+                  <span
+                          v-if="countLoginTime<=0"
+                          class="verification-btn"
+                          @click="onClick_sendLoginCode"
+                  >获取验证码</span>
+                </template>
+              </el-input>
+              <el-input
+                      v-model="ruleForm.password"
+                      type="password"
+                      class="login-input"
+                      placeholder="请输入新密码"
+                      size="large"
+              >
+                <i slot="prefix" class="el-input__icon el-icon-lock"></i>
+              </el-input>
+              <el-input
+                      v-model="ruleForm.password"
+                      type="password"
+                      class="login-input"
+                      placeholder="再次确认新密码"
+                      size="large"
+              >
+                <i slot="prefix" class="el-input__icon el-icon-lock"></i>
+              </el-input>
+            </div>
+            <div class="btn-box">
+              <el-button type="primary" class="login-btn" @click="onClick_newregist">立即注册</el-button>
+            </div>
+            <div class="bottom-box">已有账号？<span @click="onClick_changelogin">立即登录</span></div>
+          </template>
+        </div>
+        <div class="check-box">
+          <template>
+            <div class="regist-title">服务商账户注册</div>
+            <div class="input-box">
+              <template>
+                <el-radio v-model="radio" label="1">企业商户</el-radio>
+                <el-radio v-model="radio" label="2">个人商户</el-radio>
+              </template>
+              <el-input
+                      v-model="ruleForm.phone"
+                      class="login-input"
+                      placeholder="请输入公司名称"
+                      size="large"
+              >
+                <i slot="prefix" class="el-input__icon el-icon-user"></i>
+              </el-input>
+              <el-input
+                      v-model="ruleForm.password"
+                      type="password"
+                      class="login-input"
+                      placeholder="请输入法人姓名"
+                      size="large"
+              >
+                <i slot="prefix" class="el-input__icon el-icon-lock"></i>
+              </el-input>
+              <el-input
+                      v-model="ruleForm.password"
+                      type="password"
+                      class="login-input"
+                      placeholder="请输入法人手机号"
+                      size="large"
+              >
+                <i slot="prefix" class="el-input__icon el-icon-lock"></i>
+              </el-input>
+              <el-input
+                      v-model="ruleForm.password"
+                      type="password"
+                      class="login-input"
+                      placeholder="请输入邮箱"
+                      size="large"
+              >
+                <i slot="prefix" class="el-input__icon el-icon-lock"></i>
+              </el-input>
+              <el-cascader
+                      class="login-input"
+                      v-model="county"
+                      :options="options"
+                      placeholder="省/市/区"
+                      @change="changeCounty"></el-cascader>
+              <el-input
+                      v-model="ruleForm.password"
+                      type="password"
+                      class="login-input"
+                      placeholder="请输入详细地址"
+                      size="large"
+              >
+                <i slot="prefix" class="el-input__icon el-icon-lock"></i>
+              </el-input>
+            </div>
+            <div class="btn-regist">立即注册</div>
+          </template>
         </div>
       </div>
       <div class="right-box">
@@ -172,6 +288,11 @@ export default {
   components: {},
   data() {
     return {
+      radio: '1',
+      county: '',
+      options: [],
+      isRegister: false,
+      isLogin: true,
       loading: false,
       ruleForm: {
         phone: "",
@@ -213,6 +334,7 @@ export default {
   watch: {},
   created() {},
   methods: {
+    changeCounty() {},
     onClick_changePassword() {
       if (!this.ruleForm4.newPasswd) {
         this.$alert("请输入新密码");
@@ -384,6 +506,15 @@ export default {
         .catch(err => {
           this.$alert(err);
         });
+    },
+    onClick_register() {
+      this.isRegister = true
+      this.isLogin = false
+    },
+    onClick_newregist() {},
+    onClick_changelogin() {
+      this.isRegister = false
+      this.isLogin = true
     }
     // onClick_login(formName) {
     //   this.$refs[formName].validate(valid => {
@@ -472,8 +603,15 @@ export default {
       line-height: 30px;
       letter-spacing: 1px;
     }
-    .login-content {
+    .login-content,.regist-content,.check-box {
       margin-top: 73px;
+    }
+    .regist-content {
+      width: 100%;
+      .regist-title {
+        font-size: 20px;
+        font-weight: 500;
+      }
     }
     .type-box {
       .active-type {
@@ -505,6 +643,7 @@ export default {
     .btn-box {
       margin-top: 16px;
       width: 368px;
+      margin-bottom: 16px;
       .login-btn {
         width: 100%;
         line-height: 20px;
@@ -512,6 +651,16 @@ export default {
         border-radius: 4px;
         font-size: 16px;
         letter-spacing: 5px;
+      }
+    }
+    .bottom-box {
+      width: 368px;
+      text-align: center;
+      font-size: 16px;
+      color: #606266;
+      span {
+        color: #1989FA;
+        cursor: pointer;
       }
     }
     .content-title {
@@ -575,6 +724,22 @@ export default {
     }
   }
 }
-</style>
-<style>
+.regist-suffix {
+  width: 96px;
+  height: 40px;
+  line-height: 40px;
+  background: #E8F3FE;
+  color: #333333;
+  border: 1px solid #1989FA;
+}
+.btn-regist {
+  width: 368px;
+  margin-top: 24px;
+  background: #1989fa;
+  color: #ffffff;
+  border-radius: 4px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+}
 </style>

@@ -11,6 +11,7 @@ import PersonInfo from '../page/personInfo/personInfo.vue'
 import Result from '../page/personInfo/result.vue'
 import ErrorPage from '../page/404/404.vue'
 import noJurisdiction from '../page/401/401.vue'
+import RegistSuccess from '../page/login/registSuccess'
 
 Vue.use(VueRouter)
 
@@ -72,6 +73,13 @@ const router = new VueRouter({
       path: '/401',
       name: 'noJurisdiction',
       component: noJurisdiction,
+      meta: {
+        requireLogin: false
+      }
+    },
+    {
+      path: '/registSuccess',
+      component: RegistSuccess,
       meta: {
         requireLogin: false
       }
