@@ -221,7 +221,18 @@ const asyncRoutes = {
       icon: 'activityAward'
     },
     component: () => import('@/page/financial/activityAward/aplyAward.vue'),
-    children: []
+    children: [
+      {
+        path: 'activityAwardDetail',
+        name: 'activityAwardDetail',
+        meta: {
+          title: '活动奖励',
+          fatherName: 'activityAward',
+          icon: 'activityAwardDetail'
+        },
+        component: () => import('@/page/financial/activityAward/activityAwardDetail.vue')
+      }
+    ]
   },
   'aplyAward': {
     path: 'aplyAward',
