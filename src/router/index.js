@@ -245,7 +245,78 @@ const menuItems = [
       }
     ]
   },
-
+  {
+    text: '财务中心',
+    type: 'ios-paper',
+    path: 'financial',
+    name: 'financial',
+    isShow: true,
+    meta: {
+      title: '财务中心',
+      icon: 'financial'
+    },
+    children: [
+      {
+        text: '分润统计表',
+        type: 'ios-paper',
+        name: 'shareProfit',
+        path: 'shareProfit',
+        isShow: true,
+        meta: {
+          title: '分润统计表',
+          icon: 'shareProfit'
+        },
+        children: [
+          {
+            type: 'ios-grid',
+            name: 'serviceProfit',
+            text: '服务商分润统计',
+            path: 'serviceProfit',
+            isShow: true,
+            meta: {
+              title: '服务商分润统计',
+              icon: 'serviceProfit'
+            }
+          },
+          {
+            type: 'ios-grid',
+            name: 'interconnection',
+            text: '间联分润统计',
+            path: 'interconnection',
+            isShow: true,
+            meta: {
+              title: '间联分润统计',
+              icon: 'interconnection'
+            }
+          }
+        ]
+      },
+      {
+        text: '活动奖励',
+        type: 'ios-paper',
+        name: 'activityAward',
+        path: 'activityAward',
+        isShow: true,
+        meta: {
+          title: '活动奖励',
+          icon: 'activityAward'
+        },
+        children: [
+          {
+            type: 'ios-grid',
+            name: 'aplyAward',
+            text: '支付宝蜻蜓奖励',
+            path: 'aplyAward',
+            isShow: true,
+            meta: {
+              title: '间联分润统计',
+              icon: 'aplyAward'
+            }
+          }
+        ]
+      }
+    ]
+  },
   {
     text: '服务商服务',
     type: 'ios-paper',

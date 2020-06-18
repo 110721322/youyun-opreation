@@ -191,6 +191,49 @@ const asyncRoutes = {
     },
     children: []
   },
+  financial: {
+    path: '/financial',
+    name: 'financial',
+    meta: {
+      title: '财务中心',
+      icon: 'financial'
+    },
+    component: Layout,
+    children: []
+  },
+  'shareProfit': {
+    path: 'shareProfit',
+    name: 'shareProfit',
+    meta: {
+      title: '分润统计表',
+      subMenuName: '',
+      icon: 'shareProfit'
+    },
+    component: () => import('@/page/financial/shareProfit/serviceProfit.vue'),
+    children: []
+  },
+  'activityAward': {
+    path: 'activityAward',
+    name: 'activityAward',
+    meta: {
+      title: '活动奖励',
+      subMenuName: '',
+      icon: 'activityAward'
+    },
+    component: () => import('@/page/financial/activityAward/aplyAward.vue'),
+    children: []
+  },
+  'aplyAward': {
+    path: 'aplyAward',
+    name: 'aplyAward',
+    meta: {
+      title: '活动奖励',
+      subMenuName: '',
+      icon: 'activityAward'
+    },
+    component: () => import('@/page/financial/activityAward/aplyAward.vue'),
+    children: []
+  },
   'coupon': {
     path: 'coupon',
     name: 'coupon',
@@ -222,6 +265,39 @@ const asyncRoutes = {
         component: () => import('@/page/marketing/couponDetail.vue')
       }
     ]
+  },
+  'serviceProfit': {
+    path: 'serviceProfit',
+    name: 'serviceProfit',
+    meta: {
+      title: '服务商分润统计',
+      subMenuName: 'shareProfit',
+      icon: 'serviceProfit'
+    },
+    component: () => import('@/page/financial/shareProfit/serviceProfit.vue'),
+    children: [
+      {
+        path: 'serviceProfitDetail',
+        name: 'serviceProfitDetail',
+        meta: {
+          fatherName: 'serviceProfit',
+          icon: 'serviceProfitDetail',
+          title: '商户明细'
+        },
+        component: () => import('@/page/financial/shareProfit/serviceProfitDetail.vue')
+      }
+    ]
+  },
+  'interconnection': {
+    path: 'interconnection',
+    name: 'interconnection',
+    meta: {
+      title: '间联分润统计',
+      subMenuName: 'shareProfit',
+      icon: 'interconnection'
+    },
+    component: () => import('@/page/financial/shareProfit/interconnection.vue'),
+    children: []
   },
   'hardwareOrder': {
     path: 'hardwareOrder',
