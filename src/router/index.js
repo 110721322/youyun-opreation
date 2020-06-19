@@ -314,6 +314,65 @@ const menuItems = [
             }
           }
         ]
+      },
+      {
+        text: '财务审核',
+        type: 'ios-paper',
+        name: 'transferReview',
+        path: 'transferReview',
+        isShow: true,
+        meta: {
+          title: '财务审核',
+          icon: 'transferReview'
+        },
+        children: [
+          {
+            type: 'ios-grid',
+            name: 'commission',
+            text: '对公转账审核',
+            path: 'commission',
+            isShow: true,
+            meta: {
+              title: '对公转账审核',
+              icon: 'commission'
+            }
+          },
+          {
+            type: 'ios-grid',
+            name: 'commission',
+            text: '佣金结算审核',
+            path: 'commission',
+            isShow: true,
+            meta: {
+              title: '佣金结算审核',
+              icon: 'commission'
+            }
+          }
+        ]
+      },
+      {
+        text: '运营审核',
+        type: 'ios-paper',
+        name: 'operation',
+        path: 'operation',
+        isShow: true,
+        meta: {
+          title: '运营审核',
+          icon: 'operation'
+        },
+        children: [
+          {
+            type: 'ios-grid',
+            name: 'operationApprove',
+            text: '佣金结算审核',
+            path: 'operationApprove',
+            isShow: true,
+            meta: {
+              title: '佣金结算审核',
+              icon: 'operationApprove'
+            }
+          }
+        ]
       }
     ]
   },
@@ -1129,75 +1188,99 @@ const menuItems = [
     ]
   },
   {
-    text: '对公转账审核',
+    text: '佣金结算',
     type: 'ios-paper',
-    path: 'transferReview',
-    name: 'transferReview',
+    path: 'comSettlement',
+    name: 'comSettlement',
     isShow: true,
     meta: {
-      title: '对公转账审核',
-      icon: 'transferReview'
+      title: '佣金结算',
+      icon: 'comSettlement'
     },
     children: [
       {
         type: 'ios-grid',
-        name: 'operationApprove',
-        text: '运营结算审核',
-        path: 'operationApprove',
+        name: 'comset',
+        text: '佣金结算',
+        path: 'comset',
         isShow: true,
         meta: {
-          title: '运营结算审核',
-          icon: 'operationApprove'
+          title: '佣金结算',
+          icon: 'comset'
         }
-      },
-      {
-        type: 'ios-grid',
-        name: 'financialAudit',
-        text: '财务审核',
-        path: 'financialAudit',
-        isShow: true,
-        meta: {
-          title: '财务审核',
-          icon: 'financialAudit'
-        },
-        children: [
-          {
-            text: '财务结算审核',
-            type: 'ios-paper',
-            name: 'financialSettlement',
-            path: 'financialSettlement',
-            isShow: true,
-            meta: {
-              title: '财务结算审核',
-              icon: 'financialSettlement'
-            }
-          },
-          {
-            text: '财务订购审核',
-            type: 'ios-paper',
-            name: 'financialOrder',
-            path: 'financialOrder',
-            isShow: true,
-            meta: {
-              title: '财务订购审核',
-              icon: 'financialOrder'
-            }
-          }
-          // {
-          //   text: '财务续费审核',
-          //   type: 'ios-paper',
-          //   name: 'financialRenewal',
-          //   path: 'financialRenewal',
-          //   isShow: true,
-          //   meta: {
-          //     title: '财务续费审核',
-          //     icon: 'financialRenewal'
-          //   }
-          // }
-        ]
       }
     ]
   },
+  // {
+  //   text: '对公转账审核',
+  //   type: 'ios-paper',
+  //   path: 'transferReview',
+  //   name: 'transferReview',
+  //   isShow: true,
+  //   meta: {
+  //     title: '对公转账审核',
+  //     icon: 'transferReview'
+  //   },
+  //   children: [
+  //     {
+  //       type: 'ios-grid',
+  //       name: 'operationApprove',
+  //       text: '运营结算审核',
+  //       path: 'operationApprove',
+  //       isShow: true,
+  //       meta: {
+  //         title: '运营结算审核',
+  //         icon: 'operationApprove'
+  //       }
+  //     },
+  //     {
+  //       type: 'ios-grid',
+  //       name: 'financialAudit',
+  //       text: '财务审核',
+  //       path: 'financialAudit',
+  //       isShow: true,
+  //       meta: {
+  //         title: '财务审核',
+  //         icon: 'financialAudit'
+  //       },
+  //       children: [
+  //         {
+  //           text: '财务结算审核',
+  //           type: 'ios-paper',
+  //           name: 'financialSettlement',
+  //           path: 'financialSettlement',
+  //           isShow: true,
+  //           meta: {
+  //             title: '财务结算审核',
+  //             icon: 'financialSettlement'
+  //           }
+  //         },
+  //         {
+  //           text: '财务订购审核',
+  //           type: 'ios-paper',
+  //           name: 'financialOrder',
+  //           path: 'financialOrder',
+  //           isShow: true,
+  //           meta: {
+  //             title: '财务订购审核',
+  //             icon: 'financialOrder'
+  //           }
+  //         }
+  //         // {
+  //         //   text: '财务续费审核',
+  //         //   type: 'ios-paper',
+  //         //   name: 'financialRenewal',
+  //         //   path: 'financialRenewal',
+  //         //   isShow: true,
+  //         //   meta: {
+  //         //     title: '财务续费审核',
+  //         //     icon: 'financialRenewal'
+  //         //   }
+  //         // }
+  //       ]
+  //     }
+  //   ]
+  // },
   {
     text: '顶级服务商管理',
     type: 'ios-paper',

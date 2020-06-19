@@ -245,6 +245,70 @@ const asyncRoutes = {
     component: () => import('@/page/financial/activityAward/aplyAward.vue'),
     children: []
   },
+  'transferReview': {
+    path: 'transferReview',
+    name: 'transferReview',
+    meta: {
+      title: '财务审核',
+      subMenuName: '',
+      icon: 'transferReview'
+    },
+    component: () => import('@/page/financial/transferReview/commission.vue'),
+    children: []
+  },
+  'comSettlement': {
+    path: '/comSettlement',
+    name: 'comSettlement',
+    meta: {
+      title: '佣金结算',
+      icon: 'comSettlement'
+    },
+    component: Layout,
+    children: []
+  },
+  'comset': {
+    path: 'comset',
+    name: 'comset',
+    meta: {
+      title: '佣金结算',
+      icon: 'comset'
+    },
+    component: () => import('@/page/comSettlement/comset.vue'),
+    children: [
+      {
+        path: 'comsetDetail',
+        name: 'comsetDetail',
+        meta: {
+          title: '佣金明细',
+          fatherName: 'comset',
+          icon: 'comsetDetail'
+        },
+        component: () => import('@/page/comSettlement/comsetDetail.vue')
+      }
+    ]
+  },
+  'operation': {
+    path: 'operation',
+    name: 'operation',
+    meta: {
+      title: '运营审核',
+      subMenuName: '',
+      icon: 'operation'
+    },
+    component: () => import('@/page/financial/operation/operationApprove.vue'),
+    children: []
+  },
+  'operationApprove': {
+    path: 'operationApprove',
+    name: 'operationApprove',
+    meta: {
+      title: '佣金结算审核',
+      subMenuName: '',
+      icon: 'operationApprove'
+    },
+    component: () => import('@/page/financial/operation/operationApprove.vue'),
+    children: []
+  },
   'coupon': {
     path: 'coupon',
     name: 'coupon',
@@ -876,6 +940,9 @@ const asyncRoutes = {
     },
     component: () => import('@/page/task/statisticsDetail.vue'),
     children: []
+  },
+  'commission': {
+    path: ''
   },
   'dataMarket': {
     path: '/dataMarket',
@@ -1590,27 +1657,27 @@ const asyncRoutes = {
       }
     ]
   },
-  'transferReview': {
-    path: '/transferReview',
-    name: 'transferReview',
-    component: Layout,
-    meta: {
-      title: '对公转账审核',
-      icon: 'transferReview'
-    },
-    children: []
-  },
-  'operationApprove': {
-    path: 'operationApprove',
-    name: 'operationApprove',
-    meta: {
-      title: '运营结算审核',
-      icon: 'operationApprove'
-    },
-    component: () => import('@/page/transferReview/operationApprove.vue'),
-    children: [
-    ]
-  },
+  // 'transferReview': {
+  //   path: '/transferReview',
+  //   name: 'transferReview',
+  //   component: Layout,
+  //   meta: {
+  //     title: '对公转账审核',
+  //     icon: 'transferReview'
+  //   },
+  //   children: []
+  // },
+  // 'operationApprove': {
+  //   path: 'operationApprove',
+  //   name: 'operationApprove',
+  //   meta: {
+  //     title: '运营结算审核',
+  //     icon: 'operationApprove'
+  //   },
+  //   component: () => import('@/page/transferReview/operationApprove.vue'),
+  //   children: [
+  //   ]
+  // },
   'financialAudit': {
     path: 'financialAudit',
     name: 'financialAudit',
