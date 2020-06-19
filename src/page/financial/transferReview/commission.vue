@@ -1,6 +1,6 @@
 <template>
   <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
+    <router-view v-if="this.$route.path.indexOf('/detail') !== -1 || this.$route.path.indexOf('/publicTransfer') !== -1" />
     <div v-else>
       <div class="tab_head">
         <span class="title">佣金结算审核</span>
@@ -48,9 +48,9 @@
 import Search from "@/components/search/search.vue";
 import Form from "@/components/form/index.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
-import { FORM_CONFIG } from "../formConfig/orderForm";
-import { SEARCH_CONFIG } from "../formConfig/orderSearch";
-import { TABLE_CONFIG } from "../tableConfig/orderConfig";
+import { FORM_CONFIG } from "../formConfig/commission";
+import { SEARCH_CONFIG } from "../formConfig/commissionSearch";
+import { TABLE_CONFIG } from "../tableConfig/commissionConfig";
 import api from "@/api/api_financialAudit.js";
 
 export default {
@@ -65,49 +65,43 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl",
-      params: {
-        status: "",
-        beginTime: "",
-        endTime: ""
-      },
-      formStatus: null,
-      api: api.deviceAuditPage
+      params: {},
+      api: api.queryByPage,
+      activeRow: null
     };
   },
   mounted() {},
   methods: {
-    confirm($data) {
-      switch (this.formStatus) {
-        case "reject":api.deviceAuditReject({
+    confirm($ruleForm) {
+      api
+        .updateAuditStatusOfReject({
           id: this.activeRow.id,
-          rejectRemark: $data.rejectRemark
-        }).then(res => {
-          this.$message("已驳回");
-          this.drawer = false;
-        }).catch(err => {
-          this.$message(err);
-        }); break; default:break;
-      }
+          reason: $ruleForm.reason
+        })
+        .then(result => {
+          this.$message({
+            type: "info",
+            message: "已驳回"
+          });
+        })
+        .catch(err => {
+          console.error(err);
+        });
     },
     search($ruleForm) {
-      // eslint-disable-next-line no-console
-      console.log($ruleForm);
       this.params = {
-        beginTime: $ruleForm.date ? $ruleForm.date[0] : null,
-        endTime: $ruleForm.date ? $ruleForm.date[1] : null,
-        status: $ruleForm.status || ""
+        auditStatus: $ruleForm.auditStatus
       };
       this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
     },
-    onClick_detail() {
+    onClick_detail($row) {
       this.$router.push({
-        // path: "/transferReview/financialAudit/financialSettlement/detail"
+        path: "/agentService/renewalRecord",
+        query: { id: $row.id }
       });
     },
     onClick_reject($row) {
       this.activeRow = $row;
-      this.formStatus = "reject";
       this.fromConfigData = FORM_CONFIG.rejectData;
       this.drawer = true;
     },
@@ -116,18 +110,23 @@ export default {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认",
         cancelButtonText: "取消"
-      }).then(() => {
-        api.deviceAuditPass({
-          id: $row.id
-        }).then(result => {
-          this.$message({
-            type: "info",
-            message: "已通过"
-          });
-        }).catch(err => {
-          console.error(err);
-        });
-      }).catch(() => {});
+      })
+        .then(() => {
+          api
+            .updateAuditStatusOfPass({
+              id: $row.id
+            })
+            .then(result => {
+              this.$message({
+                type: "info",
+                message: "已通过"
+              });
+            })
+            .catch(err => {
+              console.error(err);
+            });
+        })
+        .catch(() => {});
     },
     cancel() {
       this.drawer = false;
@@ -137,11 +136,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .table_box {
-    position: relative;
-    margin: 24px;
-    padding: 24px;
-    overflow: hidden;
-    background: #fff;
-  }
+.table_box {
+  position: relative;
+  margin: 24px;
+  padding: 24px;
+  overflow: hidden;
+  background: #fff;
+}
 </style>

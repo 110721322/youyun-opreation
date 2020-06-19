@@ -612,17 +612,6 @@ const asyncRoutes = {
     ]
   },
 
-  // 'workBench': {
-  //   path: 'bench',
-  //   name: 'workBench',
-  //   meta: {
-  //     title: '工作台',
-  //     icon: 'workBench'
-  //   },
-  //   component: () => import('@/page/work/workBench.vue'),
-  //   children: []
-  // },
-
   'workTodo': {
     path: 'todo',
     name: 'workTodo',
@@ -941,8 +930,34 @@ const asyncRoutes = {
     component: () => import('@/page/task/statisticsDetail.vue'),
     children: []
   },
+  'publicTransfer': {
+    path: 'publicTransfer',
+    name: 'publicTransfer',
+    meta: {
+      title: '对公转账审核',
+      icon: 'publicTransfer'
+    },
+    component: () => import('@/page/financial/transferReview/publicTransfer.vue')
+  },
   'commission': {
-    path: ''
+    path: 'commission',
+    name: 'commission',
+    meta: {
+      title: '佣金结算审核',
+      icon: 'commission'
+    },
+    component: () => import('@/page/financial/transferReview/commission.vue'),
+    children: [
+      {
+        path: 'commissionDetail',
+        name: 'commissionDetail',
+        meta: {
+          title: '佣金结算审核详情',
+          icon: 'commissionDetail'
+        },
+        component: () => import('@/page/financial/transferReview/commissionDetail.vue')
+      }
+    ]
   },
   'dataMarket': {
     path: '/dataMarket',
@@ -1656,80 +1671,6 @@ const asyncRoutes = {
         }
       }
     ]
-  },
-  // 'transferReview': {
-  //   path: '/transferReview',
-  //   name: 'transferReview',
-  //   component: Layout,
-  //   meta: {
-  //     title: '对公转账审核',
-  //     icon: 'transferReview'
-  //   },
-  //   children: []
-  // },
-  // 'operationApprove': {
-  //   path: 'operationApprove',
-  //   name: 'operationApprove',
-  //   meta: {
-  //     title: '运营结算审核',
-  //     icon: 'operationApprove'
-  //   },
-  //   component: () => import('@/page/transferReview/operationApprove.vue'),
-  //   children: [
-  //   ]
-  // },
-  'financialAudit': {
-    path: 'financialAudit',
-    name: 'financialAudit',
-    component: () => import('@/page/transferReview/financialAudit/financialAudit.vue'),
-    meta: {
-      title: '财务审核',
-      icon: 'financialAudit'
-    },
-    children: []
-  },
-  "financialSettlement": {
-    path: 'financialSettlement',
-    name: 'financialSettlement',
-    component: () => import('@/page/transferReview/financialAudit/financialSettlement.vue'),
-    meta: {
-      title: '财务结算审核',
-      icon: 'financialSettlement',
-      subMenuName: 'financialAudit'
-    },
-    children: [
-      {
-        path: 'detail',
-        name: 'detail',
-        component: () => import('@/page/transferReview/financialAudit/financialSettlementDetail.vue'),
-        meta: {
-          fatherName: 'financialSettlement',
-          title: '详情',
-          icon: 'detail'
-        }
-      }]
-  },
-  "financialOrder": {
-    path: 'financialOrder',
-    name: 'financialOrder',
-    component: () => import('@/page/transferReview/financialAudit/financialOrder.vue'),
-    meta: {
-      title: '财务订购审核',
-      icon: 'financialOrder',
-      subMenuName: 'financialAudit'
-    },
-    children: []
-  },
-  "financialRenewal": {
-    path: 'financialRenewal',
-    name: 'financialRenewal',
-    component: () => import('@/page/transferReview/financialAudit/financialRenewal.vue'),
-    meta: {
-      title: '财务续费审核',
-      icon: 'financialRenewal',
-      subMenuName: 'financialAudit'
-    },
-    children: []
   }
 }
 const routers = []

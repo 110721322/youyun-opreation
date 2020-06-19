@@ -34,7 +34,9 @@ export default {
     return {
       searchConfig: SEARCH_CONFIG,
       configData: SERVICE_CONFIG,
-      testData: []
+      testData: [],
+      searchHeight: '260',
+      params: {}
     }
   },
   mounted() {

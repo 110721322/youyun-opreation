@@ -27,7 +27,7 @@
 import api from "@/api/api_financialAudit.js";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 
-import { RECORD_CONFIG } from "./../tableConfig/financialSettlementDetailConfig";
+import { RECORD_CONFIG } from "../tableConfig/commissionDetail";
 
 export default {
   name: "SettlementDetail",

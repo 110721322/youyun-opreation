@@ -329,23 +329,23 @@ const menuItems = [
           {
             type: 'ios-grid',
             name: 'commission',
-            text: '对公转账审核',
-            path: 'commission',
-            isShow: true,
-            meta: {
-              title: '对公转账审核',
-              icon: 'commission'
-            }
-          },
-          {
-            type: 'ios-grid',
-            name: 'commission',
             text: '佣金结算审核',
             path: 'commission',
             isShow: true,
             meta: {
               title: '佣金结算审核',
               icon: 'commission'
+            }
+          },
+          {
+            type: 'ios-grid',
+            name: 'publicTransfer',
+            text: '对公转账审核',
+            path: 'publicTransfer',
+            isShow: true,
+            meta: {
+              title: '对公转账审核',
+              icon: 'publicTransfer'
             }
           }
         ]

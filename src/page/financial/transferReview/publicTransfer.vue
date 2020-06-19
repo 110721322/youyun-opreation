@@ -3,7 +3,7 @@
     <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
     <div v-else>
       <div class="tab_head">
-        <span class="title">财务续费审核</span>
+        <span class="title">对公转账审核</span>
       </div>
       <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
 
@@ -22,7 +22,7 @@
           :default-expand-all="false"
           :hide-edit-area="configData.hideEditArea"
           :header-cell-style="headerCellStyle"
-          :api-service="api"
+          :api-service="null"
           :params="params"
           @detail="onClick_detail"
           @reject="onClick_reject"
@@ -48,9 +48,9 @@
 import Search from "@/components/search/search.vue";
 import Form from "@/components/form/index.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
-import { FORM_CONFIG } from "../formConfig/renewalForm";
-import { SEARCH_CONFIG } from "../formConfig/renewalSearch";
-import { TABLE_CONFIG } from "../tableConfig/renewalConfig";
+import { FORM_CONFIG } from "../formConfig/publicForm";
+import { SEARCH_CONFIG } from "../formConfig/publicSearch";
+import { TABLE_CONFIG } from "../tableConfig/publicConfig";
 import api from "@/api/api_financialAudit.js";
 
 export default {
@@ -65,43 +65,49 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      params: {},
-      api: api.queryByPage,
-      activeRow: null
+      direction: "rtl",
+      params: {
+        status: "",
+        beginTime: "",
+        endTime: ""
+      },
+      formStatus: null,
+      api: api.deviceAuditPage
     };
   },
   mounted() {},
   methods: {
-    confirm($ruleForm) {
-      api
-        .updateAuditStatusOfReject({
+    confirm($data) {
+      switch (this.formStatus) {
+        case "reject":api.deviceAuditReject({
           id: this.activeRow.id,
-          reason: $ruleForm.reason
-        })
-        .then(result => {
-          this.$message({
-            type: "info",
-            message: "已驳回"
-          });
-        })
-        .catch(err => {
-          console.error(err);
-        });
+          rejectRemark: $data.rejectRemark
+        }).then(res => {
+          this.$message("已驳回");
+          this.drawer = false;
+        }).catch(err => {
+          this.$message(err);
+        }); break; default:break;
+      }
     },
     search($ruleForm) {
+      // eslint-disable-next-line no-console
+      console.log($ruleForm);
       this.params = {
-        auditStatus: $ruleForm.auditStatus
+        beginTime: $ruleForm.date ? $ruleForm.date[0] : null,
+        endTime: $ruleForm.date ? $ruleForm.date[1] : null,
+        status: $ruleForm.status || ""
       };
       this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
     },
-    onClick_detail($row) {
+    onClick_detail() {
       this.$router.push({
-        path: "/agentService/renewalRecord",
-        query: { id: $row.id }
+        // path: "/transferReview/financialAudit/financialSettlement/detail"
       });
     },
     onClick_reject($row) {
       this.activeRow = $row;
+      this.formStatus = "reject";
       this.fromConfigData = FORM_CONFIG.rejectData;
       this.drawer = true;
     },
@@ -110,23 +116,18 @@ export default {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认",
         cancelButtonText: "取消"
-      })
-        .then(() => {
-          api
-            .updateAuditStatusOfPass({
-              id: $row.id
-            })
-            .then(result => {
-              this.$message({
-                type: "info",
-                message: "已通过"
-              });
-            })
-            .catch(err => {
-              console.error(err);
-            });
-        })
-        .catch(() => {});
+      }).then(() => {
+        api.deviceAuditPass({
+          id: $row.id
+        }).then(result => {
+          this.$message({
+            type: "info",
+            message: "已通过"
+          });
+        }).catch(err => {
+          console.error(err);
+        });
+      }).catch(() => {});
     },
     cancel() {
       this.drawer = false;
@@ -136,11 +137,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.table_box {
-  position: relative;
-  margin: 24px;
-  padding: 24px;
-  overflow: hidden;
-  background: #fff;
-}
+  .table_box {
+    position: relative;
+    margin: 24px;
+    padding: 24px;
+    overflow: hidden;
+    background: #fff;
+  }
 </style>
