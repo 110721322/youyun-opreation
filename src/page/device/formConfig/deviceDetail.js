@@ -10,6 +10,8 @@ export const FORM_CONFIG = {
         type: 1,
         label: '设备类型',
         key: 'deviceType',
+        style: 'width:294px',
+        labelWidth: '100px',
         urlOptions: {
           url: apiDevice.queryAllDeviceModel,
           keyName: 'deviceId',
@@ -18,7 +20,8 @@ export const FORM_CONFIG = {
           params: {
             classification: 1
           }
-        }
+        },
+        rules: setRules('设备类型').isRequired.get
       },
       {
         type: 0,

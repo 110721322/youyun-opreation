@@ -6,7 +6,7 @@
           <img src="../../assets/img/loginLogo.png" alt class="logo-img" />
         </div>
         <div class="title">智慧办公系统</div>
-        <div class="login-content" v-show="false">
+        <div class="login-content">
           <template v-if="activeType==='accountLogin'">
             <div class="type-box">
               <span class="active-type" @click="toAccountLogin">账号密码登录</span>
@@ -464,12 +464,14 @@ export default {
       }
       api
         .login({
+          phone: this.ruleForm.phone,
           password: this.ruleForm.password,
-          loginType: 1,
-          id: 40290,
-          userName: this.ruleForm.phone
+          type: 'password',
+          system: 'operation'
+
         })
         .then(res => {
+          localStorage.setItem('accessToken', res.object.accessToken)
           if (this.$route.query.redirect) {
             this.$router.push({ path: `${this.$route.query.redirect}` });
           } else {

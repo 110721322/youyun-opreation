@@ -1,13 +1,13 @@
 import * as API from '.';
 
 export default {
-  deviceQueryByPage: (params) => API.GET('/operation/v1/device/queryByPage', params),
-  deviceAdd: (params) => API.POST('/operation/v1/device/add', params),
-  deviceQueryById: (params) => API.GET('/operation/v1/device/queryById', params),
-  deviceUpdate: (params) => API.POST('/operation/v1/device/update', params),
-  deviceDelete: (params) => API.GET('/operation/v1/device/delete', params),
-  queryAllDeviceModel: (params) => API.GET('/operation/v1/device/queryAllDeviceModel', params),
-  finishAllAgent: (params) => API.GET('/operation/v1/deviceOutput/finishAllAgent', params),
+  deviceQueryByPage: (params) => API.GET('/operation/v1/device/queryByPage', params), // 设备管理-库存管理-设备库存-分页查询
+  deviceAdd: (params) => API.POST('/operation/v1/device/add', params), // 设备管理-库存管理-设备库存-新增设备
+  deviceQueryById: (params) => API.GET('/operation/v1/device/queryById', params), // 设备管理-库存管理-设备库存-编辑前的查询
+  deviceUpdate: (params) => API.POST('/operation/v1/device/update', params), // 设备管理-库存管理-设备库存-修改设备
+  deviceDelete: (params) => API.GET('/operation/v1/device/delete', params), // 设备管理-库存管理-设备库存-删除设备
+  queryAllDeviceModel: (params) => API.GET('/operation/v1/device/queryAllDeviceModel', params), // 设备管理-库存管理-设备库存-查询所有设备型号/类型
+  finishAllAgent: (params) => API.GET('/operation/v1/deviceOutput/finishAllAgent', params), // operation/v1/deviceActivation/queryByPage
   finishAllPrivilegeType: (params) => API.GET('/operation/v1/deviceOutput/finishAllPrivilegeType', params),
   deviceActivationQueryByPage: (params) => API.GET('/operation/v1/deviceActivation/queryByPage', params),
   deviceActivationUpdate: (params) => API.POST('/operation/v1/deviceActivation/update', params),

@@ -131,7 +131,7 @@ export default {
   watch: {},
   created() {
     this.init();
-    console.log(this.formBaseData);
+    // console.log(this.formBaseData);
   },
   methods: {
     handleDataSelect($time) {

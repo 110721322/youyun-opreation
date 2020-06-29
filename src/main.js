@@ -49,7 +49,7 @@ function setWindowAttribute ($attr, $value) {
   }
 
   if (process.env.NODE_ENV === 'development') {
-    console.log('进入', process.env.NODE_ENV);
+    // console.log('进入', process.env.NODE_ENV);
     window[$attr] = $value;
   }
 }

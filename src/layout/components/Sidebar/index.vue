@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       openSlider: 1,
-      height: ''
+      height: `${document.documentElement.clientHeight}`
     };
   },
   computed: {
@@ -55,7 +55,6 @@ export default {
   },
   created() {
     this.openSlider = localStorage.getItem("openSlider");
-    this.height = `${document.documentElement.clientHeight}`
   },
   mounted() {
     EventBus.$on("decreased", () => {

@@ -80,7 +80,8 @@ export default {
       console.log($ruleForm);
       const params = {
         deviceModel: $ruleForm.deviceModel,
-        deviceType: $ruleForm.deviceType
+        deviceType: $ruleForm.deviceType,
+        classification: 1
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;

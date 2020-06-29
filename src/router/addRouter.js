@@ -1686,7 +1686,7 @@ const menusToRoutes = function (data) {
     result.push(curr)
   })
   result.push({ path: '*', redirect: '/error' })
-  console.log(result);
+  // console.log(result);
   return result
 }
 
@@ -1701,7 +1701,7 @@ const generateRoutes = function (children, item) {
 
   if (item.children) {
     item.children.forEach(e => {
-      console.log(children)
+      // console.log(children)
       generateRoutes(asyncRoutes[item.name].children, e)
     })
   }
