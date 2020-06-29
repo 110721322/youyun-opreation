@@ -1,5 +1,5 @@
 <template>
-  <div class="aaa">
+  <div class="aaa" :style="{'height': (height*2-100)+'px', 'overflow': 'auto'}">
     <logo :collapse="isCollapse" />
     <!-- <el-scrollbar> -->
     <el-menu :default-active="activeName" :collapse="openSlider == 1 ? false : true" :unique-opened="false" :collapse-transition="false" mode="vertical" background-color="#001529" text-color="#FFFFFF">
@@ -26,7 +26,8 @@ export default {
   },
   data() {
     return {
-      openSlider: 1
+      openSlider: 1,
+      height: ''
     };
   },
   computed: {
@@ -54,6 +55,7 @@ export default {
   },
   created() {
     this.openSlider = localStorage.getItem("openSlider");
+    this.height = `${document.documentElement.clientHeight}`
   },
   mounted() {
     EventBus.$on("decreased", () => {

@@ -478,6 +478,9 @@ export default {
 </script>
 
 <style scoped>
+#app .main-container {
+  margin-left: 170px;
+}
 .crud-pagination {
   background: #fff;
   padding: 16px 24px;

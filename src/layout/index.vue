@@ -204,4 +204,8 @@ export default {
   left: 133px;
   z-index: 1001;
 }
+.sidebar-container {
+  height: 100%;
+  overflow: hidden;
+}
 </style>
