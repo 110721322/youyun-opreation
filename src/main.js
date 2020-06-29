@@ -9,6 +9,7 @@ import App from './App.vue';
 import * as g from './libs/global';
 // 公共css
 import './assets/css/basic.scss';
+import './assets/css/utils.scss';
 
 Vue.prototype.$EventBus = new Vue();
 

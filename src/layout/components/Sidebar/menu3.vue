@@ -9,7 +9,7 @@
           <div v-for="(childItem, childKey) of item.children" :key="childKey">
             <app-link :to="'/' + rootPath + '/' + item.path+'/'+childItem.path">
               <el-menu-item
-                v-if="item.isShow"
+                v-if="childItem.isShow"
                 :style="currRouter==childItem.name?'color:#409EFF':''"
                 :index="childItem.name"
                 @click="onClick_item"

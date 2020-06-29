@@ -373,6 +373,52 @@ const menuItems = [
             }
           }
         ]
+      },
+      {
+        text: '直连分润导入',
+        type: 'ios-paper',
+        name: 'directProfits',
+        path: 'directProfits',
+        isShow: true,
+        meta: {
+          title: '直连分润导入',
+          icon: 'directProfits'
+        },
+        children: [
+          {
+            type: 'ios-grid',
+            name: 'aliProfits',
+            text: '支付宝直连导入',
+            path: 'aliProfits',
+            isShow: true,
+            meta: {
+              title: '支付宝直连导入',
+              icon: 'aliProfits'
+            }
+          },
+          {
+            type: 'ios-grid',
+            name: 'wxProfits',
+            text: '微信直连导入',
+            path: 'wxProfits',
+            isShow: true,
+            meta: {
+              title: '微信直连导入',
+              icon: 'wxProfits'
+            }
+          },
+          {
+            type: 'ios-grid',
+            name: 'profitsDetail',
+            text: '商户明细',
+            path: 'profitsDetail',
+            isShow: false,
+            meta: {
+              title: '商户明细',
+              icon: 'profitsDetail'
+            }
+          }
+        ]
       }
     ]
   },
