@@ -14,25 +14,27 @@ export const FORM_CONFIG = {
         labelWidth: '100px',
         urlOptions: {
           url: apiDevice.queryAllDeviceModel,
-          keyName: 'deviceModel',
+          keyName: 'deviceTypeCode',
           valueName: 'deviceModel',
           method: 'get',
           params: {
             classification: 1
           }
-        }
+        },
+        rules: setRules('设备型号').isSelected.get
       },
       {
         type: 0,
         label: '设备型号',
         key: 'deviceModel',
+        urlData: 'common',
         rules: setRules('设备型号').isRequired.get
       },
       {
         type: 6,
         label: '图片',
-        key: 'deviceImg',
-        rules: setRules('图片').isRequired.get
+        key: 'deviceImg'
+        // rules: setRules('图片').isRequired.get
       },
       {
         type: 0,

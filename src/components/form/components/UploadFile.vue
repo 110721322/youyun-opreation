@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-upload
+      v-loading="loading"
       action="OSS上传路径，必填"
       class="upload-demo"
       :on-remove="handleRemove"
@@ -37,7 +38,8 @@ export default {
       dialogImageUrl: "",
       dialogImagePath: "",
       ossData: {},
-      fileList: []
+      fileList: [],
+      loading: false
     };
   },
   computed: {},
@@ -51,7 +53,7 @@ export default {
     beforeUpload(file) {
       return new Promise(resolve => {
         api
-          .uploadPicExcel({ count: 1 })
+          .uploadPicExcel({})
           .then(result => {
             this.ossData = result.object;
 

@@ -93,9 +93,9 @@ export default {
         deviceId: "",
         distributionUserId: 1,
         outputNo: "",
-        outputUserId: 1,
-        saleUserId: 1,
-        status: 1
+        outputUserId: "",
+        saleUserId: "",
+        status: ""
       },
       device: {},
       api: api.deviceOutputQueryByPage

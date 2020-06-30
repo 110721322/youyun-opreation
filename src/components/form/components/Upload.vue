@@ -2,7 +2,8 @@
   <div>
     <el-upload
       v-loading="loading"
-      action="OSS上传路径，必填"
+      action="OSSS上传图片"
+      :data="urlData"
       class="avatar-uploader"
       :show-file-list="false"
       :before-upload="beforeUpload"
@@ -22,82 +23,6 @@
     <el-image-viewer v-if="showViewer" :on-close="closeViewer" :url-list="[dialogImageUrl]" />
   </div>
 </template>
-
-<style lang="scss" scoped>
-
-.avatar-uploader {
-  width: 294px;
-  min-height: 178px;
-  float: left;
-  .avatar {
-    width: 100%;
-    margin: 0 auto; /* 水平居中 */
-
-    /* position: relative; */
-
-    /* top: 50%; !*偏移*! */
-    //transform: translateY(-50%);
-  }
-}
-
-.el-upload img {
-  max-width: 294px;
-}
-
-.el-upload i {
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  border: 1px dashed #ccc;
-  border-radius: 6px;
-}
-
-.avatar-uploader .el-upload i:hover {
-  border-color: #409eff;
-}
-
-.avatar-uploader-icon {
-  width: 178px;
-  height: 178px;
-  font-size: 28px;
-  line-height: 178px;
-  color: #8c939d;
-  text-align: center;
-}
-
-.upload {
-  /* width: 178px; */
-
-  /* height: 89px; */
-  .avatar-uploader-icon {
-    width: 178px;
-    height: 89px;
-    font-size: 28px;
-    line-height: 89px;
-    color: #8c939d;
-    text-align: center;
-  }
-
-  .el-icon-plus::before {
-    position: absolute;
-    bottom: 2px;
-    left: 20px;
-  }
-
-  .textspan {
-    position: absolute;
-    top: 24px;
-    left: 60px;
-    color: #909399;
-  }
-
-  .avatar {
-    display: block;
-    height: 100%;
-    margin: 0 auto;
-  }
-}
-</style>
 <script>
 import api from "@/api/api_common";
 import ElImageViewer from "element-ui/packages/image/src/image-viewer";
@@ -114,7 +39,10 @@ export default {
       showViewer: false,
       dialogImageUrl: "",
       dialogImagePath: "",
-      ossData: {} // 存签名信息
+      ossData: {}, // 存签名信息
+      urlData: {
+        type: 'common' || 'excel'
+      }
     };
   },
 
@@ -132,7 +60,8 @@ export default {
       this.dialogVisible = true;
     },
 
-    beforeUpload() {
+    beforeUpload(file) {
+      console.log(file)
       return new Promise(resolve => {
         if (this.type === "entry") {
           api
@@ -144,7 +73,7 @@ export default {
             .catch();
         } else {
           api
-            .uploadPic({ count: 1 })
+            .uploadPic({})
             .then(result => {
               this.ossData = result.object;
               resolve(true);
@@ -155,6 +84,7 @@ export default {
     },
 
     upLoad(file) {
+      console.log(file)
       const formData = new FormData();
       formData.append(
         "key",
@@ -200,3 +130,79 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+
+  .avatar-uploader {
+    width: 294px;
+    min-height: 178px;
+    float: left;
+    .avatar {
+      width: 100%;
+      margin: 0 auto; /* 水平居中 */
+
+      /* position: relative; */
+
+      /* top: 50%; !*偏移*! */
+      //transform: translateY(-50%);
+    }
+  }
+
+  .el-upload img {
+    max-width: 294px;
+  }
+
+  .el-upload i {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px dashed #ccc;
+    border-radius: 6px;
+  }
+
+  .avatar-uploader .el-upload i:hover {
+    border-color: #409eff;
+  }
+
+  .avatar-uploader-icon {
+    width: 178px;
+    height: 178px;
+    font-size: 28px;
+    line-height: 178px;
+    color: #8c939d;
+    text-align: center;
+  }
+
+  .upload {
+    /* width: 178px; */
+
+    /* height: 89px; */
+    .avatar-uploader-icon {
+      width: 178px;
+      height: 89px;
+      font-size: 28px;
+      line-height: 89px;
+      color: #8c939d;
+      text-align: center;
+    }
+
+    .el-icon-plus::before {
+      position: absolute;
+      bottom: 2px;
+      left: 20px;
+    }
+
+    .textspan {
+      position: absolute;
+      top: 24px;
+      left: 60px;
+      color: #909399;
+    }
+
+    .avatar {
+      display: block;
+      height: 100%;
+      margin: 0 auto;
+    }
+  }
+</style>

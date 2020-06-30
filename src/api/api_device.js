@@ -5,7 +5,7 @@ export default {
   deviceAdd: (params) => API.POST('/operation/v1/device/add', params), // 设备管理-库存管理-设备库存-新增设备
   deviceQueryById: (params) => API.GET('/operation/v1/device/queryById', params), // 设备管理-库存管理-设备库存-编辑前的查询
   deviceUpdate: (params) => API.POST('/operation/v1/device/update', params), // 设备管理-库存管理-设备库存-修改设备
-  deviceDelete: (params) => API.GET('/operation/v1/device/delete', params), // 设备管理-库存管理-设备库存-删除设备
+  deviceDelete: (params) => API.POST('/operation/v1/device/delete', params), // 设备管理-库存管理-设备库存-删除设备
   queryAllDeviceModel: (params) => API.GET('/operation/v1/device/queryAllDeviceModel', params), // 设备管理-库存管理-设备库存-查询所有设备型号/类型
   finishAllAgent: (params) => API.GET('/operation/v1/deviceOutput/finishAllAgent', params), // operation/v1/deviceActivation/queryByPage
   finishAllPrivilegeType: (params) => API.GET('/operation/v1/deviceOutput/finishAllPrivilegeType', params),
@@ -18,7 +18,7 @@ export default {
   deviceDetailUpdate: (params) => API.POST('/operation/v1/deviceDetail/update', params),
   deviceDetailDelete: (params) => API.GET('/operation/v1/deviceDetail/delete', params),
   deviceOutputAdd: (params) => API.POST('/operation/v1/deviceOutput/add', params),
-  deviceOutputQueryByPage: (params) => API.POST('/operation/v1/deviceOutput/queryByPage', params),
+  deviceOutputQueryByPage: (params) => API.GET('/operation/v1/deviceOutput/queryByPage', params),
   deviceOutputQueryById: (params) => API.GET('/operation/v1/deviceOutput/queryById', params),
   distribute: (params) => API.POST('/operation/v1/deviceOutput/distribute', params),
   reject: (params) => API.GET('/operation/v1/deviceOutput/reject', params),
@@ -33,10 +33,10 @@ export default {
   queryDetail: (params) => API.GET('/operation/v1/deviceData/queryDetail', params),
   queryProcessLife: (params) => API.GET('/operation/v1/deviceData/queryProcessLife', params),
   deviceDataQueryByPage: (params) => API.GET('/operation/v1/deviceData/queryByPage', params),
-  deviceMerchantQueryByPage: (params) => API.POST('/operation/v1/deviceMerchant/queryByPage', params),
+  deviceMerchantQueryByPage: (params) => API.GET('/operation/v1/deviceMerchant/queryByPage', params), // 设备使用列表-分页查询
   unbind: (params) => API.GET('/operation/v1/deviceMerchant/unbind', params),
   unfreeze: (params) => API.GET('/operation/v1/deviceMerchant/unfreeze', params),
-  deviceMaintainQueryByPage: (params) => API.GET('/operation/v1/deviceMaintain/queryByPage', params),
+  deviceMaintainQueryByPage: (params) => API.GET('/operation/v1/deviceMaintain/queryByPage', params), // 设备维修-分页查询
   deviceMaintainQueryById: (params) => API.GET('/operation/v1/deviceMaintain/queryById', params),
   auditPass: (params) => API.POST('/operation/v1/deviceMaintain/auditPass', params),
   auditReject: (params) => API.POST('/operation/v1/deviceMaintain/auditReject', params),
@@ -49,5 +49,6 @@ export default {
   deviceMallUpdate: (params) => API.POST('/operation/v1/deviceMall/update', params),
   deviceMallDelete: (params) => API.POST('/operation/v1/deviceMall/delete', params),
   on: (params) => API.POST('/operation/v1/deviceMall/on', params),
-  off: (params) => API.POST('/operation/v1/deviceMall/off', params)
+  off: (params) => API.POST('/operation/v1/deviceMall/off', params),
+  queryAllOperation: () => API.GET('/operation/v1/advertPrivilege/queryAllOperation') // 查询所有运营人员
 };
