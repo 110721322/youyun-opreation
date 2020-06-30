@@ -86,7 +86,6 @@ export default {
                 label: item[urlOptions.valueName]
               });
             }
-            console.log(newArr);
             this.selectOptions = newArr;
           })
           .catch(err => {

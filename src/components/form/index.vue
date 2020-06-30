@@ -53,6 +53,7 @@ import Cascader from "./components/Cascader.vue";
 import UploadFile from "./components/UploadFile";
 import Show from "./components/Show";
 import DatePicker from "./components/DatePicker.vue";
+import SelectInput from "./components/SelectInput.vue";
 
 // import { isUndefined, deepClone } from '@/libs/lit/utils'
 
@@ -70,7 +71,8 @@ export default {
     Cascader,
     UploadFile,
     Show,
-    DatePicker
+    DatePicker,
+    SelectInput
   },
   props: {
     formBaseData: Array,

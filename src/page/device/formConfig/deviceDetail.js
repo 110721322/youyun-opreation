@@ -14,14 +14,13 @@ export const FORM_CONFIG = {
         labelWidth: '100px',
         urlOptions: {
           url: apiDevice.queryAllDeviceModel,
-          keyName: 'deviceId',
-          valueName: 'deviceType',
+          keyName: 'deviceModel',
+          valueName: 'deviceModel',
           method: 'get',
           params: {
             classification: 1
           }
-        },
-        rules: setRules('设备类型').isRequired.get
+        }
       },
       {
         type: 0,
