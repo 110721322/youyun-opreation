@@ -13,6 +13,17 @@ export const rules = {
     }];
     return i.concat(result);
   },
+  isSelected: (i) => {
+    const readObj = i[0];
+    const message = `请选择${readObj.keyName}`;
+    const trigger = 'change';
+    const result = [{
+      required: true,
+      trigger,
+      message
+    }];
+    return result;
+  },
   intNumber: (i) => {
     const result = [{
       trigger: 'change',

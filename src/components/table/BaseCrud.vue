@@ -177,7 +177,7 @@ export default {
       // 展示的表格数据，数据来源可能是父组件传递的固定数据，可能是接口请求数据
       showGridData: [],
       // 当前页码
-      currentPage: 1,
+      currentPage: 0,
       // 每页显示数量
       currentPageSize: 10,
       // 列表数据总数

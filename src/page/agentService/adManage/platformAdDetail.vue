@@ -17,7 +17,7 @@
 <script>
 import apiAgent from "@/api/api_agent.js";
 import Form from "@/components/form/index.vue";
-import { FORM_CONFIG } from "./../formConfig/platformAdDetailFrom";
+import { FORM_CONFIG } from "../formConfig/platformAdDetailFrom";
 export default {
   name: "PlatformAdDetail",
   components: { Form },
