@@ -71,9 +71,9 @@ export default {
       direction: "rtl",
       count: 0,
       params: {
-        currentPage: 1,
-        deviceId: 2,
-        pageSize: 1,
+        currentPage: 0,
+        deviceId: "",
+        pageSize: 10,
         beginTime: this.$g.utils.getToday(),
         endTime: this.$g.utils.getToday()
       },
@@ -81,6 +81,9 @@ export default {
     };
   },
   mounted() {},
+  created() {
+    this.getMember()
+  },
   methods: {
     search($ruleForm) {
       console.log($ruleForm);
@@ -110,22 +113,22 @@ export default {
         })
         .then(res => {
           this.count = res.object;
-          this.deviceInputAdd($data);
+          this.deviceInputAdd($data, this.count);
         })
         .catch(err => {
           this.$message(err);
         });
     },
     // 新增
-    deviceInputAdd($data) {
+    deviceInputAdd($data, count) {
       api
         .deviceInputAdd({
-          employeeId: 2,
-          count: this.count.length,
+          employeeId: 234234,
+          count: count.length,
           deadline: $data.deadline,
           deviceId: $data.deviceId,
           inputTime: $data.inputTime,
-          deviceIdentifierList: this.count
+          deviceIdentifierList: count
         })
         .then(res => {
           this.$refs.table.getData();
@@ -146,6 +149,14 @@ export default {
           id: $item.id
         }
       });
+    },
+    getMember() {
+      api
+        .queryAllOperation({}).then(res => {
+          console.log(res)
+        }).catch(err => {
+          console.log(err)
+        })
     }
   }
 };

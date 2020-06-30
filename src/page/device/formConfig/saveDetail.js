@@ -18,7 +18,8 @@ export const FORM_CONFIG = {
           params: {
             classification: 1
           }
-        }
+        },
+        rules: setRules('邮箱').isSelected.get
       },
       {
         type: 11,
@@ -40,7 +41,7 @@ export const FORM_CONFIG = {
         type: 'uploadFile',
         label: '设备标识',
         key: 'count',
-        rules: setRules('设备标识').isRequired.get
+        rules: setRules('设备标识').isSelected.get
       }
     ]
   }
