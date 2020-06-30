@@ -179,4 +179,8 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+  .item {
+    font-size: 12px;
+  }
+</style>
