@@ -15,7 +15,6 @@ export const rules = {
   },
   isSelected: (i) => {
     const readObj = i[0];
-    console.log(readObj);
     const message = `请选择${readObj.keyName}`;
     const trigger = 'change';
     const result = [{

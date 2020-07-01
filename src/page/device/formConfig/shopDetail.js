@@ -13,7 +13,7 @@ export const FORM_CONFIG = {
         isDisabled: true,
         urlOptions: {
           url: apiDevice.queryAllDeviceModel,
-          keyName: 'deviceId',
+          keyName: 'deviceType',
           valueName: 'deviceType',
           method: 'get',
           params: {
@@ -72,13 +72,14 @@ export const FORM_CONFIG = {
         key: 'deviceType',
         urlOptions: {
           url: apiDevice.queryAllDeviceModel,
-          keyName: 'deviceId',
+          keyName: 'deviceTypeCode',
           valueName: 'deviceType',
           method: 'get',
           params: {
             classification: 1
           }
-        }
+        },
+        rules: setRules('详情').isSelected.get
       },
       {
         type: 1,
@@ -87,12 +88,13 @@ export const FORM_CONFIG = {
         urlOptions: {
           url: apiDevice.queryAllDeviceModel,
           keyName: 'deviceId',
-          valueName: 'deviceType',
+          valueName: 'deviceModel',
           method: 'get',
           params: {
             classification: 1
           }
-        }
+        },
+        rules: setRules('详情').isSelected.get
       },
       {
         type: 0,
@@ -104,19 +106,19 @@ export const FORM_CONFIG = {
         type: 6,
         label: '宣传视频',
         key: 'video',
-        rules: setRules('宣传视频').isRequired.get
+        rules: setRules('宣传视频').isSelected.get
       },
       {
         type: 6,
         label: '宣传图片',
         key: 'img',
-        rules: setRules('宣传图片').isRequired.get
+        rules: setRules('宣传图片').isSelected.get
       },
       {
         type: 7,
         label: '详情',
         key: 'desc',
-        rules: setRules('详情').isRequired.get
+        rules: setRules('详情').isSelected.get
       }
     ]
   }

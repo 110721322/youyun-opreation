@@ -7,6 +7,7 @@ import VueQrcode from '@chenfengyuan/vue-qrcode';
 import router from './router';
 import App from './App.vue';
 import * as g from './libs/global';
+// import directives from '@/utils/directives'  // 菜单按钮权限
 // 公共css
 import './assets/css/basic.scss';
 import './assets/css/utils.scss';
@@ -28,7 +29,7 @@ Vue.prototype.$echarts = echarts;
 Vue.use(ElementUI, {
   size: 'small'
 });
-
+// Vue.use(directives)
 // Vue.use(animated);
 Vue.component(VueQrcode.name, VueQrcode);
 // 挂全局方法

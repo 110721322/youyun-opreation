@@ -16,7 +16,7 @@ export default {
   queryInputPage: (params) => API.POST('/operation/v1/deviceDetail/queryInputPage', params),
   queryOutputPage: (params) => API.GET('/operation/v1/deviceDetail/queryOutputPage', params),
   deviceDetailUpdate: (params) => API.POST('/operation/v1/deviceDetail/update', params),
-  deviceDetailDelete: (params) => API.GET('/operation/v1/deviceDetail/delete', params),
+  deviceDetailDelete: (params) => API.POST('/operation/v1/deviceDetail/delete', params), // 设备管理-库存管理-入库明细-删除入库
   deviceOutputAdd: (params) => API.POST('/operation/v1/deviceOutput/add', params),
   deviceOutputQueryByPage: (params) => API.GET('/operation/v1/deviceOutput/queryByPage', params),
   deviceOutputQueryById: (params) => API.GET('/operation/v1/deviceOutput/queryById', params),
@@ -45,7 +45,7 @@ export default {
   send: (params) => API.POST('/operation/v1/deviceMaintain/send', params),
   deviceMallQueryByPage: (params) => API.GET('/operation/v1/deviceMall/queryByPage', params),
   deviceMallAdd: (params) => API.POST('/operation/v1/deviceMall/add', params),
-  selectById: (params) => API.POST('/operation/v1/deviceMall/selectById', params),
+  selectById: (params) => API.GET('/operation/v1/deviceMall/selectById', params), // 设备商城管理-根据主键查询
   deviceMallUpdate: (params) => API.POST('/operation/v1/deviceMall/update', params),
   deviceMallDelete: (params) => API.POST('/operation/v1/deviceMall/delete', params),
   on: (params) => API.POST('/operation/v1/deviceMall/on', params),
