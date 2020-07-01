@@ -55,7 +55,7 @@ const router = new VueRouter({
     },
     {
       path: '/result',
-      name: '完善个人信息',
+      name: '开通成功',
       component: Result,
       meta: {
         requireLogin: false

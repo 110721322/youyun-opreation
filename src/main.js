@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import ElementUI from 'element-ui';
+import store from './store'
 import 'element-ui/lib/theme-chalk/index.css';
 import 'babel-polyfill';
 
@@ -7,7 +8,9 @@ import VueQrcode from '@chenfengyuan/vue-qrcode';
 import router from './router';
 import App from './App.vue';
 import * as g from './libs/global';
-// import directives from '@/utils/directives'  // 菜单按钮权限
+
+// 权限控制
+import './libs/directive/permission';
 // 公共css
 import './assets/css/basic.scss';
 import './assets/css/utils.scss';
@@ -29,7 +32,7 @@ Vue.prototype.$echarts = echarts;
 Vue.use(ElementUI, {
   size: 'small'
 });
-// Vue.use(directives)
+
 // Vue.use(animated);
 Vue.component(VueQrcode.name, VueQrcode);
 // 挂全局方法
@@ -42,6 +45,7 @@ Vue.config.productionTip = false;
 /* eslint-disable no-new */
 new Vue({
   render: (h) => h(App),
+  store,
   router
 }).$mount('#app');
 

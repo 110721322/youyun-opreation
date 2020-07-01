@@ -21,7 +21,8 @@ export const FORM_CONFIG = {
           keyName: 'advertType',
           valueName: 'advertTypeDesc',
           method: 'get'
-        }
+        },
+        rules: setRules('广告类型').isSelected.get
       },
       {
         type: 6,

@@ -282,6 +282,7 @@
 </template>
 <script type="text/ecmascript-6">
 import api from "@/api/api_login";
+import { mapActions } from 'vuex';
 // import * as g from '@/libs/global';
 
 export default {
@@ -334,6 +335,9 @@ export default {
   watch: {},
   created() {},
   methods: {
+    ...mapActions([
+      'saveUserInfo', 'setRolePermission'
+    ]),
     changeCounty() {},
     onClick_changePassword() {
       if (!this.ruleForm4.newPasswd) {
@@ -472,6 +476,9 @@ export default {
         })
         .then(res => {
           localStorage.setItem('accessToken', res.object.accessToken)
+
+          this.saveUserInfo(res.object.user)
+          this.setRolePermission(['merchant'])
           if (this.$route.query.redirect) {
             this.$router.push({ path: `${this.$route.query.redirect}` });
           } else {
