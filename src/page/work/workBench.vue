@@ -31,6 +31,7 @@ export default {
                 imgUrl: "",
                 dotNum: 5,
                 text: "待办事项",
+                permission: 'merchant',
                 path: "/work/todo"
               }
             ]
@@ -47,7 +48,8 @@ export default {
             list: [
               {
                 imgUrl: "",
-                text: "商户入件审核"
+                text: "商户入件审核",
+                permission: 'service'
               },
               {
                 imgUrl: "",

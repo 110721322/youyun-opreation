@@ -8,6 +8,9 @@ import VueQrcode from '@chenfengyuan/vue-qrcode';
 import router from './router';
 import App from './App.vue';
 import * as g from './libs/global';
+
+// 权限控制
+import './libs/directive/permission';
 // 公共css
 import './assets/css/basic.scss';
 import './assets/css/utils.scss';

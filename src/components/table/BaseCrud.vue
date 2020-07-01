@@ -202,7 +202,6 @@ export default {
     }
   },
   mounted() {
-    // console.log(this.apiService);
     if (this.apiService && this.params !== null) {
       this.getData();
     }
@@ -210,7 +209,6 @@ export default {
   methods: {
     onClick_handleToggle($row, $item) {
       if (this.$refs[this.refName]) {
-        console.log("$item.emitName,", $item.emitName);
         this.$emit($item.emitName, $row, this.$refs[this.refName]);
       }
     },
@@ -257,7 +255,6 @@ export default {
                 ? []
                 : res.datas || res.object;
           }
-          console.log("总数据", this.showGridData);
           this.dataTotal = res.totalCount;
           this.listLoading = false;
         })
@@ -304,11 +301,9 @@ export default {
       }
     },
     handleSelectionChange(val) {
-      console.log('多选选中的值', val);
       this.$emit("selectionChange", val);
     },
     cancelEdit($row) {
-      console.log("取消");
       $row.edit = false;
       for (const item of this.gridConfig) {
         if (item.isEdit) {
@@ -319,7 +314,6 @@ export default {
       this.$emit("cancelEdit", $row);
     },
     rowEdit($item) {
-      console.log("编辑");
       this.$nextTick(() => {
         const data = JSON.parse(JSON.stringify(this.showGridData));
         for (const item of data) {

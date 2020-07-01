@@ -336,7 +336,7 @@ export default {
   created() {},
   methods: {
     ...mapActions([
-      'saveUserInfo'
+      'saveUserInfo', 'setRolePermission'
     ]),
     changeCounty() {},
     onClick_changePassword() {
@@ -478,6 +478,7 @@ export default {
           localStorage.setItem('accessToken', res.object.accessToken)
 
           this.saveUserInfo(res.object.user)
+          this.setRolePermission(['merchant'])
           if (this.$route.query.redirect) {
             this.$router.push({ path: `${this.$route.query.redirect}` });
           } else {
