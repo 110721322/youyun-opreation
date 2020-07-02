@@ -116,101 +116,7 @@ export default {
   data() {
     return {
       showExpandBtn: true,
-      deviceListData: [
-        {
-          label: "刷脸设备",
-          deviceList: [
-            {
-              imgUrl:
-                "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-              nums: "aa",
-              name: "aaa"
-            },
-            {
-              imgUrl:
-                "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-              nums: "aa",
-              name: "aaa"
-            },
-            {
-              imgUrl:
-                "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-              nums: "aa",
-              name: "aaa"
-            },
-            {
-              imgUrl:
-                "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-              nums: "aa",
-              name: "aaa"
-            },
-            {
-              imgUrl:
-                "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-              nums: "aa",
-              name: "aaa"
-            },
-            {
-              imgUrl:
-                "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-              nums: "aa",
-              name: "aaa"
-            },
-            {
-              imgUrl:
-                "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-              nums: "aa",
-              name: "aaa"
-            },
-            {
-              imgUrl:
-                "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-              nums: "aa",
-              name: "aaa"
-            },
-            {
-              imgUrl:
-                "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-              nums: "aa",
-              name: "aaa"
-            }
-          ]
-        },
-        {
-          label: "SPOS机",
-          deviceList: [
-            {
-              imgUrl:
-                "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-              nums: "aa",
-              name: "aaa"
-            },
-            {
-              imgUrl:
-                "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-              nums: "aa",
-              name: "aaa"
-            }
-          ]
-        },
-        {
-          label: "其他设备",
-          deviceList: [
-            {
-              imgUrl:
-                "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-              nums: "aa",
-              name: "aaa"
-            },
-            {
-              imgUrl:
-                "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-              nums: "aa",
-              name: "aaa"
-            }
-          ]
-        }
-      ],
+      deviceListData: [],
       searchMaxHeight: "260",
       searchConfig: SEARCH_CONFIG,
       configData: {},
@@ -439,15 +345,35 @@ export default {
       detailData: [],
       detailData2: [],
       beginDate: null,
-      endDate: null
+      endDate: null,
+      currentdate: ''
     };
   },
+  created() {
+    this.getNowFormatDate()
+    this.handleProvince()
+  },
   mounted() {
-    this.queryAllProvince();
     this.queryRegion();
     this.queryRegionTrade();
   },
   methods: {
+    getNowFormatDate() {
+      const date = new Date();
+      const seperator1 = "-";
+      var year = date.getFullYear();
+      var month = date.getMonth() + 1;
+      var strDate = date.getDate();
+      if (month >= 1 && month <= 9) {
+        month = "0" + month;
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+      }
+      var currentdate = year + seperator1 + month + seperator1 + strDate;
+      this.currentdate = currentdate
+      return currentdate;
+    },
     handleNumRadioChange($data) {
       $data === "region" ? this.queryRegion() : null;
       $data === "industry" ? this.queryMcc() : null;
@@ -554,6 +480,10 @@ export default {
     },
     // 获取设备省份数据
     queryAllProvince($data) {
+      if (!this.beginDate) {
+        this.beginDate = this.currentdate
+        this.endDate = this.currentdate
+      }
       api
         .queryAllProvince({
           beginDate: this.beginDate,
@@ -605,11 +535,12 @@ export default {
       });
     },
     search($ruleForm) {
-      console.log($ruleForm);
+      this.beginDate = $ruleForm.date[0]
+      this.endDate = $ruleForm.date[1]
       api
         .queryUsing({
           beginDate: $ruleForm.date[0],
-          endDate: $ruleForm.date[0],
+          endDate: $ruleForm.date[1],
           deviceId: ""
         })
         .then(res => {

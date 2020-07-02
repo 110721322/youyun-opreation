@@ -24,8 +24,8 @@ export default {
   reject: (params) => API.GET('/operation/v1/deviceOutput/reject', params),
   finishOutput: (params) => API.POST('/operation/v1/deviceOutput/finishOutput', params),
   finishOutputInfo: (params) => API.GET('/operation/v1/deviceOutput/finishOutputInfo', params), // 设备管理-库存管理-出库管理-查看发货信息
-  queryUsing: (params) => API.GET('/operation/v1/deviceData/queryUsing', params),
-  queryAllProvince: (params) => API.GET('/operation/v1/deviceData/queryAllProvince', params),
+  queryUsing: (params) => API.GET('/operation/v1/deviceData/queryUsing', params), // 设备统计-查询各个设备正在使用的数量
+  queryAllProvince: (params) => API.GET('/operation/v1/deviceData/queryAllProvince', params), // 设备统计-查询所有省份正在使用的数量
   queryRegion: (params) => API.GET('/operation/v1/deviceData/queryRegion', params),
   queryRegionTrade: (params) => API.GET('/operation/v1/deviceData/queryRegionTrade', params),
   queryMcc: (params) => API.GET('/operation/v1/deviceData/queryMcc', params),

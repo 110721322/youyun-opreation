@@ -47,16 +47,19 @@ export default {
       params: {
         beginDate: this.$g.utils.getToday(),
         endDate: this.$g.utils.getToday(),
-        agentNo: "新美3拉老豆",
-        cityCode: "haha",
-        currentPage: 0,
-        deviceId: 64204,
-        pageSize: 20,
-        provinceCode: "哈拉0冬85数",
-        regionCode: "d6猪美3"
+        agentNo: "",
+        cityCode: "",
+        currentPage: 1,
+        deviceId: '',
+        pageSize: 10,
+        provinceCode: "",
+        regionCode: ""
       },
       api: api.deviceDataQueryByPage
     };
+  },
+  created() {
+    this.search()
   },
   mounted() {},
   methods: {
