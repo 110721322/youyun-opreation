@@ -87,9 +87,10 @@ export default {
       });
     },
     onClick_edit($row) {
+      console.log($row.id);
       this.$router.push({
         path: "/agentService/adManage/adPutList/detail",
-        query: { id: $row.advertId }
+        query: { id: $row.id }
       });
     },
     onClick_addAd() {
