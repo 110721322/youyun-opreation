@@ -476,15 +476,28 @@ export default {
 
         })
         .then(res => {
+          console.log(res)
           localStorage.setItem('accessToken', res.object.accessToken)
+          const userId = res.object.user.id
+          const roleId = res.object.user.roleId
+          api.queryUserVueRouterList({
+            userToken: res.object.accessToken,
+            system: 'operation',
+            userId: userId,
+            roleId: roleId
+          }).then(routerRes => {
+            console.log(routerRes)
+          }).catch(err => {
+            console.log(err)
+          })
 
-          this.saveUserInfo(res.object.user)
-          this.setRolePermission(['merchant'])
-          if (this.$route.query.redirect) {
-            this.$router.push({ path: `${this.$route.query.redirect}` });
-          } else {
-            this.$router.push(`/index`);
-          }
+          // this.saveUserInfo(res.object.user)
+          // this.setRolePermission(['merchant'])
+          // if (this.$route.query.redirect) {
+          //   this.$router.push({ path: `${this.$route.query.redirect}` });
+          // } else {
+          //   this.$router.push(`/index`);
+          // }
         })
         .catch(err => {
           this.$alert(err);

@@ -20,18 +20,22 @@ export default {
   components: { Form },
   data() {
     return {
-      fromConfigData: FORM_CONFIG.addData,
-      id: this.$route.query.id
+      fromConfigData: {},
+      id: ''
     };
   },
   created() {
-    this.id = this.$route.query.id;
-    this.id && this.selectById();
+    if (this.$route.query.id) {
+      this.id = this.$route.query.id
+      this.selectById(this.$route.query.id)
+    } else {
+      this.fromConfigData = FORM_CONFIG.addData
+    }
   },
   methods: {
-    selectById() {
+    selectById(id) {
       api
-        .selectById({ id: this.id })
+        .selectById({ id: id })
         .then(res => {
           console.log('res', res);
           const newFromConfigData = FORM_CONFIG.editData;

@@ -8,5 +8,6 @@ export default {
   forgetPassword: (params) => API.POST('/operation/v1/login/forgetPassword', params),
   bindWeChat: (params) => API.POST('/operation/v1/login/bindWeChat', params),
   out: (params) => API.POST('/operation/v1/login/out', params),
-  perfectUpdate: (params) => API.POST('/operation/v1/employee/perfectUpdate', params)
+  perfectUpdate: (params) => API.POST('/operation/v1/employee/perfectUpdate', params),
+  queryUserVueRouterList: (params) => API.GET('/operation/v1/systemMenu/queryUserVueRouterList', params) // 获取用户前端路由模板
 };

@@ -1390,21 +1390,10 @@ const asyncRoutes = {
   'checkService': {
     path: 'checkService',
     name: 'checkService',
-    component: () => import('@/page/approval/serviceCheck/serviceCheck.vue'),
-    meta: {
-      title: '下级服务商审核',
-      icon: 'checkService'
-    },
-    children: []
-  },
-  'checkServiceList': {
-    path: 'checkServiceList',
-    name: 'checkServiceList',
     component: () => import('@/page/approval/serviceCheck/checkServiceList.vue'),
     meta: {
       title: '下级服务商审核',
-      icon: 'checkServiceList',
-      subMenuName: 'checkService'
+      icon: 'checkService'
     },
     children: [
       {
@@ -1423,21 +1412,10 @@ const asyncRoutes = {
   'checkPartner': {
     path: 'checkPartner',
     name: 'checkPartner',
-    component: () => import('@/page/approval/partnerCheck/partnerCheck.vue'),
-    meta: {
-      title: '合伙人审核',
-      icon: 'checkPartner'
-    },
-    children: []
-  },
-  'checkPartnerList': {
-    path: 'checkPartnerList',
-    name: 'checkPartnerList',
     component: () => import('@/page/approval/partnerCheck/checkPartnerList.vue'),
     meta: {
       title: '合伙人审核列表',
-      icon: 'checkPartnerList',
-      subMenuName: 'checkPartner'
+      icon: 'checkPartner'
     },
     children: [
       {

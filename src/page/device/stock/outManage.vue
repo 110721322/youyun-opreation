@@ -205,7 +205,10 @@ export default {
     },
     onClick_detail($item) {
       this.$router.push({
-        path: "/deviceManage/stock/stockOut/detail"
+        path: "/deviceManage/stock/stockOut/detail",
+        query: {
+          id: $item.id
+        }
       });
     },
     onClick_send($data) {

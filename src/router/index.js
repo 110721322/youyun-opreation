@@ -949,20 +949,7 @@ const menuItems = [
         meta: {
           title: '下级服务商审核',
           icon: 'checkService'
-        },
-        children: [
-          {
-            type: 'ios-grid',
-            name: 'checkServiceList',
-            text: '下级服务商审核',
-            path: 'checkServiceList',
-            isShow: true,
-            meta: {
-              title: '下级服务商审核',
-              icon: 'checkServiceList'
-            }
-          }
-        ]
+        }
       },
       {
         type: 'ios-grid',
@@ -973,20 +960,7 @@ const menuItems = [
         meta: {
           title: '合伙人审核',
           icon: 'checkPartner'
-        },
-        children: [
-          {
-            type: 'ios-grid',
-            name: 'checkPartnerList',
-            text: '合伙人审核',
-            path: 'checkPartnerList',
-            isShow: true,
-            meta: {
-              title: '合伙人审核',
-              icon: 'checkPartnerList'
-            }
-          }
-        ]
+        }
       }
     ]
   },

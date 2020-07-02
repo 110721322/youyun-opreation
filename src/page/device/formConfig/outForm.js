@@ -30,7 +30,7 @@ export const FORM_CONFIG = {
         type: 'uploadFile',
         label: '设备标识',
         key: 'deviceIdentifierList',
-        rules: setRules('设备标识').isRequired.get
+        rules: setRules('设备标识').isSelected.get
       }
     ]
   },
@@ -52,7 +52,7 @@ export const FORM_CONFIG = {
       {
         type: 'show',
         label: '订单类型',
-        key: 'outputType'
+        key: 'outputTypeDesc'
       },
       {
         type: 'show',
@@ -72,13 +72,18 @@ export const FORM_CONFIG = {
       {
         type: 'show',
         label: '支付方式',
-        key: 'payType'
+        key: 'payTypeDesc'
       },
       {
         type: 'show',
         label: '打款凭证',
         key: 'voucher',
         isImage: true
+      },
+      {
+        type: 'show',
+        label: '邮寄地址',
+        key: 'buyerAddress'
       },
       {
         type: 'show',

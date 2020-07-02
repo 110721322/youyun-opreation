@@ -27,6 +27,7 @@
           :row-key="'id'"
           :default-expand-all="false"
           :hide-edit-area="configData.hideEditArea"
+          :is-show="false"
           @edit="onClick_edit"
           @delete="onClick_delete"
           @on="onClick_on"
@@ -88,6 +89,7 @@ export default {
               id: $row.id
             })
             .then(result => {
+              this.$refs.table.getData();
               this.$message({
                 type: "info",
                 message: "删除成功"
@@ -111,6 +113,7 @@ export default {
               id: $row.id
             })
             .then(result => {
+              this.$refs.table.getData();
               this.$message({
                 type: "info",
                 message: "下架成功"
@@ -134,6 +137,7 @@ export default {
               id: $row.id
             })
             .then(result => {
+              this.$refs.table.getData();
               this.$message({
                 type: "info",
                 message: "上架成功"

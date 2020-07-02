@@ -14,8 +14,25 @@
     </div>
 
     <transition name="fade">
-      <div v-if="activeIndex == '1'">
-        <detailMode :key="1" :rule-form="ruleForm" :config-data="configData"></detailMode>
+      <div class="shipping" v-if="activeIndex == '1'">
+        <div class="shipping_title">订单信息</div>
+        <div class="shipping_content">
+          <div class="pay_img">
+            <img :src="orderDetail.voucher" alt="">
+            <p>打款凭证</p>
+          </div>
+          <ul>
+            <li><span>销售人员：</span><span>{{orderDetail.saleUserName}}</span></li>
+            <li><span>订单号：</span><span>{{orderDetail.outputNo}}</span></li>
+            <li><span>订单类型：</span><span>{{orderDetail.outputTypeDesc}}</span></li>
+            <li><span>订单金额：</span><span>{{orderDetail.amount}}元</span></li>
+            <li><span>实付金额：</span><span>{{orderDetail.actualAmount}}元</span></li>
+            <li><span>购买服务商：</span><span>{{orderDetail.agentName}}</span></li>
+            <li><span>支付方式：</span><span>{{orderDetail.payTypeDesc}}</span></li>
+            <li><span>邮寄地址：</span><span>{{orderDetail.buyerAddress}}</span></li>
+            <li><span>运营备注：</span><span>{{orderDetail.financeRemark}}</span></li>
+          </ul>
+        </div>
       </div>
       <div v-if="activeIndex == '2'">
         <detailMode :key="2" :rule-form="ruleForm2" :config-data="configData2"></detailMode>
@@ -88,25 +105,9 @@ export default {
   data() {
     return {
       tableConfigData: OUTSHOP_CONFIG,
-      activeIndex: "2",
-      ruleForm: {
-        name: "1",
-        name1: "2",
-        name2: "3",
-        name3: "4",
-        email: "12312312@163.com",
-        pic:
-          "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
-      },
-      ruleForm2: {
-        name: "1",
-        name1: "2",
-        name2: "3",
-        name3: "4",
-        email: "12312312@163.com",
-        pic:
-          "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
-      },
+      activeIndex: "1",
+      ruleForm: {},
+      ruleForm2: {},
       configData: {
         name: "订单信息",
         items: [
@@ -203,17 +204,29 @@ export default {
         detailIdList: []
       },
       deviceModelList: [],
-      api: api.queryOutputPage
+      id: '',
+      orderDetail: {}
     };
   },
-  mounted() {
-    this.finishOutputInfo();
+  created() {
+    this.id = this.$route.query.id
+    this.checkOrderDetail(this.id)
   },
+  // mounted() {
+  //
+  // },
   methods: {
+    checkOrderDetail(id) {
+      api.deviceOutputQueryById({id: id}).then(res => {
+        this.orderDetail = res.object
+      }).catch(err => {
+        console.log(err)
+      })
+    },
     finishOutputInfo() {
-      api.finishOutputInfo({ outputId: 1 }).then(res => {
-        this.deviceModelList = res.infoResponseVOList;
-        this.ruleForm = res;
+      api.finishOutputInfo({ outputId: this.id }).then(res => {
+        this.deviceModelList = res.object.infoResponseVOList;
+        this.ruleForm2 = res.object;
       });
     },
     onClick_getData($item) {
@@ -226,6 +239,9 @@ export default {
     },
     handleSelect($index) {
       this.activeIndex = $index;
+      if ($index === '2') {
+        this.finishOutputInfo();
+      }
     },
     onClick_edit($item) {
       $item.edit = true;
@@ -323,4 +339,53 @@ export default {
   float: right;
   margin-right: 30px;
 }
+  .shipping {
+    width: 100%;
+    padding: 24px 24px;
+  }
+  .shipping_title {
+    width: 100%;
+    height: 64px;
+    background: #ffffff;
+    padding-left: 32px;
+    line-height: 64px;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 1px solid #EBEEF5;
+  }
+  .shipping_content {
+    width: 100%;
+    background: #ffffff;
+    padding: 32px 32px;
+  }
+  .shipping_content .pay_img{
+    width: 100%;
+    margin-bottom: 32px;
+  }
+  .pay_img img {
+    width: 100px;
+    height: 100px;
+    border-radius: 4px;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .pay_img p {
+    padding-left: 22px;
+    font-size: 14px;
+    color: #606266;
+  }
+  .shipping_content ul {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .shipping_content ul li {
+    width: 33.3%;
+    margin-bottom: 16px;
+    line-height: 22px;
+    font-size: 14px;
+  }
+  .shipping_content ul li span:nth-child(2) {
+    font-size: 14px;
+    color: #606266;
+  }
 </style>

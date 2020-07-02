@@ -1,4 +1,3 @@
-import apiAgent from "@/api/api_agent.js";
 import apiDevice from "@/api/api_device";
 
 export const SEARCH_CONFIG = {
@@ -53,12 +52,20 @@ export const SEARCH_CONFIG = {
       key: 'freezeStatus',
       style: 'width:294px',
       labelWidth: '185px',
-      urlOptions: {
-        url: apiAgent.queryAllDistributeStatus,
-        keyName: 'status',
-        valueName: 'statusDesc',
-        method: 'get'
-      }
+      options: [
+        {
+          value: '',
+          label: '全部'
+        },
+        {
+          value: 1,
+          label: '可用'
+        },
+        {
+          value: 2,
+          label: '禁用'
+        }
+      ]
     }
   ]
 }

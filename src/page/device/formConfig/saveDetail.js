@@ -13,7 +13,7 @@ export const FORM_CONFIG = {
         urlOptions: {
           url: apiDevice.queryAllDeviceModel,
           keyName: 'deviceId',
-          valueName: 'deviceType',
+          valueName: 'deviceModel',
           method: 'get',
           params: {
             classification: 1
