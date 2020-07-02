@@ -158,49 +158,49 @@
           </template>
           <div class="bottom-box">没有账号？<span @click="onClick_register">立即注册</span></div>
         </div>
-        <div class="regist-content" v-show="false">
+        <div v-show="false" class="regist-content">
           <template>
             <div class="regist-title">服务商账户注册</div>
             <div class="input-box">
               <el-input
-                      v-model="ruleForm.phone"
-                      class="login-input"
-                      placeholder="请输入手机号"
-                      size="large"
+                v-model="ruleForm.phone"
+                class="login-input"
+                placeholder="请输入手机号"
+                size="large"
               >
                 <i slot="prefix" class="el-input__icon el-icon-user"></i>
               </el-input>
               <el-input
-                      v-model="ruleForm.password"
-                      type="password"
-                      class="login-input"
-                      placeholder="请输入验证码"
-                      size="large"
+                v-model="ruleForm.password"
+                type="password"
+                class="login-input"
+                placeholder="请输入验证码"
+                size="large"
               >
                 <i slot="prefix" class="el-input__icon el-icon-lock"></i>
                 <template slot="append">
                   <span
-                          v-if="countLoginTime<=0"
-                          class="verification-btn"
-                          @click="onClick_sendLoginCode"
+                    v-if="countLoginTime<=0"
+                    class="verification-btn"
+                    @click="onClick_sendLoginCode"
                   >获取验证码</span>
                 </template>
               </el-input>
               <el-input
-                      v-model="ruleForm.password"
-                      type="password"
-                      class="login-input"
-                      placeholder="请输入新密码"
-                      size="large"
+                v-model="ruleForm.password"
+                type="password"
+                class="login-input"
+                placeholder="请输入新密码"
+                size="large"
               >
                 <i slot="prefix" class="el-input__icon el-icon-lock"></i>
               </el-input>
               <el-input
-                      v-model="ruleForm.password"
-                      type="password"
-                      class="login-input"
-                      placeholder="再次确认新密码"
-                      size="large"
+                v-model="ruleForm.password"
+                type="password"
+                class="login-input"
+                placeholder="再次确认新密码"
+                size="large"
               >
                 <i slot="prefix" class="el-input__icon el-icon-lock"></i>
               </el-input>
@@ -220,52 +220,53 @@
                 <el-radio v-model="radio" label="2">个人商户</el-radio>
               </template>
               <el-input
-                      v-model="ruleForm.phone"
-                      class="login-input"
-                      placeholder="请输入公司名称"
-                      size="large"
+                v-model="ruleForm.phone"
+                class="login-input"
+                placeholder="请输入公司名称"
+                size="large"
               >
                 <i slot="prefix" class="el-input__icon el-icon-user"></i>
               </el-input>
               <el-input
-                      v-model="ruleForm.password"
-                      type="password"
-                      class="login-input"
-                      placeholder="请输入法人姓名"
-                      size="large"
+                v-model="ruleForm.password"
+                type="password"
+                class="login-input"
+                placeholder="请输入法人姓名"
+                size="large"
               >
                 <i slot="prefix" class="el-input__icon el-icon-lock"></i>
               </el-input>
               <el-input
-                      v-model="ruleForm.password"
-                      type="password"
-                      class="login-input"
-                      placeholder="请输入法人手机号"
-                      size="large"
+                v-model="ruleForm.password"
+                type="password"
+                class="login-input"
+                placeholder="请输入法人手机号"
+                size="large"
               >
                 <i slot="prefix" class="el-input__icon el-icon-lock"></i>
               </el-input>
               <el-input
-                      v-model="ruleForm.password"
-                      type="password"
-                      class="login-input"
-                      placeholder="请输入邮箱"
-                      size="large"
+                v-model="ruleForm.password"
+                type="password"
+                class="login-input"
+                placeholder="请输入邮箱"
+                size="large"
               >
                 <i slot="prefix" class="el-input__icon el-icon-lock"></i>
               </el-input>
               <el-cascader
-                      class="login-input"
-                      v-model="county"
-                      :options="options"
-                      placeholder="省/市/区"
-                      @change="changeCounty"></el-cascader>
+                v-model="county"
+                class="login-input"
+                :options="options"
+                placeholder="省/市/区"
+                @change="changeCounty"
+              ></el-cascader>
               <el-input
-                      v-model="ruleForm.password"
-                      type="password"
-                      class="login-input"
-                      placeholder="请输入详细地址"
-                      size="large"
+                v-model="ruleForm.password"
+                type="password"
+                class="login-input"
+                placeholder="请输入详细地址"
+                size="large"
               >
                 <i slot="prefix" class="el-input__icon el-icon-lock"></i>
               </el-input>

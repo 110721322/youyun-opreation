@@ -10,6 +10,7 @@ export const FORM_CONFIG = {
         type: 0,
         label: '广告名称',
         key: 'advertName',
+        maxlength: 20,
         rules: setRules('广告名称').isRequired.get
       },
       {
@@ -28,6 +29,7 @@ export const FORM_CONFIG = {
         type: 6,
         label: '广告图片',
         key: 'advertImg',
+        showFileList: true,
         rules: setRules('广告图片').isRequired.get
       }
     ]
@@ -58,6 +60,7 @@ export const FORM_CONFIG = {
         type: 6,
         label: '广告图片',
         key: 'advertImg',
+        showFileList: true,
         rules: setRules('广告图片').isRequired.get
       }
     ]

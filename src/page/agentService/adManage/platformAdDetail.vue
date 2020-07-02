@@ -39,7 +39,7 @@ export default {
         // 编辑前重赋值
         FORM_CONFIG.editData.formData.forEach((item, index) => {
           item.initVal = res.object[item.key];
-          console.log('canine', item.initVal);
+          console.log(item);
         });
         this.fromConfigData = FORM_CONFIG.editData;
         this.show = true;

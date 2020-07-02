@@ -4,17 +4,23 @@ export const SEARCH_CONFIG = {
   formData: [
     {
       type: 10,
+      inputType: 'autocomplete',
       label: '精准筛选',
       class: 'max-width',
       placeholder: "请输入商户",
       options: [
         {
+          valueKey: 'agentNo',
           label: '服务商ID',
-          value: 'agentNo'
+          value: 'agentNo',
+          isAutocomplete: false
         },
         {
+          valueKey: 'agentNo',
           label: '服务商名称',
-          value: 'agentName'
+          value: 'agentName',
+          isAutocomplete: true,
+          api: apiAgent.listAgentByAgentName
         }
       ]
     },

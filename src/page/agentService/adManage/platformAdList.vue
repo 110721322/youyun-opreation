@@ -76,6 +76,7 @@ export default {
       this.testData = [];
     },
     onClick_remove(row) {
+      console.log(row)
       this.$confirm("确认删除该广告吗", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"

@@ -8,8 +8,8 @@
           <div
             v-for="(item2,index2) in configData.list[index].list"
             :key="index2"
-            class="item1"
             v-has="item2.permission"
+            class="item1"
             @click="onClick_item(item2)"
           >
             <div class="img" :style="{backgroundColor:configData.imgColor}">

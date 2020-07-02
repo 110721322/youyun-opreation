@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-upload
+    <!--<el-upload
       v-loading="loading"
       action="OSSS上传图片"
       :data="urlData"
@@ -10,13 +10,31 @@
       :http-request="upLoad"
       :on-preview="handlePictureCardPreview"
     >
-      <img v-if="dialogImageUrl" :src="dialogImagePath + dialogImageUrl" class="avatar" />
-      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+      &lt;!&ndash;<img v-if="dialogImageUrl" :src="dialogImagePath + dialogImageUrl" class="avatar" />
+      <i v-else class="el-icon-plus avatar-uploader-icon"></i>&ndash;&gt;
+      <i class="el-icon-plus avatar-uploader-icon"></i>
+    </el-upload>-->
+    <el-upload
+      v-loading="loading"
+      action="OSSS上传图片"
+      list-type="picture-card"
+      class="avatar-uploader"
+      :data="urlData"
+      :file-list="fileList"
+      :show-file-list="showFileList"
+      :before-upload="beforeUpload"
+      :before-remove="beforeRemove"
+      :on-remove="onRemove"
+      :http-request="upLoad"
+      :on-preview="handlePictureCardPreview"
+    >
+      <img v-if="dialogImageUrl && !showFileList" :src="dialogImagePath + dialogImageUrl" class="avatar" />
+      <i v-else class="el-icon-plus"></i>
     </el-upload>
     <i
-      v-if="dialogImageUrl"
+      v-if="dialogImageUrl && !showFileList"
       class="el-icon-plus el-icon-zoom-in"
-      style="float:left;position:relative;left:-20px;top:5px;cursor:pointer"
+      style="float: left; position: relative; left: -20px; top: 5px; cursor: pointer;"
       @click="onClick_preview"
     ></i>
 
@@ -38,18 +56,51 @@ export default {
       loading: false,
       showViewer: false,
       dialogImageUrl: "",
+      dialogImageList: [], // 多图上传存储ARR
       dialogImagePath: "",
+      imageList: [], // 多图上传存储ARR完整url地址
       ossData: {}, // 存签名信息
       urlData: {
         type: 'common' || 'excel'
       }
     };
   },
-
+  computed: {
+    showFileList() {
+      let showFileList = true;
+      this.formItem.showFileList ? showFileList = true : showFileList = false;
+      return showFileList
+    },
+    fileList() {
+      const fileList = this.imageList.map(item => {
+        const obj = {
+          url: item
+        }
+        return obj
+      })
+      return fileList
+    }
+  },
+  watch: {
+    /** 监听图片列表变化拼接url字符串 **/
+    dialogImageList() {
+      this.dialogImageUrl = this.dialogImageList.join(',');
+      this.ruleForm[this.formItem.key] = {
+        dialogImageUrl: this.dialogImageUrl
+      };
+    }
+  },
   created() {
-    console.log('this.formItem.initVal', this.formItem);
     if (this.formItem.initVal) {
-      this.dialogImageUrl = this.formItem.initVal;
+      if (this.showFileList) {
+        this.imageList = this.formItem.initVal.split(',');
+        this.dialogImageList = this.formItem.initVal.split(',');
+        this.dialogImageList = this.dialogImageList.map(item => {
+          return item.split('aliyuncs.com/')[1] // 修改图片时去掉阿里云根路径
+        })
+      } else {
+        this.dialogImageUrl = this.formItem.initVal;
+      }
     }
   },
 
@@ -57,11 +108,10 @@ export default {
   methods: {
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
+      this.showViewer = true;
     },
 
     beforeUpload(file) {
-      console.log(file)
       return new Promise(resolve => {
         if (this.type === "entry") {
           api
@@ -84,7 +134,6 @@ export default {
     },
 
     upLoad(file) {
-      console.log(file)
       const formData = new FormData();
       formData.append(
         "key",
@@ -107,13 +156,11 @@ export default {
         contentType: false,
         success: () => {
           this.dialogImagePath = this.ossData.ossHost + "/";
-          this.dialogImageUrl =
-            this.ossData.objectKeyPrefix + "/" + this.ossData.objectKeys[0];
-
-          this.ruleForm[this.formItem.key] = {
-            dialogImagePath: this.dialogImagePath,
-            dialogImageUrl: this.dialogImageUrl
-          };
+          if (this.showFileList) {
+            this.uploadMultiple();
+          } else {
+            this.uploadSingle();
+          }
           this.loading = false;
         },
         error: () => {
@@ -121,7 +168,38 @@ export default {
         }
       });
     },
+    /** 单图上传回调 */
+    uploadSingle() {
+      this.dialogImageUrl =
+          this.ossData.objectKeyPrefix + "/" + this.ossData.objectKeys[0];
+
+      this.ruleForm[this.formItem.key] = {
+        dialogImagePath: this.dialogImagePath,
+        dialogImageUrl: this.dialogImageUrl
+      };
+    },
+    /** 多图上传回调 */
+    uploadMultiple() {
+      const imageUrl = this.ossData.objectKeyPrefix + "/" + this.ossData.objectKeys[0];
+      this.dialogImageList.push(imageUrl);
+      this.imageList.push(this.dialogImagePath + imageUrl)
+    },
+    beforeRemove() {
+      return this.$confirm("确认删除该广告图片吗", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消"
+      })
+    },
+    /** 移除文件 **/
+    onRemove(file, fileList) {
+      const index = this.fileList.findIndex(ele => {
+        return ele.uid === file.uid
+      });
+      this.dialogImageList.splice(index, 1);
+      this.imageList.splice(index, 1);
+    },
     onClick_preview() {
+      this.dialogImageUrl = this.dialogImagePath + this.dialogImageUrl
       this.showViewer = true;
     },
     closeViewer() {
