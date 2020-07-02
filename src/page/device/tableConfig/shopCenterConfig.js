@@ -35,7 +35,8 @@ export const SHOPCENTER_CONFIG = {
       {
         name: '编辑',
         emitName: 'edit',
-        type: 'text'
+        type: 'text',
+        isShow: false
       },
       {
         name: '删除',
