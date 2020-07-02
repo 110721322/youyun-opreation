@@ -14,7 +14,7 @@ export const FORM_CONFIG = {
         labelWidth: '100px',
         urlOptions: {
           url: apiDevice.queryAllDeviceModel,
-          keyName: 'deviceTypeCode',
+          keyName: 'deviceType',
           valueName: 'deviceModel',
           method: 'get',
           params: {
@@ -33,8 +33,8 @@ export const FORM_CONFIG = {
       {
         type: 6,
         label: '图片',
-        key: 'deviceImg'
-        // rules: setRules('图片').isRequired.get
+        key: 'deviceImg',
+        rules: setRules('图片').isSelected.get
       },
       {
         type: 0,
@@ -167,13 +167,14 @@ export const FORM_CONFIG = {
         key: 'deviceType',
         urlOptions: {
           url: apiDevice.queryAllDeviceModel,
-          keyName: 'deviceId',
+          keyName: 'deviceType',
           valueName: 'deviceType',
           method: 'get',
           params: {
             classification: 1
           }
-        }
+        },
+        rules: setRules('设备型号').isSelected.get
       },
       {
         type: 0,

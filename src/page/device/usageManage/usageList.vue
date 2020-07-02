@@ -72,11 +72,11 @@ export default {
         confirmButtonText: "确认",
         cancelButtonText: "取消"
       }).then(() => {
-        api.unbind({ id: $row.deviceId}).then(result => {
+        api.unbind({ id: $row.deviceDetailId}).then(result => {
           this.$refs.table.getData();
           this.$message("已解绑");
         }).catch(err => {
-          console.error(err);
+          this.$message(err.errorMessage)
         });
       }).catch((e) => {});
     },
@@ -87,12 +87,12 @@ export default {
         cancelButtonText: "取消"
       }).then(() => {
         api.unfreeze({
-          id: $row.deviceId
+          id: $row.deviceDetailId
         }).then(result => {
           this.$refs.table.getData();
           this.$message("已启用");
         }).catch(err => {
-          console.error(err);
+          this.$message(err.errorMessage)
         });
       }).catch(() => {});
     },

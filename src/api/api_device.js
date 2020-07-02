@@ -23,7 +23,7 @@ export default {
   distribute: (params) => API.POST('/operation/v1/deviceOutput/distribute', params),
   reject: (params) => API.GET('/operation/v1/deviceOutput/reject', params),
   finishOutput: (params) => API.POST('/operation/v1/deviceOutput/finishOutput', params),
-  finishOutputInfo: (params) => API.GET('/operation/v1/deviceOutput/finishOutputInfo', params),
+  finishOutputInfo: (params) => API.GET('/operation/v1/deviceOutput/finishOutputInfo', params), // 设备管理-库存管理-出库管理-查看发货信息
   queryUsing: (params) => API.GET('/operation/v1/deviceData/queryUsing', params),
   queryAllProvince: (params) => API.GET('/operation/v1/deviceData/queryAllProvince', params),
   queryRegion: (params) => API.GET('/operation/v1/deviceData/queryRegion', params),
@@ -34,10 +34,10 @@ export default {
   queryProcessLife: (params) => API.GET('/operation/v1/deviceData/queryProcessLife', params),
   deviceDataQueryByPage: (params) => API.GET('/operation/v1/deviceData/queryByPage', params),
   deviceMerchantQueryByPage: (params) => API.GET('/operation/v1/deviceMerchant/queryByPage', params), // 设备使用列表-分页查询
-  unbind: (params) => API.GET('/operation/v1/deviceMerchant/unbind', params),
-  unfreeze: (params) => API.GET('/operation/v1/deviceMerchant/unfreeze', params),
+  unbind: (params) => API.POST('/operation/v1/deviceMerchant/unbind', params), // 设备使用列表-解绑
+  unfreeze: (params) => API.POST('/operation/v1/deviceMerchant/unfreeze', params), // 设备使用列表-恢复可用
   deviceMaintainQueryByPage: (params) => API.GET('/operation/v1/deviceMaintain/queryByPage', params), // 设备维修-分页查询
-  deviceMaintainQueryById: (params) => API.GET('/operation/v1/deviceMaintain/queryById', params),
+  deviceMaintainQueryById: (params) => API.GET('/operation/v1/deviceMaintain/queryById', params), // 设备维修-通过ID查询
   auditPass: (params) => API.POST('/operation/v1/deviceMaintain/auditPass', params),
   auditReject: (params) => API.POST('/operation/v1/deviceMaintain/auditReject', params),
   receive: (params) => API.POST('/operation/v1/deviceMaintain/receive', params),

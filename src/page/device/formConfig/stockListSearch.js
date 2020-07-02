@@ -26,7 +26,7 @@ export const SEARCH_CONFIG = {
       labelWidth: '100px',
       urlOptions: {
         url: apiDevice.queryAllDeviceModel,
-        keyName: 'deviceTypeCode',
+        keyName: 'deviceType',
         valueName: 'deviceType',
         method: 'get',
         params: {
