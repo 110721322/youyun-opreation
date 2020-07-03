@@ -2,7 +2,7 @@ export const STOCKLIST_CONFIG = {
   gridConfig: [
     {
       label: '设备类型',
-      prop: 'deviceType',
+      prop: 'deviceTypeDesc',
       width: '150px'
     },
     {

@@ -7,7 +7,7 @@
           <div>
             <img class="process-icon" :src="item.icon" />
           </div>
-          <div class="label">{{ item.actionType }}</div>
+          <div class="label">{{ item.actionTypeDesc || '' }}</div>
           <div class="time">{{ item.date }}</div>
         </div>
         <img
@@ -73,6 +73,7 @@ export default {
       width: 70px;
       text-align: center;
       flex-shrink: 0;
+      position: relative;
       .process-icon {
         height: 40px;
         width: 40px;

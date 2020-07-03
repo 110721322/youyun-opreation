@@ -31,20 +31,12 @@ export const SEARCH_CONFIG = {
       label: '大区',
       key: 'regionCode',
       style: 'width:294px',
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
+      urlOptions: {
+        url: apiDevice.queryAllRegion,
+        keyName: 'regionCode',
+        valueName: 'regionName',
+        method: 'get'
+      }
     },
     {
       type: 1,

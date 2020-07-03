@@ -22,7 +22,7 @@ export const OUTLIST_CONFIG = {
     },
     {
       label: '状态',
-      prop: 'status',
+      prop: 'statusMsg',
       width: '150px'
     },
     {
