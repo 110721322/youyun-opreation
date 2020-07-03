@@ -28,7 +28,16 @@ export const REPAIRLIST_CONFIG = {
     {
       label: '照片',
       prop: 'img',
-      width: '150px'
+      width: '150px',
+      render: (h, params) => {
+        const imgUrl = params.row.img;
+        return h('el-image', {
+          props: {
+            src: imgUrl,
+            'preview-src-list': [imgUrl]
+          }
+        }, '正常');
+      }
     },
     {
       label: '提交时间',
@@ -37,7 +46,7 @@ export const REPAIRLIST_CONFIG = {
     },
     {
       label: '状态',
-      prop: 'status',
+      prop: 'statusDesc',
       width: '150px'
     }
   ],
@@ -54,31 +63,98 @@ export const REPAIRLIST_CONFIG = {
       {
         name: '通过',
         emitName: 'pass',
-        type: 'text'
+        type: 'text',
+        isShow: ($item) => {
+          if ($item.children) {
+            return false
+          } else {
+            if ($item.status === 1) {
+              return true
+            } else {
+              return false
+            }
+          }
+        }
       },
       {
         name: '驳回',
         emitName: 'reject',
-        type: 'text'
+        type: 'text',
+        isShow: ($item) => {
+          if ($item.children) {
+            return false
+          } else {
+            if ($item.status === 1) {
+              return true
+            } else {
+              return false
+            }
+          }
+        }
       },
       {
         name: '分配',
         emitName: 'distribution',
-        type: 'text'
+        type: 'text',
+        isShow: ($item) => {
+          if ($item.children) {
+            return false
+          } else {
+            if ($item.status === 6) {
+              return true
+            } else {
+              return false
+            }
+          }
+        }
       }, {
         name: '发货',
         emitName: 'send',
-        type: 'text'
+        type: 'text',
+        isShow: ($item) => {
+          if ($item.children) {
+            return false
+          } else {
+            if ($item.status === 6) {
+              return true
+            } else {
+              return false
+            }
+          }
+        }
       },
       {
         name: '完成',
         emitName: 'done',
-        type: 'text'
+        type: 'text',
+        isShow: ($item) => {
+          if ($item.children) {
+            return false
+          } else {
+            if ($item.status === 5) {
+              return true
+            } else {
+              return false
+            }
+          }
+        }
       },
       {
         name: '确定收货',
         emitName: 'Receipt',
-        type: 'text'
+        type: 'text',
+        isShow: ($item) => {
+          console.log($item)
+          if ($item.children) {
+            return false
+          } else {
+            if ($item.status === 4) {
+              return true
+            } else {
+              return false
+            }
+          }
+        }
       },
       {
         name: '详情',

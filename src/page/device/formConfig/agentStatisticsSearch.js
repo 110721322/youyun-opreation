@@ -1,3 +1,4 @@
+import apiDevice from "@/api/api_device";
 import areaData from "@/assets/data/areaData";
 export const SEARCH_CONFIG = {
   formData: [
@@ -30,20 +31,12 @@ export const SEARCH_CONFIG = {
       label: '大区',
       key: 'regionCode',
       style: 'width:294px',
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
+      urlOptions: {
+        url: apiDevice.queryAllRegion,
+        keyName: 'regionCode',
+        valueName: 'regionName',
+        method: 'get'
+      }
     },
     {
       type: 1,
@@ -51,20 +44,15 @@ export const SEARCH_CONFIG = {
       key: 'deviceId',
       style: 'width:294px',
       labelWidth: '185px',
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
+      urlOptions: {
+        url: apiDevice.queryAllDeviceModel,
+        keyName: 'deviceId',
+        valueName: 'deviceModel',
+        method: 'get',
+        params: {
+          classification: 1
         }
-      ]
+      }
     },
     {
       type: 8,

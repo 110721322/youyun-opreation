@@ -27,7 +27,7 @@ export const SEARCH_CONFIG = {
       urlOptions: {
         url: apiDevice.queryAllDeviceModel,
         keyName: 'deviceType',
-        valueName: 'deviceType',
+        valueName: 'deviceTypeName',
         method: 'get',
         params: {
           classification: 1

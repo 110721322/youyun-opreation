@@ -35,8 +35,7 @@ export const SHOPCENTER_CONFIG = {
       {
         name: '编辑',
         emitName: 'edit',
-        type: 'text',
-        isShow: false
+        type: 'text'
       },
       {
         name: '删除',
@@ -47,12 +46,35 @@ export const SHOPCENTER_CONFIG = {
       {
         name: '上架',
         emitName: 'on',
-        type: 'text'
+        type: 'text',
+        isShow: ($item) => {
+          console.log($item)
+          if ($item.children) {
+            return false
+          } else {
+            if ($item.status === 2) {
+              return true
+            } else {
+              return false
+            }
+          }
+        }
       },
       {
         name: '下架',
         emitName: 'off',
-        type: 'text'
+        type: 'text',
+        isShow: ($item) => {
+          if ($item.children) {
+            return false
+          } else {
+            if ($item.status === 1) {
+              return true
+            } else {
+              return false
+            }
+          }
+        }
       }
     ]
   },

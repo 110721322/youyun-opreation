@@ -18,7 +18,7 @@ export const AUTHORIZED_CONFIG = {
     },
     {
       label: '状态',
-      prop: 'status',
+      prop: 'statusDesc',
       width: '150px'
     }
   ],

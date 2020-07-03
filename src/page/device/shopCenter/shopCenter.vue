@@ -101,7 +101,9 @@ export default {
         })
         .catch(() => {});
     },
-    onClick_off($row) {
+    onClick_off($row, $item) {
+      console.log($row)
+      console.log($item)
       this.$confirm("是否要下架该设备？", "提示", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认下架",

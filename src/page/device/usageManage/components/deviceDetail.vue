@@ -59,10 +59,10 @@ export default {
       params: {
         agentName: "",
         beginDate: this.$g.utils.getToday(),
-        deviceId: 4199,
-        deviceIdentifier: "g拉哈侠",
+        deviceId: "",
+        deviceIdentifier: "",
         endDate: this.$g.utils.getToday(),
-        merchantName: "72测豆8g2美"
+        merchantName: ""
       },
       api: api.queryDetail
     };

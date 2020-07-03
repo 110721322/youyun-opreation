@@ -7,7 +7,6 @@
       :is-show-all="true"
       :begin-date="beginDate"
       :end-date="endDate"
-      @dataSelect="handleDataSelect"
       @search="search"
     />
     <div class="device-list">
@@ -23,18 +22,15 @@
         <div ref="echartsMap" class="chart-panel"></div>
       </div>
       <div class="data-box">
-        <div class="data-title">
-          省份分布排行榜
-          <span class="all-num">共33940个</span>
-        </div>
+        <div class="data-title">省份分布排行榜</div>
         <div v-for="(item,index) in mapData" :key="index" class="data-item">
           <div class="data-left">
             <span :class="['index',index<=2?'hightlight':'normal']">{{ index+1 }}</span>
             {{ item.provinceCode }}
           </div>
           <div class="data-right">
-            <span>{{ item.usingCount }}</span> |
-            <span class="perc">{{ item.perc }}</span>
+            <span>{{ item.usingCount? item.usingCount: '0' }}</span> |
+            <span class="perc">{{ item.deviceProportion*100 }}%</span>
           </div>
         </div>
       </div>
@@ -60,7 +56,7 @@
                 v-for="(item1,index1) in detailData"
                 :key="index1"
                 class="data-item"
-              >{{ item1[item.prop] }}</div>
+              >{{ item1[item.prop]? item1[item.prop] : '0'}}</div>
             </div>
           </div>
         </div>
@@ -91,7 +87,7 @@
                 v-for="(item1,index1) in detailData2"
                 :key="index1"
                 class="data-item"
-              >{{ item1[item.prop] }}</div>
+              >{{ item1[item.prop]? item1[item.prop]: '0' }}</div>
             </div>
           </div>
         </div>
@@ -109,6 +105,7 @@ import "./../../../../libs/kit/china";
 import dataItem from "../../../dataMarket/components/dataItem.vue";
 import dotTip from "./dotTip.vue";
 import deviceList from "./deviceList.vue";
+import provinceData from "./../../../../assets/data/provinceData"
 
 export default {
   name: "Theme",
@@ -116,117 +113,14 @@ export default {
   data() {
     return {
       showExpandBtn: true,
-      deviceListData: [
-        {
-          label: "刷脸设备",
-          deviceList: [
-            {
-              imgUrl:
-                "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-              nums: "aa",
-              name: "aaa"
-            },
-            {
-              imgUrl:
-                "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-              nums: "aa",
-              name: "aaa"
-            },
-            {
-              imgUrl:
-                "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-              nums: "aa",
-              name: "aaa"
-            },
-            {
-              imgUrl:
-                "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-              nums: "aa",
-              name: "aaa"
-            },
-            {
-              imgUrl:
-                "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-              nums: "aa",
-              name: "aaa"
-            },
-            {
-              imgUrl:
-                "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-              nums: "aa",
-              name: "aaa"
-            },
-            {
-              imgUrl:
-                "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-              nums: "aa",
-              name: "aaa"
-            },
-            {
-              imgUrl:
-                "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-              nums: "aa",
-              name: "aaa"
-            },
-            {
-              imgUrl:
-                "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-              nums: "aa",
-              name: "aaa"
-            }
-          ]
-        },
-        {
-          label: "SPOS机",
-          deviceList: [
-            {
-              imgUrl:
-                "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-              nums: "aa",
-              name: "aaa"
-            },
-            {
-              imgUrl:
-                "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-              nums: "aa",
-              name: "aaa"
-            }
-          ]
-        },
-        {
-          label: "其他设备",
-          deviceList: [
-            {
-              imgUrl:
-                "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-              nums: "aa",
-              name: "aaa"
-            },
-            {
-              imgUrl:
-                "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-              nums: "aa",
-              name: "aaa"
-            }
-          ]
-        }
-      ],
+      deviceListData: [],
       searchMaxHeight: "260",
       searchConfig: SEARCH_CONFIG,
       configData: {},
       fromConfigData: {},
       drawer: false,
       direction: "rtl",
-      mapData: [
-        { name: "安徽省", num: "323,209", perc: "36%" },
-        { name: "甘肃省", num: "323,209", perc: "36%" },
-        { name: "安徽省", num: "323,209", perc: "36%" },
-        { name: "香港特别行政区", num: "323,209", perc: "36%" },
-        { name: "安徽省", num: "323,209", perc: "36%" },
-        { name: "山西省", num: "234", perc: "36%" },
-        { name: "山西省", num: "234", perc: "36%" },
-        { name: "山西省", num: "234", perc: "36%" }
-      ],
+      mapData: [],
       titleList: ["设备数量统计", "设备交易统计"],
       radioListData: [
         {
@@ -389,7 +283,7 @@ export default {
       detailTitle: [
         {
           label: "大区",
-          prop: "regionCode",
+          prop: "regionName",
           hasDot: false
         },
         {
@@ -439,15 +333,35 @@ export default {
       detailData: [],
       detailData2: [],
       beginDate: null,
-      endDate: null
+      endDate: null,
+      currentdate: ''
     };
   },
+  created() {
+    this.getNowFormatDate()
+    this.handleProvince()
+  },
   mounted() {
-    this.queryAllProvince();
     this.queryRegion();
     this.queryRegionTrade();
   },
   methods: {
+    getNowFormatDate() {
+      const date = new Date();
+      const seperator1 = "-";
+      var year = date.getFullYear();
+      var month = date.getMonth() + 1;
+      var strDate = date.getDate();
+      if (month >= 1 && month <= 9) {
+        month = "0" + month;
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+      }
+      var currentdate = year + seperator1 + month + seperator1 + strDate;
+      this.currentdate = currentdate
+      return currentdate;
+    },
     handleNumRadioChange($data) {
       $data === "region" ? this.queryRegion() : null;
       $data === "industry" ? this.queryMcc() : null;
@@ -472,11 +386,25 @@ export default {
         .then(res => {
           this.detailTitle[0] = {
             label: "大区",
-            prop: "regionCode",
+            prop: "regionName",
             hasDot: false
           };
+          res.object.forEach(v => {
+            if (!v.activationCount) {
+              v.activationCount = 0
+            }
+            if (!v.noUsingCount) {
+              v.noUsingCount = 0
+            }
+            if (!v.saleCount) {
+              v.saleCount = 0
+            }
+            if (!v.usingCount) {
+              v.usingCount = 0
+            }
+          })
           this.detailData = res.object;
-          this.transferEchartsData(res.object, this.barOption, "regionCode");
+          this.transferEchartsData(res.object, this.barOption, "regionName");
           this.showBar();
         })
         .catch(err => {
@@ -516,11 +444,15 @@ export default {
         .then(res => {
           this.detailTitle2[0] = {
             label: "大区",
-            prop: "regionCode",
+            prop: "regionName",
             hasDot: false
           };
+          res.object.forEach(v => {
+            console.log('+++++++++++++++++++')
+            console.log(v)
+          })
           this.detailData2 = res.object;
-          this.transferEchartsData(res.object, this.barOption2, "regionCode");
+          this.transferEchartsData(res.object, this.barOption2, "regionName");
           this.showBar2();
         })
         .catch(err => {
@@ -552,8 +484,12 @@ export default {
     handleProvince($itemData) {
       this.queryAllProvince($itemData);
     },
-    // 获取设备省份数据
+    // 查询所有省份正在使用的数量/查询省份使用排行榜
     queryAllProvince($data) {
+      if (!this.beginDate) {
+        this.beginDate = "2020-03-01"
+        this.endDate = "2020-07-30"
+      }
       api
         .queryAllProvince({
           beginDate: this.beginDate,
@@ -561,24 +497,16 @@ export default {
           deviceId: $data && $data.deviceId
         })
         .then(res => {
+          res.object.forEach(v => {
+            provinceData.forEach(m => {
+              if (v.provinceCode === m.value) {
+                v.provinceCode = m.label
+                v.provinceName = m.name
+              }
+            })
+          })
           this.mapData = res.object;
           this.initMap();
-        })
-        .catch(err => {
-          this.$message(err);
-        });
-    },
-    handleDataSelect($time) {
-      api
-        .queryUsing({
-          beginDate: $time[0],
-          endDate: $time[1],
-          deviceId: ""
-        })
-        .then(res => {
-          this.deviceListData = res.object;
-          this.beginDate = $time[0];
-          this.endDate = $time[1];
         })
         .catch(err => {
           this.$message(err);
@@ -605,11 +533,12 @@ export default {
       });
     },
     search($ruleForm) {
-      console.log($ruleForm);
+      this.beginDate = $ruleForm.date[0]
+      this.endDate = $ruleForm.date[1]
       api
         .queryUsing({
           beginDate: $ruleForm.date[0],
-          endDate: $ruleForm.date[0],
+          endDate: $ruleForm.date[1],
           deviceId: ""
         })
         .then(res => {
@@ -618,163 +547,20 @@ export default {
         .catch(err => {
           this.$message(err);
         });
+      this.queryAllProvince()
     },
     initMap() {
       const myChart = echarts.init(this.$refs.echartsMap);
-      // eslint-disable-next-line no-unused-vars
-      const dataList = [
-        {
-          name: "南海诸岛",
-          value: 0
-        },
-        {
-          name: "北京",
-          value: 54
-        },
-        {
-          name: "天津",
-          value: 13
-        },
-        {
-          name: "上海",
-          value: 40
-        },
-        {
-          name: "重庆",
-          value: 75
-        },
-        {
-          name: "河北",
-          value: 13
-        },
-        {
-          name: "河南",
-          value: 1183
-        },
-        {
-          name: "云南",
-          value: 11
-        },
-        {
-          name: "辽宁",
-          value: 19
-        },
-        {
-          name: "黑龙江",
-          value: 15
-        },
-        {
-          name: "湖南",
-          value: 69
-        },
-        {
-          name: "安徽",
-          value: 60
-        },
-        {
-          name: "山东",
-          value: 39
-        },
-        {
-          name: "新疆",
-          value: 4
-        },
-        {
-          name: "江苏",
-          value: 31
-        },
-        {
-          name: "浙江",
-          value: 0
-        },
-        {
-          name: "江西",
-          value: 36
-        },
-        {
-          name: "湖北",
-          value: 1052
-        },
-        {
-          name: "广西",
-          value: 33
-        },
-        {
-          name: "甘肃",
-          value: 7
-        },
-        {
-          name: "山西",
-          value: 9
-        },
-        {
-          name: "内蒙古",
-          value: 7
-        },
-        {
-          name: "陕西",
-          value: 22
-        },
-        {
-          name: "吉林",
-          value: 4
-        },
-        {
-          name: "福建",
-          value: 18
-        },
-        {
-          name: "贵州",
-          value: 5
-        },
-        {
-          name: "广东",
-          value: 98
-        },
-        {
-          name: "青海",
-          value: 1
-        },
-        {
-          name: "西藏",
-          value: 0
-        },
-        {
-          name: "四川",
-          value: 44
-        },
-        {
-          name: "宁夏",
-          value: 4
-        },
-        {
-          name: "海南",
-          value: 22
-        },
-        {
-          name: "台湾",
-          value: 3
-        },
-        {
-          name: "香港",
-          value: 5
-        },
-        {
-          name: "澳门",
-          value: 5
-        }
-      ];
       const mapData = [];
       this.mapData.forEach((item, index) => {
         mapData[index] = {};
-        mapData[index].name = item.provinceCode;
+        mapData[index].name = item.provinceName;
         mapData[index].value = item.usingCount;
       });
-      console.log(mapData);
-      console.log(this.mapData);
       window.onresize = myChart.resize;
       myChart.setOption({
         tooltip: {
+          show: true,
           triggerOn: "mousemove"
         },
         visualMap: {
@@ -817,6 +603,7 @@ export default {
           show: !0
         },
         geo: {
+          show: true,
           map: "china",
           roam: !1,
           scaleLimit: {
@@ -848,7 +635,7 @@ export default {
         },
         series: [
           {
-            name: "商户数量",
+            name: "使用数量",
             type: "map",
             geoIndex: 0,
             data: mapData
@@ -876,6 +663,7 @@ export default {
     .data-item {
       text-align: center;
       margin-top: 32px;
+      padding-right: 30px;
     }
   }
 }

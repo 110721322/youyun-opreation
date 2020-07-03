@@ -52,9 +52,9 @@ export const SEARCH_CONFIG = {
       key: 'status',
       labelWidth: '185px',
       urlOptions: {
-        url: apiAgent.queryAllDistributeStatus,
-        keyName: 'status',
-        valueName: 'statusDesc',
+        url: apiDevice.deviceStatusAll,
+        keyName: 'advertType',
+        valueName: 'advertTypeDesc',
         method: 'get'
       }
     },

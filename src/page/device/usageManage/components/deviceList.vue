@@ -9,16 +9,23 @@
           :label-width="item.labelWidth"
         >
           <div class="device-list">
-            <div
-              v-for="(item1,index1) in item.usingList"
-              :key="index1"
-              class="device-item"
-              @click="onClick_selectItem(item1)"
-            >
-              <img class="device-img" :src="item1.deviceImg" />
-              <div class="nums">{{ item1.usingCount }}</div>
-              <div class="name">{{ item1.deviceModel }}</div>
+            <div class="device-list">
+              <div class="device-item" @click="onClick_selectItem(item)">
+                <img class="device-img" :src="item.deviceImg" />
+                <div class="nums">{{ item.usingCount || '0' }}台</div>
+                <div class="name">{{ item.deviceModel }}</div>
+              </div>
             </div>
+<!--            <div-->
+<!--              v-for="(item1,index1) in item.usingList"-->
+<!--              :key="index1"-->
+<!--              class="device-item"-->
+<!--              @click="onClick_selectItem(item1)"-->
+<!--            >-->
+<!--              <img class="device-img" :src="item1.deviceImg" />-->
+<!--              <div class="nums">{{ item1.usingCount }}</div>-->
+<!--              <div class="name">{{ item1.deviceModel }}</div>-->
+<!--            </div>-->
           </div>
         </el-form-item>
       </el-form>
@@ -71,6 +78,10 @@ export default {
 <style lang="scss" scoped>
 .device-contain {
   margin: 24px;
+  .el-form {
+    display: flex;
+    margin-right: 24px;
+  }
   .device-form {
     height: 150px;
     overflow: hidden;
@@ -89,10 +100,11 @@ export default {
       }
       .nums {
         font-size: 16px;
-        font-family: PingFangSC-Medium, PingFang SC;
         font-weight: 500;
         color: #333335;
         line-height: 16px;
+        margin-bottom: 8px;
+        margin-top: 16px;
       }
       .name {
         font-size: 12px;
