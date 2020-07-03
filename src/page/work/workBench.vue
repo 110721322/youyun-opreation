@@ -31,7 +31,7 @@ export default {
                 imgUrl: "",
                 dotNum: 5,
                 text: "待办事项",
-                permission: 'merchant',
+                permission: 1,
                 path: "/work/todo"
               }
             ]
@@ -49,19 +49,22 @@ export default {
               {
                 imgUrl: "",
                 text: "商户入件审核",
-                permission: 'service'
+                permission: 2
               },
               {
                 imgUrl: "",
-                text: "下级服务商入件审核"
+                text: "下级服务商入件审核",
+                permission: 3
               },
               {
                 imgUrl: "",
-                text: "合伙人入件审核"
+                text: "合伙人入件审核",
+                permission: 4
               },
               {
                 imgUrl: "",
-                text: "服务商佣金结算"
+                text: "服务商佣金结算",
+                permission: 5
               }
             ]
           },
@@ -70,12 +73,14 @@ export default {
             list: [
               {
                 imgUrl: "",
-                text: "设备解绑"
+                text: "设备解绑",
+                permission: 6
               },
               {
                 imgUrl: "",
                 text: "公告",
-                path: "/message/serviceAnnouncementList"
+                path: "/message/serviceAnnouncementList",
+                permission: 7
               },
               {
                 imgUrl: "",
@@ -89,15 +94,18 @@ export default {
             list: [
               {
                 imgUrl: "",
-                text: "商户数据"
+                text: "商户数据",
+                permission: 8
               },
               {
                 imgUrl: "",
-                text: "服务商数据"
+                text: "服务商数据",
+                permission: 9
               },
               {
                 imgUrl: "",
-                text: "设备数据"
+                text: "设备数据",
+                permission: 10
               }
             ]
           }

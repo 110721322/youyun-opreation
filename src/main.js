@@ -29,6 +29,8 @@ require('echarts/lib/component/title');
 
 Vue.prototype.$echarts = echarts;
 
+Vue.prototype.$store = store;
+
 Vue.use(ElementUI, {
   size: 'small'
 });

@@ -4,16 +4,14 @@ import store from '@/store'
 /** 权限指令 **/
 const has = Vue.directive('has', {
   // 当被绑定的元素插入到 DOM 中时……
-  inserted: function (el, binding, vnode) {
-    let btnPermissions = '';
-    // 获取指令按钮权限
-    let characteristic = binding.value;
-    if (characteristic)
+  inserted: function ($el, $binding, $vnode) {
+    let btnPerId = $binding.value;
+    console.log(btnPerId);
+    if (btnPerId)
     {
-      btnPermissions = new Array(characteristic);
-      if (!Vue.prototype.$_has(btnPermissions))
+      if (!Vue.prototype.$_has(btnPerId))
       {
-        el.parentNode.removeChild(el);
+        $el.parentNode.removeChild($el);
       }
     }
     /*else         // 获取路由按钮权限
@@ -25,16 +23,20 @@ const has = Vue.directive('has', {
 });
 
 // 权限检查方法
-Vue.prototype.$_has = function (value) {
+Vue.prototype.$_has = function ($value) {
   let isExist = false;
   let btnPermissionsArr = store.state.role.permission;
+  let result;
   if (btnPermissionsArr == undefined || btnPermissionsArr == null) {
     return false;
   }
-  let res = value.filter((x) => {
-    return btnPermissionsArr.includes(x)
+  result = btnPermissionsArr.filter(($ele) => {
+    if ( $ele['buttonId'] == $value && $ele.isShow )
+      return true
+    else
+      return false
   })
-  if (res.length > 0) isExist = true;
+  if (result.length > 0) isExist = true;
   return isExist;
 };
 

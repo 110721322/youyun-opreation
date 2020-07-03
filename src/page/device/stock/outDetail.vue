@@ -14,7 +14,7 @@
     </div>
 
     <transition name="fade">
-      <div class="shipping" v-if="activeIndex == '1'">
+      <div v-if="activeIndex == '1'" class="shipping">
         <div class="shipping_title">订单信息</div>
         <div class="shipping_content">
           <div class="pay_img">
@@ -22,15 +22,15 @@
             <p>打款凭证</p>
           </div>
           <ul>
-            <li><span>销售人员：</span><span>{{orderDetail.saleUserName}}</span></li>
-            <li><span>订单号：</span><span>{{orderDetail.outputNo}}</span></li>
-            <li><span>订单类型：</span><span>{{orderDetail.outputTypeDesc}}</span></li>
-            <li><span>订单金额：</span><span>{{orderDetail.amount}}元</span></li>
-            <li><span>实付金额：</span><span>{{orderDetail.actualAmount}}元</span></li>
-            <li><span>购买服务商：</span><span>{{orderDetail.agentName}}</span></li>
-            <li><span>支付方式：</span><span>{{orderDetail.payTypeDesc}}</span></li>
-            <li><span>邮寄地址：</span><span>{{orderDetail.buyerAddress}}</span></li>
-            <li><span>运营备注：</span><span>{{orderDetail.financeRemark}}</span></li>
+            <li><span>销售人员：</span><span>{{ orderDetail.saleUserName }}</span></li>
+            <li><span>订单号：</span><span>{{ orderDetail.outputNo }}</span></li>
+            <li><span>订单类型：</span><span>{{ orderDetail.outputTypeDesc }}</span></li>
+            <li><span>订单金额：</span><span>{{ orderDetail.amount }}元</span></li>
+            <li><span>实付金额：</span><span>{{ orderDetail.actualAmount }}元</span></li>
+            <li><span>购买服务商：</span><span>{{ orderDetail.agentName }}</span></li>
+            <li><span>支付方式：</span><span>{{ orderDetail.payTypeDesc }}</span></li>
+            <li><span>邮寄地址：</span><span>{{ orderDetail.buyerAddress }}</span></li>
+            <li><span>运营备注：</span><span>{{ orderDetail.financeRemark }}</span></li>
           </ul>
         </div>
       </div>

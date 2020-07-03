@@ -14,6 +14,7 @@ import Logo from "./Logo";
 import SidebarItem from "./SidebarItem";
 // import variables from '@/assets/css/variables.scss'
 import { EventBus } from "../../bus/event-bus.js";
+import store from '@/store'
 
 export default {
   components: { SidebarItem, Logo },
@@ -40,8 +41,10 @@ export default {
       return path;
     },
     menuList() {
-      const menus = localStorage.getItem("menus");
-      return JSON.parse(menus);
+      // const menus = localStorage.getItem("menus");
+      // return JSON.parse(menus);
+      const menus = store.state.role.routes;
+      return menus;
     },
     variables() {
       return "";

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
+import { Loading, Message } from 'element-ui';
 // import Vue from 'vue';
 // import web_config from 'libs/config/config';
 import * as g from '../libs/global';
@@ -25,6 +26,7 @@ axios.interceptors.request.use((config) => {
   } else if (config.method === 'get') {
     // config.params.merchantNo = localStorage.getItem('userInfo-merchant') ? JSON.parse(localStorage.getItem('userInfo-figmerchant')).merchantNo : '';
   }
+  Loading.service({text: '载入中'})
   return config;
 }, (error) => {
   // Do something with request error
@@ -33,6 +35,7 @@ axios.interceptors.request.use((config) => {
 
 // 添加一个响应拦截器
 axios.interceptors.response.use((response) => {
+  Loading.service().close();
   // if (response.data && response.data.status === 'success') {
   //   return response;
   // } else {
@@ -48,6 +51,7 @@ axios.interceptors.response.use((response) => {
   }
 }, (error) => {
   // Do something with response error
+  Loading.service().close();
   if (error.response) {
     switch (error.response.status) {
       case 400:
@@ -99,6 +103,11 @@ axios.interceptors.response.use((response) => {
   } else {
     error.message = '网络异常,连接服务器失败!';
   }
+  Message({
+    message: error.message,
+    duration: 1500,
+    type: 'error'
+  })
   return Promise.reject(error);
 });
 

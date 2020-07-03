@@ -59,6 +59,7 @@
                   <el-button plain size="large" @click="onClick_reset">重置</el-button>
                   <el-button
                     v-if="canCheckAll"
+                    v-has="11"
                     plain
                     size="large"
                     class="btn_checkall"

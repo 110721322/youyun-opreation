@@ -2,7 +2,7 @@
   <div>
     <el-menu class="el-menu-vertical-demo" :default-openeds="[subMenuName]">
       <div v-for="(item, key) of menu2Data" :key="key">
-        <el-submenu v-if="item.children" :index="item.name">
+        <el-submenu v-if="item.children.length>0" :index="item.name">
           <template slot="title">
             <span>{{ item.text }}</span>
           </template>
@@ -18,9 +18,8 @@
           </div>
         </el-submenu>
 
-        <app-link :to="'/' + rootPath + '/' + item.path">
+        <app-link v-else :to="'/' + rootPath + '/' + item.path">
           <el-menu-item
-            v-if="!item.children && item.isShow"
             :index="item.name"
             :style="currRouter==item.name?'color:#409EFF':''"
             @click="onClick_item"

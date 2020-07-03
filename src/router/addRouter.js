@@ -1700,14 +1700,18 @@ const menusToRoutes = function (data) {
   const result = []
   data.forEach(item => {
     const curr = asyncRoutes[item.name];
-    if (item.children) {
-      item.children.forEach(item2 => {
-        generateRoutes(curr.children, item2)
-      })
+    if (curr) {
+      if (item.children && item.children.length > 0) {
+        item.children.forEach(item2 => {
+          generateRoutes(curr.children, item2)
+        })
+      }
+      result.push(curr)
+    } else {
+      console.error(`not find page ${item.name} , page's title is ${item.meta.title}`);
     }
-    result.push(curr)
   })
-  result.push({ path: '*', redirect: '/error' })
+  // result.push({ path: '*', redirect: '/error' })
   // console.log(result);
   return result
 }
@@ -1718,7 +1722,12 @@ const getRouters = function () {
 
 const generateRoutes = function (children, item) {
   if (item.name) {
-    children.push(asyncRoutes[item.name])
+    const page = asyncRoutes[item.name];
+    if (page) {
+      children.push(page)
+    } else {
+      console.error(`not find page ${item.name} , page's title is ${item.meta.title}`);
+    }
   }
 
   if (item.children) {

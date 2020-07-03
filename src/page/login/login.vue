@@ -283,7 +283,10 @@
 </template>
 <script type="text/ecmascript-6">
 import api from "@/api/api_login";
+import {computedRoleRouter} from '@/libs/role'
+import currRouter from '@/router/addRouter'
 import { mapActions } from 'vuex';
+import store from '@/store';
 // import * as g from '@/libs/global';
 
 export default {
@@ -337,7 +340,7 @@ export default {
   created() {},
   methods: {
     ...mapActions([
-      'saveUserInfo', 'setRolePermission'
+      'saveUserInfo', 'setRolePermission', 'saveRoutersArr'
     ]),
     changeCounty() {},
     onClick_changePassword() {
@@ -459,6 +462,7 @@ export default {
       this.activeType = "verificationLogin";
     },
     onClick_passwdLogin() {
+      let userId, roleId;
       if (!this.ruleForm.phone) {
         this.$alert("请输入账号");
         return;
@@ -476,17 +480,23 @@ export default {
 
         })
         .then(res => {
-          console.log(res)
           localStorage.setItem('accessToken', res.object.accessToken)
-          const userId = res.object.user.id
-          const roleId = res.object.user.roleId
+          userId = res.object.user.id
+          roleId = res.object.user.roleId
+          this.saveUserInfo(res.object.user)
           api.queryUserVueRouterList({
             userToken: res.object.accessToken,
             system: 'operation',
             userId: userId,
             roleId: roleId
-          }).then(routerRes => {
-            console.log(routerRes)
+          }).then(res => {
+            computedRoleRouter(res.object)
+            this.addRoutes();
+            if (this.$route.query.redirect) {
+              this.$router.push({ path: `${this.$route.query.redirect}` });
+            } else {
+              this.$router.push(`/index`);
+            }
           }).catch(err => {
             console.log(err)
           })
@@ -502,6 +512,12 @@ export default {
         .catch(err => {
           this.$alert(err);
         });
+    },
+    addRoutes() {
+      const menuItems = store.state.role.routes;
+      const routerList = currRouter.menusToRoutes(menuItems);
+      this.$router.addRoutes(routerList);
+      this.saveRoutersArr(routerList)
     },
     onClick_codeLogin() {
       if (!this.ruleForm2.phone) {

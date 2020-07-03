@@ -40,7 +40,7 @@ export default {
   },
   computed: {
     routes() {
-      const routerList = JSON.parse(localStorage.getItem("routers"));
+      const routerList = this.$store.state.admin.routers ? this.$store.state.admin.routers : [];
       return routerList;
     }
   },

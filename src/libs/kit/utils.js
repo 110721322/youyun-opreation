@@ -306,6 +306,71 @@ export default {
     }
   },
 
+  /**
+   * 解构高维数组并以同级集合返回
+   * @param $data  传入数组
+   * @param $keyName   嵌套数组键值
+   * @param $isPushFirst 是否导入一级数组
+   * @returns {[]}
+   * @author liuyun
+   */
+  getNestedArr($data = [], $keyName = '', $isPushFirst= true) {
+    let result = [],
+        arr = [];
+    //导入一级数组
+    if($isPushFirst) {
+      arr.push($data)
+    }
+    //过滤筛选keyName数组
+    $data = $data.map(item => {
+      if (this.isArr(item[$keyName]) && item[$keyName].length > 0) {
+        return item[$keyName];
+      }
+    }).filter(item => {
+      if (!this.isNull(item) && !this.isUndefined(item)) {
+        return item
+      }
+    })
+    //递归导入下一级数组
+    $data.forEach(item => {
+      if(this.isArr(item) && item.length > 0){
+        arr.push(...this.getNestedArr(item,$keyName))
+      }
+    })
+    arr.push(...$data);
+    //过滤空数组，过滤解析到底的对象，到此为二维数组
+    arr.forEach(item => {
+      if(this.isArr(item) && item.length > 0){
+        result.push(...item)
+      }
+    })
+    return result;
+  },
+
+  /**
+   * 按键的boolean值过滤高维数组
+   * @param $data  过滤数组
+   * @param $filterArrKey  高维数组key
+   * @param $isShowKey     过滤凭据boolean值
+   * @returns {[]}
+   * @author liuyun
+   */
+  filterNestedArr($data,$filterArrKey,$isShowKey) {
+    if(this.isArr($data) && $data.length > 0)
+    {
+      $data = $data.filter(item => {
+        item[$filterArrKey] = this.filterNestedArr(item[$filterArrKey], $filterArrKey , $isShowKey);
+
+        if(item[$isShowKey])
+        {
+          return item;
+        }
+      })
+    }
+
+    return $data;
+  },
+
   throwError(msg) {
     throw new ReferenceError(msg);
   },
