@@ -5,7 +5,6 @@
         <el-form-item
           v-for="(item,index) in deviceListData"
           :key="index"
-          :label="item.deviceType+':'"
           :label-width="item.labelWidth"
         >
           <div class="device-list">
@@ -39,9 +38,9 @@
     <template v-if="hasSelectOne">
       <div class="select-item">
         <i class="el-icon-close close-icon" @click="onClick_closeItem"></i>
-        <img class="device-img" :src="selectItem.imgUrl" />
-        <div class="nums">{{ selectItem.nums }}</div>
-        <div class="name">{{ selectItem.name }}</div>
+        <img class="device-img" :src="selectItem.deviceImg" />
+        <div class="nums">{{ selectItem.usingCount || '0' }}台</div>
+        <div class="name">{{ selectItem.deviceModel }}</div>
       </div>
     </template>
   </div>

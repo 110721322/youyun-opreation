@@ -64,7 +64,7 @@
                 @click="onClick_getData(item)"
               >
                 <div class="device_name">{{ item.deviceModel }}</div>
-                <div class="device_num">{{ item.count }}</div>
+                <div class="device_num">{{ item.count }}台</div>
               </div>
             </div>
           </div>
