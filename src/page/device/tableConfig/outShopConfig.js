@@ -2,7 +2,7 @@ export const OUTSHOP_CONFIG = {
   gridConfig: [
     {
       label: '状态',
-      prop: 'bindStatusDesc',
+      prop: 'bindStatus',
       width: '150px'
     },
     {
@@ -48,7 +48,7 @@ export const OUTSHOP_CONFIG = {
           if ($item.children) {
             return false
           } else {
-            if (!$item.edit) {
+            if (!$item.edit && $item.bindStatus === '未绑定') {
               return true
             } else {
               return false

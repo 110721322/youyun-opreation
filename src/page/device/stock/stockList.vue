@@ -92,7 +92,6 @@ export default {
       this.drawer = true;
     },
     confirm($data) {
-      console.log('#data', $data);
       switch (this.formStatus) {
         case "add":
           api

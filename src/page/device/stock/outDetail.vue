@@ -36,21 +36,6 @@
       </div>
       <div v-if="activeIndex == '2'">
         <detailMode :key="2" :rule-form="ruleForm2" :config-data="configData2"></detailMode>
-
-        <!-- <detailBox title="商品信息">
-          <div class="table_box">
-            <BaseCrud
-              :grid-config="tableConfigData.gridConfig"
-              :grid-btn-config="tableConfigData.gridBtnConfig"
-              :grid-data="testData"
-              :form-config="tableConfigData.formConfig"
-              :form-data="tableConfigData.formModel"
-              :grid-edit-width="300"
-              form-title="用户"
-              :is-async="true"
-            />
-          </div>
-        </detailBox>-->
         <div class="table_box" style="padding:0">
           <div class="left_box">
             <div class="tab_head">
@@ -58,10 +43,11 @@
             </div>
             <div class="device_list">
               <div
-                v-for="(item,key) of deviceModelList"
-                :key="key"
+                v-for="(item, index) in  deviceModelList"
+                :key="index"
                 class="device_item"
-                @click="onClick_getData(item)"
+                :class="selectIndex===index? 'select_item': ''"
+                @click="onClick_getData(item,index)"
               >
                 <div class="device_name">{{ item.deviceModel }}</div>
                 <div class="device_num">{{ item.count }}台</div>
@@ -75,7 +61,7 @@
               :api-service="api"
               :grid-config="tableConfigData.gridConfig"
               :grid-btn-config="tableConfigData.gridBtnConfig"
-              :grid-data="testData"
+              :grid-data="deviceInfo"
               :form-config="tableConfigData.formConfig"
               :form-data="tableConfigData.formModel"
               :grid-edit-width="100"
@@ -167,36 +153,6 @@ export default {
           }
         ]
       },
-      testData: [
-        {
-          id: 0,
-          type: "设备品牌",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          reason: "银行卡账号错误，服务商无法联系",
-          edit: false
-        },
-        {
-          id: 1,
-          type: "设备型号",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系",
-          edit: false
-        }
-      ],
       params: {
         currentPage: 0,
         deviceIdentifier: "",
@@ -205,7 +161,9 @@ export default {
       },
       deviceModelList: [],
       id: '',
-      orderDetail: {}
+      orderDetail: {},
+      deviceInfo: [],
+      selectIndex: 0
     };
   },
   created() {
@@ -226,16 +184,15 @@ export default {
     finishOutputInfo() {
       api.finishOutputInfo({ outputId: this.id }).then(res => {
         this.deviceModelList = res.object.infoResponseVOList;
+        if (res.object.infoResponseVOList.length > 0) {
+          this.deviceInfo = res.object.infoResponseVOList[0].deviceDetailList
+        }
         this.ruleForm2 = res.object;
       });
     },
-    onClick_getData($item) {
-      this.params = {
-        currentPage: 0,
-        deviceIdentifier: $item.deviceId,
-        pageSize: 1,
-        detailIdList: $item.deviceIdentifierList
-      };
+    onClick_getData($item, index) {
+      this.deviceInfo = $item.deviceDetailList
+      this.selectIndex = index
     },
     handleSelect($index) {
       this.activeIndex = $index;
@@ -249,6 +206,15 @@ export default {
     onClick_okEdit($item) {
       $item.edit = false;
       console.log($item);
+      api.finishOutputInfoUpdate({
+        detailId: $item.detailId,
+        deviceIdentifier: $item.deviceIdentifier
+      }).then(res => {
+        console.log(res)
+        this.finishOutputInfo()
+      }).catch(err => {
+        console.log(err.errorMessage)
+      })
     },
     onClick_cancelEdit($item) {
       $item.edit = false;
@@ -318,6 +284,9 @@ export default {
 .device_item {
   width: 100%;
   height: 48px;
+}
+.device_item.select_item {
+  background: #F1F5F6;
 }
 .device_name {
   width: 101px;

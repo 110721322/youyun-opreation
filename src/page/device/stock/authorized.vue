@@ -11,7 +11,7 @@
         <div class="btn_download" @click="onClick_download">
           <i class="el-icon-download"></i>设备信息模版下载
         </div>
-        <el-button class="btn" type="primary" @click="onClick_addDevice">导入设备信息</el-button>
+        <UploadFile class="btn" type="primary" @click="onClick_addDevice">导入设备信息</UploadFile>
       </div>
       <BaseCrud
         ref="table"
@@ -43,10 +43,11 @@ import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { SEARCH_CONFIG } from "../formConfig/authorizedSearch";
 import { AUTHORIZED_CONFIG } from "../tableConfig/authorizedConfig";
+import UploadFile from "@/components/form/components/UploadFile";
 
 export default {
   name: "Theme",
-  components: { Search, BaseCrud },
+  components: { Search, BaseCrud, UploadFile },
   data() {
     return {
       headerCellStyle: { backgroundColor: "#FAFAFA" },
