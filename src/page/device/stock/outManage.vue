@@ -87,8 +87,8 @@ export default {
       tableId: "",
       tableDeviceId: "",
       params: {
-        beginTime: this.$g.utils.getToday(),
-        endTime: this.$g.utils.getToday(),
+        beginDate: this.$g.utils.getToday(),
+        endDate: this.$g.utils.getToday(),
         agentNo: "",
         deviceId: "",
         distributionUserId: 1,
@@ -105,8 +105,8 @@ export default {
   methods: {
     search($ruleForm) {
       const params = {
-        beginTime: $ruleForm.date ? $ruleForm.date[0] : null,
-        endTime: $ruleForm.date ? $ruleForm.date[1] : null,
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
+        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
         deviceId: $ruleForm.deviceId,
         status: $ruleForm.status,
         saleUserId: $ruleForm.saleUserId,
