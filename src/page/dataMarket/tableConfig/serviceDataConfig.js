@@ -1,4 +1,9 @@
+import { AGENT_DATA_MORE } from "../../../libs/data/permissionBtns";
+
 export const MERCHANTDATACONFIG1 = {
+  permission: {
+    searchMore: AGENT_DATA_MORE
+  },
   gridConfig: [
     {
       label: "排名",
@@ -27,6 +32,9 @@ export const MERCHANTDATACONFIG1 = {
   ]
 }
 export const MERCHANTDATACONFIG2 = {
+  permission: {
+    searchMore: AGENT_DATA_MORE
+  },
   gridConfig: [
     {
       label: "排名",
@@ -49,6 +57,9 @@ export const MERCHANTDATACONFIG2 = {
   ]
 }
 export const MERCHANTDATACONFIG3 = {
+  permission: {
+    searchMore: AGENT_DATA_MORE
+  },
   gridConfig: [
     {
       label: "排名",
@@ -76,6 +87,9 @@ export const MERCHANTDATACONFIG3 = {
   ]
 }
 export const MERCHANTDATACONFIG4 = {
+  permission: {
+    searchMore: AGENT_DATA_MORE
+  },
   gridConfig: [
     {
       label: "排名",
@@ -103,6 +117,9 @@ export const MERCHANTDATACONFIG4 = {
   ]
 }
 export const MERCHANTDATACONFIG5 = {
+  permission: {
+    searchMore: AGENT_DATA_MORE
+  },
   gridConfig: [
     {
       label: "排名",

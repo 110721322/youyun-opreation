@@ -1,4 +1,5 @@
 import { setRules } from '@/libs/kit/formFns.js'
+import store from "@/store";
 
 export const FORM_CONFIG = {
   editData: {
@@ -9,37 +10,36 @@ export const FORM_CONFIG = {
         type: 6,
         label: "头像",
         key: "img",
-        // key: "headerImageSrc",
-        initVal: "pdd",
+        initVal: "",
         rules: setRules("头像").isRequired.get
       },
       {
         type: 0,
         label: "花名",
         key: "jobName",
-        initVal: "pdd",
+        initVal: "",
         rules: setRules("花名").isRequired.get
       },
       {
         type: 0,
         label: "姓名",
         key: "name",
-        initVal: "pdd",
+        initVal: "",
         rules: setRules("姓名").isRequired.get
       },
       {
         type: 5,
         label: "性别",
         key: "sex",
-        initVal: "male",
+        initVal: "",
         options: [
           {
             label: "男",
-            value: "male"
+            value: 1
           },
           {
             label: "女",
-            value: "female"
+            value: 0
           }
         ],
         rules: setRules("性别", 1).isRequired.get
@@ -49,48 +49,14 @@ export const FORM_CONFIG = {
         label: "职位",
         key: "position",
         initVal: [],
-        options: [
-          {
-            label: "唱",
-            value: 0
-          },
-          {
-            label: "跳",
-            value: 1
-          },
-          {
-            label: "rap",
-            value: 2
-          },
-          {
-            label: "篮球",
-            value: 3
-          }
-        ]
+        options: store.state.system.positionList
       },
       {
         type: 1,
         label: "直属上级",
         key: "superiorId",
         initVal: [],
-        options: [
-          {
-            label: "唱",
-            value: 0
-          },
-          {
-            label: "跳",
-            value: 1
-          },
-          {
-            label: "rap",
-            value: 2
-          },
-          {
-            label: "篮球",
-            value: 3
-          }
-        ]
+        options: store.state.system.employeeList
       },
       {
         type: 0,

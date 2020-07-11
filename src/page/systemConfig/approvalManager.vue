@@ -8,9 +8,9 @@
       <BaseCrud
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
-        :grid-data="testData"
         :form-config="configData.formConfig"
         :form-data="configData.formModel"
+        :api-service="configData.api"
         :grid-edit-width="150"
         :is-async="true"
         :is-select="false"
@@ -69,7 +69,6 @@ export default {
       searchMaxHeight: "340",
       configData: USERLIST_CONFIG,
       fromConfigData: {},
-      testData: [],
       drawer: false,
       direction: "rtl",
       form: {
@@ -88,9 +87,7 @@ export default {
       ]
     };
   },
-  mounted() {
-    this.getTableData();
-  },
+  mounted() {},
   methods: {
     onChange_resource($value) {
       console.log($value);
@@ -102,37 +99,6 @@ export default {
           value: 1
         });
       }
-    },
-
-    getTableData() {
-      this.testData = [
-        {
-          id: 1,
-          type: "日常任务",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          reason: "银行卡账号错误，服务商无法联系"
-        },
-        {
-          id: 2,
-          type: "日常任务",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系"
-        }
-      ];
     },
     selectionChange($val) {
       // eslint-disable-next-line no-console

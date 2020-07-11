@@ -2,6 +2,8 @@ export const SEARCH_CONFIG = {
   formData: [
     {
       type: 9,
+      timeType: 'datetimerange',
+      isSelectToday: true,
       label: '筛选时间',
       key: 'date',
       class: 'max-width',
@@ -19,15 +21,15 @@ export const SEARCH_CONFIG = {
         },
         {
           label: '成员花名',
-          value: 'nickName'
+          value: 'jobName'
         },
         {
           label: '成员姓名',
-          value: 'realName'
+          value: 'name'
         },
         {
           label: '手机号',
-          value: 'userName'
+          value: 'phone'
         }
       ],
       labelWidth: '100px'
@@ -41,15 +43,15 @@ export const SEARCH_CONFIG = {
       options: [
         {
           label: '保密',
+          value: null
+        },
+        {
+          label: '女',
           value: 0
         },
         {
           label: '男',
           value: 1
-        },
-        {
-          label: '女',
-          value: 2
         }
       ]
     }

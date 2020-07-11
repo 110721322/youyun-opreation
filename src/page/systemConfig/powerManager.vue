@@ -10,10 +10,12 @@
         <BaseCrud
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
-          :grid-data="testData"
+          :children-key="configData.childrenKey"
           :form-config="configData.formConfig"
           :form-data="configData.formModel"
-          :grid-edit-width="150"
+          :api-service="configData.api"
+          :params="params"
+          :grid-edit-width="200"
           :is-async="true"
           :is-select="false"
           :is-expand="false"
@@ -54,7 +56,10 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl"
+      direction: "rtl",
+      params: {
+        system: 'operation'
+      }
     };
   },
   mounted() {

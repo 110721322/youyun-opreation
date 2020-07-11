@@ -2,13 +2,13 @@
 export const AGENTPC_CONFIG = {
   gridConfig: [
     {
-      label: '按钮名称',
-      prop: 'type',
+      label: '角色名称',
+      prop: 'roleName',
       width: '150px'
     },
     {
-      label: '所属页面',
-      prop: 'taskName',
+      label: '角色数量',
+      prop: 'count',
       width: '150px'
     }
   ],

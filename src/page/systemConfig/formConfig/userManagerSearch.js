@@ -1,7 +1,16 @@
+import api_memberManage from "@/api/api_memberManage";
+import { PERSON_MANAGE_CONDITION } from "../../../libs/data/permissionBtns";
+import store from '@/store'
+
 export const SEARCH_CONFIG = {
+  permission: {
+    condition: PERSON_MANAGE_CONDITION
+  },
   formData: [
     {
       type: 9,
+      timeType: 'datetimerange',
+      isSelectToday: true,
       label: '筛选时间',
       key: 'date',
       class: 'max-width',
@@ -15,19 +24,19 @@ export const SEARCH_CONFIG = {
       options: [
         {
           label: '工号',
-          value: 'id'
+          value: 'jobNumber'
         },
         {
           label: '成员花名',
-          value: 'nickName'
+          value: 'jobName'
         },
         {
           label: '成员姓名',
-          value: 'realName'
+          value: 'name'
         },
         {
           label: '手机号',
-          value: 'userName'
+          value: 'phone'
         }
       ],
       labelWidth: '100px'
@@ -40,16 +49,12 @@ export const SEARCH_CONFIG = {
       labelWidth: '100px',
       options: [
         {
-          label: '川菜',
+          label: '女',
           value: 0
         },
         {
-          label: '粤菜',
+          label: '男',
           value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
         }
       ]
     },
@@ -59,20 +64,7 @@ export const SEARCH_CONFIG = {
       key: 'position',
       style: 'width:294px',
       labelWidth: '185px',
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
+      options: store.state.system.positionList
     },
     {
       type: 1,
@@ -81,20 +73,12 @@ export const SEARCH_CONFIG = {
       style: 'width:294px',
       labelWidth: '100px',
       class: "clear_both",
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
+      urlOptions: {
+        url: api_memberManage.superiorsList,
+        keyName: 'id',
+        valueName: 'nickName',
+        method: 'post'
+      }
     }
   ]
 }

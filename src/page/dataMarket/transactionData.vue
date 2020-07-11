@@ -11,6 +11,7 @@
       :open-height="searchMaxHeight"
       :form-base-data="searchConfig.formData"
       :show-foot-btn="searchConfig.showFootBtn"
+      :permission="searchConfig.permission"
       @dataSelect="handleDataSelect"
       @search="search"
     />

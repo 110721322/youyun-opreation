@@ -92,18 +92,24 @@ const router = new VueRouter({
 })
 
 // 全局钩子函数,在跳转之前执行
-
-const menuItems = store.state.role.routes;
-
-const routerList = currRouter.menusToRoutes(menuItems);
+// import { authRoutes } from "./authRoutes";
+const authRoutes = store.state.role.routes;
+// store.dispatch('setRoleRoutes', authRoutes);
+const routerList = currRouter.menusToRoutes(authRoutes);
 store.dispatch('saveRoutersArr', utils.deepClone(routerList));
 
 router.addRoutes(routerList);
+
 router.beforeEach((to, from, next) => {
-  if (to.meta.requireLogin) {
+  if (to.path === '/login') {
     next()
   } else {
-    next()
+    const accessToken = store.state.admin.accessToken;
+    if (accessToken === null || accessToken === '') {
+      next('/login');
+    } else {
+      next();
+    }
   }
 })
 

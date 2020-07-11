@@ -1,21 +1,28 @@
+import api_systemConfig from "@/api/api_systemConfig";
+import utils from "@/libs/kit/utils";
 
 export const POWERMANAGER_CONFIG = {
+  api: api_systemConfig.getSystemMenuTemplate,
+  childrenKey: 'childrenMenus',
   gridConfig: [
     {
       label: '页面名称',
-      prop: 'type',
+      prop: 'menuName',
       width: '50px'
     },
     {
       label: '按钮名称',
       prop: 'btnList',
       width: '150px',
-      render: (h, params) => {
+      render: ($h, $params) => {
         const targetList = [];
-        if (params.row.btnList) {
-          for (const item of params.row.btnList) {
-            const targetName = item.name;
-            const target = h('el-tag',
+        const systemButtons = $params.row.systemButtons;
+        let buttonList = [];
+        if (utils.isArr(systemButtons) && systemButtons.length > 0) {
+          buttonList = utils.getNestedArr(systemButtons, 'systemButtons');
+          for (const item of buttonList) {
+            const targetName = item.buttonName;
+            const target = $h('el-tag',
               {
                 props: {
                   size: 'medium'
@@ -32,7 +39,7 @@ export const POWERMANAGER_CONFIG = {
           }
         }
 
-        return h('div',
+        return $h('div',
           targetList
         );
       }
@@ -81,5 +88,5 @@ export const POWERMANAGER_CONFIG = {
     expand: '',
     roleIdList: []
   },
-  hideEditArea: false
+  hideEditArea: true
 };

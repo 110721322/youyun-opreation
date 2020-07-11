@@ -1,5 +1,10 @@
 import areaData from "@/assets/data/areaData";
+import { MERCHANT_SEARCH_CONDITION } from "../../../libs/data/permissionBtns";
+
 export const FORM_CONFIG = {
+  permission: {
+    condition: MERCHANT_SEARCH_CONDITION
+  },
   formData: [
     {
       type: 9,

@@ -7,7 +7,7 @@
     </div>
 
     <div
-      v-if="showMenu2&&menuHoverData.children.length > 0"
+      v-if="showMenu2&&menuHoverData.children && menuHoverData.children.length > 0"
       class="menu2"
       @mouseleave="leave()"
       @mouseenter="enter()"

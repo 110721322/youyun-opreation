@@ -17,11 +17,11 @@
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
           <img src="https://avatars1.githubusercontent.com/u/23054546?s=64&v=4" class="user-avatar" />
-          <span class="name">伯温</span>
+          <span class="name">{{ nameLabel }}</span>
         </div>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item divided @click.native="logout">
-            <span style="display:block;">Log Out</span>
+            <span style="display:block;">退出</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -35,6 +35,7 @@ import api from "@/api/api_login";
 import Breadcrumb from "./breadcrumb.vue";
 // import Screenfull from "./Screenfull/index.vue";
 import { EventBus } from "../bus/event-bus.js";
+import { mapActions } from 'vuex';
 import Search from "./headSearch.vue";
 export default {
   components: {
@@ -42,8 +43,18 @@ export default {
     Breadcrumb,
     Search
   },
-  computed: {},
+  data() {
+    return {
+      userInfo: this.$store.state.admin.userInfo
+    }
+  },
+  computed: {
+    nameLabel() {
+      return this.userInfo.name || this.userInfo.jobName || this.userInfo.nickName || '无名氏'
+    }
+  },
   methods: {
+    ...mapActions(['saveAccessToken']),
     toggleSideBar() {
       const openSlider = localStorage.getItem("openSlider");
       // eslint-disable-next-line eqeqeq
@@ -54,10 +65,11 @@ export default {
       // await this.$store.dispatch("user/logout");
       api
         .out({
-          userToken: localStorage.getItem("token-merchant")
+          userToken: this.$store.state.admin.accessToken
         })
         .then(res => {
-          this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+          this.saveAccessToken(null);
+          this.$router.replace(`/login?redirect=${this.$route.fullPath}`);
         })
         .catch(err => {
           this.$message(err);
@@ -129,14 +141,14 @@ export default {
     }
 
     .avatar-container {
+      width: 153px;
       margin-right: 30px;
-
       .avatar-wrapper {
         margin-top: 5px;
         position: relative;
         margin-right: 20px;
         .name {
-          width: 40px;
+          width: 100px;
           height: 40px;
           display: inline-block;
           line-height: 40px;

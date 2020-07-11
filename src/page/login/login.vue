@@ -340,7 +340,7 @@ export default {
   created() {},
   methods: {
     ...mapActions([
-      'saveUserInfo', 'setRolePermission', 'saveRoutersArr'
+      'saveAccessToken', 'saveUserInfo', 'setRolePermission', 'saveRoutersArr'
     ]),
     changeCounty() {},
     onClick_changePassword() {
@@ -480,7 +480,7 @@ export default {
 
         })
         .then(res => {
-          localStorage.setItem('accessToken', res.object.accessToken)
+          this.saveAccessToken(res.object.accessToken)
           userId = res.object.user.id
           roleId = res.object.user.roleId
           this.saveUserInfo(res.object.user)

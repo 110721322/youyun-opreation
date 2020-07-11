@@ -1,8 +1,10 @@
+import { PERSON_LIST_EDIT, PERSON_LIST_DEL } from "../../../libs/data/permissionBtns";
+
 export const USERLIST_CONFIG = {
   gridConfig: [
     {
       label: '花名',
-      prop: 'nickName',
+      prop: 'jobName',
       width: '150px'
     },
     {
@@ -12,12 +14,12 @@ export const USERLIST_CONFIG = {
     },
     {
       label: '姓名',
-      prop: 'realName',
+      prop: 'name',
       width: '150px'
     },
     {
       label: '手机号',
-      prop: 'userName',
+      prop: 'phone',
       width: '150px'
     },
     {
@@ -49,13 +51,15 @@ export const USERLIST_CONFIG = {
       {
         name: '编辑',
         emitName: 'edit',
-        type: 'text'
+        type: 'text',
+        permission: PERSON_LIST_EDIT
       },
       {
         name: '删除',
         emitName: 'remove',
         type: 'text',
-        style: 'color:#F5222D'
+        style: 'color:#F5222D',
+        permission: PERSON_LIST_DEL
       }
     ]
   },

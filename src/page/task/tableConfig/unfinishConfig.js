@@ -1,3 +1,5 @@
+import { TASK_ALERT } from "../../../libs/data/permissionBtns";
+
 export const UNFINISH_CONFIG = {
   gridConfig: [
     {
@@ -30,6 +32,7 @@ export const UNFINISH_CONFIG = {
         emitName: 'notice',
         type: 'text',
         style: 'color:#1989FA',
+        permission: TASK_ALERT, //  提醒按钮权限
         isShow: item => {
           if (item.isChild) {
             return false

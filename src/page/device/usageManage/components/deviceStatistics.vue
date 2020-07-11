@@ -56,7 +56,7 @@
                 v-for="(item1,index1) in detailData"
                 :key="index1"
                 class="data-item"
-              >{{ item1[item.prop]? item1[item.prop] : '0'}}</div>
+              >{{ item1[item.prop]? item1[item.prop] : '0' }}</div>
             </div>
           </div>
         </div>

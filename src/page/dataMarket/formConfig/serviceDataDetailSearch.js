@@ -1,7 +1,11 @@
 import areaData from "@/assets/data/areaData";
 import apiAgent from "@/api/api_agent.js";
+import { AGENT_SEARCH_CONDITION } from "../../../libs/data/permissionBtns";
 
 export const FORM_CONFIG = {
+  permission: {
+    condition: AGENT_SEARCH_CONDITION
+  },
   formData: [
     {
       type: 9,

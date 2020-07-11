@@ -1,9 +1,10 @@
+import { PERSON_MANAGE_COMPLETE, PERSON_MANAGE_EDIT } from "../../../libs/data/permissionBtns";
 
 export const USERLIST_CONFIG = {
   gridConfig: [
     {
       label: '花名',
-      prop: 'nickName',
+      prop: 'jobName',
       width: '150px'
     },
     {
@@ -13,7 +14,7 @@ export const USERLIST_CONFIG = {
     },
     {
       label: '姓名',
-      prop: 'realName',
+      prop: 'name',
       width: '150px'
     },
     {
@@ -28,13 +29,22 @@ export const USERLIST_CONFIG = {
     },
     {
       label: '手机号',
-      prop: 'userName',
+      prop: 'phone',
       width: '150px'
     },
     {
       label: '性别',
       prop: 'sex',
-      width: '150px'
+      width: '150px',
+      formatter($row) {
+        const sex = $row[this.prop];
+        if (sex === 0) {
+          return '女';
+        } else if (sex === 1) {
+          return '男';
+        }
+        return ''
+      }
     },
     {
       label: '创建时间',
@@ -49,7 +59,16 @@ export const USERLIST_CONFIG = {
     {
       label: '状态',
       prop: 'status',
-      width: '150px'
+      width: '150px',
+      formatter($row) {
+        const status = $row[this.prop];
+        if (status === 'lock') {
+          return '冻结';
+        } else if (status === 'normal') {
+          return '正常';
+        }
+        return ''
+      }
     }
   ],
 
@@ -65,7 +84,21 @@ export const USERLIST_CONFIG = {
       {
         name: '完善岗位信息',
         emitName: 'perfect',
-        type: 'text'
+        type: 'text',
+        permission: PERSON_MANAGE_COMPLETE,
+        isShow($row) {
+          const infoStatus = $row.infoStatus;
+          switch (infoStatus) {
+            case 0:
+              return true;
+            case 1:
+              return true;
+            case 2:
+              return false;
+            default:
+              return true;
+          }
+        }
       },
       {
         name: '编辑基础信息',
@@ -75,7 +108,21 @@ export const USERLIST_CONFIG = {
       {
         name: '编辑岗位信息',
         emitName: 'editPost',
-        type: 'text'
+        type: 'text',
+        permission: PERSON_MANAGE_EDIT,
+        isShow($row) {
+          const infoStatus = $row.infoStatus;
+          switch (infoStatus) {
+            case 0:
+              return false;
+            case 1:
+              return false;
+            case 2:
+              return true;
+            default:
+              return false;
+          }
+        }
       }
     ]
   },

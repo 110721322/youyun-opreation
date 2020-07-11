@@ -48,8 +48,8 @@
             <el-switch
               v-if="item.type == 'switch'"
               v-model="ruleForm[item.key]"
-              inactive-value="0"
-              active-value="100"
+              :inactive-value="0"
+              :active-value="1"
             ></el-switch>
           </el-form-item>
         </el-col>

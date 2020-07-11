@@ -111,6 +111,7 @@ export default {
         }
       ],
       tableData: [],
+      cloneTableData: [],
       menuList: [
         {
           name: "成员信息（编辑信息）",
@@ -127,6 +128,21 @@ export default {
       type: "employee_edit"
     };
   },
+  computed: {
+    /**
+     * 返回发生修改的表格项
+     * @returns {unknown[]}
+     */
+    updateTableItems() {
+      return this.tableData.filter(($item, $index) => {
+        const isDisplay = this.cloneTableData[$index].isDisplay;
+        const isNeed = this.cloneTableData[$index].isNeed;
+        console.log(isDisplay, isNeed);
+        const isChange = ($item.isDisplay !== isDisplay) || ($item.isNeed !== isNeed);
+        if (isChange) return $item
+      })
+    }
+  },
   mounted() {
     this.selectMenu = this.menuList[0];
     this.getTableData();
@@ -140,30 +156,30 @@ export default {
     onInput_checkBox() {
       console.log(this.tableData);
     },
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
-    },
     getTableData(params) {
       api
         .queryAllFormFieldsByType({
           type: this.type
         })
         .then(res => {
-          console.log(res);
           this.tableData = res.object;
+          this.cloneTableData = this.$g.utils.deepClone(res.object);
         })
         .catch();
     },
     saveTableData() {
-      api
-        .batchSetFormFieldsProperty({ vos: this.tableData })
-        .then(res => {
-          console.log(res);
-          this.$message("保存成功");
-          this.isEdit = false;
-        })
-        .catch();
+      if (this.$g.utils.isArr(this.updateTableItems) && this.updateTableItems.length > 0) {
+        api
+          .batchSetFormFieldsProperty(this.updateTableItems)
+          .then(() => {
+            this.$message({
+              type: 'success',
+              message: "已保存"
+            });
+            this.getTableData();
+            this.isEdit = false;
+          })
+      }
     },
     onClick_Edit() {
       this.isEdit = true;
@@ -171,31 +187,8 @@ export default {
     cancelEdit() {
       this.isEdit = false;
     },
-    selectionChange($val) {
-      // eslint-disable-next-line no-console
-      console.log($val);
-    },
     cancel(done) {
       done();
-    },
-    handleClose(tag) {
-      this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
-    },
-
-    showInput() {
-      this.inputVisible = true;
-      this.$nextTick(_ => {
-        this.$refs.saveTagInput.$refs.input.focus();
-      });
-    },
-
-    handleInputConfirm() {
-      const inputValue = this.inputValue;
-      if (inputValue) {
-        this.dynamicTags.push(inputValue);
-      }
-      this.inputVisible = false;
-      this.inputValue = "";
     }
   }
 };

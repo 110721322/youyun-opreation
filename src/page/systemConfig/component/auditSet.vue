@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <div class="p_head">权限设置</div>
+    <div class="p_head">审批设置</div>
     <el-form ref="form" label-width="100px" style="margin: 24px;">
       <el-form-item label="复制成员权限:">
         <el-select v-model="bindEmployee" placeholder="请选择成员" @change="changeEmployee">
@@ -91,35 +91,22 @@ export default {
     this.templateMapList = this.templateMap();
   },
   methods: {
+    /**
+     * 适配elment-tree组件
+     */
     templateMap() {
       const that = this;
-      //  映射模板列表的回调函数,处理逻辑部分，将模板列表映射为elemment-tree规范的数组高维数组
       function mapCallback($element) {
-        // 拼接按钮列表和菜单列表
-        let childrenMenus = [];
-        let systemButtons = [];
-        that.$g.utils.isArr($element.childrenMenus) ? childrenMenus = $element.childrenMenus : [];
-        that.$g.utils.isArr($element.systemButtons) ? systemButtons = $element.systemButtons : [];
-        $element.children = childrenMenus.concat(systemButtons);
-        // 添加label，区分菜单和按钮
-        if ($element.menuName) {
-          $element.label = $element.menuName;
-          $element.type = 'menu';
-          $element.checkedId = $element.parentMenuId + '-' + $element.id; // 由于菜单id与按钮id以"-"拼接父级id和当前id作为唯一识别key
-        } else if ($element.buttonName) {
-          $element.label = $element.buttonName;
-          $element.type = 'button';
-          $element.checkedId = $element.menuId + '-' + $element.id; // 由于菜单id与按钮id以"-"拼接父级id和当前id作为唯一识别key
-        } else {
-          $element.label = ""
-        }
+        // 添加label
+        $element.label = $element.page + '-' + $element.buttonName;
+        $element.type = 'button';
+        $element.checkedId = $element.buttonId; // 由于菜单id与按钮id以"-"拼接父级id和当前id作为唯一识别key
         if ($element.have) { // 选出已有的权限
-          console.log($element.checkedId);
           that.checkedList.push($element);
         }
         return $element
       }
-      return that.$g.utils.mapNestedArr(this.templateListClone, 'children', mapCallback)
+      return this.templateListClone.map(mapCallback)
     },
     /**
      * 选择节点发生变化触发
@@ -140,18 +127,14 @@ export default {
       const checkedButtonIds = this.checkedButtons.map($button => {
         return {
           menuId: $button.menuId,
-          buttonId: $button.id
+          buttonId: $button.buttonId
         }
       })
-      const checkedMenuIds = this.checkedMenus.map($menu => {
-        return $menu.id;
-      });
-      const result = {
-        buttons: checkedButtonIds,
-        menuIds: checkedMenuIds
-      };
-      this.$emit('confirm', result);
+      this.$emit('confirm', {approvalButtons: checkedButtonIds});
     },
+    /**
+     * 切换成员
+     */
     changeEmployee($option) {
       this.queryParams = {
         userId: $option.id,
@@ -168,10 +151,6 @@ export default {
           this.checkedList = [];
           this.templateListClone = res.object;
           this.templateMapList = this.templateMap();
-          this.$message({
-            type: 'success',
-            message: '已复制,请记得保存'
-          })
         })
       }
     },
@@ -184,10 +163,6 @@ export default {
       this.checkedList = [];
       this.templateListClone = this.templateList;
       this.templateMapList = this.templateMap();
-      this.$message({
-        type: 'success',
-        message: '已重置'
-      })
     }
   }
 };

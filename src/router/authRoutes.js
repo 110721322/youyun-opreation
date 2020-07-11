@@ -1,4 +1,4 @@
-const authRoutes = [
+export const authRoutes = [
   {
     text: '工作台',
     type: 'ios-paper',
@@ -1135,7 +1135,7 @@ const authRoutes = [
       }
     ]
   },
-  {
+  /* {
     text: '对公转账审核',
     type: 'ios-paper',
     path: 'transferReview',
@@ -1159,24 +1159,24 @@ const authRoutes = [
       },
       {
         type: 'ios-grid',
-        name: 'financialAudit',
+        name: 'transferReview',
         text: '财务审核',
-        path: 'financialAudit',
+        path: 'transferReview',
         isShow: true,
         meta: {
           title: '财务审核',
-          icon: 'financialAudit'
+          icon: 'transferReview'
         },
         children: [
           {
             text: '财务结算审核',
             type: 'ios-paper',
-            name: 'financialSettlement',
-            path: 'financialSettlement',
+            name: 'comSettlement',
+            path: 'comSettlement',
             isShow: true,
             meta: {
               title: '财务结算审核',
-              icon: 'financialSettlement'
+              icon: 'comSettlement'
             }
           },
           {
@@ -1189,22 +1189,22 @@ const authRoutes = [
               title: '财务订购审核',
               icon: 'financialOrder'
             }
+          },
+          {
+            text: '财务续费审核',
+            type: 'ios-paper',
+            name: 'financialRenewal',
+            path: 'financialRenewal',
+            isShow: true,
+            meta: {
+              title: '财务续费审核',
+              icon: 'financialRenewal'
+            }
           }
-          // {
-          //   text: '财务续费审核',
-          //   type: 'ios-paper',
-          //   name: 'financialRenewal',
-          //   path: 'financialRenewal',
-          //   isShow: true,
-          //   meta: {
-          //     title: '财务续费审核',
-          //     icon: 'financialRenewal'
-          //   }
-          // }
         ]
       }
     ]
-  },
+  },*/
   {
     text: '顶级服务商管理',
     type: 'ios-paper',

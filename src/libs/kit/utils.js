@@ -176,8 +176,7 @@ export default {
     }
   },
   // 获取ago当前日期
-  getToday: (ago) => {
-    ago = ago || -1;
+  getToday: (ago = -1) => {
     var _time = new Date(Date.now() + ago * 24 * 60 * 60 * 1000);
     var pad = function (n, width, z) {
       z = z || '0';
@@ -188,8 +187,7 @@ export default {
     return _time.getFullYear() + '-' + pad((_time.getMonth() + 1), 2) + '-' + pad(_time.getDate(), 2);
   },
   // 获取ago当前日期   年月日
-  getToday2: (ago) => {
-    ago = ago || 0;
+  getToday2: (ago = 0) => {
     var _time = new Date(Date.now() + ago * 24 * 60 * 60 * 1000);
     var pad = function (n, width, z) {
       z = z || '0';
@@ -259,6 +257,10 @@ export default {
     return this.jugeType(target) === '[object Null]';
   },
 
+  isFunction(target) {
+    return this.jugeType(target) === '[object Function]';
+  },
+
   /**
      * 对象深拷贝
      */
@@ -307,6 +309,30 @@ export default {
   },
 
   /**
+   * 映射高维数组
+   * @param $data { Array }
+   * @param $secondArrKey { String }
+   * @param $callback { Function }
+   * @returns {*[]}
+   */
+  mapNestedArr($data = [], $secondArrKey = 'data' , $callback) {
+    let that = this,
+        result = [];
+
+    result = $data.map($ele => {
+      if(that.isFunction($callback)){
+        $ele = $callback($ele)
+      }
+      if(that.isArr($ele[$secondArrKey]) && $ele[$secondArrKey].length > 0){
+        $ele[$secondArrKey] = that.mapNestedArr($ele[$secondArrKey], $secondArrKey, $callback)
+      }
+      return $ele
+    });
+
+    return result;
+  },
+
+  /**
    * 解构高维数组并以同级集合返回
    * @param $data  传入数组
    * @param $keyName   嵌套数组键值
@@ -316,34 +342,28 @@ export default {
    */
   getNestedArr($data = [], $keyName = '', $isPushFirst= true) {
     let result = [],
-        arr = [];
-    //导入一级数组
-    if($isPushFirst) {
-      arr.push($data)
+        that = this;
+    if($isPushFirst)
+      result.push(...loopDeep($data));
+    else
+      loopDeep($data);
+
+    function loopDeep ($nextData = []) {
+      //过滤筛选keyName数组
+      $nextData = $nextData.filter(item => {
+        if (!that.isNull(item) && !that.isUndefined(item)) {
+          return item
+        }
+      })
+      //递归导入下一级数组
+      $nextData.forEach(item => {
+        if(that.isArr(item[$keyName]) && item[$keyName].length > 0){
+          result.push(...loopDeep(item[$keyName]))
+        }
+      })
+      return $nextData
     }
-    //过滤筛选keyName数组
-    $data = $data.map(item => {
-      if (this.isArr(item[$keyName]) && item[$keyName].length > 0) {
-        return item[$keyName];
-      }
-    }).filter(item => {
-      if (!this.isNull(item) && !this.isUndefined(item)) {
-        return item
-      }
-    })
-    //递归导入下一级数组
-    $data.forEach(item => {
-      if(this.isArr(item) && item.length > 0){
-        arr.push(...this.getNestedArr(item,$keyName))
-      }
-    })
-    arr.push(...$data);
-    //过滤空数组，过滤解析到底的对象，到此为二维数组
-    arr.forEach(item => {
-      if(this.isArr(item) && item.length > 0){
-        result.push(...item)
-      }
-    })
+
     return result;
   },
 

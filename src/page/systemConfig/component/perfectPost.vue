@@ -1,64 +1,173 @@
 <template>
   <div>
-    <div class="p_head">完善岗位信息</div>
-    <el-form ref="form" :model="form" label-width="80px">
-      <div style="margin:24px">
-        <el-form-item label="直属上级">
-          <el-select v-model="form.region" placeholder="请选择活动区域">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="职位">
-          <el-select v-model="form.region" placeholder="请选择活动区域">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="权限">
-          <span>未设置</span>
-          <el-button type="text" style="font-size:14px" @click="onClick_setPower">设置</el-button>
-        </el-form-item>
-        <el-form-item label="审批">
-          <span>未设置</span>
-          <el-button type="text" style="font-size:14px" @click="onClick_setPower">设置</el-button>
-        </el-form-item>
+    <div class="p_head">{{ formConfigData.title }}</div>
+    <Form
+      ref="jopsForm"
+      :form-base-data="formConfigData.formData"
+      :show-foot-btn="formConfigData.showFootBtn"
+      label-width="130px"
+      @confirm="confirm"
+      @cancel="cancel"
+    >
+    </Form>
+    <div class="u-form-item">
+      <label class="s-required">权限:</label>
+      <div class="g-form-content">
+        <span style="margin-right: 16px;">未设置</span>
+        <el-button type="text" style="font-size: 14px; padding: 0;" @click="onClick_setPower">设置</el-button>
       </div>
-
-      <div class="foot_btn_box">
-        <el-button type="primary" class="foot_btn" @click="onClick_saveJobInformation">确定</el-button>
-        <el-button class="foot_btn">取消</el-button>
+    </div>
+    <div class="u-form-item">
+      <label>审批:</label>
+      <div class="g-form-content">
+        <span style="margin-right: 16px;">未设置</span>
+        <el-button type="text" style="font-size: 14px; padding: 0;" @click="onClick_setAudit">设置</el-button>
       </div>
-    </el-form>
+    </div>
     <el-drawer :append-to-body="true" :visible.sync="innerDrawer" :with-header="false" size="40%">
-      <power-set></power-set>
+      <power-set v-if="innerDrawer" :template-list="permissionTemplate" :api-service="permissionApi" @confirm="saveUserPermission"></power-set>
+    </el-drawer>
+    <el-drawer :append-to-body="true" :visible.sync="auditDrawer" :with-header="false" size="40%">
+      <audit-set v-if="auditDrawer" :template-list="auditTemplate" :api-service="auditApi" @confirm="saveUserAudit"></audit-set>
     </el-drawer>
   </div>
 </template>
 <script>
-import api from "@/api/api_memberManage.js";
 import PowerSet from "./powerSet.vue";
+import auditSet from "./auditSet.vue";
+import Form from "@/components/form/index.vue";
+
+import api_memberManage from "@/api/api_memberManage.js";
+import api_systemConfig from "@/api/api_systemConfig.js";
+import { FORM_CONFIG } from "../formConfig/perfectPost";
+
+import { mapState } from 'vuex';
 
 export default {
   name: "Theme",
-  components: { PowerSet },
+  components: { PowerSet, Form, auditSet },
+  props: {
+    perfectRow: {
+      type: Object,
+      default() {
+        return {}
+      }
+    }
+  },
   data() {
     return {
       innerDrawer: false,
+      auditDrawer: false,
       form: {},
       defaultProps: {
         children: "children",
         label: "label"
-      }
+      },
+      permissionTemplate: [], //  权限模板
+      auditTemplate: [], //  权限模板
+      permissionApi: api_systemConfig.getPermistionTemplate, //  权限模板api
+      auditApi: api_systemConfig.getAuditTemplate //  审核模板API
     };
   },
-  mounted() {},
-  methods: {
-    onClick_saveJobInformation() {
-      api.saveJobInformation();
+  computed: {
+    ...mapState({
+      positionList: state => state.system.positionList,
+      employeeList: state => state.system.employeeList
+    }),
+    formConfigData() {
+      FORM_CONFIG.editData.formData.forEach((item, index) => {
+        item.initVal = this.perfectRow[item.key];
+        if (item.key === 'superiorId') {
+          item.options = this.positionList
+        } else if (item.key === 'position') {
+          item.options = this.employeeList
+        }
+      });
+      if (this.$refs.jopsForm) {
+        this.$refs.jopsForm.init();
+      }
+      return FORM_CONFIG.editData;
     },
+    employeeId() {
+      return this.perfectRow.id;
+    },
+    roleId() {
+      return this.perfectRow.roleId;
+    }
+  },
+  mounted() {
+    console.log(FORM_CONFIG);
+  },
+  methods: {
     onClick_setPower() {
-      this.innerDrawer = true;
+      const params = {
+        system: 'operation',
+        userId: this.employeeId,
+        roleId: this.roleId
+      }
+      api_systemConfig.getPermistionTemplate(params).then(res => {
+        if (res.status === 0) {
+          this.permissionTemplate = res.object;
+          this.innerDrawer = true;
+        }
+      })
+    },
+    onClick_setAudit() {
+      const params = {
+        system: 'operation',
+        userId: this.employeeId,
+        roleId: this.roleId
+      }
+      api_systemConfig.getAuditTemplate(params).then(res => {
+        if (res.status === 0) {
+          this.auditTemplate = res.object;
+          this.auditDrawer = true;
+        }
+      })
+    },
+    confirm($ruleForm) {
+      const formData = {
+        employeeId: this.employeeId,
+        positionId: $ruleForm['position'],
+        superiorId: $ruleForm['superiorId']
+      };
+      api_memberManage.saveJobInformation(formData).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            type: 'success',
+            message: '已保存'
+          })
+        }
+        this.$emit('confirm');
+      })
+    },
+    cancel() {
+      this.$emit('cancel');
+    },
+    saveUserPermission($result) {
+      Object.assign($result, { userId: this.employeeId })
+      api_systemConfig.saveUserPermission($result).then(res => {
+        if (res.status === 0) {
+          this.innerDrawer = false;
+          this.$message({
+            type: 'success',
+            message: '已保存'
+          })
+        }
+      })
+    },
+    saveUserAudit($result) {
+      console.log($result);
+      Object.assign($result, {userId: this.employeeId})
+      api_systemConfig.saveUserAudit($result).then(res => {
+        if (res.status === 0) {
+          this.auditDrawer = false;
+          this.$message({
+            type: 'success',
+            message: '已保存'
+          })
+        }
+      })
     }
   }
 };
@@ -71,6 +180,28 @@ export default {
   padding: 24px;
   overflow: hidden;
   background: #fff;
+}
+.u-form-item {
+  display: flex;
+  padding-left: 90px;
+  margin-bottom: 24px;
+  label {
+    display: block;
+    width: 50px;
+    text-align: right;
+    color: #606266;
+    font-size: 14px;
+  }
+  .s-required::before {
+    content: '*';
+    font-size: 14px;
+    color: #F5222D;
+  }
+  .g-form-content{
+    width: 360px;
+    padding-left: 15px;
+    color: #333335;
+  }
 }
 .form_item {
   float: left !important;

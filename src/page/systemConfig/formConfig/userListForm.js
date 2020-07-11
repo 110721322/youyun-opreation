@@ -35,11 +35,11 @@ export const FORM_CONFIG = {
         options: [
           {
             label: "男",
-            value: "male"
+            value: 1
           },
           {
             label: "女",
-            value: "female"
+            value: 0
           }
         ],
         rules: setRules("性别", 1).isRequired.get

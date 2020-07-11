@@ -1,4 +1,9 @@
+import { TASK_SEARCH_1 } from "../../../libs/data/permissionBtns";
+
 export const FORM_CONFIG = {
+  permission: {
+    search: TASK_SEARCH_1
+  },
   formData: [
     {
       type: 1,

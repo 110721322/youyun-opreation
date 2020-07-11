@@ -6,14 +6,17 @@
 
     <div class="table_box">
       <div class="tabale_title_box">
-        <el-button class="btn" type="primary" @click="onClick_add">添加一级菜单</el-button>
+        <el-button v-has="'待开发'" class="btn" type="primary" @click="onClick_add">添加一级菜单</el-button>
       </div>
       <BaseCrud
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
         :grid-data="testData"
+        :children-key="configData.childrenKey"
         :form-config="configData.formConfig"
         :form-data="configData.formModel"
+        :api-service="api"
+        :params="params"
         :grid-edit-width="200"
         :is-async="true"
         :is-select="false"
@@ -40,6 +43,7 @@
 <script>
 import Form from "@/components/form/index.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
+import api from "@/api/api_systemConfig";
 
 import { FORM_CONFIG } from "../formConfig/businessMenuDetail";
 import { MENU_CONFIG } from "../tableConfig/businessMenuConfig";
@@ -51,79 +55,20 @@ export default {
     return {
       searchMaxHeight: "340",
       configData: MENU_CONFIG,
+      api: api.getSystemMenuTemplate,
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl"
+      params: {
+        system: 'merchant'
+      }
     };
   },
-  mounted() {
-    this.getTableData();
-  },
+  mounted() {},
   methods: {
     search() {
       // eslint-disable-next-line no-console
       console.log(this.ruleForm);
-    },
-    getTableData() {
-      this.testData = [
-        {
-          id: 1,
-          type: "日常任务",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          reason: "银行卡账号错误，服务商无法联系",
-          children: [
-            {
-              id: 12,
-              type: "日常任务111",
-              taskName: "商户结算失败",
-              num: "4",
-              oper: "提醒",
-              name: "XXXX店铺",
-              time: "20:00:23",
-              image:
-                "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-              amount: "222.22",
-              reason: "银行卡账号错误，服务商无法联系",
-              children: [
-                {
-                  id: 122,
-                  type: "日常任务111",
-                  taskName: "商户结算失败",
-                  num: "4",
-                  oper: "提醒",
-                  name: "XXXX店铺",
-                  time: "20:00:23",
-                  image:
-                    "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-                  amount: "222.22",
-                  reason: "银行卡账号错误，服务商无法联系"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          id: 2,
-          type: "日常任务",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系"
-        }
-      ];
     },
     selectionChange($val) {
       // eslint-disable-next-line no-console

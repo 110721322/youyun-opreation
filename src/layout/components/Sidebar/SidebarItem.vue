@@ -1,6 +1,6 @@
 <template>
   <div v-if="!item.hidden" @mouseleave="leave(item)" @mouseenter="enter(item)">
-    <template v-if="!item.children.length > 0">
+    <template v-if="!(item.children && item.children.length > 0 )">
       <app-link :to="resolvePath(item.path)">
         <el-menu-item :index="item.name" popper-append-to-body class="el-menu-item">
           <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />

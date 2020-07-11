@@ -21,7 +21,7 @@
           :label="formItem.label+(formItem.hideColon?'':':')"
           :rules="formItem.rules"
         >
-          <components :is="transType(formItem.type)" :rule-form="ruleForm" :form-item="formItem"></components>
+          <components :is="transType(formItem.type)" ref="formItem" :rule-form="ruleForm" :form-item="formItem"></components>
         </el-form-item>
       </template>
     </el-form>
@@ -75,7 +75,12 @@ export default {
     SelectInput
   },
   props: {
-    formBaseData: Array,
+    formBaseData: {
+      type: Array,
+      default() {
+        return []
+      }
+    },
     rules: Object,
     showFootBtn: {
       type: Boolean,
@@ -134,13 +139,19 @@ export default {
       this.ruleForm = {}
       if (this.formBaseData.length > 0) {
         for (const iterator of this.formBaseData) {
-          console.log("iterator", iterator);
           let initVal = iterator.initVal;
           if (g.utils.isUndefined(initVal)) {
             initVal = null;
           }
           this.formKeys.push(iterator.key);
           this.$set(this.ruleForm, iterator.key, initVal);
+        }
+        if (this.$refs.formItem && this.$g.utils.isArr(this.$refs.formItem)) {
+          for (const componentFormItem of this.$refs.formItem) {
+            if (componentFormItem.initVal) {
+              componentFormItem.initVal();
+            }
+          }
         }
       }
     },

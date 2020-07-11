@@ -7,18 +7,18 @@
       :open-height="searchMaxHeight"
       :form-base-data="searchConfig.formData"
       :show-foot-btn="searchConfig.showFootBtn"
+      :condition-permission="PERSON_LIST_CONDITION"
       @search="search"
     />
 
     <div class="table_box">
       <div class="tabale_title_box">
-        <el-button class="btn" type="primary" @click="onClick_addUser">添加成员</el-button>
+        <el-button v-has="PERSON_LIST_ADD" class="btn" type="primary" @click="onClick_addUser">添加成员</el-button>
       </div>
       <BaseCrud
         ref="child"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
-        :grid-data="testData"
         :form-config="configData.formConfig"
         :form-data="configData.formModel"
         :grid-edit-width="150"
@@ -27,16 +27,18 @@
         :is-expand="false"
         :row-key="'id'"
         :params="params"
-        :api-service="null"
+        :api-service="api"
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
         @edit="onClick_edit"
+        @remove="onClick_remove"
       ></BaseCrud>
     </div>
 
     <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
+        ref="memberEdit"
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
         label-width="130px"
@@ -75,15 +77,19 @@ import Form from "@/components/form/index.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import api from "@/api/api_memberManage.js";
 
+import { validPhone } from "@/libs/kit/validate";
 import { FORM_CONFIG } from "./formConfig/userListForm";
 import { SEARCH_CONFIG } from "./formConfig/userListSearch";
 import { USERLIST_CONFIG } from "./tableConfig/userlistConfig";
+import { PERSON_LIST_CONDITION, PERSON_LIST_ADD } from "../../libs/data/permissionBtns";
 
 export default {
   name: "Theme",
   components: { Search, BaseCrud, Form },
   data() {
     return {
+      PERSON_LIST_CONDITION: PERSON_LIST_CONDITION,
+      PERSON_LIST_ADD: PERSON_LIST_ADD,
       searchMaxHeight: "260",
       searchConfig: SEARCH_CONFIG,
       configData: USERLIST_CONFIG,
@@ -93,13 +99,9 @@ export default {
       drawerAddPhone: false,
       direction: "rtl",
       params: {
-        offset: 0,
-        id: 55267,
         state: null,
-        startTime: this.$g.utils.getToday(),
-        endTime: this.$g.utils.getToday()
-        // startTime: "yyyy-MM-dd HH:mm:ss",
-        // endTime: "yyyy-MM-dd HH:mm:ss"
+        startTime: this.$g.utils.getToday(0) + ' 00:00:00',
+        endTime: this.$g.utils.getToday(0) + ' 23:59:59'
       },
       api: api.queryEmployeeList,
       addPhoneList: [""],
@@ -107,7 +109,7 @@ export default {
     };
   },
   mounted() {
-    this.getTableData();
+    // this.getTableData();
   },
   methods: {
     onClick_addPhoneItem() {
@@ -118,7 +120,6 @@ export default {
       }
     },
     search($ruleForm) {
-      console.log($ruleForm);
       this.params = {
         sex: $ruleForm.sex,
         state: null,
@@ -126,7 +127,6 @@ export default {
         endTime: $ruleForm.date[1]
       };
       this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
-      // this.$refs.child.getData();
     },
     getTableData() {
       this.testData = [
@@ -162,18 +162,34 @@ export default {
       this.drawerAddPhone = true;
     },
     handleClick() {
-      api
-        .addMember({
-          phoneList: this.addPhoneList
-        })
-        .then(res => {
-          this.addPhoneList = [""];
-          this.$message("已添加");
-          this.drawerAddPhone = false;
-        })
-        .catch(err => {
-          this.$message(err);
+      let addPhoneList = this.addPhoneList;
+      addPhoneList = addPhoneList.filter($phone => $phone !== "")
+      if (addPhoneList.length === 0) {
+        this.$message({
+          message: '请添加手机号',
+          type: 'warning'
         });
+        return false;
+      }
+      for (const $phone of addPhoneList) {
+        if (!validPhone($phone)) {
+          this.$message({
+            message: '请填写正确手机号',
+            type: 'warning'
+          });
+          return false
+        }
+      }
+      api.addMember({
+        phoneList: this.addPhoneList
+      }).then(res => {
+        this.addPhoneList = [""];
+        this.$message({
+          message: '添加成功',
+          type: 'success'
+        });
+        this.drawerAddPhone = false;
+      })
     },
     cancelForm() {
       this.drawerAddPhone = false;
@@ -182,6 +198,7 @@ export default {
       this.drawer = false;
     },
     confirm($ruleForm) {
+      const img = this.$g.utils.isString($ruleForm.img) ? $ruleForm.img : ($ruleForm.img.dialogImagePath + $ruleForm.img.dialogImageUrl); // 兼容未修改图片情况
       api
         .fillUserInfo({
           id: this.activityRow.id,
@@ -192,7 +209,7 @@ export default {
           email: $ruleForm.email,
           sex: $ruleForm.sex,
           jobName: $ruleForm.jobName,
-          img: $ruleForm.img,
+          img: img,
           jobNumber: $ruleForm.jobNumber,
           birthday: $ruleForm.birthday,
           nickName: $ruleForm.nickName
@@ -217,10 +234,38 @@ export default {
           this.activityRow = $row;
           this.fromConfigData = FORM_CONFIG.editData;
           this.drawer = true;
+          if (this.$refs.memberEdit) {
+            this.$refs.memberEdit.init();
+          }
         })
         .catch(err => {
           this.$message(err);
         });
+    },
+    /**
+     * 删除
+     * @param {Object} $row
+     */
+    onClick_remove($row) {
+      this.$confirm("确认删除该成员吗", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消"
+      }).then(() => {
+        api.delMember({
+          id: $row.id
+        }).then(res => {
+          this.$refs.child.getData();
+          this.$message({
+            type: "success",
+            message: "已删除"
+          });
+        });
+      }).catch(() => {
+        this.$message({
+          type: "info",
+          message: "已取消"
+        });
+      });
     }
   }
 };

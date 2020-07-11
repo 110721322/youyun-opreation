@@ -59,7 +59,7 @@
                   <el-button plain size="large" @click="onClick_reset">重置</el-button>
                   <el-button
                     v-if="canCheckAll"
-                    v-has="11"
+                    v-has="GROUP_MEET"
                     plain
                     size="large"
                     class="btn_checkall"
@@ -124,6 +124,7 @@ import Form from "@/components/form/index.vue";
 import taskList from "./components/taskList.vue";
 import { TASKLIST_CONFIG } from "./tableConfig/taskListConfig";
 import { FORM_CONFIG } from "./formConfig/workTodoConfig";
+import { GROUP_MEET } from "../../libs/data/permissionBtns";
 
 export default {
   name: "WorkToDo",
@@ -132,6 +133,7 @@ export default {
 
   data() {
     return {
+      GROUP_MEET: GROUP_MEET,
       drawer: false,
       currentStatus: "",
       checkList: [],

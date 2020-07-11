@@ -23,15 +23,15 @@
         </div>
       </div>
       <div class="right_box">
-        <div v-show="selectMenu.type == 'todoList'">
+        <div v-if="selectMenu.type == 'todoList'">
           <TodoSetting></TodoSetting>
         </div>
 
-        <div v-show="selectMenu.type == 'target'">
+        <div v-if="selectMenu.type == 'target'">
           <TagSetting></TagSetting>
         </div>
 
-        <div v-show="selectMenu.type == 'area'">
+        <div v-if="selectMenu.type == 'area'">
           <AreaSetting></AreaSetting>
         </div>
       </div>
@@ -50,7 +50,7 @@ export default {
     return {
       menuList: [
         {
-          name: "代办事项",
+          name: "待办事项",
           type: "todoList"
         },
         {

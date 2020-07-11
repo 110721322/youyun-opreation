@@ -91,21 +91,34 @@ export default {
     }
   },
   created() {
-    if (this.formItem.initVal) {
-      if (this.showFileList) {
-        this.imageList = this.formItem.initVal.split(',');
-        this.dialogImageList = this.formItem.initVal.split(',');
-        this.dialogImageList = this.dialogImageList.map(item => {
-          return item.split('aliyuncs.com/')[1] // 修改图片时去掉阿里云根路径
-        })
-      } else {
-        this.dialogImageUrl = this.formItem.initVal;
-      }
-    }
+    this.initVal();
   },
 
   mounted() {},
   methods: {
+    /**
+     * 初始化表单项目
+     */
+    initVal() {
+      if (this.formItem.initVal) {
+        if (this.showFileList) {
+          this.imageList = this.formItem.initVal.split(',');
+          this.dialogImageList = this.formItem.initVal.split(',');
+          this.dialogImageList = this.dialogImageList.map(item => {
+            return item.split('aliyuncs.com/')[1] // 修改图片时去掉阿里云根路径
+          })
+        } else {
+          this.dialogImagePath = "";
+          this.dialogImageUrl = this.formItem.initVal;
+        }
+      } else {
+        this.dialogImageUrl = "";
+        this.dialogImageList = []; // 多图上传存储ARR
+        this.dialogImagePath = "";
+        this.imageList = []; // 多图上传存储ARR完整url地址
+        this.ossData = {}; // 存签名信息
+      }
+    },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.showViewer = true;
@@ -172,10 +185,9 @@ export default {
     uploadSingle() {
       this.dialogImageUrl =
           this.ossData.objectKeyPrefix + "/" + this.ossData.objectKeys[0];
-
       this.ruleForm[this.formItem.key] = {
-        dialogImagePath: this.dialogImagePath,
-        dialogImageUrl: this.dialogImageUrl
+        dialogImageUrl: this.dialogImageUrl,
+        dialogImagePath: this.dialogImagePath
       };
     },
     /** 多图上传回调 */

@@ -18,6 +18,7 @@
         <Search
           :is-show-all="true"
           :form-base-data="searchConfig.formData"
+          :permission="searchConfig.permission"
           :open-height="searchMaxHeight"
           @search="search"
         />
@@ -72,6 +73,7 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import { FINISH_CONFIG } from "./tableConfig/finishConfig";
 import { UNFINISH_CONFIG } from "./tableConfig/unfinishConfig";
 import { FORM_CONFIG } from "./formConfig/staticSearch";
+import {TASK_SEARCH_1, TASK_SEARCH_2 } from "../../libs/data/permissionBtns";
 
 export default {
   name: "Theme",
@@ -130,10 +132,12 @@ export default {
       switch ($item) {
         case "1":
           this.configData = UNFINISH_CONFIG;
+          this.searchConfig.permission = TASK_SEARCH_1;
           this.params.status = "undo";
           break;
         case "2":
           this.configData = FINISH_CONFIG;
+          this.searchConfig.permission = TASK_SEARCH_2;
           this.params.status = "done";
           break;
       }

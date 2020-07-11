@@ -6,7 +6,6 @@ const has = Vue.directive('has', {
   // 当被绑定的元素插入到 DOM 中时……
   inserted: function ($el, $binding, $vnode) {
     let btnPerId = $binding.value;
-    console.log(btnPerId);
     if (btnPerId)
     {
       if (!Vue.prototype.$_has(btnPerId))

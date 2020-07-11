@@ -7,6 +7,7 @@
       :open-height="searchMaxHeight"
       :form-base-data="searchConfig.formData"
       :show-foot-btn="searchConfig.showFootBtn"
+      :permission="searchConfig.permission"
       @search="search"
     />
 
@@ -16,7 +17,7 @@
       </div>
       <BaseCrud
         :params="params"
-        :api-service="null"
+        :api-service="api"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
         :grid-data="testData"
@@ -36,17 +37,20 @@
     </div>
 
     <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
-      <div class="p_head">{{ fromConfigData.title }}</div>
-      <Form
-        :form-base-data="fromConfigData.formData"
-        :show-foot-btn="fromConfigData.showFootBtn"
-        label-width="130px"
-        @cancel="cancel"
-        @confirm="confirm"
-      ></Form>
+      <template v-if="drawer">
+        <div class="p_head">{{ fromConfigData.title }}</div>
+        <Form
+          ref="basicEditor"
+          :form-base-data="fromConfigData.formData"
+          :show-foot-btn="fromConfigData.showFootBtn"
+          label-width="130px"
+          @cancel="cancel"
+          @confirm="confirm"
+        ></Form>
+      </template>
     </el-drawer>
     <el-drawer :visible.sync="drawerPersonInfo" :with-header="false" size="40%">
-      <PerfectPost></PerfectPost>
+      <PerfectPost v-if="drawerPersonInfo" :perfect-row="perfectRow" @confirm="confirmPerfectPost" @cancel="cancelPerfectPost"></PerfectPost>
     </el-drawer>
     <el-drawer :visible.sync="drawerOrganization" :with-header="false" size="40%">
       <div class="p_head">组织架构</div>
@@ -94,6 +98,7 @@ export default {
       drawerPersonInfo: false,
       drawerOrganization: false,
       innerDrawer: false,
+      perfectRow: null,
       direction: "rtl",
       form: {},
       defaultProps: {
@@ -101,13 +106,9 @@ export default {
         label: "label"
       },
       params: {
-        offset: 0,
-        id: 55267,
-        state: 1,
-        startTime: this.$g.utils.getToday(),
-        endTime: this.$g.utils.getToday()
-        // startTime: "yyyy-MM-dd HH:mm:ss",
-        // endTime: "yyyy-MM-dd HH:mm:ss"
+        state: 0,
+        startTime: this.$g.utils.getToday(0) + ' 00:00:00',
+        endTime: this.$g.utils.getToday(0) + ' 23:59:59'
       },
       api: api.queryEmployeeList,
       activityRow: {},
@@ -152,9 +153,11 @@ export default {
       ]
     };
   },
-  mounted() {
-    this.getTableData();
+  beforeCreate() {
+    api.allMemberList();
+    api.jobsList();
   },
+  mounted() {},
   methods: {
     handleClick() {
       api
@@ -178,41 +181,11 @@ export default {
         sex: $ruleForm.sex,
         position: $ruleForm.position,
         superiorName: $ruleForm.superiorName,
-        state: null,
+        state: 0,
         startTime: $ruleForm.date[0],
         endTime: $ruleForm.date[1]
       };
       this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
-    },
-    getTableData() {
-      this.testData = [
-        {
-          id: 21,
-          type: "日常任务",
-          nickName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          reason: "银行卡账号错误，服务商无法联系"
-        },
-        {
-          id: 2,
-          type: "日常任务",
-          nickName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系"
-        }
-      ];
     },
     selectionChange($val) {
       // eslint-disable-next-line no-console
@@ -225,14 +198,14 @@ export default {
           system: "operation",
           name: $ruleForm.name,
           phone: $ruleForm.phone,
-          password: $ruleForm.password,
           email: $ruleForm.email,
           sex: $ruleForm.sex,
           jobName: $ruleForm.jobName,
           img: $ruleForm.img,
           jobNumber: $ruleForm.jobNumber,
           birthday: $ruleForm.birthday,
-          nickName: $ruleForm.nickName
+          position: $ruleForm.posiiton,
+          superiorId: $ruleForm.superiorId
         })
         .then(res => {
           this.drawer = false;
@@ -245,8 +218,19 @@ export default {
     cancel() {
       this.drawer = false;
     },
-    onClick_perfect() {
-      this.drawerPersonInfo = true;
+    onClick_perfect($row) {
+      api
+        .employeeDetail({
+          id: $row.id
+        })
+        .then(res => {
+          this.perfectRow = res.object;
+          this.activityRow = $row;
+          this.drawerPersonInfo = true;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
     },
     handleClose(done) {
       this.$confirm("还有未保存的工作哦确定关闭吗？")
@@ -262,6 +246,7 @@ export default {
       this.drawerPersonInfo = true;
     },
     onClick_showOrganization($row) {
+      this.drawerOrganization = true;
       api
         .employeeOrganization({
           id: $row.id
@@ -279,7 +264,7 @@ export default {
     },
     onClick_editBasics($row) {
       api
-        .queryUserById({
+        .employeeDetail({
           id: $row.id
         })
         .then(res => {
@@ -289,10 +274,19 @@ export default {
           this.activityRow = $row;
           this.fromConfigData = FORM_CONFIG.editData;
           this.drawer = true;
+          if (this.$refs.basicEditor) {
+            this.$refs.basicEditor.init();
+          }
         })
         .catch(err => {
           this.$message(err);
         });
+    },
+    confirmPerfectPost() {
+      this.drawerPersonInfo = false;
+    },
+    cancelPerfectPost() {
+      this.drawerPersonInfo = false;
     },
     handleDragStart(node, ev) {
       console.log("drag start", node);

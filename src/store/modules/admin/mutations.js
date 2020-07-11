@@ -1,6 +1,11 @@
 export default {
-  SAVE_AD_ID(state, $info) {
-    state.adId = $info
+  SAVE_ACCESS_TOKEN(state, $token) {
+    state.accessToken = $token;
+    if ($token) {
+      localStorage.setItem('accessToken', $token);
+    } else {
+      localStorage.removeItem('accessToken');
+    }
   },
   SAVE_USER_INFO(state, $info) {
     state.userInfo = $info

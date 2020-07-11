@@ -4,6 +4,7 @@
       :is-show-edit-btn="true"
       :rule-form="ruleForm"
       :config-data="configData"
+      :span-width="12"
       @edit="onClick_edit('params')"
     ></DetailMod>
     <DetailMod
@@ -18,6 +19,10 @@
       :config-data="configData3"
       @edit="onClick_edit('payData')"
     ></DetailMod>
+
+    <div class="btn-box">
+      <el-button size="medium" type="primary" @click="save">保存</el-button>
+    </div>
 
     <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
       <div class="p_head">{{ fromConfigData.title }}</div>
@@ -35,7 +40,7 @@
 import api from "@/api/api_params";
 import Form from "@/components/form/index.vue";
 import DetailMod from "@/components/detailMode/detailMode2.vue";
-import { FORM_CONFIG } from "./../formConfig/paramsDetail";
+import { FORM_CONFIG } from "../formConfig/paramsDetail";
 export default {
   name: "Theme",
   components: { Form, DetailMod },
@@ -109,11 +114,11 @@ export default {
   methods: {
     getData() {
       api
-        .details({})
+        .details()
         .then(res => {
           Object.keys(res.object).forEach((item, index) => {
             if (item === "isTaskCountdown") {
-              this.$set(this.ruleForm, "isTaskCountdown", !!res.object[item]);
+              this.$set(this.ruleForm, "isTaskCountdown", Boolean(res.object[item]));
               return;
             }
             if (item === "dataComparisonType") {
@@ -127,38 +132,48 @@ export default {
             this.$set(this.ruleForm, item, res.object[item]);
           });
         })
-        .catch();
     },
     cancel(done) {
       this.drawer = false;
     },
     confirm($ruleForm) {
-      console.log($ruleForm);
-      api
-        .update($ruleForm)
-        .then(res => {
-          api.update({
-            isTaskCountdown: $ruleForm.isTaskCountdown,
-            perCustomerTransaction: $ruleForm.perCustomerTransaction,
-            dingdingAddress: $ruleForm.dingdingAddress,
-            transactionNum: $ruleForm.transactionNum,
-            dataComparisonType: $ruleForm.dataComparisonType,
-            dataTransactionNum: $ruleForm.dataTransactionNum,
-            dataRatio: $ruleForm.dataRatio
-          });
-          this.$message("修改成功");
-        })
-        .catch(err => {
-          console.error(err);
-        });
+      this.$message({
+        type: 'warning',
+        message: '请记得保存'
+      })
+      this.drawer = false;
+      Object.assign(this.ruleForm, $ruleForm);
     },
     onClick_edit($formName) {
       this.fromConfigData = FORM_CONFIG[$formName];
+      this.fromConfigData.formData.forEach($formItem => {
+        $formItem.initVal = this.ruleForm[$formItem.key];
+      })
       this.drawer = true;
+    },
+    save() {
+      api.update({
+        isTaskCountdown: this.ruleForm.isTaskCountdown ? 1 : 0,
+        perCustomerTransaction: this.ruleForm.perCustomerTransaction,
+        dingdingAddress: this.ruleForm.dingdingAddress,
+        transactionNum: this.ruleForm.transactionNum,
+        dataComparisonType: this.ruleForm.dataComparisonType,
+        dataTransactionNum: this.ruleForm.dataTransactionNum,
+        dataRatio: this.ruleForm.dataRatio
+      }).then(res => {
+        this.$message({
+          type: 'success',
+          message: '已保存'
+        });
+      })
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+  .btn-box {
+    padding: 30px 24px;
+    border-top: 1px solid #ededed;
+  }
 </style>

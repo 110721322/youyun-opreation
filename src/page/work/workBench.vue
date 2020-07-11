@@ -12,6 +12,10 @@
 <script>
 import api from "@/api/api_workBench";
 import detailMode from "@/components/detailMode/detailMode3.vue";
+import { TODO_BTN, MERCHANT_ENTRY_AUDIT, LOWER_AGENT_ENTRY,
+  PARTNER_ENTRY_AUDIT, AGENT_COMMISSION_SETTLE, DEVICE_UNBIND,
+  AGENT_ANNOUNCE, MERCHANT_DATA, AGENT_DATA,
+  DEVICE_DATA } from "../../libs/data/permissionBtns";
 // import search from '@/components/search/search.vue';
 // import BaseCrud from '@/components/table/BaseCrud.vue';
 // import { USER_CONFIG } from './tableConfig/merchantConfig';
@@ -31,7 +35,7 @@ export default {
                 imgUrl: "",
                 dotNum: 5,
                 text: "待办事项",
-                permission: 1,
+                permission: TODO_BTN,
                 path: "/work/todo"
               }
             ]
@@ -49,22 +53,22 @@ export default {
               {
                 imgUrl: "",
                 text: "商户入件审核",
-                permission: 2
+                permission: MERCHANT_ENTRY_AUDIT
               },
               {
                 imgUrl: "",
                 text: "下级服务商入件审核",
-                permission: 3
+                permission: LOWER_AGENT_ENTRY
               },
               {
                 imgUrl: "",
                 text: "合伙人入件审核",
-                permission: 4
+                permission: PARTNER_ENTRY_AUDIT
               },
               {
                 imgUrl: "",
                 text: "服务商佣金结算",
-                permission: 5
+                permission: AGENT_COMMISSION_SETTLE
               }
             ]
           },
@@ -74,13 +78,13 @@ export default {
               {
                 imgUrl: "",
                 text: "设备解绑",
-                permission: 6
+                permission: DEVICE_UNBIND
               },
               {
                 imgUrl: "",
                 text: "公告",
                 path: "/message/serviceAnnouncementList",
-                permission: 7
+                permission: AGENT_ANNOUNCE
               },
               {
                 imgUrl: "",
@@ -95,17 +99,17 @@ export default {
               {
                 imgUrl: "",
                 text: "商户数据",
-                permission: 8
+                permission: MERCHANT_DATA
               },
               {
                 imgUrl: "",
                 text: "服务商数据",
-                permission: 9
+                permission: AGENT_DATA
               },
               {
                 imgUrl: "",
                 text: "设备数据",
-                permission: 10
+                permission: DEVICE_DATA
               }
             ]
           }

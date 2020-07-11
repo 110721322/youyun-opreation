@@ -1,14 +1,38 @@
+import api_systemConfig from "@/api/api_systemConfig";
 
 export const USERLIST_CONFIG = {
+  api: api_systemConfig.getAllAuditTemplate,
   gridConfig: [
     {
       label: '按钮名称',
-      prop: 'type',
-      width: '150px'
+      prop: 'buttonName',
+      width: '150px',
+      render: ($h, $params) => {
+        const targetList = [];
+        const targetName = $params.row.buttonName;
+        const target = $h('el-tag',
+          {
+            props: {
+              size: 'medium'
+            },
+            style: {
+              marginLeft: '10px',
+              marginBottom: '10px',
+              display: 'block',
+              float: 'left'
+            }
+          },
+          targetName);
+        targetList.push(target)
+
+        return $h('div',
+          targetList
+        );
+      }
     },
     {
       label: '所属页面',
-      prop: 'taskName',
+      prop: 'page',
       width: '150px'
     }
   ],
@@ -40,5 +64,5 @@ export const USERLIST_CONFIG = {
     expand: '',
     roleIdList: []
   },
-  hideEditArea: false
+  hideEditArea: true
 };

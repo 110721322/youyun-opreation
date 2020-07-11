@@ -1,5 +1,5 @@
 const state = {
-  adId: null,
+  accessToken: localStorage.getItem('accessToken') ? localStorage.getItem('accessToken') : null, // 授权口令
   userInfo: null, // 登录角色信息
   routers: []
 }

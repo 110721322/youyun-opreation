@@ -1,6 +1,8 @@
 import axios from 'axios';
 import qs from 'qs';
 import { Loading, Message } from 'element-ui';
+import store from '@/store';
+import router from "@/router"
 // import Vue from 'vue';
 // import web_config from 'libs/config/config';
 import * as g from '../libs/global';
@@ -16,6 +18,7 @@ axios.defaults.withCredentials = true;
 // 添加一个请求拦截器
 axios.interceptors.request.use((config) => {
   // 设置全局参数
+  config.timeout = 10000;
   config.headers.common.userToken = localStorage.getItem('token-merchant') || '';
   config.headers.common.client = 'WEB';
   config.headers.common.Access_token = localStorage.getItem('accessToken') || ''
@@ -26,7 +29,10 @@ axios.interceptors.request.use((config) => {
   } else if (config.method === 'get') {
     // config.params.merchantNo = localStorage.getItem('userInfo-merchant') ? JSON.parse(localStorage.getItem('userInfo-figmerchant')).merchantNo : '';
   }
-  Loading.service({text: '载入中'})
+  if (JSON.stringify(config.data) === "{}") {
+    config.data = null;
+  }
+  Loading.service({text: '载入中', body: true})
   return config;
 }, (error) => {
   // Do something with request error
@@ -36,18 +42,15 @@ axios.interceptors.request.use((config) => {
 // 添加一个响应拦截器
 axios.interceptors.response.use((response) => {
   Loading.service().close();
-  // if (response.data && response.data.status === 'success') {
-  //   return response;
-  // } else {
-  //   if (response.config.url.indexOf('check_login') === -1 && response.data.code === 'UNIDENTIFY') {
-  //     window.reload();
-  //   }
-  //   _this.$message.error(response.data.message);
-  //   return Promise.reject(response.data);
-  // }
-
-  if (response.data) {
+  if (response.data && response.data.status === 0) {
     return response;
+  } else {
+    Message({
+      message: response.data.errorMessage,
+      duration: 1500,
+      type: 'error'
+    })
+    return Promise.reject(response.data);
   }
 }, (error) => {
   // Do something with response error
@@ -60,6 +63,8 @@ axios.interceptors.response.use((response) => {
 
       case 401:
         error.message = '未授权，请登录';
+        store.dispatch('saveAccessToken', null);
+        router.replace('/login');
         break;
 
       case 403:

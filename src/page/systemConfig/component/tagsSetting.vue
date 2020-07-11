@@ -9,7 +9,7 @@
           closable
           :disable-transitions="false"
           @close="handleClose(tag,formData.agentTags)"
-        >{{ tag.labelName }}</el-tag>
+        >{{ tag.name }}</el-tag>
         <el-input
           v-if="formData.agentTags.inputVisible"
           ref="saveTagInput"
@@ -123,11 +123,7 @@ export default {
       formData: {
         agentTags: {
           type: "agent",
-          tags: [
-            { labelName: "标签一", labelId: "1" },
-            { labelName: "标签一", labelId: "2" },
-            { labelName: "标签一", labelId: "3" }
-          ],
+          tags: [],
           inputVisible: false,
           inputValue: ""
         },
@@ -155,11 +151,7 @@ export default {
         ],
         positionTags: {
           type: "user",
-          tags: [
-            { labelName: "标签一", labelId: "1" },
-            { labelName: "标签一", labelId: "2" },
-            { labelName: "标签一", labelId: "3" }
-          ],
+          tags: [],
           inputVisible: false,
           inputValue: ""
         }
@@ -178,7 +170,7 @@ export default {
     // 查询情绪色
     moodColorQueryByConditionAgent() {
       api
-        .moodColorQueryByConditionAgent({})
+        .moodColorQueryByConditionAgent()
         .then(res => {
           // this.formData.moodColor = res.object;
         })
@@ -189,9 +181,9 @@ export default {
     // 查询服务商标签
     labelQueryByConditionAgent() {
       api
-        .labelQueryByConditionAgent({})
+        .labelQueryByConditionAgent()
         .then(res => {
-          // this.formData.agentTags.tags = res.object;
+          this.formData.agentTags.tags = res.object;
         })
         .catch(err => {
           this.$message(err);
@@ -200,9 +192,9 @@ export default {
     // 查询成员职位标签
     labelQueryByConditionUser() {
       api
-        .labelQueryByConditionUser({})
+        .labelQueryByConditionUser()
         .then(res => {
-          // this.formData.positionTags.tags = res.object;
+          this.formData.positionTags.tags = res.object;
         })
         .catch(err => {
           this.$message(err);
@@ -229,22 +221,16 @@ export default {
     handleClose(tag, $item) {
       if ($item.type === "user") {
         api
-          .labelDeleteUser({ labelId: tag.labelId })
+          .labelDelete({ labelId: tag.id })
           .then(res => {
-            $item.tags.splice($item.tags.indexOf(tag), 1);
+            this.labelQueryByConditionUser();
           })
-          .catch(err => {
-            this.$message(err);
-          });
       } else if ($item.type === "agent") {
         api
-          .labelDeleteAgent({ labelId: tag.labelId })
+          .labelDelete({ labelId: tag.id })
           .then(res => {
-            $item.tags.splice($item.tags.indexOf(tag), 1);
+            this.labelQueryByConditionAgent();
           })
-          .catch(err => {
-            this.$message(err);
-          });
       }
     },
 

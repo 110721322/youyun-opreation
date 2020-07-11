@@ -38,11 +38,18 @@ export default {
   data() {
     return {
       defaultTime: "",
-      timeInterval: "",
       placeholder: this.formItem.placeholder,
       datatype: this.formItem.datatype,
       format: this.formItem.format
     };
+  },
+  computed: {
+    timeInterval() {
+      if (this.formItem.key) {
+        return this.ruleForm[this.formItem.key]
+      }
+      return null
+    }
   },
   watch: {},
   created() {

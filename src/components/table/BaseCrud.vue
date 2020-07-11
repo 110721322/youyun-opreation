@@ -9,7 +9,7 @@
       :border="border"
       :row-key="rowKey"
       :default-expand-all="defaultExpandAll"
-      :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+      :tree-props="{ children: childrenKey ? childrenKey : 'children', hasChildren: 'hasChildren' }"
       :header-cell-style="headerCellStyle"
       :expand-row-keys="expands"
       @selection-change="handleSelectionChange"
@@ -36,6 +36,7 @@
         :label="item.label"
         show-overflow-tooltip
         :min-width="item.width ? item.width : ''"
+        :width="item.maxWidth ? item.maxWidth : ''"
         :fixed="item.isFixed || false"
         :sortable="item.sortable"
       >
@@ -62,7 +63,7 @@
                 @click="cancelEdit(scope.row)"
               >取消</el-button>
             </template>
-            <span v-else>{{ scope.row[item.prop] }}</span>
+            <span v-else>{{ item.formatter ? item.formatter(scope.row) : scope.row[item.prop] }}</span>
             <template v-if="item.hasImg">
               <img
                 :src="item.imgUrl"
@@ -89,7 +90,7 @@
         <template slot-scope="scope">
           <!--扩展按钮-->
           <span v-for="(item, index) in gridBtnConfig.expands" :key="index">
-            <span v-if="isShowFun(item, scope)">
+            <span v-if="isShowFun(item, scope)" v-has="item.permission">
               <el-button
                 size="medium"
                 :style="item.style"
@@ -161,13 +162,14 @@ export default {
     "isExpand",
     // 表 格子项拓展
     "rowKey",
-    // 表 格子项默认是否全部展开
+    // 表 格子项默认是否全部展开,
     "defaultExpandAll",
     "headerCellStyle",
     "border",
     "expands",
     "refName",
     "hideExpendColumn",
+    "childrenKey",
     "params"
   ],
   data() {

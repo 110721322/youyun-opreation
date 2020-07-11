@@ -14,6 +14,7 @@ import './libs/directive/permission';
 // 公共css
 import './assets/css/basic.scss';
 import './assets/css/utils.scss';
+import './assets/css/scrollBar.scss';
 
 Vue.prototype.$EventBus = new Vue();
 

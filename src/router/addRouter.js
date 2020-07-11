@@ -1711,8 +1711,7 @@ const menusToRoutes = function (data) {
       console.error(`not find page ${item.name} , page's title is ${item.meta.title}`);
     }
   })
-  // result.push({ path: '*', redirect: '/error' })
-  // console.log(result);
+  result.push({ path: '*', redirect: '/error' })
   return result
 }
 

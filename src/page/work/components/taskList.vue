@@ -24,15 +24,15 @@
           <div v-else>{{ item1.label ? item1.label+":"+item1.value :item1.value }}</div>
         </div>
       </div>
-      <div v-if="type===1" class="oper-box">
+      <div v-if="type===1" v-has="TASK_DEALT" class="oper-box">
         <el-button type="primary" class="btn" @click="onClick_communication(item)">立即沟通</el-button>
       </div>
-      <div v-if="type===2" class="oper-box">
+      <div v-if="type===2" v-has="TASK_DEALT" class="oper-box">
         <el-button type="primary" class="btn_agree" @click="onClick_pass(item)">同意</el-button>
         <el-button plain class="btn_refuse" @click="onClick_reject(item)">拒绝</el-button>
       </div>
 
-      <div v-if="type===3" class="oper-box">
+      <div v-if="type===3" v-has="TASK_DEALT" class="oper-box">
         <img v-if="item.handleStatus===1" src="../../../assets/img/pass.png" />
         <img v-if="item.handleStatus===2" src="../../../assets/img/refuse.png" />
         <img v-if="item.handleStatus===3" src="../../../assets/img/approval.png" />
@@ -48,6 +48,7 @@
 
 <script>
 import transformTime from "./transformTime";
+import { TASK_DEALT } from "../../../libs/data/permissionBtns";
 
 export default {
   name: "TaskList",
@@ -56,7 +57,8 @@ export default {
 
   data() {
     return {
-      checkList: []
+      checkList: [],
+      TASK_DEALT: TASK_DEALT
     };
   },
   watch: {

@@ -3,15 +3,26 @@ export const MENU_CONFIG = {
   gridConfig: [
     {
       label: '菜单名称',
-      prop: 'type',
+      prop: 'menuName',
       width: '150px'
     },
     {
       label: '图标',
-      prop: 'taskName',
-      width: '150px'
+      prop: 'menuIcon',
+      width: '150px',
+      type: 'img',
+      render: (h, params) => {
+        const imgUrl = params.row.menuIcon;
+        return h('el-image', {
+          props: {
+            src: imgUrl,
+            'preview-src-list': [imgUrl]
+          }
+        }, '正常');
+      }
     }
   ],
+  childrenKey: 'childrenMenus',
 
   // crud的模态框表单配置，可配置表单类型，验证规则，是否必填,col-span布局可通过span参数配置
 
@@ -25,17 +36,20 @@ export const MENU_CONFIG = {
       {
         name: '添加下级菜单',
         emitName: 'addSubMenu',
-        type: 'text'
+        type: 'text',
+        permission: '待开发'
       },
       {
         name: '编辑',
         emitName: 'edit',
-        type: 'text'
+        type: 'text',
+        permission: '待开发'
       },
       {
         name: '删除',
         emitName: 'adopt',
-        type: 'text'
+        type: 'text',
+        permission: '待开发'
       }
     ]
   },
@@ -50,5 +64,5 @@ export const MENU_CONFIG = {
     expand: '',
     roleIdList: []
   },
-  hideEditArea: false
+  hideEditArea: true
 };
