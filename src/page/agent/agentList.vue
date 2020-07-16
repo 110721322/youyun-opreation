@@ -36,13 +36,14 @@
           :is-async="true"
           :is-select="true"
           :params="params"
-          :api-service="null"
+          :api-service="api"
           @selectionChange="selectionChange"
           @detail="openDetail"
           @thaw="thaw"
           @frozen="frozen"
           @openAgentManager="openAgentManager"
           @goMerchantList="goMerchantList"
+          @completion="onCompletion"
         />
       </div>
     </div>
@@ -51,7 +52,6 @@
 <script>
 import search from "@/components/search/search.vue";
 import api from "@/api/api_agent.js";
-// import dataMode from '@/components/dataMode/dataMode.vue'
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { USER_CONFIG } from "./tableConfig/agentConfig";
 import { FORM_CONFIG } from "./formConfig/agentListSearch";
@@ -72,28 +72,7 @@ export default {
       api: api.agentList
     };
   },
-  created() {
-    this.params = {
-      agentNo: "",
-      businessType: "",
-      agentName: "",
-      personName: "",
-      personMobile: "",
-      contractType: "",
-      activeScopeType: "",
-      operateUserNo: "",
-      parentAgentNo: "",
-      activeDate: "",
-      expireDate: "",
-      contractStatus: "",
-      contractStatusSet: "",
-      isExpired: "",
-      provinceCode: "",
-      cityCode: "",
-      areaCode: "",
-      agentGrade: 1
-    };
-  },
+  created() {},
   mounted() {},
   methods: {
     transfer() {
@@ -128,26 +107,16 @@ export default {
       this.selectData = $val;
     },
     search($form) {
-      console.log($form);
       this.params = {
-        agentNo: "",
-        businessType: "",
-        agentName: "",
-        personName: "",
-        personMobile: "",
-        contractType: "",
-        activeScopeType: $form.activeScopeType,
-        operateUserNo: $form.operateUserNo,
-        parentAgentNo: "",
-        activeDate: "",
-        expireDate: "",
-        contractStatus: "",
-        contractStatusSet: $form.contractStatusSet,
-        isExpired: "",
-        provinceCode: "",
-        cityCode: "",
-        areaCode: "",
-        agentGrade: $form.agentGrade
+        agentGrade: $form.agentGrade,
+        activeDateStart: $form.date[0],
+        activeDateEnd: $form.date[1],
+        agentNo: $form.agentNo,
+        agentName: $form.agentName,
+        status: $form.status,
+        labelId: $form.labelId,
+        regionCode: $form.regionCode,
+        operateUserNo: $form.operateUserNo
       };
       if ($form.area) {
         this.params.provinceCode = $form.area[0];
@@ -156,9 +125,13 @@ export default {
       }
       this.params[$form.inputSelect] = $form.inputForm;
     },
-    openDetail() {
+    openDetail($row) {
+      console.log($row)
       this.$router.push({
-        path: "/agent/list/detail"
+        path: "/agent/list/detail",
+        query: {
+          agentNo: $row.agentNo
+        }
       });
     },
     thaw(row) {
@@ -181,13 +154,13 @@ export default {
         })
         .catch(() => {});
     },
-    frozen() {
+    frozen(row) {
       this.$confirm("是否要冻结该代理商？", "冻结代理商", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认冻结",
         cancelButtonText: "取消"
       })
-        .then(row => {
+        .then(res => {
           api
             .frozen({
               agentNo: row.agentNo
@@ -197,6 +170,7 @@ export default {
                 type: "info",
                 message: "已冻结"
               });
+              this.$refs.child.getData()
             });
         })
         .catch(() => {});
@@ -211,7 +185,8 @@ export default {
       this.$router.push({
         path: "/agent/list/addAgent"
       })
-    }
+    },
+    onCompletion() {}
   }
 };
 </script>

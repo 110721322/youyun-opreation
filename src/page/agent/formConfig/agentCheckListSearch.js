@@ -14,37 +14,41 @@ export const FORM_CONFIG = {
       class: 'max-width',
       options: [
         {
-          label: '公司名称',
-          value: 'companyName'
+          label: '服务商编号',
+          value: 'agentNo'
         },
         {
-          label: '法人姓名',
-          value: 'personName'
-        },
-        {
-          label: '法人手机号',
-          value: 'personMobile'
+          label: '服务商名字',
+          value: 'agentName'
         }
       ],
       labelWidth: '100px'
     },
     {
+      type: 0,
+      label: '法人姓名',
+      key: 'personName',
+      style: 'width:294px'
+    },
+    {
+      type: 0,
+      label: '法人电话',
+      key: 'personMobile',
+      style: 'width:294px'
+    },
+    {
       type: 1,
       label: '服务商类型',
-      key: 'type',
+      key: 'businessType',
       style: 'width:294px',
       options: [
         {
-          label: '川菜',
-          value: 0
+          label: '企业',
+          value: 'individual'
         },
         {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
+          label: '个人',
+          value: 'enterprise'
         }
       ]
     },
@@ -52,22 +56,29 @@ export const FORM_CONFIG = {
       type: 1,
       label: '状态',
       key: 'contractStatus',
-      style: 'width:294px',
-      labelWidth: '185px',
       options: [
         {
-          label: '川菜',
-          value: 0
+          label: '已拒绝',
+          value: 'reject'
         },
         {
-          label: '粤菜',
-          value: 1
+          label: '等待',
+          value: 'wait'
         },
         {
-          label: '杭帮菜',
-          value: 2
+          label: '审核中',
+          value: 'audit'
+        },
+        {
+          label: '审核通过',
+          value: 'success'
         }
       ]
+    },
+    {
+      type: 0,
+      label: '运营人员Id',
+      key: 'operationId'
     }
   ]
 }

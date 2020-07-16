@@ -2,12 +2,12 @@ export const USER_CONFIG = {
   gridConfig: [
     {
       label: '公司名称',
-      prop: 'id',
+      prop: 'agentName',
       width: '90px'
     },
     {
       label: '法人',
-      prop: 'lawPerson',
+      prop: 'personName',
       width: '90px'
     },
     {
@@ -23,7 +23,7 @@ export const USER_CONFIG = {
     },
     {
       label: '公司地址',
-      prop: 'companyArea.detailAddress',
+      prop: 'companyAddress',
       width: '90px'
     },
     {
@@ -33,19 +33,40 @@ export const USER_CONFIG = {
     },
     {
       label: '状态',
-      prop: 'accountStatus',
-
+      prop: 'contractStatus',
       render: (h, params) => {
-        if (params.row.status === '0') {
+        if (params.row.contractStatus === 'audit') {
+          return h(
+            'el-tag',
+            {
+              props: {
+                size: 'medium',
+                type: 'primary'
+              }
+            },
+            '待审核'
+          );
+        } else if (params.row.contractStatus === 'wait') {
           return h(
             'el-tag',
             {
               props: {
                 size: 'medium ',
-                type: 'warning'
+                type: ''
               }
             },
-            '已驳回'
+            '等待'
+          );
+        } else if (params.row.contractStatus === 'reject') {
+          return h(
+            'el-tag',
+            {
+              props: {
+                size: 'medium ',
+                type: 'danger'
+              }
+            },
+            '已拒绝'
           );
         } else {
           return h(
@@ -56,7 +77,7 @@ export const USER_CONFIG = {
                 type: 'success'
               }
             },
-            '待审核'
+            '审核通过'
           );
         }
       }
@@ -77,7 +98,7 @@ export const USER_CONFIG = {
         type: 'text',
         style: 'color:#F5222D',
         isShow: ($row) => {
-          if ($row.id === '1') {
+          if ($row.contractStatus === 'audit') {
             return true;
           } else {
             return false;
@@ -87,12 +108,26 @@ export const USER_CONFIG = {
       {
         name: '激活',
         emitName: 'activation',
-        type: 'text'
+        type: 'text',
+        isShow: ($row) => {
+          if ($row.contractStatus === 'reject') {
+            return true;
+          } else {
+            return false;
+          }
+        }
       },
       {
         name: '通过',
         emitName: 'adopt',
-        type: 'text'
+        type: 'text',
+        isShow: ($row) => {
+          if ($row.contractStatus === 'audit') {
+            return true;
+          } else {
+            return false;
+          }
+        }
       }
     ]
   },

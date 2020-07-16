@@ -30,64 +30,27 @@ export const FORM_CONFIG = {
     {
       type: 1,
       label: '标签',
-      key: 'tags',
+      key: 'labelId',
       style: 'width:294px',
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
+      urlOptions: {
+        url: apiAgent.selectByChannelAgentCode,
+        keyName: 'id',
+        valueName: 'name',
+        method: 'get'
+      }
     },
     {
       type: 1,
       label: '所属大区',
-      key: 'region',
+      key: 'regionCode',
       style: 'width:294px',
       labelWidth: '185px',
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
-    },
-    {
-      type: 1,
-      label: '服务商等级',
-      key: 'level',
-      style: 'width:294px',
-      class: "clear_both",
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
+      urlOptions: {
+        url: apiAgent.queryAllRegion,
+        keyName: 'regionCode',
+        valueName: 'regionName',
+        method: 'get'
+      }
     },
     {
       type: 8,
@@ -112,21 +75,21 @@ export const FORM_CONFIG = {
     {
       type: 1,
       label: '状态',
-      key: 'contractStatus',
+      key: 'status',
       style: 'width:294px',
       labelWidth: '185px',
       options: [
         {
-          label: '川菜',
-          value: 0
+          label: '使用中',
+          value: 'complete '
         },
         {
-          label: '粤菜',
-          value: 1
+          label: '冻结',
+          value: 'blocked '
         },
         {
-          label: '杭帮菜',
-          value: 2
+          label: '到期',
+          value: 'expired'
         }
       ]
     }

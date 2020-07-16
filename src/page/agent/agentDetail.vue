@@ -422,9 +422,7 @@ export default {
         pic:
           "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
       },
-      params: {
-        agentNo: ""
-      },
+      agentNo: '',
       planCount: 0,
       params1: {
         id: 1,
@@ -465,100 +463,23 @@ export default {
       activeValue: "情绪客户"
     };
   },
-  mounted() {
-    this.testData = [
-      {
-        id: "1",
-        tel: "15184318420",
-        name: "小白",
-        email: "412412@qq.com",
-        status: "1",
-        create_time: "2018-04-20",
-        expand: "扩展信息一",
-        role: ["2"]
-      },
-      {
-        id: "1",
-        tel: "15184318420",
-        name: "小白",
-        email: "412412@qq.com",
-        status: "1",
-        create_time: "2018-04-20",
-        expand: "扩展信息一",
-        role: ["2"]
-      },
-      {
-        id: "1",
-        tel: "15184318420",
-        name: "小白",
-        email: "412412@qq.com",
-        status: "1",
-        create_time: "2018-04-20",
-        expand: "扩展信息一",
-        role: ["2"]
-      },
-      {
-        id: "1",
-        tel: "15184318420",
-        name: "小白",
-        email: "412412@qq.com",
-        status: "1",
-        create_time: "2018-04-20",
-        expand: "扩展信息一",
-        role: ["2"]
-      },
-      {
-        id: "1",
-        tel: "15184318420",
-        name: "小白",
-        email: "412412@qq.com",
-        status: "1",
-        create_time: "2018-04-20",
-        expand: "扩展信息一",
-        role: ["2"]
-      },
-      {
-        id: "1",
-        tel: "15184318420",
-        name: "小白",
-        email: "412412@qq.com",
-        status: "1",
-        create_time: "2018-04-20",
-        expand: "扩展信息一",
-        role: ["2"]
-      },
-      {
-        id: "1",
-        tel: "15184318420",
-        name: "小白",
-        email: "412412@qq.com",
-        status: "1",
-        create_time: "2018-04-20",
-        expand: "扩展信息一",
-        role: ["2"]
-      },
-      {
-        id: "1",
-        tel: "15184318420",
-        name: "小白",
-        email: "412412@qq.com",
-        status: "1",
-        create_time: "2018-04-20",
-        expand: "扩展信息一",
-        role: ["2"]
-      }
-    ];
-    this.getAgentDetail();
+  created() {
+    console.log(this.$route.query.agentNo, "agentNo")
+    this.agentNo = this.$route.query.agentNo
+    this.getDetail(this.agentNo);
     this.getPlanCount();
   },
+  mounted() {},
   methods: {
     onClick_changeClientType($item) {
       this.activeClass = $item.colorName;
       this.activeValue = $item.value;
     },
-    getAgentDetail() {
-      api.getAgentDetail(this.params).then(res => {
-        console.log(res.object);
+    getDetail(agentNo) {
+      api.getAgentDetail({
+        agentNo: agentNo
+      }).then(res => {
+        console.log(res);
         res.object.labelList.forEach(item => {
           this.dynamicTags.push(item.name);
         });

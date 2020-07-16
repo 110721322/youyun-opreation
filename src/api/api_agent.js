@@ -1,25 +1,94 @@
 import * as API from '.';
 
 export default {
-  agentList: (params) => API.GET('/operation/v1/agent/queryPageByCondition', params),
+  // 服务商审核-分页查询服务商审核列表
   agentExamineList: (params) => API.GET('/operation/v1/agentAudit/queryAuditPageByCondition', params),
-  subagentExamineList: (params) => API.GET('/operation/v1/agentAudit/querySubAuditPageByCondition', params),
-  reject: (params) => API.GET('/operation/v1/agentAudit/updateAuditStatusOfReject', params),
+  // 服务商审核-通过服务商审核
   pass: (params) => API.GET('/operation/v1/agentAudit/updateAuditStatusOfPass', params),
+  // 服务商审核-驳回服务商审核
+  reject: (params) => API.GET('/operation/v1/agentAudit/updateAuditStatusOfReject', params),
+  // 服务商审核-激活服务商审核
   activate: (params) => API.GET('/operation/v1/agentAudit/updateAuditStatusOfActivate', params),
-  subreject: (params) => API.GET('/operation/v1/agentAudit/updateSubAuditStatusOfReject', params),
+  // 服务商审核-分页查询下级服务商审核列表
+  subagentExamineList: (params) => API.GET('/operation/v1/agentAudit/querySubAuditPageByCondition', params),
+  // 服务商审核-通过下级服务商审核
   subpass: (params) => API.GET('/operation/v1/agentAudit/updateSubAuditStatusOfPass', params),
+  // 服务商审核-驳回下级服务商审核
+  subreject: (params) => API.GET('/operation/v1/agentAudit/updateSubAuditStatusOfReject', params),
+  // 分页查询服务商列表
+  agentList: (params) => API.GET('/operation/v1/agent/queryPageByCondition', params),
+  // 服务商-转移运营
   transferOperate: (params) => API.GET('/operation/v1/agent/updateOperateUserNo', params),
+  // 服务商-冻结服务商账号
   frozen: (params) => API.GET('/operation/v1/agent/updateAccountStatusOfFrozen', params),
+  // 服务商-解冻服务商账号
   unfrozen: (params) => API.GET('/operation/v1/agent/updateAccountStatusOfUnfrozen', params),
+  // 服务商-查看服务商详情
   getAgentDetail: (params) => API.GET('/operation/v1/agent/getAgentDetail', params),
-  // 分润总览
+  // 服务商-更新服务商基本资料、财务信息
+  updateAgentBaseInfo: (params) => API.POST('/operation/v1/agent/updateAgentBaseInfo', params),
+  // 服务商-更新服务商续费
+  updateAgentRenew: (params) => API.POST('/operation/v1/agent/updateAgentRenew', params),
+  // 服务商-更新服务商费率
+  updateAgentRate: (params) => API.POST('/operation/v1/agent/updateAgentRate', params),
+  // 服务商-更新服务商权限
+  updateAgentPrivilege: (params) => API.POST('/operation/v1/agent/updateAgentPrivilege', params),
+  // 分润总览-分润总览
   totalCommission: (params) => API.GET('/operation/v1/commission/queryTotalCommission', params),
+  // 分润总览-服务商分润
   agentCommission: (params) => API.GET('/operation/v1/commission/listAgentCommission', params),
+  // 分润总览-商户分润
   merchantCommission: (params) => API.GET('/operation/v1/commission/listMerchantCommission', params),
+  // 服务商信息-沟通联系人-添加通讯簿
+  addTalkAddressBook: (params) => API.POST('/operation/v1/talkAddressBook/add', params),
+  // 服务商信息-沟通联系人-更新通讯簿
+  updateTalkAddressBook: (params) => API.POST('/operation/v1/talkAddressBook/update', params),
+  // 服务商信息-沟通联系人-查询单个通讯簿
+  getById: (params) => API.GET('/operation/v1/talkAddressBook/getById', params),
+  // 服务商信息-沟通联系人-分页查询通讯簿
+  addressBookQuery: (params) => API.GET('/operation/v1/talkAddressBook/queryByPage', params),
+  // 服务商信息-沟通联系人-查询通讯簿下拉框
+  queryByAgentNo: (params) => API.GET('/operation/v1/talkAddressBook/queryByAgentNo', params),
+  // 服务商信息-沟通记录-更新沟通记录
+  updateAgent: (params) => API.POST('/operation/v1/talkLists/update/agent', params),
+  // 服务商信息-沟通记录-新增沟通记录
+  addTalkLists: (params) => API.POST('/operation/v1/talkLists/add/agent', params),
+  // 服务商信息-沟通记录-分页查询沟通记录
+  queryPlanList: (params) => API.GET('/operation/v1/talkLists/queryByPage', params),
+  // 服务商信息-沟通记录-查询单个沟通记录
+  talkListsGetById: (params) => API.GET('/operation/v1/talkLists/queryByPage', params),
+  // 服务商信息-沟通记录-查询沟通数据
+  selectSummary: (params) => API.GET('/operation/v1/talkLists/selectSummaryByCondition', params),
+  // 服务商信息-沟通计划-添加沟通计划
+  addTalkPlan: (params) => API.POST('/operation/v1/talkPlan/add', params),
+  // 服务商信息-沟通计划-修改沟通计划
+  updateTalkPlan: (params) => API.POST('/operation/v1/talkPlan/update', params),
+  // 服务商信息-沟通计划-查询单个沟通计划
+  getTalkPlan: (params) => API.POST('/operation/v1/talkPlan/getById', params),
+  // 服务商信息-沟通计划-分页查询沟通计划
+  queryTalkPlan: (params) => API.GET('/operation/v1/talkPlan/queryByPage', params),
+  // 服务商信息-沟通计划-查询待沟通次数
+  queryWait: (params) => API.GET('/operation/v1/talkPlan/queryWaitExecutePlanCount', params),
+  // 服务商审核-下级服务商详情
+  getSubAgentDetail: (params) => API.GET('/operation/v1/agent/getSubAgentDetail', params),
+  // 服务商-添加邮寄地址
+  addPostAddress: (params) => API.POST('/operation/v1/postAddress/add/agent', params),
+  // 服务商-更新邮寄地址
+  updatePostAddress: (params) => API.POST('/operation/v1/postAddress/update/agent', params),
+  // 下级服务商列表
+  queryPageByCondition: (params) => API.GET('/agent/v1/subAgent/queryPageByCondition', params),
+  // 更换所属上级服务商
+  updateParentAgentNo: (params) => API.GET('/operation/v1/agent/updateParentAgentNo', params),
+  // 根据服务商名模糊查询顶级服务商
+  queryNamesByCondition: (params) => API.GET('/operation/v1/agent/queryNamesByCondition', params),
+  // 查询标签接口
+  selectByChannelAgentCode: () => API.GET('operation/v1/label/selectByChannelAgentCode'),
+  // 查询所属大区
+  queryAllRegion: () => API.GET('operation/v1/region/queryAllRegion'),
+  // 添加服务商
+  addAgent: (params) => API.POST('/operation/v1/agent/addAgent', params),
   planCount: (params) => API.GET('/operation/v1/talkPlan/queryWaitExecutePlanCount', params),
   queryPlan: (params) => API.GET('/operation/v1/talkPlan/queryByPage', params),
-  queryPlanList: (params) => API.GET('/operation/v1/talkLists/queryByPage', params),
   // 订单管理
   hardwarePageOrder: (params) => API.GET('/operation/v1/deviceOrder/hardwarePageOrder', params),
   hardwareDetail: (params) => API.GET('/operation/v1/deviceOrder/hardwareDetail', params),
@@ -36,7 +105,6 @@ export default {
   queryAllDistributeName: (params) => API.GET('operation/v1/advertDistribute/queryAllDistributeName', params),
   queryAllPrivilegeType: (params) => API.GET('/operation/v1/advertDistribute/queryAllPrivilegeType', params),
   queryAllAdvertDistributeType: (params) => API.GET('/operation/v1/advertDistribute/queryAllAdvertDistributeType', params),
-
   advertQueryById: (params) => API.GET('operation/v1/advert/queryById', params),
   putList: (params) => API.POST('/operation/v1/advertDistribute/queryByPage', params),
   advertDistributeAdd: (params) => API.POST('/operation/v1/advertDistribute/add', params),
