@@ -25,8 +25,10 @@ export default {
   unfrozen: (params) => API.GET('/operation/v1/agent/updateAccountStatusOfUnfrozen', params),
   // 服务商-查看服务商详情
   getAgentDetail: (params) => API.GET('/operation/v1/agent/getAgentDetail', params),
-  // 服务商-更新服务商基本资料、财务信息
+  // 服务商-更新服务商基本资料
   updateAgentBaseInfo: (params) => API.POST('/operation/v1/agent/updateAgentBaseInfo', params),
+  // 服务商-更新服务商财务信息
+  updateFinancial: (params) => API.POST('/operation/v1/agent/updateAgentFinancialInfo', params),
   // 服务商-更新服务商续费
   updateAgentRenew: (params) => API.POST('/operation/v1/agent/updateAgentRenew', params),
   // 服务商-更新服务商费率

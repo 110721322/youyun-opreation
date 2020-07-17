@@ -32,11 +32,12 @@
             >
               <el-image
                 v-if="item2.type === 'img'"
-                style="width: 100px; height: 100px"
+                style="width: 100px; height: 100px;"
                 :src="ruleForm[item2.key]"
                 :preview-src-list="[ruleForm[item2.key]]"
               ></el-image>
-              <span v-else class="item-value">{{ ruleForm[item2.key] }}</span>
+              <span v-if="item2.key === 'bankAccountType'" class="item-value">{{ ruleForm[item2.key] === 'private' ? '对私' : ruleForm[item2.key] === 'public' ? '对公' : ''}}</span>
+              <span v-if="item2.type !== 'img' && item2.key !== 'bankAccountType'" class="item-value">{{ ruleForm[item2.key] }}</span>
             </el-form-item>
           </el-col>
         </el-row>

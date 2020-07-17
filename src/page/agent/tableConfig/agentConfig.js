@@ -89,7 +89,7 @@ export const USER_CONFIG = {
         emitName: 'frozen',
         type: 'text',
         isShow: ($row) => {
-          if ($row.status !== 'blocked') {
+          if ($row.isBlocked === 0) {
             return true;
           } else {
             return false;
@@ -113,7 +113,7 @@ export const USER_CONFIG = {
         emitName: 'thaw',
         type: 'text',
         isShow: ($row) => {
-          if ($row.status === 'blocked') {
+          if ($row.isBlocked === 1) {
             return true;
           } else {
             return false;

@@ -2,7 +2,7 @@
   <div class>
     <div class="p_head_detail" :class="[activeClass]">
       <div class="top">
-        <span>杭州网络科技有限公司</span>
+        <span>{{agentDetail.agentName}}</span>
         <el-dropdown trigger="click" @command="onClick_changeClientType">
           <div class="el-dropdown-link">
             <div class="doit" :class="[activeClass]"></div>
@@ -152,6 +152,7 @@
       <Form
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
+        @confirm="handel_confirm"
         @cancel="cancel"
       ></Form>
     </el-drawer>
@@ -171,6 +172,7 @@ export default {
   components: { detailMode, BaseCrud, Form },
   data() {
     return {
+      agentDetail: {},
       drawer: false,
       dynamicTags: [],
       inputVisible: false,
@@ -186,11 +188,11 @@ export default {
                 items: [
                   {
                     name: "公司名称",
-                    key: ""
+                    key: "agentName"
                   },
                   {
                     name: "法人手机号",
-                    key: "lawMobile"
+                    key: "personMobile"
                   }
                 ]
               },
@@ -211,11 +213,11 @@ export default {
                 items: [
                   {
                     name: "法人姓名",
-                    key: "lawPerson"
+                    key: "personName"
                   },
                   {
                     name: "公司地址",
-                    key: "detailAddress"
+                    key: "companyAddress"
                   }
                 ]
               }
@@ -229,7 +231,7 @@ export default {
                 items: [
                   {
                     name: "结算卡类型",
-                    key: "accountType"
+                    key: "bankAccountType"
                   },
                   {
                     name: "开户支行地区",
@@ -241,11 +243,11 @@ export default {
                 items: [
                   {
                     name: "开户名",
-                    key: "email"
+                    key: "bankAccountHolder"
                   },
                   {
                     name: "开户支行",
-                    key: "branchName"
+                    key: "bankBranchName"
                   }
                 ]
               },
@@ -253,7 +255,7 @@ export default {
                 items: [
                   {
                     name: "银行卡号",
-                    key: "bankCardImg"
+                    key: "bankCardNo"
                   }
                 ]
               }
@@ -261,17 +263,17 @@ export default {
           },
           {
             name: "邮寄地址",
-            modelName: "mailAddress",
+            modelName: "address",
             models: [
               {
                 items: [
                   {
                     name: "收件人",
-                    key: "name1"
+                    key: "personName"
                   },
                   {
                     name: "详细地址",
-                    key: "name"
+                    key: "detailAddress"
                   }
                 ]
               },
@@ -279,7 +281,7 @@ export default {
                 items: [
                   {
                     name: "手机号",
-                    key: "email"
+                    key: "personMobile"
                   }
                 ]
               },
@@ -305,28 +307,20 @@ export default {
               {
                 items: [
                   {
-                    name: "微信/支付宝费率(直连)",
-                    key: "name1"
+                    name: "微信/支付宝费率",
+                    key: "wechatPayRate"
                   },
                   {
-                    name: "云闪付费率单笔＞1000(间连)",
-                    key: "name"
+                    name: "云闪付费率单笔＞1000",
+                    key: "cloudPayGt1000Rate"
                   }
                 ]
               },
               {
                 items: [
                   {
-                    name: "微信/支付宝费率(间连)",
-                    key: "email"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "云闪付费率单笔≤1000(间连)",
-                    key: "name3"
+                    name: "云闪付费率单笔≤1000",
+                    key: "cloudPayLe1000Rate"
                   }
                 ]
               }
@@ -334,17 +328,17 @@ export default {
           },
           {
             name: "续费",
-            modelName: "finance",
+            modelName: "renew",
             models: [
               {
                 items: [
                   {
                     name: "开户时间",
-                    key: "name1"
+                    key: "activeDate"
                   },
                   {
                     name: "缴费金额",
-                    key: "name"
+                    key: "renewValue"
                   }
                 ]
               },
@@ -352,7 +346,7 @@ export default {
                 items: [
                   {
                     name: "到期时间",
-                    key: "email"
+                    key: "expireDate"
                   }
                 ]
               },
@@ -360,7 +354,7 @@ export default {
                 items: [
                   {
                     name: "续费方式",
-                    key: "name3"
+                    key: "renewType"
                   }
                 ]
               }
@@ -378,7 +372,7 @@ export default {
                   },
                   {
                     name: "平台分润抽成",
-                    key: "name"
+                    key: "chargeFeePercent"
                   }
                 ]
               },
@@ -386,7 +380,7 @@ export default {
                 items: [
                   {
                     name: "是否开通下级",
-                    key: "email"
+                    key: "expandSub"
                   }
                 ]
               },
@@ -394,7 +388,7 @@ export default {
                 items: [
                   {
                     name: "服务类型",
-                    key: "name3"
+                    key: "activeMode"
                   }
                 ]
               }
@@ -413,15 +407,7 @@ export default {
       tableConfigData: USER_CONFIG,
       tableConfigData2: USER_CONFIG2,
       fromConfigData: [],
-      ruleForm: {
-        name: "1",
-        name1: "2",
-        name2: "3",
-        name3: "4",
-        email: "12312312@163.com",
-        pic:
-          "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
-      },
+      ruleForm: {},
       agentNo: '',
       planCount: 0,
       params1: {
@@ -460,11 +446,11 @@ export default {
         }
       ],
       activeClass: "red",
-      activeValue: "情绪客户"
+      activeValue: "情绪客户",
+      editType: ''
     };
   },
   created() {
-    console.log(this.$route.query.agentNo, "agentNo")
     this.agentNo = this.$route.query.agentNo
     this.getDetail(this.agentNo);
     this.getPlanCount();
@@ -479,10 +465,13 @@ export default {
       api.getAgentDetail({
         agentNo: agentNo
       }).then(res => {
-        console.log(res);
-        res.object.labelList.forEach(item => {
-          this.dynamicTags.push(item.name);
-        });
+        if (res.object) {
+          this.agentDetail = res.object
+          res.object.labelList.forEach(item => {
+            this.dynamicTags.push(item.name);
+          });
+          this.ruleForm = res.object
+        }
       });
     },
     getPlanCount() {
@@ -518,15 +507,150 @@ export default {
       this.$router.push("/agent/list/detail");
     },
     itemEdit($model) {
+      if ($model === 'basicData') {
+        this.editType = 'editBasicData'
+      }
+      if ($model === 'finance') {
+        this.editType = 'editFincance'
+      }
       this.drawer = true;
-      this.fromConfigData = FORM_CONFIG[$model];
+      const newFromConfigData = FORM_CONFIG[$model];
+      newFromConfigData.formData.forEach((item, index) => {
+        item.initVal = this.agentDetail[item.key];
+      });
+      this.fromConfigData = newFromConfigData;
     },
     rateEdit($model) {
+      if ($model === 'rateInfo') {
+        this.editType = 'editRateInfo'
+      }
+      if ($model === 'mailAddress') {
+        this.editType = 'editMailAddress'
+      }
       this.drawer = true;
-      this.fromConfigData = FORM_CONFIG[$model];
+      const newFromConfigData = FORM_CONFIG[$model];
+      newFromConfigData.formData.forEach((item, index) => {
+        item.initVal = this.agentDetail[item.key];
+      });
+      this.fromConfigData = newFromConfigData;
     },
     cancel() {
+      this.editType = ''
       this.drawer = false;
+    },
+    handel_confirm(row) {
+      console.log(row)
+      if (this.editType === 'editBasicData') {
+        if (!row.businessType || !row.agentName || !row.personName || !row.personMobile || !row.email || !row.companyAddress || !row.businessLicenseImg) {
+          this.$message({
+            message: '请填写完整信息',
+            type: 'info'
+          })
+          return false
+        } else {
+          api.updateAgentBaseInfo({
+            agentNo: this.$route.query.agentNo,
+            businessType: row.businessType,
+            agentName: row.agentName,
+            personName: row.personName,
+            personMobile: row.personMobile,
+            email: row.email,
+            companyAddress: row.companyAddress,
+            businessLicenseImg: row.businessLicenseImg.dialogImageUrl
+          }).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                message: '基础资料更新成功',
+                type: 'success'
+              })
+              this.getDetail(this.$route.query.agentNo)
+              this.editType = ''
+              this.drawer = false
+            }
+          }).catch(err => {
+            console.log(err)
+          })
+        }
+      }
+      if (this.editType === 'editFincance') {
+        api.updateFinancial({
+          agentNo: this.$route.query.agentNo,
+          bankAccountHolder: row.bankAccountHolder,
+          bankCardNo: row.bankCardNo,
+          bankArea: row.bankArea,
+          bankBranchName: row.bankBranchName,
+          bankAccountType: row.bankAccountType
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '财务资料更新成功',
+              type: 'success'
+            })
+            this.getDetail(this.$route.query.agentNo)
+            this.editType = ''
+            this.drawer = false
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+      }
+      if (this.editType === 'editRateInfo') {
+        if (!row.wechatPayRate || !row.cloudPayLe1000Rate || !row.cloudPayGt1000Rate) {
+          this.$message({
+            message: '请填写完整费率信息',
+            type: "warning"
+          })
+          return false
+        } else {
+          if (row.wechatPayRate < 3 || row.wechatPayRate > 6) {
+            this.$message({
+              message: '请输入正确的费率',
+              type: "warning"
+            })
+            return false
+          } else if ((row.cloudPayLe1000Rate || row.cloudPayGt1000Rate) < 2.3 || (row.cloudPayLe1000Rate || row.cloudPayGt1000Rate) > 10) {
+            this.$message({
+              message: '请输入正确的费率',
+              type: "warning"
+            })
+            return false
+          } else {
+            api.updateAgentRate({
+              agentNo: this.$route.query.agentNo,
+              wechatPayRate: Number(row.wechatPayRate),
+              alipayRate: Number(row.wechatPayRate),
+              cloudPayLe1000Rate: Number(row.cloudPayLe1000Rate),
+              cloudPayGt1000Rate: Number(row.cloudPayGt1000Rate)
+            }).then(res => {
+              if (res.status === 0) {
+                this.$message({
+                  message: '财务资料更新成功',
+                  type: 'success'
+                })
+                this.getDetail(this.$route.query.agentNo)
+                this.editType = ''
+                this.drawer = false
+              }
+            })
+          }
+        }
+      }
+      if (this.editType === 'editMailAddress') {
+        if (!row.activeMode || !row.chargeFeePercent || !row.expandSub) {
+          this.$message({
+            message: '请填写完整信息',
+            type: 'warning'
+          })
+          return false
+        } else {
+          // api.updateAgentPrivilege({
+          //   activeMode: row.activeMode,
+          //   chargeFeePercent: row.chargeFeePercent,
+          //   expandSub: row.expandSub,
+          //   agentNo: this.$route.query.agentNo,
+          // })
+        }
+      }
     }
   }
 };
