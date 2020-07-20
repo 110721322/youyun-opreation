@@ -41,6 +41,8 @@ export default {
   agentCommission: (params) => API.GET('/operation/v1/commission/listAgentCommission', params),
   // 分润总览-商户分润
   merchantCommission: (params) => API.GET('/operation/v1/commission/listMerchantCommission', params),
+  // 服务商信息-查询某服务商已关联的标签集合
+  queryRelatedLabels: (params) => API.GET('operation/v1/label/queryRelatedLabels/agent', params),
   // 服务商信息-沟通联系人-添加通讯簿
   addTalkAddressBook: (params) => API.POST('/operation/v1/talkAddressBook/add', params),
   // 服务商信息-沟通联系人-更新通讯簿
@@ -89,6 +91,8 @@ export default {
   queryAllRegion: () => API.GET('operation/v1/region/queryAllRegion'),
   // 添加服务商
   addAgent: (params) => API.POST('/operation/v1/agent/addAgent', params),
+  // 服务商标签下拉框
+  queryLaBleAgent: () => API.GET('/operation/v1/label/queryLaBleAgent'),
   planCount: (params) => API.GET('/operation/v1/talkPlan/queryWaitExecutePlanCount', params),
   queryPlan: (params) => API.GET('/operation/v1/talkPlan/queryByPage', params),
   // 订单管理

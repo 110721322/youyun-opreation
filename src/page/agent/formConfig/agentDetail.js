@@ -183,49 +183,29 @@ export const FORM_CONFIG = {
     formData: [
       {
         type: 8,
-        label: '代理范围',
-        key: 'activeScopeType',
-        style: 'width:294px',
-        labelWidth: '185px',
-        options: [
-          {
-            label: '全国',
-            value: 'all'
-          },
-          {
-            label: '省',
-            value: 'province'
-          },
-          {
-            label: '市',
-            value: 'city'
-          }
-        ],
-        rules: setRules('请选择').isSelected.get
-      },
-      {
-        type: 8,
         label: '服务地区',
         key: 'area',
         style: 'width:294px',
         labelWidth: '185px',
-        options: areaData
+        options: areaData,
+        rules: setRules('请输入').isSelected.get
       },
       {
         type: 5,
-        label: '是否可开通下级',
+        label: '可否开通下级',
         key: 'expandSub',
         initVal: '',
         options: [
           {
-            label: '否',
-            value: 0
-          },
-          {
             label: '是',
             value: 1
+          },
+          {
+            label: '否',
+            value: 0
           }
-        ]
+        ],
+        rules: setRules('请输入').isSelected.get
       },
       {
         type: 5,
@@ -250,7 +230,9 @@ export const FORM_CONFIG = {
         key: 'chargeFeePercent',
         initVal: '',
         placeholder: '请输入',
-        rules: setRules('请输入').oneFloat.get
+        rules: setRules('请输入').oneFloat.get,
+        isShowSlot: true,
+        showSlotName: '‰'
       }
     ]
   }

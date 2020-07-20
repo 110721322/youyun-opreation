@@ -35,6 +35,7 @@
           v-model="inputValue"
           class="input-new-tag"
           size="mini"
+          @input="tagInput"
           @keyup.enter.native="handleInputConfirm"
           @blur="handleInputConfirm"
         ></el-input>
@@ -69,19 +70,19 @@
         <div class="bg_box" style="margin-right:0;margin-top:0;height:314px">
           <div class="title">沟通数据</div>
 
-          <el-select
-            v-model="value"
-            size="medium"
-            placeholder="请选择"
-            style="margin:32px;width:calc(100% - 64px)"
+          <el-date-picker
+            v-model="timeDate"
+            type="datetimerange"
+            :picker-options="pickerOptions"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            align="right"
+            format="yyyy-MM-dd HH:mm:ss"
+            value-format="yyyy-MM-dd HH:mm:ss"
+            @change="dateChange"
           >
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
+          </el-date-picker>
 
           <el-row>
             <el-col :span="8" class="data_item" style="height:58px">
@@ -89,11 +90,11 @@
               <div>55次</div>
             </el-col>
             <el-col :span="8" class="data_item" style="height:58px">
-              <div class="data_item_title">客情维护</div>
+              <div class="data_item_title">问题处理</div>
               <div>55次</div>
             </el-col>
             <el-col :span="8" class="data_item border_none" style="height:58px">
-              <div class="data_item_title">客情维护</div>
+              <div class="data_item_title">沟通类型</div>
               <div>55次</div>
             </el-col>
           </el-row>
@@ -102,9 +103,9 @@
       <el-col :span="15">
         <div class="bg_box" style="margin-left:0;margin-top:0;height:314px">
           <img class="title_img" src="@/assets/img/clock.png" alt />
-          <div class="title">
-            待沟通{{ planCount }}次
-            <el-button type="primary" style="float:right;margin:10px 24px">添加沟通计划</el-button>
+          <div class="title" >
+            待沟通<span style="color: #1989FA; padding: 0 4px;">{{ willConactNum }}</span>次
+            <el-button type="primary" style="float: right; margin: 10px 24px;" @click="addContacts">添加沟通计划</el-button>
           </div>
 
           <BaseCrud
@@ -127,8 +128,8 @@
     <div class="bg_box" style="height:411px;margin-top:0;">
       <div class="title">
         历史沟通记录
-        <el-button type="primary" style="float:right;margin:10px 24px">添加沟通计划</el-button>
-        <el-button style="float:right;margin:10px 0px">查看联系人</el-button>
+        <el-button type="primary" style="float:right;margin:10px 24px" @click="addSubtotal">添加沟通小计</el-button>
+        <el-button style="float:right;margin:10px 0px" @click="viewLiaison">查看联系人</el-button>
       </div>
 
       <BaseCrud
@@ -156,6 +157,55 @@
         @cancel="cancel"
       ></Form>
     </el-drawer>
+    <el-drawer title="我是标题" :visible.sync="addContactsDraw" :with-header="false" size="40%">
+      <div class="p_head">{{ contactConfigData.title }}</div>
+      <Form
+        :form-base-data="contactConfigData"
+        :show-foot-btn="contactConfigData.showFootBtn"
+        @confirm="handel_addContacts"
+        @cancel="cancel"
+      ></Form>
+    </el-drawer>
+    <el-drawer :visible.sync="findLiaison" :with-header="false" size="40%">
+        <div class="top_title">
+          <span class="the_title">查看联系人</span>
+          <el-button type="primary" @click="liaisonAdd">添加联系人</el-button>
+        </div>
+        <ul class="liaisonList">
+          <li class="liaison-contant">
+            <div class="liaison-top">
+              <span class="liaison-name">炸弹</span>
+              <div class="liaison-editor">编辑</div>
+            </div>
+            <div class="liasion-info">
+              <div class="info-list">
+                <span>手机号：</span>
+                <span>1236366585</span>
+              </div>
+              <div class="info-list">
+                <span>职位：</span>
+                <span>1236366585</span>
+              </div>
+              <div class="info-list">
+                <span>备注：</span>
+                <span>1236366585</span>
+              </div>
+              <div class="jobStatus">
+                <img src="../../assets/img/injob.png" alt="">
+                <img src="../../assets/img/outjob.png" alt="">
+              </div>
+            </div>
+          </li>
+        </ul>
+    </el-drawer>
+    <el-drawer :visible.sync="addLiaison" :with-header="false" size="30%">
+      <Form
+         :form-base-data="liaisonConfigData.formData"
+         :show-foot-btn="contactConfigData.showFootBtn"
+         @confirm="handel_addLiaison"
+         @cancel="cancel"
+      ></Form>
+    </el-drawer>
   </div>
 </template>
 
@@ -166,14 +216,21 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import detailMode from "@/components/detailMode/detailMode.vue";
 import { USER_CONFIG, USER_CONFIG2 } from "./tableConfig/config_communicate";
 import { FORM_CONFIG } from "./formConfig/agentDetail";
+import { CONTACTS_CONFIG } from "./formConfig/addContacts"
+import { LISASION } from "./formConfig/addLiasion"
 
 export default {
   name: "Theme",
   components: { detailMode, BaseCrud, Form },
   data() {
     return {
+      addLiaison: false,
+      findLiaison: false,
+      addDrewerType: '',
+      willConactNum: 0,
       agentDetail: {},
       drawer: false,
+      addContactsDraw: false,
       dynamicTags: [],
       inputVisible: false,
       inputValue: "",
@@ -231,7 +288,8 @@ export default {
                 items: [
                   {
                     name: "结算卡类型",
-                    key: "bankAccountType"
+                    key: "bankAccountType",
+                    type: "bankType"
                   },
                   {
                     name: "开户支行地区",
@@ -308,11 +366,13 @@ export default {
                 items: [
                   {
                     name: "微信/支付宝费率",
-                    key: "wechatPayRate"
+                    key: "wechatPayRate",
+                    type: "pecent"
                   },
                   {
                     name: "云闪付费率单笔＞1000",
-                    key: "cloudPayGt1000Rate"
+                    key: "cloudPayGt1000Rate",
+                    type: "pecent"
                   }
                 ]
               },
@@ -320,7 +380,8 @@ export default {
                 items: [
                   {
                     name: "云闪付费率单笔≤1000",
-                    key: "cloudPayLe1000Rate"
+                    key: "cloudPayLe1000Rate",
+                    type: "pecent"
                   }
                 ]
               }
@@ -368,18 +429,20 @@ export default {
                 items: [
                   {
                     name: "服务地区",
-                    key: "name1"
+                    key: "activeScopeType",
+                    type: "descript"
                   },
                   {
                     name: "平台分润抽成",
-                    key: "chargeFeePercent"
+                    key: "chargeFeePercent",
+                    type: "pecent"
                   }
                 ]
               },
               {
                 items: [
                   {
-                    name: "是否开通下级",
+                    name: "可否开通下级",
                     key: "expandSub"
                   }
                 ]
@@ -396,20 +459,42 @@ export default {
           }
         ]
       },
-      value: "",
-      options: [
-        {
-          value: 1,
-          label: "a"
-        }
-      ],
+      pickerOptions: {
+        shortcuts: [{
+          text: '最近一周',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近一个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近三个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+            picker.$emit('pick', [start, end]);
+          }
+        }]
+      },
+      timeDate: [],
       testData: [],
       tableConfigData: USER_CONFIG,
       tableConfigData2: USER_CONFIG2,
+      liaisonConfigData: LISASION,
+      contactConfigData: {},
       fromConfigData: [],
       ruleForm: {},
       agentNo: '',
-      planCount: 0,
       params1: {
         id: 1,
         addressBookId: 1,
@@ -453,13 +538,161 @@ export default {
   created() {
     this.agentNo = this.$route.query.agentNo
     this.getDetail(this.agentNo);
-    this.getPlanCount();
+    const now = new Date();
+    const year = now.getFullYear() // 得到年份
+    const month = now.getMonth() + 1// 得到月份
+    const date = now.getDate() // 得到日期
+    const hour = '00' // 得到小时
+    const minu = '00' // 得到分钟
+    const month1 = month < 10 ? "0" + month : month
+    const date1 = date < 10 ? "0" + date : date
+    var start = year + '-' + month1 + '-' + date1 + ' ' + hour + ':' + minu + ':' + '00'
+    var end = year + '-' + month1 + '-' + date1 + ' ' + '23' + ':' + '59' + ':' + '59'
+    this.timeDate = [start, end]
+    this.gatTag()
+    this.getSelectSummary(this.timeDate)
+    this.getQueryWait()
+    this.getRelatedLabels()
+    this.getAddressBookQuery()
   },
   mounted() {},
   methods: {
+    // 查询通讯簿
+    getAddressBookQuery() {
+      api.addressBookQuery({
+        relateCode: this.$route.query.agentNo
+      }).then(res => {
+        console.log(res)
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    // 弹出查看联系人列表的右边抽屉
+    viewLiaison() {
+      this.findLiaison = true
+    },
+    // 弹出新增联系人的右边抽屉
+    liaisonAdd() {
+      this.addLiaison = true
+    },
+    // 新增联系人
+    handel_addLiaison(row) {
+      if (!row.linkmanName || !row.phoneNum) {
+        this.$message({
+          message: '请填写必填信息',
+          type: 'warning'
+        })
+        return false
+      } else {
+        api.addTalkAddressBook({
+          linkmanName: row.linkmanName,
+          phoneNum: row.phoneNum,
+          jobName: row.jobName,
+          remark: row.remark,
+          relateCode: this.$route.query.agentNo
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '添加联系人成功',
+              type: 'success'
+            })
+          }
+        }).catch(() => {})
+      }
+    },
+    // 查询沟通次数
+    getQueryWait() {
+      api.queryWait({
+        relateCode: this.$route.query.agentNo
+      }).then(res => {
+        this.willConactNum = res.object
+      }).catch(() => {})
+    },
+    // 查询服务商已关联的标签
+    getRelatedLabels() {
+      api.queryRelatedLabels({
+        agentNo: this.$route.query.agentNo
+      }).then(res => {
+        console.log('服务商关联的标签')
+        console.log(res)
+        console.log('服务商关联的标签')
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    // 弹出添加沟通计划侧弹窗
+    addContacts() {
+      this.addDrewerType = 'contactsType'
+      this.addContactsDraw = true
+      this.contactConfigData = CONTACTS_CONFIG.formData
+    },
+    addSubtotal() {
+      this.addDrewerType = 'subtotalType'
+      this.addContactsDraw = true
+      this.contactConfigData = CONTACTS_CONFIG.formData1
+    },
+    // 添加沟通计划确定按钮
+    handel_addContacts(row) {
+      if (this.addDrewerType === 'contactsType') {
+        if (row.addressBookId || row.nextContactTime || row.remark) {
+          this.$message({
+            message: '请填写完整信息',
+            type: 'warning'
+          })
+        } else {
+          api.addTalkPlan({
+            addressBookId: row.addressBookId,
+            id: row.id,
+            nextContactTime: row.nextContactTime,
+            relateCode: this.$route.query.agentNo,
+            remark: row.remark,
+            remindTime: row.remindTime,
+            remindType: row.remindType,
+            type: row.type
+          }).then(res => {
+            console.log(res)
+          }).catch(err => {
+            console.log(err)
+          })
+        }
+      }
+      if (this.addDrewerType === 'subtotalType') {
+        console.log('1111')
+      }
+    },
+    // 标签输入框
+    tagInput(value) {
+      console.log(value)
+    },
+    // 沟通计划切换时间
+    dateChange(value) {
+      console.log(value)
+      this.timeDate = value
+      this.getSelectSummary(value)
+    },
     onClick_changeClientType($item) {
       this.activeClass = $item.colorName;
       this.activeValue = $item.value;
+    },
+    // 获取标签信息
+    gatTag() {
+      api.queryLaBleAgent().then(res => {
+        console.log(res)
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    // 查询沟通数据
+    getSelectSummary(value) {
+      api.selectSummary({
+        relateCode: this.$route.query.agentNo,
+        beginDate: value[0],
+        endDate: value[1]
+      }).then(res => {
+        console.log(res)
+      }).catch(err => {
+        console.log(err)
+      })
     },
     getDetail(agentNo) {
       api.getAgentDetail({
@@ -473,15 +706,6 @@ export default {
           this.ruleForm = res.object
         }
       });
-    },
-    getPlanCount() {
-      api
-        .planCount({
-          relateCode: ""
-        })
-        .then(res => {
-          this.planCount = res.object;
-        });
     },
     handleClose(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
@@ -636,19 +860,39 @@ export default {
         }
       }
       if (this.editType === 'editMailAddress') {
-        if (!row.activeMode || !row.chargeFeePercent || !row.expandSub) {
+        if (!row.activeMode || !row.chargeFeePercent || !row.expandSub || !row.area) {
           this.$message({
             message: '请填写完整信息',
             type: 'warning'
           })
           return false
         } else {
-          // api.updateAgentPrivilege({
-          //   activeMode: row.activeMode,
-          //   chargeFeePercent: row.chargeFeePercent,
-          //   expandSub: row.expandSub,
-          //   agentNo: this.$route.query.agentNo,
-          // })
+          if (row.chargeFeePercent <= 0 || row.chargeFeePercent >= 100) {
+            this.$message({
+              message: '请填写完整信息',
+              type: 'warning'
+            })
+            return false
+          } else {
+            api.updateAgentPrivilege({
+              activeMode: row.activeMode,
+              chargeFeePercent: row.chargeFeePercent,
+              expandSub: row.expandSub,
+              agentNo: this.$route.query.agentNo,
+              activeScope: {
+                cityCode: row.addressObj[0].value,
+                cityName: row.addressObj[0].label,
+                provinceCode: row.addressObj[1].value,
+                provinceName: row.addressObj[1].label
+              }
+            }).then(res => {
+              this.getDetail(this.$route.query.agentNo)
+              this.editType = ''
+              this.drawer = false
+            }).catch(err => {
+              console.log(err)
+            })
+          }
         }
       }
     }
@@ -802,5 +1046,87 @@ export default {
 
 .border_none {
   border: none;
+}
+.top_title {
+  width: 100%;
+  height: 72px;
+  padding: 0 24px 0 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #EBEEF5;
+  .the_title {
+    font-size: 20px;
+    font-weight: 500;
+    color: #000000;
+  }
+  button {
+    width: 80px;
+    height: 28px;
+    color: #ffffff;
+    font-size: 12px;
+    text-align: center;
+    line-height: 28px;
+    padding: 0 0;
+  }
+}
+
+.liaisonList {
+  padding: 32px 24px;
+  width: 100%;
+  .liaison-contant {
+    width: 100%;
+    height: 190px;
+    margin-bottom: 24px;
+    border: 1px solid #E9E9E9;
+    border-radius: 4px;
+    .liaison-top {
+      width: 100%;
+      height: 44px;
+      border-bottom: 1px solid #EBEEF5;
+      background: #EBEEF5;
+      padding: 0 24px 0 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      span {
+        font-size: 14px;
+        color: #000000;
+        opacity: 85%;
+        font-weight: 500;
+      }
+      .liaison-editor {
+        color: #1989FA;
+        font-size: 14px;
+        cursor: pointer;
+      }
+    }
+    .liasion-info {
+      padding: 24px 0 0 32px;
+      position: relative;
+      top: 0;
+      left: 0;
+      .info-list {
+        margin-bottom: 14px;
+        line-height: 22px;
+        font-size: 14px;
+        span:nth-child(1) {
+          color: #000000;
+        }
+        span:nth-child(2) {
+          color: #606266;
+        }
+      }
+      .jobStatus {
+        position: absolute;
+        right: 40px;
+        top: 20px;
+        img {
+          width: 104px;
+          height: 104px;
+        }
+      }
+    }
+  }
 }
 </style>
