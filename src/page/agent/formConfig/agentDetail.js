@@ -235,5 +235,69 @@ export const FORM_CONFIG = {
         showSlotName: '‰'
       }
     ]
+  },
+  renew: {
+    title: '续费信息',
+    showFootBtn: true,
+    formData: [
+      {
+        type: 1,
+        label: '续费方式',
+        key: 'renewType',
+        initVal: '',
+        placeholder: '请选择',
+        options: [
+          {
+            label: '固定',
+            value: 'fixed'
+          },
+          {
+            label: '百分比',
+            value: 'pecent'
+          }
+        ]
+      },
+      {
+        type: 1,
+        label: '续费时间',
+        key: 'time',
+        options: [
+          {
+            label: '1个月',
+            value: 1
+          },
+          {
+            label: '2个月',
+            value: 2
+          },
+          {
+            label: '6个月',
+            value: 3
+          },
+          {
+            label: '1年',
+            value: 4
+          },
+          {
+            label: '2年',
+            value: 5
+          },
+          {
+            label: '3年',
+            value: 6
+          }
+        ]
+      },
+      {
+        type: 0,
+        label: '佣金比例',
+        key: 'renewValue',
+        initVal: '',
+        placeholder: '请输入',
+        isShowSlot: true,
+        showSlotName: '%',
+        rules: setRules('请输入').doubleFloat.get
+      }
+    ]
   }
 }

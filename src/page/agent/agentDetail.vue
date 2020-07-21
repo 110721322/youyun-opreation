@@ -81,6 +81,7 @@
             format="yyyy-MM-dd HH:mm:ss"
             value-format="yyyy-MM-dd HH:mm:ss"
             @change="dateChange"
+            class="selectDate"
           >
           </el-date-picker>
 
@@ -145,6 +146,7 @@
         :params="params2"
         :api-service="api2"
         style="margin:24px;border:1px solid #EBEEF5;height:309px;overflow:hidden"
+        @detail="viewDetail"
       ></BaseCrud>
     </div>
 
@@ -157,7 +159,7 @@
         @cancel="cancel"
       ></Form>
     </el-drawer>
-    <el-drawer title="我是标题" :visible.sync="addContactsDraw" :with-header="false" size="40%">
+    <el-drawer title="添加沟通计划" :visible.sync="addContactsDraw" :with-header="false" size="40%">
       <div class="p_head">{{ contactConfigData.title }}</div>
       <Form
         :form-base-data="contactConfigData"
@@ -172,27 +174,27 @@
           <el-button type="primary" @click="liaisonAdd">添加联系人</el-button>
         </div>
         <ul class="liaisonList">
-          <li class="liaison-contant">
+          <li class="liaison-contant" v-for="(item, index) in contactsList" :key="index">
             <div class="liaison-top">
-              <span class="liaison-name">炸弹</span>
-              <div class="liaison-editor">编辑</div>
+              <span class="liaison-name">{{item.linkmanName}}</span>
+              <div class="liaison-editor" @click="editLiaison(item)">编辑</div>
             </div>
             <div class="liasion-info">
               <div class="info-list">
                 <span>手机号：</span>
-                <span>1236366585</span>
+                <span>{{item.phoneNum}}</span>
               </div>
               <div class="info-list">
                 <span>职位：</span>
-                <span>1236366585</span>
+                <span>{{item.jobName || ''}}</span>
               </div>
               <div class="info-list">
                 <span>备注：</span>
-                <span>1236366585</span>
+                <span>{{item.remark || ''}}</span>
               </div>
               <div class="jobStatus">
-                <img src="../../assets/img/injob.png" alt="">
-                <img src="../../assets/img/outjob.png" alt="">
+                <img v-if="item.jobStatus === 'on'" src="../../assets/img/injob.png" alt="">
+                <img v-else src="../../assets/img/outjob.png" alt="">
               </div>
             </div>
           </li>
@@ -200,12 +202,56 @@
     </el-drawer>
     <el-drawer :visible.sync="addLiaison" :with-header="false" size="30%">
       <Form
+         ref="liaisonRef"
          :form-base-data="liaisonConfigData.formData"
-         :show-foot-btn="contactConfigData.showFootBtn"
+         :show-foot-btn="liaisonConfigData.showFootBtn"
          @confirm="handel_addLiaison"
-         @cancel="cancel"
+         @cancel="liaisonCancel"
       ></Form>
     </el-drawer>
+    <el-dialog title="沟通记录详情" :visible.sync="dialogTableVisible">
+      <ul class="liaison_detail">
+        <li>
+          <span>联系人：</span>
+          <span>张三</span>
+        </li>
+        <li>
+          <span>职位：</span>
+          <span>张三</span>
+        </li>
+        <li>
+          <span>手机号：</span>
+          <span>张三</span>
+        </li>
+        <li>
+          <span>创建人：</span>
+          <span>张三</span>
+        </li>
+        <li>
+          <span>创建时间：</span>
+          <span>张三</span>
+        </li>
+        <li>
+          <span>沟通方式：</span>
+          <span>张三</span>
+        </li>
+        <li>
+          <span>沟通主题：</span>
+          <span>张三</span>
+        </li>
+        <li>
+          <div>问题商户：</div>
+          <div>
+            <p>张三</p>
+            <p>李四</p>
+          </div>
+        </li>
+        <li>
+          <span>沟通内容：</span>
+          <span>张三你好</span>
+        </li>
+      </ul>
+    </el-dialog>
   </div>
 </template>
 
@@ -224,6 +270,8 @@ export default {
   components: { detailMode, BaseCrud, Form },
   data() {
     return {
+      dialogTableVisible: false,
+      liaisonId: '',
       addLiaison: false,
       findLiaison: false,
       addDrewerType: '',
@@ -490,7 +538,7 @@ export default {
       testData: [],
       tableConfigData: USER_CONFIG,
       tableConfigData2: USER_CONFIG2,
-      liaisonConfigData: LISASION,
+      liaisonConfigData: {},
       contactConfigData: {},
       fromConfigData: [],
       ruleForm: {},
@@ -506,16 +554,8 @@ export default {
         createTime: ""
       },
       api1: api.queryPlan,
-      params2: {
-        id: 1,
-        addressBookId: 1,
-        relateCode: "",
-        theme: "",
-        way: "",
-        content: "",
-        createTime: ""
-      },
-      api2: api.queryPlanList,
+      params2: {},
+      api2: "",
       clientList: [
         {
           value: "情绪客户",
@@ -532,10 +572,13 @@ export default {
       ],
       activeClass: "red",
       activeValue: "情绪客户",
-      editType: ''
+      editType: '',
+      contactsList: [],
+      liaisonType: ''
     };
   },
   created() {
+    localStorage.setItem('liasionAgent', this.$route.query.agentNo)
     this.agentNo = this.$route.query.agentNo
     this.getDetail(this.agentNo);
     const now = new Date();
@@ -554,6 +597,10 @@ export default {
     this.getQueryWait()
     this.getRelatedLabels()
     this.getAddressBookQuery()
+    this.params2 = {
+      relateCode: this.$route.query.agentNo
+    }
+    this.api2 = api.queryPlanList
   },
   mounted() {},
   methods: {
@@ -561,6 +608,19 @@ export default {
     getAddressBookQuery() {
       api.addressBookQuery({
         relateCode: this.$route.query.agentNo
+      }).then(res => {
+        console.log(res)
+        if (res.datas) {
+          this.contactsList = res.datas
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    viewDetail(row) {
+      this.dialogTableVisible = true
+      api.talkListsGetById({
+        id: row.id
       }).then(res => {
         console.log(res)
       }).catch(err => {
@@ -573,31 +633,84 @@ export default {
     },
     // 弹出新增联系人的右边抽屉
     liaisonAdd() {
+      this.liaisonType = 'add'
+      this.liaisonConfigData = LISASION.addData
       this.addLiaison = true
+    },
+    // 编辑联系人的右边抽屉
+    editLiaison(row) {
+      console.log(row)
+      this.liaisonId = row.id
+      this.addLiaison = true
+      const newFromConfigData = LISASION.editData;
+      // 编辑前重赋值
+      newFromConfigData.formData.forEach((item, index) => {
+        item.initVal = row[item.key];
+      });
+      this.liaisonConfigData = newFromConfigData;
+      this.liaisonType = 'edit'
+    },
+    // 关闭添加、编辑联系人的侧边抽屉
+    liaisonCancel() {
+      this.addLiaison = false
     },
     // 新增联系人
     handel_addLiaison(row) {
-      if (!row.linkmanName || !row.phoneNum) {
+      if (!row.linkmanName || !row.phoneNum || !row.jobStatus || !row.jobName) {
         this.$message({
           message: '请填写必填信息',
           type: 'warning'
         })
         return false
       } else {
-        api.addTalkAddressBook({
-          linkmanName: row.linkmanName,
-          phoneNum: row.phoneNum,
-          jobName: row.jobName,
-          remark: row.remark,
-          relateCode: this.$route.query.agentNo
-        }).then(res => {
-          if (res.status === 0) {
-            this.$message({
-              message: '添加联系人成功',
-              type: 'success'
-            })
-          }
-        }).catch(() => {})
+        if (this.liaisonType === 'add') {
+          api.addTalkAddressBook({
+            linkmanName: row.linkmanName,
+            phoneNum: row.phoneNum,
+            jobName: row.jobName,
+            jobStatus: row.jobStatus,
+            remark: row.remark,
+            relateCode: this.$route.query.agentNo
+          }).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                message: '添加联系人成功',
+                type: 'success'
+              })
+              this.addLiaison = false
+              this.getAddressBookQuery()
+            } else {
+              this.$message({
+                message: res.errMessage,
+                type: 'fail'
+              })
+            }
+          }).catch(() => {})
+        } else {
+          api.updateTalkAddressBook({
+            linkmanName: row.linkmanName,
+            phoneNum: row.phoneNum,
+            jobName: row.jobName,
+            jobStatus: row.jobStatus,
+            remark: row.remark,
+            relateCode: this.$route.query.agentNo,
+            id: this.liaisonId
+          }).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                message: '编辑联系人成功',
+                type: 'success'
+              })
+              this.addLiaison = false
+              this.getAddressBookQuery()
+            } else {
+              this.$message({
+                message: res.errMessage,
+                type: 'fail'
+              })
+            }
+          }).catch(() => {})
+        }
       }
     },
     // 查询沟通次数
@@ -633,8 +746,9 @@ export default {
     },
     // 添加沟通计划确定按钮
     handel_addContacts(row) {
+      console.log(row)
       if (this.addDrewerType === 'contactsType') {
-        if (row.addressBookId || row.nextContactTime || row.remark) {
+        if (!row.addressBookId || !row.nextContactTime || !row.remark || !row.remindType) {
           this.$message({
             message: '请填写完整信息',
             type: 'warning'
@@ -642,13 +756,10 @@ export default {
         } else {
           api.addTalkPlan({
             addressBookId: row.addressBookId,
-            id: row.id,
             nextContactTime: row.nextContactTime,
             relateCode: this.$route.query.agentNo,
             remark: row.remark,
-            remindTime: row.remindTime,
-            remindType: row.remindType,
-            type: row.type
+            remindType: row.remindType
           }).then(res => {
             console.log(res)
           }).catch(err => {
@@ -657,7 +768,26 @@ export default {
         }
       }
       if (this.addDrewerType === 'subtotalType') {
-        console.log('1111')
+        if (!row.addressBookId || !row.way || !row.theme || !row.content) {
+          this.$message({
+            message: '请填写完整信息',
+            type: 'warning'
+          })
+          return false
+        } else {
+          api.addTalkLists({
+            addressBookId: row.addressBookId,
+            way: row.way,
+            content: row.content,
+            theme: row.theme[0],
+            subTheme: row.theme[1],
+            relateCode: this.$route.query.agentNo
+          }).then(res => {
+            console.log(res)
+          }).catch(err => {
+            console.log(err)
+          })
+        }
       }
     },
     // 标签输入框
@@ -676,7 +806,9 @@ export default {
     },
     // 获取标签信息
     gatTag() {
-      api.queryLaBleAgent().then(res => {
+      api.queryLaBleAgent({
+        agentNo: this.$route.query.agentNo
+      }).then(res => {
         console.log(res)
       }).catch(err => {
         console.log(err)
@@ -750,6 +882,9 @@ export default {
       }
       if ($model === 'mailAddress') {
         this.editType = 'editMailAddress'
+      }
+      if ($model === 'renew') {
+        this.editType = 'editRenew'
       }
       this.drawer = true;
       const newFromConfigData = FORM_CONFIG[$model];
@@ -1072,8 +1207,10 @@ export default {
 }
 
 .liaisonList {
-  padding: 32px 24px;
+  padding: 32px 24px 100px 24px;
   width: 100%;
+  height: 100vh;
+  overflow: auto;
   .liaison-contant {
     width: 100%;
     height: 190px;
@@ -1128,5 +1265,29 @@ export default {
       }
     }
   }
+}
+
+.liaison_detail {
+  width: 100%;
+  padding-left: 20%;
+  li{
+    display: flex;
+    line-height: 24px;
+    margin-bottom: 8px;
+    span:nth-child(1) {
+      font-size: 16px;
+      color: #333333;
+      padding-right: 20px;
+    }
+    span:nth-child(2) {
+      font-size: 16px;
+    }
+  }
+}
+
+.selectDate {
+  top: 10px;
+  left: 50%;
+  margin-left: -200px;
 }
 </style>

@@ -60,7 +60,7 @@ export default {
   // 服务商信息-沟通记录-分页查询沟通记录
   queryPlanList: (params) => API.GET('/operation/v1/talkLists/queryByPage', params),
   // 服务商信息-沟通记录-查询单个沟通记录
-  talkListsGetById: (params) => API.GET('/operation/v1/talkLists/queryByPage', params),
+  talkListsGetById: (params) => API.POST('/operation/v1/talkLists/getById', params),
   // 服务商信息-沟通记录-查询沟通数据
   selectSummary: (params) => API.GET('/operation/v1/talkLists/selectSummaryByCondition', params),
   // 服务商信息-沟通计划-添加沟通计划
@@ -92,7 +92,7 @@ export default {
   // 添加服务商
   addAgent: (params) => API.POST('/operation/v1/agent/addAgent', params),
   // 服务商标签下拉框
-  queryLaBleAgent: () => API.GET('/operation/v1/label/queryLaBleAgent'),
+  queryLaBleAgent: (params) => API.GET('/operation/v1/label/queryLaBleAgent', params),
   planCount: (params) => API.GET('/operation/v1/talkPlan/queryWaitExecutePlanCount', params),
   queryPlan: (params) => API.GET('/operation/v1/talkPlan/queryByPage', params),
   // 订单管理

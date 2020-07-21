@@ -2,27 +2,27 @@ export const USER_CONFIG = {
   gridConfig: [
     {
       label: '待沟通时间',
-      prop: 'id',
+      prop: 'createTime',
       width: '150px'
     },
     {
       label: '联系人',
-      prop: 'tel',
+      prop: 'addressBookId',
       width: '150px'
     },
     {
-      label: '联系电话',
-      prop: 'email',
+      label: '沟通主题',
+      prop: 'theme',
       width: '150px'
     },
     {
-      label: '备注',
-      prop: 'name',
+      label: '沟通副主题',
+      prop: 'subTheme',
       width: '150px'
     },
     {
-      label: '商户数量',
-      prop: 'name',
+      label: '沟通内容',
+      prop: 'content',
       width: '150px'
     }
   ],

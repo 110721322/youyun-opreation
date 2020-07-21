@@ -79,11 +79,21 @@ export default {
           )
           .then(res => {
             const newArr = [];
-            for (const item of res.object) {
-              newArr.push({
-                value: item[urlOptions.keyName],
-                label: item[urlOptions.valueName]
-              });
+            if (res.object) {
+              for (const item of res.object) {
+                newArr.push({
+                  value: item[urlOptions.keyName],
+                  label: item[urlOptions.valueName]
+                });
+              }
+            }
+            if (res.datas) {
+              for (const item of res.datas) {
+                newArr.push({
+                  value: item[urlOptions.keyName],
+                  label: item[urlOptions.valueName]
+                });
+              }
             }
             console.log(newArr);
             this.selectOptions = newArr;

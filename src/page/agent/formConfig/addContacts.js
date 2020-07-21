@@ -1,4 +1,5 @@
 import { setRules } from '@/libs/kit/formFns.js'
+import aipAgent from '@/api/api_agent.js'
 
 export const CONTACTS_CONFIG = {
   title: '添加沟通计划',
@@ -9,12 +10,15 @@ export const CONTACTS_CONFIG = {
       type: 1,
       label: '联系人',
       key: 'addressBookId',
-      options: [
-        {
-          label: '张三',
-          value: 1
+      urlOptions: {
+        url: aipAgent.addressBookQuery,
+        keyName: 'id',
+        valueName: 'linkmanName',
+        method: 'get',
+        params: {
+          relateCode: localStorage.getItem('liasionAgent')
         }
-      ],
+      },
       rules: setRules('请输入').isSelected.get
     },
     {
@@ -26,7 +30,7 @@ export const CONTACTS_CONFIG = {
     {
       type: 14,
       label: '下次联系时间',
-      key: 'remindTime',
+      key: 'nextContactTime',
       class: 'max-width',
       labelWidth: '100px',
       rules: setRules('请输入').isSelected.get
@@ -69,13 +73,16 @@ export const CONTACTS_CONFIG = {
       type: 1,
       label: '联系人',
       key: 'addressBookId',
-      options: [
-        {
-          label: '张三',
-          value: 1
+      urlOptions: {
+        url: aipAgent.addressBookQuery,
+        keyName: 'id',
+        valueName: 'linkmanName',
+        method: 'get',
+        params: {
+          relateCode: localStorage.getItem('liasionAgent')
         }
-      ],
-      rules: setRules('请输入').isSelected.get
+      },
+      rules: setRules('请选择').isSelected.get
     },
     {
       type: 1,
