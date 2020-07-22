@@ -1,131 +1,136 @@
 import * as API from '.';
+import * as g from '../libs/global';
 
 export default {
   // 服务商审核-分页查询服务商审核列表
-  agentExamineList: (params) => API.GET('/operation/v1/agentAudit/queryAuditPageByCondition', params),
+  agentExamineList: (params) => API.GET(g.config.server + '/operation/v1/agentAudit/queryAuditPageByCondition', params),
   // 服务商审核-通过服务商审核
-  pass: (params) => API.GET('/operation/v1/agentAudit/updateAuditStatusOfPass', params),
+  pass: (params) => API.GET(g.config.server + '/operation/v1/agentAudit/updateAuditStatusOfPass', params),
   // 服务商审核-驳回服务商审核
-  reject: (params) => API.GET('/operation/v1/agentAudit/updateAuditStatusOfReject', params),
+  reject: (params) => API.GET(g.config.server + '/operation/v1/agentAudit/updateAuditStatusOfReject', params),
   // 服务商审核-激活服务商审核
-  activate: (params) => API.GET('/operation/v1/agentAudit/updateAuditStatusOfActivate', params),
+  activate: (params) => API.GET(g.config.server + '/operation/v1/agentAudit/updateAuditStatusOfActivate', params),
   // 服务商审核-分页查询下级服务商审核列表
-  subagentExamineList: (params) => API.GET('/operation/v1/agentAudit/querySubAuditPageByCondition', params),
+  subagentExamineList: (params) => API.GET(g.config.server + '/operation/v1/agentAudit/querySubAuditPageByCondition', params),
   // 服务商审核-通过下级服务商审核
-  subpass: (params) => API.GET('/operation/v1/agentAudit/updateSubAuditStatusOfPass', params),
+  subpass: (params) => API.GET(g.config.server + '/operation/v1/agentAudit/updateSubAuditStatusOfPass', params),
   // 服务商审核-驳回下级服务商审核
-  subreject: (params) => API.GET('/operation/v1/agentAudit/updateSubAuditStatusOfReject', params),
+  subreject: (params) => API.GET(g.config.server + '/operation/v1/agentAudit/updateSubAuditStatusOfReject', params),
   // 分页查询服务商列表
-  agentList: (params) => API.GET('/operation/v1/agent/queryPageByCondition', params),
+  agentList: (params) => API.GET(g.config.server + '/operation/v1/agent/queryPageByCondition', params),
   // 服务商-转移运营
-  transferOperate: (params) => API.GET('/operation/v1/agent/updateOperateUserNo', params),
+  transferOperate: (params) => API.GET(g.config.server + '/operation/v1/agent/updateOperateUserNo', params),
   // 服务商-冻结服务商账号
-  frozen: (params) => API.GET('/operation/v1/agent/updateAccountStatusOfFrozen', params),
+  frozen: (params) => API.GET(g.config.server + '/operation/v1/agent/updateAccountStatusOfFrozen', params),
   // 服务商-解冻服务商账号
-  unfrozen: (params) => API.GET('/operation/v1/agent/updateAccountStatusOfUnfrozen', params),
+  unfrozen: (params) => API.GET(g.config.server + '/operation/v1/agent/updateAccountStatusOfUnfrozen', params),
   // 服务商-查看服务商详情
-  getAgentDetail: (params) => API.GET('/operation/v1/agent/getAgentDetail', params),
+  getAgentDetail: (params) => API.GET(g.config.server + '/operation/v1/agent/getAgentDetail', params),
   // 服务商-更新服务商基本资料
-  updateAgentBaseInfo: (params) => API.POST('/operation/v1/agent/updateAgentBaseInfo', params),
+  updateAgentBaseInfo: (params) => API.POST(g.config.server + '/operation/v1/agent/updateAgentBaseInfo', params),
   // 服务商-更新服务商财务信息
-  updateFinancial: (params) => API.POST('/operation/v1/agent/updateAgentFinancialInfo', params),
+  updateFinancial: (params) => API.POST(g.config.server + '/operation/v1/agent/updateAgentFinancialInfo', params),
   // 服务商-更新服务商续费
-  updateAgentRenew: (params) => API.POST('/operation/v1/agent/updateAgentRenew', params),
+  updateAgentRenew: (params) => API.POST(g.config.server + '/operation/v1/agent/updateAgentRenew', params),
   // 服务商-更新服务商费率
-  updateAgentRate: (params) => API.POST('/operation/v1/agent/updateAgentRate', params),
+  updateAgentRate: (params) => API.POST(g.config.server + '/operation/v1/agent/updateAgentRate', params),
   // 服务商-更新服务商权限
-  updateAgentPrivilege: (params) => API.POST('/operation/v1/agent/updateAgentPrivilege', params),
+  updateAgentPrivilege: (params) => API.POST(g.config.server + '/operation/v1/agent/updateAgentPrivilege', params),
   // 分润总览-分润总览
-  totalCommission: (params) => API.GET('/operation/v1/commission/queryTotalCommission', params),
+  totalCommission: (params) => API.GET(g.config.server + '/operation/v1/commission/queryTotalCommission', params),
   // 分润总览-服务商分润
-  agentCommission: (params) => API.GET('/operation/v1/commission/listAgentCommission', params),
+  agentCommission: (params) => API.GET(g.config.server + '/operation/v1/commission/listAgentCommission', params),
   // 分润总览-商户分润
-  merchantCommission: (params) => API.GET('/operation/v1/commission/listMerchantCommission', params),
+  merchantCommission: (params) => API.GET(g.config.server + '/operation/v1/commission/listMerchantCommission', params),
   // 服务商信息-查询某服务商已关联的标签集合
-  queryRelatedLabels: (params) => API.GET('operation/v1/label/queryRelatedLabels/agent', params),
+  queryRelatedLabels: (params) => API.GET(g.config.server + 'operation/v1/label/queryRelatedLabels/agent', params),
   // 服务商信息-沟通联系人-添加通讯簿
-  addTalkAddressBook: (params) => API.POST('/operation/v1/talkAddressBook/add', params),
+  addTalkAddressBook: (params) => API.POST(g.config.server + '/operation/v1/talkAddressBook/add', params),
   // 服务商信息-沟通联系人-更新通讯簿
-  updateTalkAddressBook: (params) => API.POST('/operation/v1/talkAddressBook/update', params),
+  updateTalkAddressBook: (params) => API.POST(g.config.server + '/operation/v1/talkAddressBook/update', params),
   // 服务商信息-沟通联系人-查询单个通讯簿
-  getById: (params) => API.GET('/operation/v1/talkAddressBook/getById', params),
+  getById: (params) => API.GET(g.config.server + '/operation/v1/talkAddressBook/getById', params),
   // 服务商信息-沟通联系人-分页查询通讯簿
-  addressBookQuery: (params) => API.GET('/operation/v1/talkAddressBook/queryByPage', params),
+  addressBookQuery: (params) => API.GET(g.config.server + '/operation/v1/talkAddressBook/queryByPage', params),
   // 服务商信息-沟通联系人-查询通讯簿下拉框
-  queryByAgentNo: (params) => API.GET('/operation/v1/talkAddressBook/queryByAgentNo', params),
+  queryByAgentNo: (params) => API.GET(g.config.server + '/operation/v1/talkAddressBook/queryByAgentNo', params),
   // 服务商信息-沟通记录-更新沟通记录
-  updateAgent: (params) => API.POST('/operation/v1/talkLists/update/agent', params),
+  updateAgent: (params) => API.POST(g.config.server + '/operation/v1/talkLists/update/agent', params),
   // 服务商信息-沟通记录-新增沟通记录
-  addTalkLists: (params) => API.POST('/operation/v1/talkLists/add/agent', params),
+  addTalkLists: (params) => API.POST(g.config.server + '/operation/v1/talkLists/add/agent', params),
   // 服务商信息-沟通记录-分页查询沟通记录
-  queryPlanList: (params) => API.GET('/operation/v1/talkLists/queryByPage', params),
+  queryPlanList: (params) => API.GET(g.config.server + '/operation/v1/talkLists/queryByPage', params),
   // 服务商信息-沟通记录-查询单个沟通记录
-  talkListsGetById: (params) => API.POST('/operation/v1/talkLists/getById', params),
+  talkListsGetById: (params) => API.POST(g.config.server + '/operation/v1/talkLists/getById', params),
   // 服务商信息-沟通记录-查询沟通数据
-  selectSummary: (params) => API.GET('/operation/v1/talkLists/selectSummaryByCondition', params),
+  selectSummary: (params) => API.GET(g.config.server + '/operation/v1/talkLists/selectSummaryByCondition', params),
   // 服务商信息-沟通计划-添加沟通计划
-  addTalkPlan: (params) => API.POST('/operation/v1/talkPlan/add', params),
+  addTalkPlan: (params) => API.POST(g.config.server + '/operation/v1/talkPlan/add', params),
   // 服务商信息-沟通计划-修改沟通计划
-  updateTalkPlan: (params) => API.POST('/operation/v1/talkPlan/update', params),
+  updateTalkPlan: (params) => API.POST(g.config.server + '/operation/v1/talkPlan/update', params),
   // 服务商信息-沟通计划-查询单个沟通计划
-  getTalkPlan: (params) => API.POST('/operation/v1/talkPlan/getById', params),
+  getTalkPlan: (params) => API.POST(g.config.server + '/operation/v1/talkPlan/getById', params),
   // 服务商信息-沟通计划-分页查询沟通计划
-  queryTalkPlan: (params) => API.GET('/operation/v1/talkPlan/queryByPage', params),
+  queryTalkPlan: (params) => API.GET(g.config.server + '/operation/v1/talkPlan/queryByPage', params),
   // 服务商信息-沟通计划-查询待沟通次数
-  queryWait: (params) => API.GET('/operation/v1/talkPlan/queryWaitExecutePlanCount', params),
+  queryWait: (params) => API.GET(g.config.server + '/operation/v1/talkPlan/queryWaitExecutePlanCount', params),
   // 服务商审核-下级服务商详情
-  getSubAgentDetail: (params) => API.GET('/operation/v1/agent/getSubAgentDetail', params),
+  getSubAgentDetail: (params) => API.GET(g.config.server + '/operation/v1/agent/getSubAgentDetail', params),
   // 服务商-添加邮寄地址
-  addPostAddress: (params) => API.POST('/operation/v1/postAddress/add/agent', params),
+  addPostAddress: (params) => API.POST(g.config.server + '/operation/v1/postAddress/add/agent', params),
   // 服务商-更新邮寄地址
-  updatePostAddress: (params) => API.POST('/operation/v1/postAddress/update/agent', params),
-  // 下级服务商列表
-  queryPageByCondition: (params) => API.GET('/agent/v1/subAgent/queryPageByCondition', params),
+  updatePostAddress: (params) => API.POST(g.config.server + '/operation/v1/postAddress/update/agent', params),
+  // 服务商-下级服务商列表
+  queryPageByCondition: (params) => API.GET('http://192.168.2.102:8082/agent/v1/subAgent/queryPageByCondition', params),
+  // 服务商-查看下级服务商的详情
+  subAgentDetail: (params) => API.POST('http://192.168.2.102:8082/agent/v1/subAgent/getSubAgentDetail', params),
+  // 服务商-冻结下级服务商
+  updateAccountStatusOfFrozen: (params) => API.GET('http://192.168.2.102:8082/agent/v1/subAgent/updateAccountStatusOfFrozen', params),
   // 更换所属上级服务商
-  updateParentAgentNo: (params) => API.GET('/operation/v1/agent/updateParentAgentNo', params),
+  updateParentAgentNo: (params) => API.GET(g.config.server + '/operation/v1/agent/updateParentAgentNo', params),
   // 根据服务商名模糊查询顶级服务商
-  queryNamesByCondition: (params) => API.GET('/operation/v1/agent/queryNamesByCondition', params),
+  queryNamesByCondition: (params) => API.GET(g.config.server + '/operation/v1/agent/queryNamesByCondition', params),
   // 查询标签接口
-  selectByChannelAgentCode: () => API.GET('operation/v1/label/selectByChannelAgentCode'),
+  selectByChannelAgentCode: () => API.GET(g.config.server + 'operation/v1/label/selectByChannelAgentCode'),
   // 查询所属大区
-  queryAllRegion: () => API.GET('operation/v1/region/queryAllRegion'),
+  queryAllRegion: () => API.GET(g.config.server + 'operation/v1/region/queryAllRegion'),
   // 添加服务商
-  addAgent: (params) => API.POST('/operation/v1/agent/addAgent', params),
+  addAgent: (params) => API.POST(g.config.server + '/operation/v1/agent/addAgent', params),
   // 服务商标签下拉框
-  queryLaBleAgent: (params) => API.GET('/operation/v1/label/queryLaBleAgent', params),
-  planCount: (params) => API.GET('/operation/v1/talkPlan/queryWaitExecutePlanCount', params),
-  queryPlan: (params) => API.GET('/operation/v1/talkPlan/queryByPage', params),
+  queryLaBleAgent: (params) => API.GET(g.config.server + '/operation/v1/label/queryLaBleAgent', params),
+  planCount: (params) => API.GET(g.config.server + '/operation/v1/talkPlan/queryWaitExecutePlanCount', params),
+  queryPlan: (params) => API.GET(g.config.server + '/operation/v1/talkPlan/queryByPage', params),
   // 订单管理
-  hardwarePageOrder: (params) => API.GET('/operation/v1/deviceOrder/hardwarePageOrder', params),
-  hardwareDetail: (params) => API.GET('/operation/v1/deviceOrder/hardwareDetail', params),
+  hardwarePageOrder: (params) => API.GET(g.config.server + '/operation/v1/deviceOrder/hardwarePageOrder', params),
+  hardwareDetail: (params) => API.GET(g.config.server + '/operation/v1/deviceOrder/hardwareDetail', params),
   // 广告权限
-  advertPrivilege: (params) => API.GET('/operation/v1/advertPrivilege/queryByPage', params),
-  advertPrivilegeUpdate: (params) => API.POST('/operation/v1/advertPrivilege/update', params),
-  queryAllPrivilege: (params) => API.GET('/operation/v1/advertPrivilege/queryAllPrivilege', params),
-  advertList: (params) => API.GET('/operation/v1/advert/queryByPage', params),
-  advertDelete: (params) => API.GET('/operation/v1/advert/delete', params),
-  advertDistribute: (params) => API.GET('/operation/v1/advertDistribute/delete', params),
-  advertAdd: (params) => API.POST('/operation/v1/advert/add', params),
-  advertUpdate: (params) => API.POST('/operation/v1/advert/update', params),
-  queryById: (params) => API.GET('operation/v1/advertDistribute/queryById', params),
-  queryAllDistributeName: (params) => API.GET('operation/v1/advertDistribute/queryAllDistributeName', params),
-  queryAllPrivilegeType: (params) => API.GET('/operation/v1/advertDistribute/queryAllPrivilegeType', params),
-  queryAllAdvertDistributeType: (params) => API.GET('/operation/v1/advertDistribute/queryAllAdvertDistributeType', params),
-  advertQueryById: (params) => API.GET('operation/v1/advert/queryById', params),
-  putList: (params) => API.POST('/operation/v1/advertDistribute/queryByPage', params),
-  advertDistributeAdd: (params) => API.POST('/operation/v1/advertDistribute/add', params),
-  advertDistributeUpdate: (params) => API.GET('/operation/v1/advertDistribute/update', params),
+  advertPrivilege: (params) => API.GET(g.config.server + '/operation/v1/advertPrivilege/queryByPage', params),
+  advertPrivilegeUpdate: (params) => API.POST(g.config.server + '/operation/v1/advertPrivilege/update', params),
+  queryAllPrivilege: (params) => API.GET(g.config.server + '/operation/v1/advertPrivilege/queryAllPrivilege', params),
+  advertList: (params) => API.GET(g.config.server + '/operation/v1/advert/queryByPage', params),
+  advertDelete: (params) => API.GET(g.config.server + '/operation/v1/advert/delete', params),
+  advertDistribute: (params) => API.GET(g.config.server + '/operation/v1/advertDistribute/delete', params),
+  advertAdd: (params) => API.POST(g.config.server + '/operation/v1/advert/add', params),
+  advertUpdate: (params) => API.POST(g.config.server + '/operation/v1/advert/update', params),
+  queryById: (params) => API.GET(g.config.server + 'operation/v1/advertDistribute/queryById', params),
+  queryAllDistributeName: (params) => API.GET(g.config.server + 'operation/v1/advertDistribute/queryAllDistributeName', params),
+  queryAllPrivilegeType: (params) => API.GET(g.config.server + '/operation/v1/advertDistribute/queryAllPrivilegeType', params),
+  queryAllAdvertDistributeType: (params) => API.GET(g.config.server + '/operation/v1/advertDistribute/queryAllAdvertDistributeType', params),
+  advertQueryById: (params) => API.GET(g.config.server + 'operation/v1/advert/queryById', params),
+  putList: (params) => API.POST(g.config.server + '/operation/v1/advertDistribute/queryByPage', params),
+  advertDistributeAdd: (params) => API.POST(g.config.server + '/operation/v1/advertDistribute/add', params),
+  advertDistributeUpdate: (params) => API.GET(g.config.server + '/operation/v1/advertDistribute/update', params),
   // 运营结算审核
-  listOperationSettle: (params) => API.GET('/operation/v1/agentSettle/listOperationSettle', params),
+  listOperationSettle: (params) => API.GET(g.config.server + '/operation/v1/agentSettle/listOperationSettle', params),
   // 第三方对接列表
-  queryByPage: (params) => API.GET('/operation/v1/agentOpenConfig/queryByPage', params),
-  updateOfFrozen: (params) => API.GET('/operation/v1/agentOpenConfig/updateOfFrozen', params),
-  updateOfUnFrozen: (params) => API.GET('/operation/v1/agentOpenConfig/updateOfUnFrozen', params),
-  add: (params) => API.GET('/operation/v1/agentOpenConfig/add', params),
-  update: (params) => API.GET('/operation/v1/agentOpenConfig/update', params),
+  queryByPage: (params) => API.GET(g.config.server + '/operation/v1/agentOpenConfig/queryByPage', params),
+  updateOfFrozen: (params) => API.GET(g.config.server + '/operation/v1/agentOpenConfig/updateOfFrozen', params),
+  updateOfUnFrozen: (params) => API.GET(g.config.server + '/operation/v1/agentOpenConfig/updateOfUnFrozen', params),
+  add: (params) => API.GET(g.config.server + '/operation/v1/agentOpenConfig/add', params),
+  update: (params) => API.GET(g.config.server + '/operation/v1/agentOpenConfig/update', params),
   // 平台广告列表-广告类型下拉列表接口
-  queryAllAdvertType: (params) => API.GET('/operation/v1/advert/queryAllAdvertType', params),
-  queryAllOperation: (params) => API.GET('/operation/v1/advertPrivilege/queryAllOperation', params),
-  queryAllDistributeStatus: (params) => API.GET('/operation/v1/advertDistribute/queryAllDistributeStatus', params),
-  queryAllDistributeAgent: (params) => API.GET('/operation/v1/advertDistribute/queryAllDistributeAgent', params)
+  queryAllAdvertType: (params) => API.GET(g.config.server + '/operation/v1/advert/queryAllAdvertType', params),
+  queryAllOperation: (params) => API.GET(g.config.server + '/operation/v1/advertPrivilege/queryAllOperation', params),
+  queryAllDistributeStatus: (params) => API.GET(g.config.server + '/operation/v1/advertDistribute/queryAllDistributeStatus', params),
+  queryAllDistributeAgent: (params) => API.GET(g.config.server + '/operation/v1/advertDistribute/queryAllDistributeAgent', params)
 };

@@ -12,6 +12,7 @@
       <!-- <data-mode></data-mode> -->
       <div class="table_box">
         <BaseCrud
+          ref="table"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
           :grid-data="testData"
@@ -54,18 +55,11 @@ export default {
       searchConfig: FORM_CONFIG,
       testData: [],
       params: {},
-      api: api.subagentExamineList
+      api: api.queryPageByCondition
     };
   },
   created() {
     this.params = {
-      "agentNo": "",
-      "agentName": "",
-      "personName": "",
-      "personMobile": "",
-      "operateUserNo": "",
-      "contractStatus": "",
-      "contractStatusSet": ""
     }
   },
   mounted() {
@@ -74,19 +68,18 @@ export default {
     search($form, $obj) {
       console.log($form)
       this.params = {
-        "agentNo": "",
-        "agentName": "",
-        "personName": "",
-        "personMobile": "",
-        "operateUserNo": $form.operateUserNo,
-        "contractStatus": $form.contractStatus,
-        "contractStatusSet": ""
+        regionCode: $form.regionCode,
+        provinceCode: $form.area[0],
+        cityCode: $form.area[1]
       }
       this.params[$form.inputSelect] = $form.inputForm
     },
-    openDetail() {
+    openDetail(row) {
       this.$router.push({
-        path: "/agent/subList/detail"
+        path: "/agent/subList/detail",
+        query: {
+          agentNo: row.agentNo
+        }
       });
     },
     thaw(row) {
@@ -114,13 +107,14 @@ export default {
         cancelButtonText: "取消"
       })
         .then(() => {
-          api.frozen({
+          api.updateAccountStatusOfFrozen({
             agentNo: row.agentNo
           }).then(res => {
             this.$message({
-              type: "info",
+              type: "success",
               message: "已冻结"
             });
+            this.$refs.table.getData()
           })
         })
         .catch(() => {});

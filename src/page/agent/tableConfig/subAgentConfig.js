@@ -84,7 +84,14 @@ export const USER_CONFIG = {
       {
         name: '冻结',
         emitName: 'frozen',
-        type: 'text'
+        type: 'text',
+        isShow: ($row) => {
+          if ($row.isBlocked === 0) {
+            return true;
+          } else {
+            return false;
+          }
+        }
       },
       {
         name: '详情',
@@ -94,7 +101,14 @@ export const USER_CONFIG = {
       {
         name: '解冻',
         emitName: 'thaw',
-        type: 'text'
+        type: 'text',
+        isShow: ($row) => {
+          if ($row.isBlocked === 1) {
+            return true;
+          } else {
+            return false;
+          }
+        }
       },
       {
         name: '服务商后台',
