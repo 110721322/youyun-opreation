@@ -1,24 +1,19 @@
 export const USER_CONFIG = {
   gridConfig: [
     {
-      label: '服务商ID',
-      prop: 'ID',
-      width: '120px'
-    },
-    {
-      label: '服务商名称',
-      prop: 'agentName',
-      width: '150px'
+      label: '服务商',
+      prop: [{ key: 'agentName' }, { key: 'agentNo', label: "ID:" }],
+      width: '200px'
     },
     {
       label: '开通时间',
-      prop: 'activeDate',
-      width: '150px'
+      prop: 'createTime',
+      width: '200px'
     },
     {
       label: '到期时间',
       prop: 'expireDate',
-      width: '150px'
+      width: '200px'
     },
     {
       label: '商户数量（个）',
@@ -33,21 +28,10 @@ export const USER_CONFIG = {
 
     {
       label: '状态',
-      prop: 'accountStatus',
+      prop: 'contractStatus',
 
       render: (h, params) => {
-        if (params.row.status === '0') {
-          return h(
-            'el-tag',
-            {
-              props: {
-                size: 'medium ',
-                type: 'warning'
-              }
-            },
-            '已驳回'
-          );
-        } else {
+        if (params.row.contractStatus === 'success') {
           return h(
             'el-tag',
             {
@@ -56,7 +40,7 @@ export const USER_CONFIG = {
                 type: 'success'
               }
             },
-            '待审核'
+            '审核通过'
           );
         }
       }
@@ -87,21 +71,54 @@ export const USER_CONFIG = {
     delete: false,
     view: false,
     expands: [
-
+      {
+        name: '补充',
+        emitName: 'completion',
+        type: 'text',
+        style: 'color: #3ABD2D',
+        isShow: ($row) => {
+          if ($row.status === 'incomplete') {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      },
       {
         name: '冻结',
         emitName: 'frozen',
-        type: 'text'
+        type: 'text',
+        isShow: ($row) => {
+          if ($row.isBlocked === 0) {
+            return true;
+          } else {
+            return false;
+          }
+        }
       },
       {
         name: '详情',
         emitName: 'detail',
-        type: 'text'
+        type: 'text',
+        isShow: ($row) => {
+          if ($row.status !== 'incomplete') {
+            return true;
+          } else {
+            return false;
+          }
+        }
       },
       {
         name: '解冻',
         emitName: 'thaw',
-        type: 'text'
+        type: 'text',
+        isShow: ($row) => {
+          if ($row.isBlocked === 1) {
+            return true;
+          } else {
+            return false;
+          }
+        }
       },
       {
         name: '服务商后台',

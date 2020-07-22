@@ -10,7 +10,7 @@
     <!-- <data-mode></data-mode> -->
     <div class="table_box">
       <BaseCrud
-        ref="child"
+        ref="table"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
         :grid-data="testData"
@@ -19,7 +19,7 @@
         :grid-edit-width="300"
         form-title="用户"
         :is-async="true"
-        :is-select="true"
+        :is-select="false"
         :params="params"
         :api-service="api"
         @reject="reject"
@@ -110,12 +110,13 @@ export default {
       })
         .then(() => {
           api.reject({
-            "agentNo": row.agentNo
-          }).then((result) => {
+            agentNo: row.agentNo
+          }).then(() => {
             this.$message({
               type: "info",
               message: "已驳回"
             });
+            this.$refs.table.getData();
           }).catch(err => {
             console.error(err);
           });
@@ -130,12 +131,13 @@ export default {
       })
         .then(() => {
           api.activate({
-            "agentNo": row.agentNo
+            agentNo: row.agentNo
           }).then((result) => {
             this.$message({
               type: "info",
               message: "已激活"
             });
+            this.$refs.table.getData();
           }).catch(err => {
             console.error(err);
           });
@@ -143,6 +145,7 @@ export default {
         .catch(() => {});
     },
     adopt(row) {
+      console.log(row)
       this.$confirm("是否要通过该代理商？", "通过代理商", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认通过",
@@ -150,8 +153,8 @@ export default {
       })
         .then(() => {
           api.pass({
-            "agentNo": row.agentNo
-          }).then((result) => {
+            agentNo: row.agentNo
+          }).then(res => {
             this.$message({
               type: "info",
               message: "已通过"

@@ -38,5 +38,13 @@ export const rules = {
       message: '请输入可带两位小数的正数'
     }];
     return i.concat(result);
+  },
+  oneFloat: (i) => {
+    const result = [{
+      pattern: /^\d+(\.\d{0,1})?$/,
+      message: '可带一位小数的正数',
+      required: true,
+    }];
+    return i.concat(result);
   }
 };

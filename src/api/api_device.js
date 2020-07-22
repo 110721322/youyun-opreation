@@ -52,5 +52,6 @@ export default {
   off: (params) => API.POST('/operation/v1/deviceMall/off', params), // 设备商城管理-下架
   queryAllOperation: () => API.GET('/operation/v1/advertPrivilege/queryAllOperation'), // 查询所有运营人员
   queryAllRegion: () => API.GET('/operation/v1/region/queryAllRegion'), // 参数设置-大区设置-查询所有大区
-  deviceStatusAll: () => API.GET('operation/v1/deviceMaintain/deviceStatusAll') // 设备维修-运营端-状态下拉
+  deviceStatusAll: () => API.GET('operation/v1/deviceMaintain/deviceStatusAll'), // 设备维修-运营端-状态下拉
+  finishOutputInfoUpdate: (params) => API.GET('operation/v1/deviceOutput/finishOutputInfoUpdate', params) // 设备-出库管理-发货信息编辑
 };

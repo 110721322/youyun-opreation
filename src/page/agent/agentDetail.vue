@@ -2,7 +2,7 @@
   <div class>
     <div class="p_head_detail" :class="[activeClass]">
       <div class="top">
-        <span>杭州网络科技有限公司</span>
+        <span>{{agentDetail.agentName}}</span>
         <el-dropdown trigger="click" @command="onClick_changeClientType">
           <div class="el-dropdown-link">
             <div class="doit" :class="[activeClass]"></div>
@@ -35,6 +35,7 @@
           v-model="inputValue"
           class="input-new-tag"
           size="mini"
+          @input="tagInput"
           @keyup.enter.native="handleInputConfirm"
           @blur="handleInputConfirm"
         ></el-input>
@@ -69,19 +70,20 @@
         <div class="bg_box" style="margin-right:0;margin-top:0;height:314px">
           <div class="title">沟通数据</div>
 
-          <el-select
-            v-model="value"
-            size="medium"
-            placeholder="请选择"
-            style="margin:32px;width:calc(100% - 64px)"
+          <el-date-picker
+            v-model="timeDate"
+            type="datetimerange"
+            :picker-options="pickerOptions"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            align="right"
+            format="yyyy-MM-dd HH:mm:ss"
+            value-format="yyyy-MM-dd HH:mm:ss"
+            @change="dateChange"
+            class="selectDate"
           >
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
+          </el-date-picker>
 
           <el-row>
             <el-col :span="8" class="data_item" style="height:58px">
@@ -89,11 +91,11 @@
               <div>55次</div>
             </el-col>
             <el-col :span="8" class="data_item" style="height:58px">
-              <div class="data_item_title">客情维护</div>
+              <div class="data_item_title">问题处理</div>
               <div>55次</div>
             </el-col>
             <el-col :span="8" class="data_item border_none" style="height:58px">
-              <div class="data_item_title">客情维护</div>
+              <div class="data_item_title">沟通类型</div>
               <div>55次</div>
             </el-col>
           </el-row>
@@ -102,9 +104,9 @@
       <el-col :span="15">
         <div class="bg_box" style="margin-left:0;margin-top:0;height:314px">
           <img class="title_img" src="@/assets/img/clock.png" alt />
-          <div class="title">
-            待沟通{{ planCount }}次
-            <el-button type="primary" style="float:right;margin:10px 24px">添加沟通计划</el-button>
+          <div class="title" >
+            待沟通<span style="color: #1989FA; padding: 0 4px;">{{ willConactNum }}</span>次
+            <el-button type="primary" style="float: right; margin: 10px 24px;" @click="addContacts">添加沟通计划</el-button>
           </div>
 
           <BaseCrud
@@ -127,8 +129,8 @@
     <div class="bg_box" style="height:411px;margin-top:0;">
       <div class="title">
         历史沟通记录
-        <el-button type="primary" style="float:right;margin:10px 24px">添加沟通计划</el-button>
-        <el-button style="float:right;margin:10px 0px">查看联系人</el-button>
+        <el-button type="primary" style="float:right;margin:10px 24px" @click="addSubtotal">添加沟通小计</el-button>
+        <el-button style="float:right;margin:10px 0px" @click="viewLiaison">查看联系人</el-button>
       </div>
 
       <BaseCrud
@@ -144,6 +146,7 @@
         :params="params2"
         :api-service="api2"
         style="margin:24px;border:1px solid #EBEEF5;height:309px;overflow:hidden"
+        @detail="viewDetail"
       ></BaseCrud>
     </div>
 
@@ -152,9 +155,103 @@
       <Form
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
+        @confirm="handel_confirm"
         @cancel="cancel"
       ></Form>
     </el-drawer>
+    <el-drawer title="添加沟通计划" :visible.sync="addContactsDraw" :with-header="false" size="40%">
+      <div class="p_head">{{ contactConfigData.title }}</div>
+      <Form
+        :form-base-data="contactConfigData"
+        :show-foot-btn="contactConfigData.showFootBtn"
+        @confirm="handel_addContacts"
+        @cancel="cancel"
+      ></Form>
+    </el-drawer>
+    <el-drawer :visible.sync="findLiaison" :with-header="false" size="40%">
+        <div class="top_title">
+          <span class="the_title">查看联系人</span>
+          <el-button type="primary" @click="liaisonAdd">添加联系人</el-button>
+        </div>
+        <ul class="liaisonList">
+          <li class="liaison-contant" v-for="(item, index) in contactsList" :key="index">
+            <div class="liaison-top">
+              <span class="liaison-name">{{item.linkmanName}}</span>
+              <div class="liaison-editor" @click="editLiaison(item)">编辑</div>
+            </div>
+            <div class="liasion-info">
+              <div class="info-list">
+                <span>手机号：</span>
+                <span>{{item.phoneNum}}</span>
+              </div>
+              <div class="info-list">
+                <span>职位：</span>
+                <span>{{item.jobName || ''}}</span>
+              </div>
+              <div class="info-list">
+                <span>备注：</span>
+                <span>{{item.remark || ''}}</span>
+              </div>
+              <div class="jobStatus">
+                <img v-if="item.jobStatus === 'on'" src="../../assets/img/injob.png" alt="">
+                <img v-else src="../../assets/img/outjob.png" alt="">
+              </div>
+            </div>
+          </li>
+        </ul>
+    </el-drawer>
+    <el-drawer :visible.sync="addLiaison" :with-header="false" size="30%">
+      <Form
+         ref="liaisonRef"
+         :form-base-data="liaisonConfigData.formData"
+         :show-foot-btn="liaisonConfigData.showFootBtn"
+         @confirm="handel_addLiaison"
+         @cancel="liaisonCancel"
+      ></Form>
+    </el-drawer>
+    <el-dialog title="沟通记录详情" :visible.sync="dialogTableVisible">
+      <ul class="liaison_detail">
+        <li>
+          <span>联系人：</span>
+          <span>张三</span>
+        </li>
+        <li>
+          <span>职位：</span>
+          <span>张三</span>
+        </li>
+        <li>
+          <span>手机号：</span>
+          <span>张三</span>
+        </li>
+        <li>
+          <span>创建人：</span>
+          <span>张三</span>
+        </li>
+        <li>
+          <span>创建时间：</span>
+          <span>张三</span>
+        </li>
+        <li>
+          <span>沟通方式：</span>
+          <span>张三</span>
+        </li>
+        <li>
+          <span>沟通主题：</span>
+          <span>张三</span>
+        </li>
+        <li>
+          <div>问题商户：</div>
+          <div>
+            <p>张三</p>
+            <p>李四</p>
+          </div>
+        </li>
+        <li>
+          <span>沟通内容：</span>
+          <span>张三你好</span>
+        </li>
+      </ul>
+    </el-dialog>
   </div>
 </template>
 
@@ -165,13 +262,23 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import detailMode from "@/components/detailMode/detailMode.vue";
 import { USER_CONFIG, USER_CONFIG2 } from "./tableConfig/config_communicate";
 import { FORM_CONFIG } from "./formConfig/agentDetail";
+import { CONTACTS_CONFIG } from "./formConfig/addContacts"
+import { LISASION } from "./formConfig/addLiasion"
 
 export default {
   name: "Theme",
   components: { detailMode, BaseCrud, Form },
   data() {
     return {
+      dialogTableVisible: false,
+      liaisonId: '',
+      addLiaison: false,
+      findLiaison: false,
+      addDrewerType: '',
+      willConactNum: 0,
+      agentDetail: {},
       drawer: false,
+      addContactsDraw: false,
       dynamicTags: [],
       inputVisible: false,
       inputValue: "",
@@ -186,11 +293,11 @@ export default {
                 items: [
                   {
                     name: "公司名称",
-                    key: ""
+                    key: "agentName"
                   },
                   {
                     name: "法人手机号",
-                    key: "lawMobile"
+                    key: "personMobile"
                   }
                 ]
               },
@@ -211,11 +318,11 @@ export default {
                 items: [
                   {
                     name: "法人姓名",
-                    key: "lawPerson"
+                    key: "personName"
                   },
                   {
                     name: "公司地址",
-                    key: "detailAddress"
+                    key: "companyAddress"
                   }
                 ]
               }
@@ -229,7 +336,8 @@ export default {
                 items: [
                   {
                     name: "结算卡类型",
-                    key: "accountType"
+                    key: "bankAccountType",
+                    type: "bankType"
                   },
                   {
                     name: "开户支行地区",
@@ -241,11 +349,11 @@ export default {
                 items: [
                   {
                     name: "开户名",
-                    key: "email"
+                    key: "bankAccountHolder"
                   },
                   {
                     name: "开户支行",
-                    key: "branchName"
+                    key: "bankBranchName"
                   }
                 ]
               },
@@ -253,7 +361,7 @@ export default {
                 items: [
                   {
                     name: "银行卡号",
-                    key: "bankCardImg"
+                    key: "bankCardNo"
                   }
                 ]
               }
@@ -261,17 +369,17 @@ export default {
           },
           {
             name: "邮寄地址",
-            modelName: "mailAddress",
+            modelName: "address",
             models: [
               {
                 items: [
                   {
                     name: "收件人",
-                    key: "name1"
+                    key: "personName"
                   },
                   {
                     name: "详细地址",
-                    key: "name"
+                    key: "detailAddress"
                   }
                 ]
               },
@@ -279,7 +387,7 @@ export default {
                 items: [
                   {
                     name: "手机号",
-                    key: "email"
+                    key: "personMobile"
                   }
                 ]
               },
@@ -305,28 +413,23 @@ export default {
               {
                 items: [
                   {
-                    name: "微信/支付宝费率(直连)",
-                    key: "name1"
+                    name: "微信/支付宝费率",
+                    key: "wechatPayRate",
+                    type: "pecent"
                   },
                   {
-                    name: "云闪付费率单笔＞1000(间连)",
-                    key: "name"
+                    name: "云闪付费率单笔＞1000",
+                    key: "cloudPayGt1000Rate",
+                    type: "pecent"
                   }
                 ]
               },
               {
                 items: [
                   {
-                    name: "微信/支付宝费率(间连)",
-                    key: "email"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "云闪付费率单笔≤1000(间连)",
-                    key: "name3"
+                    name: "云闪付费率单笔≤1000",
+                    key: "cloudPayLe1000Rate",
+                    type: "pecent"
                   }
                 ]
               }
@@ -334,17 +437,17 @@ export default {
           },
           {
             name: "续费",
-            modelName: "finance",
+            modelName: "renew",
             models: [
               {
                 items: [
                   {
                     name: "开户时间",
-                    key: "name1"
+                    key: "activeDate"
                   },
                   {
                     name: "缴费金额",
-                    key: "name"
+                    key: "renewValue"
                   }
                 ]
               },
@@ -352,7 +455,7 @@ export default {
                 items: [
                   {
                     name: "到期时间",
-                    key: "email"
+                    key: "expireDate"
                   }
                 ]
               },
@@ -360,7 +463,7 @@ export default {
                 items: [
                   {
                     name: "续费方式",
-                    key: "name3"
+                    key: "renewType"
                   }
                 ]
               }
@@ -374,19 +477,21 @@ export default {
                 items: [
                   {
                     name: "服务地区",
-                    key: "name1"
+                    key: "activeScopeType",
+                    type: "descript"
                   },
                   {
                     name: "平台分润抽成",
-                    key: "name"
+                    key: "chargeFeePercent",
+                    type: "pecent"
                   }
                 ]
               },
               {
                 items: [
                   {
-                    name: "是否开通下级",
-                    key: "email"
+                    name: "可否开通下级",
+                    key: "expandSub"
                   }
                 ]
               },
@@ -394,7 +499,7 @@ export default {
                 items: [
                   {
                     name: "服务类型",
-                    key: "name3"
+                    key: "activeMode"
                   }
                 ]
               }
@@ -402,30 +507,42 @@ export default {
           }
         ]
       },
-      value: "",
-      options: [
-        {
-          value: 1,
-          label: "a"
-        }
-      ],
+      pickerOptions: {
+        shortcuts: [{
+          text: '最近一周',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近一个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近三个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+            picker.$emit('pick', [start, end]);
+          }
+        }]
+      },
+      timeDate: [],
       testData: [],
       tableConfigData: USER_CONFIG,
       tableConfigData2: USER_CONFIG2,
+      liaisonConfigData: {},
+      contactConfigData: {},
       fromConfigData: [],
-      ruleForm: {
-        name: "1",
-        name1: "2",
-        name2: "3",
-        name3: "4",
-        email: "12312312@163.com",
-        pic:
-          "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
-      },
-      params: {
-        agentNo: ""
-      },
-      planCount: 0,
+      ruleForm: {},
+      agentNo: '',
       params1: {
         id: 1,
         addressBookId: 1,
@@ -437,16 +554,8 @@ export default {
         createTime: ""
       },
       api1: api.queryPlan,
-      params2: {
-        id: 1,
-        addressBookId: 1,
-        relateCode: "",
-        theme: "",
-        way: "",
-        content: "",
-        createTime: ""
-      },
-      api2: api.queryPlanList,
+      params2: {},
+      api2: "",
       clientList: [
         {
           value: "情绪客户",
@@ -462,116 +571,273 @@ export default {
         }
       ],
       activeClass: "red",
-      activeValue: "情绪客户"
+      activeValue: "情绪客户",
+      editType: '',
+      contactsList: [],
+      liaisonType: ''
     };
   },
-  mounted() {
-    this.testData = [
-      {
-        id: "1",
-        tel: "15184318420",
-        name: "小白",
-        email: "412412@qq.com",
-        status: "1",
-        create_time: "2018-04-20",
-        expand: "扩展信息一",
-        role: ["2"]
-      },
-      {
-        id: "1",
-        tel: "15184318420",
-        name: "小白",
-        email: "412412@qq.com",
-        status: "1",
-        create_time: "2018-04-20",
-        expand: "扩展信息一",
-        role: ["2"]
-      },
-      {
-        id: "1",
-        tel: "15184318420",
-        name: "小白",
-        email: "412412@qq.com",
-        status: "1",
-        create_time: "2018-04-20",
-        expand: "扩展信息一",
-        role: ["2"]
-      },
-      {
-        id: "1",
-        tel: "15184318420",
-        name: "小白",
-        email: "412412@qq.com",
-        status: "1",
-        create_time: "2018-04-20",
-        expand: "扩展信息一",
-        role: ["2"]
-      },
-      {
-        id: "1",
-        tel: "15184318420",
-        name: "小白",
-        email: "412412@qq.com",
-        status: "1",
-        create_time: "2018-04-20",
-        expand: "扩展信息一",
-        role: ["2"]
-      },
-      {
-        id: "1",
-        tel: "15184318420",
-        name: "小白",
-        email: "412412@qq.com",
-        status: "1",
-        create_time: "2018-04-20",
-        expand: "扩展信息一",
-        role: ["2"]
-      },
-      {
-        id: "1",
-        tel: "15184318420",
-        name: "小白",
-        email: "412412@qq.com",
-        status: "1",
-        create_time: "2018-04-20",
-        expand: "扩展信息一",
-        role: ["2"]
-      },
-      {
-        id: "1",
-        tel: "15184318420",
-        name: "小白",
-        email: "412412@qq.com",
-        status: "1",
-        create_time: "2018-04-20",
-        expand: "扩展信息一",
-        role: ["2"]
-      }
-    ];
-    this.getAgentDetail();
-    this.getPlanCount();
+  created() {
+    localStorage.setItem('liasionAgent', this.$route.query.agentNo)
+    this.agentNo = this.$route.query.agentNo
+    this.getDetail(this.agentNo);
+    const now = new Date();
+    const year = now.getFullYear() // 得到年份
+    const month = now.getMonth() + 1// 得到月份
+    const date = now.getDate() // 得到日期
+    const hour = '00' // 得到小时
+    const minu = '00' // 得到分钟
+    const month1 = month < 10 ? "0" + month : month
+    const date1 = date < 10 ? "0" + date : date
+    var start = year + '-' + month1 + '-' + date1 + ' ' + hour + ':' + minu + ':' + '00'
+    var end = year + '-' + month1 + '-' + date1 + ' ' + '23' + ':' + '59' + ':' + '59'
+    this.timeDate = [start, end]
+    this.gatTag()
+    this.getSelectSummary(this.timeDate)
+    this.getQueryWait()
+    this.getRelatedLabels()
+    this.getAddressBookQuery()
+    this.params2 = {
+      relateCode: this.$route.query.agentNo
+    }
+    this.api2 = api.queryPlanList
   },
+  mounted() {},
   methods: {
+    // 查询通讯簿
+    getAddressBookQuery() {
+      api.addressBookQuery({
+        relateCode: this.$route.query.agentNo
+      }).then(res => {
+        console.log(res)
+        if (res.datas) {
+          this.contactsList = res.datas
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    viewDetail(row) {
+      this.dialogTableVisible = true
+      api.talkListsGetById({
+        id: row.id
+      }).then(res => {
+        console.log(res)
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    // 弹出查看联系人列表的右边抽屉
+    viewLiaison() {
+      this.findLiaison = true
+    },
+    // 弹出新增联系人的右边抽屉
+    liaisonAdd() {
+      this.liaisonType = 'add'
+      this.liaisonConfigData = LISASION.addData
+      this.addLiaison = true
+    },
+    // 编辑联系人的右边抽屉
+    editLiaison(row) {
+      console.log(row)
+      this.liaisonId = row.id
+      this.addLiaison = true
+      const newFromConfigData = LISASION.editData;
+      // 编辑前重赋值
+      newFromConfigData.formData.forEach((item, index) => {
+        item.initVal = row[item.key];
+      });
+      this.liaisonConfigData = newFromConfigData;
+      this.liaisonType = 'edit'
+    },
+    // 关闭添加、编辑联系人的侧边抽屉
+    liaisonCancel() {
+      this.addLiaison = false
+    },
+    // 新增联系人
+    handel_addLiaison(row) {
+      if (!row.linkmanName || !row.phoneNum || !row.jobStatus || !row.jobName) {
+        this.$message({
+          message: '请填写必填信息',
+          type: 'warning'
+        })
+        return false
+      } else {
+        if (this.liaisonType === 'add') {
+          api.addTalkAddressBook({
+            linkmanName: row.linkmanName,
+            phoneNum: row.phoneNum,
+            jobName: row.jobName,
+            jobStatus: row.jobStatus,
+            remark: row.remark,
+            relateCode: this.$route.query.agentNo
+          }).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                message: '添加联系人成功',
+                type: 'success'
+              })
+              this.addLiaison = false
+              this.getAddressBookQuery()
+            } else {
+              this.$message({
+                message: res.errMessage,
+                type: 'fail'
+              })
+            }
+          }).catch(() => {})
+        } else {
+          api.updateTalkAddressBook({
+            linkmanName: row.linkmanName,
+            phoneNum: row.phoneNum,
+            jobName: row.jobName,
+            jobStatus: row.jobStatus,
+            remark: row.remark,
+            relateCode: this.$route.query.agentNo,
+            id: this.liaisonId
+          }).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                message: '编辑联系人成功',
+                type: 'success'
+              })
+              this.addLiaison = false
+              this.getAddressBookQuery()
+            } else {
+              this.$message({
+                message: res.errMessage,
+                type: 'fail'
+              })
+            }
+          }).catch(() => {})
+        }
+      }
+    },
+    // 查询沟通次数
+    getQueryWait() {
+      api.queryWait({
+        relateCode: this.$route.query.agentNo
+      }).then(res => {
+        this.willConactNum = res.object
+      }).catch(() => {})
+    },
+    // 查询服务商已关联的标签
+    getRelatedLabels() {
+      api.queryRelatedLabels({
+        agentNo: this.$route.query.agentNo
+      }).then(res => {
+        console.log('服务商关联的标签')
+        console.log(res)
+        console.log('服务商关联的标签')
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    // 弹出添加沟通计划侧弹窗
+    addContacts() {
+      this.addDrewerType = 'contactsType'
+      this.addContactsDraw = true
+      this.contactConfigData = CONTACTS_CONFIG.formData
+    },
+    addSubtotal() {
+      this.addDrewerType = 'subtotalType'
+      this.addContactsDraw = true
+      this.contactConfigData = CONTACTS_CONFIG.formData1
+    },
+    // 添加沟通计划确定按钮
+    handel_addContacts(row) {
+      console.log(row)
+      if (this.addDrewerType === 'contactsType') {
+        if (!row.addressBookId || !row.nextContactTime || !row.remark || !row.remindType) {
+          this.$message({
+            message: '请填写完整信息',
+            type: 'warning'
+          })
+        } else {
+          api.addTalkPlan({
+            addressBookId: row.addressBookId,
+            nextContactTime: row.nextContactTime,
+            relateCode: this.$route.query.agentNo,
+            remark: row.remark,
+            remindType: row.remindType
+          }).then(res => {
+            console.log(res)
+          }).catch(err => {
+            console.log(err)
+          })
+        }
+      }
+      if (this.addDrewerType === 'subtotalType') {
+        if (!row.addressBookId || !row.way || !row.theme || !row.content) {
+          this.$message({
+            message: '请填写完整信息',
+            type: 'warning'
+          })
+          return false
+        } else {
+          api.addTalkLists({
+            addressBookId: row.addressBookId,
+            way: row.way,
+            content: row.content,
+            theme: row.theme[0],
+            subTheme: row.theme[1],
+            relateCode: this.$route.query.agentNo
+          }).then(res => {
+            console.log(res)
+          }).catch(err => {
+            console.log(err)
+          })
+        }
+      }
+    },
+    // 标签输入框
+    tagInput(value) {
+      console.log(value)
+    },
+    // 沟通计划切换时间
+    dateChange(value) {
+      console.log(value)
+      this.timeDate = value
+      this.getSelectSummary(value)
+    },
     onClick_changeClientType($item) {
       this.activeClass = $item.colorName;
       this.activeValue = $item.value;
     },
-    getAgentDetail() {
-      api.getAgentDetail(this.params).then(res => {
-        console.log(res.object);
-        res.object.labelList.forEach(item => {
-          this.dynamicTags.push(item.name);
-        });
-      });
+    // 获取标签信息
+    gatTag() {
+      api.queryLaBleAgent({
+        agentNo: this.$route.query.agentNo
+      }).then(res => {
+        console.log(res)
+      }).catch(err => {
+        console.log(err)
+      })
     },
-    getPlanCount() {
-      api
-        .planCount({
-          relateCode: ""
-        })
-        .then(res => {
-          this.planCount = res.object;
-        });
+    // 查询沟通数据
+    getSelectSummary(value) {
+      api.selectSummary({
+        relateCode: this.$route.query.agentNo,
+        beginDate: value[0],
+        endDate: value[1]
+      }).then(res => {
+        console.log(res)
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    getDetail(agentNo) {
+      api.getAgentDetail({
+        agentNo: agentNo
+      }).then(res => {
+        if (res.object) {
+          this.agentDetail = res.object
+          res.object.labelList.forEach(item => {
+            this.dynamicTags.push(item.name);
+          });
+          this.ruleForm = res.object
+        }
+      });
     },
     handleClose(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
@@ -597,15 +863,173 @@ export default {
       this.$router.push("/agent/list/detail");
     },
     itemEdit($model) {
+      if ($model === 'basicData') {
+        this.editType = 'editBasicData'
+      }
+      if ($model === 'finance') {
+        this.editType = 'editFincance'
+      }
       this.drawer = true;
-      this.fromConfigData = FORM_CONFIG[$model];
+      const newFromConfigData = FORM_CONFIG[$model];
+      newFromConfigData.formData.forEach((item, index) => {
+        item.initVal = this.agentDetail[item.key];
+      });
+      this.fromConfigData = newFromConfigData;
     },
     rateEdit($model) {
+      if ($model === 'rateInfo') {
+        this.editType = 'editRateInfo'
+      }
+      if ($model === 'mailAddress') {
+        this.editType = 'editMailAddress'
+      }
+      if ($model === 'renew') {
+        this.editType = 'editRenew'
+      }
       this.drawer = true;
-      this.fromConfigData = FORM_CONFIG[$model];
+      const newFromConfigData = FORM_CONFIG[$model];
+      newFromConfigData.formData.forEach((item, index) => {
+        item.initVal = this.agentDetail[item.key];
+      });
+      this.fromConfigData = newFromConfigData;
     },
     cancel() {
+      this.editType = ''
       this.drawer = false;
+    },
+    handel_confirm(row) {
+      console.log(row)
+      if (this.editType === 'editBasicData') {
+        if (!row.businessType || !row.agentName || !row.personName || !row.personMobile || !row.email || !row.companyAddress || !row.businessLicenseImg) {
+          this.$message({
+            message: '请填写完整信息',
+            type: 'info'
+          })
+          return false
+        } else {
+          api.updateAgentBaseInfo({
+            agentNo: this.$route.query.agentNo,
+            businessType: row.businessType,
+            agentName: row.agentName,
+            personName: row.personName,
+            personMobile: row.personMobile,
+            email: row.email,
+            companyAddress: row.companyAddress,
+            businessLicenseImg: row.businessLicenseImg.dialogImageUrl
+          }).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                message: '基础资料更新成功',
+                type: 'success'
+              })
+              this.getDetail(this.$route.query.agentNo)
+              this.editType = ''
+              this.drawer = false
+            }
+          }).catch(err => {
+            console.log(err)
+          })
+        }
+      }
+      if (this.editType === 'editFincance') {
+        api.updateFinancial({
+          agentNo: this.$route.query.agentNo,
+          bankAccountHolder: row.bankAccountHolder,
+          bankCardNo: row.bankCardNo,
+          bankArea: row.bankArea,
+          bankBranchName: row.bankBranchName,
+          bankAccountType: row.bankAccountType
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '财务资料更新成功',
+              type: 'success'
+            })
+            this.getDetail(this.$route.query.agentNo)
+            this.editType = ''
+            this.drawer = false
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+      }
+      if (this.editType === 'editRateInfo') {
+        if (!row.wechatPayRate || !row.cloudPayLe1000Rate || !row.cloudPayGt1000Rate) {
+          this.$message({
+            message: '请填写完整费率信息',
+            type: "warning"
+          })
+          return false
+        } else {
+          if (row.wechatPayRate < 3 || row.wechatPayRate > 6) {
+            this.$message({
+              message: '请输入正确的费率',
+              type: "warning"
+            })
+            return false
+          } else if ((row.cloudPayLe1000Rate || row.cloudPayGt1000Rate) < 2.3 || (row.cloudPayLe1000Rate || row.cloudPayGt1000Rate) > 10) {
+            this.$message({
+              message: '请输入正确的费率',
+              type: "warning"
+            })
+            return false
+          } else {
+            api.updateAgentRate({
+              agentNo: this.$route.query.agentNo,
+              wechatPayRate: Number(row.wechatPayRate),
+              alipayRate: Number(row.wechatPayRate),
+              cloudPayLe1000Rate: Number(row.cloudPayLe1000Rate),
+              cloudPayGt1000Rate: Number(row.cloudPayGt1000Rate)
+            }).then(res => {
+              if (res.status === 0) {
+                this.$message({
+                  message: '财务资料更新成功',
+                  type: 'success'
+                })
+                this.getDetail(this.$route.query.agentNo)
+                this.editType = ''
+                this.drawer = false
+              }
+            })
+          }
+        }
+      }
+      if (this.editType === 'editMailAddress') {
+        if (!row.activeMode || !row.chargeFeePercent || !row.expandSub || !row.area) {
+          this.$message({
+            message: '请填写完整信息',
+            type: 'warning'
+          })
+          return false
+        } else {
+          if (row.chargeFeePercent <= 0 || row.chargeFeePercent >= 100) {
+            this.$message({
+              message: '请填写完整信息',
+              type: 'warning'
+            })
+            return false
+          } else {
+            api.updateAgentPrivilege({
+              activeMode: row.activeMode,
+              chargeFeePercent: row.chargeFeePercent,
+              expandSub: row.expandSub,
+              agentNo: this.$route.query.agentNo,
+              activeScope: {
+                cityCode: row.addressObj[0].value,
+                cityName: row.addressObj[0].label,
+                provinceCode: row.addressObj[1].value,
+                provinceName: row.addressObj[1].label
+              }
+            }).then(res => {
+              this.getDetail(this.$route.query.agentNo)
+              this.editType = ''
+              this.drawer = false
+            }).catch(err => {
+              console.log(err)
+            })
+          }
+        }
+      }
     }
   }
 };
@@ -757,5 +1181,113 @@ export default {
 
 .border_none {
   border: none;
+}
+.top_title {
+  width: 100%;
+  height: 72px;
+  padding: 0 24px 0 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #EBEEF5;
+  .the_title {
+    font-size: 20px;
+    font-weight: 500;
+    color: #000000;
+  }
+  button {
+    width: 80px;
+    height: 28px;
+    color: #ffffff;
+    font-size: 12px;
+    text-align: center;
+    line-height: 28px;
+    padding: 0 0;
+  }
+}
+
+.liaisonList {
+  padding: 32px 24px 100px 24px;
+  width: 100%;
+  height: 100vh;
+  overflow: auto;
+  .liaison-contant {
+    width: 100%;
+    height: 190px;
+    margin-bottom: 24px;
+    border: 1px solid #E9E9E9;
+    border-radius: 4px;
+    .liaison-top {
+      width: 100%;
+      height: 44px;
+      border-bottom: 1px solid #EBEEF5;
+      background: #EBEEF5;
+      padding: 0 24px 0 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      span {
+        font-size: 14px;
+        color: #000000;
+        opacity: 85%;
+        font-weight: 500;
+      }
+      .liaison-editor {
+        color: #1989FA;
+        font-size: 14px;
+        cursor: pointer;
+      }
+    }
+    .liasion-info {
+      padding: 24px 0 0 32px;
+      position: relative;
+      top: 0;
+      left: 0;
+      .info-list {
+        margin-bottom: 14px;
+        line-height: 22px;
+        font-size: 14px;
+        span:nth-child(1) {
+          color: #000000;
+        }
+        span:nth-child(2) {
+          color: #606266;
+        }
+      }
+      .jobStatus {
+        position: absolute;
+        right: 40px;
+        top: 20px;
+        img {
+          width: 104px;
+          height: 104px;
+        }
+      }
+    }
+  }
+}
+
+.liaison_detail {
+  width: 100%;
+  padding-left: 20%;
+  li{
+    display: flex;
+    line-height: 24px;
+    margin-bottom: 8px;
+    span:nth-child(1) {
+      font-size: 16px;
+      color: #333333;
+      padding-right: 20px;
+    }
+    span:nth-child(2) {
+      font-size: 16px;
+    }
+  }
+}
+
+.selectDate {
+  top: 10px;
+  left: 50%;
+  margin-left: -200px;
 }
 </style>

@@ -52,6 +52,9 @@ export const transFormType = typeNum => {
     case 'show':
       componentName = 'Show'
       break
+    case 14:
+      componentName = 'DateTime'
+      break
     default:
     // throwError("formType \"" + typeNum + "\" does not exist.open fn.js and add it");
   }

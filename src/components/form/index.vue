@@ -54,6 +54,7 @@ import UploadFile from "./components/UploadFile";
 import Show from "./components/Show";
 import DatePicker from "./components/DatePicker.vue";
 import SelectInput from "./components/SelectInput.vue";
+import DateTime from "./components/DateTime.vue"
 
 // import { isUndefined, deepClone } from '@/libs/lit/utils'
 
@@ -72,7 +73,8 @@ export default {
     UploadFile,
     Show,
     DatePicker,
-    SelectInput
+    SelectInput,
+    DateTime
   },
   props: {
     formBaseData: {
