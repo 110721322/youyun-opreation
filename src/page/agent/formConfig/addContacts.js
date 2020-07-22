@@ -195,5 +195,72 @@ export const CONTACTS_CONFIG = {
       class: 'max-width',
       labelWidth: '100px'
     }
+  ],
+  formData2: [
+    {
+      type: 1,
+      label: '联系人',
+      key: 'addressBookId',
+      urlOptions: {
+        url: aipAgent.addressBookQuery,
+        keyName: 'id',
+        valueName: 'linkmanName',
+        method: 'get',
+        params: {
+          relateCode: localStorage.getItem('liasionAgent')
+        }
+      },
+      initVal: '',
+      rules: setRules('请输入').isSelected.get
+    },
+    {
+      type: 0,
+      label: '备注',
+      key: 'remark',
+      initVal: '',
+      rules: setRules('请输入').isRequired.get
+    },
+    {
+      type: 14,
+      label: '下次联系时间',
+      key: 'nextContactTime',
+      class: 'max-width',
+      labelWidth: '100px',
+      rules: setRules('请输入').isSelected.get,
+      initVal: ''
+    },
+    {
+      type: 1,
+      label: '提醒时间',
+      key: 'remindType',
+      options: [
+        {
+          label: '十分钟前',
+          value: 'before10M'
+        },
+        {
+          label: '半个小时前',
+          value: 'before30M'
+        },
+        {
+          label: '一个小时前',
+          value: 'before1H'
+        },
+        {
+          label: '两个小时前',
+          value: 'before2H'
+        },
+        {
+          label: '三个小时前',
+          value: 'before3H'
+        },
+        {
+          label: '一天前',
+          value: 'before1D'
+        }
+      ],
+      rules: setRules('请输入').isSelected.get,
+      initVal: ''
+    }
   ]
 }

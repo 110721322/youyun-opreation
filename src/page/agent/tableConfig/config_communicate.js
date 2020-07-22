@@ -1,28 +1,18 @@
 export const USER_CONFIG = {
   gridConfig: [
     {
-      label: '待沟通时间',
+      label: '沟通时间',
       prop: 'createTime',
       width: '150px'
     },
     {
-      label: '联系人',
-      prop: 'addressBookId',
+      label: '沟通人',
+      prop: 'linkmanName',
       width: '150px'
     },
     {
-      label: '沟通主题',
-      prop: 'theme',
-      width: '150px'
-    },
-    {
-      label: '沟通副主题',
-      prop: 'subTheme',
-      width: '150px'
-    },
-    {
-      label: '沟通内容',
-      prop: 'content',
+      label: '备注',
+      prop: 'remark',
       width: '150px'
     }
   ],
@@ -58,27 +48,27 @@ export const USER_CONFIG2 = {
   gridConfig: [
     {
       label: '沟通时间',
-      prop: 'id',
+      prop: 'createTime',
       width: '150px'
     },
     {
       label: '沟通人',
-      prop: 'tel',
+      prop: 'linkmanName',
       width: '150px'
     },
     {
-      label: '沟通方式',
-      prop: 'email',
+      label: '沟通主题',
+      prop: 'theme',
       width: '150px'
     },
     {
-      label: '沟通类型',
-      prop: 'name',
+      label: '沟通副主题',
+      prop: 'subTheme',
       width: '150px'
     },
     {
-      label: '备注内容',
-      prop: 'name',
+      label: '沟通内容',
+      prop: 'content',
       width: '150px'
     }
   ],
