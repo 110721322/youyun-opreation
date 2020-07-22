@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "vue-cli-service serve --mode dev",
-    "build": "vue-cli-service build",
-    "build:test": "vue-cli-service build --mode test",
-    "build:prod": "vue-cli-service build --mode prod",
+    "test": "vue-cli-service serve --mode=test",
+    "prod": "vue-cli-service serve --mode=production",
+    "build": "vue-cli-service build --mode=production",
+    "build-test": "vue-cli-service build --mode test",
+    "build-dev": "vue-cli-service build --mode dev",
     "lint": "vue-cli-service lint && npm run lint:code && npm run lint:style",
-    "test": "vue-cli-service serve --mode test",
     "lint:code": "eslint --fix **/*.{js,jsx,tsx}",
     "lint:style": "stylelint --fix src/**/*.{css,less,scss,sass}"
   },

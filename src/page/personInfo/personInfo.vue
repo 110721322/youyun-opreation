@@ -96,7 +96,6 @@ export default {
       this.ruleForm.headerImageSrc = "";
     },
     handleChange($val, $list) {
-      debugger;
       console.log($val);
     },
     onClick_submit() {

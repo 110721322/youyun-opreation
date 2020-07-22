@@ -30,20 +30,6 @@
 
     <DetailBox title="服务商顶部颜色条" :border="true" :is-show-edit-btn="true" @edit="onClick_editColor">
       <div>
-        <!-- <div class="color_item">
-          <div class="color_box"></div>
-          <div class="item_text">{{ formData.agentColor.red }}</div>
-        </div>
-
-        <div class="color_item">
-          <div class="color_box green"></div>
-          <div class="item_text">{{ formData.agentColor.green }}</div>
-        </div>
-
-        <div class="color_item">
-          <div class="color_box yellow"></div>
-          <div class="item_text">{{ formData.agentColor.yellow }}</div>
-        </div>-->
         <div v-for="(item,index) in formData.moodColor" :key="index" class="color_item">
           <div class="color_box" :style="{background: item.color}"></div>
           <div class="item_text">{{ item.mean }}</div>
@@ -59,7 +45,7 @@
           closable
           :disable-transitions="false"
           @close="handleClose(tag,formData.positionTags)"
-        >{{ tag.labelName }}</el-tag>
+        >{{ tag.name }}</el-tag>
         <el-input
           v-if="formData.positionTags.inputVisible"
           ref="saveTagInput"
@@ -172,7 +158,7 @@ export default {
       api
         .moodColorQueryByConditionAgent()
         .then(res => {
-          // this.formData.moodColor = res.object;
+          this.formData.moodColor = res.object;
         })
         .catch(err => {
           this.$message(err);
@@ -241,9 +227,9 @@ export default {
       if ($event.target.value) {
         if ($item.type === "user") {
           api
-            .labelAddUser({ labelName: $event.target.value, sort: 1 })
+            .labelAddUser({ name: $event.target.value, sort: 1 })
             .then(res => {
-              $item.tags.push({ labelName: $event.target.value, labelId: "1" });
+              this.labelQueryByConditionUser();
               $item.inputVisible = false;
               $item.inputValue = "";
             })
@@ -252,9 +238,9 @@ export default {
             });
         } else if ($item.type === "agent") {
           api
-            .labelAddAgent({ labelName: $event.target.value, sort: 1 })
+            .labelAddAgent({ name: $event.target.value, sort: 1 })
             .then(res => {
-              $item.tags.push({ labelName: $event.target.value, labelId: "1" });
+              this.labelQueryByConditionAgent();
               $item.inputVisible = false;
               $item.inputValue = "";
             })

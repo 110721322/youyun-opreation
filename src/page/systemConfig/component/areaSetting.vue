@@ -12,18 +12,25 @@
         </div>
         <div class="tag-box">
           <el-tag
-            v-for="tag in item.citys"
-            :key="tag.regionCode"
+            v-for="tag in item.province"
+            :key="tag.value"
             closable
             :disable-transitions="false"
-            @close="handleClose(tag,item)"
-          >{{ tag.regionName }}</el-tag>
-          <el-cascader
+            @close="handleClose(item.regionCode, tag.value)"
+          >{{ tag.label }}</el-tag>
+          <el-select
             v-if="item.isShowSelect"
-            :options="areaDate"
+            v-model="item.addOption"
             size="small"
-            @change="areaSelectConfirm($event,item)"
-          ></el-cascader>
+            @change="areaSelectConfirm($event, item)"
+          >
+            <el-option
+              v-for="province in areaData"
+              :key="province.value"
+              :label="province.label"
+              :value="province.value"
+            ></el-option>
+          </el-select>
           <el-button v-else class="button-new-tag" size="small" @click="areaSelect(item)">+ 添加城市</el-button>
         </div>
       </div>
@@ -34,6 +41,7 @@
     <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
+        v-if="drawer"
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
         label-width="130px"
@@ -47,7 +55,7 @@
 import api from "@/api/api_systemConfig";
 import Form from "@/components/form/index.vue";
 import DetailBox from "@/components/detailMode/detailBox.vue";
-import areaDate from "@/assets/data/areaData";
+import areaData from "@/assets/data/areaData";
 import { FORM_CONFIG } from "../formConfig/areaSettingForm";
 
 export default {
@@ -55,9 +63,11 @@ export default {
   components: { Form, DetailBox },
   data() {
     return {
-      areaDate: areaDate,
+      areaData: areaData,
+      addOption: "",
       drawer: false,
       fromConfigData: {},
+      activeRow: {},
       areaList: [
         {
           id: 1,
@@ -88,7 +98,11 @@ export default {
               regionName: $ruleform.regionName
             })
             .then(res => {
-              this.$message("保存成功");
+              this.$message({
+                type: 'success',
+                message: '已修改'
+              })
+              this.queryAllRegion()
               this.drawer = false;
             })
             .catch(err => {
@@ -97,9 +111,13 @@ export default {
           break;
         case "add":
           api
-            .saveRegion({ regionCode: "", regionName: $ruleform.regionName })
+            .saveRegion({ regionName: $ruleform.regionName })
             .then(res => {
-              this.$message("添加成功");
+              this.$message({
+                type: 'success',
+                message: '添加成功'
+              })
+              this.queryAllRegion()
               this.drawer = false;
             })
             .catch(err => {
@@ -112,23 +130,28 @@ export default {
       }
     },
     queryAllRegion() {
-      api.queryAllRegion({}).then(res => {
-        res.object.forEach((item, index) => {
-          item.citys = [];
-        });
+      api.queryRegionProvince({}).then(res => {
         this.areaList = res.object;
-        res.object.forEach((item, index) => {
-          api.queryRegionProvince({}).then(res2 => {
-            this.areaList[index].citys = res2.object;
-          });
-        });
+        this.areaList = this.areaList.map($area => {
+          $area.addOption = "";
+          $area.province = $area.provinceCodes.map($code => {
+            return areaData.filter($province => {
+              if ($province.value === $code) {
+                return $province;
+              }
+            }).map($province => {
+              return {label: $province.label, value: $province.value};
+            })[0];
+          })
+          return $area;
+        })
       });
     },
     onClick_editArea($row) {
       this.formStatus = "edit";
       this.activeRow = $row;
-      FORM_CONFIG.editData.formData[0].initVal = $row.regionName;
       this.fromConfigData = FORM_CONFIG.editData;
+      this.fromConfigData.formData[0].initVal = $row.regionName;
       this.drawer = true;
     },
     onClick_addArea($row) {
@@ -137,14 +160,18 @@ export default {
       this.fromConfigData = FORM_CONFIG.addData;
       this.drawer = true;
     },
-    handleClose(tag, $item) {
+    handleClose($regionCode, $provinceCode) {
       api
         .deleteProvince({
-          regionCode: $item.regionCode,
-          provinceCode: tag.regionCode
+          regionCode: $regionCode,
+          provinceCode: $provinceCode
         })
         .then(res => {
-          $item.citys.splice($item.citys.indexOf(tag), 1);
+          this.$message({
+            type: 'success',
+            message: '已删除'
+          })
+          this.queryAllRegion();
         })
         .catch(err => {
           this.$message(err);
@@ -155,32 +182,19 @@ export default {
       // $item.isShowSelect = true;
     },
     areaSelectConfirm($value, $item) {
-      const options = JSON.parse(JSON.stringify(this.areaDate));
-      const obj = [];
-      obj[0] = options.find(item => {
-        return item.value === $value[0];
-      });
-      obj[1] = obj[0].children.find(item => {
-        return item.value === $value[1];
-      });
-      obj[2] = obj[1].children.find(item => {
-        return item.value === $value[2];
-      });
-      obj.forEach(item => {
-        delete item.children;
-      });
-      // $item.citys.push(obj[0].label + "," + obj[1].label + "," + obj[2].label);
+      console.log($value, $item);
+      const params = {
+        provinceCode: $value,
+        regionCode: $item.regionCode
+      }
       api
-        .saveRegionProvinceSet({
-          regionCode: $item.regionCode,
-          provinceCode: ""
-        })
+        .saveRegionProvinceSet(params)
         .then(res => {
-          $item.citys.push({
-            regionCode: obj[2].value,
-            regionName: obj[2].label
-          });
-          $item.isShowSelect = false;
+          this.$message({
+            type: 'success',
+            message: '添加成功'
+          })
+          this.queryAllRegion()
         })
         .catch(err => {
           this.$message(err);

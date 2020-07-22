@@ -1,5 +1,5 @@
 // import * as API from '../../api';
-import * as g from '../global';
+// import * as g from '../global';
 
 export default {
   // 一下方法已经加入到工具类库中,在此只作为实例.
@@ -101,9 +101,10 @@ export default {
 
   // 根据id获取地区数据的该项
   getAreaItem: ($obj, $id) => {
+    var that = this;
     for (var a in $obj) {
       if (typeof ($obj[a]) === 'object') {
-        var ro = g.utils.getAreaItem($obj[a], $id); // 递归遍历
+        var ro = that.getAreaItem($obj[a], $id); // 递归遍历
         if (ro !== undefined) {
           return ro;
         }

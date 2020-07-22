@@ -2,7 +2,8 @@
   <div class="main_page">
     <router-view
       v-if="this.$route.path.indexOf('/equimentDetail') !== -1 || this.$route.path.indexOf('/shoppingCart') !== -1 || this.$route.path.indexOf('/equimentOrder') !== -1 || this.$route.path.indexOf('/equimentPay') !== -1 ||
-      this.$route.path.indexOf('/orderRecords') !== -1 || this.$route.path.indexOf('/equimentOrderDetail') !== -1" />
+        this.$route.path.indexOf('/orderRecords') !== -1 || this.$route.path.indexOf('/equimentOrderDetail') !== -1"
+    />
     <div v-else>
       <div class="equiment">
         <span>刷脸设备</span>
@@ -10,18 +11,18 @@
         <span class="title">离扫脸时代只差一台设备</span>
       </div>
       <div class="equiment_list">
-        <div class="list" v-for="(item, index) in equimentData" :key="index" @click.stop="onclick_todetail(item.id)">
+        <div v-for="(item, index) in equimentData" :key="index" class="list" @click.stop="onclick_todetail(item.id)">
           <div class="list_img">
             <img src="" alt="">
           </div>
-          <p class="list_name">{{item.name}}</p>
-          <p class="list_subtitle">{{item.subTitle}}</p>
+          <p class="list_name">{{ item.name }}</p>
+          <p class="list_subtitle">{{ item.subTitle }}</p>
           <div class="list_bottom">
-            <span>¥{{item.price}}</span>
+            <span>¥{{ item.price }}</span>
             <div class="cart_img" @mouseenter="mouse_cart(index)">
               <img src="../../assets/img/cart_icon.png" alt="">
             </div>
-            <div class="list_step" style="display: none;"><el-input-number v-model="num[index]" @change="handleChange(index)" :min="1" :max="10" size="small"></el-input-number></div>
+            <div class="list_step" style="display: none;"><el-input-number v-model="num[index]" :min="1" :max="10" size="small" @change="handleChange(index)"></el-input-number></div>
           </div>
         </div>
       </div>
@@ -29,18 +30,18 @@
         <span>收银机具</span>
       </div>
       <div class="equiment_list">
-        <div class="list" v-for="(item, index) in equimentData" :key="index" @click.stop="onclick_todetail(item.id)">
+        <div v-for="(item, index) in equimentData" :key="index" class="list" @click.stop="onclick_todetail(item.id)">
           <div class="list_img">
             <img src="" alt="">
           </div>
-          <p class="list_name">{{item.name}}</p>
-          <p class="list_subtitle">{{item.subTitle}}</p>
+          <p class="list_name">{{ item.name }}</p>
+          <p class="list_subtitle">{{ item.subTitle }}</p>
           <div class="list_bottom">
-            <span>¥{{item.price}}</span>
+            <span>¥{{ item.price }}</span>
             <div class="cart_img" @mouseenter="mouse_cart(index)">
               <img src="../../assets/img/cart_icon.png" alt="">
             </div>
-            <div class="list_step" style="display: none;"><el-input-number v-model="num[index]" @change="handleChange(index)" :min="1" :max="10" size="small"></el-input-number></div>
+            <div class="list_step" style="display: none;"><el-input-number v-model="num[index]" :min="1" :max="10" size="small" @change="handleChange(index)"></el-input-number></div>
           </div>
         </div>
       </div>

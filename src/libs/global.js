@@ -16,7 +16,7 @@ function getConfig () {
     config = devConfig;
   } else if (process.env.VUE_APP_ENV_CONFIG === 'test') {
     config = testConfig;
-  } else if (process.env.VUE_APP_ENV_CONFIG === 'prod') {
+  } else if (process.env.VUE_APP_ENV_CONFIG === 'production') {
     config = prodConfig;
   } else {
     config = devConfig;

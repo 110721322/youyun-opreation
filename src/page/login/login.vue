@@ -283,6 +283,7 @@
 </template>
 <script type="text/ecmascript-6">
 import api from "@/api/api_login";
+// import WBT from "@/libs/kit/webSocket"
 import {computedRoleRouter} from '@/libs/role'
 import currRouter from '@/router/addRouter'
 import { mapActions } from 'vuex';
@@ -477,13 +478,17 @@ export default {
           password: this.ruleForm.password,
           type: 'password',
           system: 'operation'
-
         })
         .then(res => {
           this.saveAccessToken(res.object.accessToken)
           userId = res.object.user.id
           roleId = res.object.user.roleId
           this.saveUserInfo(res.object.user)
+          // this.connactWebSocket({
+          //   from: 'operation',
+          //   userId: res.object.user.id,
+          //   accessToken: res.object.accessToken
+          // })
           api.queryUserVueRouterList({
             userToken: res.object.accessToken,
             system: 'operation',
@@ -512,6 +517,12 @@ export default {
         .catch(err => {
           this.$alert(err);
         });
+    },
+    connactWebSocket ($params) {
+      // const url = `www.intranet.aduer.com/ws?from=operation&userId=${$params.userId}&accessToken=${$params.accessToken}`
+      // const webSocket = new WebSocket(url)
+      api.getWebSocket($params)
+      // return webSocket
     },
     addRoutes() {
       const menuItems = store.state.role.routes;

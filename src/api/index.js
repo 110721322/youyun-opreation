@@ -22,9 +22,13 @@ axios.interceptors.request.use((config) => {
   config.headers.common.userToken = localStorage.getItem('token-merchant') || '';
   config.headers.common.client = 'WEB';
   config.headers.common.Access_token = localStorage.getItem('accessToken') || ''
+  console.log(config);
   // 参数格式为form data(默认request payload)
+
   if (config.method === 'post' && config.needFormData) {
     config.data.merchantNo = localStorage.getItem('userInfo-merchant') ? JSON.parse(localStorage.getItem('userInfo-merchant')).merchantNo : '';
+    config.data = qs.stringify(config.data);
+  } else if (config.method === 'post' && Object.keys(config.data).length === 1) {
     config.data = qs.stringify(config.data);
   } else if (config.method === 'get') {
     // config.params.merchantNo = localStorage.getItem('userInfo-merchant') ? JSON.parse(localStorage.getItem('userInfo-figmerchant')).merchantNo : '';
