@@ -27,21 +27,32 @@ export const USER_CONFIG = {
     },
     {
       label: '状态',
-      prop: 'accountStatus',
+      prop: 'contractStatus',
 
       render: (h, params) => {
-        if (params.row.status === '0') {
+        if (params.row.contractStatus === 'reject') {
           return h(
             'el-tag',
             {
               props: {
                 size: 'medium ',
-                type: 'warning'
+                type: 'fail'
               }
             },
             '已驳回'
           );
-        } else {
+        } else if (params.row.contractStatus === 'success') {
+          return h(
+            'el-tag',
+            {
+              props: {
+                size: 'medium ',
+                type: 'success'
+              }
+            },
+            '通过'
+          );
+        } else if (params.row.contractStatus === 'audit') {
           return h(
             'el-tag',
             {

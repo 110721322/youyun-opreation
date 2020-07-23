@@ -241,26 +241,16 @@ export const FORM_CONFIG = {
     showFootBtn: true,
     formData: [
       {
-        type: 1,
+        type: 0,
         label: '续费方式',
         key: 'renewType',
-        initVal: '',
-        placeholder: '请选择',
-        options: [
-          {
-            label: '固定',
-            value: 'fixed'
-          },
-          {
-            label: '百分比',
-            value: 'pecent'
-          }
-        ]
+        placeholder: '佣金按比例',
+        isDisabled: true
       },
       {
         type: 1,
         label: '续费时间',
-        key: 'time',
+        key: 'monthCount',
         options: [
           {
             label: '1个月',
@@ -272,21 +262,22 @@ export const FORM_CONFIG = {
           },
           {
             label: '6个月',
-            value: 3
+            value: 6
           },
           {
             label: '1年',
-            value: 4
+            value: 12
           },
           {
             label: '2年',
-            value: 5
+            value: 24
           },
           {
             label: '3年',
-            value: 6
+            value: 36
           }
-        ]
+        ],
+        rules: setRules('请选择').isSelected.get
       },
       {
         type: 0,

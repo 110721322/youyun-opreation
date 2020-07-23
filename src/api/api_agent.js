@@ -81,9 +81,9 @@ export default {
   // 服务商-更新邮寄地址
   updatePostAddress: (params) => API.POST(g.config.server + 'operation/v1/postAddress/update/agent', params),
   // 服务商-下级服务商列表
-  queryPageByCondition: (params) => API.GET('http://192.168.2.102:8082/agent/v1/subAgent/queryPageByCondition', params),
+  queryPageByCondition: (params) => API.GET(g.config.server + 'operation/v1/subAgent/queryPageByCondition', params),
   // 服务商-查看下级服务商的详情
-  subAgentDetail: (params) => API.POST('http://192.168.2.102:8082/agent/v1/subAgent/getSubAgentDetail', params),
+  subAgentDetail: (params) => API.GET(g.config.server + 'operation/v1/subAgent/getSubAgentDetail', params),
   // 服务商-冻结下级服务商
   updateAccountStatusOfFrozen: (params) => API.GET('http://192.168.2.102:8082/agent/v1/subAgent/updateAccountStatusOfFrozen', params),
   // 更换所属上级服务商
@@ -131,5 +131,11 @@ export default {
   queryAllAdvertType: (params) => API.GET(g.config.server + 'operation/v1/advert/queryAllAdvertType', params),
   queryAllOperation: (params) => API.GET(g.config.server + 'operation/v1/advertPrivilege/queryAllOperation', params),
   queryAllDistributeStatus: (params) => API.GET(g.config.server + 'operation/v1/advertDistribute/queryAllDistributeStatus', params),
-  queryAllDistributeAgent: (params) => API.GET(g.config.server + 'operation/v1/advertDistribute/queryAllDistributeAgent', params)
+  queryAllDistributeAgent: (params) => API.GET(g.config.server + 'operation/v1/advertDistribute/queryAllDistributeAgent', params),
+  // 服务商-分页查询财务续费审核记录
+  agentRenewRecord: (params) => API.GET('/operation/v1/agentRenewRecord/queryByPage', params),
+  // 服务商-添加佣金按比例续费
+  addPercentRenew: (params) => API.POST('/operation/v1/agent/addPercentRenew', params),
+  // 服务商-批量转移运营
+  updateOperationId: (params) => API.POST('/operation/v1/agent/updateOperationId', params)
 };

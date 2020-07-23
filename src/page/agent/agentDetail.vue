@@ -86,16 +86,16 @@
           <div class="talkInfo">
             <el-row>
               <el-col :span="8" class="data_item" style="height:58px">
-                <div class="data_item_title">客情维护</div>
-                <div>55次</div>
+                <div class="data_item_title">{{summaryInfo.theme1}}</div>
+                <div>{{summaryInfo.theme1Count}}次</div>
               </el-col>
               <el-col :span="8" class="data_item" style="height:58px">
-                <div class="data_item_title">问题处理</div>
-                <div>55次</div>
+                <div class="data_item_title">{{summaryInfo.theme2}}</div>
+                <div>{{summaryInfo.theme2Count}}次</div>
               </el-col>
               <el-col :span="8" class="data_item border_none" style="height:58px">
                 <div class="data_item_title">沟通类型</div>
-                <div>55次</div>
+                <div>{{summaryInfo.otherThemeCount}}次</div>
               </el-col>
             </el-row>
           </div>
@@ -112,15 +112,14 @@
           <BaseCrud
             :grid-config="tableConfigData.gridConfig"
             :grid-btn-config="tableConfigData.gridBtnConfig"
-            :grid-data="testData"
+            :grid-data="talkPlanList"
             :form-config="tableConfigData.formConfig"
             :form-data="tableConfigData.formModel"
             :grid-edit-width="100"
             :table-height="212"
             form-title="用户"
-            :is-async="false"
+            :is-async="true"
             :params="params1"
-            :api-service="api1"
             @detail="editDetail"
             style="margin:24px;border:1px solid #EBEEF5;height:212px;overflow:hidden"
           ></BaseCrud>
@@ -137,15 +136,14 @@
       <BaseCrud
         :grid-config="tableConfigData2.gridConfig"
         :grid-btn-config="tableConfigData2.gridBtnConfig"
-        :grid-data="testData"
+        :grid-data="channelList"
         :form-config="tableConfigData2.formConfig"
         :form-data="tableConfigData2.formModel"
         :grid-edit-width="100"
         :table-height="309"
         form-title="用户"
-        :is-async="false"
+        :is-async="true"
         :params="params2"
-        :api-service="api2"
         style="margin:24px;border:1px solid #EBEEF5;height:309px;overflow:hidden"
         @detail="viewDetail"
       ></BaseCrud>
@@ -271,6 +269,8 @@ export default {
   components: { detailMode, BaseCrud, Form },
   data() {
     return {
+      channelList: [],
+      talkPlanList: [],
       contactId: '',
       talkListDetail: {},
       dialogTableVisible: false,
@@ -538,7 +538,6 @@ export default {
         }]
       },
       timeDate: [],
-      testData: [],
       tableConfigData: USER_CONFIG,
       tableConfigData2: USER_CONFIG2,
       liaisonConfigData: {},
@@ -546,16 +545,7 @@ export default {
       fromConfigData: [],
       ruleForm: {},
       agentNo: '',
-      params1: {
-        id: 1,
-        addressBookId: 1,
-        relateCode: "",
-        remark: "",
-        nextContactTime: "",
-        remindTime: "",
-        remindType: "",
-        createTime: ""
-      },
+      params1: {},
       api1: api.queryTalkPlan,
       params2: {},
       clientList: [
@@ -576,7 +566,8 @@ export default {
       activeValue: "情绪客户",
       editType: '',
       contactsList: [],
-      liaisonType: ''
+      liaisonType: '',
+      summaryInfo: {}
     };
   },
   created() {
@@ -600,10 +591,7 @@ export default {
     this.getRelatedLabels()
     this.getAddressBookQuery()
     this.getQueryTalkPlan()
-    this.params2 = {
-      relateCode: this.$route.query.agentNo
-    }
-    this.api2 = api.queryPlanList
+    this.getQueryPlanList()
   },
   mounted() {},
   methods: {
@@ -637,11 +625,13 @@ export default {
       this.addContactsDraw = true
       this.contactConfigData = CONTACTS_CONFIG.formData
     },
+    // 添加沟通小计侧弹窗
     addSubtotal() {
       this.addDrewerType = 'subtotalType'
       this.addContactsDraw = true
       this.contactConfigData = CONTACTS_CONFIG.formData1
     },
+    // 编辑沟通计划
     editDetail($row) {
       this.contactId = $row.id
       api.getTalkPlan({
@@ -649,15 +639,12 @@ export default {
       }).then(res => {
         this.addDrewerType = 'editcontactsType'
         this.addContactsDraw = true
-        const newFromConfigData = CONTACTS_CONFIG.formData;
+        const newFromConfigData = CONTACTS_CONFIG.formData2;
         newFromConfigData.forEach((item, index) => {
           item.initVal = res.object[item.key];
         });
-        console.log(newFromConfigData)
         this.contactConfigData = newFromConfigData;
-      }).catch(err => {
-        console.log(err)
-      })
+      }).catch(() => {})
     },
     // 添加沟通计划确定按钮
     handel_addContacts(row) {
@@ -675,9 +662,15 @@ export default {
             remark: row.remark,
             remindType: row.remindType
           }).then(res => {
-            console.log(res)
-          }).catch(err => {
-            console.log(err)
+            if (res.status === 0) {
+              this.$message({
+                message: '添加成功',
+                type: 'success'
+              })
+              this.addContactsDraw = false
+              this.getQueryTalkPlan()
+            }
+          }).catch(() => {
           })
         }
       }
@@ -697,9 +690,15 @@ export default {
             subTheme: row.theme[1],
             relateCode: this.$route.query.agentNo
           }).then(res => {
-            console.log(res)
-          }).catch(err => {
-            console.log(err)
+            if (res.status === 0) {
+              this.$message({
+                message: "添加成功",
+                type: 'success'
+              })
+              this.addContactsDraw = false
+              this.getQueryPlanList()
+            }
+          }).catch(() => {
           })
         }
       }
@@ -718,9 +717,17 @@ export default {
             remark: row.remark,
             remindType: row.remindType
           }).then(res => {
-            alert('修改成功')
+            this.$message({
+              message: '修改成功',
+              type: 'success'
+            })
+            this.addContactsDraw = false
+            this.getQueryTalkPlan()
           }).catch(err => {
-            console.log(err)
+            this.$message({
+              message: err.errMessage,
+              type: 'success'
+            })
           })
         }
       }
@@ -731,7 +738,6 @@ export default {
     },
     // 沟通计划切换时间
     dateChange(value) {
-      console.log(value)
       this.timeDate = value
       this.getSelectSummary(value)
     },
@@ -756,17 +762,24 @@ export default {
         beginDate: value[0],
         endDate: value[1]
       }).then(res => {
-        console.log(res)
-      }).catch(err => {
-        console.log(err)
-      })
+        this.summaryInfo = res.object
+      }).catch(() => {})
     },
     // 查询沟通计划列表
     getQueryTalkPlan() {
       api.queryTalkPlan({
         relateCode: this.$route.query.agentNo
       }).then(res => {
-        console.log(res)
+        this.talkPlanList = res.datas
+      })
+    },
+    // 查询沟通记录列表
+    getQueryPlanList() {
+      api.queryPlanList({
+        relateCode: this.$route.query.agentNo
+      }).then(res => {
+        this.channelList = res.datas
+      }).catch(() => {
       })
     },
     handleClose(tag) {
@@ -821,9 +834,9 @@ export default {
     cancel() {
       this.editType = ''
       this.drawer = false;
+      this.addContactsDraw = false
     },
     handel_confirm(row) {
-      console.log(row)
       if (this.editType === 'editBasicData') {
         if (!row.businessType || !row.agentName || !row.personName || !row.personMobile || !row.email || !row.companyAddress || !row.businessLicenseImg) {
           this.$message({
@@ -949,10 +962,31 @@ export default {
               this.getDetail(this.$route.query.agentNo)
               this.editType = ''
               this.drawer = false
-            }).catch(err => {
-              console.log(err)
+            }).catch(() => {
             })
           }
+        }
+      }
+      if (this.editType === 'editRenew') {
+        if (!row.monthCount || !row.renewValue) {
+          this.$message({
+            message: '请填写必填信息',
+            type: 'warning'
+          })
+          return false
+        } else {
+          api.addPercentRenew({
+            agentNo: this.$route.query.agentNo,
+            monthCount: row.monthCount,
+            renewType: 'percent',
+            renewValue: row.renewValue
+          }).then(res => {
+            if (res.status === 0) {
+              this.getDetail(this.$route.query.agentNo)
+              this.editType = ''
+              this.drawer = false
+            }
+          })
         }
       }
     },
@@ -961,7 +995,6 @@ export default {
       api.addressBookQuery({
         relateCode: this.$route.query.agentNo
       }).then(res => {
-        console.log(res)
         if (res.datas) {
           this.contactsList = res.datas
         }

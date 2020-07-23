@@ -35,7 +35,8 @@ export const rules = {
   doubleFloat: (i) => {
     const result = [{
       pattern: /^\d+(\.\d{0,2})?$/,
-      message: '请输入可带两位小数的正数'
+      message: '请输入可带两位小数的正数',
+      required: true
     }];
     return i.concat(result);
   },

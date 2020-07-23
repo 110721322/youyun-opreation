@@ -234,15 +234,26 @@ const menuItems = [
       },
       {
         type: 'ios-grid',
-        name: 'dividedOverview',
-        text: '分润总览',
-        path: 'dividedOverview',
+        name: 'renewalDue',
+        text: '到期续费记录',
+        path: 'renewalDue',
         isShow: true,
         meta: {
-          title: '分润总览',
-          icon: 'dividedOverview'
+          title: '到期续费记录',
+          icon: 'renewalDue'
         }
       }
+      // {
+      //   type: 'ios-grid',
+      //   name: 'dividedOverview',
+      //   text: '分润总览',
+      //   path: 'dividedOverview',
+      //   isShow: true,
+      //   meta: {
+      //     title: '分润总览',
+      //     icon: 'dividedOverview'
+      //   }
+      // }
     ]
   },
   {
