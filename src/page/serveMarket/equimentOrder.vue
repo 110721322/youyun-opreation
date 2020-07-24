@@ -138,7 +138,7 @@ export default {
           })
         } else {
           this.$router.push({
-            path: '/serviceCentre/cashRegisterTool/facilityOrder/equimentPay',
+            path: '/serveMarket/equipmentMall/equimentPay',
             query: {
               orderInfo: res.object,
               deviceInfos: deviceInfos,
