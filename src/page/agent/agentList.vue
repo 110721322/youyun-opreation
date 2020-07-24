@@ -165,7 +165,6 @@ export default {
       this.params[$form.inputSelect] = $form.inputForm;
     },
     openDetail($row) {
-      console.log($row)
       this.$router.push({
         path: "/agent/list/detail",
         query: {

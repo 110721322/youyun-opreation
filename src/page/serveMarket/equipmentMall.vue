@@ -10,14 +10,14 @@
         <span class="title">离扫脸时代只差一台设备</span>
       </div>
       <div class="equiment_list">
-        <div class="list" v-for="(item, index) in equimentData" :key="index" @click.stop="onclick_todetail(item.id)">
+        <div class="list" v-for="(item, index) in mallList.FACE" :key="index" @click.stop="onclick_todetail(item.deviceId)">
           <div class="list_img">
             <img src="" alt="">
           </div>
-          <p class="list_name">{{item.name}}</p>
-          <p class="list_subtitle">{{item.subTitle}}</p>
+          <p class="list_name">{{item.deviceModel}}</p>
+          <p class="list_subtitle">{{item.viceTitle}}</p>
           <div class="list_bottom">
-            <span>¥{{item.price}}</span>
+            <span>¥{{item.salePrice}}</span>
             <div class="cart_img" @mouseenter="mouse_cart(index)">
               <img src="../../assets/img/cart_icon.png" alt="">
             </div>
@@ -29,14 +29,14 @@
         <span>收银机具</span>
       </div>
       <div class="equiment_list">
-        <div class="list" v-for="(item, index) in equimentData" :key="index" @click.stop="onclick_todetail(item.id)">
+        <div class="list" v-for="(item, index) in mallList.POSS" :key="index" @click.stop="onclick_todetail(item.deviceId)">
           <div class="list_img">
-            <img src="" alt="">
+            <img :src="item.img" alt="">
           </div>
-          <p class="list_name">{{item.name}}</p>
-          <p class="list_subtitle">{{item.subTitle}}</p>
+          <p class="list_name">{{item.deviceModel}}</p>
+          <p class="list_subtitle">{{item.viceTitle}}</p>
           <div class="list_bottom">
-            <span>¥{{item.price}}</span>
+            <span>¥{{item.salePrice}}</span>
             <div class="cart_img" @mouseenter="mouse_cart(index)">
               <img src="../../assets/img/cart_icon.png" alt="">
             </div>
@@ -63,10 +63,12 @@
 </template>
 
 <script>
+import api from "@/api/api_serveMarket"
 export default {
   data() {
     return {
       num: {},
+      mallList: [],
       equimentData: [
         {
           name: '蜻蜓plus',
@@ -107,7 +109,20 @@ export default {
       ]
     }
   },
+  created() {
+    this.getData()
+  },
   methods: {
+    getData() {
+      api.queryMallDeviceListPage({
+        currentPage: 1,
+        pageSize: 10
+      }).then(res => {
+        this.mallList = res.object
+      }).catch(err => {
+        console.log(err)
+      })
+    },
     handleChange(index, value) {
       console.log(value)
       console.log(index)
@@ -115,11 +130,11 @@ export default {
     mouse_cart(index) {
       console.log(index)
     },
-    onclick_todetail(id) {
+    onclick_todetail(deviceId) {
       this.$router.push({
         path: '/serveMarket/equipmentMall/equimentDetail',
         query: {
-          id: id
+          deviceId: deviceId
         }
       })
     },
@@ -187,8 +202,11 @@ export default {
   .list_img {
     width: 180px;
     height: 180px;
-    background: blue;
     margin: 0 auto;
+  }
+  .list_img img {
+    width: 180px;
+    height: 180px;
   }
   .list_name {
     text-align: center;
