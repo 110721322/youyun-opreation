@@ -55,7 +55,7 @@ export default {
     this.deviceId = this.$route.query.deviceId
     // this.userId = localStorage.getItem('userId')
     this.getDetail(this.deviceId)
-    // this.getAddress()
+    this.getAddress()
   },
   methods: {
     getDetail(deviceId) {
@@ -71,26 +71,27 @@ export default {
         this.$message(err.errorMessage)
       })
     },
-    // getAddress() {
-    //   api_address.queryByCondition({
-    //     agentNo: localStorage.getItem('agentNo')
-    //   }).then(res => {
-    //     if (res.object) {
-    //       for (const i in res.object) {
-    //         if (res.object[i].defaultType === '是') {
-    //           this.address = res.object[i]
-    //         }
-    //       }
-    //     }
-    //   }).catch(err => {
-    //     console.log(err)
-    //   })
-    // },
+    getAddress() {
+      api.queryAddress({
+        agentNo: localStorage.getItem('agentNo')
+      }).then(res => {
+        if (res.object) {
+          console.log(res)
+          for (const i in res.object) {
+            if (res.object[i].defaultType) {
+              this.address = res.object[i]
+            }
+          }
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+    },
     click_addCart() {
       api.addShopCart({
         deviceId: this.goodsDetail.deviceId,
         count: this.num,
-        userId: this.userId
+        userId: localStorage.getItem('agentUserId')
       }).then(res => {
         this.$message({
           message: '添加购物车成功',
@@ -127,7 +128,7 @@ export default {
             })
           } else {
             this.$router.push({
-              // path: '/serviceCentre/cashRegisterTool/facilityOrder/equimentPay',
+              path: '/serveMarket/equipmentMall/equimentPay',
               query: {
                 orderInfo: res.object,
                 deviceInfos: deviceInfos,

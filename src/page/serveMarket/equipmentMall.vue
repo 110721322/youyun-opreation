@@ -46,7 +46,7 @@
       </div>
       <div class="right_btn">
         <div class="btn1" @click="onclick_tocart">
-          <el-badge :value="200" :max="99" class="item">
+          <el-badge :value="totalNum" :max="99" class="item">
             <img src="../../assets/img/cart_icon.png" alt="">
           </el-badge>
         </div>
@@ -69,6 +69,7 @@ export default {
     return {
       num: {},
       mallList: [],
+      totalNum: 0,
       equimentData: [
         {
           name: '蜻蜓plus',
@@ -111,8 +112,10 @@ export default {
   },
   created() {
     this.getData()
+    this.getCartNum()
   },
   methods: {
+    // 获取设备列表
     getData() {
       api.queryMallDeviceListPage({
         currentPage: 1,
@@ -121,6 +124,14 @@ export default {
         this.mallList = res.object
       }).catch(err => {
         console.log(err)
+      })
+    },
+    // 获取购物车的数量
+    getCartNum() {
+      api.queryShopCartList({
+        userId: localStorage.getItem('agentUserId')
+      }).then(res => {
+        this.totalNum = res.object.FACE.length + res.object.POSS.length + res.object.OTHER.length
       })
     },
     handleChange(index, value) {

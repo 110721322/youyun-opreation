@@ -478,6 +478,7 @@ export default {
         .then(res => {
           console.log(res)
           localStorage.setItem('accessToken', res.object.accessToken)
+          localStorage.setItem('agentUserId', res.object.user.id)
           const userId = res.object.user.id
           const roleId = res.object.user.roleId
           api.queryUserVueRouterList({

@@ -31,5 +31,7 @@ export default {
   // 商城-查询设备详情
   queryMallDeviceDetail: (params) => API.GET(g.config.agentServer + '/agent/v1/serviceCenter/deviceMall/queryMallDeviceDetail', params),
   // 设备管理-库存管理-设备库存-查询所有设备型号/类型
-  queryAllDeviceModel: (params) => API.GET('/operation/v1/device/queryAllDeviceModel', params)
+  queryAllDeviceModel: (params) => API.GET('/operation/v1/device/queryAllDeviceModel', params),
+  // 查询默认地址
+  queryAddress: (params) => API.GET('/operation/v1/postAddress/queryByCondition/agent', params)
 };
