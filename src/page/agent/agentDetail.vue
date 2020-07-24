@@ -161,6 +161,7 @@
     <el-drawer title="添加沟通计划" :visible.sync="addContactsDraw" :with-header="false" size="40%">
       <div class="p_head">{{ contactConfigData.title }}</div>
       <Form
+        ref="liaisonRef"
         :form-base-data="contactConfigData"
         :show-foot-btn="contactConfigData.showFootBtn"
         @confirm="handel_addContacts"
