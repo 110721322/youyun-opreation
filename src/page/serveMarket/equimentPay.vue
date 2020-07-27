@@ -4,94 +4,174 @@
       <li>
         <span class="left-title">付款剩余时间:</span>
         <div class="step-time">
-          <div class="times">16</div>
+          <div class="times">{{lefth}}</div>
           <span>:</span>
-          <div class="times">20</div>
+          <div class="times">{{leftm}}</div>
           <span>:</span>
-          <div class="times">23</div>
+          <div class="times">{{lefts}}</div>
         </div>
       </li>
       <li>
         <span class="left-title">订单号:</span>
-        <span class="left-title">2022328082090</span>
+        <span class="left-title">{{orderInfo.outputNo}}</span>
       </li>
       <li>
         <span class="left-title">付款金额:</span>
-        <span class="price">344.90</span>
+        <span class="price">{{orderInfo.actualAmount}}</span>
       </li>
     </div>
     <div class="pay_way">
       <div class="pay_label">支付方式:</div>
-      <div class="way" :class="wayIndex===index?'isway':''" v-for="(item, index) in wayData" :key="index" @click="onclick_way(index)">{{item.value}}</div>
+      <div v-for="(item, index) in wayData" :key="index" class="way" :class="wayIndex===index?'isway':''" @click="onclick_way(index)">{{ item.value }}</div>
     </div>
-    <div class="qrcode" v-if="wayIndex===0">
-      <img src="../../assets/img/qr_code.jpg" alt="">
-    </div>
-    <div class="bottom-des" v-if="wayIndex===0">
-      <span>支持</span>
-      <img src="../../assets/img/apply_pay.png" alt="">
-      <img src="../../assets/img/wx_pay.png" alt="">
-      <img src="../../assets/img/yun_pay.png" alt="">
-      <span>扫码支付</span>
-    </div>
-    <div class="bank" v-if="wayIndex===1"><span>打款账户:</span><span>3301040160001013187</span></div>
-    <div class="bank" v-if="wayIndex===1"><span>开户银行:</span><span>杭州银行滨江支行</span></div>
-    <div class="code" v-if="wayIndex===1">
-      <div class="code_label">打款凭证:</div>
-      <div class="photo">
-        <el-upload
-                class="avatar-uploader"
-                action="https://jsonplaceholder.typicode.com/posts/"
-                :show-file-list="false"
-                :on-success="handleAvatarSuccess"
-                :before-upload="beforeAvatarUpload"
-        >
-          <img v-if="imageUrl" :src="imageUrl" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
-      </div>
-    </div>
-    <div class="see_model" v-if="wayIndex===1">查看示例</div>
-    <div class="sub_btn" v-if="wayIndex===1">
-      <button>提交</button>
+    <!--    <div v-if="wayIndex===0" class="qrcode">-->
+    <!--      <img src="../../../assets/img/qr_code.jpg" alt="">-->
+    <!--    </div>-->
+    <!--    <div v-if="wayIndex===0" class="bottom-des">-->
+    <!--      <span>支持</span>-->
+    <!--      <img src="../../../assets/img/zfbpay.png" alt="">-->
+    <!--      <img src="../../../assets/img/wxpay.png" alt="">-->
+    <!--      <img src="../../../assets/img/ysfpay.png" alt="">-->
+    <!--      <span>扫码支付</span>-->
+    <!--    </div>-->
+    <div v-if="wayIndex===0" class="bank"><span>打款账户:</span><span>3301040160001013187</span></div>
+    <div v-if="wayIndex===0" class="bank"><span>开户银行:</span><span>杭州银行滨江支行</span></div>
+    <div v-if="wayIndex===0" class="code">
+      <!--      <div class="code_label">打款凭证:</div>-->
+      <Form
+              :show-submit="fromConfigData.showSubmit"
+              :show-foot-btn="fromConfigData.showFootBtn"
+              :form-base-data="fromConfigData.formData"
+              @submit="onClick_submit"
+      ></Form>
     </div>
   </div>
 </template>
 
 <script>
+import api from "@/api/api_serveMarket"
+import Form from "@/components/form/index.vue";
 export default {
+  components: { Form },
   data() {
     return {
       imageUrl: '',
       wayData: [
-        {
-          value: '扫码支付'
-        },
+        // {
+        //   value: '扫码支付'
+        // },
         {
           value: '对公转账'
         }
       ],
-      wayIndex: 0
+      wayIndex: 0,
+      orderInfo: {},
+      fromConfigData: {
+        formData: [
+          {
+            type: 6,
+            label: '打款凭证',
+            key: 'deviceImg'
+          }
+        ],
+        showSubmit: true,
+        showFootBtn: false
+      },
+      leftd: '',
+      lefth: '',
+      leftm: '',
+      lefts: '',
+      deviceInfos: [],
+      address: {}
     }
   },
+  created() {},
+  mounted() {
+    this.orderInfo = this.$route.query.orderInfo
+    this.deviceInfos = this.$route.query.deviceInfos
+    this.address = this.$route.query.address
+    this.getTime()
+  },
   methods: {
+    getTime() {
+      var date = new Date();
+      var Months = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+      var Dates = date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
+      var Hours = date.getHours() < 10 ? '0' + date.getHours() : date.getHours()
+      var Minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
+      var Seconds = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()
+      var now = date.getFullYear() + '-' + Months + '-' + Dates + ' ' + Hours + ':' + Minutes + ':' + Seconds;
+      var now1 = now.replace(new RegExp("-", "gm"), "/")
+      var now2 = this.orderInfo.theTime.replace(new RegExp("-", "gm"), "/")
+      var startDateM = (new Date(now1)).getTime(); // 得到倒计时的毫秒数
+      var endTime = (new Date(now2)).getTime()
+      var nowTime = (endTime + 1800000) - startDateM
+      if (nowTime >= 0) {
+        this.leftd = Math.floor(nowTime / (1000 * 60 * 60 * 24)) // 计算天数
+        this.lefth = Math.floor(nowTime / (1000 * 60 * 60) % 24) // 计算小时数
+        this.leftm = Math.floor(nowTime / (1000 * 60) % 60) // 计算分钟数
+        this.lefts = Math.floor(nowTime / 1000 % 60) // 计算秒数
+        if (this.leftd < 10) {
+          this.leftd = "0" + this.leftd
+        }
+        if (this.lefth < 10) {
+          this.lefth = "0" + this.lefth
+        }
+        if (this.leftm < 10) {
+          this.leftm = "0" + this.leftm
+        }
+        if (this.lefts < 10) {
+          this.lefts = "0" + this.lefts
+        }
+        setInterval(() => {
+          this.getTime()
+        }, 1000)
+      } else {
+        this.lefth = '00'
+        this.lefth = '00'
+        this.leftm = '00'
+        this.lefts = '00'
+      }
+    },
     onclick_way(index) {
       this.wayIndex = index
     },
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg';
-      const isLt2M = file.size / 1024 / 1024 < 2;
-
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!');
+    onClick_submit($data) {
+      if (!$data.deviceImg) {
+        this.$message({
+          message: '请上传付款凭证',
+          type: 'warning'
+        })
+      } else {
+        api.companyOrderSettle({
+          voucher: $data.deviceImg.dialogImageUrl,
+          outputNo: this.orderInfo.outputNo
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '操作成功',
+              type: "success"
+            })
+          } else {
+            this.$confirm('超时未付款，订单自动关闭', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning',
+              showCancelButton: false,
+              showClose: false
+            }).then(res => {
+              this.$router.replace({
+                path: '/serviceCentre/cashRegisterTool/orderRecord'
+              })
+            })
+          }
+        }).catch(err => {
+          this.$message({
+            message: err.errorMessage,
+            type: "warning"
+          })
+        })
       }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!');
-      }
-      return isJPG && isLt2M;
     }
   }
 }
@@ -155,6 +235,7 @@ export default {
     display: flex;
     align-items: center;
     font-size: 14px;
+    padding-left: 50px;
   }
   .pay_label {
     color: #000000;
@@ -205,6 +286,7 @@ export default {
     display: flex;
     align-items: center;
     margin-top: 16px;
+    margin-left: 50px;
   }
   .bank span{
     font-size: 14px;
@@ -267,6 +349,9 @@ export default {
     color: #ffffff;
     background: #1989FA;
     border-radius: 4px;
+  }
+  .code .el-form.formTemplate {
+    margin: 0 0;
   }
 </style>
 

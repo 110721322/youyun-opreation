@@ -505,14 +505,8 @@ export default {
           }).catch(err => {
             console.log(err)
           })
-
           // this.saveUserInfo(res.object.user)
           // this.setRolePermission(['merchant'])
-          // if (this.$route.query.redirect) {
-          //   this.$router.push({ path: `${this.$route.query.redirect}` });
-          // } else {
-          //   this.$router.push(`/index`);
-          // }
         })
         .catch(err => {
           this.$alert(err);

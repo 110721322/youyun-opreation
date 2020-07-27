@@ -44,7 +44,6 @@
     </div>
 
     <detailMode :rule-form="ruleForm" :config-data="configData" @edit="itemEdit"></detailMode>
-
     <detailMode :rule-form="ruleForm" :config-data="configData2" @edit="rateEdit"></detailMode>
 
     <div class="bg_box">
@@ -84,21 +83,22 @@
             class="selectDate"
           >
           </el-date-picker>
-
-          <el-row>
-            <el-col :span="8" class="data_item" style="height:58px">
-              <div class="data_item_title">客情维护</div>
-              <div>55次</div>
-            </el-col>
-            <el-col :span="8" class="data_item" style="height:58px">
-              <div class="data_item_title">问题处理</div>
-              <div>55次</div>
-            </el-col>
-            <el-col :span="8" class="data_item border_none" style="height:58px">
-              <div class="data_item_title">沟通类型</div>
-              <div>55次</div>
-            </el-col>
-          </el-row>
+          <div class="talkInfo">
+            <el-row>
+              <el-col :span="8" class="data_item" style="height:58px">
+                <div class="data_item_title">{{summaryInfo.theme1}}</div>
+                <div>{{summaryInfo.theme1Count}}次</div>
+              </el-col>
+              <el-col :span="8" class="data_item" style="height:58px">
+                <div class="data_item_title">{{summaryInfo.theme2}}</div>
+                <div>{{summaryInfo.theme2Count}}次</div>
+              </el-col>
+              <el-col :span="8" class="data_item border_none" style="height:58px">
+                <div class="data_item_title">沟通类型</div>
+                <div>{{summaryInfo.otherThemeCount}}次</div>
+              </el-col>
+            </el-row>
+          </div>
         </div>
       </el-col>
       <el-col :span="15">
@@ -112,15 +112,15 @@
           <BaseCrud
             :grid-config="tableConfigData.gridConfig"
             :grid-btn-config="tableConfigData.gridBtnConfig"
-            :grid-data="testData"
+            :grid-data="talkPlanList"
             :form-config="tableConfigData.formConfig"
             :form-data="tableConfigData.formModel"
             :grid-edit-width="100"
             :table-height="212"
             form-title="用户"
-            :is-async="false"
+            :is-async="true"
             :params="params1"
-            :api-service="api1"
+            @detail="editDetail"
             style="margin:24px;border:1px solid #EBEEF5;height:212px;overflow:hidden"
           ></BaseCrud>
         </div>
@@ -134,17 +134,16 @@
       </div>
 
       <BaseCrud
-        :grid-config="tableConfigData.gridConfig"
-        :grid-btn-config="tableConfigData.gridBtnConfig"
-        :grid-data="testData"
-        :form-config="tableConfigData.formConfig"
-        :form-data="tableConfigData.formModel"
+        :grid-config="tableConfigData2.gridConfig"
+        :grid-btn-config="tableConfigData2.gridBtnConfig"
+        :grid-data="channelList"
+        :form-config="tableConfigData2.formConfig"
+        :form-data="tableConfigData2.formModel"
         :grid-edit-width="100"
         :table-height="309"
         form-title="用户"
-        :is-async="false"
+        :is-async="true"
         :params="params2"
-        :api-service="api2"
         style="margin:24px;border:1px solid #EBEEF5;height:309px;overflow:hidden"
         @detail="viewDetail"
       ></BaseCrud>
@@ -213,42 +212,42 @@
       <ul class="liaison_detail">
         <li>
           <span>联系人：</span>
-          <span>张三</span>
+          <span>{{talkListDetail.linkmanName}}</span>
         </li>
         <li>
           <span>职位：</span>
-          <span>张三</span>
+          <span>{{talkListDetail.jobName}}</span>
         </li>
         <li>
           <span>手机号：</span>
-          <span>张三</span>
+          <span>{{talkListDetail.phoneNum}}</span>
         </li>
         <li>
           <span>创建人：</span>
-          <span>张三</span>
+          <span>{{talkListDetail.operationName}}</span>
         </li>
         <li>
           <span>创建时间：</span>
-          <span>张三</span>
+          <span>{{talkListDetail.createTime}}</span>
         </li>
         <li>
           <span>沟通方式：</span>
-          <span>张三</span>
+          <span>{{talkListDetail.way}}</span>
         </li>
         <li>
           <span>沟通主题：</span>
-          <span>张三</span>
+          <span>{{talkListDetail.theme}}</span>
         </li>
-        <li>
+        <li v-if="talkListDetail.merchantList && talkListDetail.merchantList.length>0">
           <div>问题商户：</div>
-          <div>
-            <p>张三</p>
+          <div v-for="(item, index) in talkListDetail.merchantList" :key="index">
+            <p>{{item.merchantName}}</p>
             <p>李四</p>
           </div>
         </li>
         <li>
           <span>沟通内容：</span>
-          <span>张三你好</span>
+          <span>{{talkListDetail.content}}</span>
         </li>
       </ul>
     </el-dialog>
@@ -270,6 +269,10 @@ export default {
   components: { detailMode, BaseCrud, Form },
   data() {
     return {
+      channelList: [],
+      talkPlanList: [],
+      contactId: '',
+      talkListDetail: {},
       dialogTableVisible: false,
       liaisonId: '',
       addLiaison: false,
@@ -366,41 +369,41 @@ export default {
                 ]
               }
             ]
-          },
-          {
-            name: "邮寄地址",
-            modelName: "address",
-            models: [
-              {
-                items: [
-                  {
-                    name: "收件人",
-                    key: "personName"
-                  },
-                  {
-                    name: "详细地址",
-                    key: "detailAddress"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "手机号",
-                    key: "personMobile"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "地区",
-                    key: "name3"
-                  }
-                ]
-              }
-            ]
           }
+          // {
+          //   name: "邮寄地址",
+          //   modelName: "address",
+          //   models: [
+          //     {
+          //       items: [
+          //         {
+          //           name: "收件人",
+          //           key: "personName"
+          //         },
+          //         {
+          //           name: "详细地址",
+          //           key: "detailAddress"
+          //         }
+          //       ]
+          //     },
+          //     {
+          //       items: [
+          //         {
+          //           name: "手机号",
+          //           key: "personMobile"
+          //         }
+          //       ]
+          //     },
+          //     {
+          //       items: [
+          //         {
+          //           name: "地区",
+          //           key: "name3"
+          //         }
+          //       ]
+          //     }
+          //   ]
+          // }
         ]
       },
       configData2: {
@@ -535,7 +538,6 @@ export default {
         }]
       },
       timeDate: [],
-      testData: [],
       tableConfigData: USER_CONFIG,
       tableConfigData2: USER_CONFIG2,
       liaisonConfigData: {},
@@ -543,19 +545,9 @@ export default {
       fromConfigData: [],
       ruleForm: {},
       agentNo: '',
-      params1: {
-        id: 1,
-        addressBookId: 1,
-        relateCode: "",
-        remark: "",
-        nextContactTime: "",
-        remindTime: "",
-        remindType: "",
-        createTime: ""
-      },
-      api1: api.queryPlan,
+      params1: {},
+      api1: api.queryTalkPlan,
       params2: {},
-      api2: "",
       clientList: [
         {
           value: "情绪客户",
@@ -574,7 +566,8 @@ export default {
       activeValue: "情绪客户",
       editType: '',
       contactsList: [],
-      liaisonType: ''
+      liaisonType: '',
+      summaryInfo: {}
     };
   },
   created() {
@@ -597,138 +590,31 @@ export default {
     this.getQueryWait()
     this.getRelatedLabels()
     this.getAddressBookQuery()
-    this.params2 = {
-      relateCode: this.$route.query.agentNo
-    }
-    this.api2 = api.queryPlanList
+    this.getQueryTalkPlan()
+    this.getQueryPlanList()
   },
   mounted() {},
   methods: {
-    // 查询通讯簿
-    getAddressBookQuery() {
-      api.addressBookQuery({
-        relateCode: this.$route.query.agentNo
+    // 查询服务商详情
+    getDetail(agentNo) {
+      api.getAgentDetail({
+        agentNo: agentNo
       }).then(res => {
-        console.log(res)
-        if (res.datas) {
-          this.contactsList = res.datas
+        if (res.object) {
+          this.agentDetail = res.object
+          res.object.labelList.forEach(item => {
+            this.dynamicTags.push(item.name);
+          });
+          this.ruleForm = res.object
         }
-      }).catch(err => {
-        console.log(err)
-      })
-    },
-    viewDetail(row) {
-      this.dialogTableVisible = true
-      api.talkListsGetById({
-        id: row.id
-      }).then(res => {
-        console.log(res)
-      }).catch(err => {
-        console.log(err)
-      })
-    },
-    // 弹出查看联系人列表的右边抽屉
-    viewLiaison() {
-      this.findLiaison = true
-    },
-    // 弹出新增联系人的右边抽屉
-    liaisonAdd() {
-      this.liaisonType = 'add'
-      this.liaisonConfigData = LISASION.addData
-      this.addLiaison = true
-    },
-    // 编辑联系人的右边抽屉
-    editLiaison(row) {
-      console.log(row)
-      this.liaisonId = row.id
-      this.addLiaison = true
-      const newFromConfigData = LISASION.editData;
-      // 编辑前重赋值
-      newFromConfigData.formData.forEach((item, index) => {
-        item.initVal = row[item.key];
       });
-      this.liaisonConfigData = newFromConfigData;
-      this.liaisonType = 'edit'
-    },
-    // 关闭添加、编辑联系人的侧边抽屉
-    liaisonCancel() {
-      this.addLiaison = false
-    },
-    // 新增联系人
-    handel_addLiaison(row) {
-      if (!row.linkmanName || !row.phoneNum || !row.jobStatus || !row.jobName) {
-        this.$message({
-          message: '请填写必填信息',
-          type: 'warning'
-        })
-        return false
-      } else {
-        if (this.liaisonType === 'add') {
-          api.addTalkAddressBook({
-            linkmanName: row.linkmanName,
-            phoneNum: row.phoneNum,
-            jobName: row.jobName,
-            jobStatus: row.jobStatus,
-            remark: row.remark,
-            relateCode: this.$route.query.agentNo
-          }).then(res => {
-            if (res.status === 0) {
-              this.$message({
-                message: '添加联系人成功',
-                type: 'success'
-              })
-              this.addLiaison = false
-              this.getAddressBookQuery()
-            } else {
-              this.$message({
-                message: res.errMessage,
-                type: 'fail'
-              })
-            }
-          }).catch(() => {})
-        } else {
-          api.updateTalkAddressBook({
-            linkmanName: row.linkmanName,
-            phoneNum: row.phoneNum,
-            jobName: row.jobName,
-            jobStatus: row.jobStatus,
-            remark: row.remark,
-            relateCode: this.$route.query.agentNo,
-            id: this.liaisonId
-          }).then(res => {
-            if (res.status === 0) {
-              this.$message({
-                message: '编辑联系人成功',
-                type: 'success'
-              })
-              this.addLiaison = false
-              this.getAddressBookQuery()
-            } else {
-              this.$message({
-                message: res.errMessage,
-                type: 'fail'
-              })
-            }
-          }).catch(() => {})
-        }
-      }
-    },
-    // 查询沟通次数
-    getQueryWait() {
-      api.queryWait({
-        relateCode: this.$route.query.agentNo
-      }).then(res => {
-        this.willConactNum = res.object
-      }).catch(() => {})
     },
     // 查询服务商已关联的标签
     getRelatedLabels() {
       api.queryRelatedLabels({
         agentNo: this.$route.query.agentNo
       }).then(res => {
-        console.log('服务商关联的标签')
         console.log(res)
-        console.log('服务商关联的标签')
       }).catch(err => {
         console.log(err)
       })
@@ -739,14 +625,29 @@ export default {
       this.addContactsDraw = true
       this.contactConfigData = CONTACTS_CONFIG.formData
     },
+    // 添加沟通小计侧弹窗
     addSubtotal() {
       this.addDrewerType = 'subtotalType'
       this.addContactsDraw = true
       this.contactConfigData = CONTACTS_CONFIG.formData1
     },
+    // 编辑沟通计划
+    editDetail($row) {
+      this.contactId = $row.id
+      api.getTalkPlan({
+        id: $row.id
+      }).then(res => {
+        this.addDrewerType = 'editcontactsType'
+        this.addContactsDraw = true
+        const newFromConfigData = CONTACTS_CONFIG.formData2;
+        newFromConfigData.forEach((item, index) => {
+          item.initVal = res.object[item.key];
+        });
+        this.contactConfigData = newFromConfigData;
+      }).catch(() => {})
+    },
     // 添加沟通计划确定按钮
     handel_addContacts(row) {
-      console.log(row)
       if (this.addDrewerType === 'contactsType') {
         if (!row.addressBookId || !row.nextContactTime || !row.remark || !row.remindType) {
           this.$message({
@@ -761,9 +662,15 @@ export default {
             remark: row.remark,
             remindType: row.remindType
           }).then(res => {
-            console.log(res)
-          }).catch(err => {
-            console.log(err)
+            if (res.status === 0) {
+              this.$message({
+                message: '添加成功',
+                type: 'success'
+              })
+              this.addContactsDraw = false
+              this.getQueryTalkPlan()
+            }
+          }).catch(() => {
           })
         }
       }
@@ -783,9 +690,44 @@ export default {
             subTheme: row.theme[1],
             relateCode: this.$route.query.agentNo
           }).then(res => {
-            console.log(res)
+            if (res.status === 0) {
+              this.$message({
+                message: "添加成功",
+                type: 'success'
+              })
+              this.addContactsDraw = false
+              this.getQueryPlanList()
+            }
+          }).catch(() => {
+          })
+        }
+      }
+      if (this.addDrewerType === 'editcontactsType') {
+        if (!row.addressBookId || !row.nextContactTime || !row.remark || !row.remindType) {
+          this.$message({
+            message: '请填写完整信息',
+            type: 'warning'
+          })
+        } else {
+          api.updateTalkPlan({
+            id: this.contactId,
+            addressBookId: row.addressBookId,
+            nextContactTime: row.nextContactTime,
+            relateCode: this.$route.query.agentNo,
+            remark: row.remark,
+            remindType: row.remindType
+          }).then(res => {
+            this.$message({
+              message: '修改成功',
+              type: 'success'
+            })
+            this.addContactsDraw = false
+            this.getQueryTalkPlan()
           }).catch(err => {
-            console.log(err)
+            this.$message({
+              message: err.errMessage,
+              type: 'success'
+            })
           })
         }
       }
@@ -796,7 +738,6 @@ export default {
     },
     // 沟通计划切换时间
     dateChange(value) {
-      console.log(value)
       this.timeDate = value
       this.getSelectSummary(value)
     },
@@ -806,13 +747,13 @@ export default {
     },
     // 获取标签信息
     gatTag() {
-      api.queryLaBleAgent({
-        agentNo: this.$route.query.agentNo
-      }).then(res => {
-        console.log(res)
-      }).catch(err => {
-        console.log(err)
-      })
+      // api.queryLaBleAgent({
+      //   agentNo: this.$route.query.agentNo
+      // }).then(res => {
+      //   console.log(res)
+      // }).catch(err => {
+      //   console.log(err)
+      // })
     },
     // 查询沟通数据
     getSelectSummary(value) {
@@ -821,28 +762,29 @@ export default {
         beginDate: value[0],
         endDate: value[1]
       }).then(res => {
-        console.log(res)
-      }).catch(err => {
-        console.log(err)
+        this.summaryInfo = res.object
+      }).catch(() => {})
+    },
+    // 查询沟通计划列表
+    getQueryTalkPlan() {
+      api.queryTalkPlan({
+        relateCode: this.$route.query.agentNo
+      }).then(res => {
+        this.talkPlanList = res.datas
       })
     },
-    getDetail(agentNo) {
-      api.getAgentDetail({
-        agentNo: agentNo
+    // 查询沟通记录列表
+    getQueryPlanList() {
+      api.queryPlanList({
+        relateCode: this.$route.query.agentNo
       }).then(res => {
-        if (res.object) {
-          this.agentDetail = res.object
-          res.object.labelList.forEach(item => {
-            this.dynamicTags.push(item.name);
-          });
-          this.ruleForm = res.object
-        }
-      });
+        this.channelList = res.datas
+      }).catch(() => {
+      })
     },
     handleClose(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
     },
-
     showInput() {
       this.inputVisible = true;
       this.$nextTick(() => {
@@ -857,10 +799,6 @@ export default {
       }
       this.inputVisible = false;
       this.inputValue = "";
-    },
-    go_detail() {
-      // eslint-disable-next-line no-console
-      this.$router.push("/agent/list/detail");
     },
     itemEdit($model) {
       if ($model === 'basicData') {
@@ -896,9 +834,9 @@ export default {
     cancel() {
       this.editType = ''
       this.drawer = false;
+      this.addContactsDraw = false
     },
     handel_confirm(row) {
-      console.log(row)
       if (this.editType === 'editBasicData') {
         if (!row.businessType || !row.agentName || !row.personName || !row.personMobile || !row.email || !row.companyAddress || !row.businessLicenseImg) {
           this.$message({
@@ -1024,12 +962,150 @@ export default {
               this.getDetail(this.$route.query.agentNo)
               this.editType = ''
               this.drawer = false
-            }).catch(err => {
-              console.log(err)
+            }).catch(() => {
             })
           }
         }
       }
+      if (this.editType === 'editRenew') {
+        if (!row.monthCount || !row.renewValue) {
+          this.$message({
+            message: '请填写必填信息',
+            type: 'warning'
+          })
+          return false
+        } else {
+          api.addPercentRenew({
+            agentNo: this.$route.query.agentNo,
+            monthCount: row.monthCount,
+            renewType: 'percent',
+            renewValue: row.renewValue
+          }).then(res => {
+            if (res.status === 0) {
+              this.getDetail(this.$route.query.agentNo)
+              this.editType = ''
+              this.drawer = false
+            }
+          })
+        }
+      }
+    },
+    // 查询通讯簿
+    getAddressBookQuery() {
+      api.addressBookQuery({
+        relateCode: this.$route.query.agentNo
+      }).then(res => {
+        if (res.datas) {
+          this.contactsList = res.datas
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    // 查看沟通记录详情
+    viewDetail(row) {
+      this.dialogTableVisible = true
+      api.talkListsGetById({
+        id: row.id
+      }).then(res => {
+        this.talkListDetail = res.object
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    // 弹出查看联系人列表的右边抽屉
+    viewLiaison() {
+      this.findLiaison = true
+    },
+    // 弹出新增联系人的右边抽屉
+    liaisonAdd() {
+      this.liaisonType = 'add'
+      this.liaisonConfigData = LISASION.addData
+      this.addLiaison = true
+    },
+    // 编辑联系人的右边抽屉
+    editLiaison(row) {
+      console.log(row)
+      this.liaisonId = row.id
+      this.addLiaison = true
+      const newFromConfigData = LISASION.editData;
+      // 编辑前重赋值
+      newFromConfigData.formData.forEach((item, index) => {
+        item.initVal = row[item.key];
+      });
+      this.liaisonConfigData = newFromConfigData;
+      this.liaisonType = 'edit'
+    },
+    // 关闭添加、编辑联系人的侧边抽屉
+    liaisonCancel() {
+      this.addLiaison = false
+    },
+    // 新增联系人
+    handel_addLiaison(row) {
+      if (!row.linkmanName || !row.phoneNum || !row.jobStatus || !row.jobName) {
+        this.$message({
+          message: '请填写必填信息',
+          type: 'warning'
+        })
+        return false
+      } else {
+        if (this.liaisonType === 'add') {
+          api.addTalkAddressBook({
+            linkmanName: row.linkmanName,
+            phoneNum: row.phoneNum,
+            jobName: row.jobName,
+            jobStatus: row.jobStatus,
+            remark: row.remark,
+            relateCode: this.$route.query.agentNo
+          }).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                message: '添加联系人成功',
+                type: 'success'
+              })
+              this.addLiaison = false
+              this.getAddressBookQuery()
+            } else {
+              this.$message({
+                message: res.errMessage,
+                type: 'fail'
+              })
+            }
+          }).catch(() => {})
+        } else {
+          api.updateTalkAddressBook({
+            linkmanName: row.linkmanName,
+            phoneNum: row.phoneNum,
+            jobName: row.jobName,
+            jobStatus: row.jobStatus,
+            remark: row.remark,
+            relateCode: this.$route.query.agentNo,
+            id: this.liaisonId
+          }).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                message: '编辑联系人成功',
+                type: 'success'
+              })
+              this.addLiaison = false
+              this.getAddressBookQuery()
+            } else {
+              this.$message({
+                message: res.errMessage,
+                type: 'fail'
+              })
+            }
+          }).catch(() => {})
+        }
+      }
+    },
+    // 查询沟通次数
+    getQueryWait() {
+      api.queryWait({
+        relateCode: this.$route.query.agentNo
+      }).then(res => {
+        this.willConactNum = res.object
+      }).catch(() => {})
     }
   }
 };
@@ -1286,8 +1362,12 @@ export default {
 }
 
 .selectDate {
-  top: 10px;
+  top: 30px;
   left: 50%;
   margin-left: -200px;
+}
+
+.talkInfo {
+  margin-top: 50px;
 }
 </style>

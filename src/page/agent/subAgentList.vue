@@ -95,7 +95,8 @@ export default {
             this.$message({
               type: "info",
               message: "已解冻"
-            });
+            })
+            this.$refs.table.getData()
           })
         })
         .catch(() => {});
@@ -107,7 +108,7 @@ export default {
         cancelButtonText: "取消"
       })
         .then(() => {
-          api.updateAccountStatusOfFrozen({
+          api.frozen({
             agentNo: row.agentNo
           }).then(res => {
             this.$message({

@@ -29,30 +29,30 @@
       </div>
       <div class="service-box">
         <pie
-                :pie-option="pieOptionList[0]"
-                :data-list="dataList[0]"
-                :ref-name="'echartPie0'"
-                :pie-style="pieStyle"
+          :pie-option="pieOptionList[0]"
+          :data-list="dataList[0]"
+          :ref-name="'echartPie0'"
+          :pie-style="pieStyle"
         ></pie>
         <pie
-                :pie-option="pieOptionList[0]"
-                :data-list="dataList[0]"
-                :ref-name="'echartPie1'"
-                :pie-style="pieStyle"
+          :pie-option="pieOptionList[0]"
+          :data-list="dataList[0]"
+          :ref-name="'echartPie1'"
+          :pie-style="pieStyle"
         ></pie>
         <pie
-                :pie-option="pieOptionList[0]"
-                :data-list="dataList[0]"
-                :ref-name="'echartPie2'"
-                :pie-style="pieStyle"
+          :pie-option="pieOptionList[0]"
+          :data-list="dataList[0]"
+          :ref-name="'echartPie2'"
+          :pie-style="pieStyle"
         ></pie>
       </div>
       <search
-              :is-show-all="true"
-              :form-base-data="searchConfig.formData"
-              :show-foot-btn="searchConfig.showFootBtn"
-              @dataSelect="handleDataSelect"
-              @search="search"
+        :is-show-all="true"
+        :form-base-data="searchConfig.formData"
+        :show-foot-btn="searchConfig.showFootBtn"
+        @dataSelect="handleDataSelect"
+        @search="search"
       />
       <div class="title">顶级服务商平均交易额走势</div>
       <div class="trend-box">
@@ -61,66 +61,66 @@
         </div>
         <div class="data-box">
           <dataItem
-                  :is-show-table="true"
-                  :title="'总交易额排行榜'"
-                  :is-show-more="true"
-                  :config-data="tableConfigData5"
-                  :item-test-data="testData5"
-                  :is-show-line="false"
-                  :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
-                  @showMore="handleShowMore"
+            :is-show-table="true"
+            :title="'总交易额排行榜'"
+            :is-show-more="true"
+            :config-data="tableConfigData5"
+            :item-test-data="testData5"
+            :is-show-line="false"
+            :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
+            @showMore="handleShowMore"
           ></dataItem>
         </div>
       </div>
       <div class="pie-box">
         <data-item
-                class="pie-item"
-                :radio="radioListData[0]"
-                :title="'交易额涨跌排行'"
-                :config-data="tableConfigData"
-                :is-show-more="true"
-                :is-show-table="true"
-                :item-test-data="testData"
-                :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
-                @radioChange="handleTradeAmountChange"
+          class="pie-item"
+          :radio="radioListData[0]"
+          :title="'交易额涨跌排行'"
+          :config-data="tableConfigData"
+          :is-show-more="true"
+          :is-show-table="true"
+          :item-test-data="testData"
+          :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
+          @radioChange="handleTradeAmountChange"
         />
         <dataItem
-                class="pie-item"
-                :title="'新增商户数量排行'"
-                :config-data="tableConfigData2"
-                :is-show-more="true"
-                :is-show-table="true"
-                :item-test-data="testData2"
-                :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
-                @showMore="handleShowMore"
+          class="pie-item"
+          :title="'新增商户数量排行'"
+          :config-data="tableConfigData2"
+          :is-show-more="true"
+          :is-show-table="true"
+          :item-test-data="testData2"
+          :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
+          @showMore="handleShowMore"
         />
       </div>
-<!--      <div class="pie-box">-->
-<!--        <dataItem-->
-<!--                class="pie-item"-->
-<!--                :radio="radioListData[1]"-->
-<!--                :title="'会员商户排行'"-->
-<!--                :config-data="tableConfigData3"-->
-<!--                :is-show-more="true"-->
-<!--                :is-show-table="true"-->
-<!--                :item-test-data="testData3"-->
-<!--                :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"-->
-<!--                @showMore="handleShowMore"-->
-<!--                @radioChange="handleTradeAmountChange"-->
-<!--        />-->
-<!--        <dataItem-->
-<!--                class="pie-item"-->
-<!--                :radio="radioListData[2]"-->
-<!--                :title="'刷脸订单排行'"-->
-<!--                :config-data="tableConfigData4"-->
-<!--                :is-show-more="true"-->
-<!--                :is-show-table="true"-->
-<!--                :item-test-data="testData4"-->
-<!--                :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"-->
-<!--                @showMore="handleShowMore"-->
-<!--                @radioChange="handleTradeAmountChange"-->
-<!--        />-->
-<!--      </div>-->
+      <!--      <div class="pie-box">-->
+      <!--        <dataItem-->
+      <!--                class="pie-item"-->
+      <!--                :radio="radioListData[1]"-->
+      <!--                :title="'会员商户排行'"-->
+      <!--                :config-data="tableConfigData3"-->
+      <!--                :is-show-more="true"-->
+      <!--                :is-show-table="true"-->
+      <!--                :item-test-data="testData3"-->
+      <!--                :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"-->
+      <!--                @showMore="handleShowMore"-->
+      <!--                @radioChange="handleTradeAmountChange"-->
+      <!--        />-->
+      <!--        <dataItem-->
+      <!--                class="pie-item"-->
+      <!--                :radio="radioListData[2]"-->
+      <!--                :title="'刷脸订单排行'"-->
+      <!--                :config-data="tableConfigData4"-->
+      <!--                :is-show-more="true"-->
+      <!--                :is-show-table="true"-->
+      <!--                :item-test-data="testData4"-->
+      <!--                :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"-->
+      <!--                @showMore="handleShowMore"-->
+      <!--                @radioChange="handleTradeAmountChange"-->
+      <!--        />-->
+      <!--      </div>-->
     </div>
   </div>
 </template>

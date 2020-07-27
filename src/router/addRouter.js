@@ -616,6 +616,15 @@ const asyncRoutes = {
     },
     component: () => import('@/page/agent/agentCheckList.vue')
   },
+  'renewalDue': {
+    path: 'renewalDue',
+    name: 'renewalDue',
+    meta: {
+      title: '到期续费记录',
+      icon: 'renewalDue'
+    },
+    component: () => import('@/page/agent/renewalDue.vue')
+  },
 
   'dividedOverview': {
     path: 'dividedOverview',

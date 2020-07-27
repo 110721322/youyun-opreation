@@ -47,11 +47,30 @@
         />
       </div>
     </div>
+    <el-dialog
+      title="批量转移运营"
+      :visible.sync="dialogVisible"
+      width="30%"
+      :before-close="handleClose">
+      <el-select v-model="operationId" filterable placeholder="请选择">
+        <el-option
+          v-for="item in options"
+          :key="item.operationId"
+          :label="item.operationName"
+          :value="item.operationId">
+        </el-option>
+      </el-select>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="handle_ok">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
 import search from "@/components/search/search.vue";
 import api from "@/api/api_agent.js";
+import commonApi from "@/api/api_common.js"
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { USER_CONFIG } from "./tableConfig/agentConfig";
 import { FORM_CONFIG } from "./formConfig/agentListSearch";
@@ -63,13 +82,16 @@ export default {
 
   data() {
     return {
+      operationId: '',
+      options: [],
       searchMaxHeight: "380",
       configData: USER_CONFIG,
       searchConfig: FORM_CONFIG,
       testData: [],
       selectData: [],
       params: {},
-      api: api.agentList
+      api: api.agentList,
+      dialogVisible: false
     };
   },
   created() {},
@@ -77,25 +99,10 @@ export default {
   methods: {
     transfer() {
       if (this.selectData.length) {
-        this.$confirm("是否批量转移运营？", "转移运营", {
-          distinguishCancelAndClose: true,
-          confirmButtonText: "确认",
-          cancelButtonText: "取消"
+        this.dialogVisible = true
+        commonApi.listOperations().then(res => {
+          this.options = res.object
         })
-          .then(() => {
-            api
-              .transferOperate({
-                agentNos: [],
-                operateUserNo: ""
-              })
-              .then(res => {
-                this.$message({
-                  type: "info",
-                  message: "转移成功"
-                });
-              });
-          })
-          .catch(() => {});
       } else {
         this.$message({
           type: "info",
@@ -103,6 +110,38 @@ export default {
         });
       }
     },
+    handle_ok() {
+      if (!this.operationId) {
+        this.$message({
+          message: '请选择运营人员',
+          type: 'warning'
+        })
+        return false
+      } else {
+        var agentNosList = ''
+        for (var i = 0; i < this.selectData.length; i++) {
+          agentNosList += this.selectData[i].agentNo + ','
+        }
+        agentNosList = agentNosList.slice(0, agentNosList.length - 1)
+        api.updateOperationId({
+          operationId: this.operationId,
+          agentNos: agentNosList
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '批量转移成功',
+              type: 'success'
+            })
+          }
+          this.dialogVisible = false
+          this.selectData = []
+          this.$refs.child.getData()
+        }).catch(err => {
+          console.log(err)
+        })
+      }
+    },
+    handleClose() {},
     selectionChange($val) {
       this.selectData = $val;
     },
@@ -126,7 +165,6 @@ export default {
       this.params[$form.inputSelect] = $form.inputForm;
     },
     openDetail($row) {
-      console.log($row)
       this.$router.push({
         path: "/agent/list/detail",
         query: {

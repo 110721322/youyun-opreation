@@ -2,26 +2,26 @@
   <div class="page">
     <div class="top-area">
       <span>确认收货信息</span>
-      <span>管理收货地址</span>
+      <!--      <span>管理收货地址</span>-->
     </div>
     <div class="address">
-      <li class="noselect" :class="selectIndex===index? 'isselect' :''" v-for="(item, index) in addressList" :key="index">
+      <li v-for="(item, index) in addressList" :key="index" class="noselect" :class="selectIndex===index? 'isselect' :''">
         <div class="left">
-          <div class="desc" :style="{'visibility':item.isMoren === true? 'visibility':'hidden'}">默认</div>
-          <input type="radio" class="radio" v-model="addressSelect" @change="getRadioVal" :value="index"/>
-          <div class="address-info">{{item.address}}</div>
+          <div class="desc">默认</div>
+          <input v-model="addressSelect" type="radio" class="radio" :value="index" />
+          <div class="address-info">{{ item.personName+ ' ' + '(' + item.personMobile + ')'+ ' ' + item.detailAddress }}</div>
         </div>
-        <div class="right" v-if="selectIndex===index">修改本地址</div>
+        <div class="right" @click="modifyAddress">修改本地址</div>
       </li>
     </div>
     <div class="remark">
       <span>备注:</span>
       <el-input
-        type="textarea"
-        placeholder="请输入内容"
-        v-model="textarea"
-        maxlength="150"
-        show-word-limit
+              v-model="textarea"
+              type="textarea"
+              placeholder="请输入内容"
+              maxlength="150"
+              show-word-limit
       >
       </el-input>
     </div>
@@ -37,15 +37,15 @@
       </div>
       <div class="goods-list">
         <div class="list">
-          <div class="left-list" v-for="(item, index) in goodsData" :key="index">
-            <li>商品图片</li>
-            <li>{{item.goodsName}}</li>
-            <li>{{item.price}}</li>
-            <li>{{item.quantity}}</li>
-            <li>{{item.total}}</li>
+          <div v-for="(item, index) in goodsData" :key="index" class="left-list">
+            <li><img :src="item.img" alt=""></li>
+            <li>{{ item.deviceModel }}</li>
+            <li>{{ item.salePrice }}</li>
+            <li>{{ enterInfo.count || item.shopCartCount }}</li>
+            <li>{{ item.salePrice*enterInfo.count || item.shopSubtotal }}</li>
           </div>
         </div>
-        <div class="right-amount" :style="{'height':goodsData.length*92+'px', 'line-height': goodsData.length*92+'px'}">¥1920.00</div>
+        <div class="right-amount" :style="{'height':goodsData.length*92+'px', 'line-height': goodsData.length*92+'px'}">{{enterType === 1?goodsData[0].salePrice*enterInfo.count : totalAmount }}</div>
       </div>
     </div>
     <div class="bottom-btn">
@@ -56,59 +56,106 @@
         </div>
       </div>
     </div>
+    <el-drawer :visible.sync="drawer" :with-header="false" size="35%">
+      <div class="p_head">{{ fromConfigData.title }}</div>
+      <Form
+        :form-base-data="fromConfigData.formData"
+        :show-foot-btn="fromConfigData.showFootBtn"
+        label-width="130px"
+        @cancel="cancel"
+        @confirm="confirm"
+      ></Form>
+    </el-drawer>
   </div>
 </template>
 
 <script>
+import api from "@/api/api_serveMarket"
+import { ADVERTISING_MATERIAL_CONFIG } from "./formConfig/modifyAdress";
+import Form from "@/components/form/index.vue";
 export default {
+  components: { Form },
   data() {
     return {
+      enterInfo: {},
+      fromConfigData: {},
+      drawer: false,
       selectIndex: 0,
-      addressSelect: '',
+      addressSelect: 0,
       textarea: '',
-      addressList: [
-        {
-          id: 1,
-          address: '金柒柒（18506812507） 浙江省 杭州市 西湖区 紫金众创小镇E1-18，小马哥',
-          isMoren: true
-        },
-        {
-          id: 2,
-          address: '金柒柒（18506812507） 浙江省 杭州市 西湖区 紫金众创小镇E1-19，小马哥',
-          isMoren: false
-        }
-      ],
-      goodsData: [
-        {
-          goodsName: '青蛙',
-          price: 10,
-          quantity: 2,
-          total: 20
-        },
-        {
-          goodsName: '青蛙1',
-          price: 10,
-          quantity: 2,
-          total: 20
-        },
-        {
-          goodsName: '青蛙',
-          price: 10,
-          quantity: 2,
-          total: 20
-        }
-      ]
+      addressList: [],
+      goodsData: [],
+      totalAmount: '',
+      settleInfo: {}
+    }
+  },
+  created() {
+    this.enterType = this.$route.query.enterType
+    if (this.enterType === 1) {
+      this.enterInfo = this.$route.query
+      this.getGoodsDetail()
+    } else {
+      this.totalAmount = ''
+      this.goodsData = this.$route.query.cartList.datas.goods
+      this.totalAmount = this.$route.query.cartList.datas.sumPrice
+      this.addressList = this.$route.query.cartList.datas.address
     }
   },
   methods: {
+    getGoodsDetail() {
+      api.queryMallDeviceDetail({
+        deviceId: this.enterInfo.deviceId
+      }).then(res => {
+        this.goodsData.push(res.object)
+      }).catch(err => {
+        console.log(err)
+      })
+    },
     getRadioVal() {
       this.selectIndex = this.addressSelect
     },
     onClick_topay() {
-      this.$router.push({
-        path: '/serveMarket/equipmentMall/equimentPay'
+      const deviceInfos = this.goodsData.map(v => ({
+        deviceId: v.deviceId,
+        count: v.shopCartCount,
+        salePrice: v.salePrice
+      }))
+      api.orderSettle({
+        deviceInfos: deviceInfos,
+        amount: this.totalAmount,
+        actualAmount: this.totalAmount,
+        agentNo: localStorage.getItem('agentUserId'),
+        buyerName: this.addressList[0].personName,
+        buyerPhone: this.addressList[0].personMobile,
+        buyerAddress: this.addressList[0].detailAddress,
+        buyerRemark: this.textarea,
+        outputType: 1
+      }).then(res => {
+        if (!res.object) {
+          this.$message({
+            message: res.errorMessage + ',请修改购买数量',
+            type: 'warning'
+          })
+        } else {
+          this.$router.push({
+            path: '/serveMarket/equipmentMall/equimentPay',
+            query: {
+              orderInfo: res.object,
+              deviceInfos: deviceInfos,
+              address: this.addressList[0]
+            }
+          })
+        }
+      }).catch(err => {
+        console.log(err)
       })
-    }
+    },
+    modifyAddress() {
+      this.fromConfigData = ADVERTISING_MATERIAL_CONFIG.deviceData;
+      this.drawer = true
+    },
+    cancel() {},
+    confirm() {}
   }
 }
 </script>
@@ -215,16 +262,16 @@ export default {
     width: 19.3%;
   }
   .goods-table li:nth-child(2) {
-      width: 16.3%;
+    width: 16.3%;
   }
   .goods-table li:nth-child(3) {
-      width: 15.3%;
+    width: 15.3%;
   }
   .goods-table li:nth-child(4) {
-      width: 16.3%;
+    width: 16.3%;
   }
   .goods-table li:nth-child(5) {
-      width: 14.8%;
+    width: 14.8%;
   }
   .goods-list {
     width: 100%;
@@ -244,6 +291,11 @@ export default {
     align-items: center;
     font-size: 14px;
     color: #606266;
+  }
+  .left-list li img {
+    display: block;
+    width: 80px;
+    height: 80px;
   }
   .left-list li:nth-child(1) {
     width: 19.3%;

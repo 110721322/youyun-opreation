@@ -4,6 +4,7 @@ const webConfig = {
   loginserver: 'http://192.168.2.102:8082/',  //登录开发调试端口
   // server: 'http://192.168.2.158:8888/app/mock/16',  // mock数据地址
   // server: 'http://127.0.0.1:8082/', // 登录获取地址
+  agentServer: 'http://192.168.2.102:8082',
   timeout: 30000,
   successCode: 2000, // 和后端约定的接口正常状态码
   unLoginCode: 4005, // 未登录的接口返回状态码
