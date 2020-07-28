@@ -52,7 +52,7 @@ import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import Form from "@/components/form/index.vue";
 
-import { SEARCH_CONFIG } from "./../formConfig/wxDirectListSearch";
+import { SEARCH_CONFIG } from "./../formConfig/aliDirectListSearch";
 import { FORM_CONFIG } from "./../formConfig/wxDirectListConfig";
 import { WXDIRECTLIST_CONFIG } from "./../tableConfig/wxDirectListConfig";
 
@@ -69,18 +69,7 @@ export default {
       searchHeight: "260",
       drawer: false,
       formStatus: "",
-      params: {
-        beginDate: this.$g.utils.getToday(),
-        endDate: this.$g.utils.getToday(),
-        agentNo: "rn4",
-        agentName: "5ff",
-        pageSize: 0,
-        channelStatus: "u22",
-        operationUserNo: "mef",
-        currentPage: 0,
-        merchantNo: "iy7",
-        merchantName: "y6a"
-      },
+      params: {},
       api: api.queryWechatAuditPageByCondition
     };
   },

@@ -7,7 +7,10 @@
       <div class="tab_head">
         <span class="title">商户间连审核</span>
       </div>
-      <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
+      <Search
+        :open-height="searchHeight"
+        :form-base-data="searchConfig.formData"
+        @search="search" />
 
       <div class="table_box">
         <BaseCrud
@@ -27,7 +30,6 @@
           :default-expand-all="false"
           :hide-edit-area="configData.hideEditArea"
           @detail="handleDetail"
-          @preApprove="handlePreApprove"
           @record="handleRecord"
         >
           <div slot="head" slot-scope="item">
@@ -73,18 +75,7 @@ export default {
       testData: [],
       direction: "rtl",
       searchHeight: "320",
-      params: {
-        beginDate: this.$g.utils.getToday(),
-        endDate: this.$g.utils.getToday(),
-        agentNo: "rn4",
-        agentName: "5ff",
-        pageSize: 0,
-        channelStatus: "u22",
-        operationUserNo: "mef",
-        currentPage: 0,
-        merchantNo: "iy7",
-        merchantName: "y6a"
-      },
+      params: {},
       api: api.queryLeshuaAuditPageByCondition
     };
   },
@@ -97,54 +88,26 @@ export default {
       const params = {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,
-        channelStatus: $ruleForm.channelStatus,
+        status: $ruleForm.status,
         operationUserNo: $ruleForm.operationUserNo
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     },
-    handleDetail() {
+    handleDetail(row) {
+      console.log(row)
       this.$router.push({
-        path: "/approval/checkMerchant/indirectList/detail"
-      });
-    },
-    handlePreApprove() {
-      this.$router.push({
-        path: "/approval/checkMerchant/indirectList/detail"
+        path: "/approval/checkMerchant/indirectList/detail",
+        query: {
+          merchantNo: row.merchantNo,
+          channelStatusList: row.channelStatusList
+        }
       });
     },
     handleRecord() {
       this.$router.push({
         path: "/approval/checkMerchant/indirectList/recordDetail"
       });
-    },
-    getTableData() {
-      this.testData = [
-        {
-          merchantName: "紫菜网络科技有限公司,ID: 13293127119831938",
-          serviceName: "紫菜网络科技有限公司,ID: 13293127119831938",
-          statusList: [
-            { name: "乐刷", status: "opened" },
-            { name: "乐刷", status: "review" },
-            { name: "乐刷", status: "reject" },
-            { name: "乐刷", status: "unused" }
-          ],
-          time: "2014-02-15 16:00:23",
-          showDetail: true
-        },
-        {
-          merchantName: "紫菜网络科技有限公司,ID: 13293127119831938",
-          serviceName: "紫菜网络科技有限公司,ID: 13293127119831938",
-          statusList: [
-            { name: "乐刷", status: "opened" },
-            { name: "乐刷", status: "review" },
-            { name: "乐刷", status: "reject" },
-            { name: "乐刷", status: "unused" }
-          ],
-          time: "2014-02-15 16:00:23",
-          showPreApprove: true
-        }
-      ];
     }
   }
 };

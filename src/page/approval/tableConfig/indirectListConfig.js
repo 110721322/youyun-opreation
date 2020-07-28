@@ -14,18 +14,24 @@ export const INDIRECTLIST_CONFIG = {
       label: '通道情况 ',
       width: '200px',
       customHead: true,
-      prop: "channel"
-      // render: (h, params) => {
-      //   const status = params.row.channel;
-      //   return h('div', {
-      //     'class': "status-box"
-      //   }, [status.map(function ($item) {
-      //     return [h('span', {
-      //       'class': "dot " + $item.status
-      //     }), $item.name]
-      //   })]
-      //   );
-      // }
+      prop: "channel",
+      render: (h, params) => {
+        console.log(params)
+        // return h(
+        //   'span', '乐刷'
+        // )
+        const lists = params.row.channelStatusList;
+        lists.forEach(v => {
+          return h(
+            'span',
+            {
+              props: {
+
+              }
+            }
+          )
+        })
+      }
     },
     {
       label: '入件时间',
@@ -46,26 +52,7 @@ export const INDIRECTLIST_CONFIG = {
       {
         name: '详情',
         emitName: 'detail',
-        type: 'text',
-        isShow: ($item) => {
-          if ($item.showDetail) {
-            return true;
-          } else {
-            return false
-          }
-        }
-      },
-      {
-        name: '预审核',
-        emitName: 'preApprove',
-        type: 'text',
-        isShow: ($item) => {
-          if ($item.showPreApprove) {
-            return true;
-          } else {
-            return false
-          }
-        }
+        type: 'text'
       },
       {
         name: '审核记录',

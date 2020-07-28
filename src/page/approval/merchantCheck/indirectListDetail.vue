@@ -88,7 +88,7 @@ export default {
     return {
       fromConfigData: {},
       drawer: false,
-      activeIndex: "2",
+      activeIndex: "1",
       rejectTitle: "驳回原因：商户名称与营业执照不符合",
       showComponents: {
         showRejectTitle: false,

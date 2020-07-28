@@ -51,7 +51,6 @@ import api from "@/api/api_merchantAudit";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import Form from "@/components/form/index.vue";
-
 import { SEARCH_CONFIG } from "./../formConfig/aliDirectListSearch";
 import { FORM_CONFIG } from "./../formConfig/aliDirectListConfig";
 import { ALIDIRECTLIST_CONFIG } from "./../tableConfig/aliDirectListConfig";
@@ -69,18 +68,7 @@ export default {
       searchHeight: "260",
       drawer: false,
       formStatus: "",
-      params: {
-        beginDate: this.$g.utils.getToday(),
-        endDate: this.$g.utils.getToday(),
-        agentNo: "rn4",
-        agentName: "5ff",
-        pageSize: 0,
-        channelStatus: "u22",
-        operationUserNo: "mef",
-        currentPage: 0,
-        merchantNo: "iy7",
-        merchantName: "y6a"
-      },
+      params: {},
       api: api.queryAlipayAuditPageByCondition
     };
   },
@@ -123,9 +111,13 @@ export default {
     cancel() {
       this.drawer = false;
     },
-    handleDetail() {
+    handleDetail(row) {
       this.$router.push({
-        path: "/approval/checkMerchant/aliDirectList/detail"
+        path: "/approval/checkMerchant/aliDirectList/detail",
+        query: {
+          merchantNo: row.merchantNo,
+          channelCode: row.channel
+        }
       });
     },
     handlePreApprove() {

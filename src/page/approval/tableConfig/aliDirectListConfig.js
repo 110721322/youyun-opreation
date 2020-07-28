@@ -17,8 +17,40 @@ export const ALIDIRECTLIST_CONFIG = {
     },
     {
       label: '状态',
-      prop: 'channel',
-      width: '150px'
+      prop: 'status',
+      width: '150px',
+      render: (h, params) => {
+        if (params.row.status === 'nonOpen') {
+          return h(
+            'span', '待审核'
+          )
+        }
+        if (params.row.status === 'platformAudit') {
+          return h(
+            'span', '平台审核中'
+          )
+        }
+        if (params.row.status === 'channelAudit') {
+          return h(
+            'span', '通道审核中'
+          )
+        }
+        if (params.row.status === 'platformReject') {
+          return h(
+            'span', '平台驳回'
+          )
+        }
+        if (params.row.status === 'channelReject') {
+          return h(
+            'span', '通道驳回'
+          )
+        }
+        if (params.row.status === 'channelPass') {
+          return h(
+            'span', '审核通过'
+          )
+        }
+      }
     }
   ],
 
@@ -32,52 +64,52 @@ export const ALIDIRECTLIST_CONFIG = {
     view: false,
     expands: [
       {
-        name: '详情',
-        emitName: 'detail',
-        type: 'text'
-        // isShow: ($item) => {
-        //   if ($item.showDetail) {
-        //     return true;
-        //   } else {
-        //     return false
-        //   }
-        // }
-      },
-      {
         name: '预审核',
         emitName: 'preApprove',
-        type: 'text'
-        // isShow: ($item) => {
-        //   if ($item.showPreApprove) {
-        //     return true;
-        //   } else {
-        //     return false
-        //   }
-        // }
+        type: 'text',
+        isShow: ($item) => {
+          if ($item.status === 'nonOpen') {
+            return true;
+          } else {
+            return false
+          }
+        }
+      },
+      {
+        name: '详情',
+        emitName: 'detail',
+        type: 'text',
+        isShow: ($item) => {
+          if ($item.status !== 'nonOpen') {
+            return true;
+          } else {
+            return false
+          }
+        }
       },
       {
         name: '通过',
         emitName: 'pass',
-        type: 'text'
-        // isShow: ($item) => {
-        //   if ($item.showPass) {
-        //     return true;
-        //   } else {
-        //     return false
-        //   }
-        // }
+        type: 'text',
+        isShow: ($item) => {
+          if ($item.status === 'nonOpen') {
+            return true;
+          } else {
+            return false
+          }
+        }
       },
       {
         name: '驳回',
         emitName: 'reject',
-        type: 'text'
-        // isShow: ($item) => {
-        //   if ($item.showReject) {
-        //     return true;
-        //   } else {
-        //     return false
-        //   }
-        // }
+        type: 'text',
+        isShow: ($item) => {
+          if ($item.status === 'nonOpen') {
+            return true;
+          } else {
+            return false
+          }
+        }
       },
       {
         name: '审核记录',

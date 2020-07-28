@@ -73,49 +73,10 @@ export default {
       // pass通过 preApproval预审核 checking审核中 reject驳回
       currentType: "",
       ruleForm: {
-        baseData: {
-          merName: "329438980213098094",
-          address: "浙江省杭州市西湖区黄姑山路工专路交叉路口",
-          kind: "餐饮类",
-          peopleName: "金柒柒",
-          phone: "18409098920",
-          idCard: "3310281995009208899"
-        },
-        merchantData: {
-          kind: "企业",
-          name: "山东紫菜",
-          startTime: "2019-03-10",
-          number: "3428947394238",
-          phone: "18503892300",
-          endTime: "2019-03-10",
-          pic:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic2:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic3:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic4:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic5:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic6:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
-        },
-        merchantSettle: {
-          type: "对公",
-          cardId: "622023204284902384320984",
-          address: "浙江省 杭州市 西湖区",
-          bank: "招商银行股份有限公司杭州保交支行",
-          phone: "15820908766   ",
-          pic:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
-        },
-        other: {
-          perc: "2.8 ‰",
-          appid: "2.8 ‰",
-          pid: "5.6 ‰",
-          email: "3133427948@sina.com"
-        }
+        baseData: {},
+        merchantData: {},
+        merchantSettle: {},
+        other: {}
       },
       configData: {
         baseData: {
@@ -123,7 +84,7 @@ export default {
           items: [
             {
               name: "商户全称",
-              key: "fullName"
+              key: "merchantName"
             },
             {
               name: "公司地址",
@@ -250,7 +211,7 @@ export default {
             },
             {
               name: "APPID",
-              key: "appId"
+              key: "appid"
             },
             {
               name: "PID",
@@ -281,19 +242,23 @@ export default {
       }
     }
   },
+  created() {
+    this.merchantNo = this.$route.query.merchantNo
+    this.channelCode = this.$route.query.channelCode
+    this.getData()
+  },
   mounted() {
     this.currentType = "preApproval";
-    this.getDetailByMerchantNo();
   },
   methods: {
-    getDetailByMerchantNo() {
-      api
-        .getDetailByMerchantNo({ merchantNo: "", channelCode: "" })
-        .then(res => {
-          console.log(res);
-          this.ruleForm = res.data;
-        })
-        .catch();
+    getData() {
+      api.getDetailByMerchantNo({
+        merchantNo: this.merchantNo,
+        channelCode: this.channelCode
+      }).then(res => {
+        console.log(res);
+        this.ruleForm = res.object;
+      }).catch();
     },
     confirm($data) {
       console.log($data);
