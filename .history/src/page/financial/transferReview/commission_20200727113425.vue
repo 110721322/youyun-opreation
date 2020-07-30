@@ -22,7 +22,7 @@
           :default-expand-all="false"
           :hide-edit-area="configData.hideEditArea"
           :header-cell-style="headerCellStyle"
-          :api-service="api"
+          :api-service="null"
           :params="params"
           @detail="onClick_detail"
           @reject="onClick_reject"
@@ -51,8 +51,7 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import { FORM_CONFIG } from "../formConfig/commission";
 import { SEARCH_CONFIG } from "../formConfig/commissionSearch";
 import { TABLE_CONFIG } from "../tableConfig/commissionConfig";
-// import api from "@/api/api_financialAudit.js";
-import api_statistice from "@/api/api_statistice";
+import api from "@/api/api_financialAudit.js";
 
 export default {
   name: "Theme",
@@ -67,15 +66,15 @@ export default {
       testData: [],
       drawer: false,
       params: {},
-      api: api_statistice.listFinanceSettle,
+      api: api.queryByPage,
       activeRow: null
     };
   },
   mounted() {},
   methods: {
     confirm($ruleForm) {
-      api_statistice
-        .listFinanceSettle({
+      api
+        .updateAuditStatusOfReject({
           id: this.activeRow.id,
           reason: $ruleForm.reason
         })
@@ -113,8 +112,8 @@ export default {
         cancelButtonText: "取消"
       })
         .then(() => {
-          api_statistice
-            .listFinanceSettle({
+          api
+            .updateAuditStatusOfPass({
               id: $row.id
             })
             .then(result => {

@@ -35,8 +35,6 @@ export default {
   components: { Search, BaseCrud },
   data() {
     return {
-      agentNo: '',
-      rewardDate: '',
       searchHeight: '200',
       configData: SERVICE_CONFIG,
       searchConfig: SEARCH_CONFIG,
@@ -50,14 +48,13 @@ export default {
     this.rewardDate = this.$route.query.tradeMonth
     this.params = {
       agentNo: this.agentNo,
-      tradeMonth: this.rewardDate
+      tradeMonth: this.tradeMonth
     }
-    console.log(this.params)
   },
   methods: {
     search($ruleform) {
       this.params = {
-        agentNo: this.agentNo,
+        agentNo: this.$route.query.agentNo,
         merchantNo: $ruleform.inputSelect === 'merchantNo' ? $ruleform.inputForm : "",
         rewardDate: $ruleform.date,
         merchantName: $ruleform.inputSelect === 'merchantName' ? $ruleform.inputForm : ""

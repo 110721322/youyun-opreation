@@ -43,8 +43,8 @@ export const TABLE_CONFIG = {
     {
       label: '法人',
       prop: 'renewImg',
-      width: '150px'
-      // type: 'img'
+      width: '150px',
+      type: 'img'
       // render: (h, params) => {
       //   const imgUrl = params.row.renewImg;
       //   return h('el-image', {

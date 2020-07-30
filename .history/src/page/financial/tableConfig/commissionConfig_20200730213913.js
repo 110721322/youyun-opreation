@@ -6,12 +6,7 @@ export const TABLE_CONFIG = {
       width: '90px'
     },
     {
-      label: '结算金额（元）',
-      prop: 'activeScopeType',
-      width: '130px'
-    },
-    {
-      label: '实际结算金额（元）',
+      label: '结算金额（元）|实际结算金额（元）',
       prop: 'activeScopeType',
       width: '130px'
     },
@@ -41,19 +36,19 @@ export const TABLE_CONFIG = {
       width: '90px'
     },
     {
-      label: '法人',
+      label: '打款凭证',
       prop: 'renewImg',
-      width: '150px'
-      // type: 'img'
-      // render: (h, params) => {
-      //   const imgUrl = params.row.renewImg;
-      //   return h('el-image', {
-      //     props: {
-      //       src: imgUrl,
-      //       'preview-src-list': [imgUrl]
-      //     }
-      //   }, '正常');
-      // }
+      width: '150px',
+      type: 'img',
+      render: (h, params) => {
+        const imgUrl = params.row.renewImg;
+        return h('el-image', {
+          props: {
+            src: imgUrl,
+            'preview-src-list': [imgUrl]
+          }
+        }, '正常');
+      }
     },
     {
       label: '创建时间',
@@ -70,11 +65,11 @@ export const TABLE_CONFIG = {
     delete: false,
     view: false,
     expands: [
-      {
-        name: '详情',
-        emitName: 'detail',
-        type: 'text'
-      },
+      // {
+      //   name: '操作',
+      //   emitName: 'detail',
+      //   type: 'text'
+      // },
       {
         name: '驳回',
         emitName: 'reject',
@@ -86,7 +81,7 @@ export const TABLE_CONFIG = {
         //     return false;
         //   }
         // }
-      },
+      // },
       {
         name: '通过',
         emitName: 'adopt',

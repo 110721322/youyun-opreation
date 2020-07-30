@@ -62,12 +62,23 @@ export default {
     }
   },
   methods: {
+    // getDate() {
+    //   api_statistice.selectMerchantDataByPage({
+    //   }).then(res => {
+    //     console.log(res)
+    //   }).catch(err => {
+    //     console.log(err)
+    //   })
+    // },
     search($ruleform) {
       this.params = {
-        agentNo: this.agentNo,
-        tradeMonth: this.tradeMonth
+        agentNo: this.$route.query.agentNo,
+        channelAgentCode: $ruleform.inputSelect === 'merchantName' && $ruleform.inputForm ? $ruleform.inputForm : "",
+        merchantNo: $ruleform.inputSelect === 'merchantNo' && $ruleform.inputForm ? $ruleform.inputForm : "",
+        tradeMonth: "2020-07-01",
+        currentPage: 1
+        // this.$route.query.tradeMonth
       }
-      this.params[$ruleform.inputSelect] = $ruleform.inputForm
       console.log(this.params)
     }
   },

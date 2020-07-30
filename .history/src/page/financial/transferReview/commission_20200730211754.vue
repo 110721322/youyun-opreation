@@ -22,7 +22,7 @@
           :default-expand-all="false"
           :hide-edit-area="configData.hideEditArea"
           :header-cell-style="headerCellStyle"
-          :api-service="api"
+          :api-service="null"
           :params="params"
           @detail="onClick_detail"
           @reject="onClick_reject"

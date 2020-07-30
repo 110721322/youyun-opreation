@@ -41,19 +41,19 @@ export const TABLE_CONFIG = {
       width: '90px'
     },
     {
-      label: '法人',
+      label: '打款凭证',
       prop: 'renewImg',
-      width: '150px'
-      // type: 'img'
-      // render: (h, params) => {
-      //   const imgUrl = params.row.renewImg;
-      //   return h('el-image', {
-      //     props: {
-      //       src: imgUrl,
-      //       'preview-src-list': [imgUrl]
-      //     }
-      //   }, '正常');
-      // }
+      width: '150px',
+      type: 'img',
+      render: (h, params) => {
+        const imgUrl = params.row.renewImg;
+        return h('el-image', {
+          props: {
+            src: imgUrl,
+            'preview-src-list': [imgUrl]
+          }
+        }, '正常');
+      }
     },
     {
       label: '创建时间',

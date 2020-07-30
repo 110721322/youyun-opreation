@@ -6,22 +6,17 @@ export const TABLE_CONFIG = {
       width: '90px'
     },
     {
-      label: '结算金额（元）',
+      label: '服务商区域等级',
       prop: 'activeScopeType',
       width: '130px'
     },
     {
-      label: '实际结算金额（元）',
-      prop: 'activeScopeType',
-      width: '130px'
-    },
-    {
-      label: '结算卡号',
+      label: '续费时长（年）',
       prop: 'renewYear',
       width: '130px'
     },
     {
-      label: '结算类型',
+      label: '订单金额（元）',
       prop: 'renewMoney',
       width: '130px'
 
@@ -41,19 +36,19 @@ export const TABLE_CONFIG = {
       width: '90px'
     },
     {
-      label: '法人',
+      label: '打款凭证',
       prop: 'renewImg',
-      width: '150px'
-      // type: 'img'
-      // render: (h, params) => {
-      //   const imgUrl = params.row.renewImg;
-      //   return h('el-image', {
-      //     props: {
-      //       src: imgUrl,
-      //       'preview-src-list': [imgUrl]
-      //     }
-      //   }, '正常');
-      // }
+      width: '150px',
+      type: 'img',
+      render: (h, params) => {
+        const imgUrl = params.row.renewImg;
+        return h('el-image', {
+          props: {
+            src: imgUrl,
+            'preview-src-list': [imgUrl]
+          }
+        }, '正常');
+      }
     },
     {
       label: '创建时间',

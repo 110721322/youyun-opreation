@@ -38,12 +38,16 @@ export default {
   components: { Search, BaseCrud },
   data() {
     return {
-      agentNo: '',
-      tradeMonth: '',
       searchConfig: SEARCH_CONFIG,
       configData: SERVICE_CONFIG,
       testData: [],
-      params: {},
+      params: {
+        channelAgentCode: '',
+        agentNo: this.$route.query.agentNo,
+        tradeMonth: this.$route.query.tradeMonth,
+        currentPage: 1,
+        merchantNo: ""
+      },
       // currentPage: 1,
       // this.$route.query.tradeMonth
       api: api_statistice.selectMerchantDataByPage,
@@ -54,20 +58,26 @@ export default {
     this.getDate();
   },
   created() {
-    this.agentNo = this.$route.query.agentNo
-    this.tradeMonth = this.$route.query.tradeMonth
-    this.params = {
-      agentNo: this.agentNo,
-      tradeMonth: this.tradeMonth
-    }
+    this.search();
   },
   methods: {
+    // getDate() {
+    //   api_statistice.selectMerchantDataByPage({
+    //   }).then(res => {
+    //     console.log(res)
+    //   }).catch(err => {
+    //     console.log(err)
+    //   })
+    // },
     search($ruleform) {
       this.params = {
-        agentNo: this.agentNo,
-        tradeMonth: this.tradeMonth
+        agentNo: this.$route.query.agentNo,
+        channelAgentCode: $ruleform.inputSelect === 'merchantName' && $ruleform.inputForm ? $ruleform.inputForm : "",
+        merchantNo: $ruleform.inputSelect === 'merchantNo' && $ruleform.inputForm ? $ruleform.inputForm : "",
+        tradeMonth: "2020-07-01",
+        currentPage: 1
+        // this.$route.query.tradeMonth
       }
-      this.params[$ruleform.inputSelect] = $ruleform.inputForm
       console.log(this.params)
     }
   },

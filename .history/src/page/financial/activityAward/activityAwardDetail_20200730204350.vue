@@ -50,9 +50,8 @@ export default {
     this.rewardDate = this.$route.query.tradeMonth
     this.params = {
       agentNo: this.agentNo,
-      tradeMonth: this.rewardDate
+      tradeMonth: this.tradeMonth
     }
-    console.log(this.params)
   },
   methods: {
     search($ruleform) {
