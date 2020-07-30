@@ -12,7 +12,7 @@ export default {
   // 间连审核-平台驳回商户审核
   rejectIndirectAudit: (params) => API.POST('/operation/v1/merchantAudit/rejectIndirectAudit', params),
   // 间联审核-通道商户审核详情
-  getChannelMerchantDetailByNo: (params) => API.GET('/operation/v1/merchant/getChannelMerchantDetailByNo', params),
+  getChannelDetailByNo: (params) => API.GET('/operation/v1/merchant/getChannelMerchantDetailByNo', params),
   // 直连审核-平台驳回商户审核
   rejectDirectAudit: (params) => API.POST('/operation/v1/merchantAudit/rejectDirectAudit', params),
   // 直连审核-平台通过商户审核
@@ -30,27 +30,27 @@ export default {
   // 结算卡审核-详情
   getMerchantSettleDetail: (params) => API.GET('/operation/v1/merchantSettleCardAudit/getMerchantSettleDetail', params),
   // 结算卡审核-通过
-  updateAuditStatusOfPass: (params) => API.POST('/operation/v1/merchantSettleCardAudit/updateAuditStatusOfPass', params),
+  updateAuditStatusOfPass: (params) => API.GET('/operation/v1/merchantSettleCardAudit/updateAuditStatusOfPass', params),
   // 结算卡审核-驳回
   updateAuditStatusOfReject: (params) => API.GET('/operation/v1/merchantSettleCardAudit/updateAuditStatusOfReject', params),
   // 合伙人审核-分页查询服务商审核列表
   queryAuditPageByCondition: (params) => API.GET('/operation/v1/agentPartnerAudit/queryAuditPageByCondition', params),
   // 合伙人审核-通过合伙人审核
-  agentPartnerUpdateAuditStatusOfPass: (params) => API.GET('/operation/v1/agentPartnerAudit/updateAuditStatusOfPass', params),
+  agentPartnerPass: (params) => API.GET('/operation/v1/agentPartnerAudit/updateAuditStatusOfPass', params),
   // 合伙人审核-驳回合伙人审核
   agentPartnerUpdateAuditStatusOfReject: (params) => API.GET('/operation/v1/agentPartnerAudit/updateAuditStatusOfReject', params),
   // 修改商户详情-其他信息
   updateOthersInfo: (params) => API.POST('/operation/v1/merchantAudit/updateOthersInfo', params),
-  // 商户审核详情
+  // 直连商户（支付宝，微信）审核详情
   getDetailByMerchantNo: (params) => API.GET('/operation/v1/merchantAudit/getDetailByMerchantNo', params),
   // 获取下载包资料
   merchantInfoDownload: (params) => API.GET('/operation/v1/merchantAudit/merchantInfoDownload', params),
   // 合伙人审核-合伙人详情
   getDetailByPartnerNo: (params) => API.GET('/operation/v1/agentPartnerAudit/getDetailByPartnerNo', params),
   // 下级服务商审核-审核列表
-  querySubAuditPageByCondition: (params) => API.GET('/operation/v1/agentAudit/querySubAuditPageByCondition', params),
+  querySubAudit: (params) => API.GET('/operation/v1/agentAudit/querySubAuditPageByCondition', params),
   // 下级服务商审核-下级服务商详情
-  getSubAgentDetail: (params) => API.GET('/operation/v1/agent/getSubAgentDetail', params),
+  getSubAgentDetail: (params) => API.GET('/operation/v1/subAgent/getSubAgentDetail', params),
   // 下级服务商审核-通过
   updateSubAuditStatusOfPass: (params) => API.GET('/operation/v1/agentAudit/updateSubAuditStatusOfPass', params),
   // 下级服务商审核-驳回

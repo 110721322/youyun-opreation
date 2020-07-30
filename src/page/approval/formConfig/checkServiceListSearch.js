@@ -22,17 +22,19 @@ export const SEARCH_CONFIG = {
         {
           label: '服务商名称',
           value: 'agentName'
-        },
-        {
-          label: '联系人',
-          value: 'personName'
-        },
-        {
-          label: '联系方式',
-          value: 'personMobile'
         }
       ],
       labelWidth: '100px'
+    },
+    {
+      type: 0,
+      label: '联系人',
+      key: 'personName'
+    },
+    {
+      type: 0,
+      label: '联系方式',
+      key: 'personMobile'
     },
     {
       type: 1,
@@ -42,22 +44,22 @@ export const SEARCH_CONFIG = {
       options: [
         {
           label: '待审核',
-          value: 0
+          value: 'audit'
         },
         {
           label: '审核通过',
-          value: 1
+          value: 'success'
         },
         {
           label: '驳回',
-          value: 2
+          value: 'reject'
         }
       ]
     },
     {
       type: 1,
       label: '所属运营',
-      key: 'operateUserNo',
+      key: 'operationId',
       style: 'width:294px',
       labelWidth: '185px',
       urlOptions: {

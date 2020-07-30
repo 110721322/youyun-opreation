@@ -51,36 +51,29 @@ export default {
       testData: [],
       direction: "rtl",
       searchHeight: "260",
-      params: {
-        beginDate: this.$g.utils.getToday(),
-        endDate: this.$g.utils.getToday(),
-        agentNo: "",
-        agentName: "",
-        personName: "",
-        personMobile: "",
-        operateUserNo: "",
-        contractStatus: "",
-        contractStatusSet: "",
-        pageSize: 1,
-        currentPage: 1
-      },
-      api: api.querySubAuditPageByCondition
+      params: {},
+      api: api.querySubAudit
     };
   },
   mounted() {},
   methods: {
-    handleDetail() {
+    handleDetail(row) {
       this.$router.push({
-        path: "/approval/checkService/checkServiceList/detail"
+        path: "/approval/checkService/detail",
+        query: {
+          agentNo: row.agentNo
+        }
       });
     },
-    handlePreApprove() {
+    handlePreApprove(row) {
       this.$router.push({
-        path: "/approval/checkService/checkServiceList/detail"
+        path: "/approval/checkService/detail",
+        query: {
+          agentNo: row.agentNo
+        }
       });
     },
     search($ruleForm) {
-      console.log($ruleForm);
       const params = {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,

@@ -1,7 +1,7 @@
 <template>
   <div class>
     <router-view
-      v-if="this.$route.path.indexOf('/detail') !== -1||this.$route.path.indexOf('/recordDetail') !== -1"
+      v-if="this.$route.path.indexOf('/detail') !== -1 || this.$route.path.indexOf('/recordDetail') !== -1"
     />
     <div v-else>
       <div class="tab_head">
@@ -60,6 +60,8 @@ export default {
   components: { Search, BaseCrud, Form },
   data() {
     return {
+      channelAgentCode: '',
+      merchantNo: '',
       fromConfigData: {},
       searchConfig: SEARCH_CONFIG,
       configData: ALIDIRECTLIST_CONFIG,
@@ -75,37 +77,59 @@ export default {
   mounted() {},
   methods: {
     confirm($data) {
-      console.log($data);
       if (this.formStatus === "reject") {
-        api
-          .merchantUpdateAuditStatusOfReject({
-            merchantNo: "",
-            reason: $data["reason"],
-            channelCode: this.channelCode
-          })
-          .then(res => {
-            this.$message("已驳回");
-            this.drawer = false;
-          })
-          .catch(err => {
-            this.$message(err);
+        api.rejectDirectChannelAudit({
+          merchantNo: this.merchantNo,
+          reason: $data["reason"],
+          channelCode: "alipay",
+          channelAgentCode: this.channelAgentCode
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '已驳回',
+              type: 'success'
+            })
+            this.drawer = false
+            this.$refs.table.getData()
+          }
+        }).catch(err => {
+          this.$message({
+            message: err.errorMessage,
+            type: 'info'
           });
+        });
       }
       if (this.formStatus === "pass") {
-        api
-          .updateOthersInfo({
-            merchantNo: $data["merchantNo"],
-            channelCode: $data["channelCode"],
-            rate: $data["rate"],
-            appid: $data["appid"],
-            pid: $data["pid"]
+        if (!$data.appid || !$data.pid || !$data.rate) {
+          this.$message({
+            message: '请填写必填信息',
+            type: 'warning'
           })
-          .then(res => {
-            this.$message("已通过");
+          return false
+        } else {
+          api.passDirectChannelAudit({
+            merchantNo: this.merchantNo,
+            channelCode: "alipay",
+            channelAgentCode: this.channelAgentCode
+          }).then(res => {
+            console.log(res)
+            api.updateOthersInfo({
+              merchantNo: this.merchantNo,
+              channelCode: "alipay",
+              appid: $data["appid"],
+              pid: $data["pid"]
+            }).then(rem => {
+              if (rem.status === 0) {
+                this.$message({
+                  message: '操作成功',
+                  type: 'success'
+                });
+                this.drawer = false
+                this.$refs.table.getData()
+              }
+            })
           })
-          .catch(err => {
-            this.$message(err);
-          });
+        }
       }
     },
     cancel() {
@@ -116,32 +140,45 @@ export default {
         path: "/approval/checkMerchant/aliDirectList/detail",
         query: {
           merchantNo: row.merchantNo,
-          channelCode: row.channel
+          channelCode: row.channel,
+          channelAgentCode: row.channelAgentCode
         }
       });
     },
-    handlePreApprove() {
+    handlePreApprove(row) {
       this.$router.push({
-        path: "/approval/checkMerchant/aliDirectList/detail"
+        path: "/approval/checkMerchant/aliDirectList/detail",
+        query: {
+          merchantNo: row.merchantNo,
+          channelCode: row.channel,
+          channelAgentCode: row.channelAgentCode
+        }
       });
     },
-    handleRecord() {
+    handleRecord(row) {
       this.$router.push({
-        path: "/approval/checkMerchant/aliDirectList/recordDetail"
+        path: "/approval/checkMerchant/aliDirectList/recordDetail",
+        query: {
+          merchantNo: row.merchantNo,
+          channel: row.channel
+        }
       });
     },
     handlePass(data) {
+      this.channelAgentCode = data.channelAgentCode
+      this.merchantNo = data.merchantNo
       this.drawer = true;
       this.formStatus = "pass";
       this.fromConfigData = FORM_CONFIG.passData;
     },
-    handleReject() {
+    handleReject(data) {
+      this.channelAgentCode = data.channelAgentCode
+      this.merchantNo = data.merchantNo
       this.drawer = true;
       this.formStatus = "reject";
       this.fromConfigData = FORM_CONFIG.rejectData;
     },
     search($ruleForm) {
-      console.log($ruleForm);
       const params = {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,

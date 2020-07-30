@@ -92,7 +92,7 @@ export const WXDIRECTLIST_CONFIG = {
         emitName: 'pass',
         type: 'text',
         isShow: ($item) => {
-          if ($item.status === 'nonOpen') {
+          if ($item.status === 'channelAudit') {
             return true;
           } else {
             return false
@@ -104,7 +104,7 @@ export const WXDIRECTLIST_CONFIG = {
         emitName: 'reject',
         type: 'text',
         isShow: ($item) => {
-          if ($item.status === 'nonOpen') {
+          if ($item.status === 'channelAudit') {
             return true;
           } else {
             return false

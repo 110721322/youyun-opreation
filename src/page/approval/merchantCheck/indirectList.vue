@@ -100,7 +100,8 @@ export default {
         path: "/approval/checkMerchant/indirectList/detail",
         query: {
           merchantNo: row.merchantNo,
-          channelStatusList: row.channelStatusList
+          channelStatusList: row.channelStatusList,
+          channelAgentCode: row.channelAgentCode
         }
       });
     },

@@ -79,9 +79,13 @@ export default {
         }
       });
     },
-    handleRecord() {
+    handleRecord(row) {
       this.$router.push({
-        path: "/approval/checkMerchant/settlementList/recordDetail"
+        path: "/approval/checkMerchant/settlementList/recordDetail",
+        query: {
+          merchantNo: row.merchantNo,
+          channel: row.channelCode
+        }
       });
     },
     search($ruleForm) {

@@ -88,8 +88,7 @@ export default {
             },
             {
               name: "结算卡类型",
-              key: "bankAccountType",
-              type: 'settleType'
+              key: "bankAccountType"
             },
             {
               name: "开户名",
@@ -143,8 +142,7 @@ export default {
             },
             {
               name: "结算卡类型",
-              key: "bankAccountType",
-              type: "settleType"
+              key: "bankAccountType"
             },
             {
               name: "开户名",
@@ -173,52 +171,28 @@ export default {
             }
           ]
         }
-      },
-      testData: [
-        {
-          id: 0,
-          type: "设备品牌",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          reason: "银行卡账号错误，服务商无法联系",
-          edit: false
-        },
-        {
-          id: 1,
-          type: "设备型号",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系",
-          edit: false
-        }
-      ]
+      }
     };
   },
   watch: {
     currentType: function($val) {
-      console.log($val)
       switch ($val) {
         case "waitSign":
           this.showComponents.showOperBtns = true;
+          this.showComponents.showRejectTitle = false
           break;
-        case "checking":
+        case "audit":
+          this.showComponents.showOperBtns = true;
+          this.showComponents.showRejectTitle = false
+          break;
+        case "success":
+          this.showComponents.showOperBtns = false;
+          this.showComponents.showRejectTitle = false
           break;
         case "reject":
           this.showComponents.showRejectTitle = true;
+          this.showComponents.showOperBtns = false;
           break;
-
         default:
           break;
       }
@@ -239,14 +213,32 @@ export default {
         channelAgentCode: this.channelAgentCode,
         channelCode: this.channelCode
       }).then(res => {
+        if (res.object.old.merchantType === 'enterprise') {
+          res.object.old.merchantType = '企业'
+        }
+        if (res.object.old.merchantType === 'individual') {
+          res.object.old.merchantType = '个体工商户'
+        }
+        if (res.object.old.merchantType === 'private') {
+          res.object.old.merchantType = '个人'
+        }
         if (res.object.old.bankAccountType === 'public') {
           res.object.old.bankAccountType = '对公'
         }
         if (res.object.old.bankAccountType === 'private') {
           res.object.old.bankAccountType = '对私'
         }
-        if (res.object.old.bankAccountType === 'public') {
-          res.object.old.bankAccountType = '对公'
+        if (res.object.new.merchantType === 'enterprise') {
+          res.object.new.merchantType = '企业'
+        }
+        if (res.object.new.merchantType === 'individual') {
+          res.object.new.merchantType = '个体工商户'
+        }
+        if (res.object.new.merchantType === 'private') {
+          res.object.new.merchantType = '个人'
+        }
+        if (res.object.new.bankAccountType === 'public') {
+          res.object.new.bankAccountType = '对公'
         }
         if (res.object.new.bankAccountType === 'private') {
           res.object.new.bankAccountType = '对私'
@@ -266,12 +258,14 @@ export default {
           channelMerchantNo: this.channelMerchantNo,
           channelCode: this.channelCode
         }).then(res => {
-          console.log(res)
-          // this.$message("已通过");
-        }).catch(err => {
-          console.log(err)
-          // this.$message(err);
-        });
+          if (res.status === 0) {
+            this.$message({
+              message: '操作成功',
+              type: 'success'
+            });
+            this.getDetail()
+          }
+        }).catch(() => {});
       }).catch(() => {
         this.$message({
           message: '取消操作',
@@ -280,7 +274,6 @@ export default {
       })
     },
     confirm($data) {
-      console.log($data);
       if (!$data.reason) {
         this.$message({
           message: '请填写驳回原因',
@@ -299,6 +292,7 @@ export default {
               type: 'success'
             })
             this.getDetail()
+            this.drawer = false
           }
         }).catch(err => {
           console.log(err)

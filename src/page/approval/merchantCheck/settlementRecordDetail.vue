@@ -16,7 +16,7 @@
           :form-config="configData.formConfig"
           :form-data="configData.formModel"
           :grid-edit-width="150"
-          :is-async="false"
+          :is-async="true"
           :is-select="false"
           :is-expand="false"
           :row-key="'id'"
@@ -41,35 +41,19 @@ export default {
       configData: RECORD_CONFIG,
       testData: [],
       direction: "rtl",
-      params: {
-        channel: "ol7",
-        pageSize: 0,
-        currentPage: 0,
-        merchantNo: "anw"
-      },
+      params: {},
       api: api.preAuditRecordQueryByPage
     };
   },
+  created() {
+    this.params = {
+      channel: this.$route.query.channel,
+      merchantNo: this.$route.query.merchantNo
+    }
+  },
   mounted() {
-    this.getTableData();
   },
   methods: {
-    getTableData() {
-      this.testData = [
-        {
-          time: "紫菜网络科技有限公司,ID: 13293127119831938",
-          people: "紫菜网络科技有限公司,ID: 13293127119831938",
-          channel: ["乐刷", "新大陆", "网商"],
-          content: "2014-02-15 16:00:23"
-        },
-        {
-          time: "紫菜网络科技有限公司,ID: 13293127119831938",
-          people: "紫菜网络科技有限公司,ID: 13293127119831938",
-          channel: ["乐刷", "新大陆", "网商"],
-          content: "2014-02-15 16:00:23"
-        }
-      ];
-    }
   }
 };
 </script>

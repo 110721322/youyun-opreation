@@ -9,7 +9,7 @@
         <el-alert
           v-if="showComponents.showRejectTitle"
           class="detail-alert"
-          :title="rejectTitle"
+          :title="ruleForm.rejectReason"
           type="info"
           :closable="false"
           show-icon
@@ -18,13 +18,7 @@
           <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.baseData"></detailMode>
           <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.merchantData"></detailMode>
           <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.merchantSettle"></detailMode>
-          <detailMode
-            :is-show-edit-btn="showComponents.showOtherEdit"
-            :img-width="4"
-            :rule-form="ruleForm"
-            :config-data="configData.other"
-            @edit="handleEdit"
-          ></detailMode>
+          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.other"></detailMode>
         </div>
         <div v-if="showComponents.showOperBtns" class="btn-box">
           <div class="btn_download" @click="onClick_download">
@@ -38,6 +32,7 @@
     <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
+        res="rejectForm"
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
         :foot-btn-label="'确定'"
@@ -60,10 +55,12 @@ export default {
 
   data() {
     return {
+      channelAgentCode: '',
+      merchantNo: '',
+      channelCode: '',
       isAlrealyDownload: false,
       fromConfigData: {},
       drawer: false,
-      rejectTitle: "驳回原因：商户名称与营业执照不符合",
       formStatus: "",
       showComponents: {
         showRejectTitle: false,
@@ -225,18 +222,28 @@ export default {
   watch: {
     currentType: function($val) {
       switch ($val) {
-        case "pass":
-          this.showComponents.showOtherEdit = true;
+        case "channelPass":
+          this.showComponents.showOperBtns = false;
+          this.showComponents.showRejectTitle = false;
           break;
-        case "preApproval":
+        case "platformAudit":
           this.showComponents.showOperBtns = true;
+          this.showComponents.showRejectTitle = false;
           break;
-        case "checking":
+        case "nonOpen ":
           break;
-        case "reject":
+        case "channelAudit":
+          this.showComponents.showOperBtns = false;
+          this.showComponents.showRejectTitle = false;
+          break;
+        case "platformReject":
+          this.showComponents.showOperBtns = false;
           this.showComponents.showRejectTitle = true;
           break;
-
+        case "channelReject":
+          this.showComponents.showOperBtns = false;
+          this.showComponents.showRejectTitle = true;
+          break;
         default:
           break;
       }
@@ -245,114 +252,135 @@ export default {
   created() {
     this.merchantNo = this.$route.query.merchantNo
     this.channelCode = this.$route.query.channelCode
-    this.getData()
+    this.channelAgentCode = this.$route.query.channelAgentCode
   },
   mounted() {
-    this.currentType = "preApproval";
+    this.getAliData()
   },
   methods: {
-    getData() {
+    getAliData() {
       api.getDetailByMerchantNo({
         merchantNo: this.merchantNo,
-        channelCode: this.channelCode
+        channelCode: this.channelCode,
+        channelAgentCode: this.channelAgentCode
       }).then(res => {
-        console.log(res);
+        if (res.object.merchantType === 'enterprise') {
+          res.object.merchantType = '企业'
+        }
+        if (res.object.merchantType === 'individual') {
+          res.object.merchantType = '个体工商户'
+        }
+        if (res.object.merchantType === 'private') {
+          res.object.merchantType = '个人'
+        }
+        if (res.object.bankAccountType === 'public') {
+          res.object.bankAccountType = '对公'
+        }
+        if (res.object.bankAccountType === 'private') {
+          res.object.bankAccountType = '对私'
+        }
+        if (res.object.status === 'platformReject' || res.object.status === 'channelReject') {
+          res.object.rejectReason = '驳回原因：' + res.object.rejectReason
+        }
         this.ruleForm = res.object;
+        this.currentType = res.object.status
       }).catch();
     },
     confirm($data) {
-      console.log($data);
       if (this.formStatus === "reject") {
-        api
-          .merchantUpdateAuditStatusOfReject({
-            merchantNo: "",
-            reason: $data["reason"],
-            channelCode: this.channelCode
+        if (!$data.reason) {
+          this.$message({
+            message: '请填写驳回理由',
+            type: 'warning'
           })
-          .then(res => {
-            this.$message("已驳回");
-            this.drawer = false;
-          })
-          .catch(err => {
+          return false
+        } else {
+          api.rejectDirectAudit({
+            merchantNo: this.merchantNo,
+            reason: $data.reason,
+            channelCode: this.channelCode,
+            channelAgentCode: this.channelAgentCode
+          }).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                message: '操作成功',
+                type: 'success'
+              })
+              this.getAliData()
+              this.drawer = false;
+            }
+          }).catch(err => {
             this.$message(err);
           });
-      }
-      if (this.formStatus === "edit") {
-        api
-          .updateOthersInfo({
-            merchantNo: $data["merchantNo"],
-            channelCode: $data["channelCode"],
-            rate: $data["rate"],
-            appid: $data["appid"],
-            pid: $data["pid"]
-          })
-          .then(res => {
-            this.$message("已修改");
-            this.drawer = false;
-          })
-          .catch(err => {
-            this.$message(err);
-          });
+        }
       }
     },
     handleEdit($ruleForm) {
-      console.log($ruleForm);
       this.drawer = true;
       this.formStatus = "edit";
       this.fromConfigData = FORM_CONFIG.detailEdit;
     },
     onClick_sign() {
       if (!this.isAlrealyDownload) {
-        this.$confirm(
-          "未打包下载资料，确定已提交资料到支付宝开发平台了吗?",
-          "提示",
-          {
-            confirmButtonText: "确定",
-            cancelButtonText: "取消"
-          }
-        )
-          .then(() => {
-            api
-              .merchantUpdateAuditStatusOfPass({
-                merchantNo: "",
-                channelCode: this.channelCode
+        this.$confirm("未打包下载资料，确定已提交资料到支付宝开发平台了吗?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消"
+        }).then(() => {
+          api.passDirectAudit({
+            merchantNo: this.merchantNo,
+            channelCode: this.channelCode,
+            channelAgentCode: this.channelAgentCode
+          }).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                message: '操作成功',
+                type: 'success'
               })
-              .then(res => {
-                this.$message("已通过");
-              })
-              .catch(err => {
-                this.$message(err);
-              });
-          })
-          .catch(() => {
+              this.getAliData()
+            }
+          }).catch(err => {
             this.$message({
               type: "info",
-              message: "已取消"
-            });
-          });
+              message: err.errorMessage
+            })
+          })
+        }).catch(() => {
+          this.$message({
+            type: "info",
+            message: "取消操作"
+          })
+        })
       } else {
-        api
-          .merchantUpdateAuditStatusOfPass({
-            merchantNo: "",
-            channelCode: this.channelCode
-          })
-          .then(res => {
-            this.$message("已通过");
-          })
-          .catch(err => {
-            this.$message(err);
+        api.passDirectAudit({
+          merchantNo: this.merchantNo,
+          channelCode: this.channelCode,
+          channelAgentCode: this.channelAgentCode
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '操作成功',
+              type: 'success'
+            });
+            this.getAliData()
+          }
+        }).catch(err => {
+          this.$message({
+            message: err.errorMessage,
+            type: 'info'
           });
+        });
       }
     },
     onClick_download() {
       this.isAlrealyDownload = true;
       // 然后下载操作
-      api
-        .getDownloadUrl({ merchantNo: "", channelCode: "" })
-        .then(res => {
-          window.open(res.object);
-        })
-        .catch();
+      api.merchantInfoDownload({
+        merchantNo: this.merchantNo,
+        channelCode: this.channelCode,
+        channelAgentCode: this.channelAgentCode
+      }).then(res => {
+        console.log(res)
+      }).catch();
     },
     cancel() {
       this.drawer = false;

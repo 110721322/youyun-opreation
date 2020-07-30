@@ -1,5 +1,5 @@
 <template>
-  <div class>
+  <div class v-if="channelStatusList">
     <div class="tab_head">
       <span class="title">商户预审核信息</span>
       <el-menu
@@ -8,14 +8,10 @@
         mode="horizontal"
         @select="handleSelect"
       >
-        <el-menu-item index="1">
-          <i class="dot"></i>乐刷
-        </el-menu-item>
-        <el-menu-item index="2">
-          <i class="dot dotRed"></i>新大陆
-        </el-menu-item>
-        <el-menu-item index="3">
-          <i class="dot dotYellow"></i>网商
+        <el-menu-item v-for="(item, index) in channelStatusList" :index="index+1" :key="index">
+          <i class="dot" v-if="item.channelCode === 'leShua'"></i>
+          <i class="dot dotRed" v-if="item.channelCode === 'newLand'"></i>
+          {{item.channel}}
         </el-menu-item>
       </el-menu>
     </div>
@@ -86,6 +82,9 @@ export default {
 
   data() {
     return {
+      merchantNo: '',
+      channelStatusList: [],
+      channelAgentCode: '',
       fromConfigData: {},
       drawer: false,
       activeIndex: "1",
@@ -523,37 +522,7 @@ export default {
             }
           ]
         }
-      },
-      testData: [
-        {
-          id: 0,
-          type: "设备品牌",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          reason: "银行卡账号错误，服务商无法联系",
-          edit: false
-        },
-        {
-          id: 1,
-          type: "设备型号",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系",
-          edit: false
-        }
-      ]
+      }
     };
   },
   watch: {
@@ -573,20 +542,44 @@ export default {
       }
     }
   },
+  created() {
+    this.merchantNo = this.$route.query.merchantNo
+    this.channelStatusList = this.$route.query.channelStatusList
+    this.channelAgentCode = this.$route.query.channelAgentCode
+    if (this.channelStatusList) {
+      this.getDetail()
+    }
+
+    // const channel = []
+    // this.channelStatusList.forEach(v => {
+    //   const m = {}
+    //   m.channel = v.channel
+    //   m.channelCode = V.channelCode
+    // })
+  },
   mounted() {
-    this.currentType = "approval";
-    this.getDetailByMerchantNo();
+
+    // this.getDetailByMerchantNo();
   },
   methods: {
-    getDetailByMerchantNo() {
-      api
-        .getDetailByMerchantNo({ merchantNo: "", channelCode: "" })
-        .then(res => {
-          console.log(res);
-          this.ruleForm = res.data;
-        })
-        .catch();
+    getDetail() {
+      api.getChannelDetailByNo({
+        merchantNo: this.merchantNo,
+        channelCode: this.channelStatusList[this.activeIndex - 1].channelCode,
+        channelAgentCode: this.channelAgentCode
+      }).then(res => {
+        console.log(res)
+      })
     },
+    // getDetailByMerchantNo() {
+    //   api
+    //     .getDetailByMerchantNo({ merchantNo: "", channelCode: "" })
+    //     .then(res => {
+    //       console.log(res);
+    //       this.ruleForm = res.data;
+    //     })
+    //     .catch();
+    // },
     onClick_pass() {
       api
         .merchantUpdateAuditStatusOfPass({
@@ -623,36 +616,7 @@ export default {
       this.drawer = true;
       this.fromConfigData = FORM_CONFIG.rejectReason;
     },
-    getTableData() {
-      this.testData = [
-        {
-          id: 0,
-          type: "设备品牌",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          reason: "银行卡账号错误，服务商无法联系"
-        },
-        {
-          id: 1,
-          type: "设备型号",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系"
-        }
-      ];
-    },
+    getTableData() {},
     handleSelect($index) {
       this.activeIndex = $index;
       this.channelCode = $index;
