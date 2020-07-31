@@ -6,7 +6,7 @@ export default {
   // 服务商分控-新增入件黑名单
   agentBanListAdd: (params) => API.POST('/operation/v1/agentBanList/add', params),
   // 服务商风控-移除
-  deleteByAgentNo: (params) => API.POST('/operation/v1/agentBanList/deleteByAgentNo', params),
+  deleteByAgentNo: (params) => API.POST('/operation/v1/agentBanList/deleteByAgentNo', params, { changeContent: true }),
   // 商户风控-列表
   merchantBanListQueryByPage: (params) => API.GET('/operation/v1/merchantBanList/queryByPage', params),
   // 商户风控-新增风控信息

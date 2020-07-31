@@ -7,7 +7,7 @@ export const SERVICEINCOMING_CONFIG = {
     },
     {
       label: '所属顶级服务商',
-      prop: [{ key: 'parentAgentName' }, { key: 'parentAgentNo', label: "ID:" }],
+      prop: [{ key: 'topAgentName' }, { key: 'operationId', label: "ID:" }],
       width: '150px'
     },
     {
@@ -17,7 +17,7 @@ export const SERVICEINCOMING_CONFIG = {
     },
     {
       label: '所属运营',
-      prop: 'operateUserName',
+      prop: 'operationName',
       width: '150px'
     },
     {

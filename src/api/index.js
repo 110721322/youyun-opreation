@@ -11,6 +11,7 @@ import * as g from '../libs/global';
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 // axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
 // axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? web_config.devServer : web_config.server;
+// axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
 axios.defaults.baseURL = g.config.server;
 
 axios.defaults.timeout = g.config.timeout;
@@ -27,6 +28,7 @@ axios.interceptors.request.use((config) => {
   // 参数格式为form data(默认request payload)
 
   if (config.method === 'post' && config.needFormData) {
+    alert('1')
     config.data.merchantNo = localStorage.getItem('userInfo-merchant') ? JSON.parse(localStorage.getItem('userInfo-merchant')).merchantNo : '';
     config.data = qs.stringify(config.data);
   } else if (config.method === 'post' && Object.keys(config.data).length === 1) {

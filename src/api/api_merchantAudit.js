@@ -38,7 +38,7 @@ export default {
   // 合伙人审核-通过合伙人审核
   agentPartnerPass: (params) => API.GET('/operation/v1/agentPartnerAudit/updateAuditStatusOfPass', params),
   // 合伙人审核-驳回合伙人审核
-  agentPartnerUpdateAuditStatusOfReject: (params) => API.GET('/operation/v1/agentPartnerAudit/updateAuditStatusOfReject', params),
+  agentPartnerReject: (params) => API.GET('/operation/v1/agentPartnerAudit/updateAuditStatusOfReject', params),
   // 修改商户详情-其他信息
   updateOthersInfo: (params) => API.POST('/operation/v1/merchantAudit/updateOthersInfo', params),
   // 直连商户（支付宝，微信）审核详情

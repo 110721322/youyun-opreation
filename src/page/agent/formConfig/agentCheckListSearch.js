@@ -1,3 +1,4 @@
+import apiAgent from "@/api/api_agent.js";
 export const FORM_CONFIG = {
   formData: [
     {
@@ -76,9 +77,16 @@ export const FORM_CONFIG = {
       ]
     },
     {
-      type: 0,
-      label: '运营人员Id',
-      key: 'operationId'
+      type: 1,
+      label: '所属运营',
+      key: 'operateUserNo',
+      class: "clear_both",
+      urlOptions: {
+        url: apiAgent.queryAllOperation,
+        keyName: 'operationId',
+        valueName: 'operationName',
+        method: 'get'
+      }
     }
   ]
 }

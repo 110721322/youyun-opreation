@@ -183,9 +183,7 @@ export default {
     this.agentPartnerNo = this.$route.query.agentPartnerNo
     this.getPartenDetail()
   },
-  mounted() {
-    // this.currentType = "preApproval";
-  },
+  mounted() {},
   methods: {
     getPartenDetail() {
       api.getDetailByPartnerNo({
@@ -202,26 +200,69 @@ export default {
       })
     },
     confirm($data) {
-      console.log($data);
-      api
-        .agentPartnerUpdateAuditStatusOfReject({
-          agentPartnerNo: "",
-          reason: $data["reason"]
+      var rejectReason
+      if (!$data.baseData && !$data.reason) {
+        this.$message({
+          message: '请填写驳回原因'
         })
-        .then(res => {
-          this.$message("已驳回");
+      } else {
+        if ($data.baseData && !$data.reason) {
+          if ($data.baseData === 1) {
+            rejectReason = '合伙人姓名与证件不符'
+          }
+          if ($data.baseData === 2) {
+            rejectReason = '合伙人身份证正面照有误'
+          }
+          if ($data.baseData === 3) {
+            rejectReason = '合伙人身份证反面照有误'
+          }
+          if ($data.baseData === 4) {
+            rejectReason = '合伙人手持身份证有误'
+          }
+        } else if (!$data.baseData && $data.reason) {
+          rejectReason = $data.reason
+        } else {
+          if ($data.baseData === 1) {
+            rejectReason = '合伙人姓名与证件不符,' + $data.reason
+          }
+          if ($data.baseData === 2) {
+            rejectReason = '合伙人姓名与证件不符,' + $data.reason
+          }
+          if ($data.baseData === 3) {
+            rejectReason = '合伙人姓名与证件不符,' + $data.reason
+          }
+          if ($data.baseData === 4) {
+            rejectReason = '合伙人姓名与证件不符,' + $data.reason
+          }
+        }
+        api.agentPartnerReject({
+          agentPartnerNo: this.agentPartnerNo,
+          reason: rejectReason
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '已驳回',
+              type: 'success'
+            });
+            this.getPartenDetail()
+          }
           this.drawer = false;
-        })
-        .catch(err => {
+        }).catch(err => {
           this.$message(err);
         });
+      }
     },
     onClick_sign() {
       api.agentPartnerPass({
         agentPartnerNo: this.agentPartnerNo
       }).then(res => {
-        console.log(res)
-        // this.$message("已通过");
+        if (res.status === 0) {
+          this.$message({
+            message: '已通过',
+            type: 'success'
+          })
+          this.getPartenDetail()
+        }
       }).catch(err => {
         this.$message(err);
       });
