@@ -7,7 +7,6 @@
       :type="datatype"
       :placeholder="placeholder"
       :clearable="clearable"
-      :default-time="defaultTime"
       :picker-options="pickerOptions"
       :value-format="format"
       @change="onChage"

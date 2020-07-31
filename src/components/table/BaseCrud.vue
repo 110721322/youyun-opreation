@@ -243,9 +243,9 @@ export default {
     // 获取列表数据
     getData() {
       this.listLoading = true;
-      this.queryParams = Object.assign({}, this.params);
       this.queryParams.currentPage = this.currentPage;
       this.queryParams.pageSize = this.currentPageSize;
+      this.queryParams = Object.assign({}, this.params);
       this.apiService(this.queryParams)
         .then(res => {
           // debugger;
