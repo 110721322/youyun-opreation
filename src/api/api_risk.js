@@ -4,23 +4,25 @@ export default {
   // 服务商风控-列表
   agentBanListQueryByPage: (params) => API.GET('/operation/v1/agentBanList/queryByPage', params),
   // 服务商分控-新增入件黑名单
-  agentBanListAdd: (params) => API.POST('/operation/v1/agentBanList/add', params),
+  agentBanListAdd: (params) => API.POST('/operation/v1/agentBanList/add', params, { changeContent: true }),
   // 服务商风控-移除
   deleteByAgentNo: (params) => API.POST('/operation/v1/agentBanList/deleteByAgentNo', params, { changeContent: true }),
   // 商户风控-列表
   merchantBanListQueryByPage: (params) => API.GET('/operation/v1/merchantBanList/queryByPage', params),
+  // 商户-风控信息
+  getFildType: () => API.GET('/operation/v1/merchantBanList/getFildType'),
   // 商户风控-新增风控信息
   merchantBanListAdd: (params) => API.POST('/operation/v1/merchantBanList/add', params),
   // 商户风控-移出
-  deleteById: (params) => API.POST('/operation/v1/merchantBanList/deleteById', params),
+  deleteById: (params) => API.POST('/operation/v1/merchantBanList/deleteById', params, { changeContent: true }),
   // 商户风控-移入黑名单
-  updateOfBlack: (params) => API.POST('/operation/v1/merchantBanList/updateOfBlack', params),
+  updateOfBlack: (params) => API.POST('/operation/v1/merchantBanList/updateOfBlack', params, { changeContent: true }),
   // 商户风控-移入灰名单
-  updateOfGray: (params) => API.POST('/operation/v1/merchantBanList/updateOfGray', params),
+  updateOfGray: (params) => API.POST('/operation/v1/merchantBanList/updateOfGray', params, { changeContent: true }),
   // 商户风控-黑名单拦截记录-列表
-  merchantBanFilterLogQueryByPage: (params) => API.GET('/operation/v1/merchantBanFilterLog/queryByPage', params),
+  merchantBanFilterLogQueryByPage: (params) => API.GET('/operation/v1/merchantBanList/backListQueryByPage', params),
   // 乐刷风控-列表
-  leshuaQueryByPage: (params) => API.GET('/operation/v1/merchantBanAppeal/leshua/queryByPage', params),
+  leshuaQueryByPage: (params) => API.GET('/operation/v1/merchantBanAppeal/leshua/queryByCondition', params),
   // 平台风控-列表
   midPlatformQueryByPage: (params) => API.GET('/operation/v1/merchantBanAppeal/midPlatform/queryByPage', params),
   // 风控申诉-详情

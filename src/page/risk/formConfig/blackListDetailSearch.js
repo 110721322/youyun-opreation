@@ -1,3 +1,4 @@
+import apiAgent from "@/api/api_agent.js";
 export const SEARCH_CONFIG = {
   formData: [
     {
@@ -10,67 +11,39 @@ export const SEARCH_CONFIG = {
     {
       type: 10,
       label: '精准筛选',
-      key: '',
+      key: 'banField',
       class: 'max-width',
       options: [
         {
           label: '营业执照编号',
-          value: 'banField'
+          value: 'shopLicenseNo'
         },
         {
           label: '法人身份证号',
-          value: 'banField'
+          value: 'lawIdCard'
         },
         {
           label: '法人手机号',
-          value: 'banField'
+          value: 'lawMobile'
         },
         {
           label: '银行卡号',
-          value: 'banField'
+          value: 'bankCardNo'
         }
       ],
       labelWidth: '100px'
     },
     {
       type: 1,
-      label: '加入人员',
-      key: 'operationId',
-      style: 'width:294px',
-      options: [
-        {
-          label: '待审核',
-          value: 0
-        },
-        {
-          label: '审核通过',
-          value: 1
-        },
-        {
-          label: '驳回',
-          value: 2
-        }
-      ]
-    },
-    {
-      type: 1,
-      label: '类型',
-      key: 'type',
-      style: 'width:294px',
-      labelWidth: '185px',
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
-    }]
+      label: '所属运营',
+      key: 'operateUserNo',
+      labelWidth: '100px',
+      urlOptions: {
+        url: apiAgent.queryAllOperation,
+        keyName: 'operationId',
+        valueName: 'operationName',
+        method: 'get'
+      }
+    }
+  ]
 }

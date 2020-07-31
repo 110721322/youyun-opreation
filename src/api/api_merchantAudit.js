@@ -50,7 +50,7 @@ export default {
   // 下级服务商审核-审核列表
   querySubAudit: (params) => API.GET('/operation/v1/agentAudit/querySubAuditPageByCondition', params),
   // 下级服务商审核-下级服务商详情
-  getSubAgentDetail: (params) => API.GET('/operation/v1/subAgent/getSubAgentDetail', params),
+  getSubAgentDetail: (params) => API.GET('/operation/v1/agent/getSubAgentDetail', params),
   // 下级服务商审核-通过
   updateSubAuditStatusOfPass: (params) => API.GET('/operation/v1/agentAudit/updateSubAuditStatusOfPass', params),
   // 下级服务商审核-驳回

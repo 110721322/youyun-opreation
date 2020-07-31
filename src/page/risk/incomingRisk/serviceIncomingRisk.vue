@@ -52,9 +52,11 @@
             已选择
             <span class="blue">{{ selectData.length }}</span> 项目
           </span>
-          <el-button class="btn" type="text">清空</el-button>
+<!--          <el-button class="btn" type="text">清空</el-button>-->
         </div>
         <BaseCrud
+          ref="agentTable"
+          :params="params1"
           :grid-config="configData2.gridConfig"
           :grid-btn-config="configData2.gridBtnConfig"
           :grid-data="testData2"
@@ -104,6 +106,7 @@ export default {
       direction: "rtl",
       selectData: [],
       params: {},
+      params1: {},
       api: api.agentBanListQueryByPage,
       agentApi: agentApi.agentList
     };
@@ -111,13 +114,31 @@ export default {
   mounted() {},
   methods: {
     selectionChange($val) {
-      this.selectData = $val;
+      this.selectData = []
+      const selectValue = []
+      $val.forEach(v => {
+        selectValue.push(v.agentNo)
+      })
+      this.selectData = selectValue
     },
     onClick_reset() {
       this.input = "";
       this.select = "";
     },
-    onClick_search() {},
+    onClick_search() {
+      if (!this.select) {
+        this.params1 = {}
+      }
+      if (this.select === 1) {
+        this.params1 = {
+          agentName: this.input
+        }
+      } else {
+        this.params1 = {
+          agentNo: this.input
+        }
+      }
+    },
     search($ruleForm) {
       const params = {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
@@ -161,24 +182,47 @@ export default {
       })
     },
     onClick_confirm() {
-      this.drawer = false;
-      api
-        .agentBanListAdd({
-          agentNos: [
-            {
-              agentNo: ""
-            }
-          ]
+      if (this.selectData.length === 0) {
+        this.$message({
+          message: '请选择服务商',
+          type: 'info'
         })
-        .then(res => {
-          this.$message("添加成功");
+        return false
+      } else {
+        console.log(this.selectData)
+        api.agentBanListAdd({
+          agentNos: this.selectData
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '添加成功',
+              type: 'success'
+            })
+            this.drawer = false
+            this.selectData = []
+            this.$refs.table.getData()
+          }
         })
-        .catch(err => {
-          this.$message(err);
-        });
+      }
+      // this.drawer = false;
+      // api
+      //   .agentBanListAdd({
+      //     agentNos: [
+      //       {
+      //         agentNo: ""
+      //       }
+      //     ]
+      //   })
+      //   .then(res => {
+      //     this.$message("添加成功");
+      //   })
+      //   .catch(err => {
+      //     this.$message(err);
+      //   });
     },
     onClick_cancel() {
       this.drawer = false;
+      this.$refs['agentTable'].clearSelection()
     },
     onClick_addBlackList() {
       this.drawer = true;

@@ -9,39 +9,44 @@ export const FORM_CONFIG = {
         type: 1,
         label: '信息类型',
         key: 'banField',
-        initVal: '0',
         options: [
           {
-            label: '农村',
-            value: '0'
+            label: '营业执照编号',
+            value: 'shopLicenseNo'
           },
           {
-            label: '城市',
-            value: '1'
+            label: '法人身份证号',
+            value: 'lawIdCard'
+          },
+          {
+            label: '法人手机号',
+            value: 'lawMobile'
+          },
+          {
+            label: '银行卡号',
+            value: 'bankCardNo'
           }
         ],
-        rules: setRules('信息类型').isRequired.get
+        rules: setRules('信息类型').isSelected.get
       },
       {
         type: 0,
         label: '内容',
         key: 'content',
-        initVal: 'pdd',
         rules: setRules('内容').isRequired.get
       },
       {
         type: 1,
         label: '类型',
         key: 'type',
-        initVal: '0',
         options: [
           {
-            label: '农村',
-            value: '0'
+            label: '灰名单',
+            value: 'gray'
           },
           {
-            label: '城市',
-            value: '1'
+            label: '黑名单',
+            value: 'black'
           }
         ],
         rules: setRules('类型').isRequired.get

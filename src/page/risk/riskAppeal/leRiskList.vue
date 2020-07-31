@@ -65,17 +65,7 @@ export default {
       direction: "rtl",
       searchHeight: "260",
       drawer: false,
-      params: {
-        beginDate: this.$g.utils.getToday(),
-        endDate: this.$g.utils.getToday(),
-        merchantNo: "",
-        merchantName: "",
-        channelMerchantNo: "",
-        operateUserNo: "",
-        status: "",
-        currentPage: "",
-        pageSize: ""
-      },
+      params: {},
       api: api.leshuaQueryByPage
     };
   },
