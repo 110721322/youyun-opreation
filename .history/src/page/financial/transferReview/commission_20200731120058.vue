@@ -95,11 +95,10 @@ export default {
     confirm($ruleForm) {
       api_statistice
         .listOperationSettle({
-          id: $ruleForm.id
-          // reason: $ruleForm.reason
+          id: this.activeRow.id,
+          reason: $ruleForm.reason
         })
         .then(result => {
-          console.log('1111', this.id)
           this.$message({
             type: "info",
             message: "已驳回"

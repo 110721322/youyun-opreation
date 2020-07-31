@@ -139,20 +139,10 @@ export default {
     },
     cancel() {},
     confirm($sunmit) {
-      console.log($sunmit)
+      console.log('1111', $sunmit)
       api_statistice
         .submitSettle({
-          expressNumber: $sunmit.date.linkmanName,
-          expressImg: $sunmit.date.photo.dialogImagePath + $sunmit.date.photo.dialogImageUrl,
-          settleCommission: this.totalCommission,
-          // actualAmount: 可结算金额,$sunmit.date.linkmanName,
-          settleAccount: $sunmit.date.linkmanPhone,
-          // settleName: 结算人,$sunmit.date.linkmanName,
-          settleMobile: $sunmit.date.deviceNumLimit,
-          alternatePhone: $sunmit.date.asyncNotifyUrl,
-          // operationId: 所属运营人员,$sunmit.date.linkmanName,
-          settleRemark: $sunmit.date.remark
-          // typeMonthList: 结算类型-结算月份对照$sunmit.date.linkmanName,
+          // expressNumber：
         })
         .then(res => {
           // this.activityReward = res.object.activityReward

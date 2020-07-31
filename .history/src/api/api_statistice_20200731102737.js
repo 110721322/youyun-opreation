@@ -15,7 +15,7 @@ export default {
   // 代理商下的商户明细
   selectMerchantDataByPage: (params) => API.POST(g.config.server + 'operation/v1/topAgentStatistics/selectMerchantDataByPage', params),
   // 财务审核列表查询
-  listFinanceSettle: (params) => API.POST(g.config.server + '/operation/v1/topAgentAudit/listFinanceSettle', params),
+  listFinanceSettle: (params) => API.GET(g.config.server + '/operation/v1/topAgentAudit/listFinanceSettle', params),
   // 财务审核拒绝
   financeReject: (params) => API.POST(g.config.server + '/operation/v1/agentSettle/financeReject', params),
   // 财务审核通过
@@ -23,15 +23,9 @@ export default {
   // 运营审核列表查询
   listOperationSettle: (params) => API.GET(g.config.server + '/operation/v1/agentSettle/listOperationSettle', params),
   // 审核通过、驳回前的查询
-  queryDetail: (params) => API.POST(g.config.server + '/operation/v1/agentSettle/queryDetail', params),
+  queryDetail: (params) => API.GET(g.config.server + '/operation/v1/agentSettle/queryDetail', params),
   // 运营审核拒绝
   operationReject: (params) => API.POST(g.config.server + '/operation/v1/agentSettle/operationReject', params),
   // 运营审核通过
-  operationSuccess: (params) => API.POST(g.config.server + '/operation/v1/agentSettle/operationSuccess', params),
-  // 佣金结算
-  querySettleSum: (params) => API.POST(g.config.server + 'operation/v1/topAgentSettle/querySettleSum', params),
-  // 佣金结算
-  SettlequeryByPage: (params) => API.POST(g.config.server + 'operation/v1/topAgentSettle/queryByPage', params),
-  // 佣金结算
-  submitSettle: (params) => API.POST(g.config.server + 'operation/v1/topAgentSettle/submitSettle', params)
+  operationSuccess: (params) => API.POST(g.config.server + '/operation/v1/agentSettle/operationSuccess', params)
 }

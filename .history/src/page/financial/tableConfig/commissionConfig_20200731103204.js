@@ -13,7 +13,7 @@ export const TABLE_CONFIG = {
     {
       label: '实际结算金额（元）',
       prop: 'actualSettleCommission',
-      width: '150px'
+      width: '130px'
     },
     {
       label: '结算卡号',

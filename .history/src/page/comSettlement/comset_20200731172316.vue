@@ -142,17 +142,17 @@ export default {
       console.log($sunmit)
       api_statistice
         .submitSettle({
-          expressNumber: $sunmit.date.linkmanName,
-          expressImg: $sunmit.date.photo.dialogImagePath + $sunmit.date.photo.dialogImageUrl,
-          settleCommission: this.totalCommission,
-          // actualAmount: 可结算金额,$sunmit.date.linkmanName,
-          settleAccount: $sunmit.date.linkmanPhone,
-          // settleName: 结算人,$sunmit.date.linkmanName,
-          settleMobile: $sunmit.date.deviceNumLimit,
-          alternatePhone: $sunmit.date.asyncNotifyUrl,
-          // operationId: 所属运营人员,$sunmit.date.linkmanName,
-          settleRemark: $sunmit.date.remark
-          // typeMonthList: 结算类型-结算月份对照$sunmit.date.linkmanName,
+          // expressNumber: 发票快递号,
+          // expressImg: 发票图片地址,
+          // settleCommission: 总佣金,
+          // actualAmount: 可结算金额,
+          // settleAccount: 结算账户,
+          // settleName: 结算人,
+          // settleMobile: 结算联系电话,
+          // alternatePhone: 备用联系方式,
+          // operationId: 所属运营人员,
+          // settleRemark: 结算备注,
+          // typeMonthList: 结算类型-结算月份对照
         })
         .then(res => {
           // this.activityReward = res.object.activityReward

@@ -27,11 +27,5 @@ export default {
   // 运营审核拒绝
   operationReject: (params) => API.POST(g.config.server + '/operation/v1/agentSettle/operationReject', params),
   // 运营审核通过
-  operationSuccess: (params) => API.POST(g.config.server + '/operation/v1/agentSettle/operationSuccess', params),
-  // 佣金结算
-  querySettleSum: (params) => API.POST(g.config.server + 'operation/v1/topAgentSettle/querySettleSum', params),
-  // 佣金结算
-  SettlequeryByPage: (params) => API.POST(g.config.server + 'operation/v1/topAgentSettle/queryByPage', params),
-  // 佣金结算
-  submitSettle: (params) => API.POST(g.config.server + 'operation/v1/topAgentSettle/submitSettle', params)
+  operationSuccess: (params) => API.POST(g.config.server + '/operation/v1/agentSettle/operationSuccess', params)
 }

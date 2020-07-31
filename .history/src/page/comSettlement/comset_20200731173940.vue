@@ -139,10 +139,10 @@ export default {
     },
     cancel() {},
     confirm($sunmit) {
-      console.log($sunmit)
+      console.log($sunmit.Object)
       api_statistice
         .submitSettle({
-          expressNumber: $sunmit.date.linkmanName,
+          expressNumber: $sunmit.Object.linkmanName,
           expressImg: $sunmit.date.photo.dialogImagePath + $sunmit.date.photo.dialogImageUrl,
           settleCommission: this.totalCommission,
           // actualAmount: 可结算金额,$sunmit.date.linkmanName,

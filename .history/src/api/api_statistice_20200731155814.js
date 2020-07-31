@@ -31,7 +31,5 @@ export default {
   // 佣金结算
   querySettleSum: (params) => API.POST(g.config.server + 'operation/v1/topAgentSettle/querySettleSum', params),
   // 佣金结算
-  SettlequeryByPage: (params) => API.POST(g.config.server + 'operation/v1/topAgentSettle/queryByPage', params),
-  // 佣金结算
-  submitSettle: (params) => API.POST(g.config.server + 'operation/v1/topAgentSettle/submitSettle', params)
+  SettlequeryByPage: (params) => API.POST(g.config.server + 'operation/v1/topAgentSettle/queryByPage', params)
 }

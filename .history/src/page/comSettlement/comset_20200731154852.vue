@@ -9,8 +9,8 @@
       </div>
       <div class="content">
         <ul class="content-banner">
-          <li><p>间联佣金(元)</p><p style="color: #262626; line-height: 32px; font-weight: 500; font-size: 20px;">{{ indirectCommission }}</p></li>
-          <li><p>活动奖励(元)</p><p style="color: #1989FA; font-size: 20px; font-weight: 500; line-height: 32px;">{{ activityReward }}</p></li>
+          <li><p>间联佣金(元)</p><p style="color: #262626; line-height: 32px; font-weight: 500; font-size: 20px;">¥904.45</p></li>
+          <li><p>活动奖励(元)</p><p style="color: #1989FA; font-size: 20px; font-weight: 500; line-height: 32px;">¥904.45</p></li>
           <li>
             <p>总佣金</p>
             <p style="font-size: 24px; margin-top: 4px; line-height: 24px; font-weight: 500; color: #333333">{{ totalCommission }}</p>
@@ -32,10 +32,9 @@
             :is-select="false"
             :is-expand="false"
             :row-key="'id'"
-            :params="typeflage"
             :default-expand-all="false"
             :hide-edit-area="configData.hideEditArea"
-            :api-service="apiSettlequeryByPage"
+            :api-service="null"
             @detail="onClick_detail"
           ></BaseCrud>
         </div>
@@ -55,13 +54,12 @@
               <div class="select">
                 <div class="left-label">结算类型：</div>
                 <el-checkbox-group v-model="isChenk">
-                  <el-checkbox label="间联佣金" class="select-box">间联佣金</el-checkbox>
-                  <el-checkbox label="活动奖励" class="select-box">活动奖励</el-checkbox>
+                  <el-checkbox label="复选框 A" class="select-box"></el-checkbox>
                 </el-checkbox-group>
               </div>
               <div class="select" style="margin: 16px 0 24px 0;">
                 <div class="left-label">总佣金：</div>
-                <div class="select-price">{{ totalCommission }}</div>
+                <div class="select-price">¥52.30</div>
               </div>
             </div>
           </div>
@@ -99,14 +97,10 @@ export default {
       testData: [],
       drawer: false,
       isChenk: [],
-      typeflage: {
-        typeFlag: 1
-      },
-      // api: api_statistice,
+      api: api_statistice,
       indirectCommission: '',
       activityReward: '',
-      totalCommission: '',
-      apiSettlequeryByPage: api_statistice.SettlequeryByPage
+      totalCommission: ''
     }
   },
   created() {},
@@ -123,7 +117,7 @@ export default {
           this.indirectCommission = res.object.indirectCommission
           this.activityReward = res.object.activityReward
           this.totalCommission = res.object.totalCommission
-          // console.log(res.object)
+          console.log(res.object)
         })
         .catch(err => {
           console.error(err);
@@ -138,31 +132,7 @@ export default {
       this.drawer = false
     },
     cancel() {},
-    confirm($sunmit) {
-      console.log($sunmit)
-      api_statistice
-        .submitSettle({
-          expressNumber: $sunmit.date.linkmanName,
-          expressImg: $sunmit.date.photo.dialogImagePath + $sunmit.date.photo.dialogImageUrl,
-          settleCommission: this.totalCommission,
-          // actualAmount: 可结算金额,$sunmit.date.linkmanName,
-          settleAccount: $sunmit.date.linkmanPhone,
-          // settleName: 结算人,$sunmit.date.linkmanName,
-          settleMobile: $sunmit.date.deviceNumLimit,
-          alternatePhone: $sunmit.date.asyncNotifyUrl,
-          // operationId: 所属运营人员,$sunmit.date.linkmanName,
-          settleRemark: $sunmit.date.remark
-          // typeMonthList: 结算类型-结算月份对照$sunmit.date.linkmanName,
-        })
-        .then(res => {
-          // this.activityReward = res.object.activityReward
-          // this.totalCommission = res.object.totalCommission
-          // console.log(res.object)
-        })
-        .catch(err => {
-          console.error(err);
-        });
-    }
+    confirm() {}
   }
 }
 </script>

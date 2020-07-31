@@ -71,17 +71,13 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      params: {
-      },
+      params: {},
       api: api_statistice.listFinanceSettle,
       activeRow: null
     };
   },
   created() {
-    this.params = {
-      beginTime: this.$g.utils.getToday(),
-      endTime: this.$g.utils.getToday()
-    };
+    this.search()
     // this.agentNo = this.$route.query.agentNo
     // this.rewardDate = this.$route.query.tradeMonth
     // this.params = {
@@ -95,11 +91,10 @@ export default {
     confirm($ruleForm) {
       api_statistice
         .listOperationSettle({
-          id: $ruleForm.id
-          // reason: $ruleForm.reason
+          id: this.activeRow.id,
+          reason: $ruleForm.reason
         })
         .then(result => {
-          console.log('1111', this.id)
           this.$message({
             type: "info",
             message: "已驳回"
@@ -111,7 +106,6 @@ export default {
     },
     search($ruleForm) {
       // console.log('1111', $ruleForm)
-      // debugger
       this.params = {
         beginTime: $ruleForm.date[0],
         endTime: $ruleForm.date[1]

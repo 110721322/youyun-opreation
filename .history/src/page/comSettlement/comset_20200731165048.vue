@@ -55,8 +55,8 @@
               <div class="select">
                 <div class="left-label">结算类型：</div>
                 <el-checkbox-group v-model="isChenk">
-                  <el-checkbox label="间联佣金" class="select-box">间联佣金</el-checkbox>
-                  <el-checkbox label="活动奖励" class="select-box">活动奖励</el-checkbox>
+                  <el-checkbox label="间联佣金" class="select-box"></el-checkbox>
+                  <el-checkbox label="活动奖励" class="select-box"></el-checkbox>
                 </el-checkbox-group>
               </div>
               <div class="select" style="margin: 16px 0 24px 0;">
@@ -138,31 +138,7 @@ export default {
       this.drawer = false
     },
     cancel() {},
-    confirm($sunmit) {
-      console.log($sunmit)
-      api_statistice
-        .submitSettle({
-          expressNumber: $sunmit.date.linkmanName,
-          expressImg: $sunmit.date.photo.dialogImagePath + $sunmit.date.photo.dialogImageUrl,
-          settleCommission: this.totalCommission,
-          // actualAmount: 可结算金额,$sunmit.date.linkmanName,
-          settleAccount: $sunmit.date.linkmanPhone,
-          // settleName: 结算人,$sunmit.date.linkmanName,
-          settleMobile: $sunmit.date.deviceNumLimit,
-          alternatePhone: $sunmit.date.asyncNotifyUrl,
-          // operationId: 所属运营人员,$sunmit.date.linkmanName,
-          settleRemark: $sunmit.date.remark
-          // typeMonthList: 结算类型-结算月份对照$sunmit.date.linkmanName,
-        })
-        .then(res => {
-          // this.activityReward = res.object.activityReward
-          // this.totalCommission = res.object.totalCommission
-          // console.log(res.object)
-        })
-        .catch(err => {
-          console.error(err);
-        });
-    }
+    confirm() {}
   }
 }
 </script>

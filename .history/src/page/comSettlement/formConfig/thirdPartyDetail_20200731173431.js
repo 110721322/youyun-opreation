@@ -4,7 +4,7 @@ export const FORM_CONFIG = {
   detailData: {
     title: '设备',
     showFootBtn: true,
-    key: 'date',
+    key: "date",
     formData: [
       {
         type: 6,
