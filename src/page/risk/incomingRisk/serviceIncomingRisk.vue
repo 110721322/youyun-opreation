@@ -64,6 +64,7 @@
           :is-async="true"
           :is-select="true"
           :hide-edit-area="true"
+          :api-service="agentApi"
           @selectionChange="selectionChange"
         />
       </div>
@@ -76,6 +77,7 @@
 </template>
 <script>
 import api from "@/api/api_risk";
+import agentApi from "@/api/api_agent"
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { SEARCH_CONFIG } from "../formConfig/serviceIncomingSearch";
@@ -102,7 +104,8 @@ export default {
       direction: "rtl",
       selectData: [],
       params: {},
-      api: api.agentBanListQueryByPage
+      api: api.agentBanListQueryByPage,
+      agentApi: agentApi.agentList
     };
   },
   mounted() {},
@@ -116,7 +119,6 @@ export default {
     },
     onClick_search() {},
     search($ruleForm) {
-      console.log($ruleForm);
       const params = {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,
@@ -125,26 +127,38 @@ export default {
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     },
-    onClick_remove() {
+    onClick_remove(row) {
       this.$confirm("确定将该服务商移出黑名单吗?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
-      })
-        .then(() => {
-          api
-            .deleteByAgentNo({
-              agentNo: ""
+      }).then(() => {
+        api.deleteByAgentNo({
+          agentNo: row.agentNo
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '操作成功',
+              type: 'success'
             })
-            .then(res => {
-              this.$message("移出成功");
-            });
-        })
-        .catch(() => {
+            this.$refs.table.getData()
+          } else {
+            this.$message({
+              message: res.errorMessage,
+              type: 'info'
+            })
+          }
+        }).catch(err => {
           this.$message({
             type: "info",
-            message: "已取消"
+            message: err.errorMessage
           });
+        })
+      }).catch(() => {
+        this.$message({
+          type: "info",
+          message: "已取消"
         });
+      })
     },
     onClick_confirm() {
       this.drawer = false;

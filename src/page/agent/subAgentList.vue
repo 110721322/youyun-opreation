@@ -66,7 +66,6 @@ export default {
   },
   methods: {
     search($form, $obj) {
-      console.log($form)
       this.params = {
         regionCode: $form.regionCode,
         provinceCode: $form.area[0],
