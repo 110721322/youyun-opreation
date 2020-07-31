@@ -17,11 +17,11 @@
     <div class="remark">
       <span>备注:</span>
       <el-input
-              v-model="textarea"
-              type="textarea"
-              placeholder="请输入内容"
-              maxlength="150"
-              show-word-limit
+        v-model="textarea"
+        type="textarea"
+        placeholder="请输入内容"
+        maxlength="150"
+        show-word-limit
       >
       </el-input>
     </div>

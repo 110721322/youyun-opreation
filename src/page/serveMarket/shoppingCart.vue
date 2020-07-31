@@ -4,36 +4,36 @@
     <div class="equiment">
       <div class="tabtle-title">刷脸设备</div>
       <BaseCrud
-              ref="table"
-              :grid-config="configData.gridConfig"
-              :grid-btn-config="configData.gridBtnConfig"
-              :grid-data="shopList.FACE"
-              :grid-edit-width="300"
-              form-title="用户"
-              :is-async="false"
-              :is-select="true"
-              :is-expand="false"
-              :hide-edit-area="false"
-              @delete="handel_delete"
-              @okEdit="handel_sure"
+        ref="table"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :grid-data="shopList.FACE"
+        :grid-edit-width="300"
+        form-title="用户"
+        :is-async="false"
+        :is-select="true"
+        :is-expand="false"
+        :hide-edit-area="false"
+        @delete="handel_delete"
+        @okEdit="handel_sure"
       >
       </BaseCrud>
       <div class="tabtle-title">收银机具</div>
       <BaseCrud
-              ref="table"
-              :grid-config="configData.gridConfig"
-              :grid-btn-config="configData.gridBtnConfig"
-              :grid-data="shopList.POSS"
-              :form-config="configData.formConfig"
-              :form-data="configData.formModel"
-              :grid-edit-width="300"
-              form-title="用户"
-              :row-key="'id'"
-              :is-async="false"
-              :is-select="true"
-              @selectionChange="handel_select"
-              @delete="handel_delete"
-              @okEdit="handel_sure"
+        ref="table"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :grid-data="shopList.POSS"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="300"
+        form-title="用户"
+        :row-key="'id'"
+        :is-async="false"
+        :is-select="true"
+        @selectionChange="handel_select"
+        @delete="handel_delete"
+        @okEdit="handel_sure"
       >
       </BaseCrud>
     </div>
@@ -41,11 +41,11 @@
       <div class="bottom-area">
         <div class="left-radio">
           <el-checkbox v-model="checkAll" @change="handel_selectAll">全选</el-checkbox>
-          <div class="delete" v-if="deviceIdList.length>0" @click="click_delete">删除</div>
+          <div v-if="deviceIdList.length>0" class="delete" @click="click_delete">删除</div>
         </div>
         <div class="right-area">
-          <div class="right-amount">合计（不含运费）：<span style="color: #F64D4C; font-size: 20px; font-weight: 500;">{{totalAmount|| '0'}}</span></div>
-          <button @click="onClick_toorder">结算({{deviceIdList.length || '0'}})</button>
+          <div class="right-amount">合计（不含运费）：<span style="color: #F64D4C; font-size: 20px; font-weight: 500;">{{ totalAmount|| '0' }}</span></div>
+          <button @click="onClick_toorder">结算({{ deviceIdList.length || '0' }})</button>
         </div>
       </div>
     </div>

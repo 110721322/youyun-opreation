@@ -14,10 +14,10 @@
           :closable="false"
           show-icon
         ></el-alert>
-        <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.beforeData"></detailMode>
-        <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.afterData"></detailMode>
+        <detailMode :img-width="4" :rule-form="ruleForm.old" :config-data="configData.beforeData"></detailMode>
+        <detailMode :img-width="4" :rule-form="ruleForm.new" :config-data="configData.afterData"></detailMode>
         <div v-if="showComponents.showOperBtns" class="btn-box">
-          <div class="btn_pass" @click="onClick_pass">资料已检查并提交签约</div>
+          <div class="btn_pass" @click="onClick_pass">资料已全部检查,通过</div>
           <div class="btn-reject" @click="onClick_reject">驳回</div>
         </div>
       </div>
@@ -46,6 +46,9 @@ export default {
 
   data() {
     return {
+      channelMerchantNo: '',
+      channelAgentCode: '',
+      channelCode: '',
       fromConfigData: {},
       drawer: false,
       rejectTitle: "驳回原因：银行卡号不属于法人",
@@ -56,40 +59,8 @@ export default {
       // approval通过 checking审核中 reject驳回
       currentType: "",
       ruleForm: {
-        beforeData: {
-          type: "对私-非法人",
-          name: "金柒柒",
-          idcard: "3302840184013840149847",
-          bankid: "2430124230482394802",
-          address: "浙江省 杭州市 西湖区",
-          bank: "招商银行股份有限公司杭州保交支行",
-          phone: "15820908766",
-          pic:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic2:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic3:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic4:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
-        },
-        afterData: {
-          type: "对私-非法人",
-          name: "金柒柒",
-          idcard: "3302840184013840149847",
-          bankid: "2430124230482394802",
-          address: "浙江省 杭州市 西湖区",
-          bank: "招商银行股份有限公司杭州保交支行",
-          phone: "15820908766",
-          pic:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic2:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic3:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic4:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
-        }
+        old: {},
+        new: {}
       },
       configData: {
         beforeData: {
@@ -97,27 +68,27 @@ export default {
           items: [
             {
               name: "结算人银行卡",
-              key: "settlePersonBankCard",
+              key: "bankCardImg",
               type: "image"
             },
             {
               name: "结算人身份证正面",
-              key: "settlePersonIdCardPortraitImg",
+              key: "idCardPortraitImg",
               type: "image"
             },
             {
               name: "结算人身份证反面",
-              key: "settlePersonIdCardEmblemImg",
+              key: "idCardEmblemImg",
               type: "image"
             },
             {
               name: "非法人授权书",
-              key: "nolegalAuthImg",
+              key: "nonLawSettleAuthImg",
               type: "image"
             },
             {
               name: "结算卡类型",
-              key: "accountType"
+              key: "bankAccountType"
             },
             {
               name: "开户名",
@@ -138,7 +109,7 @@ export default {
             },
             {
               name: "开户支行",
-              key: "branchName"
+              key: "bankBranchName"
             },
             {
               name: "银行预留手机号",
@@ -151,27 +122,27 @@ export default {
           items: [
             {
               name: "结算人银行卡",
-              key: "settlePersonBankCard",
+              key: "bankCardImg",
               type: "image"
             },
             {
               name: "结算人身份证正面",
-              key: "settlePersonIdCardPortraitImg",
+              key: "idCardPortraitImg",
               type: "image"
             },
             {
               name: "结算人身份证反面",
-              key: "settlePersonIdCardEmblemImg",
+              key: "idCardEmblemImg",
               type: "image"
             },
             {
               name: "非法人授权书",
-              key: "nolegalAuthImg",
+              key: "nonLawSettleAuthImg",
               type: "image"
             },
             {
               name: "结算卡类型",
-              key: "accountType"
+              key: "bankAccountType"
             },
             {
               name: "开户名",
@@ -192,8 +163,7 @@ export default {
             },
             {
               name: "开户支行",
-              key: "branchName",
-              hasIconTime: true
+              key: "bankBranchName"
             },
             {
               name: "银行预留手机号",
@@ -201,98 +171,133 @@ export default {
             }
           ]
         }
-      },
-      testData: [
-        {
-          id: 0,
-          type: "设备品牌",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          reason: "银行卡账号错误，服务商无法联系",
-          edit: false
-        },
-        {
-          id: 1,
-          type: "设备型号",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系",
-          edit: false
-        }
-      ]
+      }
     };
   },
   watch: {
     currentType: function($val) {
       switch ($val) {
-        case "approval":
+        case "waitSign":
           this.showComponents.showOperBtns = true;
+          this.showComponents.showRejectTitle = false
           break;
-        case "checking":
+        case "audit":
+          this.showComponents.showOperBtns = true;
+          this.showComponents.showRejectTitle = false
+          break;
+        case "success":
+          this.showComponents.showOperBtns = false;
+          this.showComponents.showRejectTitle = false
           break;
         case "reject":
           this.showComponents.showRejectTitle = true;
+          this.showComponents.showOperBtns = false;
           break;
-
         default:
           break;
       }
     }
   },
+  created() {
+    this.channelMerchantNo = this.$route.query.channelMerchantNo
+    this.channelAgentCode = this.$route.query.channelAgentCode
+    this.channelCode = this.$route.query.channelCode
+    this.getDetail()
+  },
   mounted() {
-    this.currentType = "approval";
-    this.getDetailByMerchantNo();
   },
   methods: {
-    getDetailByMerchantNo() {
-      api
-        .getDetailByMerchantNo({ merchantNo: "", channelCode: "" })
-        .then(res => {
-          console.log(res);
-          this.ruleForm = res.data;
-        })
-        .catch();
+    getDetail() {
+      api.getMerchantSettleDetail({
+        channelMerchantNo: this.channelMerchantNo,
+        channelAgentCode: this.channelAgentCode,
+        channelCode: this.channelCode
+      }).then(res => {
+        if (res.object.old.merchantType === 'enterprise') {
+          res.object.old.merchantType = '企业'
+        }
+        if (res.object.old.merchantType === 'individual') {
+          res.object.old.merchantType = '个体工商户'
+        }
+        if (res.object.old.merchantType === 'private') {
+          res.object.old.merchantType = '个人'
+        }
+        if (res.object.old.bankAccountType === 'public') {
+          res.object.old.bankAccountType = '对公'
+        }
+        if (res.object.old.bankAccountType === 'private') {
+          res.object.old.bankAccountType = '对私'
+        }
+        if (res.object.new.merchantType === 'enterprise') {
+          res.object.new.merchantType = '企业'
+        }
+        if (res.object.new.merchantType === 'individual') {
+          res.object.new.merchantType = '个体工商户'
+        }
+        if (res.object.new.merchantType === 'private') {
+          res.object.new.merchantType = '个人'
+        }
+        if (res.object.new.bankAccountType === 'public') {
+          res.object.new.bankAccountType = '对公'
+        }
+        if (res.object.new.bankAccountType === 'private') {
+          res.object.new.bankAccountType = '对私'
+        }
+        this.ruleForm = res.object
+        this.currentType = res.object.auditStatus
+        this.merchantType = res.onject.merchantType
+      })
     },
     onClick_pass() {
-      api
-        .settleCardUpdateAuditStatusOfPass({
-          merchantNo: "",
+      this.$confirm("是否校验完信息并通过", "提示", {
+        distinguishCancelAndClose: true,
+        confirmButtonText: "确认通过",
+        cancelButtonText: "取消"
+      }).then(() => {
+        api.updateAuditStatusOfPass({
+          channelMerchantNo: this.channelMerchantNo,
           channelCode: this.channelCode
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '操作成功',
+              type: 'success'
+            });
+            this.getDetail()
+          }
+        }).catch(() => {});
+      }).catch(() => {
+        this.$message({
+          message: '取消操作',
+          type: 'info'
         })
-        .then(res => {
-          this.$message("已通过");
-        })
-        .catch(err => {
-          this.$message(err);
-        });
+      })
     },
     confirm($data) {
-      console.log($data);
-      api
-        .settleCardUpdateAuditStatusOfReject({
-          merchantNo: "",
+      if (!$data.reason) {
+        this.$message({
+          message: '请填写驳回原因',
+          type: 'warning'
+        })
+        return false
+      } else {
+        api.updateAuditStatusOfReject({
+          channelMerchantNo: this.channelMerchantNo,
           reason: $data["reason"],
           channelCode: this.channelCode
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '操作成功',
+              type: 'success'
+            })
+            this.getDetail()
+            this.drawer = false
+          }
+        }).catch(err => {
+          console.log(err)
         })
-        .then(res => {
-          this.$message("已驳回");
-          this.drawer = false;
-        })
-        .catch(err => {
-          this.$message(err);
-        });
+      }
     },
     cancel() {
       this.drawer = false;

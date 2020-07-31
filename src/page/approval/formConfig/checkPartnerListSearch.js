@@ -17,14 +17,6 @@ export const SEARCH_CONFIG = {
       class: 'max-width',
       options: [
         {
-          label: '合伙人姓名',
-          value: 'partnerName'
-        },
-        {
-          label: '合伙人手机号',
-          value: 'mobile'
-        },
-        {
           label: '所属服务商ID',
           value: 'agentNo'
         },
@@ -36,6 +28,16 @@ export const SEARCH_CONFIG = {
       labelWidth: '100px'
     },
     {
+      type: 0,
+      label: '合伙人姓名',
+      key: 'partnerName'
+    },
+    {
+      type: 0,
+      label: '合伙人手机号',
+      key: 'mobile'
+    },
+    {
       type: 1,
       label: '合伙人类型',
       key: 'jobType',
@@ -43,11 +45,11 @@ export const SEARCH_CONFIG = {
       options: [
         {
           label: '拓展员',
-          value: 0
+          value: 'expand'
         },
         {
           label: '入件操作员',
-          value: 1
+          value: 'join'
         }
       ]
     },
@@ -60,22 +62,22 @@ export const SEARCH_CONFIG = {
       options: [
         {
           label: '待审核',
-          value: 0
+          value: 'audit'
         },
         {
           label: '审核通过',
-          value: 1
+          value: 'success'
         },
         {
           label: '驳回',
-          value: 2
+          value: 'reject'
         }
       ]
     },
     {
       type: 1,
       label: '所属运营',
-      key: 'oper',
+      key: 'operationId',
       labelWidth: '100px',
       class: "clear_both",
       urlOptions: {

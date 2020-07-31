@@ -1,9 +1,9 @@
 export const SEARCH_CONFIG = {
   formData: [
     {
-      type: 10,
+      type: 9,
       label: '精准筛选',
-      key: '',
+      key: 'date',
       class: 'max-width',
       options: [
         {

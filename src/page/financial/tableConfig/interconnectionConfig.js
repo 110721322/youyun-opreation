@@ -2,19 +2,19 @@ export const SERVICE_CONFIG = {
   gridConfig: [
     {
       label: '通道名称',
-      prop: 'name'
+      prop: 'payChannel'
     },
     {
       label: '总流水',
-      prop: 'total'
+      prop: 'tradeAmount'
     },
     {
       label: '官方分润',
-      prop: 'profit'
+      prop: 'ourCommission'
     },
     {
       label: '代理商分润',
-      prop: 'serviceProfit'
+      prop: 'agentCommission'
     }
   ],
   // crud的模态框表单配置，可配置表单类型，验证规则，是否必填,col-span布局可通过span参数配置

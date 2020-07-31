@@ -1,6 +1,11 @@
 <template>
   <div class="main_page">
-    <Search :form-base-data="searchConfig.formData" @search="search" :isShowAll="true"/>
+    <Search
+      :is-show-all="false"
+      :open-height="searchHeight"
+      :form-base-data="searchConfig.formData"
+      @search="search"
+    />
     <div class="table_box">
       <BaseCrud
         :grid-config="configData.gridConfig"
@@ -13,8 +18,8 @@
         :is-async="true"
         :is-select="false"
         :params="params"
-        :api-service="null"
-        :hideEditArea="true"
+        :api-service="api"
+        :hide-edit-area="true"
       />
     </div>
   </div>
@@ -25,18 +30,41 @@ import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { SEARCH_CONFIG } from "../formConfig/activityDetail";
 import {SERVICE_CONFIG} from "../tableConfig/activityDetailConfig";
+import api_statistice from "@/api/api_statistice";
 export default {
   components: { Search, BaseCrud },
   data() {
     return {
+      agentNo: '',
+      rewardDate: '',
+      searchHeight: '200',
       configData: SERVICE_CONFIG,
       searchConfig: SEARCH_CONFIG,
       testData: [],
-      params: {}
+      params: {},
+      api: api_statistice.merchantqueryByPage
     }
   },
+  created() {
+    this.agentNo = this.$route.query.agentNo
+    this.rewardDate = this.$route.query.tradeMonth
+    this.params = {
+      agentNo: this.agentNo,
+      tradeMonth: this.rewardDate
+    }
+    // console.log(this.params)
+  },
   methods: {
-    search() {}
+    search($ruleform) {
+      this.params = {
+        agentNo: this.agentNo,
+        merchantNo: $ruleform.inputSelect === 'merchantNo' ? $ruleform.inputForm : "",
+        rewardDate: $ruleform.date,
+        merchantName: $ruleform.inputSelect === 'merchantName' ? $ruleform.inputForm : ""
+      }
+      console.log(this.params)
+      console.log($ruleform)
+    }
   }
 }
 </script>

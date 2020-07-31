@@ -51,6 +51,7 @@ export default {
   },
   methods: {
     onChage($data) {
+      console.log($data)
       this.$emit("select", $data);
       this.ruleForm[this.formItem.key] = $data;
     }

@@ -52,9 +52,11 @@
             已选择
             <span class="blue">{{ selectData.length }}</span> 项目
           </span>
-          <el-button class="btn" type="text">清空</el-button>
+<!--          <el-button class="btn" type="text">清空</el-button>-->
         </div>
         <BaseCrud
+          ref="agentTable"
+          :params="params1"
           :grid-config="configData2.gridConfig"
           :grid-btn-config="configData2.gridBtnConfig"
           :grid-data="testData2"
@@ -64,6 +66,7 @@
           :is-async="true"
           :is-select="true"
           :hide-edit-area="true"
+          :api-service="agentApi"
           @selectionChange="selectionChange"
         />
       </div>
@@ -76,6 +79,7 @@
 </template>
 <script>
 import api from "@/api/api_risk";
+import agentApi from "@/api/api_agent"
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { SEARCH_CONFIG } from "../formConfig/serviceIncomingSearch";
@@ -101,30 +105,41 @@ export default {
       drawer: false,
       direction: "rtl",
       selectData: [],
-      params: {
-        beginDate: this.$g.utils.getToday(),
-        endDate: this.$g.utils.getToday(),
-        agentNo: "",
-        agentName: "",
-        operateUserNo: "",
-        pageSize: "",
-        currentPage: ""
-      },
-      api: api.agentBanListQueryByPage
+      params: {},
+      params1: {},
+      api: api.agentBanListQueryByPage,
+      agentApi: agentApi.agentList
     };
   },
   mounted() {},
   methods: {
     selectionChange($val) {
-      this.selectData = $val;
+      this.selectData = []
+      const selectValue = []
+      $val.forEach(v => {
+        selectValue.push(v.agentNo)
+      })
+      this.selectData = selectValue
     },
     onClick_reset() {
       this.input = "";
       this.select = "";
     },
-    onClick_search() {},
+    onClick_search() {
+      if (!this.select) {
+        this.params1 = {}
+      }
+      if (this.select === 1) {
+        this.params1 = {
+          agentName: this.input
+        }
+      } else {
+        this.params1 = {
+          agentNo: this.input
+        }
+      }
+    },
     search($ruleForm) {
-      console.log($ruleForm);
       const params = {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,
@@ -133,46 +148,81 @@ export default {
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     },
-    onClick_remove() {
+    onClick_remove(row) {
       this.$confirm("确定将该服务商移出黑名单吗?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
-      })
-        .then(() => {
-          api
-            .deleteByAgentNo({
-              agentNo: ""
+      }).then(() => {
+        api.deleteByAgentNo({
+          agentNo: row.agentNo
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '操作成功',
+              type: 'success'
             })
-            .then(res => {
-              this.$message("移出成功");
-            });
-        })
-        .catch(() => {
+            this.$refs.table.getData()
+          } else {
+            this.$message({
+              message: res.errorMessage,
+              type: 'info'
+            })
+          }
+        }).catch(err => {
           this.$message({
             type: "info",
-            message: "已取消"
+            message: err.errorMessage
           });
+        })
+      }).catch(() => {
+        this.$message({
+          type: "info",
+          message: "已取消"
         });
+      })
     },
     onClick_confirm() {
-      this.drawer = false;
-      api
-        .agentBanListAdd({
-          agentNos: [
-            {
-              agentNo: ""
-            }
-          ]
+      if (this.selectData.length === 0) {
+        this.$message({
+          message: '请选择服务商',
+          type: 'info'
         })
-        .then(res => {
-          this.$message("添加成功");
+        return false
+      } else {
+        console.log(this.selectData)
+        api.agentBanListAdd({
+          agentNos: this.selectData
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '添加成功',
+              type: 'success'
+            })
+            this.drawer = false
+            this.selectData = []
+            this.$refs.table.getData()
+          }
         })
-        .catch(err => {
-          this.$message(err);
-        });
+      }
+      // this.drawer = false;
+      // api
+      //   .agentBanListAdd({
+      //     agentNos: [
+      //       {
+      //         agentNo: ""
+      //       }
+      //     ]
+      //   })
+      //   .then(res => {
+      //     this.$message("添加成功");
+      //   })
+      //   .catch(err => {
+      //     this.$message(err);
+      //   });
     },
     onClick_cancel() {
       this.drawer = false;
+      this.$refs['agentTable'].clearSelection()
     },
     onClick_addBlackList() {
       this.drawer = true;

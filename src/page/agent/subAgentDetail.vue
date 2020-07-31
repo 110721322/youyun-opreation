@@ -8,56 +8,58 @@
           <span>所属上级服务商：</span>
           <el-select
             v-if="showName === false"
-            clearable
             v-model="agentNo"
+            clearable
             filterable
             remote
             placeholder="请输入关键词"
             :remote-method="remoteMethod"
-            :loading="loading">
+            :loading="loading"
+          >
             <el-option
               v-for="item in options"
               :key="item.agentNo"
               :label="item.agentName"
-              :value="item.agentNo">
+              :value="item.agentNo"
+            >
             </el-option>
           </el-select>
-          <span v-if="showName === true">{{ruleForm.parentAgentName}}</span>
-          <div class="modify" @click="on_change" v-if="showName === true">修改</div>
-          <div class="modify" @click="on_save" v-if="showName === false">保存</div>
+          <span v-if="showName === true">{{ ruleForm.parentAgentName }}</span>
+          <div v-if="showName === true" class="modify" @click="on_change">修改</div>
+          <div v-if="showName === false" class="modify" @click="on_save">保存</div>
         </li>
         <li>
           <span>账号类型：</span>
-          <span>{{ruleForm.parentAgentName}}</span>
+          <span>{{ ruleForm.parentAgentName }}</span>
         </li>
         <li>
           <span>公司名称：</span>
-          <span>{{ruleForm.agentName}}</span>
+          <span>{{ ruleForm.agentName }}</span>
         </li>
         <li>
           <span>法人姓名：</span>
-          <span>{{ruleForm.personName}}</span>
+          <span>{{ ruleForm.personName }}</span>
         </li>
         <li>
           <span>法人手机号：</span>
-          <span>{{ruleForm.personMobile}}</span>
+          <span>{{ ruleForm.personMobile }}</span>
         </li>
         <li>
           <span>地区：</span>
-          <span>{{ruleForm.areaColor}}</span>
+          <span>{{ ruleForm.areaColor }}</span>
         </li>
         <li>
           <span>详细地址：</span>
-          <span>{{ruleForm.companyAddress}}</span>
+          <span>{{ ruleForm.companyAddress }}</span>
         </li>
         <li>
           <span>邮箱：</span>
-          <span>{{ruleForm.email}}</span>
+          <span>{{ ruleForm.email }}</span>
         </li>
       </ul>
     </div>
 
-<!--    <detailMode :rule-form="ruleForm" :config-data="configData" @edit="itemEdit"></detailMode>-->
+    <!--    <detailMode :rule-form="ruleForm" :config-data="configData" @edit="itemEdit"></detailMode>-->
   </div>
 </template>
 

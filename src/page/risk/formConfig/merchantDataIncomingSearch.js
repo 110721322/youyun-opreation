@@ -1,3 +1,4 @@
+import apiAgent from "@/api/api_agent.js";
 export const SEARCH_CONFIG = {
   formData: [
     {
@@ -10,49 +11,40 @@ export const SEARCH_CONFIG = {
     {
       type: 10,
       label: '精准筛选',
-      key: '',
+      key: 'banField',
       class: 'max-width',
       placeholder: "",
       options: [
         {
           label: '营业执照编号',
-          value: 'banField'
+          value: 'shopLicenseNo'
         },
         {
           label: '法人身份证号',
-          value: 'banField'
+          value: 'lawIdCard'
         },
         {
           label: '法人手机号',
-          value: 'banField'
+          value: 'lawMobile'
         },
         {
           label: '银行卡号',
-          value: 'banField'
+          value: 'bankCardNo'
         }
       ],
       labelWidth: '100px'
     },
     {
       type: 1,
-      label: '加入人员',
-      key: 'operationId',
-      style: 'width:294px',
-      class: "clear_both",
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
+      label: '所属运营',
+      key: 'operateUserNo',
+      labelWidth: '100px',
+      urlOptions: {
+        url: apiAgent.queryAllOperation,
+        keyName: 'operationId',
+        valueName: 'operationName',
+        method: 'get'
+      }
     },
     {
       type: 1,
@@ -62,16 +54,16 @@ export const SEARCH_CONFIG = {
       labelWidth: '185px',
       options: [
         {
-          label: '川菜',
-          value: 0
+          label: '全部',
+          value: ''
         },
         {
-          label: '粤菜',
-          value: 1
+          label: '灰名单',
+          value: 'gray'
         },
         {
-          label: '杭帮菜',
-          value: 2
+          label: '黑名单',
+          value: 'black'
         }
       ]
     }

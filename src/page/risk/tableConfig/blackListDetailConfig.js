@@ -3,7 +3,29 @@ export const TABLE_CONFIG = {
     {
       label: '信息类型',
       prop: 'banField',
-      width: '150px'
+      width: '150px',
+      render: (h, params) => {
+        if (params.row.banField === 'shopLicenseNo') {
+          return h(
+            'span', '营业执照编号'
+          )
+        }
+        if (params.row.banField === 'lawIdCard') {
+          return h(
+            'span', '法人身份证号'
+          )
+        }
+        if (params.row.banField === 'lawMobile') {
+          return h(
+            'span', '法人手机号'
+          )
+        }
+        if (params.row.banField === 'bankCardNo') {
+          return h(
+            'span', '银行卡号'
+          )
+        }
+      }
     },
     {
       label: '内容',
@@ -16,7 +38,7 @@ export const TABLE_CONFIG = {
       width: '150px'
     },
     {
-      label: '加入黑名单时间',
+      label: '加入时间',
       prop: 'banCreateTime',
       width: '150px'
     },

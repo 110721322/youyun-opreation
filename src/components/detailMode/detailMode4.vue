@@ -12,7 +12,7 @@
       <div class="title">
         {{ child.name }}
         <slot name="operatingItem" :child="child">
-          <span v-if="child.ShowEditBtn" class="edit" @click="edit(child.modelName)">{{child.ShowEditBtn}}</span>
+          <span v-if="child.ShowEditBtn" class="edit" @click="edit(child.modelName)">{{ child.ShowEditBtn }}</span>
         </slot>
       </div>
       <el-form
@@ -39,11 +39,11 @@
               ></el-image>
               <span v-else class="item-value">{{ ruleForm[item2.key] }}</span>
             </el-form-item>
-           </el-col>
-          </el-row>
-        </el-form>
-      </div>
-      <slot name="operatingBottomCont"></slot>
+          </el-col>
+        </el-row>
+      </el-form>
+    </div>
+    <slot name="operatingBottomCont"></slot>
   </div>
 </template>
 

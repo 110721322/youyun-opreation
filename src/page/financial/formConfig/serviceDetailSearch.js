@@ -7,11 +7,11 @@ export const SEARCH_CONFIG = {
       class: 'max-width',
       options: [
         {
-          label: '服务商ID',
+          label: '商户ID',
           value: 'merchantNo'
         },
         {
-          label: '服务商名称',
+          label: '商户名称',
           value: 'merchantName'
         }
       ],

@@ -2,47 +2,52 @@
   <div class="main_page">
     <router-view v-if="this.$route.path.indexOf('/serviceProfitDetail') !== -1 || this.$route.path.indexOf('/interconnection') !== -1" />
     <div v-else>
-      <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
+      <Search
+        :open-height="searchHeight"
+        :form-base-data="searchConfig.formData"
+        :is-show-all="true"
+        @search="search"
+      />
       <div class="select">
         <div class="select-top">
-          <div class="select-item" :class="selectIndex===index? 'isSelect': ''" v-for="(item, index) in selectData" :key="index" @click="onClick_select(index)">{{item.value}}</div>
+          <div v-for="(item, index) in selectData" :key="index" class="select-item" :class="selectIndex===index? 'isSelect': ''" @click="onClick_select(index)">{{ item.value }}</div>
         </div>
         <div class="table_box">
           <BaseCrud
-                  v-if="selectIndex===0"
-                  ref="table"
-                  :params="params"
-                  :api-service="null"
-                  :grid-config="configData.gridConfig"
-                  :grid-btn-config="configData.gridBtnConfig"
-                  :grid-data="testData"
-                  :form-config="configData.formConfig"
-                  :form-data="configData.formModel"
-                  :grid-edit-width="100"
-                  :is-async="true"
-                  :is-select="false"
-                  :is-expand="false"
-                  :row-key="'id'"
-                  :default-expand-all="false"
-                  @detail="handleDetail"
+            v-if="selectIndex===0"
+            ref="table"
+            :params="params"
+            :api-service="api"
+            :grid-config="configData.gridConfig"
+            :grid-btn-config="configData.gridBtnConfig"
+            :grid-data="testData"
+            :form-config="configData.formConfig"
+            :form-data="configData.formModel"
+            :grid-edit-width="100"
+            :is-async="true"
+            :is-select="false"
+            :is-expand="false"
+            :row-key="'id'"
+            :default-expand-all="false"
+            @detail="handleDetail"
           ></BaseCrud>
           <BaseCrud
-                  v-if="selectIndex===1"
-                  ref="table"
-                  :params="params"
-                  :api-service="null"
-                  :grid-config="configData1.gridConfig"
-                  :grid-btn-config="configData1.gridBtnConfig"
-                  :grid-data="testData"
-                  :form-config="configData1.formConfig"
-                  :form-data="configData1.formModel"
-                  :grid-edit-width="100"
-                  :is-async="true"
-                  :is-select="false"
-                  :is-expand="false"
-                  :row-key="'id'"
-                  :default-expand-all="false"
-                  @detail="handleDetail"
+            v-if="selectIndex===1"
+            ref="table"
+            :params="params"
+            :api-service="api"
+            :grid-config="configData1.gridConfig"
+            :grid-btn-config="configData1.gridBtnConfig"
+            :grid-data="testData"
+            :form-config="configData1.formConfig"
+            :form-data="configData1.formModel"
+            :grid-edit-width="100"
+            :is-async="true"
+            :is-select="false"
+            :is-expand="false"
+            :row-key="'id'"
+            :default-expand-all="false"
+            @detail="handleDetail"
           ></BaseCrud>
         </div>
       </div>
@@ -56,6 +61,7 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import { SEARCH_CONFIG } from "../formConfig/serviceSearch";
 import { SERVICE_CONFIG } from "../tableConfig/serviceConfig";
 import { SERVICE_CONFIG1 } from "../tableConfig/serviceJianConfig";
+import api_statistice from "@/api/api_statistice"
 export default {
   components: { Search, BaseCrud },
   data() {
@@ -63,9 +69,15 @@ export default {
       searchConfig: SEARCH_CONFIG,
       configData: SERVICE_CONFIG,
       configData1: SERVICE_CONFIG1,
+      api: api_statistice.selectAgentDataByPage,
       testData: [],
       searchHeight: '300',
-      params: {},
+      agendoquery: '',
+      params: {
+        tradeMonth: '',
+        channelAgentCode: '',
+        agentNo: ''
+      },
       selectData: [
         {
           value: '按支付方式',
@@ -82,24 +94,41 @@ export default {
   mounted() {
     this.getData()
   },
+  created() {
+    this.getDate();
+    this.search()
+  },
   methods: {
-    getData() {
-      this.testData = [
-        {
-          service: '紫菜汤',
-          topSrevice: '酸菜鱼',
-          call: '张三'
-        }
-      ]
-    },
+    // getDate() {
+    //   api_statistice.selectAgentDataByPage({
+    //   }).then(res => {
+    // console.log(res)
+    // }).catch(err => {
+    //   console.log(err)
+    // })
+    // console.log(this.configData)
+    // },
     onClick_select(index) {
       this.selectIndex = index
     },
-    search() {},
-    handleDetail() {
+    search($ruleform) {
+      this.params = {
+        tradeMonth: $ruleform.date + "-" + "01"
+        // agentNo: $ruleform.inputSelect === 'merchantNo' ? $ruleform.inputForm : "",
+        // channelAgentCode: $ruleform.inputSelect === 'merchantName' ? $ruleform.inputForm : ""
+      }
+      // console.log(this.params)
+    },
+    handleDetail($row) {
       this.$router.push({
-        path: '/financial/shareProfit/serviceProfit/serviceProfitDetail'
+        path: '/financial/shareProfit/serviceProfit/serviceProfitDetail',
+        query: {
+          agentNo: $row.agentNo,
+          tradeMonth: this.params.tradeMonth
+        }
       })
+      // this.params.tradeMonth
+      // console.log(this.query.tradeMonth)
     }
   }
 }

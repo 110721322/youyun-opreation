@@ -1,6 +1,6 @@
 <template>
   <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/messageCustomer') !== -1 "/>
+    <router-view v-if="this.$route.path.indexOf('/messageCustomer') !== -1 " />
     <div v-else class="content">
       <div class="card">
         <div class="top">

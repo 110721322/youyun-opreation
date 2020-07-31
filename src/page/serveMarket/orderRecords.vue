@@ -5,29 +5,29 @@
     <div v-else>
       <div class="p_head" style="margin-bottom: 24px;">订购记录</div>
       <search
-              class="searchForm"
-              :is-show-all="true"
-              :form-base-data="searchConfig.formData"
-              :show-foot-btn="searchConfig.showFootBtn"
-              @search="search"
+        class="searchForm"
+        :is-show-all="true"
+        :form-base-data="searchConfig.formData"
+        :show-foot-btn="searchConfig.showFootBtn"
+        @search="search"
       />
       <!-- <data-mode></data-mode> -->
       <div class="table_box">
         <BaseCrud
-                ref="table"
-                :grid-config="configData.gridConfig"
-                :grid-btn-config="configData.gridBtnConfig"
-                :grid-data="testData"
-                :form-config="configData.formConfig"
-                :form-data="configData.formModel"
-                :grid-edit-width="300"
-                form-title="用户"
-                :is-async="true"
-                :is-expand="true"
-                :is-select="false"
-                :params="params"
-                :api-service="api"
-                @detail="handel_detail"
+          ref="table"
+          :grid-config="configData.gridConfig"
+          :grid-btn-config="configData.gridBtnConfig"
+          :grid-data="testData"
+          :form-config="configData.formConfig"
+          :form-data="configData.formModel"
+          :grid-edit-width="300"
+          form-title="用户"
+          :is-async="true"
+          :is-expand="true"
+          :is-select="false"
+          :params="params"
+          :api-service="api"
+          @detail="handel_detail"
         >
           <template v-slot="{ row }">
             <el-form label-position="left" inline class="demo-table-expand">

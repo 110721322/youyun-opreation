@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import api from "@/api/api_merchant";
+// import api from "@/api/api_merchant";
 import detailMode from "@/components/detailMode/detailMode2.vue";
 
 export default {
@@ -107,18 +107,18 @@ export default {
     };
   },
   mounted() {
-    this.getData();
+    // this.getData();
   },
   methods: {
-    getData() {
-      api
-        .getDetailByMerchantNo({ merchantNo: "" })
-        .then(res => {
-          this.ruleForm = res.object;
-          console.log(res);
-        })
-        .catch();
-    }
+    // getData() {
+    //   api
+    //     .getDetailByMerchantNo({ merchantNo: "" })
+    //     .then(res => {
+    //       this.ruleForm = res.object;
+    //       console.log(res);
+    //     })
+    //     .catch();
+    // }
   }
 };
 </script>

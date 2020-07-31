@@ -2,52 +2,52 @@ export const SERVICE_CONFIG = {
   gridConfig: [
     {
       label: '商家名称',
-      prop: 'shopName',
+      prop: 'merchantName',
       width: '90px'
     },
     {
       label: '总交易金额',
-      prop: 'total',
+      prop: 'tradeAmount',
       width: '90px'
     },
     {
       label: '总分润',
-      prop: 'totalProfit',
+      prop: 'totalCommission',
       width: '90px'
     },
     {
       label: '支付宝',
-      prop: 'aply',
+      prop: 'alipayIndirectCommission',
       width: '90px'
     },
     {
       label: '微信',
-      prop: 'wechat',
+      prop: 'wechatIndirectCommission',
       width: '90px'
     },
     {
       label: '云闪付',
-      prop: 'yun',
+      prop: 'cloudPayCommission',
       width: '90px'
     },
     {
       label: '支付宝',
-      prop: 'aply',
+      prop: 'alipayDirectCommission',
       width: '90px'
     },
     {
       label: '微信',
-      prop: 'wechat',
+      prop: 'wechatDirectCommission',
       width: '90px'
     },
     {
       label: '支付宝',
-      prop: 'aply',
+      prop: 'alipayOfficialCommission',
       width: '90px'
     },
     {
       label: '微信',
-      prop: 'wechat',
+      prop: 'wechatOfficialCommission',
       width: '90px'
     }
   ],

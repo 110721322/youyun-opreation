@@ -2,41 +2,41 @@ export const SERVICE_CONFIG1 = {
   gridConfig: [
     {
       label: '服务商',
-      prop: 'service',
+      prop: 'agentName',
       width: '90px'
     },
-    {
-      label: '所属上级服务商',
-      prop: 'topSrevice',
-      width: '90px'
-    },
+    // {
+    //   label: '所属上级服务商',
+    //   prop: 'topSrevice',
+    //   width: '90px'
+    // },
     {
       label: '联系人',
-      prop: 'call',
+      prop: 'contact',
       width: '90px'
     },
     {
       label: '结算账号',
-      prop: [{key: 'brand'}, {key: 'bankNum'}],
+      prop: 'settleAccount',
       width: '90px'
     },
     {
       label: '结算总额',
-      prop: 'total',
+      prop: 'totalCommission',
       width: '90px'
     },
     {
       label: '直连',
-      prop: 'aply',
+      prop: 'directCommission',
       width: '90px'
     },
     {
       label: '间联',
-      prop: 'weChat'
+      prop: 'indirectCommission'
     },
     {
       label: '活动',
-      prop: 'active'
+      prop: 'activityReward'
     }
   ],
   // crud的模态框表单配置，可配置表单类型，验证规则，是否必填,col-span布局可通过span参数配置

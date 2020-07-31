@@ -6,18 +6,18 @@
       </div>
     </div>
     <div class="right-box">
-        <div class="right-head"></div>
-        <div class="right-content">
-            <div class="content">
-                <div class="middle">
-                    <div class="content-img">
-                        <img src="@/assets/img/order_photo.png" alt="">
-                    </div>
-                    <p class="title1">欢迎使用小马哥服务商管理系统</p>
-                    <p class="title2">平台将在一个工作日内为您进行资料审核请您耐心等待</p>
-                </div>
+      <div class="right-head"></div>
+      <div class="right-content">
+        <div class="content">
+          <div class="middle">
+            <div class="content-img">
+              <img src="@/assets/img/order_photo.png" alt="">
             </div>
+            <p class="title1">欢迎使用小马哥服务商管理系统</p>
+            <p class="title2">平台将在一个工作日内为您进行资料审核请您耐心等待</p>
+          </div>
         </div>
+      </div>
     </div>
   </div>
 </template>

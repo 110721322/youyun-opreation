@@ -43,7 +43,7 @@
             </div>
             <div class="device_list">
               <div
-                v-for="(item, index) in  deviceModelList"
+                v-for="(item, index) in deviceModelList"
                 :key="index"
                 class="device_item"
                 :class="selectIndex===index? 'select_item': ''"

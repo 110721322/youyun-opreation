@@ -15,16 +15,16 @@
                 <div class="name">{{ item.deviceModel }}</div>
               </div>
             </div>
-<!--            <div-->
-<!--              v-for="(item1,index1) in item.usingList"-->
-<!--              :key="index1"-->
-<!--              class="device-item"-->
-<!--              @click="onClick_selectItem(item1)"-->
-<!--            >-->
-<!--              <img class="device-img" :src="item1.deviceImg" />-->
-<!--              <div class="nums">{{ item1.usingCount }}</div>-->
-<!--              <div class="name">{{ item1.deviceModel }}</div>-->
-<!--            </div>-->
+            <!--            <div-->
+            <!--              v-for="(item1,index1) in item.usingList"-->
+            <!--              :key="index1"-->
+            <!--              class="device-item"-->
+            <!--              @click="onClick_selectItem(item1)"-->
+            <!--            >-->
+            <!--              <img class="device-img" :src="item1.deviceImg" />-->
+            <!--              <div class="nums">{{ item1.usingCount }}</div>-->
+            <!--              <div class="name">{{ item1.deviceModel }}</div>-->
+            <!--            </div>-->
           </div>
         </el-form-item>
       </el-form>

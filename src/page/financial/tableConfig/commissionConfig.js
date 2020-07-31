@@ -2,28 +2,33 @@ export const TABLE_CONFIG = {
   gridConfig: [
     {
       label: '服务商',
-      prop: [{ key: 'agentName' }, { key: 'agentNo', label: 'ID:' }],
+      prop: "agentName",
       width: '90px'
     },
     {
-      label: '服务商区域等级',
-      prop: 'activeScopeType',
+      label: '结算金额（元）',
+      prop: 'actualAmount',
       width: '130px'
     },
     {
-      label: '续费时长（年）',
-      prop: 'renewYear',
+      label: '实际结算金额（元）',
+      prop: 'actualSettleCommission',
+      width: '150px'
+    },
+    {
+      label: '结算卡号',
+      prop: 'settleAccount',
       width: '130px'
     },
     {
-      label: '订单金额（元）',
-      prop: 'renewMoney',
+      label: '结算类型',
+      prop: 'settleType',
       width: '130px'
 
     },
     {
       label: '审核状态',
-      prop: 'auditStatus',
+      prop: 'settleStatus',
       // render: (h, params) => {
       //   const status = params.row.status;
       //   return h('el-tooltip', {
@@ -36,19 +41,19 @@ export const TABLE_CONFIG = {
       width: '90px'
     },
     {
-      label: '打款凭证',
-      prop: 'renewImg',
-      width: '150px',
-      type: 'img',
-      render: (h, params) => {
-        const imgUrl = params.row.renewImg;
-        return h('el-image', {
-          props: {
-            src: imgUrl,
-            'preview-src-list': [imgUrl]
-          }
-        }, '正常');
-      }
+      label: '法人',
+      prop: 'settleName',
+      width: '150px'
+      // type: 'img'
+      // render: (h, params) => {
+      //   const imgUrl = params.row.renewImg;
+      //   return h('el-image', {
+      //     props: {
+      //       src: imgUrl,
+      //       'preview-src-list': [imgUrl]
+      //     }
+      //   }, '正常');
+      // }
     },
     {
       label: '创建时间',

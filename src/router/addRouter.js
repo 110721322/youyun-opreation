@@ -1412,7 +1412,7 @@ const asyncRoutes = {
   'checkService': {
     path: 'checkService',
     name: 'checkService',
-    component: () => import('@/page/approval/serviceCheck/checkServiceList.vue'),
+    component: () => import('@/page/approval/serviceCheck/checkService.vue'),
     meta: {
       title: '下级服务商审核',
       icon: 'checkService'
@@ -1422,7 +1422,7 @@ const asyncRoutes = {
         path: 'detail',
         name: 'checkServiceListDetail',
         meta: {
-          fatherName: 'checkServiceList',
+          fatherName: 'checkService',
           title: '下级服务商审核详情',
           icon: 'checkServiceListDetail',
           subMenuName: 'checkService'

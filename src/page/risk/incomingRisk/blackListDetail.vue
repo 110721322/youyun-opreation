@@ -44,21 +44,8 @@ export default {
       searchConfig: SEARCH_CONFIG,
       configData: TABLE_CONFIG,
       testData: [],
-      direction: "rtl",
       searchHeight: "260",
-      drawer: false,
-      params: {
-        beginDate: this.$g.utils.getToday(),
-        endDate: this.$g.utils.getToday(),
-        agentNo: "",
-        partnerName: "",
-        mobile: "",
-        contractStatus: "",
-        pageSize: 1,
-        currentPage: 1,
-        operateUserNo: "",
-        jobType: ""
-      },
+      params: {},
       api: api.merchantBanFilterLogQueryByPage
     };
   },

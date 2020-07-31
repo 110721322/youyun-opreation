@@ -100,7 +100,8 @@
       width="455px"
       height="305px"
       border-radius="8px"
-      center>
+      center
+    >
       <div style="color: #606266; font-size: 20px; font-weight: 500; text-align: center; line-height: 32px;">服务器部署中，请耐心等待</div>
       <div style="color: #909399; font-size: 14px; text-align: center; line-height: 32px;">部署时间2-7个工作日</div>
       <span slot="footer" class="dialog-footer">

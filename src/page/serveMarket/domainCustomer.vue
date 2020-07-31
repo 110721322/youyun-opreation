@@ -27,7 +27,7 @@
         :label-width="'auto'"
         @commit="handleCommit"
       ></domainEditor>
-      <ul class="fill_info" v-show="false">
+      <ul v-show="false" class="fill_info">
         <li><span>主域名:</span><span>www.laoban.oa.aduer.com</span></li>
         <li><span>oa办公后台:</span><span>www.laoban.oa.aduer.com</span></li>
         <li><span>服务商后台:</span><span>www.laoban.fx.aduer.com</span></li>

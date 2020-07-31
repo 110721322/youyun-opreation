@@ -4,14 +4,14 @@
       <li class="step" :class="firstStep===1? 'now-step':''">
         <span v-if="firstStep===1 && secondStep===0" :style="{'background': (firstStep===1 && secondStep===0 && thirdStep===0)? '#1989FA' :'#ffffff'}">1</span>
         <span v-if="secondStep===1" style="display: flex; align-items: center; justify-content: center; border: 1px solid #1989FA;">
-          <img src="../../assets/img/step_now.png" style="width: 24px; height: 24px;"/>
+          <img src="../../assets/img/step_now.png" style="width: 24px; height: 24px;" />
         </span>
         <span>优惠码信息</span>
         <span></span></li>
       <li class="step" :class="firstStep===1 && secondStep===1? 'now-step':''">
         <span v-if="thirdStep===0" :style="{'background': (firstStep===1 && secondStep===1 && thirdStep===0)? '#1989FA' :'#ffffff'}">2</span>
         <span v-if="thirdStep===1" style="display: flex; align-items: center; justify-content: center; border: 1px solid #1989FA;">
-          <img src="../../assets/img/step_now.png" style="width: 24px; height: 24px;"/>
+          <img src="../../assets/img/step_now.png" style="width: 24px; height: 24px;" />
         </span>
         <span>活动页面信息</span>
         <span></span>
@@ -27,7 +27,7 @@
         <div class="sub-title">扫脸时代感恩回馈</div>
         <div class="title">支付立减优惠码，等你来抢</div>
       </div>
-      <div class="right-area" v-if="firstStep===1 && secondStep===0">
+      <div v-if="firstStep===1 && secondStep===0" class="right-area">
         <div class="right-head">
           <span></span>
           <span>优惠码设置</span>
@@ -36,14 +36,14 @@
           <Form
             :form-base-data="fromConfigData1.formData"
             :label-width="'auto'"
-            :showFootBtn="false"
+            :show-foot-btn="false"
           ></Form>
           <div class="next-btn">
             <button @click="onClick_firstbtn">下一步</button>
           </div>
         </div>
       </div>
-      <div class="right-area" v-if="secondStep===1 && thirdStep===0">
+      <div v-if="secondStep===1 && thirdStep===0" class="right-area">
         <div class="right-head">
           <span></span>
           <span>页面设置</span>
@@ -52,15 +52,15 @@
           <Form
             :form-base-data="fromConfigData2.formData"
             :label-width="'auto'"
-            :showFootBtn="false"
+            :show-foot-btn="false"
           ></Form>
           <div class="next-btn">
-            <button @click="onClick_back" class="back-btn">上一步</button>
+            <button class="back-btn" @click="onClick_back">上一步</button>
             <button @click="onClick_secondbtn">下一步</button>
           </div>
         </div>
       </div>
-      <div class="right-area" v-if="thirdStep===1">
+      <div v-if="thirdStep===1" class="right-area">
         <div class="right-head">
           <span></span>
           <span>推广步骤</span>

@@ -3,24 +3,24 @@
     <div class="p_head">佣金明细</div>
     <div class="content">
       <ul class="top-content">
-              <li>
-                  <p>总佣金(元)</p>
-                  <p>18329.29</p>
-              </li>
-              <li>
-                  <p><img src="../../assets/img/wx_pay.png" alt="">微信佣金（元）</p>
-                  <p>18329.29</p>
-              </li>
-              <li>
-                  <p><img src="../../assets/img/apply_pay.png" alt="">支付宝佣金(元)</p>
-                  <p>18329.29</p>
-              </li>
-              <li>
-                  <p><img src="../../assets/img/yun_pay.png" alt="">云闪付佣金(元)</p>
-                  <p>18329.29</p>
-              </li>
-          </ul>
-      <Search :form-base-data="searchConfig.formData" @search="search" :isShowAll="true" />
+        <li>
+          <p>总佣金(元)</p>
+          <p>18329.29</p>
+        </li>
+        <li>
+          <p><img src="../../assets/img/wx_pay.png" alt="">微信佣金（元）</p>
+          <p>18329.29</p>
+        </li>
+        <li>
+          <p><img src="../../assets/img/apply_pay.png" alt="">支付宝佣金(元)</p>
+          <p>18329.29</p>
+        </li>
+        <li>
+          <p><img src="../../assets/img/yun_pay.png" alt="">云闪付佣金(元)</p>
+          <p>18329.29</p>
+        </li>
+      </ul>
+      <Search :is-show-all="true" :form-base-data="searchConfig.formData" @search="search" />
       <div class="tabform">
         <div class="table-title">商户佣金列表</div>
         <BaseCrud
@@ -38,7 +38,7 @@
           :is-expand="false"
           :row-key="'id'"
           :default-expand-all="false"
-          :hideEditArea="true"
+          :hide-edit-area="true"
         ></BaseCrud>
       </div>
     </div>

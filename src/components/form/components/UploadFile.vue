@@ -44,7 +44,8 @@ export default {
   },
   computed: {},
 
-  cretae() {},
+  cretae() {
+  },
 
   methods: {
     handleRemove(file, fileList) {
@@ -86,11 +87,12 @@ export default {
         success: () => {
           this.dialogImagePath = this.ossData.ossHost + "/";
           this.dialogImageUrl =
-            this.ossData.objectKeyPrefix + "/" + this.ossData.objectKeys[0];
+          this.ossData.objectKeyPrefix + "/" + this.ossData.objectKeys[0];
 
           this.ruleForm[this.formItem.key] = {
             dialogImagePath: this.dialogImagePath,
-            dialogImageUrl: this.dialogImageUrl
+            dialogImageUrl: this.dialogImageUrl,
+            formDatafile: formData.get("file")
           };
           this.loading = false;
         },

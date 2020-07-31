@@ -36,7 +36,8 @@
         :visible.sync="dialogVisible"
         width="420px"
         height="394px"
-        :before-close="handleClose">
+        :before-close="handleClose"
+      >
         <div class="dialog_code">
           <img src="../../assets/img/qr_code.jpg" alt="">
         </div>

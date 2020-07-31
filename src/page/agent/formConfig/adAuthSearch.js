@@ -3,7 +3,7 @@ import apiAgent from "@/api/api_agent.js";
 export const SEARCH_CONFIG = {
   formData: [
     {
-      type: 10,
+      type: 14,
       label: '精准筛选',
       key: '',
       class: 'max-width',

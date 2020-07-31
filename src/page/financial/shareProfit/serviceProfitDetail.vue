@@ -1,6 +1,6 @@
 <template>
   <div class="main_page">
-    <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" :isShowAll="true"/>
+    <Search :is-show-all="true" :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
     <div class="table_box">
       <div class="table-title">
         <li>间联</li>
@@ -8,21 +8,21 @@
         <li>直连官方分润</li>
       </div>
       <BaseCrud
-              ref="table"
-              :params="params"
-              :api-service="null"
-              :grid-config="configData.gridConfig"
-              :grid-btn-config="configData.gridBtnConfig"
-              :grid-data="testData"
-              :form-config="configData.formConfig"
-              :form-data="configData.formModel"
-              :grid-edit-width="100"
-              :is-async="true"
-              :is-select="false"
-              :is-expand="false"
-              :row-key="'id'"
-              :default-expand-all="false"
-              :hideEditArea="true"
+        ref="table"
+        :params="params"
+        :api-service="api"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :grid-data="testData"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="100"
+        :is-async="true"
+        :is-select="false"
+        :is-expand="false"
+        :row-key="'id'"
+        :default-expand-all="false"
+        :hide-edit-area="true"
       ></BaseCrud>
     </div>
   </div>
@@ -33,32 +33,45 @@ import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { SEARCH_CONFIG } from "../formConfig/serviceDetailSearch";
 import { SERVICE_CONFIG } from "../tableConfig/serviceDetailConfig";
+import api_statistice from "@/api/api_statistice"
 export default {
   components: { Search, BaseCrud },
   data() {
     return {
+      agentNo: '',
+      tradeMonth: '',
       searchConfig: SEARCH_CONFIG,
       configData: SERVICE_CONFIG,
       testData: [],
+      params: {},
+      // currentPage: 1,
+      // this.$route.query.tradeMonth
+      api: api_statistice.selectMerchantDataByPage,
       searchHeight: 88
     }
   },
   mounted() {
-    this.getData()
+    this.getDate();
+  },
+  created() {
+    this.agentNo = this.$route.query.agentNo
+    this.tradeMonth = this.$route.query.tradeMonth
+    this.params = {
+      agentNo: this.agentNo,
+      tradeMonth: this.tradeMonth
+    }
   },
   methods: {
-    getData() {
-      this.testData = [
-        {
-          shopName: '紫菜汤',
-          total: '1000',
-          totalProfit: '500',
-          aply: '100',
-          wechat: '300'
-        }
-      ]
-    },
-    search() {}
+    search($ruleform) {
+      this.params = {
+        agentNo: this.agentNo,
+        tradeMonth: this.tradeMonth
+      }
+      this.params[$ruleform.inputSelect] = $ruleform.inputForm
+      console.log(this.params)
+    }
+  },
+  DateNo() {
   }
 }
 </script>

@@ -81,11 +81,11 @@
         <span>商户后台logo：</span>
         <div class="photo">
           <el-upload
-                  class="avatar-uploader"
-                  action="https://jsonplaceholder.typicode.com/posts/"
-                  :show-file-list="false"
-                  :on-success="handleAvatarSuccess"
-                  :before-upload="beforeAvatarUpload"
+            class="avatar-uploader"
+            action="https://jsonplaceholder.typicode.com/posts/"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload"
           >
             <img v-if="imageUrl" :src="imageUrl" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -102,8 +102,9 @@
       :visible.sync="centerDialogVisible"
       width="455px"
       height="305px"
+      center
       border-radius="8px"
-      center>
+    >
       <div style="color: #606266; font-size: 20px; font-weight: 500; text-align: center; line-height: 32px;">贴牌定制成功</div>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>

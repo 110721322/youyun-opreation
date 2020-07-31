@@ -5,7 +5,12 @@
       <div class="tab_head">
         <span class="title">佣金结算审核</span>
       </div>
-      <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
+      <Search
+        :is-show-all="true"
+        :open-height="searchHeight"
+        :form-base-data="searchConfig.formData"
+        @search="search"
+      />
 
       <div class="table_box">
         <BaseCrud
@@ -22,7 +27,7 @@
           :default-expand-all="false"
           :hide-edit-area="configData.hideEditArea"
           :header-cell-style="headerCellStyle"
-          :api-service="null"
+          :api-service="api"
           :params="params"
           @detail="onClick_detail"
           @reject="onClick_reject"
@@ -51,7 +56,8 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import { FORM_CONFIG } from "../formConfig/commission";
 import { SEARCH_CONFIG } from "../formConfig/commissionSearch";
 import { TABLE_CONFIG } from "../tableConfig/commissionConfig";
-import api from "@/api/api_financialAudit.js";
+// import api from "@/api/api_financialAudit.js";
+import api_statistice from "@/api/api_statistice";
 
 export default {
   name: "Theme",
@@ -65,20 +71,35 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      params: {},
-      api: api.queryByPage,
+      params: {
+      },
+      api: api_statistice.listFinanceSettle,
       activeRow: null
     };
+  },
+  created() {
+    this.params = {
+      beginTime: this.$g.utils.getToday(),
+      endTime: this.$g.utils.getToday()
+    };
+    // this.agentNo = this.$route.query.agentNo
+    // this.rewardDate = this.$route.query.tradeMonth
+    // this.params = {
+    //   agentNo: this.agentNo,
+    //   tradeMonth: this.rewardDate
+    // }
+    console.log(this.params)
   },
   mounted() {},
   methods: {
     confirm($ruleForm) {
-      api
-        .updateAuditStatusOfReject({
-          id: this.activeRow.id,
-          reason: $ruleForm.reason
+      api_statistice
+        .listOperationSettle({
+          id: $ruleForm.id
+          // reason: $ruleForm.reason
         })
         .then(result => {
+          console.log('1111', this.id)
           this.$message({
             type: "info",
             message: "已驳回"
@@ -89,10 +110,13 @@ export default {
         });
     },
     search($ruleForm) {
+      // console.log('1111', $ruleForm)
+      // debugger
       this.params = {
-        auditStatus: $ruleForm.auditStatus
+        beginTime: $ruleForm.date[0],
+        endTime: $ruleForm.date[1]
       };
-      this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      // this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
     },
     onClick_detail($row) {
       this.$router.push({
@@ -112,8 +136,8 @@ export default {
         cancelButtonText: "取消"
       })
         .then(() => {
-          api
-            .updateAuditStatusOfPass({
+          api_statistice
+            .listFinanceSettle({
               id: $row.id
             })
             .then(result => {

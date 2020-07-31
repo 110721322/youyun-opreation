@@ -11,14 +11,14 @@
         <span class="title">离扫脸时代只差一台设备</span>
       </div>
       <div class="equiment_list">
-        <div class="list" v-for="(item, index) in mallList.FACE" :key="index" @click.stop="onclick_todetail(item.deviceId)">
+        <div v-for="(item, index) in mallList.FACE" :key="index" class="list" @click.stop="onclick_todetail(item.deviceId)">
           <div class="list_img">
             <img src="" alt="">
           </div>
-          <p class="list_name">{{item.deviceModel}}</p>
-          <p class="list_subtitle">{{item.viceTitle}}</p>
+          <p class="list_name">{{ item.deviceModel }}</p>
+          <p class="list_subtitle">{{ item.viceTitle }}</p>
           <div class="list_bottom">
-            <span>¥{{item.salePrice}}</span>
+            <span>¥{{ item.salePrice }}</span>
             <div class="cart_img" @mouseenter="mouse_cart(index)">
               <img src="../../assets/img/cart_icon.png" alt="">
             </div>
@@ -30,14 +30,14 @@
         <span>收银机具</span>
       </div>
       <div class="equiment_list">
-        <div class="list" v-for="(item, index) in mallList.POSS" :key="index" @click.stop="onclick_todetail(item.deviceId)">
+        <div v-for="(item, index) in mallList.POSS" :key="index" class="list" @click.stop="onclick_todetail(item.deviceId)">
           <div class="list_img">
             <img :src="item.img" alt="">
           </div>
-          <p class="list_name">{{item.deviceModel}}</p>
-          <p class="list_subtitle">{{item.viceTitle}}</p>
+          <p class="list_name">{{ item.deviceModel }}</p>
+          <p class="list_subtitle">{{ item.viceTitle }}</p>
           <div class="list_bottom">
-            <span>¥{{item.salePrice}}</span>
+            <span>¥{{ item.salePrice }}</span>
             <div class="cart_img" @mouseenter="mouse_cart(index)">
               <img src="../../assets/img/cart_icon.png" alt="">
             </div>

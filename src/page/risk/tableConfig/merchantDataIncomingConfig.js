@@ -3,7 +3,29 @@ export const TABLE_CONFIG = {
     {
       label: '信息类型',
       prop: 'banField',
-      width: '150px'
+      width: '150px',
+      render: (h, params) => {
+        if (params.row.banField === 'shopLicenseNo') {
+          return h(
+            'span', '营业执照编号'
+          )
+        }
+        if (params.row.banField === 'lawIdCard') {
+          return h(
+            'span', '法人身份证号'
+          )
+        }
+        if (params.row.banField === 'lawMobile') {
+          return h(
+            'span', '法人手机号'
+          )
+        }
+        if (params.row.banField === 'bankCardNo') {
+          return h(
+            'span', '银行卡号'
+          )
+        }
+      }
     },
     {
       label: '内容',
@@ -12,7 +34,7 @@ export const TABLE_CONFIG = {
     },
     {
       label: '加入人员',
-      prop: 'operateUserName',
+      prop: 'operationName',
       width: '150px'
     },
     {
@@ -23,7 +45,19 @@ export const TABLE_CONFIG = {
     {
       label: '类型',
       prop: 'type',
-      width: '150px'
+      width: '150px',
+      render: (h, params) => {
+        if (params.row.type === 'black') {
+          return h(
+            'span', '黑名单'
+          )
+        }
+        if (params.row.type === 'gray') {
+          return h(
+            'span', '灰名单'
+          )
+        }
+      }
     }
   ],
   // crud的模态框表单配置，可配置表单类型，验证规则，是否必填,col-span布局可通过span参数配置
@@ -36,9 +70,28 @@ export const TABLE_CONFIG = {
     view: false,
     expands: [
       {
+        name: '移入灰名单',
+        emitName: 'movetoGrey',
+        type: 'text',
+        isShow: ($item) => {
+          if ($item.type === 'black') {
+            return true;
+          } else {
+            return false
+          }
+        }
+      },
+      {
         name: '移入黑名单',
-        emitName: 'movein',
-        type: 'text'
+        emitName: 'movetoBlack',
+        type: 'text',
+        isShow: ($item) => {
+          if ($item.type === 'gray') {
+            return true;
+          } else {
+            return false
+          }
+        }
       },
       {
         name: '移出',

@@ -9,8 +9,8 @@ export const FORM_CONFIG = {
         type: 0,
         label: '驳回原因',
         key: 'reason',
-        initVal: 'pdd',
-        inputType: 'textarea'
+        inputType: 'textarea',
+        rules: setRules('请输入').isRequired.get
       }
     ]
   },
@@ -22,13 +22,19 @@ export const FORM_CONFIG = {
         type: 0,
         label: 'APPID',
         key: 'appid',
-        initVal: 'pdd'
+        rules: setRules('请输入').isRequired.get
       },
       {
         type: 0,
         label: 'PID',
         key: 'pid',
-        initVal: 'pdd'
+        rules: setRules('请输入').isRequired.get
+      },
+      {
+        type: 0,
+        label: '费率',
+        key: 'rate',
+        rules: setRules('请输入').isRequired.get
       }
     ]
   },

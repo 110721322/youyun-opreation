@@ -2,7 +2,7 @@
   <div class>
     <div class="p_head_detail" :class="[activeClass]">
       <div class="top">
-        <span>{{agentDetail.agentName}}</span>
+        <span>{{ agentDetail.agentName }}</span>
         <el-dropdown trigger="click" @command="onClick_changeClientType">
           <div class="el-dropdown-link">
             <div class="doit" :class="[activeClass]"></div>
@@ -79,23 +79,23 @@
             align="right"
             format="yyyy-MM-dd HH:mm:ss"
             value-format="yyyy-MM-dd HH:mm:ss"
-            @change="dateChange"
             class="selectDate"
+            @change="dateChange"
           >
           </el-date-picker>
           <div class="talkInfo">
             <el-row>
               <el-col :span="8" class="data_item" style="height:58px">
-                <div class="data_item_title">{{summaryInfo.theme1}}</div>
-                <div>{{summaryInfo.theme1Count}}次</div>
+                <div class="data_item_title">{{ summaryInfo.theme1 }}</div>
+                <div>{{ summaryInfo.theme1Count }}次</div>
               </el-col>
               <el-col :span="8" class="data_item" style="height:58px">
-                <div class="data_item_title">{{summaryInfo.theme2}}</div>
-                <div>{{summaryInfo.theme2Count}}次</div>
+                <div class="data_item_title">{{ summaryInfo.theme2 }}</div>
+                <div>{{ summaryInfo.theme2Count }}次</div>
               </el-col>
               <el-col :span="8" class="data_item border_none" style="height:58px">
                 <div class="data_item_title">沟通类型</div>
-                <div>{{summaryInfo.otherThemeCount}}次</div>
+                <div>{{ summaryInfo.otherThemeCount }}次</div>
               </el-col>
             </el-row>
           </div>
@@ -104,7 +104,7 @@
       <el-col :span="15">
         <div class="bg_box" style="margin-left:0;margin-top:0;height:314px">
           <img class="title_img" src="@/assets/img/clock.png" alt />
-          <div class="title" >
+          <div class="title">
             待沟通<span style="color: #1989FA; padding: 0 4px;">{{ willConactNum }}</span>次
             <el-button type="primary" style="float: right; margin: 10px 24px;" @click="addContacts">添加沟通计划</el-button>
           </div>
@@ -120,8 +120,8 @@
             form-title="用户"
             :is-async="true"
             :params="params1"
-            @detail="editDetail"
             style="margin:24px;border:1px solid #EBEEF5;height:212px;overflow:hidden"
+            @detail="editDetail"
           ></BaseCrud>
         </div>
       </el-col>
@@ -161,6 +161,7 @@
     <el-drawer title="添加沟通计划" :visible.sync="addContactsDraw" :with-header="false" size="40%">
       <div class="p_head">{{ contactConfigData.title }}</div>
       <Form
+        ref="liaisonRef"
         :form-base-data="contactConfigData"
         :show-foot-btn="contactConfigData.showFootBtn"
         @confirm="handel_addContacts"
@@ -168,86 +169,86 @@
       ></Form>
     </el-drawer>
     <el-drawer :visible.sync="findLiaison" :with-header="false" size="40%">
-        <div class="top_title">
-          <span class="the_title">查看联系人</span>
-          <el-button type="primary" @click="liaisonAdd">添加联系人</el-button>
-        </div>
-        <ul class="liaisonList">
-          <li class="liaison-contant" v-for="(item, index) in contactsList" :key="index">
-            <div class="liaison-top">
-              <span class="liaison-name">{{item.linkmanName}}</span>
-              <div class="liaison-editor" @click="editLiaison(item)">编辑</div>
+      <div class="top_title">
+        <span class="the_title">查看联系人</span>
+        <el-button type="primary" @click="liaisonAdd">添加联系人</el-button>
+      </div>
+      <ul class="liaisonList">
+        <li v-for="(item, index) in contactsList" :key="index" class="liaison-contant">
+          <div class="liaison-top">
+            <span class="liaison-name">{{ item.linkmanName }}</span>
+            <div class="liaison-editor" @click="editLiaison(item)">编辑</div>
+          </div>
+          <div class="liasion-info">
+            <div class="info-list">
+              <span>手机号：</span>
+              <span>{{ item.phoneNum }}</span>
             </div>
-            <div class="liasion-info">
-              <div class="info-list">
-                <span>手机号：</span>
-                <span>{{item.phoneNum}}</span>
-              </div>
-              <div class="info-list">
-                <span>职位：</span>
-                <span>{{item.jobName || ''}}</span>
-              </div>
-              <div class="info-list">
-                <span>备注：</span>
-                <span>{{item.remark || ''}}</span>
-              </div>
-              <div class="jobStatus">
-                <img v-if="item.jobStatus === 'on'" src="../../assets/img/injob.png" alt="">
-                <img v-else src="../../assets/img/outjob.png" alt="">
-              </div>
+            <div class="info-list">
+              <span>职位：</span>
+              <span>{{ item.jobName || '' }}</span>
             </div>
-          </li>
-        </ul>
+            <div class="info-list">
+              <span>备注：</span>
+              <span>{{ item.remark || '' }}</span>
+            </div>
+            <div class="jobStatus">
+              <img v-if="item.jobStatus === 'on'" src="../../assets/img/injob.png" alt="">
+              <img v-else src="../../assets/img/outjob.png" alt="">
+            </div>
+          </div>
+        </li>
+      </ul>
     </el-drawer>
     <el-drawer :visible.sync="addLiaison" :with-header="false" size="30%">
       <Form
-         ref="liaisonRef"
-         :form-base-data="liaisonConfigData.formData"
-         :show-foot-btn="liaisonConfigData.showFootBtn"
-         @confirm="handel_addLiaison"
-         @cancel="liaisonCancel"
+        ref="liaisonRef"
+        :form-base-data="liaisonConfigData.formData"
+        :show-foot-btn="liaisonConfigData.showFootBtn"
+        @confirm="handel_addLiaison"
+        @cancel="liaisonCancel"
       ></Form>
     </el-drawer>
     <el-dialog title="沟通记录详情" :visible.sync="dialogTableVisible">
       <ul class="liaison_detail">
         <li>
           <span>联系人：</span>
-          <span>{{talkListDetail.linkmanName}}</span>
+          <span>{{ talkListDetail.linkmanName }}</span>
         </li>
         <li>
           <span>职位：</span>
-          <span>{{talkListDetail.jobName}}</span>
+          <span>{{ talkListDetail.jobName }}</span>
         </li>
         <li>
           <span>手机号：</span>
-          <span>{{talkListDetail.phoneNum}}</span>
+          <span>{{ talkListDetail.phoneNum }}</span>
         </li>
         <li>
           <span>创建人：</span>
-          <span>{{talkListDetail.operationName}}</span>
+          <span>{{ talkListDetail.operationName }}</span>
         </li>
         <li>
           <span>创建时间：</span>
-          <span>{{talkListDetail.createTime}}</span>
+          <span>{{ talkListDetail.createTime }}</span>
         </li>
         <li>
           <span>沟通方式：</span>
-          <span>{{talkListDetail.way}}</span>
+          <span>{{ talkListDetail.way }}</span>
         </li>
         <li>
           <span>沟通主题：</span>
-          <span>{{talkListDetail.theme}}</span>
+          <span>{{ talkListDetail.theme }}</span>
         </li>
         <li v-if="talkListDetail.merchantList && talkListDetail.merchantList.length>0">
           <div>问题商户：</div>
           <div v-for="(item, index) in talkListDetail.merchantList" :key="index">
-            <p>{{item.merchantName}}</p>
+            <p>{{ item.merchantName }}</p>
             <p>李四</p>
           </div>
         </li>
         <li>
           <span>沟通内容：</span>
-          <span>{{talkListDetail.content}}</span>
+          <span>{{ talkListDetail.content }}</span>
         </li>
       </ul>
     </el-dialog>

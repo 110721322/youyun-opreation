@@ -8,14 +8,14 @@
             <img :src="imgData[imgIndex]" alt="" />
           </div>
           <div class="next-img">
-            <img :src="item" alt="" v-for="(item, index) in imgData" :key="index" @click="onClice_changeImg(index)" />
+            <img v-for="(item, index) in imgData" :key="index" :src="item" alt="" @click="onClice_changeImg(index)" />
           </div>
         </div>
         <div class="operation">
-          <div class="name">{{goodsDetail.deviceModel}}</div>
-          <p>已售{{goodsDetail.payCount}}件</p>
+          <div class="name">{{ goodsDetail.deviceModel }}</div>
+          <p>已售{{ goodsDetail.payCount }}件</p>
           <div class="shop flex-between flex-align-center">
-            <div class="money">¥{{goodsDetail.salePrice}}</div>
+            <div class="money">¥{{ goodsDetail.salePrice }}</div>
             <el-input-number v-model="num" size="small" label="描述文字" :min="1" @change="handleChange"></el-input-number>
           </div>
           <div class="shop-handle">
@@ -29,7 +29,7 @@
       <div class="goods-detail">
         <div class="goods-title">商品详情</div>
         <div class="goods-info" v-html="goodsDetail.desc">
-          {{goodsDetail.desc}}
+          {{ goodsDetail.desc }}
         </div>
       </div>
     </div>

@@ -7,25 +7,25 @@
 
     <div class="table_box">
       <BaseCrud
-              :grid-config="configData.gridConfig"
-              :grid-btn-config="configData.gridBtnConfig"
-              :grid-data="testData"
-              :form-config="configData.formConfig"
-              :form-data="configData.formModel"
-              :grid-edit-width="200"
-              :is-async="true"
-              :is-select="false"
-              :is-expand="false"
-              :row-key="'id'"
-              :default-expand-all="false"
-              :hide-edit-area="configData.hideEditArea"
-              :header-cell-style="headerCellStyle"
-              :api-service="null"
-              :params="params"
-              @detail="onClick_detail"
-              @reject="onClick_reject"
-              @adopt="onClick_adopt"
-              @reviewing="onClick_reviewing"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :grid-data="testData"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="200"
+        :is-async="true"
+        :is-select="false"
+        :is-expand="false"
+        :row-key="'id'"
+        :default-expand-all="false"
+        :hide-edit-area="configData.hideEditArea"
+        :header-cell-style="headerCellStyle"
+        :api-service="null"
+        :params="params"
+        @detail="onClick_detail"
+        @reject="onClick_reject"
+        @adopt="onClick_adopt"
+        @reviewing="onClick_reviewing"
       ></BaseCrud>
     </div>
 
@@ -44,29 +44,29 @@
             <div class="time">{{ item.time }}</div>
           </div>
           <img
-                  v-if="!(index===fromConfigData.processData.length-1)"
-                  :key="'img'+index"
-                  :src="arrow"
-                  class="arrow-img"
+            v-if="!(index===fromConfigData.processData.length-1)"
+            :key="'img'+index"
+            :src="arrow"
+            class="arrow-img"
           />
         </template>
       </div>
       <elForm v-if="fromConfigData.settlementData" class="formTemplate" :label-width="'130px'">
         <el-form-item :label="fromConfigData.settlementData.label+':'" class="formTemplate-item">
           <div
-                  v-for="(item,index) in fromConfigData.settlementData.initValArray"
-                  :key="index"
-                  class="ellipsis"
+            v-for="(item,index) in fromConfigData.settlementData.initValArray"
+            :key="index"
+            class="ellipsis"
           >{{ item }}</div>
         </el-form-item>
       </elForm>
       <Form
-              :form-base-data="fromConfigData.formData"
-              :show-foot-btn="fromConfigData.showFootBtn"
-              label-width="130px"
-              :foot-btn-label="fromConfigData.footBtnLabel"
-              @cancel="cancel"
-              @confirm="confirm"
+        :form-base-data="fromConfigData.formData"
+        :show-foot-btn="fromConfigData.showFootBtn"
+        label-width="130px"
+        :foot-btn-label="fromConfigData.footBtnLabel"
+        @cancel="cancel"
+        @confirm="confirm"
       ></Form>
     </el-drawer>
   </div>

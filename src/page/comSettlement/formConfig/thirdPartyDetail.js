@@ -4,9 +4,10 @@ export const FORM_CONFIG = {
   detailData: {
     title: '设备',
     showFootBtn: true,
+    key: 'date',
     formData: [
       {
-        type: 9,
+        type: 6,
         label: '发票照片',
         key: 'photo',
         initVal: 'pdd',

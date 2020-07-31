@@ -1,9 +1,9 @@
 <template>
   <div class="main_page">
     <ul class="top-table">
-      <li v-for="(item, index) in selectIndex" :key="index" @click="onClick_select(index)" class="noselect" :class="selectData===index? 'isselect': ''">{{item.value}}</li>
+      <li v-for="(item, index) in selectIndex" :key="index" class="noselect" :class="selectData===index? 'isselect': ''" @click="onClick_select(index)">{{ item.value }}</li>
     </ul>
-    <div class="tab-list" v-if="selectData===0">
+    <div v-if="selectData===0" class="tab-list">
       <BaseCrud
         ref="table"
         :grid-config="configData.gridConfig"
@@ -19,7 +19,7 @@
       >
       </BaseCrud>
     </div>
-    <div class="tab-list" v-if="selectData===1">
+    <div v-if="selectData===1" class="tab-list">
       <BaseCrud
         ref="table"
         :grid-config="configData1.gridConfig"
@@ -35,7 +35,7 @@
       >
       </BaseCrud>
     </div>
-    <div class="tab-list" v-if="selectData===2">
+    <div v-if="selectData===2" class="tab-list">
       <BaseCrud
         ref="table"
         :grid-config="configData2.gridConfig"

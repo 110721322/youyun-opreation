@@ -14,7 +14,7 @@
       <div class="table_box">
         <div class="two-btn">
           <el-button @click="transfer">批量转移运营</el-button>
-          <el-button @click="onClick_addServe" type="primary">添加服务商</el-button>
+          <el-button type="primary" @click="onClick_addServe">添加服务商</el-button>
         </div>
         <div class="select_data">
           <span class="el-icon-info icon" />
@@ -51,13 +51,15 @@
       title="批量转移运营"
       :visible.sync="dialogVisible"
       width="30%"
-      :before-close="handleClose">
+      :before-close="handleClose"
+    >
       <el-select v-model="operationId" filterable placeholder="请选择">
         <el-option
           v-for="item in options"
           :key="item.operationId"
           :label="item.operationName"
-          :value="item.operationId">
+          :value="item.operationId"
+        >
         </el-option>
       </el-select>
       <span slot="footer" class="dialog-footer">

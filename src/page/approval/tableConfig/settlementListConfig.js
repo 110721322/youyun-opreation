@@ -17,13 +17,35 @@ export const SETTELMENTLIST_CONFIG = {
     },
     {
       label: '所属运营',
-      prop: 'operateUserName',
+      prop: 'operationName',
       width: '150px'
     },
     {
       label: '状态',
       prop: 'auditStatus',
-      width: '150px'
+      width: '150px',
+      render: (h, params) => {
+        if (params.row.auditStatus === 'waitSign') {
+          return h(
+            'span', '待审核'
+          )
+        }
+        if (params.row.auditStatus === 'audit') {
+          return h(
+            'span', '审核中'
+          )
+        }
+        if (params.row.auditStatus === 'success') {
+          return h(
+            'span', '审核通过'
+          )
+        }
+        if (params.row.auditStatus === 'reject') {
+          return h(
+            'span', '驳回'
+          )
+        }
+      }
     }
   ],
 
@@ -41,7 +63,7 @@ export const SETTELMENTLIST_CONFIG = {
         emitName: 'detail',
         type: 'text',
         isShow: ($item) => {
-          if ($item.showDetail) {
+          if ($item.auditStatus !== 'waitSign') {
             return true;
           } else {
             return false
@@ -53,7 +75,7 @@ export const SETTELMENTLIST_CONFIG = {
         emitName: 'preApprove',
         type: 'text',
         isShow: ($item) => {
-          if ($item.showPreApprove) {
+          if ($item.auditStatus === 'waitSign') {
             return true;
           } else {
             return false

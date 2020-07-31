@@ -4,28 +4,28 @@
     <div v-else>
       <div class="p_head">服务器部署</div>
       <search
-              :open-height="searchMaxHeight"
-              :form-base-data="searchConfig.formData"
-              :show-foot-btn="searchConfig.showFootBtn"
-              @search="search"
+        :open-height="searchMaxHeight"
+        :form-base-data="searchConfig.formData"
+        :show-foot-btn="searchConfig.showFootBtn"
+        @search="search"
       />
       <!-- <data-mode></data-mode> -->
       <div class="table_box">
         <BaseCrud
-                ref="child"
-                :grid-config="configData.gridConfig"
-                :grid-btn-config="configData.gridBtnConfig"
-                :form-config="configData.formConfig"
-                :form-data="configData.formModel"
-                :grid-edit-width="300"
-                form-title="用户"
-                :is-async="true"
-                :is-select="false"
-                :params="params"
-                :api-service="api"
-                @deployStart="deployStart"
-                @deployEnd="deployEnd"
-                @detail="detail"
+          ref="child"
+          :grid-config="configData.gridConfig"
+          :grid-btn-config="configData.gridBtnConfig"
+          :form-config="configData.formConfig"
+          :form-data="configData.formModel"
+          :grid-edit-width="300"
+          form-title="用户"
+          :is-async="true"
+          :is-select="false"
+          :params="params"
+          :api-service="api"
+          @deployStart="deployStart"
+          @deployEnd="deployEnd"
+          @detail="detail"
         />
       </div>
     </div>

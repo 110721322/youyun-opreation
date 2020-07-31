@@ -51,56 +51,20 @@ export default {
     };
   },
   created() {
-    this.params = {
-      "agentNo": "",
-      "agentName": "",
-      "personName": "",
-      "personMobile": "",
-      "operateUserNo": "",
-      "contractStatus": "",
-      "contractStatusSet": ""
-    }
+    this.params = {}
   },
-  mounted() {
-    // this.getData();
-  },
+  mounted() {},
   methods: {
-    getData() {
-      this.testData = [
-        {
-          id: "1",
-          tel: "15184318420",
-          name: "小白",
-          email: "412412@qq.com",
-          status: "1",
-          create_time: "2018-04-20",
-          expand: "扩展信息一",
-          role: ["2"]
-        },
-        {
-          id: "2",
-          tel: "13777369283",
-          name: "小红",
-          email: "456465@qq.com",
-          status: "0",
-          create_time: "2018-03-23",
-          expand: "hashashashas",
-          role: ["1"]
-        }
-      ];
-    },
     search($form, $obj) {
       this.params = {
-        "agentNo": "",
-        "agentName": "",
-        "personName": $form.personName,
-        "personMobile": $form.personMobile,
-        "operateUserNo": "",
-        "contractStatus": $form.contractStatus,
-        "contractStatusSet": ""
+        beginDate: $form.date[0],
+        endDate: $form.date[1],
+        personName: $form.personName,
+        personMobile: $form.personMobile,
+        businessType: $form.businessType,
+        contractStatus: $form.contractStatus
       }
       this.params[$form.inputSelect] = $form.inputForm
-      // this.$refs.child.getData()
     },
     reject(row) {
       this.$confirm("是否要驳回该代理商？", "驳回代理商", {

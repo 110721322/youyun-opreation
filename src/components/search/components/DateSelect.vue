@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-date-picker
+      v-show="isOpen"
       v-model="timeInterval"
       style="float: left;"
       size="large"

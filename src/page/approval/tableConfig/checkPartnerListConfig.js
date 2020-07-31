@@ -8,7 +8,18 @@ export const CHECKPARTNERLIST_CONFIG = {
     {
       label: '合伙人类型',
       prop: 'jobType',
-      width: '150px'
+      width: '150px',
+      render: (h, params) => {
+        if (params.row.jobType === 'join') {
+          return h(
+            'span', '入件操作员'
+          )
+        } else {
+          return h(
+            'span', '拓展员'
+          )
+        }
+      }
     },
     {
       label: '所属服务商',
@@ -22,13 +33,35 @@ export const CHECKPARTNERLIST_CONFIG = {
     },
     {
       label: '所属运营',
-      prop: 'operateUserNo',
+      prop: 'partnerName',
       width: '150px'
     },
     {
       label: '审核状态',
-      prop: 'status',
-      width: '150px'
+      prop: 'contractStatus',
+      width: '150px',
+      render: (h, params) => {
+        if (params.row.contractStatus === 'waitSign') {
+          return h(
+            'span', '待审核'
+          )
+        }
+        if (params.row.contractStatus === 'aduit') {
+          return h(
+            'span', '审核中'
+          )
+        }
+        if (params.row.contractStatus === 'success') {
+          return h(
+            'span', '审核通过'
+          )
+        }
+        if (params.row.contractStatus === 'reject') {
+          return h(
+            'span', '审核拒绝'
+          )
+        }
+      }
     }
   ],
 
@@ -46,7 +79,7 @@ export const CHECKPARTNERLIST_CONFIG = {
         emitName: 'detail',
         type: 'text',
         isShow: ($item) => {
-          if ($item.showDetail) {
+          if ($item.contractStatus !== 'waitSign') {
             return true;
           } else {
             return false
@@ -58,7 +91,7 @@ export const CHECKPARTNERLIST_CONFIG = {
         emitName: 'preApprove',
         type: 'text',
         isShow: ($item) => {
-          if ($item.showPreApprove) {
+          if ($item.contractStatus === 'waitSign') {
             return true;
           } else {
             return false

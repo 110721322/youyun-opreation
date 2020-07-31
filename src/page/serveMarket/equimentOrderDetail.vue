@@ -2,24 +2,24 @@
   <div>
     <div class="p_head">订单详情</div>
     <detailMode :rule-form="ruleFormBasic" :config-data="configData">
-      <div class="orderState" slot="operatinTopCont">
-        <div>订单状态： {{ruleFormBasic.statusName}}</div>
+      <div slot="operatinTopCont" class="orderState">
+        <div>订单状态： {{ ruleFormBasic.statusName }}</div>
         <p v-if="ruleFormBasic.status===5">预计两个工作日内给您发货</p>
         <p v-if="ruleFormBasic.status===6">快递单号</p>
         <p v-if="ruleFormBasic.status===2">超时未付款，订单自动关闭</p>
-        <div class="topay" v-if="ruleFormBasic.status===1">
+        <div v-if="ruleFormBasic.status===1" class="topay">
           <span class="left-title">付款剩余时间:</span>
           <div class="step-time">
-            <div class="times">{{lefth}}</div>
+            <div class="times">{{ lefth }}</div>
             <span>:</span>
-            <div class="times">{{leftm}}</div>
+            <div class="times">{{ leftm }}</div>
             <span>:</span>
-            <div class="times">{{lefts}}</div>
+            <div class="times">{{ lefts }}</div>
           </div>
-          <el-button class="buy_btn" type="primary" v-if="ruleFormBasic.status===1 && showBuy " @click="onClick_toPay">立即付款</el-button>
+          <el-button v-if="ruleFormBasic.status===1 && showBuy " class="buy_btn" type="primary" @click="onClick_toPay">立即付款</el-button>
         </div>
       </div>
-      <div class="orderdetails" slot="operatingBottom">
+      <div slot="operatingBottom" class="orderdetails">
         <div class="header flex-between">
           <div>商品图片</div>
           <div>商品名称</div>
@@ -27,7 +27,7 @@
           <div>购买数量</div>
           <div>小计</div>
         </div>
-        <div v-for="(item, index) in infoDTOList" :key="index"  class="content flex-between">
+        <div v-for="(item, index) in infoDTOList" :key="index" class="content flex-between">
           <div style="padding-top: 6px;"><img :src="item.deviceImg" alt="" style="width: 80px; height: 80px;"></div>
           <div>{{ item.deviceModel }}</div>
           <div>{{ item.salePrice }}</div>

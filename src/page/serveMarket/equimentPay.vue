@@ -4,20 +4,20 @@
       <li>
         <span class="left-title">付款剩余时间:</span>
         <div class="step-time">
-          <div class="times">{{lefth}}</div>
+          <div class="times">{{ lefth }}</div>
           <span>:</span>
-          <div class="times">{{leftm}}</div>
+          <div class="times">{{ leftm }}</div>
           <span>:</span>
-          <div class="times">{{lefts}}</div>
+          <div class="times">{{ lefts }}</div>
         </div>
       </li>
       <li>
         <span class="left-title">订单号:</span>
-        <span class="left-title">{{orderInfo.outputNo}}</span>
+        <span class="left-title">{{ orderInfo.outputNo }}</span>
       </li>
       <li>
         <span class="left-title">付款金额:</span>
-        <span class="price">{{orderInfo.actualAmount}}</span>
+        <span class="price">{{ orderInfo.actualAmount }}</span>
       </li>
     </div>
     <div class="pay_way">
@@ -39,10 +39,10 @@
     <div v-if="wayIndex===0" class="code">
       <!--      <div class="code_label">打款凭证:</div>-->
       <Form
-              :show-submit="fromConfigData.showSubmit"
-              :show-foot-btn="fromConfigData.showFootBtn"
-              :form-base-data="fromConfigData.formData"
-              @submit="onClick_submit"
+        :show-submit="fromConfigData.showSubmit"
+        :show-foot-btn="fromConfigData.showFootBtn"
+        :form-base-data="fromConfigData.formData"
+        @submit="onClick_submit"
       ></Form>
     </div>
   </div>

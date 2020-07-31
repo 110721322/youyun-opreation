@@ -30,7 +30,8 @@
           :default-expand-all="false"
           :hide-edit-area="configData.hideEditArea"
           @remove="onClick_remove"
-          @movein="onClick_movein"
+          @movetoBlack="onClick_moveBlack"
+          @movetoGrey="onClick_moveGrey"
         ></BaseCrud>
       </div>
 
@@ -70,18 +71,7 @@ export default {
       drawer: false,
       direction: "rtl",
       selectData: [],
-      params: {
-        beginDate: this.$g.utils.getToday(),
-        endDate: this.$g.utils.getToday(),
-        agentNo: "",
-        partnerName: "",
-        mobile: "",
-        contractStatus: "",
-        pageSize: 1,
-        currentPage: 1,
-        operateUserNo: "",
-        jobType: ""
-      },
+      params: {},
       api: api.merchantBanListQueryByPage
     };
   },
@@ -94,57 +84,94 @@ export default {
       this.input = "";
       this.select = "";
     },
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
+    search($ruleForm) {
+      const params = {
+        operateUserNo: $ruleForm.operateUserNo,
+        beginDate: $ruleForm.date[0],
+        endDate: $ruleForm.date[1],
+        type: $ruleForm.type
+      }
+      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      this.params = params;
     },
-    onClick_remove() {
-      this.$confirm("确定将该商户移出黑名单吗?", "提示", {
+    onClick_remove(row) {
+      this.$confirm("确定将该商户移出黑(灰)名单吗", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
-      })
-        .then(() => {
-          api
-            .deleteById({
-              id: 1
-            })
-            .then(res => {
-              this.$message("移出成功");
-            })
-            .catch(err => {
-              this.$message(err);
-            });
-        })
-        .catch(() => {
+      }).then(() => {
+        api.deleteById({
+          id: row.id
+        }).then(res => {
           this.$message({
-            type: "info",
-            message: "已取消"
-          });
+            message: '移出成功',
+            type: 'success'
+          })
+          this.$refs.table.getData()
+        }).catch(err => {
+          this.$message(err);
         });
+      }).catch(() => {
+        this.$message({
+          type: "info",
+          message: "已取消"
+        });
+      });
     },
-    onClick_movein() {
+    onClick_moveBlack(row) {
       this.$confirm("该信息进入黑名单后，代理商入件时将被拦截。", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
-      })
-        .then(() => {
-          api
-            .updateOfBlack({
-              id: 1
+      }).then(() => {
+        api.updateOfBlack({
+          id: row.id
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '移入成功',
+              type: 'success'
             })
-            .then(res => {
-              this.$message("移入成功!");
-            })
-            .catch(err => {
-              this.$message(err);
-            });
-        })
-        .catch(() => {
+          }
+          this.$refs.table.getData()
+        }).catch(err => {
           this.$message({
-            type: "info",
-            message: "已取消"
+            message: err.errorMessage,
+            type: 'info'
           });
         });
+      }).catch(() => {
+        this.$message({
+          type: "info",
+          message: "取消操作"
+        });
+      });
+    },
+    onClick_moveGrey(row) {
+      this.$confirm("该信息进入灰名单后，商户的预审核资料将红字提示", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消"
+      }).then(() => {
+        api.updateOfGray({
+          id: row.id
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '移入成功',
+              type: 'success'
+            })
+          }
+          this.$refs.table.getData()
+        }).catch(err => {
+          this.$message({
+            message: err.errorMessage,
+            type: 'info'
+          });
+        });
+      }).catch(() => {
+        this.$message({
+          type: "info",
+          message: "取消操作"
+        });
+      });
     },
     onClick_goBlackDetail() {
       this.$router.push({
@@ -152,18 +179,33 @@ export default {
       });
     },
     confirm($data) {
-      api
-        .merchantBanListAdd({
+      if (!$data.banField || !$data.content || !$data.type) {
+        this.$message({
+          message: '请填写必填信息',
+          type: 'info'
+        })
+        return false
+      } else {
+        api.merchantBanListAdd({
           banField: $data["banField"],
           content: $data["content"],
           type: $data["type"]
-        })
-        .then(res => {
-          this.$message("加入成功");
-        })
-        .catch(err => {
-          this.$message(err);
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '新增成功',
+              type: 'success'
+            })
+            this.drawer = false
+            this.$refs.table.getData()
+          }
+        }).catch(err => {
+          this.$message({
+            message: err.errorMessage,
+            type: 'info'
+          });
         });
+      }
     },
     onClick_cancel() {
       this.drawer = false;

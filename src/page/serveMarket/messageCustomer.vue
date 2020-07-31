@@ -11,37 +11,37 @@
     </div>
     <div class="content">
       <div class="select_btn">
-        <div class="select_title" :class="selectIndex===index? 'title_select' :''" v-for="(item, index) in menu" :key="index" @click="onclick_head(index)">
-          <span>{{item.value}}</span>
+        <div v-for="(item, index) in menu" :key="index" class="select_title" :class="selectIndex===index? 'title_select' :''" @click="onclick_head(index)">
+          <span>{{ item.value }}</span>
         </div>
       </div>
-      <div class="message_recharge" v-if="selectIndex===0">
+      <div v-if="selectIndex===0" class="message_recharge">
         <div class="relize">当前剩余短信：<span style="color: #1989FA; font-size: 20px">10</span>条</div>
         <div class="select_package">
           <div class="package_label">短信套餐:</div>
-          <div class="package_select" :class="packageIndex===index?'ispackage': ''" v-for="(item, index) in packageData" :key="index" @click="onclick_package(index)">
-            <p>{{item.num}}条</p>
-            <p>{{item.price}}元</p>
+          <div v-for="(item, index) in packageData" :key="index" class="package_select" :class="packageIndex===index?'ispackage': ''" @click="onclick_package(index)">
+            <p>{{ item.num }}条</p>
+            <p>{{ item.price }}元</p>
           </div>
         </div>
         <div class="pay_price"><span>支付金额:</span><span style="color: #F5222D; font-size: 20px;">10</span><span>元</span></div>
         <div class="pay_way">
           <div class="pay_label">支付方式:</div>
-          <div class="way" :class="wayIndex===index?'isway':''" v-for="(item, index) in wayData" :key="index" @click="onclick_way(index)">{{item.value}}</div>
+          <div v-for="(item, index) in wayData" :key="index" class="way" :class="wayIndex===index?'isway':''" @click="onclick_way(index)">{{ item.value }}</div>
         </div>
-        <div class="qrcode" v-if="wayIndex===0">
+        <div v-if="wayIndex===0" class="qrcode">
           <img src="../../assets/img/qr_code.jpg" alt="">
         </div>
-        <div class="bottom-des" v-if="wayIndex===0">
+        <div v-if="wayIndex===0" class="bottom-des">
           <span>支持</span>
           <img src="../../assets/img/apply_pay.png" alt="">
           <img src="../../assets/img/wx_pay.png" alt="">
           <img src="../../assets/img/yun_pay.png" alt="">
           <span>扫码支付</span>
         </div>
-        <div class="bank" v-if="wayIndex===1"><span>打款账户:</span><span>3301040160001013187</span></div>
-        <div class="bank" v-if="wayIndex===1"><span>开户银行:</span><span>杭州银行滨江支行</span></div>
-        <div class="code" v-if="wayIndex===1">
+        <div v-if="wayIndex===1" class="bank"><span>打款账户:</span><span>3301040160001013187</span></div>
+        <div v-if="wayIndex===1" class="bank"><span>开户银行:</span><span>杭州银行滨江支行</span></div>
+        <div v-if="wayIndex===1" class="code">
           <div class="code_label">打款凭证:</div>
           <div class="photo">
             <el-upload
@@ -56,12 +56,12 @@
             </el-upload>
           </div>
         </div>
-        <div class="see_model" v-if="wayIndex===1">查看示例</div>
-        <div class="sub_btn" v-if="wayIndex===1">
+        <div v-if="wayIndex===1" class="see_model">查看示例</div>
+        <div v-if="wayIndex===1" class="sub_btn">
           <button>提交</button>
         </div>
       </div>
-      <div class="table_box" v-if="selectIndex===1">
+      <div v-if="selectIndex===1" class="table_box">
         <BaseCrud
           ref="table"
           :grid-config="configData.gridConfig"

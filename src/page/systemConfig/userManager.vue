@@ -301,7 +301,6 @@ export default {
       console.log("tree drag over: ", dropNode.label);
     },
     handleDragEnd(draggingNode, dropNode, dropType, ev) {
-      debugger;
       console.log("tree drag end: ", dropNode && dropNode.label, dropType);
     },
     handleDrop(draggingNode, dropNode, dropType, ev) {
