@@ -22,7 +22,6 @@ axios.interceptors.request.use((config) => {
   config.headers.common.userToken = localStorage.getItem('token-merchant') || '';
   config.headers.common.client = 'WEB';
   config.headers.common.Access_token = localStorage.getItem('accessToken') || ''
-  console.log(config);
   // 参数格式为form data(默认request payload)
 
   if (config.method === 'post' && config.needFormData) {
@@ -50,7 +49,7 @@ axios.interceptors.response.use((response) => {
     return response;
   } else {
     Message({
-      message: response.data.errorMessage,
+      message: response.data.errorMessage || "出现错误，请稍后再试",
       duration: 1500,
       type: 'error'
     })
@@ -84,7 +83,7 @@ axios.interceptors.response.use((response) => {
         break;
 
       case 500:
-        error.message = '服务器内部错误';
+        error.message = error.response.errorMessage || '服务器内部错误';
         break;
 
       case 501:
@@ -113,7 +112,7 @@ axios.interceptors.response.use((response) => {
     error.message = '网络异常,连接服务器失败!';
   }
   Message({
-    message: error.message,
+    message: error.message || "出现错误，请稍后再试",
     duration: 1500,
     type: 'error'
   })
@@ -121,9 +120,9 @@ axios.interceptors.response.use((response) => {
 });
 
 // 通用方法
-export const POST = (url, params, config = {}) => axios.post(url, params, config).then((res) => res.data);
+export const POST = (url, params = {}, config = {}) => axios.post(url, params, config).then((res) => res.data);
 
-export const GET = (url, params) => axios.get(url, {
+export const GET = (url, params = {}) => axios.get(url, {
   params: params
 }).then((res) => res.data);
 

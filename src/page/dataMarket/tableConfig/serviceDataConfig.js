@@ -46,12 +46,12 @@ export const MERCHANTDATACONFIG2 = {
     },
     {
       label: "服务商名称",
-      prop: "agentName",
+      prop: "channelAgentCode",
       width: "196px"
     },
     {
       label: "新增商户数",
-      prop: "newMerchantCount",
+      prop: "newMerchantNum",
       width: "112px"
     }
   ]
@@ -131,12 +131,12 @@ export const MERCHANTDATACONFIG5 = {
     },
     {
       label: "服务商名称",
-      prop: "agentName",
+      prop: "channelAgentCode",
       width: "176px"
     },
     {
       label: "交易额",
-      prop: "actualAmount",
+      prop: "tradeAmount",
       width: "70px"
     }
   ]

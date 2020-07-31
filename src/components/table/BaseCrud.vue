@@ -63,7 +63,7 @@
                 @click="cancelEdit(scope.row)"
               >取消</el-button>
             </template>
-            <span v-else>{{ item.formatter ? item.formatter(scope.row) : scope.row[item.prop] }}</span>
+            <span v-else>{{ item.formatter ? item.formatter(scope.row, index) : scope.row[item.prop] }}</span>
             <template v-if="item.hasImg">
               <img
                 :src="item.imgUrl"
@@ -177,7 +177,7 @@ export default {
       // 新增修改模态框title
       dialogTitle: "",
       // 展示的表格数据，数据来源可能是父组件传递的固定数据，可能是接口请求数据
-      showGridData: [],
+      copyGridData: [],
       // 当前页码
       currentPage: 0,
       // 每页显示数量
@@ -191,11 +191,15 @@ export default {
       queryParams: {}
     };
   },
-
+  computed: {
+    showGridData() {
+      return this.copyGridData;
+    }
+  },
   watch: {
     // 防止表格预置数据不成功，涉及生命周期问题
     gridData() {
-      this.showGridData = this.gridData;
+      this.copyGridData = this.gridData;
     },
     params() {
       if (this.apiService) {
@@ -204,6 +208,7 @@ export default {
     }
   },
   mounted() {
+    this.copyGridData = this.gridData;
     if (this.apiService && this.params !== null) {
       this.getData();
     }
@@ -215,14 +220,14 @@ export default {
       }
     },
     sortDate: function(val) {
-      if (undefined === this.showGridData || this.showGridData.length === 0) {
+      if (undefined === this.copyGridData || this.copyGridData.length === 0) {
         return;
       }
-      const list = JSON.parse(JSON.stringify(this.showGridData));
+      const list = JSON.parse(JSON.stringify(this.copyGridData));
       const isDesc = val.order === "descending";
       const key = val.prop;
       const pattPerc = /^\d+%$/;
-      this.showGridData = list.sort(function(a, b) {
+      this.copyGridData = list.sort(function(a, b) {
         var dateA = a[key];
         var dateB = b[key];
         var aIsPerc = pattPerc.test(dateA);
@@ -243,16 +248,16 @@ export default {
     // 获取列表数据
     getData() {
       this.listLoading = true;
-      this.queryParams = Object.assign({}, this.params);
       this.queryParams.currentPage = this.currentPage;
       this.queryParams.pageSize = this.currentPageSize;
+      this.queryParams = Object.assign({}, this.params);
       this.apiService(this.queryParams)
         .then(res => {
           // debugger;
           if (g.utils.isArr(res.object)) {
-            this.showGridData = res.datas || res.object;
+            this.copyGridData = res.datas || res.object;
           } else {
-            this.showGridData =
+            this.copyGridData =
               res.datas === null || res.object === null
                 ? []
                 : res.datas || res.object;
@@ -317,13 +322,13 @@ export default {
     },
     rowEdit($item) {
       this.$nextTick(() => {
-        const data = JSON.parse(JSON.stringify(this.showGridData));
+        const data = JSON.parse(JSON.stringify(this.copyGridData));
         for (const item of data) {
           if (item.id === $item.id) {
             item.edit = true;
           }
         }
-        this.showGridData = data;
+        this.copyGridData = data;
       });
     }
   }

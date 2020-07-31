@@ -55,10 +55,8 @@ export default {
   },
   watch: {
     $route: function() {
-      console.log(this.$route);
       this.currRouter = this.$route.name;
       this.subMenuName = this.$route.meta.subMenuName;
-      console.log(this.subMenuName);
       this.$nextTick();
     },
     menu2Data: function() {

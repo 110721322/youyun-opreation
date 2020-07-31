@@ -21,10 +21,46 @@ export default {
   queryGradeRatio: (params) => API.GET('operation/v1/agentCount/queryGradeRatio', params),
   queryTypeRatio: (params) => API.GET('operation/v1/agentCount/queryTypeRatio', params),
   queryAgentDailyAverageTrade: (params) => API.GET('/operation/v1/tradeData/queryAgentDailyAverageTrade', params),
-  queryAgentTradeAmountRank: (params) => API.GET('/operation/v1/tradeData/queryAgentTradeAmountRank', params),
+  queryListByTurnover: (params) => API.POST('/operation/v1/topAgentGrail/queryListByTurnover', params),
   queryAgentTradeAmountPerRank: (params) => API.GET('/operation/v1/tradeData/queryAgentTradeAmountPerRank', params),
-  queryNewMerchantRank: (params) => API.GET('/operation/v1/tradeData/queryNewMerchantRank', params),
+  queryListByNewMerchantCount: (params) => API.POST('/operation/v1/topAgentGrail/queryListByNewMerchantCount', params),
   queryAgentFaceTradeAmountRank: (params) => API.GET('/operation/v1/tradeData/queryAgentFaceTradeAmountRank', params),
   queryAgentFaceTradeCountRank: (params) => API.GET('/operation/v1/tradeData/queryAgentFaceTradeCountRank', params),
-  queryAgentTradeList: (params) => API.GET('/operation/v1/tradeData/queryAgentTradeList', params)
+  queryAgentTradeList: (params) => API.GET('/operation/v1/tradeData/queryAgentTradeList', params),
+  /**
+   * 顶级服务商数量分布
+   * @param params
+   * @returns {Promise<>}
+   */
+  queryTopAgentNumber: (params) => API.POST('/operation/v1/topAgentGrail/queryTopAgentNumber', params),
+  /**
+   * 顶级服务商平均交易额走势
+   * @param params
+   * @returns {Promise<>}
+   */
+  queryTradeAverageList: (params) => API.POST('/operation/v1/topAgentGrail/queryTradeAverageList', params),
+  /**
+   * 获取标签，大区，运营人员列表
+   * @param params
+   * @returns {Promise<>}
+   */
+  queryInit: (params) => API.POST('/operation/v1/topAgentGrail/queryInit', params),
+  /**
+   * 数据大盘分页查询相关数据
+   * @param params
+   * @returns {Promise<>}
+   */
+  selectTradeDailyByPage: (params) => API.POST('/operation/v1/topAgentGrail/selectTradeDailyByPage', params),
+  /**
+   * 顶级服务商列表
+   * @param params
+   * @returns {Promise<>}
+   */
+  topAgentPageByCondition: (params) => API.GET('/operation/v1/topAgent/topAgentPageByCondition', params),
+  /**
+   * 查看顶级服务商详情
+   * @param params
+   * @returns {Promise<>}
+   */
+  getTopAgentDetail: (params) => API.GET('/operation/v1/topAgent/getTopAgentDetail', params)
 };

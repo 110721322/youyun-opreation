@@ -1,4 +1,5 @@
 import { setRules } from '@/libs/kit/formFns.js'
+import apiDevice from "@/api/api_device";
 import areaData from "@/assets/data/areaData"
 
 export const FORM_CONFIG = {
@@ -10,6 +11,7 @@ export const FORM_CONFIG = {
         type: 5,
         label: '账户类型',
         key: 'businessType',
+        initVal: '',
         options: [
           {
             label: '企业',
@@ -25,37 +27,42 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '公司名称',
-        key: 'agentName',
+        key: 'channelAgentName',
+        initVal: '',
         rules: setRules('请填写').isRequired.get
       },
       {
         type: 0,
         label: '法人姓名',
         key: 'personName',
+        initVal: '',
         rules: setRules('请填写').isRequired.get
       },
       {
         type: 0,
         label: '法人手机号',
         key: 'personMobile',
+        initVal: '',
         rules: setRules('法人手机号').isRequired.get
       },
       {
         type: 0,
         label: '邮箱',
         key: 'email',
+        initVal: '',
         rules: setRules('请填写').isRequired.get
       },
       {
         type: 0,
         label: '公司地址',
-        key: 'companyAddress',
+        key: 'address',
         rules: setRules('请填写').isRequired.get
       },
       {
         type: 6,
         label: '营业执照',
-        key: 'businessLicenseImg',
+        key: 'licenseImg',
+        initVal: '',
         rules: setRules('营业执照').isSelected.get
       }
     ]
@@ -92,10 +99,11 @@ export const FORM_CONFIG = {
         initVal: ''
       },
       {
-        type: 0,
+        type: 8,
         label: '开户支行地区',
         key: 'bankArea',
-        initVal: ''
+        initVal: '',
+        options: areaData
       },
       {
         type: 0,
@@ -112,21 +120,21 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '收件人',
-        key: 'personName',
+        key: 'expReceiver',
         initVal: '',
         placeholder: '请填写'
       },
       {
         type: 0,
         label: '联系方式',
-        key: 'personMobile',
+        key: 'expMobile',
         initVal: '',
         placeholder: '请填写'
       },
       {
         type: 8,
         label: '选择地区',
-        key: 'area',
+        key: 'expAreaCode',
         style: 'width:294px',
         labelWidth: '185px',
         options: areaData
@@ -134,7 +142,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '详细地址',
-        key: 'detailAddress',
+        key: 'expAddress',
         initVal: '',
         placeholder: '请填写'
       }
@@ -146,9 +154,20 @@ export const FORM_CONFIG = {
     formData: [
       {
         type: 0,
-        label: '微信/支付宝费率',
+        label: '微信费率',
         labelWidth: '300px',
         key: 'wechatPayRate',
+        initVal: '',
+        placeholder: '输入范围3-6',
+        isShowSlot: true,
+        showSlotName: '‰',
+        rules: setRules('请输入').oneFloat.get
+      },
+      {
+        type: 0,
+        label: '支付宝费率',
+        labelWidth: '300px',
+        key: 'alipayRate',
         initVal: '',
         placeholder: '输入范围3-6',
         isShowSlot: true,
@@ -288,6 +307,131 @@ export const FORM_CONFIG = {
         isShowSlot: true,
         showSlotName: '%',
         rules: setRules('请输入').doubleFloat.get
+      }
+    ]
+  },
+  buyDevice: {
+    title: '订购设备',
+    showFootBtn: true,
+    formData: [
+      {
+        type: 0,
+        label: '销售人员',
+        key: 'saleUserName',
+        initVal: '12',
+        isDisabled: true,
+        rules: setRules('销售人员').isRequired.get
+      },
+      {
+        type: 1,
+        label: '设备型号',
+        key: 'deviceId',
+        urlOptions: {
+          url: apiDevice.queryAllDeviceModel,
+          keyName: 'deviceId',
+          valueName: 'deviceModel',
+          method: 'get',
+          params: {
+            classification: 1
+          }
+        },
+        callback($ruleForm, $option) {
+          $ruleForm['deviceModel'] = $option.deviceModel;
+        }
+      },
+      {
+        type: 0,
+        label: '订购数量',
+        key: 'count',
+        isShowSlot: true,
+        showSlotName: '台',
+        rules: setRules('订购数量').isRequired.get
+      },
+      {
+        type: 0,
+        label: '订单金额',
+        key: 'amount',
+        isDisable: () => {
+          return true;
+        },
+        isShowSlot: true,
+        showSlotName: '元',
+        rules: setRules('订单金额').isRequired.get
+      },
+      {
+        type: 0,
+        label: '实付金额',
+        key: 'actualAmount',
+        isShowSlot: true,
+        showSlotName: '元',
+        rules: setRules('实付金额').isRequired.get
+      },
+      {
+        type: 0,
+        label: '购买服务商',
+        key: 'agentName',
+        initVal: '',
+        isDisabled: true
+      },
+      {
+        type: 1,
+        label: '支付方式',
+        key: 'payType',
+        urlOptions: {
+          url: apiDevice.finishAllPrivilegeType,
+          keyName: 'status',
+          valueName: 'statusDesc',
+          method: 'get'
+        }
+      },
+      {
+        type: 6,
+        label: '打款凭证',
+        key: 'voucher',
+        rules: setRules('打款凭证').isRequired.get
+      },
+      {
+        type: 0,
+        label: '邮寄地址',
+        key: 'buyerAddress',
+        initVal: '',
+        rules: setRules('邮寄地址').isRequired.get
+      },
+      {
+        type: 0,
+        label: '备注',
+        key: 'buyerRemark',
+        inputType: 'textarea',
+        rules: setRules('备注').isRequired.get
+      },
+      {
+        type: 0,
+        key: 'saleUserId',
+        initVal: 1,
+        isDisabled: true,
+        isShow() {
+          return false
+        }
+      },
+      {
+        type: 0,
+        label: '服务商编号',
+        key: 'agentNo',
+        initVal: '',
+        isDisabled: true,
+        isShow() {
+          return false
+        }
+      },
+      {
+        type: 0,
+        label: '设备型号名称',
+        key: 'deviceModel',
+        initVal: '',
+        isDisabled: true,
+        isShow() {
+          return false
+        }
       }
     ]
   }

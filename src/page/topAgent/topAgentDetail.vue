@@ -2,64 +2,20 @@
   <div class>
     <div class="p_head_detail" :class="[activeClass]">
       <div class="top">
-        <span>杭州网络科技有限公司</span>
-        <el-dropdown trigger="click" @command="onClick_changeClientType">
-          <div class="el-dropdown-link">
-            <div class="doit" :class="[activeClass]"></div>
-            <div>
-              {{ activeValue }}
-              <i class="el-icon-caret-bottom el-icon--right"></i>
-            </div>
-          </div>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item
-              v-for="(item,index) in clientList"
-              :key="index"
-              :command="item"
-            >{{ item.value }}</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </div>
-      <div class="tags">
-        <el-tag
-          v-for="tag in dynamicTags"
-          :key="tag"
-          closable
-          :disable-transitions="false"
-          size="small"
-          @close="handleClose(tag)"
-        >{{ tag }}</el-tag>
-        <el-input
-          v-if="inputVisible"
-          ref="saveTagInput"
-          v-model="inputValue"
-          class="input-new-tag"
-          size="mini"
-          @keyup.enter.native="handleInputConfirm"
-          @blur="handleInputConfirm"
-        ></el-input>
-        <el-button v-else class="button-new-tag" size="small" @click="showInput">+ 添加标签</el-button>
+        <span>{{ruleForm.channelAgentName}}</span>
       </div>
     </div>
 
     <detailMode :rule-form="ruleForm" :config-data="configData" @edit="itemEdit"></detailMode>
 
-    <detailMode :rule-form="ruleForm" :config-data="configData2" @edit="rateEdit"></detailMode>
+    <detailMode5 :rule-form="ruleForm" :config-data="configData2" @edit="itemEdit"></detailMode5>
 
     <div class="bg_box">
       <div class="title">应用</div>
       <el-row>
-        <el-col :span="8" class="app">
+        <el-col :span="8" class="app" @click.native="buyDevice('buyDevice')">
           <img src="https://avatars1.githubusercontent.com/u/23054546?s=64&v=4" alt />
           <div>订购设备</div>
-        </el-col>
-        <el-col :span="8" class="app">
-          <img src="https://avatars1.githubusercontent.com/u/23054546?s=64&v=4" alt />
-          <div>佣金结算</div>
-        </el-col>
-        <el-col :span="8" class="app border_none">
-          <img src="https://avatars1.githubusercontent.com/u/23054546?s=64&v=4" alt />
-          <div>第三方对接</div>
         </el-col>
       </el-row>
     </div>
@@ -69,32 +25,34 @@
         <div class="bg_box" style="margin-right:0;margin-top:0;height:314px">
           <div class="title">沟通数据</div>
 
-          <el-select
-                  v-model="value"
-                  size="medium"
-                  placeholder="请选择"
-                  style="margin:32px;width:calc(100% - 64px)"
-          >
-            <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-            ></el-option>
-          </el-select>
+          <div class="selectDate">
+            <el-date-picker
+              v-model="timeDate"
+              type="datetimerange"
+              :picker-options="pickerOptions"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              align="right"
+              format="yyyy-MM-dd"
+              value-format="yyyy-MM-dd"
+              @change="dateChange"
+            >
+            </el-date-picker>
+          </div>
 
-          <el-row>
+          <el-row v-if="summaryInfo">
             <el-col :span="8" class="data_item" style="height:58px">
-              <div class="data_item_title">客情维护</div>
-              <div>55次</div>
+              <div class="data_item_title">{{ summaryInfo.theme1 }}</div>
+              <div>{{ summaryInfo.theme1Count }}次</div>
             </el-col>
             <el-col :span="8" class="data_item" style="height:58px">
-              <div class="data_item_title">客情维护</div>
-              <div>55次</div>
+              <div class="data_item_title">{{ summaryInfo.theme2 }}</div>
+              <div>{{ summaryInfo.theme2Count }}次</div>
             </el-col>
             <el-col :span="8" class="data_item border_none" style="height:58px">
-              <div class="data_item_title">客情维护</div>
-              <div>55次</div>
+              <div class="data_item_title">沟通类型</div>
+              <div>{{ summaryInfo.otherThemeCount }}次</div>
             </el-col>
           </el-row>
         </div>
@@ -103,23 +61,24 @@
         <div class="bg_box" style="margin-left:0;margin-top:0;height:314px">
           <img class="title_img" src="@/assets/img/clock.png" alt />
           <div class="title">
-            待沟通{{ planCount }}次
-            <el-button type="primary" style="float:right;margin:10px 24px">添加沟通计划</el-button>
+            待沟通{{ willConactNum }}次
+            <el-button type="primary" style="float:right;margin:10px 24px" @click="addContacts">添加沟通计划</el-button>
           </div>
 
           <BaseCrud
+            ref="planTable"
             :grid-config="tableConfigData.gridConfig"
             :grid-btn-config="tableConfigData.gridBtnConfig"
-            :grid-data="testData"
             :form-config="tableConfigData.formConfig"
             :form-data="tableConfigData.formModel"
             :grid-edit-width="100"
             :table-height="212"
             form-title="用户"
             :is-async="false"
-            :params="params1"
+            :params="params"
             :api-service="api1"
             style="margin:24px;border:1px solid #EBEEF5;height:212px;overflow:hidden"
+            @detail="editDetail"
           ></BaseCrud>
         </div>
       </el-col>
@@ -127,324 +86,214 @@
     <div class="bg_box" style="height:411px;margin-top:0;">
       <div class="title">
         历史沟通记录
-        <el-button type="primary" style="float:right;margin:10px 24px">添加沟通计划</el-button>
-        <el-button style="float:right;margin:10px 0px">查看联系人</el-button>
+        <el-button type="primary" style="float:right;margin:10px 24px" @click="addSubtotal">添加沟通小计</el-button>
+        <el-button style="float:right;margin:10px 0px" @click="findLiaison = true">查看联系人</el-button>
       </div>
 
       <BaseCrud
-        :grid-config="tableConfigData.gridConfig"
-        :grid-btn-config="tableConfigData.gridBtnConfig"
-        :grid-data="testData"
-        :form-config="tableConfigData.formConfig"
-        :form-data="tableConfigData.formModel"
+        :grid-config="tableConfigData2.gridConfig"
+        :grid-btn-config="tableConfigData2.gridBtnConfig"
+        :form-config="tableConfigData2.formConfig"
+        :form-data="tableConfigData2.formModel"
         :grid-edit-width="100"
         :table-height="309"
         form-title="用户"
-        :is-async="false"
-        :params="params2"
+        :is-async="true"
+        :params="params"
         :api-service="api2"
         style="margin:24px;border:1px solid #EBEEF5;height:309px;overflow:hidden"
+        @detail="viewDetail"
       ></BaseCrud>
     </div>
 
     <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size="40%">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
+        v-if="drawer"
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
         @cancel="cancel"
+        @confirm="confirm"
       ></Form>
     </el-drawer>
+
+    <el-drawer title="添加沟通计划" :visible.sync="addContactsDraw" :with-header="false" size="40%">
+      <div class="p_head">{{ contactConfigData.title }}</div>
+      <Form
+        v-if="addContactsDraw"
+        :form-base-data="contactConfigData"
+        :show-foot-btn="contactConfigData.showFootBtn"
+        @confirm="handel_addContacts"
+        @cancel="cancel"
+      ></Form>
+    </el-drawer>
+    <el-drawer :visible.sync="findLiaison" :with-header="false" size="40%">
+      <div class="top_title">
+        <span class="the_title">查看联系人</span>
+        <el-button type="primary" @click="liaisonAdd">添加联系人</el-button>
+      </div>
+      <ul class="liaisonList">
+        <li v-for="(item, index) in contactsList" :key="index" class="liaison-contant">
+          <div class="liaison-top">
+            <span class="liaison-name">{{ item.linkmanName }}</span>
+            <div class="liaison-editor" @click="editLiaison(item)">编辑</div>
+          </div>
+          <div class="liasion-info">
+            <div class="info-list">
+              <span>手机号：</span>
+              <span>{{ item.phoneNum }}</span>
+            </div>
+            <div class="info-list">
+              <span>职位：</span>
+              <span>{{ item.jobName || '' }}</span>
+            </div>
+            <div class="info-list">
+              <span>备注：</span>
+              <span>{{ item.remark || '' }}</span>
+            </div>
+            <div class="jobStatus">
+              <img v-if="item.jobStatus === 'on'" src="../../assets/img/injob.png" alt="">
+              <img v-else src="../../assets/img/outjob.png" alt="">
+            </div>
+          </div>
+        </li>
+      </ul>
+    </el-drawer>
+
+    <el-drawer :visible.sync="addLiaison" :with-header="false" size="30%">
+      <Form
+        ref="liaisonRef"
+        :form-base-data="liaisonConfigData.formData"
+        :show-foot-btn="liaisonConfigData.showFootBtn"
+        @confirm="handel_addLiaison"
+        @cancel="addLiaison = false"
+      ></Form>
+    </el-drawer>
+
+    <el-dialog title="沟通记录详情" :visible.sync="dialogTableVisible">
+      <ul class="liaison_detail">
+        <li>
+          <span>联系人：</span>
+          <span>{{ talkListDetail.linkmanName }}</span>
+        </li>
+        <li>
+          <span>职位：</span>
+          <span>{{ talkListDetail.jobName }}</span>
+        </li>
+        <li>
+          <span>手机号：</span>
+          <span>{{ talkListDetail.phoneNum }}</span>
+        </li>
+        <li>
+          <span>创建人：</span>
+          <span>{{ talkListDetail.operationName }}</span>
+        </li>
+        <li>
+          <span>创建时间：</span>
+          <span>{{ talkListDetail.createTime }}</span>
+        </li>
+        <li>
+          <span>沟通方式：</span>
+          <span>{{ talkListDetail.way }}</span>
+        </li>
+        <li>
+          <span>沟通主题：</span>
+          <span>{{ talkListDetail.theme }}</span>
+        </li>
+        <li v-if="talkListDetail.merchantList && talkListDetail.merchantList.length>0">
+          <div>问题商户：</div>
+          <div v-for="(item, index) in talkListDetail.merchantList" :key="index">
+            <p>{{ item.merchantName }}</p>
+            <p>李四</p>
+          </div>
+        </li>
+        <li>
+          <span>沟通内容：</span>
+          <span>{{ talkListDetail.content }}</span>
+        </li>
+      </ul>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import Form from "@/components/form/index.vue";
 import api from "@/api/api_agent.js";
+import api_dataMarket from "@/api/api_dataMarket.js";
+import api_device from "@/api/api_device.js";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import detailMode from "@/components/detailMode/detailMode.vue";
+import detailMode5 from "@/components/detailMode/detailMode5.vue";
 import { USER_CONFIG, USER_CONFIG2 } from "./../agent/tableConfig/config_communicate";
 import { FORM_CONFIG } from "./../agent/formConfig/agentDetail";
+import { configData, configData2 } from "./dataConfig/topAgentDetailData";
+import {CONTACTS_CONFIG} from "../agent/formConfig/addContacts";
+import {LISASION} from "../agent/formConfig/addLiasion";
 
 export default {
   name: "Theme",
-  components: { detailMode, BaseCrud, Form },
+  components: { detailMode, detailMode5, BaseCrud, Form },
   data() {
     return {
+      channelAgentCode: this.$route.query.channelAgentCode,
       drawer: false,
+      buyDeviceDrawer: true,
       dynamicTags: [],
       inputVisible: false,
       inputValue: "",
-      configData: {
-        name: "基本信息",
-        child: [
-          {
-            name: "基本资料",
-            modelName: "basicData",
-            models: [
-              {
-                items: [
-                  {
-                    name: "公司名称",
-                    key: ""
-                  },
-                  {
-                    name: "法人手机号",
-                    key: "lawMobile"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "邮箱",
-                    key: "email"
-                  },
-                  {
-                    name: "营业执照图",
-                    key: "businessLicenseImg",
-                    type: "img"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "法人姓名",
-                    key: "lawPerson"
-                  },
-                  {
-                    name: "公司地址",
-                    key: "detailAddress"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            name: "财务",
-            modelName: "finance",
-            models: [
-              {
-                items: [
-                  {
-                    name: "结算卡类型",
-                    key: "accountType"
-                  },
-                  {
-                    name: "开户支行地区",
-                    key: "bankArea"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "开户名",
-                    key: "email"
-                  },
-                  {
-                    name: "开户支行",
-                    key: "branchName"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "银行卡号",
-                    key: "bankCardImg"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            name: "邮寄地址",
-            modelName: "mailAddress",
-            models: [
-              {
-                items: [
-                  {
-                    name: "收件人",
-                    key: "name1"
-                  },
-                  {
-                    name: "详细地址",
-                    key: "name"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "手机号",
-                    key: "email"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "地区",
-                    key: "name3"
-                  }
-                ]
-              }
-            ]
+      formType: '',
+      configData: configData,
+      configData2: configData2,
+      timeDate: [this.$g.utils.getToday(-1), this.$g.utils.getToday(0)],
+      pickerOptions: {
+        shortcuts: [{
+          text: '最近一周',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+            picker.$emit('pick', [start, end]);
           }
-        ]
-      },
-      configData2: {
-        name: "行业信息",
-        child: [
-          {
-            name: "费率",
-            modelName: "rateInfo",
-            models: [
-              {
-                items: [
-                  {
-                    name: "微信/支付宝费率(直连)",
-                    key: "name1"
-                  },
-                  {
-                    name: "云闪付费率单笔＞1000(间连)",
-                    key: "name"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "微信/支付宝费率(间连)",
-                    key: "email"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "云闪付费率单笔≤1000(间连)",
-                    key: "name3"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            name: "续费",
-            modelName: "finance",
-            models: [
-              {
-                items: [
-                  {
-                    name: "开户时间",
-                    key: "name1"
-                  },
-                  {
-                    name: "缴费金额",
-                    key: "name"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "到期时间",
-                    key: "email"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "续费方式",
-                    key: "name3"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            name: "权限",
-            modelName: "mailAddress",
-            models: [
-              {
-                items: [
-                  {
-                    name: "服务地区",
-                    key: "name1"
-                  },
-                  {
-                    name: "平台分润抽成",
-                    key: "name"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "是否开通下级",
-                    key: "email"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "服务类型",
-                    key: "name3"
-                  }
-                ]
-              }
-            ]
+        }, {
+          text: '最近一个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+            picker.$emit('pick', [start, end]);
           }
-        ]
+        }, {
+          text: '最近三个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+            picker.$emit('pick', [start, end]);
+          }
+        }]
       },
-      value: "",
-      options: [
-        {
-          value: 1,
-          label: "a"
-        }
-      ],
+      summaryInfo: null, // 沟通数据
+      willConactNum: null, // 沟通次数
+      contactConfigData: {}, // 沟通计划详情
+      addContactsDraw: false, // 添加编辑沟通计划弹窗
+      dialogTableVisible: false, // 沟通记录详情窗口
+      findLiaison: false, //  查看联系人窗口
+      talkListDetail: {}, // 沟通记录详情
+      contactsList: [], // 联系人数据
+      addDrewerType: '',
+      liaisonId: null,
+      liaisonType: '',
+      liaisonConfigData: {}, //  联系人表单
+      addLiaison: false, //  添加联系人窗口
       testData: [],
       tableConfigData: USER_CONFIG,
       tableConfigData2: USER_CONFIG2,
       fromConfigData: [],
-      ruleForm: {
-        name: "1",
-        name1: "2",
-        name2: "3",
-        name3: "4",
-        email: "12312312@163.com",
-        pic: "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
-      },
+      ruleForm: {},
       params: {
-        agentNo: ""
+        relateCode: this.$route.query.channelAgentCode
       },
-      planCount: 0,
-      params1: {
-        id: 1,
-        addressBookId: 1,
-        relateCode: "",
-        remark: "",
-        nextContactTime: "",
-        remindTime: "",
-        remindType: "",
-        createTime: ""
-      },
-      api1: api.queryPlan,
-      params2: {
-        id: 1,
-        addressBookId: 1,
-        relateCode: "",
-        theme: "",
-        way: "",
-        content: "",
-        createTime: ""
-      },
+      api1: api.queryTalkPlan,
       api2: api.queryPlanList,
       clientList: [
         {
@@ -465,109 +314,308 @@ export default {
     };
   },
   mounted() {
-    this.testData = [
-      {
-        id: "1",
-        tel: "15184318420",
-        name: "小白",
-        email: "412412@qq.com",
-        status: "1",
-        create_time: "2018-04-20",
-        expand: "扩展信息一",
-        role: ["2"]
-      },
-      {
-        id: "1",
-        tel: "15184318420",
-        name: "小白",
-        email: "412412@qq.com",
-        status: "1",
-        create_time: "2018-04-20",
-        expand: "扩展信息一",
-        role: ["2"]
-      },
-      {
-        id: "1",
-        tel: "15184318420",
-        name: "小白",
-        email: "412412@qq.com",
-        status: "1",
-        create_time: "2018-04-20",
-        expand: "扩展信息一",
-        role: ["2"]
-      },
-      {
-        id: "1",
-        tel: "15184318420",
-        name: "小白",
-        email: "412412@qq.com",
-        status: "1",
-        create_time: "2018-04-20",
-        expand: "扩展信息一",
-        role: ["2"]
-      },
-      {
-        id: "1",
-        tel: "15184318420",
-        name: "小白",
-        email: "412412@qq.com",
-        status: "1",
-        create_time: "2018-04-20",
-        expand: "扩展信息一",
-        role: ["2"]
-      },
-      {
-        id: "1",
-        tel: "15184318420",
-        name: "小白",
-        email: "412412@qq.com",
-        status: "1",
-        create_time: "2018-04-20",
-        expand: "扩展信息一",
-        role: ["2"]
-      },
-      {
-        id: "1",
-        tel: "15184318420",
-        name: "小白",
-        email: "412412@qq.com",
-        status: "1",
-        create_time: "2018-04-20",
-        expand: "扩展信息一",
-        role: ["2"]
-      },
-      {
-        id: "1",
-        tel: "15184318420",
-        name: "小白",
-        email: "412412@qq.com",
-        status: "1",
-        create_time: "2018-04-20",
-        expand: "扩展信息一",
-        role: ["2"]
-      }
-    ];
     this.getAgentDetail();
-    this.getPlanCount();
+    this.initCommunication();
   },
   methods: {
     onClick_changeClientType($item) {
       this.activeClass = $item.colorName;
       this.activeValue = $item.value;
     },
-    getAgentDetail() {
-      api.getAgentDetail(this.params).then(res => {
-        console.log(res.object);
-        res.object.labelList.forEach(item => {
-          this.dynamicTags.push(item.name);
-        });
-      });
+    // 沟通模块
+    initCommunication() {
+      this.getSelectSummary();
+      this.getQueryWait();
+      this.getAddressBookQuery();
     },
-    getPlanCount() {
-      api.planCount({
-        relateCode: ""
+    // 沟通计划切换时间
+    dateChange(value) {
+      this.timeDate = value;
+      this.getSelectSummary();
+    },
+    // 查询沟通数据
+    getSelectSummary() {
+      api.selectSummary({
+        relateCode: this.channelAgentCode,
+        beginDate: this.timeDate[0],
+        endDate: this.timeDate[1]
       }).then(res => {
-        this.planCount = res.object;
+        this.summaryInfo = res.object
+      })
+    },
+    // 查询通讯簿
+    getAddressBookQuery() {
+      api.addressBookQuery({
+        relateCode: this.channelAgentCode
+      }).then(res => {
+        if (res.datas) {
+          this.contactsList = res.datas
+        }
+      })
+    },
+    // 查询沟通次数
+    getQueryWait() {
+      api.queryWait({
+        relateCode: this.channelAgentCode
+      }).then(res => {
+        this.willConactNum = res.object
+      }).catch(() => {})
+    },
+    // 编辑沟通计划
+    editDetail($row) {
+      this.contactId = $row.id
+      api.getTalkPlan({
+        id: $row.id
+      }).then(res => {
+        this.addDrewerType = 'editcontactsType'
+        this.addContactsDraw = true
+        const newFromConfigData = CONTACTS_CONFIG.formData2;
+        newFromConfigData.forEach((item, index) => {
+          item.initVal = res.object[item.key];
+        });
+        this.contactConfigData = newFromConfigData;
+      }).catch(() => {})
+    },
+    // 弹出添加沟通计划侧弹窗
+    addContacts() {
+      this.addDrewerType = 'contactsType'
+      this.addContactsDraw = true
+      this.contactConfigData = CONTACTS_CONFIG.formData
+    },
+    // 添加沟通小计侧弹窗
+    addSubtotal() {
+      this.addDrewerType = 'subtotalType'
+      this.addContactsDraw = true
+      this.contactConfigData = CONTACTS_CONFIG.formData1
+    },
+    // 查看沟通记录详情
+    viewDetail(row) {
+      this.dialogTableVisible = true
+      api.talkListsGetById({
+        id: row.id
+      }).then(res => {
+        this.talkListDetail = res.object
+      })
+    },
+    // 弹出新增联系人的右边抽屉
+    liaisonAdd() {
+      this.liaisonType = 'add'
+      this.liaisonConfigData = LISASION.addData
+      this.addLiaison = true
+    },
+    // 编辑联系人的右边抽屉
+    editLiaison(row) {
+      this.liaisonId = row.id
+      this.addLiaison = true
+      const newFromConfigData = LISASION.editData;
+      // 编辑前重赋值
+      newFromConfigData.formData.forEach((item, index) => {
+        item.initVal = row[item.key];
+      });
+      this.liaisonConfigData = newFromConfigData;
+      this.liaisonType = 'edit'
+    },
+    // 添加沟通计划确定按钮
+    handel_addContacts(row) {
+      if (this.addDrewerType === 'contactsType') {
+        if (!row.addressBookId || !row.nextContactTime || !row.remark || !row.remindType) {
+          this.$message({
+            message: '请填写完整信息',
+            type: 'warning'
+          })
+        } else {
+          api.addTalkPlan({
+            addressBookId: row.addressBookId,
+            nextContactTime: row.nextContactTime,
+            relateCode: this.channelAgentCode,
+            remark: row.remark,
+            remindType: row.remindType
+          }).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                message: '添加成功',
+                type: 'success'
+              })
+              this.addContactsDraw = false
+              this.$refs.planTable.getData()
+            }
+          })
+        }
+      }
+      if (this.addDrewerType === 'subtotalType') {
+        if (!row.addressBookId || !row.way || !row.theme || !row.content) {
+          this.$message({
+            message: '请填写完整信息',
+            type: 'warning'
+          })
+          return false
+        } else {
+          api.addTalkLists({
+            addressBookId: row.addressBookId,
+            way: row.way,
+            content: row.content,
+            theme: row.theme[0],
+            subTheme: row.theme[1],
+            relateCode: this.channelAgentCode
+          }).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                message: "添加成功",
+                type: 'success'
+              })
+              this.addContactsDraw = false
+              this.$refs.planTable.getData()
+            }
+          })
+        }
+      }
+      if (this.addDrewerType === 'editcontactsType') {
+        if (!row.addressBookId || !row.nextContactTime || !row.remark || !row.remindType) {
+          this.$message({
+            message: '请填写完整信息',
+            type: 'warning'
+          })
+        } else {
+          api.updateTalkPlan({
+            id: this.contactId,
+            addressBookId: row.addressBookId,
+            nextContactTime: row.nextContactTime,
+            relateCode: this.channelAgentCode,
+            remark: row.remark,
+            remindType: row.remindType
+          }).then(res => {
+            this.$message({
+              message: '修改成功',
+              type: 'success'
+            })
+            this.addContactsDraw = false
+            this.$refs.planTable.getData()
+          })
+        }
+      }
+    },
+    // 新增联系人
+    handel_addLiaison(row) {
+      if (!row.linkmanName || !row.phoneNum || !row.jobStatus || !row.jobName) {
+        this.$message({
+          message: '请填写必填信息',
+          type: 'warning'
+        })
+        return false
+      } else {
+        if (this.liaisonType === 'add') {
+          api.addTalkAddressBook({
+            linkmanName: row.linkmanName,
+            phoneNum: row.phoneNum,
+            jobName: row.jobName,
+            jobStatus: row.jobStatus,
+            remark: row.remark,
+            relateCode: this.channelAgentCode
+          }).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                message: '添加联系人成功',
+                type: 'success'
+              })
+              this.addLiaison = false
+              this.getAddressBookQuery()
+            } else {
+              this.$message({
+                message: res.errMessage,
+                type: 'fail'
+              })
+            }
+          }).catch(() => {})
+        } else {
+          api.updateTalkAddressBook({
+            linkmanName: row.linkmanName,
+            phoneNum: row.phoneNum,
+            jobName: row.jobName,
+            jobStatus: row.jobStatus,
+            remark: row.remark,
+            relateCode: this.channelAgentCode,
+            id: this.liaisonId
+          }).then(res => {
+            this.addLiaison = false
+            this.getAddressBookQuery()
+          })
+        }
+      }
+    },
+    getAgentDetail() {
+      api_dataMarket.getTopAgentDetail({channelAgentCode: this.channelAgentCode}).then(res => {
+        const ruleForm = res.object;
+        const payChannels = res.object.payChannels.map(($item, $index) => {
+          return {
+            items: [
+              {
+                name: '通道名称',
+                initVal: $item.channel
+              },
+              {
+                name: '通道状态',
+                initVal: $item.expired ? '已开通' : '已到期'
+              }
+            ]
+          }
+        })
+        const businessModes = res.object.businessModes.map(($item, $index) => {
+          return {
+            name: $item.modeName + '到期时间',
+            initVal: $item.expiredDate
+          }
+        })
+        const customChannelComboPriceSets = res.object.customChannelComboPriceSets.map(($item, $index) => {
+          ruleForm['customChannel_' + $item.comboId] = $item.comboAmount
+          return {
+            items: [
+              {
+                name: '通道名称',
+                initVal: $item.productName
+              },
+              {
+                name: '服务时长',
+                initVal: $item.comboCount === -1 ? '长期' : ''
+              },
+              {
+                name: '服务价格',
+                key: 'customChannel_' + $item.comboId
+              }
+            ]
+          }
+        })
+        const customBrandComboPriceSets = res.object.customBrandComboPriceSets.map(($item, $index) => {
+          ruleForm['customBrand_' + $item.comboId] = $item.comboAmount
+          return {
+            items: [
+              {
+                name: '定制名称',
+                initVal: $item.productName
+              },
+              {
+                name: '服务时长',
+                initVal: $item.comboCount === -1 ? '长期' : ''
+              },
+              {
+                name: '服务价格',
+                key: 'customBrand_' + $item.comboId
+              }
+            ]
+          }
+        })
+        ruleForm['wechatPayRate'] = this.$g.utils.AccMul(ruleForm['wechatPayRate'], 1000);
+        ruleForm['alipayRate'] = this.$g.utils.AccMul(ruleForm['alipayRate'], 1000);
+        ruleForm['cloudPayLe1000Rate'] = this.$g.utils.AccMul(ruleForm['cloudPayLe1000Rate'], 1000);
+        ruleForm['cloudPayGt1000Rate'] = this.$g.utils.AccMul(ruleForm['cloudPayGt1000Rate'], 1000);
+        this.ruleForm = ruleForm;
+        if (businessModes.length > 0) {
+          this.configData2.child[2].models = [{items: businessModes}];
+        } else {
+          this.configData2.child[2].models = [];
+        }
+        this.configData2.child[0].models = payChannels;
+        this.configData2.child[3].models = customChannelComboPriceSets;
+        this.configData2.child[4].models = customBrandComboPriceSets;
       });
     },
     handleClose(tag) {
@@ -594,15 +642,119 @@ export default {
       this.$router.push("/agent/list/detail");
     },
     itemEdit($model) {
-      this.drawer = true;
       this.fromConfigData = FORM_CONFIG[$model];
+      for (const $item of this.fromConfigData.formData) {
+        $item.initVal = this.ruleForm[$item.key];
+      }
+      this.formType = $model
+      this.drawer = true;
     },
     rateEdit($model) {
       this.drawer = true;
       this.fromConfigData = FORM_CONFIG[$model];
     },
+    buyDevice($model) {
+      this.drawer = true;
+      FORM_CONFIG[$model].formData[5].initVal = this.ruleForm.channelAgentName;
+      FORM_CONFIG[$model].formData[8].initVal = this.ruleForm.expAddress;
+      FORM_CONFIG[$model].formData[11].initVal = this.ruleForm.channelAgentCode;
+      this.formType = $model;
+      this.fromConfigData = FORM_CONFIG[$model];
+    },
     cancel() {
+      this.editType = ''
       this.drawer = false;
+      this.addContactsDraw = false
+    },
+    confirm($ruleForm) {
+      switch (this.formType) {
+        case "buyDevice":
+          this.deviceOutputAdd($ruleForm)
+          break;
+        case "basicData":
+          Object.assign($ruleForm, {
+            action: 1,
+            channelAgentCode: this.channelAgentCode,
+            provinceCode: this.ruleForm.provinceCode,
+            areaCode: this.ruleForm.areaCode,
+            cityCode: this.ruleForm.cityCode,
+            licenseImg: this.$g.utils.isObj($ruleForm.licenseImg) ? $ruleForm.licenseImg.dialogImagePath + $ruleForm.licenseImg.dialogImageUrl : $ruleForm.licenseImg
+          })
+          this.updateTopAgentInfo($ruleForm);
+          break;
+        case "finance":
+          Object.assign($ruleForm, {
+            action: 2,
+            channelAgentCode: this.channelAgentCode,
+            bankArea: this.$g.utils.isArr($ruleForm.bankArea) ? $ruleForm.bankArea[2] : $ruleForm.bankArea,
+            bankContactLine: this.ruleForm.bankContactLine
+          })
+          this.updateTopAgentInfo($ruleForm);
+          break;
+        case "address":
+          Object.assign($ruleForm, {
+            action: 3,
+            channelAgentCode: this.channelAgentCode,
+            expAreaCode: this.$g.utils.isArr($ruleForm.expAreaCode) ? $ruleForm.expAreaCode[2] : $ruleForm.expAreaCode,
+            expCityCode: this.$g.utils.isArr($ruleForm.expAreaCode) ? $ruleForm.expAreaCode[1] : $ruleForm.expCityCode,
+            expProvinceCode: this.$g.utils.isArr($ruleForm.expAreaCode) ? $ruleForm.expAreaCode[2] : $ruleForm.expProvinceCode
+          })
+          this.updateTopAgentInfo($ruleForm);
+          break;
+        case "rateInfo":
+          Object.assign($ruleForm, {
+            action: 4,
+            channelAgentCode: this.channelAgentCode
+          })
+          this.updateTopAgentInfo($ruleForm);
+          break;
+        default:
+          break;
+      }
+    },
+    /**
+     * 更新服务商信息
+     */
+    updateTopAgentInfo($ruleForm) {
+      console.log($ruleForm);
+      api.updateTopAgentInfo($ruleForm).then(res => {
+        this.$message({
+          type: 'success',
+          message: '已修改'
+        })
+        this.drawer = false;
+        this.formType = null;
+        this.getAgentDetail();
+      })
+    },
+    /**
+     * 提交设备订单
+     */
+    deviceOutputAdd($ruleForm) {
+      const params = {
+        saleUserId: this.$store.state.admin.userInfo.id,
+        saleUserName: this.$store.state.admin.userInfo.name,
+        amount: $ruleForm.amount,
+        buyerAddress: $ruleForm.buyerAddress,
+        buyerName: this.ruleForm.expReceiver,
+        buyerPhone: this.ruleForm.expMobile,
+        outputType: 2, // 运营订购
+        actualAmount: $ruleForm.actualAmount,
+        agentNo: $ruleForm.agentNo,
+        payType: $ruleForm.payType,
+        voucher: $ruleForm.voucher.dialogImageUrl,
+        buyerRemark: $ruleForm.buyerRemark,
+        infoVOList: [{
+          count: $ruleForm.count,
+          deviceModel: $ruleForm.deviceModel,
+          deviceId: $ruleForm.deviceId,
+          salePrice: $ruleForm.actualAmount
+        }]
+      }
+      api_device.deviceOutputAdd(params).then(res => {
+        this.drawer = false;
+        this.$message("订购成功");
+      })
     }
   }
 };
@@ -752,6 +904,113 @@ export default {
     }
   }
 
+  .top_title {
+    width: 100%;
+    height: 72px;
+    padding: 0 24px 0 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #EBEEF5;
+    .the_title {
+      font-size: 20px;
+      font-weight: 500;
+      color: #000000;
+    }
+    button {
+      width: 80px;
+      height: 28px;
+      color: #ffffff;
+      font-size: 12px;
+      text-align: center;
+      line-height: 28px;
+      padding: 0 0;
+    }
+  }
+
+  .liaisonList {
+    padding: 32px 24px 100px 24px;
+    width: 100%;
+    height: 100vh;
+    overflow: auto;
+    .liaison-contant {
+      width: 100%;
+      height: 190px;
+      margin-bottom: 24px;
+      border: 1px solid #E9E9E9;
+      border-radius: 4px;
+      .liaison-top {
+        width: 100%;
+        height: 44px;
+        border-bottom: 1px solid #EBEEF5;
+        background: #EBEEF5;
+        padding: 0 24px 0 32px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        span {
+          font-size: 14px;
+          color: #000000;
+          opacity: 85%;
+          font-weight: 500;
+        }
+        .liaison-editor {
+          color: #1989FA;
+          font-size: 14px;
+          cursor: pointer;
+        }
+      }
+      .liasion-info {
+        padding: 24px 0 0 32px;
+        position: relative;
+        top: 0;
+        left: 0;
+        .info-list {
+          margin-bottom: 14px;
+          line-height: 22px;
+          font-size: 14px;
+          span:nth-child(1) {
+            color: #000000;
+          }
+          span:nth-child(2) {
+            color: #606266;
+          }
+        }
+        .jobStatus {
+          position: absolute;
+          right: 40px;
+          top: 20px;
+          img {
+            width: 104px;
+            height: 104px;
+          }
+        }
+      }
+    }
+  }
+
+  .liaison_detail {
+    width: 100%;
+    padding-left: 20%;
+    li{
+      display: flex;
+      line-height: 24px;
+      margin-bottom: 8px;
+      span:nth-child(1) {
+        font-size: 16px;
+        color: #333333;
+        padding-right: 20px;
+      }
+      span:nth-child(2) {
+        font-size: 16px;
+      }
+    }
+  }
+  .selectDate {
+    display: block;
+    width: 375px;
+    margin: 20px auto;
+  }
   .border_none {
     border: none;
   }

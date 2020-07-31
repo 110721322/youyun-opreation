@@ -4,29 +4,65 @@
     <div class="content">
       <ul class="detail">
         <div class="top-title">服务商信息</div>
-        <li><span>服务商名称：</span><span>杭州紫菜网络科技公司</span></li>
-        <li><span>法人手机号：</span><span>13087653645</span></li>
-        <li><span>公司地址：</span><span>浙江省杭州市西湖区紫金创业小镇</span></li>
-        <li><span>法人姓名：</span><span>小风</span></li>
-        <li><span>联系邮箱：</span><span>924823676@qq.com</span></li>
+        <li><span>服务商名称：</span><span>{{ detail.topAgentName }}</span></li>
+        <li><span>法人手机号：</span><span>{{ detail.personMobile }}</span></li>
+        <li><span>公司地址：</span><span>{{ detail.address }}</span></li>
+        <li><span>法人姓名：</span><span>{{ detail.personName }}</span></li>
+        <li><span>联系邮箱：</span><span>{{ detail.email }}</span></li>
       </ul>
       <ul class="detail" style="margin-bottom: 42px;">
         <div class="top-title">部署信息</div>
-        <li><span>阿里云帐号：</span><span>13456786789</span></li>
-        <li><span>阿里云密码：</span><span>13087653645</span><img src="../../assets/img/hide_password.png" alt=""></li>
-        <li><span>乐刷帐号：</span><span>13456786785</span></li>
-        <li><span>乐刷密码：</span><span>********</span><img src="../../assets/img/see_password.png" alt=""></li>
-        <li><span>联系人：</span><span>柚子</span></li>
-        <li><span>联系电话：</span><span>12354678276</span></li>
+        <li><span>阿里云帐号：</span><span>{{ detail.aliyunAccount }}</span></li>
+        <li><span>阿里云密码：</span><span>{{ aliSeeFlag ? detail.aliyunPassword : '********' }}</span><img :src="aliSeeFlag ? seePassword : hidePassword" @click="aliSeeFlag = !aliSeeFlag" alt=""></li>
+        <li><span>乐刷帐号：</span><span>{{ detail.leshuaAccount }}</span></li>
+        <li><span>乐刷密码：</span><span>{{ lsSeeFlag ? detail.leshuaPassword : '********' }}</span><img :src="lsSeeFlag ? seePassword : hidePassword" @click="lsSeeFlag = !lsSeeFlag" alt=""></li>
+        <li><span>联系人：</span><span>{{ detail.contactPerson }}</span></li>
+        <li><span>联系电话：</span><span>{{ detail.contactMobile }}</span></li>
       </ul>
     </div>
-    <div class="btn">已部署完成</div>
+    <div class="btn">{{ status }}</div>
   </div>
 </template>
 
 <script>
+import api from "@/api/api_agent"
+import hidePassword from "@/assets/img/hide_password.png"
+import seePassword from "@/assets/img/see_password.png"
 export default {
-
+  data() {
+    return {
+      channelAgentCode: this.$route.query.channelAgentCode,
+      detail: {},
+      aliSeeFlag: false,
+      lsSeeFlag: false,
+      hidePassword: hidePassword,
+      seePassword: seePassword
+    }
+  },
+  computed: {
+    status() {
+      switch (this.detail.status) {
+        case 1:
+          return '待部署';
+        case 2:
+          return '部署中';
+        case 3:
+          return '已完成';
+        default:
+          return ''
+      }
+    }
+  },
+  created() {
+    this.getSourceCodeDeployDetail()
+  },
+  methods: {
+    getSourceCodeDeployDetail() {
+      api.getSourceCodeDeployDetail({channelAgentCode: this.channelAgentCode}).then(res => {
+        this.detail = res.object;
+      })
+    }
+  }
 }
 </script>
 

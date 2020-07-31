@@ -627,9 +627,6 @@ export default {
         .then(res => {
           this.tradeByBrokenLineData = res.object;
         })
-        .catch(err => {
-          this.$message(err);
-        });
     },
     // 各支付方式的总交易额/交易笔数
     queryTradeByType($ruleForm) {
@@ -641,9 +638,6 @@ export default {
         .then(res => {
           this.tradeByTypeData = res.object;
         })
-        .catch(err => {
-          this.$message(err);
-        });
     },
     // 第一行第一个饼图切换
     handleDataSelect($time) {
@@ -657,9 +651,6 @@ export default {
         .then(res => {
           this.tradeByTypeData = res.object;
         })
-        .catch(err => {
-          this.$message(err);
-        });
       api
         .queryDailyTradeBrokenLine({
           beginDate: $time[0],
@@ -668,9 +659,6 @@ export default {
         .then(res => {
           this.tradeByBrokenLineData = res.object;
         })
-        .catch(err => {
-          this.$message(err);
-        });
     },
     // 第一行第二个饼图切换
     handleDataSelect2($time) {
@@ -684,9 +672,6 @@ export default {
         .then(res => {
           // this.tradeByTypeData = res.object;
         })
-        .catch(err => {
-          this.$message(err);
-        });
       api
         .tradeData({
           beginDate: $time[0],
@@ -695,9 +680,6 @@ export default {
         .then(res => {
           // this.tradeByTypeData = res.object;
         })
-        .catch(err => {
-          this.$message(err);
-        });
     },
     init() {
       this.showLine();

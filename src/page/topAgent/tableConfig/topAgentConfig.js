@@ -1,61 +1,55 @@
 export const USER_CONFIG = {
   gridConfig: [
     {
-      label: '序号',
-      prop: 'sort',
-      width: '60px'
-    },
-    {
       label: '创建时间',
       prop: 'createTime',
       width: '120px'
     },
     {
       label: '服务商ID',
-      prop: 'ID',
+      prop: 'channelAgentCode',
       width: '150px'
     },
     {
       label: '服务商名称',
-      prop: 'agentName',
+      prop: 'channelAgentName',
       width: '150px'
     },
     {
       label: '法人',
-      prop: 'people',
+      prop: 'personName',
       width: '60px'
     },
     {
       label: '所属运营',
-      prop: 'expireDate',
+      prop: 'personMobile',
       width: '150px'
     },
     {
       label: '状态',
       prop: 'accountStatus',
       render: (h, params) => {
-        if (params.row.status === '0') {
-          return h(
-            'el-tag',
-            {
-              props: {
-                size: 'medium ',
-                type: 'warning'
-              }
-            },
-            '已驳回'
-          );
+        if (params.row.status === 3) {
+          return h('el-tag', {
+            props: {
+              size: 'medium ',
+              type: 'warning'
+            }
+          }, params.row.statusName);
+        } else if (params.row.status === 4) {
+          return h('el-tag', {
+            props: {
+              size: 'medium ',
+              type: 'success'
+            }
+          }, params.row.statusName);
         } else {
-          return h(
-            'el-tag',
-            {
-              props: {
-                size: 'medium ',
-                type: 'success'
-              }
-            },
-            '待审核'
-          );
+          return h('el-tag', {
+            props: {
+              size: 'medium ',
+              type: 'fail'
+            }
+          }, params.row.statusName);
         }
       }
     }
@@ -72,22 +66,34 @@ export const USER_CONFIG = {
       {
         name: '补充资料',
         emitName: 'addInfo',
-        type: 'text'
-      },
-      {
-        name: '冻结',
-        emitName: 'frozen',
-        type: 'text'
+        type: 'text',
+        isShow($row) {
+          if ($row.status === 3) { return true } else { return false }
+        }
       },
       {
         name: '详情',
         emitName: 'detail',
-        type: 'text'
+        type: 'text',
+        isShow($row) {
+          if ($row.status === 4) { return true } else { return false }
+        }
+      },
+      {
+        name: '冻结',
+        emitName: 'frozen',
+        type: 'text',
+        isShow($row) {
+          if ($row.status !== 5) { return true } else { return false }
+        }
       },
       {
         name: '解冻',
         emitName: 'thaw',
-        type: 'text'
+        type: 'text',
+        isShow($row) {
+          if ($row.status === 5) { return true } else { return false }
+        }
       },
       {
         name: '后台',

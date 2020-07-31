@@ -10,7 +10,7 @@
     <!-- <data-mode></data-mode> -->
     <div class="table_box">
       <BaseCrud
-        ref="child"
+        ref="table"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
         :grid-data="testData"
@@ -21,10 +21,10 @@
         :is-async="true"
         :is-select="false"
         :params="params"
-        :api-service="null"
+        :api-service="api"
         @reject="reject"
-        @activation="activation"
-        @adopt="adopt"
+        @active="active"
+        @pass="pass"
       />
     </div>
   </div>
@@ -33,75 +33,70 @@
 <script>
 import search from "@/components/search/search.vue";
 import api from "@/api/api_agent.js"
+import api_dataMarket from "@/api/api_dataMarket";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { USER_CONFIG } from "./tableConfig/agentCheckListConfig";
 import { FORM_CONFIG } from "./formConfig/agentCheckListSearch";
+import {mapActions} from "vuex";
 export default {
   name: "Theme",
   components: { search, BaseCrud },
   data() {
     return {
-      searchMaxHeight: "320",
+      searchMaxHeight: "280",
       configData: USER_CONFIG,
       searchConfig: FORM_CONFIG,
       testData: [],
-      params: {},
-      api: api.agentExamineList
+      params: {
+        channelAgentCode: null,
+        channelAgentName: null,
+        personName: null,
+        personMobile: null,
+        operationId: null,
+        status: null
+      },
+      api: api.topAgentAuditList
     };
   },
-  created() {
-    this.params = {
-      "agentNo": "",
-      "agentName": "",
-      "personName": "",
-      "personMobile": "",
-      "operateUserNo": "",
-      "contractStatus": "",
-      "contractStatusSet": ""
-    }
-  },
+  created() {},
   mounted() {
-    this.getData()
+    this.queryInit();
   },
   methods: {
-    getData() {
-      this.testData = [
-        {
-          id: "1",
-          tel: "15184318420",
-          name: "小白",
-          email: "412412@qq.com",
-          status: "1",
-          expand: "扩展信息一",
-          role: ["2"],
-          createTime: '2020-06-20',
-          lawPerson: '啦啦啦'
-        },
-        {
-          id: "2",
-          tel: "13777369283",
-          name: "小红",
-          email: "456465@qq.com",
-          status: "0",
-          expand: "hashashashas",
-          role: ["1"],
-          createTime: '2020-06-20',
-          lawPerson: '啦啦啦'
-        }
-      ]
+    ...mapActions(['setLabelList', 'setRegionList', 'setUserList']),
+    queryInit() {
+      api_dataMarket.queryInit().then(res => {
+        const labelList = res.object.labelList.map($ele => {
+          return {
+            label: $ele.name,
+            value: $ele.id
+          }
+        })
+        const regionList = res.object.regionSetList.map($ele => {
+          return {
+            label: $ele.regionName,
+            value: $ele.regionCode
+          }
+        })
+        const userList = res.object.userDTOList.map($ele => {
+          return {
+            label: $ele.jobName || $ele.name,
+            value: $ele.id
+          }
+        })
+        this.setLabelList(labelList)
+        this.setRegionList(regionList)
+        this.setUserList(userList)
+      })
     },
-    search($form, $obj) {
+    search($form) {
       this.params = {
-        "agentNo": "",
-        "agentName": "",
-        "personName": $form.personName,
-        "personMobile": $form.personMobile,
-        "operateUserNo": "",
-        "contractStatus": $form.contractStatus,
-        "contractStatusSet": ""
+        [$form.channelAgent]: $form.channelAgentVal,
+        personName: $form.personName,
+        personMobile: $form.personMobile,
+        operationId: $form.operationId,
+        status: $form.status
       }
-      this.params[$form.inputSelect] = $form.inputForm
-      // this.$refs.child.getData()
     },
     reject(row) {
       this.$confirm("是否要驳回该代理商？", "驳回代理商", {
@@ -109,53 +104,53 @@ export default {
         confirmButtonText: "确认驳回",
         cancelButtonText: "取消"
       }).then(() => {
-        api.reject({
-          "agentNo": row.agentNo
+        api.updateTopAgentStatus({
+          operate: 2,
+          channelAgentCode: row.channelAgentCode
         }).then((result) => {
           this.$message({
-            type: "info",
+            type: "success",
             message: "已驳回"
           });
-        }).catch(err => {
-          console.error(err);
-        });
+          this.$refs.table.getData();
+        })
       }).catch(() => {});
     },
-    activation(row) {
+    active(row) {
       this.$confirm("是否要激活该代理商？", "激活代理商", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认激活",
         cancelButtonText: "取消"
       }).then(() => {
-        api.activate({
-          "agentNo": row.agentNo
+        api.updateTopAgentStatus({
+          operate: 3,
+          channelAgentCode: row.channelAgentCode
         }).then((result) => {
           this.$message({
-            type: "info",
+            type: "success",
             message: "已激活"
           });
-        }).catch(err => {
-          console.error(err);
-        });
-      }).catch(() => {});
+          this.$refs.table.getData();
+        })
+      })
     },
-    adopt(row) {
+    pass(row) {
       this.$confirm("是否要通过该代理商？", "通过代理商", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认通过",
         cancelButtonText: "取消"
       }).then(() => {
-        api.pass({
-          "agentNo": row.agentNo
+        api.updateTopAgentStatus({
+          operate: 1,
+          channelAgentCode: row.channelAgentCode
         }).then((result) => {
           this.$message({
-            type: "info",
+            type: "success",
             message: "已通过"
           });
-        }).catch(err => {
-          console.error(err);
-        });
-      }).catch(() => {});
+          this.$refs.table.getData();
+        })
+      })
     }
   }
 };

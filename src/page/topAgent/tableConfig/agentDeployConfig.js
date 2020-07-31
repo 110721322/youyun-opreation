@@ -3,7 +3,10 @@ export const USER_CONFIG = {
     {
       label: '序号',
       prop: 'sort',
-      width: '60px'
+      width: '60px',
+      formatter($row, $index) {
+        return $index + 1;
+      }
     },
     {
       label: '创建时间',
@@ -12,24 +15,24 @@ export const USER_CONFIG = {
     },
     {
       label: '服务商ID',
-      prop: 'ID',
+      prop: 'channelAgentCode',
       width: '160px'
     },
     {
       label: '服务商名称',
-      prop: 'name',
+      prop: 'topAgentName',
       width: '160px'
     },
     {
       label: '法人',
-      prop: 'people',
+      prop: 'personName',
       width: '160px'
     },
     {
       label: '服务器部署状态',
-      prop: 'accountStatus',
+      prop: 'status',
       render: (h, params) => {
-        if (params.row.status === '0') {
+        if (params.row.status === 1) {
           return h(
             'el-tag',
             {
@@ -38,18 +41,18 @@ export const USER_CONFIG = {
                 type: 'warning'
               }
             },
-            '待部署'
+            params.row.statusName
           );
-        } else if (params.row.status === '1') {
+        } else if (params.row.status === 2) {
           return h(
             'el-tag',
             {
               props: {
                 size: 'medium ',
-                type: 'success'
+                type: 'primary'
               }
             },
-            '部署中'
+            params.row.statusName
           );
         } else {
           return h(
@@ -60,7 +63,7 @@ export const USER_CONFIG = {
                 type: 'success'
               }
             },
-            '已完成'
+            params.row.statusName
           );
         }
       }
@@ -74,10 +77,22 @@ export const USER_CONFIG = {
     expands: [
       {
         name: '立即部署',
-        emitName: 'reject',
+        emitName: 'deployStart',
         type: 'text',
         isShow: ($row) => {
-          if ($row.id === '1') {
+          if ($row.status === 1) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      },
+      {
+        name: '部署完成',
+        emitName: 'deployStartEnd',
+        type: 'text',
+        isShow: ($row) => {
+          if ($row.status === 2) {
             return true;
           } else {
             return false;
@@ -86,12 +101,7 @@ export const USER_CONFIG = {
       },
       {
         name: '查看详情',
-        emitName: 'activation',
-        type: 'text'
-      },
-      {
-        name: '部署完成',
-        emitName: 'adopt',
+        emitName: 'detail',
         type: 'text'
       }
     ]

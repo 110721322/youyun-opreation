@@ -67,7 +67,20 @@ const asyncRoutes = {
       title: '数据大盘',
       icon: 'topDataMarket'
     },
-    component: () => import('@/page/topAgent/topDataMarket.vue')
+    component: () => import('@/page/topAgent/topDataMarket.vue'),
+    children: [
+      {
+        path: 'detail',
+        name: 'topAgentData',
+        meta: {
+          fatherName: 'topDataMarket',
+          title: '详情',
+          icon: 'topAgentData',
+          refreshDom: true
+        },
+        component: () => import('@/page/topAgent/topAmountDetail.vue')
+      }
+    ]
   },
   'topAgentList': {
     path: 'topAgentList',

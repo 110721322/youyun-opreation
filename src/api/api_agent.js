@@ -137,5 +137,17 @@ export default {
   // 服务商-添加佣金按比例续费
   addPercentRenew: (params) => API.POST('/operation/v1/agent/addPercentRenew', params),
   // 服务商-批量转移运营
-  updateOperationId: (params) => API.POST('/operation/v1/agent/updateOperationId', params)
+  updateOperationId: (params) => API.POST('/operation/v1/agent/updateOperationId', params),
+  // 顶级服务商审核列表
+  topAgentAuditList: (params) => API.GET('/operation/v1/topAgent/auditPageByCondition', params),
+  // 顶级服务商服务器部署列表
+  selectPageSourceCodeDeploy: (params) => API.GET('/operation/v1/topAgent/selectPageSourceCodeDeploy', params),
+  // 修改顶级服务商状态
+  updateTopAgentStatus: (params) => API.POST('/operation/v1/topAgent/updateStatus', params),
+  // 修改补充顶级服务商资料
+  updateTopAgentInfo: (params) => API.POST('/operation/v1/topAgent/update', params),
+  // 更新源码的部署状态
+  updateTopSourceCodeDeployStatus: (params) => API.POST('/operation/v1/topAgent/updateSourceCodeDeployStatus', params),
+  // 查询顶级服务商源码部署详情
+  getSourceCodeDeployDetail: (params) => API.GET('/operation/v1/topAgent/getSourceCodeDeployDetail', params)
 };

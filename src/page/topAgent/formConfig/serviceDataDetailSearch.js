@@ -17,7 +17,7 @@ export const FORM_CONFIG = {
     {
       type: 10,
       label: '精准筛选',
-      key: '',
+      key: 'id',
       class: 'max-width',
       options: [
         {
@@ -34,14 +34,14 @@ export const FORM_CONFIG = {
     {
       type: 1,
       label: '标签',
-      key: 'tags',
+      key: 'labelId',
       style: 'width:294px',
       options: store.state.dataMarket.labelList
     },
     {
       type: 1,
       label: '所属大区',
-      key: 'region',
+      key: 'regionCode',
       style: 'width:294px',
       labelWidth: '185px',
       options: store.state.dataMarket.regionList
@@ -52,12 +52,18 @@ export const FORM_CONFIG = {
       key: 'area',
       style: 'width:294px',
       class: "clear_both",
-      options: areaData
+      options: areaData.map($province => {
+        $province.children = $province.children.map($city => {
+          $city.children = null;
+          return $city;
+        })
+        return $province
+      })
     },
     {
       type: 1,
       label: '所属运营',
-      key: 'oper',
+      key: 'operationId',
       labelWidth: '185px',
       options: store.state.dataMarket.userList
     }

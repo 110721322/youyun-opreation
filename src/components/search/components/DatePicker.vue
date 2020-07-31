@@ -1,13 +1,12 @@
 <template>
   <div>
-    <el-date-picker
+  <el-date-picker
       v-model="timeInterval"
       style="float: left;"
       size="large"
       :type="datatype"
       :placeholder="placeholder"
       :clearable="clearable"
-      :default-time="defaultTime"
       :picker-options="pickerOptions"
       :value-format="format"
       @change="onChage"
@@ -38,8 +37,7 @@ export default {
   },
   data() {
     return {
-      defaultTime: [],
-      timeInterval: "",
+      timeInterval: null,
       placeholder: this.formItem.placeholder,
       datatype: this.formItem.datatype,
       format: this.formItem.format

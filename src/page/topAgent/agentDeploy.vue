@@ -15,7 +15,6 @@
                 ref="child"
                 :grid-config="configData.gridConfig"
                 :grid-btn-config="configData.gridBtnConfig"
-                :grid-data="testData"
                 :form-config="configData.formConfig"
                 :form-data="configData.formModel"
                 :grid-edit-width="300"
@@ -23,10 +22,10 @@
                 :is-async="true"
                 :is-select="false"
                 :params="params"
-                :api-service="null"
-                @reject="reject"
-                @activation="activation"
-                @adopt="adopt"
+                :api-service="api"
+                @deployStart="deployStart"
+                @deployEnd="deployEnd"
+                @detail="detail"
         />
       </div>
     </div>
@@ -38,7 +37,7 @@ import search from "@/components/search/search.vue";
 import api from "@/api/api_agent.js"
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { USER_CONFIG } from "./tableConfig/agentDeployConfig";
-import { FORM_CONFIG } from "./formConfig/agentCheckListSearch";
+import { FORM_CONFIG2 } from "./formConfig/agentCheckListSearch";
 export default {
   name: "Theme",
   components: { search, BaseCrud },
@@ -46,63 +45,63 @@ export default {
     return {
       searchMaxHeight: "320",
       configData: USER_CONFIG,
-      searchConfig: FORM_CONFIG,
-      testData: [],
-      params: {},
-      api: api.agentExamineList
+      searchConfig: FORM_CONFIG2,
+      params: {
+        channelAgentCode: null,
+        topAgentName: null,
+        personName: null,
+        personMobile: null,
+        beginTime: null,
+        endTime: null,
+        status: null
+      },
+      api: api.selectPageSourceCodeDeploy
     };
   },
-  created() {
-    this.params = {
-      "agentNo": "",
-      "agentName": "",
-      "personName": "",
-      "personMobile": "",
-      "operateUserNo": "",
-      "contractStatus": "",
-      "contractStatusSet": ""
-    }
-  },
-  mounted() {
-    this.getData()
-  },
+  created() {},
+  mounted() {},
   methods: {
-    getData() {
-      this.testData = [
-        {
-          sort: "1",
-          ID: '123333',
-          tel: "15184318420",
-          name: "小白",
-          email: "412412@qq.com",
-          status: "1",
-          people: "扩展信息一",
-          role: ["2"],
-          createTime: '2020-06-20',
-          lawPerson: '啦啦啦'
-        },
-        {
-          sort: "2",
-          ID: '1223',
-          tel: "13777369283",
-          name: "小红",
-          email: "456465@qq.com",
-          status: "0",
-          people: "hashashashas",
-          role: ["1"],
-          createTime: '2020-06-20',
-          lawPerson: '啦啦啦'
-        }
-      ]
+    search($ruleForm) {
+      console.log($ruleForm);
+      this.params = {
+        [$ruleForm.channelAgent]: $ruleForm.channelAgentVal,
+        personName: $ruleForm.personNam,
+        personMobile: $ruleForm.personMobile,
+        beginTime: $ruleForm.date[0],
+        endTime: $ruleForm.date[1],
+        status: $ruleForm.status
+      }
     },
-    search() {},
-    reject() {},
-    activation() {
-      this.$router.push({
-        path: "/topAgent/agentDeploy/deployDetail"
+    deployStart($row) {
+      this.updateTopSourceCodeDeployStatus({
+        channelAgentCode: $row.channelAgentCode,
+        status: 2
       })
     },
-    adopt() {}
+    deployEnd($row) {
+      this.updateTopSourceCodeDeployStatus({
+        channelAgentCode: $row.channelAgentCode,
+        status: 3
+      })
+    },
+    detail($row) {
+      this.$router.push({
+        path: "/topAgent/agentDeploy/deployDetail",
+        query: {
+          channelAgentCode: $row.channelAgentCode
+        }
+      })
+    },
+    updateTopSourceCodeDeployStatus($params) {
+      api.updateTopSourceCodeDeployStatus($params).then(res => {
+        this.$router.push({
+          path: "/topAgent/agentDeploy/deployDetail",
+          query: {
+            channelAgentCode: $params.channelAgentCode
+          }
+        })
+      })
+    }
   }
 }
 </script>

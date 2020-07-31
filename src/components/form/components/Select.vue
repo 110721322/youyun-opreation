@@ -10,6 +10,7 @@
       :remote-method="remoteMethod"
       :disabled="formItem.isDisabled"
       :style="selectStyle"
+      @change="changeEvent"
     >
       <el-option
         v-for="item in selectOptions"
@@ -60,6 +61,16 @@ export default {
   },
 
   methods: {
+    changeEvent($event) {
+      const checked = this.selectOptions.filter($item => {
+        if ($item.value === this.ruleForm[this.formItem.key]) {
+          return $item;
+        }
+      })[0]
+      if (this.$g.utils.isFunction(this.formItem.callback)) {
+        this.formItem.callback(this.ruleForm, checked)
+      }
+    },
     isArray(value) {
       return g.utils.isArr(value);
     },
@@ -81,18 +92,16 @@ export default {
             const newArr = [];
             if (res.object) {
               for (const item of res.object) {
-                newArr.push({
-                  value: item[urlOptions.keyName],
-                  label: item[urlOptions.valueName]
-                });
+                item.value = item[urlOptions.keyName];
+                item.label = item[urlOptions.valueName];
+                newArr.push(item);
               }
             }
             if (res.datas) {
               for (const item of res.datas) {
-                newArr.push({
-                  value: item[urlOptions.keyName],
-                  label: item[urlOptions.valueName]
-                });
+                item.value = item[urlOptions.keyName];
+                item.label = item[urlOptions.valueName];
+                newArr.push(item);
               }
             }
             this.selectOptions = newArr;

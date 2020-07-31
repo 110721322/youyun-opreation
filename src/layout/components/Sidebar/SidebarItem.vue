@@ -3,7 +3,7 @@
     <template v-if="!(item.children && item.children.length > 0 )">
       <app-link :to="resolvePath(item.path)">
         <el-menu-item :index="item.name" popper-append-to-body class="el-menu-item">
-          <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
+          <item v-if="item.meta" :icon="item.meta.icon" :title="item.meta.title" />
         </el-menu-item>
       </app-link>
     </template>
@@ -14,7 +14,7 @@
         class="el-menu-item"
         @click="onClick_item(item)"
       >
-        <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
+        <item v-if="item.meta" :icon="item.meta.icon" :title="item.meta.title" />
       </el-menu-item>
     </div>
   </div>
@@ -62,7 +62,6 @@ export default {
 
   methods: {
     onClick_item($item) {
-      console.log($item);
       if (this.$route.name === $item.children[0].name) return;
 
       if (utils.isArr($item.children[0].children) && $item.children[0].children.length > 0) {

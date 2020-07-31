@@ -11,6 +11,7 @@
       clearable
       :style="inputStyle"
       :disabled="formItem.isDisabled"
+      @blur="blurEvents"
     >
       <template v-if="formItem.isShowSlot" slot="append">
         <span>{{ formItem.showSlotName }}</span>
@@ -56,7 +57,13 @@ export default {
     }
   },
 
-  methods: {}
+  methods: {
+    blurEvents() {
+      if (this.$g.utils.isFunction(this.formItem.callback)) {
+        this.formItem.callback(this.ruleForm)
+      }
+    }
+  }
 };
 </script>
 

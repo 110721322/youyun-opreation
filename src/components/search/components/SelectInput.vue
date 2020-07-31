@@ -86,16 +86,20 @@ export default {
   created() {
     this.inputSelect = this.formItem.options[0].value;
     this.selectOption = this.formItem.options[0];
+    this.ruleForm[this.formItem.key] = this.inputSelect;
   },
   methods: {
     onInput() {
       this.ruleForm.inputSelect = this.selectOption.valueKey ? this.selectOption.valueKey : this.inputSelect;
       this.ruleForm.inputForm = this.inputForm;
+      this.ruleForm[this.formItem.key] = this.ruleForm.inputSelect;
+      this.ruleForm[this.formItem.key + 'Val'] = this.inputForm;
     },
     onSelect() {
       this.inputForm = null;
       this.selectOption = this.formItem.options.filter(ele => ele.value === this.inputSelect)[0];
       this.ruleForm.inputSelect = this.selectOption.valueKey ? this.selectOption.valueKey : this.inputSelect;
+      this.ruleForm[this.formItem.key] = this.ruleForm.inputSelect;
     },
     onAutoSelect(e) {
       this.ruleForm.inputForm = e[this.selectOption.valueKey]

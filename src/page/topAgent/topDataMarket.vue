@@ -18,40 +18,19 @@
           <div v-for="(item,index) in mapData" :key="index" class="data-item">
             <div class="data-left">
               <span :class="['index',index<=2?'hightlight':'normal']">{{ index+1 }}</span>
-              {{ item.provinceName }}
+              {{ item.name }}
             </div>
             <div class="data-right">
-              <span>{{ item.count }}</span> |
+              <span>{{ item.topAgentNumbers }}</span> |
               <span class="perc">{{ item.ratio }}</span>
             </div>
           </div>
         </div>
       </div>
-      <div class="service-box">
-        <pie
-          :pie-option="pieOptionList[0]"
-          :data-list="dataList[0]"
-          :ref-name="'echartPie0'"
-          :pie-style="pieStyle"
-        ></pie>
-        <pie
-          :pie-option="pieOptionList[0]"
-          :data-list="dataList[0]"
-          :ref-name="'echartPie1'"
-          :pie-style="pieStyle"
-        ></pie>
-        <pie
-          :pie-option="pieOptionList[0]"
-          :data-list="dataList[0]"
-          :ref-name="'echartPie2'"
-          :pie-style="pieStyle"
-        ></pie>
-      </div>
       <search
         :is-show-all="true"
         :form-base-data="searchConfig.formData"
         :show-foot-btn="searchConfig.showFootBtn"
-        @dataSelect="handleDataSelect"
         @search="search"
       />
       <div class="title">顶级服务商平均交易额走势</div>
@@ -65,7 +44,7 @@
             :title="'总交易额排行榜'"
             :is-show-more="true"
             :config-data="tableConfigData5"
-            :item-test-data="testData5"
+            :item-test-data="totalAmountRank"
             :is-show-line="false"
             :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
             @showMore="handleShowMore"
@@ -73,62 +52,26 @@
         </div>
       </div>
       <div class="pie-box">
-        <data-item
-          class="pie-item"
-          :radio="radioListData[0]"
-          :title="'交易额涨跌排行'"
-          :config-data="tableConfigData"
-          :is-show-more="true"
-          :is-show-table="true"
-          :item-test-data="testData"
-          :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
-          @radioChange="handleTradeAmountChange"
-        />
         <dataItem
           class="pie-item"
           :title="'新增商户数量排行'"
           :config-data="tableConfigData2"
           :is-show-more="true"
           :is-show-table="true"
-          :item-test-data="testData2"
+          :item-test-data="addMerchantCount"
           :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
           @showMore="handleShowMore"
         />
       </div>
-      <!--      <div class="pie-box">-->
-      <!--        <dataItem-->
-      <!--                class="pie-item"-->
-      <!--                :radio="radioListData[1]"-->
-      <!--                :title="'会员商户排行'"-->
-      <!--                :config-data="tableConfigData3"-->
-      <!--                :is-show-more="true"-->
-      <!--                :is-show-table="true"-->
-      <!--                :item-test-data="testData3"-->
-      <!--                :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"-->
-      <!--                @showMore="handleShowMore"-->
-      <!--                @radioChange="handleTradeAmountChange"-->
-      <!--        />-->
-      <!--        <dataItem-->
-      <!--                class="pie-item"-->
-      <!--                :radio="radioListData[2]"-->
-      <!--                :title="'刷脸订单排行'"-->
-      <!--                :config-data="tableConfigData4"-->
-      <!--                :is-show-more="true"-->
-      <!--                :is-show-table="true"-->
-      <!--                :item-test-data="testData4"-->
-      <!--                :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"-->
-      <!--                @showMore="handleShowMore"-->
-      <!--                @radioChange="handleTradeAmountChange"-->
-      <!--        />-->
-      <!--      </div>-->
     </div>
   </div>
 </template>
 <script>
 import api from "@/api/api_dataMarket";
-import pie from "./components/pie.vue";
 import dataItem from "./components/dataItem.vue";
 import search from "@/components/search/search.vue";
+import areaData from "../../assets/data/areaData";
+import provinceData from "../../assets/data/provinceData";
 import {
   MERCHANTDATACONFIG1,
   MERCHANTDATACONFIG2,
@@ -143,33 +86,23 @@ export default {
   name: "ServiceData",
   components: {
     search,
-    dataItem,
-    pie
+    dataItem
   },
   data() {
     return {
-      isIndeterminate: true,
-      checkAll: false,
-      checkedSelect: [],
-      checkIndex: ['服务商数量分布', '会员商户排行', '服务商平均交易走势', '交易趋势', '大区交易占比', '行业交易占比'],
       drawer: false,
-      mapData: [
-        { name: "安徽省", num: "323,209", perc: "36%" },
-        { name: "甘肃省", num: "323,209", perc: "36%" },
-        { name: "安徽省", num: "323,209", perc: "36%" },
-        { name: "香港特别行政区", num: "323,209", perc: "36%" },
-        { name: "安徽省", num: "323,209", perc: "36%" },
-        { name: "山西省", num: "234", perc: "36%" },
-        { name: "山西省", num: "234", perc: "36%" },
-        { name: "山西省", num: "234", perc: "36%" }
-      ],
+      queryParams: {
+        beginDate: null,
+        endDate: null
+      },
+      mapData: [],
       searchConfig: FORM_CONFIG2,
       searchMaxHeight: "300",
       testData: [],
-      testData2: [],
+      addMerchantCount: [],
       testData3: [],
       testData4: [],
-      testData5: [],
+      totalAmountRank: [],
       tableConfigData: MERCHANTDATACONFIG1,
       tableConfigData2: MERCHANTDATACONFIG2,
       tableConfigData3: MERCHANTDATACONFIG3,
@@ -179,165 +112,7 @@ export default {
         width: "200px",
         height: "250px"
       },
-      radioListData: [
-        {
-          radio: "1",
-          namelist: [
-            { name: "涨幅排行", label: "1" },
-            { name: "跌幅排行", label: "2" }
-          ]
-        },
-        {
-          radio: "1",
-          namelist: [
-            { name: "新增数量", label: "1" },
-            { name: "会员交易", label: "2" }
-          ]
-        },
-        {
-          radio: "1",
-          namelist: [
-            { name: "金额", label: "1" },
-            { name: "笔数", label: "2" }
-          ]
-        }
-      ],
-      dataList: [
-        [
-          {
-            title: "华东",
-            className: ["dot", "dot_d"],
-            perc: "36%"
-          },
-          {
-            title: "华中",
-            className: ["dot", "dot_z"],
-            perc: "20%"
-          },
-          {
-            title: "华北",
-            className: ["dot", "dot_b"],
-            perc: "10%"
-          },
-          {
-            title: "华南",
-            className: ["dot", "dot_n"],
-            perc: "36%"
-          },
-          {
-            title: "华西",
-            className: ["dot", "dot_x"],
-            perc: "36%"
-          }
-        ],
-        [
-          {
-            title: "房产汽车类",
-            className: ["dot", "dot_d"],
-            perc: "36%"
-          },
-          {
-            title: "民生类",
-            className: ["dot", "dot_z"],
-            perc: "20%"
-          },
-          {
-            title: "一般类",
-            className: ["dot", "dot_b"],
-            perc: "10%"
-          },
-          {
-            title: "批发类",
-            className: ["dot", "dot_n"],
-            perc: "36%"
-          },
-          {
-            title: "餐娱类",
-            className: ["dot", "dot_x"],
-            perc: "36%"
-          }
-        ]
-      ],
-      pieOptionList: [
-        {
-          title: {
-            text: "新增商户数大区占比",
-            left: "center",
-            textStyle: {
-              color: "rgba(0,0,0,0.85)",
-              fontSize: 14
-            }
-          },
-          tooltip: {
-            trigger: "item",
-            formatter: "{b}: {c} ({d}%)"
-          },
-          series: [
-            {
-              name: "新增商户数行业占比",
-              type: "pie",
-              avoidLabelOverlap: false,
-              radius: ["40%", "80%"],
-              label: {
-                normal: {
-                  show: false
-                }
-              },
-              labelLine: {
-                normal: {
-                  show: false
-                }
-              },
-              data: [
-                { value: 0.36, name: "华东", itemStyle: { color: "#00A1FF" } },
-                { value: 0.2, name: "华中", itemStyle: { color: "#37CBCB" } },
-                { value: 0.1, name: "华北", itemStyle: { color: "#FAD337" } },
-                { value: 0.09, name: "华南", itemStyle: { color: "#F2637B" } },
-                { value: 0.09, name: "华西", itemStyle: { color: "#975FE4" } }
-              ]
-            }
-          ]
-        },
-        {
-          title: {
-            text: "交易额行业占比",
-            left: "center",
-            textStyle: {
-              color: "rgba(0,0,0,0.85)",
-              fontSize: 14
-            }
-          },
-          tooltip: {
-            trigger: "item",
-            formatter: "{b}: {c} ({d}%)"
-          },
-          series: [
-            {
-              name: "交易额大区占比",
-              type: "pie",
-              avoidLabelOverlap: false,
-              radius: ["40%", "80%"],
-              label: {
-                normal: {
-                  show: false
-                }
-              },
-              labelLine: {
-                normal: {
-                  show: false
-                }
-              },
-              data: [
-                { value: 0.36, name: "华东", itemStyle: { color: "#00A1FF" } },
-                { value: 0.2, name: "华中", itemStyle: { color: "#37CBCB" } },
-                { value: 0.1, name: "华北", itemStyle: { color: "#FAD337" } },
-                { value: 0.09, name: "华南", itemStyle: { color: "#F2637B" } },
-                { value: 0.09, name: "华西", itemStyle: { color: "#975FE4" } }
-              ]
-            }
-          ]
-        }
-      ],
+      averageList: [],
       lineOption: {
         tooltip: {
           trigger: "axis",
@@ -360,20 +135,7 @@ export default {
           {
             type: "category",
             boundaryGap: false,
-            data: [
-              "12-23",
-              "12-23",
-              "12-23",
-              "12-23",
-              "12-23",
-              "12-23",
-              "12-23",
-              "12-23",
-              "12-23",
-              "12-23",
-              "12-23",
-              "12-23"
-            ]
+            data: []
           }
         ],
         yAxis: [
@@ -414,17 +176,6 @@ export default {
                 global: false // 缺省为 false
               }
             },
-            // emphasis: {
-            //   itemStyle: {
-            //     // 高亮时点的颜色。
-            //     color: "blue"
-            //   },
-            //   label: {
-            //     show: true,
-            //     // 高亮时标签的文字。
-            //     formatter: "This is a emphasis label."
-            //   }
-            // },
             itemStyle: {
               normal: {
                 color: "#1890FF",
@@ -433,27 +184,32 @@ export default {
                 }
               }
             },
-            data: [120, 132, 101, 134, 90, 230, 210, 101, 134, 90, 230, 330]
+            data: []
           }
-        ]
-      },
-      beginDate: null,
-      endDate: null,
-      agentType: 1,
-      agentType2: 1,
-      agentType3: 1
+        ],
+        beforeRouterPromise: null
+      }
     };
   },
-  created() {},
   mounted() {
-    this.init();
-    this.getData();
-    this.initMap();
     // 获取数据
-    this.queryProvinceRank();
-    this.queryRegionRatio();
-    this.queryGradeRatio();
-    this.queryTypeRatio();
+    this.queryTopAgentNumber();
+    this.search();
+  },
+  beforeRouteUpdate(to, from, next) {
+    if (from.meta.refreshDom) {
+      this.beforeRouterPromise = Promise.resolve(1);
+    }
+    next()
+  },
+  updated() {
+    if (this.$g.utils.isPromise(this.beforeRouterPromise)) {
+      this.beforeRouterPromise.then(() => {
+        this.initMap();
+        this.drawLine();
+        this.beforeRouterPromise = null;
+      })
+    }
   },
   methods: {
     handleCheckAllChange() {},
@@ -464,328 +220,74 @@ export default {
     cancleClose() {
       this.drawer = false
     },
-    // 交易额涨跌排行切换
-    handleTradeAmountChange($data) {
-      this.agentType = $data;
-      this.queryAgentTradeAmountPerRank();
-    },
-    queryAgentTradeAmountPerRank() {
-      api.queryAgentTradeAmountPerRank({
-        beginDate: this.beginDate,
-        endDate: this.endDate,
-        top: 216,
-        type: this.agentType
-      }).then(res => {
-        this.testData = res.object;
-      }).catch(err => {
-        this.$message(err);
-      });
-    },
     // 新增商户数量排行
-    queryNewMerchantRank() {
-      api.queryNewMerchantRank({
-        beginDate: this.beginDate,
-        endDate: this.endDate,
-        top: 216,
-        type: this.agentType2
-      }).then(res => {
-        this.testData2 = res.object;
-      }).catch(err => {
-        this.$message(err);
-      });
-    },
-    // 会员商户排行切换
-    // handleAgentFaceChange($data) {
-    //   this.agentType = $data;
-    //   this.queryAgentFaceTradeAmountRank();
-    // },
-    // queryAgentFaceTradeAmountRank() {
-    //   api
-    //     .queryAgentFaceTradeAmountRank({
-    //       beginDate: this.beginDate,
-    //       endDate: this.endDate,
-    //       top: 216,
-    //       type: this.agentType
-    //     })
-    //     .then(res => {
-    //       // this.mapData = res.object;
-    //     })
-    //     .catch(err => {
-    //       this.$message(err);
-    //     });
-    // },
-    // 刷脸订单排行
-    handleAgentFaceChange($data) {
-      this.agentType = $data;
-      this.queryAgentFaceTradeAmountRank();
-    },
-    queryAgentFaceTradeAmountRank() {
-      api.queryAgentFaceTradeAmountRank({
-        beginDate: this.beginDate,
-        endDate: this.endDate,
-        top: 216,
-        type: this.agentType
-      }).then(res => {
-        // this.mapData = res.object;
+    queryListByNewMerchantCount() {
+      api.queryListByNewMerchantCount(this.queryParams).then(res => {
+        this.addMerchantCount = res.object;
       }).catch(err => {
         this.$message(err);
       });
     },
     // 服务商平均交易额走势
-    queryAgentDailyAverageTrade() {
-      api.queryAgentDailyAverageTrade({
-        beginDate: this.beginDate,
-        endDate: this.endDate
-        // top: 216,
-        // type: 528
-      }).then(res => {
-        // this.mapData = res.object;
+    queryTradeAverageList() {
+      api.queryTradeAverageList(this.queryParams).then(res => {
+        this.averageList = res.object;
+        this.drawLine()
       }).catch(err => {
         this.$message(err);
       });
     },
     // 总交易排行榜
-    queryAgentTradeAmountRank() {
-      api.queryAgentTradeAmountRank({
-        beginDate: this.beginDate,
-        endDate: this.endDate,
-        top: 216,
-        type: 528
-      }).then(res => {
-        this.testData5 = res.object;
+    queryListByTurnover() {
+      api.queryListByTurnover(this.queryParams).then(res => {
+        this.totalAmountRank = res.object;
       }).catch(err => {
         this.$message(err);
       });
-    },
-    // 地图服务商数据
-    queryAllProvinceCount($ruleForm) {
-      api.queryAllProvinceCount({}).then(res => {
-        // this.mapData = res.object;
-      }).catch(err => {
-        this.$message(err);
-      });
-    },
-    // 大区占比
-    queryRegionRatio($ruleForm) {
-      api.queryRegionRatio({}).then(res => {
-        // this.mapData = res.object;
-      }).catch(err => {
-        this.$message(err);
-      });
-    },
-    // 等级占比
-    queryGradeRatio($ruleForm) {
-      api.queryGradeRatio({}).then(res => {
-        // this.mapData = res.object;
-      }).catch(err => {
-        this.$message(err);
-      });
-    },
-    // 类型占比
-    queryTypeRatio($ruleForm) {
-      api.queryTypeRatio({}).then(res => {
-        // this.mapData = res.object;
-      }).catch(err => {
-        this.$message(err);
-      });
-    },
-    // 省份分布排行榜
-    queryProvinceRank($ruleForm) {
-      api.queryProvinceRank({}).then(res => {
-        this.mapData = res.object;
-      }).catch(err => {
-        this.$message(err);
-      });
-    },
-    handleDataSelect($time) {
-      this.beginDate = $time[0];
-      this.endDate = $time[1];
-      this.queryAgentDailyAverageTrade();
-      this.queryAgentTradeAmountRank();
-      this.queryAgentTradeAmountPerRank();
-      this.queryNewMerchantRank();
-    },
-    init() {
-      this.showLine();
     },
     handleShowMore() {
-      this.$router.push({ path: "/dataMarket/serviceData/detail" });
+      this.$router.push({ path: "/topAgent/topDataMarket/detail" });
     },
-    showLine() {
+    search($ruleForm = {date: [this.$g.utils.getToday(), this.$g.utils.getToday(0)]}) {
+      Object.assign(this.queryParams, {beginDate: $ruleForm.date[0], endDate: $ruleForm.date[1]});
+      this.queryListByTurnover();
+      this.queryTradeAverageList();
+      this.queryListByNewMerchantCount();
+    },
+    queryTopAgentNumber() {
+      api.queryTopAgentNumber().then(res => {
+        this.mapData = res.object.map($item => {
+          areaData.forEach(($province, $index) => {
+            if ($item.provinceCode === $province.value) {
+              $item.name = provinceData[$index].name
+            }
+          })
+          $item.value = $item.topAgentNumbers;
+          return $item;
+        }).sort(($ele1, $ele2) => {
+          return $ele2.topAgentNumbers - $ele1.topAgentNumbers
+        })
+        this.initMap()
+      })
+    },
+    drawLine() {
       // 基于准备好的dom，初始化echarts实例
       if (!this.$refs.echartsLine) return;
       const myChartLine = this.$echarts.init(this.$refs.echartsLine);
-
-      // 绘制图表
+      // // 绘制图表
+      this.lineOption.xAxis[0].data = this.averageList.map($item => { return $item.tradeDate; })
+      this.lineOption.series[0].data = this.averageList.map($item => { return $item.tradeAverage; })
       myChartLine.setOption(this.lineOption);
       window.addEventListener("resize", function() {
         myChartLine.resize();
       });
     },
-    search() {
-      this.getData();
-    },
-    getData() {
-      this.testData3 = [
-        {
-          rank: "1",
-          name: "利郎男装有限公司",
-          new: "128%",
-          perc: "128%"
-        },
-        {
-          rank: "2",
-          name: "利郎男装有限公司",
-          new: "128%",
-          perc: "128%"
-        }
-      ];
-    },
+    /**
+     * 顶级服务商数量分布地图
+     */
     initMap() {
       if (!this.$refs.echartsMap) return;
       const myChart = echarts.init(this.$refs.echartsMap);
-      const dataList = [
-        {
-          name: "南海诸岛",
-          value: 0
-        },
-        {
-          name: "北京",
-          value: 54
-        },
-        {
-          name: "天津",
-          value: 13
-        },
-        {
-          name: "上海",
-          value: 40
-        },
-        {
-          name: "重庆",
-          value: 75
-        },
-        {
-          name: "河北",
-          value: 13
-        },
-        {
-          name: "河南",
-          value: 83
-        },
-        {
-          name: "云南",
-          value: 11
-        },
-        {
-          name: "辽宁",
-          value: 19
-        },
-        {
-          name: "黑龙江",
-          value: 15
-        },
-        {
-          name: "湖南",
-          value: 69
-        },
-        {
-          name: "安徽",
-          value: 60
-        },
-        {
-          name: "山东",
-          value: 39
-        },
-        {
-          name: "新疆",
-          value: 4
-        },
-        {
-          name: "江苏",
-          value: 31
-        },
-        {
-          name: "浙江",
-          value: 104
-        },
-        {
-          name: "江西",
-          value: 36
-        },
-        {
-          name: "湖北",
-          value: 1052
-        },
-        {
-          name: "广西",
-          value: 33
-        },
-        {
-          name: "甘肃",
-          value: 7
-        },
-        {
-          name: "山西",
-          value: 9
-        },
-        {
-          name: "内蒙古",
-          value: 7
-        },
-        {
-          name: "陕西",
-          value: 22
-        },
-        {
-          name: "吉林",
-          value: 4
-        },
-        {
-          name: "福建",
-          value: 18
-        },
-        {
-          name: "贵州",
-          value: 5
-        },
-        {
-          name: "广东",
-          value: 98
-        },
-        {
-          name: "青海",
-          value: 1
-        },
-        {
-          name: "西藏",
-          value: 0
-        },
-        {
-          name: "四川",
-          value: 44
-        },
-        {
-          name: "宁夏",
-          value: 4
-        },
-        {
-          name: "海南",
-          value: 22
-        },
-        {
-          name: "台湾",
-          value: 3
-        },
-        {
-          name: "香港",
-          value: 5
-        },
-        {
-          name: "澳门",
-          value: 5
-        }
-      ];
       window.onresize = myChart.resize;
       myChart.setOption({
         tooltip: {
@@ -864,7 +366,7 @@ export default {
             name: "商户数量",
             type: "map",
             geoIndex: 0,
-            data: dataList
+            data: this.mapData
           }
         ]
       });
@@ -937,7 +439,7 @@ export default {
     background-color: #ffffff;
     .chart-box {
       width: 70%;
-      height: 350px;
+      height: 470px;
       position: relative;
       .chart-panel {
         position: absolute;

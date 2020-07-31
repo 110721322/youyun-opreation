@@ -7,11 +7,11 @@ export const USER_CONFIG = {
     },
     {
       label: '服务商名称',
-      prop: 'name'
+      prop: 'channelAgentName'
     },
     {
       label: '法人',
-      prop: 'lawPerson',
+      prop: 'personName',
       width: '90px'
     },
     {
@@ -26,25 +26,14 @@ export const USER_CONFIG = {
     },
     {
       label: '公司地址',
-      prop: 'companyArea.detailAddress',
+      prop: 'address',
       width: '90px'
     },
     {
       label: '状态',
       prop: 'accountStatus',
       render: (h, params) => {
-        if (params.row.status === '0') {
-          return h(
-            'el-tag',
-            {
-              props: {
-                size: 'medium ',
-                type: 'warning'
-              }
-            },
-            '已驳回'
-          );
-        } else {
+        if (params.row.status === 1) {
           return h(
             'el-tag',
             {
@@ -53,7 +42,18 @@ export const USER_CONFIG = {
                 type: 'success'
               }
             },
-            '待审核'
+            params.row.statusName
+          );
+        } else {
+          return h(
+            'el-tag',
+            {
+              props: {
+                size: 'medium ',
+                type: 'warning'
+              }
+            },
+            params.row.statusName
           );
         }
       }
@@ -69,12 +69,24 @@ export const USER_CONFIG = {
     view: false,
     expands: [
       {
+        name: '通过',
+        emitName: 'pass',
+        type: 'text',
+        isShow: ($row) => {
+          if ($row.status === 1) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      },
+      {
         name: '驳回',
         emitName: 'reject',
         type: 'text',
         style: 'color:#F5222D',
         isShow: ($row) => {
-          if ($row.id === '1') {
+          if ($row.status === 1) {
             return true;
           } else {
             return false;
@@ -83,13 +95,15 @@ export const USER_CONFIG = {
       },
       {
         name: '激活',
-        emitName: 'activation',
-        type: 'text'
-      },
-      {
-        name: '通过',
-        emitName: 'adopt',
-        type: 'text'
+        emitName: 'active',
+        type: 'text',
+        isShow: ($row) => {
+          if ($row.status !== 1) {
+            return true;
+          } else {
+            return false;
+          }
+        }
       }
     ]
   }

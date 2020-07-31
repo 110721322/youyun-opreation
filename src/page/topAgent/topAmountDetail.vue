@@ -43,13 +43,12 @@ export default {
       params: {
         beginDate: this.$g.utils.getToday(),
         endDate: this.$g.utils.getToday(),
-        channelAgentCode: null,
         labelId: null,
         regionCode: null,
         provinceCode: null,
         cityCode: null,
         operationId: null,
-        currentPage: 0,
+        currentPage: 1,
         pageSize: 10
       },
       api: api.selectTradeDailyByPage
@@ -61,18 +60,15 @@ export default {
   methods: {
     ...mapActions(['setLabelList', 'setRegionList', 'setUserList']),
     search($ruleForm) {
-      const params = {
+      this.params = {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,
-        category: $ruleForm.category,
-        provinceCode: $ruleForm.addressObj
-          ? $ruleForm.addressObj[0].value
-          : null,
-        cityCode: $ruleForm.addressObj ? $ruleForm.addressObj[1].value : null
-        // 是否开通会员
-      };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
-      this.params = params;
+        [$ruleForm.inputSelect]: $ruleForm.inputForm ? $ruleForm.inputForm : null,
+        labelId: $ruleForm.labelId,
+        regionCode: $ruleForm.regionCode,
+        provinceCode: $ruleForm.area ? $ruleForm.area[0] : null,
+        cityCode: $ruleForm.area ? $ruleForm.area[1] : null
+      }
     },
     queryInit() {
       api.queryInit().then(res => {
