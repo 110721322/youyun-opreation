@@ -51,31 +51,27 @@ export default {
       testData: [],
       direction: "rtl",
       searchHeight: "320",
-      params: {
-        beginDate: this.$g.utils.getToday(),
-        endDate: this.$g.utils.getToday(),
-        agentNo: "",
-        partnerName: "",
-        mobile: "",
-        contractStatus: "",
-        pageSize: 1,
-        currentPage: 1,
-        operateUserNo: "",
-        jobType: ""
-      },
+      params: {},
       api: api.queryAuditPageByCondition
     };
   },
   mounted() {},
   methods: {
-    handleDetail() {
+    handleDetail(row) {
+      console.log(row)
       this.$router.push({
-        path: "/approval/checkPartner/checkPartnerList/detail"
+        path: "/approval/checkPartner/detail",
+        query: {
+          agentPartnerNo: row.partnerNo
+        }
       });
     },
-    handlePreApprove() {
+    handlePreApprove(row) {
       this.$router.push({
-        path: "/approval/checkPartner/checkPartnerList/detail"
+        path: "/approval/checkPartner/detail",
+        query: {
+          agentPartnerNo: row.partnerNo
+        }
       });
     },
     search($ruleForm) {

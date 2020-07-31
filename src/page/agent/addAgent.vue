@@ -25,7 +25,6 @@ export default {
   },
   methods: {
     handleCommit($item) {
-      console.log($item)
       if (!$item.account || !$item.address || !$item.agentName || !$item.businessType || !$item.personMobile || !$item.personName || !$item.companyAddress) {
         return false
       } else {

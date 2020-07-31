@@ -17,7 +17,7 @@
         <div>
           <detailMode
             :img-width="4"
-            :rule-form="ruleForm.baseData"
+            :rule-form="ruleForm"
             :config-data="configData.baseData"
           ></detailMode>
           <detailMode
@@ -57,6 +57,7 @@ export default {
 
   data() {
     return {
+      agentNo: '',
       fromConfigData: {},
       drawer: false,
       rejectTitle: "驳回原因：商户名称与营业执照不符合",
@@ -67,39 +68,14 @@ export default {
       },
       // pass通过 preApproval预审核 checking审核中 reject驳回
       currentType: "",
-      ruleForm: {
-        baseData: {
-          superService: "32943098094",
-          type: "浙江省杭州市西湖区黄姑山路工专路交叉路口",
-          pic:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic2:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic3:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          company: "3310281995",
-          name: "3310281995",
-          phone: "3310281995009208899",
-          address: "3310281995009208899",
-          detailAddress: "3310281995009208899",
-          email: "33102819908899"
-        },
-        serviceSetupData: {
-          address: "企业",
-          way: "山东紫菜",
-          aliWxPerc: "2019-03-10",
-          yunLessPerc: "3428947394238",
-          yunMorePerc: "18503892300",
-          endTime: "2019-03-10"
-        }
-      },
+      ruleForm: {},
       configData: {
         baseData: {
           name: "基本信息",
           items: [
             {
               name: "所属上级服务商",
-              key: "superService"
+              key: "parentAgentName"
             },
             {
               name: "账号类型",
@@ -123,11 +99,11 @@ export default {
 
             {
               name: "公司名称",
-              key: "company"
+              key: "agentName"
             },
             {
               name: "法人姓名",
-              key: "name"
+              key: "personName"
             },
             {
               name: "法人手机号",
@@ -135,12 +111,12 @@ export default {
             },
             {
               name: "地区",
-              key: "address"
+              key: "areaName"
             },
 
             {
               name: "详细地址",
-              key: "detailAddress"
+              key: "companyAddress"
             },
             {
               name: "邮箱",
@@ -151,26 +127,26 @@ export default {
         serviceSetupData: {
           name: "下级服务商设置",
           items: [
-            {
-              name: "服务区域",
-              key: "address"
-            },
-            {
-              name: "服务方式",
-              key: "way"
-            },
-            {
-              name: "微信/支付宝费率",
-              key: "aliWxPerc"
-            },
-            {
-              name: "云闪付费率（单笔≤1000元）",
-              key: "yunLessPerc"
-            },
-            {
-              name: "云闪付费率（单笔＞1000元）",
-              key: "yunMorePerc"
-            }
+            // {
+            //   name: "服务区域",
+            //   key: "address"
+            // },
+            // {
+            //   name: "服务方式",
+            //   key: "way"
+            // },
+            // {
+            //   name: "微信/支付宝费率",
+            //   key: "aliWxPerc"
+            // },
+            // {
+            //   name: "云闪付费率（单笔≤1000元）",
+            //   key: "yunLessPerc"
+            // },
+            // {
+            //   name: "云闪付费率（单笔＞1000元）",
+            //   key: "yunMorePerc"
+            // }
           ]
         }
       }
@@ -197,34 +173,16 @@ export default {
     }
   },
   mounted() {
-    this.currentType = "preApproval";
-    this.getSubAgentDetail();
+    this.agentNo = this.$route.query.agentNo
+    this.getServiceData()
   },
   methods: {
-    getSubAgentDetail() {
-      api
-        .getSubAgentDetail({ agentNo: "" })
-        .then(res => {
-          const expandkey = data => {
-            Object.keys(data).forEach(item => {
-              if (this.$g.utils.isObj(data[item])) {
-                Object.keys(data[item]).forEach(item1 => {
-                  data[item1] = data[item][item1];
-                  if (this.$g.utils.isObj(data[item][item1])) {
-                    Object.keys(data[item][item1]).forEach(item2 => {
-                      data[item2] = data[item][item1][item2];
-                    });
-                  }
-                });
-              }
-            });
-          };
-          expandkey(res.object);
-          console.log("expandKey");
-          console.log(res);
-          // this.ruleForm = res.object;
-        })
-        .catch();
+    getServiceData() {
+      api.getSubAgentDetail({
+        agentNo: this.agentNo
+      }).then(res => {
+        this.ruleForm = res.object
+      }).catch();
     },
     confirm($data) {
       console.log($data);

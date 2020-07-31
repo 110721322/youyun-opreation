@@ -101,15 +101,7 @@ export default {
       drawer: false,
       direction: "rtl",
       selectData: [],
-      params: {
-        beginDate: this.$g.utils.getToday(),
-        endDate: this.$g.utils.getToday(),
-        agentNo: "",
-        agentName: "",
-        operateUserNo: "",
-        pageSize: "",
-        currentPage: ""
-      },
+      params: {},
       api: api.agentBanListQueryByPage
     };
   },

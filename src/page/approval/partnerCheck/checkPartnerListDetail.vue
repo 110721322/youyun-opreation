@@ -7,15 +7,16 @@
     <transition name="fade">
       <div>
         <el-alert
-          v-if="showComponents.showRejectTitle"
+          v-if="ruleForm.contractStatus === 'reject'"
           class="detail-alert"
-          :title="rejectTitle"
+          :title="ruleForm.reason"
           type="info"
           :closable="false"
           show-icon
         ></el-alert>
         <div>
-          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.baseData"></detailMode>
+          <detailMode :img-width="4" :rule-form="ruleForm" v-if="ruleForm.jobType === '拓展员'" :config-data="configData.baseData1"></detailMode>
+          <detailMode :img-width="4" :rule-form="ruleForm" v-if="ruleForm.jobType === '入件操作员'" :config-data="configData.baseData2"></detailMode>
         </div>
         <div v-if="showComponents.showOperBtns" class="btn-box">
           <div class="btn_pass" @click="onClick_sign">通过</div>
@@ -48,6 +49,7 @@ export default {
 
   data() {
     return {
+      agentPartnerNo: '',
       fromConfigData: {},
       drawer: false,
       rejectTitle: "驳回原因：商户名称与营业执照不符合",
@@ -58,26 +60,9 @@ export default {
       },
       // pass通过 preApproval预审核 checking审核中 reject驳回
       currentType: "",
-      ruleForm: {
-        baseData: {
-          pic:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic2:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic3:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          type: "拓展员",
-          partnerName: "红莲",
-          phone: "15823622321",
-          password: "231242",
-          aliwxPerc: "2.6‰",
-          yunLessPerc: "2.8‰",
-          yunMorePerc: "5.8‰",
-          commissionPerc: "50%"
-        }
-      },
+      ruleForm: {},
       configData: {
-        baseData: {
+        baseData1: {
           name: "基本信息",
           items: [
             {
@@ -108,25 +93,61 @@ export default {
               key: "mobile"
             },
             {
-              name: "登录密码",
-              key: "loginPassword"
+              name: '登录密码',
+              key: 'loginPassword'
             },
             {
               name: "支付宝/微信费率",
-              key: "aliweFeeRate"
+              key: "alipayRate"
             },
             {
               name: "云闪付费率（单笔≤1000元）",
-              key: "le1000"
+              key: "cloudPayLe1000Rate"
             },
 
             {
               name: "云闪付费率（单笔＞1000元）",
-              key: "gt1000"
+              key: "cloudPayGt1000Rate"
             },
             {
               name: "合伙人佣金提成",
               key: "kickbackPercent"
+            }
+          ]
+        },
+        baseData2: {
+          name: "基本信息",
+          items: [
+            {
+              name: "身份证正面照",
+              key: "idPortraitImg",
+              type: "image"
+            },
+            {
+              name: "身份证反面照",
+              key: "idEmblemImg",
+              type: "image"
+            },
+            {
+              name: "手持身份证照",
+              key: "withIdImg",
+              type: "image"
+            },
+            {
+              name: "人员类型",
+              key: "jobType"
+            },
+            {
+              name: "合伙人姓名",
+              key: "partnerName"
+            },
+            {
+              name: "手机号码",
+              key: "mobile"
+            },
+            {
+              name: '登录密码',
+              key: 'loginPassword'
             }
           ]
         }
@@ -136,16 +157,21 @@ export default {
   watch: {
     currentType: function($val) {
       switch ($val) {
-        case "pass":
-          this.showComponents.showOtherEdit = true;
-          break;
-        case "preApproval":
+        case "waitSign":
           this.showComponents.showOperBtns = true;
+          this.showComponents.showRejectTitle = false;
           break;
-        case "checking":
+        case "audit":
+          this.showComponents.showOperBtns = true;
+          this.showComponents.showRejectTitle = false;
+          break;
+        case "success":
+          this.showComponents.showOperBtns = false;
+          this.showComponents.showRejectTitle = false;
           break;
         case "reject":
           this.showComponents.showRejectTitle = true;
+          this.this.showComponents.showOperBtns = false;
           break;
 
         default:
@@ -153,20 +179,27 @@ export default {
       }
     }
   },
+  created() {
+    this.agentPartnerNo = this.$route.query.agentPartnerNo
+    this.getPartenDetail()
+  },
   mounted() {
-    this.currentType = "preApproval";
-    this.getDetailByPartnerNo();
+    // this.currentType = "preApproval";
   },
   methods: {
-    a() {},
-    getDetailByPartnerNo() {
-      api
-        .getDetailByPartnerNo({ agentPartnerNo: "" })
-        .then(res => {
-          // console.log(this.$g.utils.expandKeys(res.data));
-          console.log(this.$g.utils.cloneLoop(res.data));
-        })
-        .catch();
+    getPartenDetail() {
+      api.getDetailByPartnerNo({
+        agentPartnerNo: this.agentPartnerNo
+      }).then(res => {
+        if (res.object.jobType === 'expand') {
+          res.object.jobType = '拓展员'
+        }
+        if (res.object.jobType === 'join') {
+          res.object.jobType = '入件操作员'
+        }
+        this.ruleForm = res.object
+        this.currentType = res.object.contractStatus
+      })
     },
     confirm($data) {
       console.log($data);
@@ -184,16 +217,14 @@ export default {
         });
     },
     onClick_sign() {
-      api
-        .agentPartnerUpdateAuditStatusOfPass({
-          agentPartnerNo: ""
-        })
-        .then(res => {
-          this.$message("已通过");
-        })
-        .catch(err => {
-          this.$message(err);
-        });
+      api.agentPartnerPass({
+        agentPartnerNo: this.agentPartnerNo
+      }).then(res => {
+        console.log(res)
+        // this.$message("已通过");
+      }).catch(err => {
+        this.$message(err);
+      });
     },
     cancel() {
       this.drawer = false;

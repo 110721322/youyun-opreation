@@ -39,7 +39,7 @@ import api from "@/api/api_merchantAudit";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 
-import { SEARCH_CONFIG } from "./../formConfig/settlementListSearch";
+import { SEARCH_CONFIG } from "./../formConfig/aliDirectListSearch";
 import { SETTELMENTLIST_CONFIG } from "./../tableConfig/settlementListConfig";
 
 export default {
@@ -52,36 +52,40 @@ export default {
       testData: [],
       direction: "rtl",
       searchHeight: "260",
-      params: {
-        beginDate: this.$g.utils.getToday(),
-        endDate: this.$g.utils.getToday(),
-        agentNo: "rn4",
-        agentName: "5ff",
-        pageSize: 0,
-        channelStatus: "u22",
-        operationUserNo: "mef",
-        currentPage: 0,
-        merchantNo: "iy7",
-        merchantName: "y6a"
-      },
+      params: {},
       api: api.settleCardAuditQueryByPage
     };
   },
   mounted() {},
   methods: {
-    handleDetail() {
+    handleDetail(row) {
       this.$router.push({
-        path: "/approval/checkMerchant/settlementList/detail"
+        path: "/approval/checkMerchant/settlementList/detail",
+        query: {
+          channelMerchantNo: row.channelMerchantNo,
+          channelAgentCode: row.channelAgentCode,
+          channelCode: row.channelCode,
+          auditStatus: row.auditStatus
+        }
       });
     },
-    handlePreApprove() {
+    handlePreApprove(row) {
       this.$router.push({
-        path: "/approval/checkMerchant/settlementList/detail"
+        path: "/approval/checkMerchant/settlementList/detail",
+        query: {
+          channelMerchantNo: row.channelMerchantNo,
+          channelAgentCode: row.channelAgentCode,
+          channelCode: row.channelCode
+        }
       });
     },
-    handleRecord() {
+    handleRecord(row) {
       this.$router.push({
-        path: "/approval/checkMerchant/settlementList/recordDetail"
+        path: "/approval/checkMerchant/settlementList/recordDetail",
+        query: {
+          merchantNo: row.merchantNo,
+          channel: row.channelCode
+        }
       });
     },
     search($ruleForm) {

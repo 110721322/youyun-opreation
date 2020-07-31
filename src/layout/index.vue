@@ -95,7 +95,7 @@ export default {
   },
   methods: {
     matchMenu() {
-      const menus = JSON.parse(localStorage.getItem("menus"));
+      const menus = this.$store.state.role.routes;
       menus.forEach(item => {
         if (item.isShow && item.children) {
           item.children.forEach(childItem => {
@@ -131,7 +131,7 @@ export default {
       });
     },
     getActiveName() {
-      const menus = JSON.parse(localStorage.getItem("menus"));
+      const menus = this.$store.state.role.routes;
       let currRouterName;
       if (this.$route.meta.fatherName) {
         currRouterName = this.$route.meta.fatherName;

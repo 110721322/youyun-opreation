@@ -38,27 +38,39 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '通道状态',
-      key: 'channelStatus',
+      key: 'status',
       style: 'width:294px',
       options: [
         {
           label: '待审核',
-          value: 0
+          value: 'nonOpen'
+        },
+        {
+          label: '平台审核中',
+          value: 'platformAudit'
+        },
+        {
+          label: '通道审核中',
+          value: 'channelAudit'
+        },
+        {
+          label: '平台驳回',
+          value: 'platformReject'
+        },
+        {
+          label: '通道驳回',
+          value: 'channelReject'
         },
         {
           label: '审核通过',
-          value: 1
-        },
-        {
-          label: '驳回',
-          value: 2
+          value: 'channelPass'
         }
       ]
     },
     {
       type: 1,
       label: '所属运营',
-      key: 'operationUserNo',
+      key: 'operationId',
       labelWidth: '185px',
       urlOptions: {
         url: apiAgent.queryAllOperation,

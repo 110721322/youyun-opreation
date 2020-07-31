@@ -7,7 +7,7 @@ export const CHECKSERVICELIST_CONFIG = {
     },
     {
       label: '法人',
-      prop: [{ key: 'lawPerson' }, { key: 'lawMobile' }],
+      prop: [{ key: 'personName' }, { key: 'personMobile' }],
       width: '150px'
     },
     {
@@ -22,8 +22,25 @@ export const CHECKSERVICELIST_CONFIG = {
     },
     {
       label: '审核状态',
-      prop: 'accountStatus',
-      width: '150px'
+      prop: 'contractStatus',
+      width: '150px',
+      render: (h, params) => {
+        if (params.row.contractStatus === 'audit') {
+          return h(
+            'span', '待审核'
+          )
+        }
+        if (params.row.contractStatus === 'success') {
+          return h(
+            'span', '审核通过'
+          )
+        }
+        if (params.row.contractStatus === 'reject') {
+          return h(
+            'span', '审核拒绝'
+          )
+        }
+      }
     }
   ],
 
@@ -41,7 +58,7 @@ export const CHECKSERVICELIST_CONFIG = {
         emitName: 'detail',
         type: 'text',
         isShow: ($item) => {
-          if ($item.showDetail) {
+          if ($item.contractStatus !== 'audit') {
             return true;
           } else {
             return false
@@ -53,7 +70,7 @@ export const CHECKSERVICELIST_CONFIG = {
         emitName: 'preApprove',
         type: 'text',
         isShow: ($item) => {
-          if ($item.showPreApprove) {
+          if ($item.contractStatus === 'audit') {
             return true;
           } else {
             return false

@@ -16,7 +16,7 @@
           :form-config="configData.formConfig"
           :form-data="configData.formModel"
           :grid-edit-width="150"
-          :is-async="false"
+          :is-async="true"
           :is-select="false"
           :is-expand="false"
           :row-key="'id'"
@@ -41,14 +41,15 @@ export default {
       configData: RECORD_CONFIG,
       testData: [],
       direction: "rtl",
-      params: {
-        channel: "ol7",
-        pageSize: 0,
-        currentPage: 0,
-        merchantNo: "anw"
-      },
+      params: {},
       api: api.preAuditRecordQueryByPage
     };
+  },
+  created() {
+    this.params = {
+      channel: this.$route.query.channel,
+      merchantNo: this.$route.query.merchantNo
+    }
   },
   mounted() {},
   methods: {}
