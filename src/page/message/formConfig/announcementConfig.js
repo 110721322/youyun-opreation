@@ -20,15 +20,15 @@ export const FORM_CONFIG = {
         type: 1,
         label: '公告类型',
         key: 'messageType',
-        initVal: 0,
+        initVal: 2,
         options: [
-          {
-            label: '普通消息',
-            value: 0
-          },
           {
             label: '弹窗消息',
             value: 1
+          },
+          {
+            label: '普通消息',
+            value: 2
           }
         ],
         style: 'width:364px',
@@ -142,11 +142,7 @@ export const FORM_CONFIG = {
         rules: setRules('公告内容').isRequired.get,
         style: 'width:364px',
         isShow: ($item) => {
-          if ($item.messageType === 1) {
-            return true;
-          } else {
-            return false;
-          }
+          return true;
         }
       }
     ]

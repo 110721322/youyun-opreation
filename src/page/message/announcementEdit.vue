@@ -23,13 +23,14 @@ export default {
   components: { announcementEdit },
   data() {
     return {
-      fromConfigData: FORM_CONFIG.sendMessageData
+      fromConfigData: FORM_CONFIG.sendMessageData,
+      noticeId: this.$route.query.id
     };
   },
   created() {
     // 如果是查询编辑
     api
-      .queryNoticeByPrimaryId({ id: 1 })
+      .queryNoticeByPrimaryId({ id: this.noticeId })
       .then(res => {
         this.fromConfigData.formData.forEach((item, index) => {
           item.key === "time"
@@ -46,21 +47,21 @@ export default {
   methods: {
     handleCommit($ruleForm) {
       console.log($ruleForm);
-      api
-        .update({
-          title: $ruleForm.title,
-          messageType: $ruleForm.messageType,
-          content: $ruleForm.content,
-          displayStartDate: $ruleForm.time[0],
-          displayEndDate: $ruleForm.time[1],
-          displayType: $ruleForm.displayType,
-          isReadable: $ruleForm.isReadable,
-          readableTime: $ruleForm.readableTime,
-          from: "''",
-          to: "''",
-          isAlreadyRead: false,
-          id: "无"
-        })
+      const dataType = this.noticeId ? 'update' : 'add'
+      api[dataType]({
+        title: $ruleForm.title,
+        messageType: $ruleForm.messageType,
+        content: $ruleForm.content,
+        displayStartDate: $ruleForm.time[0],
+        displayEndDate: $ruleForm.time[1],
+        displayType: $ruleForm.displayType,
+        isReadable: $ruleForm.isReadable,
+        readableTime: $ruleForm.readableTime,
+        from: "''",
+        to: "''",
+        isAlreadyRead: false,
+        id: ""
+      })
         .then(res => {
           if (res.data.status === 1) {
             this.$alert("修改成功");

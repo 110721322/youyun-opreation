@@ -4,7 +4,7 @@
       v-model="timeInterval"
       style="float: left;"
       size="large"
-      :type="type"
+      :type="datatype"
       range-separator="至"
       start-placeholder="开始日期"
       end-placeholder="结束日期"
@@ -29,7 +29,7 @@ import * as g from "@/libs/global";
 export default {
   components: {},
   props: {
-    type: {
+    datatype: {
       type: String,
       default: "daterange"
     },
@@ -89,7 +89,7 @@ export default {
           this.dateList[0].label = "今天";
         }
 
-        if (this.type === "datetimerange") {
+        if (this.datatype === "datetimerange") {
           this.defaultTime = ["00:00:00", "23:59:59"];
         }
         this.onClick_item(this.dateList[0]);
@@ -100,8 +100,8 @@ export default {
     if (this.formItem.isSelectToday) {
       this.dateList[0].label = "今天";
     }
-
-    if (this.type === "datetimerange") {
+    this.datatype = this.formItem.datatype || "daterange"
+    if (this.datatype === "datetimerange") {
       this.defaultTime = ["00:00:00", "23:59:59"];
     }
     this.onClick_item(this.dateList[0]);
@@ -114,9 +114,9 @@ export default {
       }
       this.selectItem = {};
       let timeArr = [];
-      if (this.type === "daterange") {
+      if (this.datatype === "daterange") {
         timeArr = [g.utils.date($data[0]), g.utils.date($data[1])];
-      } else if (this.type === "datetimerange") {
+      } else if (this.datatype === "datetimerange") {
         timeArr = [g.utils.time($data[0]), g.utils.time($data[1])];
       }
 
@@ -125,7 +125,7 @@ export default {
     },
     onClick_item($item) {
       this.selectItem = $item;
-      if (this.type === "daterange") {
+      if (this.datatype === "daterange") {
         let start = "";
         let end = "";
         if ($item.label === "今天") {
@@ -136,7 +136,7 @@ export default {
           start = this.getDay(-$item.value);
         }
         this.timeInterval = [start, end];
-      } else if (this.type === "datetimerange") {
+      } else if (this.datatype === "datetimerange") {
         let start = "";
         let end = "";
         if ($item.label === "今天") {

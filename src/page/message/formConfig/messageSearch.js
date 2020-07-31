@@ -15,15 +15,15 @@ export const SEARCH_CONFIG = {
       labelWidth: '100px',
       options: [
         {
-          label: '川菜',
+          label: '无',
           value: 0
         },
         {
-          label: '粤菜',
+          label: '弹窗消息',
           value: 1
         },
         {
-          label: '杭帮菜',
+          label: '普通消息',
           value: 2
         }
       ]

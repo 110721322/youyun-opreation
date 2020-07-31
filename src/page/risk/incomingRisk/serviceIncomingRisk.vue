@@ -113,7 +113,8 @@ export default {
       api: api.agentBanListQueryByPage
     };
   },
-  mounted() {},
+  mounted() {
+  },
   methods: {
     selectionChange($val) {
       this.selectData = $val;

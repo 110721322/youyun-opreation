@@ -27,13 +27,14 @@
         <div class="sub-title">扫脸时代感恩回馈</div>
         <div class="title">支付立减优惠码，等你来抢</div>
       </div>
-      <div class="right-area" v-if="firstStep===1 && secondStep===0">
+      <div class="right-area" v-show="firstStep===1 && secondStep===0">
         <div class="right-head">
           <span></span>
           <span>优惠码设置</span>
         </div>
         <div class="coupon-form">
           <Form
+            ref="firstForm"
             :form-base-data="fromConfigData1.formData"
             :label-width="'auto'"
             :showFootBtn="false"
@@ -43,13 +44,14 @@
           </div>
         </div>
       </div>
-      <div class="right-area" v-if="secondStep===1 && thirdStep===0">
+      <div class="right-area" v-show="secondStep===1 && thirdStep===0">
         <div class="right-head">
           <span></span>
           <span>页面设置</span>
         </div>
         <div class="coupon-form">
           <Form
+            ref="secondForm"
             :form-base-data="fromConfigData2.formData"
             :label-width="'auto'"
             :showFootBtn="false"
@@ -69,15 +71,16 @@
           <div class="third_title"><span>1</span><span>下载二维码/复制领取链接</span></div>
           <p>优惠码领取二维码</p>
           <div class="qd-code">
-            <img src="../../assets/img/qr_code.jpg" alt="">
+            <img :src="activityDetail.qrCodeImageUrl" alt="">
           </div>
           <button class="down">下载二维码</button>
         </div>
         <div class="coupon-form" style="padding: 24px 0 32px 32px;">
           <div class="third_title"><span>2</span><span>发给服务商扫码/进入链接进行领取</span></div>
           <p>优惠码领取链接</p>
-          <div class="text-info">http://192.168.2.7/yx/sy/#id=hbdaqk&p=%E7%99%BB%E5%BD%95%E9%A1%B5&g=1</div>
-          <button class="down">复制链接</button>
+          <!-- <div class="text-info">http://192.168.2.7/yx/sy/#id=hbdaqk&p=%E7%99%BB%E5%BD%95%E9%A1%B5&g=1</div> -->
+          <div class="text-info">{{activityDetail.shortUrl}}</div>
+          <button class="down" @click="copyActiveCode($event,activityDetail.shortUrl )">复制链接</button>
         </div>
       </div>
     </div>
@@ -88,6 +91,8 @@
 import Form from "@/components/form/index";
 import { FORM_CONFIG1 } from "./formConfig/addCoupon";
 import { FORM_CONFIG2 } from "./formConfig/addCoupon";
+import api from "@/api/api_coupon.js"
+import Clipboard from "clipboard";
 export default {
   components: { Form },
   data() {
@@ -96,18 +101,62 @@ export default {
       fromConfigData2: FORM_CONFIG2,
       firstStep: 1,
       secondStep: 0,
-      thirdStep: 0
+      thirdStep: 0,
+      ruleForm: {},
+      activityDetail: {}
     }
   },
   methods: {
     onClick_firstbtn() {
+      this.ruleForm = this.$refs.firstForm.ruleForm
       this.secondStep = 1
     },
     onClick_secondbtn() {
-      this.thirdStep = 1
+      const params = {
+        ...this.ruleForm,
+        ...this.$refs.secondForm.ruleForm
+      }
+      api.createPromoCode({
+        activityBeginTime: params.date ? params.date[0] : null,
+        activityEndTime: params.date ? params.date[1] : null,
+        activityName: params.activityName,
+        activitySubName: params.activitySubName,
+        promoCodeAmount: params.promoCodeAmount,
+        promoCodeCount: params.promoCodeCount,
+        promoCodeName: params.promoCodeName,
+        promoCodeTime: params.promoCodeTime,
+        promoCodeTimeFlag: params.promoCodeTimeFlag,
+        promoCodeBeginTime: params.dateArr ? params.dateArr[0] : null,
+        promoCodeEndTime: params.dateArr ? params.dateArr[1] : null,
+        suffixUrl: ''
+      }).then(res => {
+        if (res.object) {
+          this.activityDetail = res.object
+          this.thirdStep = 1
+        }
+      })
     },
     onClick_back() {
       this.secondStep = 0
+    },
+    copyActiveCode(e, text) {
+      const clipboard = new Clipboard(e.target, { text: () => text })
+      clipboard.on('success', e => {
+        this.$message({ type: 'success', message: '复制成功' })
+        // 释放内存
+        clipboard.off('error')
+        clipboard.off('success')
+        clipboard.destroy()
+      })
+      clipboard.on('error', e => {
+        // 不支持复制
+        this.$message({ type: 'waning', message: '该浏览器不支持自动复制' })
+        // 释放内存
+        clipboard.off('error')
+        clipboard.off('success')
+        clipboard.destroy()
+      })
+      clipboard.onClick(e)
     }
   }
 }

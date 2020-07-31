@@ -52,10 +52,11 @@ export default {
       drawer: false,
       params: {
         operatorId: "",
-        startTime: this.$g.utils.getToday(),
-        endTime: this.$g.utils.getToday()
+        startTime: this.$g.utils.getToday(0) + ' 00:00:00',
+        endTime: this.$g.utils.getToday(0) + ' 23:59:59'
       },
-      api: api.workerOrderStatisticQueryByPage
+      api: api.workerOrderStatisticQueryByPage,
+      employeeList: this.$store.state.system.employeeList // 成员列表
     };
   },
   mounted() {},
@@ -65,12 +66,11 @@ export default {
     },
     handleDetail($data) {
       this.$router.push({
-        path: "/agentService/ticketList",
+        path: "/agentService/ticketCenter/ticketList",
         query: { id: $data.operatorId }
       });
     },
     search($ruleForm) {
-      console.log($ruleForm);
       const params = {
         startTime: $ruleForm.date ? $ruleForm.date[0] : null,
         endTime: $ruleForm.date ? $ruleForm.date[1] : null,

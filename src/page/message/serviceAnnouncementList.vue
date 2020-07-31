@@ -60,7 +60,7 @@ export default {
   created() {
     this.params = {
       title: "",
-      messageType: 1
+      messageType: 0
     };
   },
   mounted() {},
@@ -68,7 +68,10 @@ export default {
     handelEdit($row) {
       console.log($row);
       this.$router.push({
-        path: "/message/serviceAnnouncementList/detail"
+        path: "/message/serviceAnnouncementList/detail",
+        query: {
+          id: $row.id
+        }
       });
     },
     onClick_addAnnouncement() {
@@ -88,7 +91,7 @@ export default {
         .then(() => {
           api
             .delete({
-              id: "无",
+              id: "",
               deleted: true
             })
             .then(res => {

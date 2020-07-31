@@ -9,6 +9,7 @@ import * as g from '../libs/global';
 
 // const _this = new Vue();
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+// axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
 // axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? web_config.devServer : web_config.server;
 axios.defaults.baseURL = g.config.server;
 
@@ -29,7 +30,9 @@ axios.interceptors.request.use((config) => {
     config.data.merchantNo = localStorage.getItem('userInfo-merchant') ? JSON.parse(localStorage.getItem('userInfo-merchant')).merchantNo : '';
     config.data = qs.stringify(config.data);
   } else if (config.method === 'post' && Object.keys(config.data).length === 1) {
-    config.data = qs.stringify(config.data);
+    if (!config.changeContent) {
+      config.data = qs.stringify(config.data);
+    }
   } else if (config.method === 'get') {
     // config.params.merchantNo = localStorage.getItem('userInfo-merchant') ? JSON.parse(localStorage.getItem('userInfo-figmerchant')).merchantNo : '';
   }
