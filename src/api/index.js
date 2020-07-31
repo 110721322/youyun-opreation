@@ -23,7 +23,7 @@ axios.interceptors.request.use((config) => {
   config.headers.common.userToken = localStorage.getItem('token-merchant') || '';
   config.headers.common.client = 'WEB';
   config.headers.common.Access_token = localStorage.getItem('accessToken') || ''
-  console.log(config);
+  // console.log(config);
   // 参数格式为form data(默认request payload)
 
   if (config.method === 'post' && config.needFormData) {

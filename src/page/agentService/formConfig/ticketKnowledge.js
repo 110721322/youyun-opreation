@@ -13,14 +13,14 @@ export const FORM_CONFIG = {
         key1: 'firstId',
         key2: 'secondId',
         urlOptions1: {
-          url: apiAgent.queryFirstClassByPage,
           keyName: 'id',
+          url: apiAgent.queryFirstClassByPage,
           valueName: 'menuName',
           method: 'get'
         },
         urlOptions2: {
-          url: apiAgent.querySecondClassByPage,
           keyName: 'id',
+          url: apiAgent.querySecondClassByPage,
           valueName: 'menuName',
           method: 'get'
         },
@@ -69,15 +69,15 @@ export const FORM_CONFIG = {
         key1: 'firstId',
         key2: 'secondId',
         urlOptions1: {
-          url: apiAgent.queryFirstClassByPage,
           keyName: 'id',
           valueName: 'menuName',
+          url: apiAgent.queryFirstClassByPage,
           method: 'get'
         },
         urlOptions2: {
-          url: apiAgent.querySecondClassByPage,
           keyName: 'id',
           valueName: 'menuName',
+          url: apiAgent.querySecondClassByPage,
           method: 'get'
         },
         rules: setRules('所属模块/分类').isSelected.get

@@ -15,10 +15,6 @@ export const SEARCH_CONFIG = {
       labelWidth: '100px',
       options: [
         {
-          label: '无',
-          value: 0
-        },
-        {
           label: '弹窗消息',
           value: 1
         },

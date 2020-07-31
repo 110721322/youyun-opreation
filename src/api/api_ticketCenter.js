@@ -20,5 +20,6 @@ export default {
   updateQuestion: (params) => API.POST('/operation/v1/workerQuestion/updateQuestion', params),
   queryQuestionByPage: (params) => API.GET('/operation/v1/workerQuestion/queryQuestionByPage', params),
   deleteFirstClass: (params) => API.POST('/operation/v1/workerQuestion/deleteFirstClass', params, {changeContent: true}),
-  deleteSecondClass: (params) => API.POST('/operation/v1/workerQuestion/deleteSecondClass', params, {changeContent: true})
+  deleteSecondClass: (params) => API.POST('/operation/v1/workerQuestion/deleteSecondClass', params, {changeContent: true}),
+  deleteQuestion: (params) => API.POST('/operation/v1/workerQuestion/deleteQuestion', params)
 };

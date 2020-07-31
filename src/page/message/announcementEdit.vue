@@ -46,7 +46,6 @@ export default {
   },
   methods: {
     handleCommit($ruleForm) {
-      console.log($ruleForm);
       const dataType = this.noticeId ? 'update' : 'add'
       api[dataType]({
         title: $ruleForm.title,
@@ -57,16 +56,14 @@ export default {
         displayType: $ruleForm.displayType,
         isReadable: $ruleForm.isReadable,
         readableTime: $ruleForm.readableTime,
-        from: "''",
-        to: "''",
+        from: "operation",
+        to: "agent",
         isAlreadyRead: false,
-        id: ""
+        id: this.noticeId ? this.noticeId : ''
       })
         .then(res => {
-          if (res.data.status === 1) {
-            this.$alert("修改成功");
-            this.$router.push({ path: "/message/serviceAnnouncementList" });
-          }
+          this.$alert("修改成功");
+          this.$router.push({ path: "/message/serviceAnnouncementList" });
         })
         .catch();
     }

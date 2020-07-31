@@ -26,6 +26,7 @@
       :remote-method="remoteMethod"
       :disabled="formItem.isDisabled"
       :style="selectStyle"
+      @change="selectSecond"
     >
       <el-option
         v-for="item in selectOptions2"
@@ -39,7 +40,7 @@
 
 <script>
 import * as g from "@/libs/global";
-
+import apiAgent from "@/api/api_ticketCenter.js";
 export default {
   name: "",
   props: {
@@ -79,7 +80,11 @@ export default {
   created() {
     this.selectOptionsFun();
   },
-
+  mounted() {
+    if (this.ruleForm[this.formItem.key1]) {
+      this.selectFirst()
+    }
+  },
   methods: {
     isArray(value) {
       return g.utils.isArr(value);
@@ -94,10 +99,10 @@ export default {
       if (options) {
         this.selectOptions1 = options;
       } else {
-        urlOptions1
-          .url(
-            urlOptions1.params || {}
-          )
+        const apiUrl = urlOptions1.url ? urlOptions1.url : apiAgent.queryFirstClassByPage
+        apiUrl(
+          urlOptions1.params || {}
+        )
           .then(res => {
             const newArr = [];
             if (res.object) {
@@ -124,6 +129,7 @@ export default {
       }
     },
     selectFirst() {
+      this.$set(this.ruleForm, this.formItem.key2, '')
       this.selectOptions2 = []
       const { options, urlOptions2 } = this.formItem;
       if (!options && !urlOptions2) {
@@ -134,8 +140,8 @@ export default {
       if (options) {
         this.selectOptions2 = options;
       } else {
-        console.log(urlOptions2)
-        urlOptions2.url({
+        const apiUrl = urlOptions2.url ? urlOptions2.url : apiAgent.querySecondClassByPage
+        apiUrl({
           firstMenuId: this.ruleForm[this.formItem.key1]
         })
           .then(res => {
@@ -162,6 +168,9 @@ export default {
             console.error(err);
           });
       }
+    },
+    selectSecond() {
+      console.log(222)
     }
   }
 };

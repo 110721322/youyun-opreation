@@ -49,7 +49,6 @@ export default {
   data() {
     return {
       searchMaxHeight: "300",
-
       configData: USER_CONFIG,
       testData: [],
       searchConfig: SEARCH_CONFIG,
@@ -59,6 +58,7 @@ export default {
   },
   created() {
     this.params = {
+      to: 'agent',
       title: "",
       messageType: 0
     };
@@ -108,7 +108,8 @@ export default {
       console.log($ruleForm);
       const params = {
         title: $ruleForm.title,
-        messageType: $ruleForm.messageType
+        messageType: $ruleForm.messageType,
+        to: 'agent'
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;

@@ -377,6 +377,21 @@ export default {
           });
       }
     },
+    getQuestion(secondId) {
+      api
+        .queryQuestionByPage({
+          secondClass: secondId,
+          pageSize: 0,
+          currentPage: 0
+        })
+        .then(res => {
+          this.questions = res.datas;
+          this.dataTotal = res.totalCount;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
     onClick_addFirstMenu() {
       this.formStatus = "addFirstClass";
       this.fromConfigData = FORM_CONFIG.menuData;
@@ -393,6 +408,7 @@ export default {
       const formData = JSON.parse(JSON.stringify(FORM_CONFIG.editQuestionData));
       this.fromConfigData = formData;
       this.drawer = true;
+      this.getQuestion(this.currentData.id)
     },
     transferQuestions() {
       this.questions.forEach(item => {
@@ -468,16 +484,17 @@ export default {
       })
         .then(() => {
           api
-            .updateQuestion({
+            .deleteQuestion({
               questionContent: $data.questionContent,
               secondClass: this.secondClass,
               answerContent: $data.answerContent,
               firstClass: this.firstClass,
-              isDeleted: true,
+              isDeleted: 1,
               id: $data.id
             })
             .then(res => {
-              this.$message("编辑成功");
+              this.$message("删除成功");
+              this.getQuestion(this.currentData.id)
               this.drawer = false;
             })
             .catch(err => {

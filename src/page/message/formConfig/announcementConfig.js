@@ -116,7 +116,7 @@ export const FORM_CONFIG = {
         style: 'width:364px',
         placeholder: '请输入1-1000整数',
         showSec: true,
-        disable: true,
+        isDisabled: false,
         isShowSlot: true,
         showSlotName: '秒',
         isShow: ($item) => {
