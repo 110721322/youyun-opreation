@@ -58,6 +58,9 @@ export default {
       modelList: []
     }
   },
+  created() {
+    this.getModel()
+  },
   methods: {
     onclick_btn() {
       this.$router.push({ path: "/serveMarket/businessModel/detail" });
@@ -70,7 +73,7 @@ export default {
     },
     getModel() {
       api.selectModuleProduct({
-        moduleCode: 'businessModel'
+        moduleCode: 'businessMode'
       }).then(res => {
         const modelList = res.object
         this.modelList = modelList
