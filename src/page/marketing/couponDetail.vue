@@ -3,13 +3,13 @@
     <div class="detail">
       <div class="detail-title">活动信息</div>
       <ul class="detail-info">
-        <li><span>活动名称：</span><span>感恩回馈1000元优惠码</span><span>进行中</span></li>
-        <li><span>优惠码面值：</span><span>1000元</span></li>
-        <li><span>截止活动时间：</span><span>2020-05-31</span></li>
-        <li><span>优惠码使用有限期：</span><span>领取后5天内</span></li>
-        <li><span>发放数量：</span><span>发放数量：</span></li>
-        <li><span>活动主标题：</span><span>支付立减优惠码，等你来抢</span></li>
-        <li><span>活动副标题：</span><span>扫脸时代感恩回馈</span></li>
+        <li><span>活动名称：</span><span>{{ activityDetail.activityName }}</span><span>{{ stateMap[activityDetail.state] }}</span></li>
+        <li><span>优惠码面值：</span><span>{{ activityDetail.promoCodeAmount }}元</span></li>
+        <li><span>截止活动时间：</span><span>{{ activityDetail.activityEndTime }}</span></li>
+        <li><span>优惠码使用有限期：</span><span>{{promoCodeTime}}</span></li>
+        <li><span>发放数量：</span><span>{{ activityDetail.promoCodeCount }}</span></li>
+        <li><span>活动主标题：</span><span>{{ activityDetail.activityName }}</span></li>
+        <li><span>活动副标题：</span><span>{{ activityDetail.activitySubName }}</span></li>
       </ul>
     </div>
     <search
@@ -20,19 +20,19 @@
     />
     <ul class="search-result">
       <li>
-        <div class="info"><span>2</span><span>次</span></div>
+        <div class="info"><span>{{ couponStatics.receiveCount }}</span><span>次</span></div>
         <p>领取数量</p>
       </li>
       <li>
-        <div class="info"><span>2</span><span>次</span></div>
+        <div class="info"><span>{{ couponStatics.usedCount }}</span><span>次</span></div>
         <p>核销数量</p>
       </li>
       <li>
-        <div class="info"><span>2</span><span>次</span></div>
+        <div class="info"><span>{{ couponStatics.orderSuccessCount }}</span><span>次</span></div>
         <p>成交订单数</p>
       </li>
       <li>
-        <div class="info"><span>2000</span><span>元</span></div>
+        <div class="info"><span>{{ couponStatics.orderSuccessMoney }}</span><span>元</span></div>
         <p>成交订单金额</p>
       </li>
     </ul>
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import api from "@/api/api_coupon.js";
 import search from "@/components/search/search.vue";
 import { FORM_CONFIG } from "./formConfig/detailConfig";
 export default {
@@ -47,11 +48,66 @@ export default {
   data() {
     return {
       searchMaxHeight: "88",
-      searchConfig: FORM_CONFIG
+      searchConfig: FORM_CONFIG,
+      activityDetail: {},
+      activityNo: '',
+      id: '',
+      stateMap: {0: '进行中', 1: '已结束'},
+      promoCodeTime: '',
+      couponStatics: {},
+      params: {}
     }
   },
+  created() {
+    const activityNo = this.$route.query.activityNo
+    const id = this.$route.query.id
+    this.getDetail(activityNo, id)
+    this.getStastic(activityNo)
+  },
   methods: {
-    search() {}
+    search($ruleForm) {
+      const params = {
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
+        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        activityNo: this.$route.query.activityNo
+      };
+      this.params = params;
+      api.queryDetailCount(params).then(res => {
+        if (res.object) {
+          // console.log(res.object)
+          this.couponStatics = res.object
+        }
+      })
+    },
+    getDetail(activityNo, id) {
+      api.promoCodeQueryDetails({
+        activityNo: activityNo,
+        id: id
+      }).then(res => {
+        if (res.object) {
+          this.activityDetail = res.object
+          if (this.activityDetail.promoCodeTimeFlag === '0') {
+            if (this.activityDetail.promoCodeTime.indexOf('D') !== -1) {
+              this.promoCodeTime = '领取后' + this.activityDetail.promoCodeTime.split('-')[1] + '天内'
+            } else {
+              this.promoCodeTime = '领取后' + this.activityDetail.promoCodeTime.split('-')[1] + '小时内'
+            }
+          } else {
+            this.promoCodeTime = this.activityDetail.promoCodeBeginTime + '-' + this.activityDetail.promoCodeEndTime
+          }
+        }
+      });
+    },
+    getStastic(activityNo) {
+      api.queryDetailCount({
+        activityNo: activityNo
+      }).then(res => {
+        if (res.object) {
+          // console.log(res.object)
+          this.couponStatics = res.object
+        }
+      })
+    }
   }
 }
 </script>

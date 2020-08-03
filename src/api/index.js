@@ -9,6 +9,7 @@ import * as g from '../libs/global';
 
 // const _this = new Vue();
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+// axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
 // axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? web_config.devServer : web_config.server;
 // axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
 axios.defaults.baseURL = g.config.server;
@@ -23,6 +24,7 @@ axios.interceptors.request.use((config) => {
   config.headers.common.userToken = localStorage.getItem('token-merchant') || '';
   config.headers.common.client = 'WEB';
   config.headers.common.Access_token = localStorage.getItem('accessToken') || ''
+  // console.log(config);
   // 参数格式为form data(默认request payload)
 
   if (config.method === 'post' && config.needFormData) {
@@ -32,8 +34,6 @@ axios.interceptors.request.use((config) => {
     if (!config.changeContent) {
       config.data = qs.stringify(config.data);
     }
-    //
-    // config.data = qs.stringify(config.data);
   } else if (config.method === 'get') {
     // config.params.merchantNo = localStorage.getItem('userInfo-merchant') ? JSON.parse(localStorage.getItem('userInfo-figmerchant')).merchantNo : '';
   }

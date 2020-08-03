@@ -4,9 +4,11 @@
       v-if="selectOption.isAutocomplete"
       v-model="inputForm"
       :placeholder="formItem.placeholder?formItem.placeholder:'请输入内容'"
-      value-key="agentName"
-      label="agentNo"
+      :value-key="selectOption.value"
+      :value="selectOption.valueKey"
+      label="label"
       class="input-with-select"
+      :style="selectOption.style"
       size="large"
       :fetch-suggestions="querySearchAsync"
       @select="onAutoSelect"
@@ -14,6 +16,7 @@
     >
 
       <el-select
+        v-if="!formItem.hiddenSelect"
         slot="prepend"
         v-model="inputSelect"
         style="width:294px"
@@ -107,7 +110,7 @@ export default {
     querySearchAsync(queryString, callback) {
       const {api} = this.selectOption;
       const params = {
-        agentName: queryString
+        [this.selectOption.value]: queryString
       }
       api(params).then(res => {
         this.autoCompleteList = res.object;

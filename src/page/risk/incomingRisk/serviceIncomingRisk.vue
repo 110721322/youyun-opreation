@@ -111,7 +111,8 @@ export default {
       agentApi: agentApi.agentList
     };
   },
-  mounted() {},
+  mounted() {
+  },
   methods: {
     selectionChange($val) {
       this.selectData = []

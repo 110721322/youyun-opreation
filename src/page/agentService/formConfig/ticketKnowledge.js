@@ -1,30 +1,30 @@
 import { setRules } from '@/libs/kit/formFns.js'
-
+import apiAgent from "@/api/api_ticketCenter.js";
 export const FORM_CONFIG = {
   addQuestionData: {
     title: '添加问题',
     showFootBtn: true,
     formData: [
       {
-        type: 1,
-        label: '所属分类',
-        key: 'type',
-        initVal: "0",
-        options: [
-          {
-            label: '川菜',
-            value: '0'
-          },
-          {
-            label: '粤菜',
-            value: '1'
-          },
-          {
-            label: '杭帮菜',
-            value: '2'
-          }
-        ],
-        rules: setRules('广告名称').isRequired.get
+        type: 16,
+        label: '所属模块 分类',
+        label1: '所属模块',
+        label2: '所属分类',
+        key1: 'firstId',
+        key2: 'secondId',
+        urlOptions1: {
+          keyName: 'id',
+          url: apiAgent.queryFirstClassByPage,
+          valueName: 'menuName',
+          method: 'get'
+        },
+        urlOptions2: {
+          keyName: 'id',
+          url: apiAgent.querySecondClassByPage,
+          valueName: 'menuName',
+          method: 'get'
+        },
+        rules: setRules('所属模块/分类').isSelected.get
       },
       {
         type: 0,
@@ -62,25 +62,25 @@ export const FORM_CONFIG = {
     showFootBtn: true,
     formData: [
       {
-        type: 1,
-        label: '所属分类',
-        key: 'type',
-        initVal: "0",
-        options: [
-          {
-            label: '川菜',
-            value: '0'
-          },
-          {
-            label: '粤菜',
-            value: '1'
-          },
-          {
-            label: '杭帮菜',
-            value: '2'
-          }
-        ],
-        rules: setRules('广告名称').isRequired.get
+        type: 16,
+        label: '所属模块 分类',
+        label1: '所属模块',
+        label2: '所属分类',
+        key1: 'firstId',
+        key2: 'secondId',
+        urlOptions1: {
+          keyName: 'id',
+          valueName: 'menuName',
+          url: apiAgent.queryFirstClassByPage,
+          method: 'get'
+        },
+        urlOptions2: {
+          keyName: 'id',
+          valueName: 'menuName',
+          url: apiAgent.querySecondClassByPage,
+          method: 'get'
+        },
+        rules: setRules('所属模块/分类').isSelected.get
       },
       {
         type: 0,

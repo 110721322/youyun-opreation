@@ -25,13 +25,13 @@
           size="medium"
           class="slot"
         >
-          <el-table-column prop="deviceId" label="设备名称" width="180"></el-table-column>
+          <el-table-column prop="deviceModel" label="设备名称" width="180"></el-table-column>
           <el-table-column prop="name" label="图片">
             <template slot-scope="scope">
               <el-image
                 style="width: 65px; height: 65px"
-                :src="scope.row.name"
-                :preview-src-list="[scope.row.name]"
+                :src="scope.row.deviceImg"
+                :preview-src-list="[scope.row.deviceImg]"
               ></el-image>
             </template>
           </el-table-column>
@@ -68,9 +68,9 @@ export default {
       currentType: "",
       tableData: [],
       ruleForm: {
-        buyerName: "1",
-        buyerMobile: "2",
-        buyerAddress: "3"
+        // buyerName: "1",
+        // buyerMobile: "2",
+        // buyerAddress: "3"
       },
       configData: {
         name: "邮寄信息",
@@ -81,7 +81,7 @@ export default {
           },
           {
             name: "联系人手机号",
-            key: "buyerMobile"
+            key: "buyerPhone"
           },
           {
             name: "邮寄地址",
@@ -90,8 +90,8 @@ export default {
         ]
       },
       ruleForm2: {
-        actualAmount: "1",
-        payTypeDesc: "2"
+        // actualAmount: "1",
+        // payTypeDesc: "2"
       },
       configData2: {
         name: "付款信息",
@@ -107,11 +107,11 @@ export default {
         ]
       },
       ruleForm3: {
-        outputNo: "1",
-        createTime: "2020-01-11",
-        agentName: "3",
-        amount: "3",
-        statusDesc: "3"
+        // outputNo: "1",
+        // createTime: "2020-01-11",
+        // agentName: "3",
+        // amount: "3",
+        // statusDesc: "3"
       },
       configData3: {
         name: "订单信息",
@@ -138,7 +138,7 @@ export default {
           },
           {
             name: "订单备注",
-            key: "createTime"
+            key: "buyerRemark"
           }
         ]
       },
@@ -167,6 +167,7 @@ export default {
   },
   mounted() {
     this.currentType = "reject";
+    this.params.id = this.$route.query.id
     this.getHardDetail()
   },
   methods: {
@@ -186,9 +187,9 @@ export default {
       api.hardwareDetail(this.params).then(res => {
         this.tableData = res.object.infoVOList
         this.ruleForm = {
-          buyerName: res.object.buyerJsonVO.buyerName,
-          buyerMobile: res.object.buyerJsonVO.buyerMobile,
-          buyerAddress: res.object.buyerJsonVO.buyerAddress
+          buyerName: res.object.buyerName,
+          buyerPhone: res.object.buyerPhone,
+          buyerAddress: res.object.buyerAddress
         }
         this.ruleForm2 = {
           actualAmount: res.object.actualAmount,
@@ -196,10 +197,11 @@ export default {
         }
         this.ruleForm3 = {
           outputNo: res.object.outputNo,
-          createTime: "2020-01-12",
+          createTime: res.object.createTime,
           agentName: res.object.agentName,
           amount: res.object.amount,
-          statusDesc: res.object.statusDesc
+          statusDesc: res.object.statusDesc,
+          buyerRemark: res.object.buyerRemark
         }
         this.rejectTitle = res.object.rejectRemark
         if (res.object.rejectRemark) {

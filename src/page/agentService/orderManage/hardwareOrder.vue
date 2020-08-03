@@ -24,7 +24,7 @@
               :is-async="true"
               :is-select="false"
               :is-expand="true"
-              :row-key="'order'"
+              :row-key="index"
               :default-expand-all="false"
               :hide-edit-area="configData.hideEditArea"
               :params="params"
@@ -33,9 +33,9 @@
             >
               <template v-slot="{ row }">
                 <el-form label-position="left" inline class="demo-table-expand">
-                  <div v-for="(item,index) in row.childrenData" :key="index" class="form-box">
-                    <el-form-item :label="item.label+':'">
-                      <span>{{ item.value }}</span>
+                  <div v-for="(item,index) in row.infoVOList" :key="index" class="form-box">
+                    <el-form-item :label="item.deviceModel+':'">
+                      <span>{{item.count}}台</span>
                     </el-form-item>
                   </div>
                 </el-form>
@@ -53,7 +53,6 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import { SEARCH_CONFIG } from "../formConfig/hardwareOrderSearch";
 import { TABLE_CONFIG } from "../tableConfig/hardwareOrderConfig";
 import api from "@/api/api_agent.js";
-
 export default {
   name: "Theme",
   components: { Search, BaseCrud },
@@ -65,77 +64,32 @@ export default {
       testData: [],
       isChangeMode: true,
       params: {
-        agentNo: "丽美",
-        outputNo: "侠猪0丽侠猪c",
-        outputType: 614,
-        status: 611,
+        agentNo: null,
+        outputNo: null,
+        outputType: null,
+        status: null,
         beginTime: this.$g.utils.getToday(),
         endTime: this.$g.utils.getToday()
       },
       api: api.hardwarePageOrder
     };
   },
+  created() {
+  },
   mounted() {},
   methods: {
-    handleDetail() {
+    handleDetail($row) {
       this.$router.push({
-        path: "/agentService/orderManage/hardwareOrder/detail"
-      });
-    },
-    getTableData() {
-      this.testData = [
-        {
-          order: "日常任务1",
-          time: "商户结算失败",
-          buyService: "提醒",
-          contact: "XXXX店铺",
-          status: "222.22",
-          amount: "222.22",
-          type: "222.22",
-          childrenData: [
-            {
-              label: "微信刷脸-青蛙",
-              value: "400台"
-            },
-            {
-              label: "微信刷脸-青蛙",
-              value: "400台"
-            },
-            {
-              label: "微信刷脸-青蛙",
-              value: "400台"
-            }
-          ]
-        },
-        {
-          order: "日常任务",
-          time: "商户结算失败",
-          buyService: "提醒",
-          contact: "XXXX店铺",
-          status: "222.22",
-          amount: "222.22",
-          type: "222.22",
-          childrenData: [
-            {
-              label: "微信刷脸-青蛙",
-              value: "400台"
-            },
-            {
-              label: "微信刷脸-青蛙",
-              value: "400台"
-            },
-            {
-              label: "微信刷脸-青蛙",
-              value: "400台"
-            }
-          ]
+        path: "/agentService/orderManage/hardwareOrder/detail",
+        query: {
+          id: $row.id
         }
-      ];
+      });
     },
     search($ruleForm) {
       this.params = {
-        agentNo: "丽美",
-        outputNo: "",
+        agentNo: $ruleForm.agentNo ? $ruleForm.agentNo : null,
+        outputNo: $ruleForm.outputNo ? $ruleForm.outputNo : null,
         outputType: $ruleForm.outputType,
         status: $ruleForm.status,
         beginTime: $ruleForm.date ? $ruleForm.date[0] : null,

@@ -27,7 +27,7 @@
               <span
                 v-show="!data.isEdit"
                 @click="onClick_editMenu(node,data)"
-              >{{ data.menuName+"("+(data.count||data.questionCount)+")" }}</span>
+              >{{ data.menuName+"("+((data.count)||(data.questionCount)||0)+")" }}</span>
               <span v-show="!data.isEdit">
                 <el-button
                   v-if="data.children"
@@ -149,7 +149,9 @@ export default {
       formStatus: "",
       firstClass: "",
       secondClass: "",
-      activeRow: {}
+      activeRow: {},
+      currentNode: {},
+      currentData: {}
     };
   },
   mounted() {
@@ -201,6 +203,9 @@ export default {
             .then(res => {
               this.$message("已添加");
               this.drawer = false;
+              this.$nextTick(() => {
+                this.queryFirstClassByPage()
+              });
             })
             .catch(err => {
               this.$message(err);
@@ -210,13 +215,16 @@ export default {
           api
             .addQuestion({
               questionContent: $data.questionContent,
-              secondClass: this.secondClass,
+              secondClass: this.secondClass || $data.secondId,
               answerContent: $data.answerContent,
-              firstClass: this.firstClass
+              firstClass: this.firstClass || $data.firstId
             })
             .then(res => {
               this.$message("已添加");
               this.drawer = false;
+              this.$nextTick(() => {
+                this.queryFirstClassByPage()
+              });
             })
             .catch(err => {
               this.$message(err);
@@ -260,8 +268,8 @@ export default {
         api
           .updateFirstClass({
             id: $data.id,
-            menu_name: $data.menuName,
-            is_deleted: ""
+            menuName: $data.menuName,
+            isDeleted: ""
           })
           .then(res => {
             this.$set($data, "isEdit", false);
@@ -314,6 +322,9 @@ export default {
                   id: draggingNode.data.id
                 })
                 .then(res => {
+                  this.$nextTick(() => {
+                    this.queryFirstClassByPage()
+                  });
                   return true;
                 })
                 .catch(err => {
@@ -327,6 +338,9 @@ export default {
                   id: draggingNode.data.id
                 })
                 .then(res => {
+                  this.$nextTick(() => {
+                    this.queryFirstClassByPage()
+                  });
                   return true;
                 })
                 .catch(err => {
@@ -343,7 +357,8 @@ export default {
       }
     },
     handleNodeClick($data, $node) {
-      console.log($data);
+      this.currentNode = $node
+      this.currentData = $data
       if ($node.level === 2) {
         this.firstClass = $node.parent.data.id;
         this.secondClass = $node.data.id;
@@ -362,6 +377,21 @@ export default {
           });
       }
     },
+    getQuestion(secondId) {
+      api
+        .queryQuestionByPage({
+          secondClass: secondId,
+          pageSize: 0,
+          currentPage: 0
+        })
+        .then(res => {
+          this.questions = res.datas;
+          this.dataTotal = res.totalCount;
+        })
+        .catch(err => {
+          this.$message(err);
+        });
+    },
     onClick_addFirstMenu() {
       this.formStatus = "addFirstClass";
       this.fromConfigData = FORM_CONFIG.menuData;
@@ -378,13 +408,14 @@ export default {
       const formData = JSON.parse(JSON.stringify(FORM_CONFIG.editQuestionData));
       this.fromConfigData = formData;
       this.drawer = true;
+      this.getQuestion(this.currentData.id)
     },
     transferQuestions() {
       this.questions.forEach(item => {
         item.answer = item.answer.replace(/\n/g, "<br/>");
       });
     },
-    onClick_append($node, $data) {
+    onClick_append($node, $data) { // 添加节点
       // this.loadNode($node, this.resolve_had);
       this.$refs.tree.store.nodesMap[$data.id].expanded = true;
       const newChild = {
@@ -400,40 +431,42 @@ export default {
       }
       $data.children.push(newChild);
     },
-    onClick_delete($node, $data) {
+    onClick_delete($node, $data) { // 删除节点
       this.$confirm("是否要删除该菜单？", "提示", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认删除",
         cancelButtonText: "取消"
       })
         .then(() => {
-          if ($node.level === 1) {
+          if (this.currentNode.level === 1) {
             api
-              .updateFirstClass({
-                id: $data.id,
-                menu_name: $data.menuName,
-                is_deleted: true
+              .deleteFirstClass({
+                id: this.currentData.id
               })
               .then(res => {
                 this.$message({
                   type: "info",
                   message: "已删除"
                 });
+                this.$nextTick(() => {
+                  this.queryFirstClassByPage()
+                });
               })
               .catch(err => {
                 this.$message(err);
               });
-          } else if ($node.level === 2) {
+          } else if (this.currentNode.level === 2) {
             api
-              .updateSecondClass({
-                id: $data.id,
-                menu_name: $data.menuName,
-                is_deleted: true
+              .deleteSecondClass({
+                id: this.currentData.id
               })
               .then(res => {
                 this.$message({
                   type: "info",
                   message: "已删除"
+                });
+                this.$nextTick(() => {
+                  this.queryFirstClassByPage()
                 });
               })
               .catch(err => {
@@ -451,16 +484,17 @@ export default {
       })
         .then(() => {
           api
-            .updateQuestion({
+            .deleteQuestion({
               questionContent: $data.questionContent,
               secondClass: this.secondClass,
               answerContent: $data.answerContent,
               firstClass: this.firstClass,
-              isDeleted: true,
+              isDeleted: 1,
               id: $data.id
             })
             .then(res => {
-              this.$message("编辑成功");
+              this.$message("删除成功");
+              this.getQuestion(this.currentData.id)
               this.drawer = false;
             })
             .catch(err => {

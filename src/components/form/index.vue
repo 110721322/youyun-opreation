@@ -55,6 +55,8 @@ import Show from "./components/Show";
 import DatePicker from "./components/DatePicker.vue";
 import SelectInput from "./components/SelectInput.vue";
 import DateTime from "./components/DateTime.vue"
+import InputSelect from "./inputSelect.vue";
+import TicketAddForm from "./ticketAddForm.vue";
 
 // import { isUndefined, deepClone } from '@/libs/lit/utils'
 
@@ -74,7 +76,9 @@ export default {
     Show,
     DatePicker,
     SelectInput,
-    DateTime
+    DateTime,
+    InputSelect,
+    TicketAddForm
   },
   props: {
     formBaseData: {

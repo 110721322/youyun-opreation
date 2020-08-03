@@ -2,55 +2,49 @@ export const USER_CONFIG = {
   gridConfig: [
     {
       label: '编号',
-      prop: 'sort',
+      prop: 'qrCodeNo',
       width: '80px'
     },
     {
       label: '优惠码名称',
-      prop: 'couponName',
+      prop: 'promoCodeName',
       width: '120px'
     },
     {
       label: '优惠码面值(元)',
-      prop: 'couponPrice',
+      prop: 'promoCodeAmount',
       width: '120px'
     },
     {
       label: '有效期',
       prop: 'timeData',
-      width: '90px'
+      width: '90px',
+      formatter($row) {
+        const startTime = $row['promoCodeBeginTime'] ? $row['promoCodeBeginTime'] : '--';
+        const endTime = $row['promoCodeEndTime'] ? $row['promoCodeEndTime'] : '--';
+        return startTime + '至' + endTime
+      }
     },
     {
       label: '库存',
-      prop: 'sale',
+      prop: 'promoCodeCount',
       width: '90px'
     },
     {
       label: '领取数量',
-      prop: 'achieve',
+      prop: 'promoCodeGetNumber',
       width: '90px'
     },
     {
       label: '核销数量',
-      prop: 'writeOff',
+      prop: 'promoCodeUseNumber',
       width: '90px'
     },
     {
       label: '状态',
-      prop: 'accountStatus',
+      prop: 'state',
       render: (h, params) => {
-        if (params.row.status === '0') {
-          return h(
-            'el-tag',
-            {
-              props: {
-                size: 'medium ',
-                type: 'warning'
-              }
-            },
-            '已结束'
-          );
-        } else {
+        if (params.row.state === '0') {
           return h(
             'el-tag',
             {
@@ -60,6 +54,17 @@ export const USER_CONFIG = {
               }
             },
             '进行中'
+          );
+        } else {
+          return h(
+            'el-tag',
+            {
+              props: {
+                size: 'medium ',
+                type: 'warning'
+              }
+            },
+            '已结束'
           );
         }
       }
@@ -79,7 +84,7 @@ export const USER_CONFIG = {
         emitName: 'extension',
         type: 'text',
         isShow: ($row) => {
-          if ($row.status === '1') {
+          if ($row.state === '0') {
             return true;
           } else {
             return false;
