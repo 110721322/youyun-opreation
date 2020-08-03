@@ -92,18 +92,11 @@ export default {
     }
   },
   mounted() {
-    // this.getData()
+    this.getData()
   },
   created() {
-    var myDate = new Date()
-    if (myDate.getMonth() < 10) {
-      this.params = {
-        tradeMonth: myDate.getFullYear() + "-" + "0" + myDate.getMonth() + "-" + "01"
-      }
-    } else {
-      this.params = {
-        tradeMonth: myDate.getFullYear() + "-" + myDate.getMonth() + "-" + "01"
-      }
+    this.params = {
+      tradeMonth: "2020-07-01"
     }
     this.getDate();
     this.search()

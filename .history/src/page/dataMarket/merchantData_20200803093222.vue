@@ -144,11 +144,11 @@
           </div>
           <div class="draw-checkbox">
             <el-checkbox-group v-model="checkedSelect" @change="handleChecked">
-              <el-checkbox v-for="(item, index) in checkIndex" :key="index" :label="item">{{ item }}</el-checkbox>
+              <el-checkbox v-for="(item, index) in checkIndex" :label="item" :key="index">{{item}}</el-checkbox>
             </el-checkbox-group>
           </div>
           <div class="bottom-btn">
-            <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" @change="handleCheckAllChange">全选</el-checkbox>
+            <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
             <div class="btn">
               <button>确定</button>
               <button @click="cancleClose">取消</button>

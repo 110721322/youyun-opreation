@@ -159,16 +159,14 @@ export default {
     },
     confirm($filel) {
       // console.log($filel)
-      api_statistice.excelTemplate({
-        param: $filel.date,
-        type: "dragonflyInput",
-        url: $filel.excil.dialogImageUrl
+      api_statistice.merchantinput({
+        dragonflyInput = this.
       }).then(res => {
         console.log(res)
       }).catch(err => {
         console.log(err)
       })
-      this.drawer = false
+      console.log(this.configData)
     },
     cancel() {
       this.drawer = false
