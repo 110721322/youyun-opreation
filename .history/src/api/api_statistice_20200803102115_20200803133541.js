@@ -4,8 +4,6 @@ import * as g from '../libs/global';
 export default {
   // 导入商户蜻蜓活动奖励excel
   merchantinput: (params) => API.POST(g.config.server + '/operation/v1/dragonfly/reward/merchant/input', params),
-  // Excel上传
-  excelTemplate: (params) => API.POST(g.config.server + '/operation/v1/excelTemplate/upload', params),
   // 服务商蜻蜓奖励分页查询
   queryByPage: (params) => API.GET(g.config.server + '/operation/v1/dragonfly/reward/agent/queryByPage', params),
   // 商户蜻蜓奖励明细分页查询
@@ -30,7 +28,7 @@ export default {
   operationReject: (params) => API.POST(g.config.server + '/operation/v1/agentSettle/operationReject', params),
   // 运营审核通过
   operationSuccess: (params) => API.POST(g.config.server + '/operation/v1/agentSettle/operationSuccess', params),
-  // 佣金总数
+  // 佣金结算
   querySettleSum: (params) => API.POST(g.config.server + 'operation/v1/topAgentSettle/querySettleSum', params),
   // 佣金结算
   SettlequeryByPage: (params) => API.POST(g.config.server + 'operation/v1/topAgentSettle/queryByPage', params),

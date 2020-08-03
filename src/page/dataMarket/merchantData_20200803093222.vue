@@ -74,7 +74,6 @@
             :title="'总交易额排行榜'"
             :is-show-more="true"
             :config-data="tableConfigData3"
-            :permission="tableConfigData3.permission"
             :item-test-data="testData3"
             :is-show-line="false"
             :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
@@ -114,7 +113,6 @@
           class="pie-item"
           :title="'无交易商户上期排行'"
           :config-data="tableConfigData"
-          :permission="tableConfigData.permission"
           :is-show-more="true"
           :is-show-table="true"
           :item-test-data="testData"
@@ -126,7 +124,6 @@
           class="pie-item"
           :title="'交易额涨跌排行'"
           :config-data="tableConfigData2"
-          :permission="tableConfigData2.permission"
           :is-show-more="true"
           :is-show-table="true"
           :item-test-data="testData2"
@@ -147,11 +144,11 @@
           </div>
           <div class="draw-checkbox">
             <el-checkbox-group v-model="checkedSelect" @change="handleChecked">
-              <el-checkbox v-for="(item, index) in checkIndex" :key="index" :label="item">{{ item }}</el-checkbox>
+              <el-checkbox v-for="(item, index) in checkIndex" :label="item" :key="index">{{item}}</el-checkbox>
             </el-checkbox-group>
           </div>
           <div class="bottom-btn">
-            <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" @change="handleCheckAllChange">全选</el-checkbox>
+            <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
             <div class="btn">
               <button>确定</button>
               <button @click="cancleClose">取消</button>

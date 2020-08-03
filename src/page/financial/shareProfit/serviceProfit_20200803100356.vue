@@ -92,7 +92,7 @@ export default {
     }
   },
   mounted() {
-    // this.getData()
+    this.getData()
   },
   created() {
     var myDate = new Date()

@@ -23,7 +23,11 @@
         :hide-edit-area="configData.hideEditArea"
       ></BaseCrud>
     </div>
+<<<<<<< HEAD
+    <!--    服务商统计数据-->
+=======
   <!--    服务商统计数据-->
+>>>>>>> dev-yuzhou
   </div>
 </template>
 <script>

@@ -11,7 +11,7 @@ export default {
   // 商户蜻蜓奖励明细分页查询
   merchantqueryByPage: (params) => API.GET(g.config.server + '/operation/v1/dragonfly/reward/merchant/queryByPage', params),
   // 分润统计-服务商分润统计-按支付方式,通道统计
-  selectAgentDataByPage: (params) => API.POST(g.config.server + '/operation/v1/topAgentStatistics/selectAgentDataByPage', params),
+  selectAgentDataByPage: (params) => API.POST(g.config.server + '/operation/v1/topAgentStatistics/selectAgentDataByPage', params, {changeContent: true}),
   // 分润统计-服务商分润统计-间连分润统计
   selectIndirectDataByPage: (params) => API.POST(g.config.server + '/operation/v1/topAgentStatistics/selectIndirectDataByPage', params),
   // 代理商下的商户明细

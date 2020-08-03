@@ -30,7 +30,7 @@ export default {
   operationReject: (params) => API.POST(g.config.server + '/operation/v1/agentSettle/operationReject', params),
   // 运营审核通过
   operationSuccess: (params) => API.POST(g.config.server + '/operation/v1/agentSettle/operationSuccess', params),
-  // 佣金总数
+  // 佣金结算
   querySettleSum: (params) => API.POST(g.config.server + 'operation/v1/topAgentSettle/querySettleSum', params),
   // 佣金结算
   SettlequeryByPage: (params) => API.POST(g.config.server + 'operation/v1/topAgentSettle/queryByPage', params),

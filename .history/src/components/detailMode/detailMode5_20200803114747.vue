@@ -8,7 +8,7 @@
     </div>
     <slot name="step"></slot>
     <div v-for="(child, key) of configData.child" :key="key" class="con_box">
-      <template v-if="child.models && child.models.length > 0">
+      <template v-if="child.models && child.models.length > 0" >
         <div class="title">
           {{ child.name }}
           <slot name="operatingItem">
@@ -23,11 +23,9 @@
           class="form"
           label-position="left"
         >
-          <el-row>
-            <el-col v-for="(item, key1) of child.models" :key="key1" :span="8">
+          <el-row v-for="(item, key1) of child.models" :key="key1">
+            <el-col v-for="(item2, key2) of item.items" :key="key2" :span="8">
               <el-form-item
-                v-for="(item2, key2) of item.items"
-                :key="key2"
                 :label="item2.name + '：'"
                 prop="name"
               >
@@ -39,7 +37,7 @@
                 ></el-image>
                 <span v-if="item2.type === 'descript'" class="item-value">{{ ruleForm[item2.key] === 'all' ? '全国' : ruleForm[item2.key] === 'province' ? '省' : ruleForm[item2.key] === 'city' ? '市' : '' }}</span>
                 <span v-if="item2.type === 'bankType'" class="item-value">{{ ruleForm[item2.key] === 'private' ? '对私' : ruleForm[item2.key] === 'public' ? '对公' : '' }}</span>
-                <span v-if="item2.type !== 'img' && item2.type !== 'bankType' && item2.type !== 'descript' " class="item-value">{{ ruleForm[item2.key] }}{{ item2.type === 'pecent' ? '‰' : '' }}</span>
+                <span v-if="item2.type !== 'img' && item2.type !== 'bankType' && item2.type !== 'descript' " class="item-value">{{ item2.key ? ruleForm[item2.key] : item2.initVal }}{{ item2.type === 'pecent' ? '‰' : '' }}</span>
               </el-form-item>
             </el-col>
           </el-row>
