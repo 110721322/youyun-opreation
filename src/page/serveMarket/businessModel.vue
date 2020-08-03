@@ -16,8 +16,8 @@
             </div>
             <div class="card_subtitle">{{item.productDesc}}</div>
             <div class="card_btn">
-              <button class="buy_btn" @click="onclick_btn">我要续费</button>
-              <div class="buy_title">已购买该服务，到期时间：{{item.expireDate}}</div>
+              <button class="buy_btn" @click="onclick_btn(item)">{{item.buyStatus===0 ? '立即购买' : '立即进入'}}</button>
+              <div class="buy_title" v-if="item.buyStatus===1">已购买该服务，到期时间：{{item.expireDate}}</div>
             </div>
           </div>
           <!-- <div class="card_list"> -->
@@ -62,8 +62,8 @@ export default {
     this.getModel()
   },
   methods: {
-    onclick_btn() {
-      this.$router.push({ path: "/serveMarket/businessModel/detail" });
+    onclick_btn($data) {
+      this.$router.push({ path: "/serveMarket/businessModel/detail", query: {productCode: $data.productCode, buyStatus: $data.buyStatus, expireDate: $data.expireDate} });
     },
     onclick_buybtn() {
       this.$router.push({ path: "/serveMarket/businessModel/omedetail" });

@@ -49,7 +49,7 @@ export default {
   // 保存新源码配置信息
   saveSourceCodeConfig: (params) => API.POST('/operation/v1/market/saveSourceCodeConfig', params),
   // 查询产品套餐
-  selectProductCombo: (params) => API.POST('/operation/v1/market/selectProductCombo', params),
+  selectProductCombo: (params) => API.GET('/operation/v1/market/selectProductCombo', params),
   // 顶级服务商订单查询
   selectTopAgentOrder: (params) => API.GET('/operation/v1/market/selectTopAgentOrder', params)
 };

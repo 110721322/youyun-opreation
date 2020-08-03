@@ -1,10 +1,10 @@
 <template>
   <div class="main_page">
     <div class="top_content">
-      <div class="warn">
+      <div class="warn" v-if="showTip">
         <div class="left_icon">i</div>
-        <span>已购买该服务，有效期到：2020-10-10 。再次购买后服务到期时间将累加</span>
-        <img src="../../assets/img/cancle.png" alt="">
+        <span>已购买该服务，有效期到：{{expireDate}} 。再次购买后服务到期时间将累加</span>
+        <img src="../../assets/img/cancle.png" alt="" @click="closeWarn">
       </div>
       <div class="buy_info">
         <img class="buy_img" src="../../assets/img/new_image.png" alt="">
@@ -17,13 +17,13 @@
           <div class="second_body">
             <div class="select_date">
               <span class="select_name">服务时间</span>
-              <div v-for="(item, index) in selectMounth" :key="index" class="select_btn" :class="selectIndex===index? 'select_show' : ''">
-                <button @click="onclick_selectDate(index)">{{ item.value }}个月</button>
+              <div v-for="(item, index) in comboList" :key="index" class="select_btn" :class="selectIndex===index? 'select_show' : ''">
+                <button @click="onclick_selectDate(item,index)">{{ item.comboName }}</button>
               </div>
             </div>
             <div class="price">
               <span class="select_name">购买价格</span>
-              <span class="data_price"><span>¥</span>1000</span>
+              <span class="data_price"><span>¥</span>{{comboPrice}}</span>
             </div>
           </div>
           <button class="buy_serve" @click="onclick_buyserve">购买服务</button>
@@ -64,34 +64,48 @@
 </template>
 
 <script>
+import api from "@/api/api_serveMarket";
 export default {
   data () {
     return {
-      selectMounth: [
-        {
-          id: 1,
-          value: 1
-        },
-        {
-          id: 2,
-          value: 2
-        },
-        {
-          id: 1,
-          value: 3
-        }
-      ],
-      selectIndex: 0
+      selectIndex: 0,
+      productCode: '',
+      comboList: [],
+      comboPrice: 0,
+      buyStatus: null,
+      expireDate: '',
+      showTip: false
+    }
+  },
+  created() {
+    this.buyStatus = this.$route.query.buyStatus || null
+    this.expireDate = this.$route.query.expireDate || ''
+    this.productCode = this.$route.query.productCode || ''
+    this.getModelDetail()
+    if (this.$route.query.buyStatus) {
+      this.showTip = true
     }
   },
   methods: {
-    onclick_selectDate(index) {
+    onclick_selectDate(data, index) {
+      this.comboPrice = data.comboAmount
       this.selectIndex = index
     },
     onclick_buyserve() {
       this.$router.push({
         path: "/serveMarket/businessModel/subOrder"
       });
+    },
+    getModelDetail() {
+      api.selectProductCombo({
+        productCode: this.productCode
+      }).then(res => {
+        this.comboList = res.object || []
+        this.comboPrice = this.comboList[this.selectIndex].comboAmount || 0
+      })
+    },
+    closeWarn() {
+      this.showTip = false
     }
   }
 }
