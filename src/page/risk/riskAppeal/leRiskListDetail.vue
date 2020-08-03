@@ -39,10 +39,38 @@
           <div class="title">审核记录</div>
           <div v-for="(item,index) in appealData" :key="index" class="item">
             <div class="time">{{ item.createTime }}</div>
-            <div class="channel">{{ item.operateUserName }}</div>
-            <div class="status">
+            <div class="channel">{{ item.operationName }}</div>
+            <div class="status" v-if="item.auditStatus === 'pass'">
               <span class="dot" :class="item.dotName"></span>
-              {{ item.auditStatus }}
+              通过
+            </div>
+            <div class="status" v-if="item.auditStatus === 'reject'">
+              <span class="dot reject" :class="item.dotName"></span>
+              驳回
+            </div>
+            <div class="status" v-if="item.auditStatus === 'channelAudit'">
+              <span class="dot unused" :class="item.dotName"></span>
+              通道审核中
+            </div>
+            <div class="status" v-if="item.auditStatus === 'channelPass'">
+              <span class="dot" :class="item.dotName"></span>
+              通道通过
+            </div>
+            <div class="status" v-if="item.auditStatus === 'channelReject'">
+              <span class="dot reject" :class="item.dotName"></span>
+              通道驳回
+            </div>
+            <div class="status" v-if="item.auditStatus === 'nonOpen'">
+              <span class="dot review" :class="item.dotName"></span>
+              待开通
+            </div>
+            <div class="status" v-if="item.auditStatus === 'platformAudit'">
+              <span class="dot unused" :class="item.dotName"></span>
+              平台审核中
+            </div>
+            <div class="status" v-if="item.auditStatus === 'platformReject'">
+              <span class="dot reject" :class="item.dotName"></span>
+              平台驳回
             </div>
             <div class="reason">{{ item.reason?'原因：' + item.reason:"" }}</div>
           </div>
@@ -89,6 +117,7 @@ export default {
 
   data() {
     return {
+      id: '',
       passImg: passImg,
       refuseImg: refuseImg,
       approvalImg: approvalImg,
@@ -103,36 +132,8 @@ export default {
       // pass通过 preApproval预审核 checking审核中 reject驳回
       currentType: "",
       ruleForm: {
-        baseData: {
-          merName: "329438980213098094",
-          address: "浙江省杭州市西湖区黄姑山路工专路交叉路口",
-          kind: "餐饮类",
-          peopleName: "金柒柒",
-          phone: "18409098920",
-          idCard: "3310281995009208899"
-        },
-        appealData: {
-          pic:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic2:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic3:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic4:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic5:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic6:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic7:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic8:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic9:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          video:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
-        }
+        baseData: {},
+        appealData: {}
       },
       configData: {
         baseData: {
@@ -140,7 +141,7 @@ export default {
           items: [
             {
               name: "商户ID",
-              key: "merhantNo"
+              key: "merchantNo"
             },
             {
               name: "商户名称",
@@ -222,37 +223,56 @@ export default {
         }
       },
       testData: [],
-      appealData: [
-        {
-          createTime: "AAAAAA",
-          operateUserName: "AAAAAA",
-          auditStatus: "AAAAAA",
-          dotName: "pass"
-        },
-        {
-          createTime: "AAAAAA",
-          operateUserName: "AAAAAA",
-          auditStatus: "AAAAAA",
-          reason: "AAAAAA",
-          dotName: "unused"
-        }
-      ]
+      appealData: []
     };
   },
   watch: {
     currentType: function($val) {
       switch ($val) {
-        case "pass":
+        case "channelAudit":
           this.$set(this.showComponents, "showDownload", true);
+          this.$set(this.showComponents, "showRejectTitle", false);
+          this.$set(this.showComponents, "showOperBtns", false);
           break;
-        case "preApproval":
+        case "channelPass":
+          this.$set(this.showComponents, "showDownload", true);
+          this.$set(this.showComponents, "showRejectTitle", false);
+          this.$set(this.showComponents, "showOperBtns", false);
+          break;
+        case "channelReject":
+          this.$set(this.showComponents, "showDownload", true);
+          this.$set(this.showComponents, "showRejectTitle", true);
+          this.$set(this.showComponents, "showOperBtns", false);
+          break;
+        case "platformAudit":
+          this.$set(this.showComponents, "showDownload", true);
+          this.$set(this.showComponents, "showRejectTitle", false);
           this.$set(this.showComponents, "showOperBtns", true);
           break;
-        case "checking":
+        case "platformReject":
           this.$set(this.showComponents, "showDownload", true);
+          this.$set(this.showComponents, "showRejectTitle", true);
+          this.$set(this.showComponents, "showOperBtns", false);
+          break;
+        case "pass":
+          this.$set(this.showComponents, "showDownload", true);
+          this.$set(this.showComponents, "showRejectTitle", false);
+          this.$set(this.showComponents, "showOperBtns", false);
+          break;
+        case "waitChannelAudit":
+          this.$set(this.showComponents, "showDownload", true);
+          this.$set(this.showComponents, "showRejectTitle", false);
+          this.$set(this.showComponents, "showOperBtns", false);
           break;
         case "reject":
           this.$set(this.showComponents, "showDownload", true);
+          this.$set(this.showComponents, "showRejectTitle", true);
+          this.$set(this.showComponents, "showOperBtns", false);
+          break;
+        case "waitPreAudit":
+          this.$set(this.showComponents, "showDownload", true);
+          this.$set(this.showComponents, "showRejectTitle", false);
+          this.$set(this.showComponents, "showOperBtns", true);
           break;
 
         default:
@@ -260,23 +280,33 @@ export default {
       }
     }
   },
+  created() {
+    this.id = this.$route.query.id
+    this.getDetail()
+    this.getRecord();
+  },
   mounted() {
     this.currentType = "preApproval";
-    this.getDetail();
-    this.queryByCondition();
   },
   methods: {
-    queryByCondition() {
-      api
-        .queryByCondition({
-          banAppealId: 1
-        })
-        .then(res => {
-          this.appealData = res.object;
-        })
-        .catch(err => {
-          this.$message(err);
-        });
+    getDetail() {
+      api.appealGetData({
+        id: this.id
+      }).then(res => {
+        this.ruleForm = res.object;
+        this.currentType = res.object.status
+      }).catch(err => {
+        this.$message(err.errorMessage);
+      });
+    },
+    getRecord() {
+      api.queryByCondition({
+        banAppealId: this.id
+      }).then(res => {
+        this.appealData = res.object;
+      }).catch(err => {
+        this.$message(err);
+      });
     },
     confirm($data) {
       api
@@ -286,18 +316,6 @@ export default {
         })
         .then(res => {
           this.$message("已驳回");
-        })
-        .catch(err => {
-          this.$message(err);
-        });
-    },
-    getDetail() {
-      api
-        .leshuaGetDetail({
-          id: 1
-        })
-        .then(res => {
-          this.ruleForm = res.object;
         })
         .catch(err => {
           this.$message(err);
