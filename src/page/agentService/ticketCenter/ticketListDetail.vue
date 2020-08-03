@@ -213,7 +213,7 @@ export default {
     getDetail() {
       api
         .detail({
-          id: this.id
+          id: this.$route.query.id
         })
         .then(res => {
           this.ruleForm = res.object;

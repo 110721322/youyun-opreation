@@ -61,6 +61,7 @@ import DateSelect from "./components/DateSelect.vue";
 import DatePicker from "./components/DatePicker.vue";
 import SelectInput from "./components/SelectInput.vue";
 import Cascader from "./components/Cascader.vue";
+import TicketAddForm from "./../form/ticketAddForm.vue";
 
 export default {
   name: "Search",
@@ -72,7 +73,8 @@ export default {
     DateSelect,
     SelectInput,
     Cascader,
-    DatePicker
+    DatePicker,
+    TicketAddForm
   },
   props: {
     isShowAll: {

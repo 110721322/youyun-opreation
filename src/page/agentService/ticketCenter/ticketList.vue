@@ -66,8 +66,8 @@ export default {
       drawer: false,
       id: this.$route.query.id,
       params: {
-        startTime: this.$g.utils.getToday(),
-        endTime: this.$g.utils.getToday(),
+        startTime: this.$g.utils.getToday(0) + ' 00:00:00',
+        endTime: this.$g.utils.getToday(0) + ' 23:59:59',
         // startTime: "yyyy-MM-dd HH:mm:ss",
         // endTime: "yyyy-MM-dd HH:mm:ss",
         operatorId: this.$route.query.id
@@ -122,7 +122,7 @@ export default {
     },
     handleDetail($row) {
       this.$router.push({
-        path: "/agentService/ticketList/detail",
+        path: "/agentService/ticketCenter/ticketList/detail",
         query: { id: $row.id }
       });
     },

@@ -1,3 +1,4 @@
+import apiAgent from "@/api/api_coupon.js";
 export const FORM_CONFIG = {
   formData: [
     {
@@ -7,16 +8,34 @@ export const FORM_CONFIG = {
       class: 'max-width',
       labelWidth: '100px'
     },
+    // {
+    //   type: 0,
+    //   label: '优惠码名称',
+    //   key: 'couponName',
+    //   labelWidth: '100px'
+    // },
     {
-      type: 0,
+      type: 10,
+      inputType: 'autocomplete',
       label: '优惠码名称',
-      key: 'couponName',
-      labelWidth: '100px'
+      hiddenSelect: true,
+      placeholder: '请输入优惠码名称',
+      // valueKey: 'id',
+      options: [
+        {
+          valueKey: 'id',
+          label: '优惠码名称',
+          value: 'promoCodeName',
+          isAutocomplete: true,
+          style: 'width:294px',
+          api: apiAgent.selectByName
+        }
+      ]
     },
     {
       type: 1,
       label: '状态',
-      key: 'contractStatus',
+      key: 'state',
       style: 'width:294px',
       labelWidth: '185px',
       options: [

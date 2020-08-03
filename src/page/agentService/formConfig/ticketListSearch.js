@@ -1,3 +1,5 @@
+import store from "@/store";
+import apiAgent from "@/api/api_ticketCenter.js";
 export const SEARCH_CONFIG = {
   formData: [
     {
@@ -5,6 +7,8 @@ export const SEARCH_CONFIG = {
       label: '筛选时间',
       key: 'date',
       class: 'max-width',
+      format: "yyyy-MM-dd HH:mm:ss",
+      datatype: "datetimerange",
       labelWidth: '100px'
     },
     {
@@ -29,45 +33,24 @@ export const SEARCH_CONFIG = {
       labelWidth: '100px'
     },
     {
-      type: 1,
-      label: '问题模块',
-      key: 'questionModule',
-      style: 'width:294px',
-      options: [
-        {
-          label: '待审核',
-          value: 0
-        },
-        {
-          label: '审核通过',
-          value: 1
-        },
-        {
-          label: '驳回',
-          value: 2
-        }
-      ]
-    },
-    {
-      type: 1,
-      label: '问题类型',
-      key: 'questionType',
-      style: 'width:294px',
-      labelWidth: '185px',
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
+      type: 16,
+      label: '所属模块',
+      label1: '所属模块',
+      label2: '所属分类',
+      key1: 'firstId',
+      key2: 'secondId',
+      urlOptions1: {
+        url: apiAgent.queryFirstClassByPage,
+        keyName: 'id',
+        valueName: 'menuName',
+        method: 'get'
+      },
+      urlOptions2: {
+        url: apiAgent.querySecondClassByPage,
+        keyName: 'id',
+        valueName: 'menuName',
+        method: 'get'
+      }
     },
     {
       type: 1,
@@ -75,20 +58,7 @@ export const SEARCH_CONFIG = {
       key: 'operatorId',
       style: 'width:294px',
       class: "clear_both",
-      options: [
-        {
-          label: '待审核',
-          value: 0
-        },
-        {
-          label: '审核通过',
-          value: 1
-        },
-        {
-          label: '驳回',
-          value: 2
-        }
-      ]
+      options: store.state.system.employeeList
     },
     {
       type: 1,
@@ -98,15 +68,15 @@ export const SEARCH_CONFIG = {
       labelWidth: '185px',
       options: [
         {
-          label: '川菜',
+          label: '待处理',
           value: 0
         },
         {
-          label: '粤菜',
+          label: '待评价',
           value: 1
         },
         {
-          label: '杭帮菜',
+          label: '已完结',
           value: 2
         }
       ]
