@@ -22,11 +22,11 @@ const WBT = function (url, callBackObj) {
   this.onerror = ((e) => {
     console.log('error')
     this.isHeartflag = false;
-    this.reConnect();
+    // this.reConnect();
   })
   //自定义Ws关闭事件：Ws连接关闭后触发
   this.onclose = ((e) => {
-    this.reConnect()
+    // this.reConnect()
     console.log('close')
   })
   //初始化websocket连接
@@ -67,7 +67,7 @@ WBT.prototype.reConnect = function () {
   this.isReconnect = true;
   //没连接上会一直重连，设置延迟避免请求过多
   setTimeout(function () {
-    this.initWs()
+    that.initWs()
     that.isReconnect = false;
   }, 2000);
 }

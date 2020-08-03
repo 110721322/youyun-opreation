@@ -6,7 +6,7 @@
           <img src="../../assets/img/loginLogo.png" alt class="logo-img" />
         </div>
         <div class="title">智慧办公系统</div>
-        <div class="login-content">
+        <div v-if="isLogin" class="login-content">
           <template v-if="activeType==='accountLogin'">
             <div class="type-box">
               <span class="active-type" @click="toAccountLogin">账号密码登录</span>
@@ -158,7 +158,7 @@
           </template>
           <div class="bottom-box">没有账号？<span @click="onClick_register">立即注册</span></div>
         </div>
-        <div v-show="false" class="regist-content">
+        <div v-else class="regist-content">
           <template>
             <div class="regist-title">服务商账户注册</div>
             <div class="input-box">
@@ -211,69 +211,6 @@
             <div class="bottom-box">已有账号？<span @click="onClick_changelogin">立即登录</span></div>
           </template>
         </div>
-        <div class="check-box">
-          <template>
-            <div class="regist-title">服务商账户注册</div>
-            <div class="input-box">
-              <template>
-                <el-radio v-model="radio" label="1">企业商户</el-radio>
-                <el-radio v-model="radio" label="2">个人商户</el-radio>
-              </template>
-              <el-input
-                v-model="ruleForm.phone"
-                class="login-input"
-                placeholder="请输入公司名称"
-                size="large"
-              >
-                <i slot="prefix" class="el-input__icon el-icon-user"></i>
-              </el-input>
-              <el-input
-                v-model="ruleForm.password"
-                type="password"
-                class="login-input"
-                placeholder="请输入法人姓名"
-                size="large"
-              >
-                <i slot="prefix" class="el-input__icon el-icon-lock"></i>
-              </el-input>
-              <el-input
-                v-model="ruleForm.password"
-                type="password"
-                class="login-input"
-                placeholder="请输入法人手机号"
-                size="large"
-              >
-                <i slot="prefix" class="el-input__icon el-icon-lock"></i>
-              </el-input>
-              <el-input
-                v-model="ruleForm.password"
-                type="password"
-                class="login-input"
-                placeholder="请输入邮箱"
-                size="large"
-              >
-                <i slot="prefix" class="el-input__icon el-icon-lock"></i>
-              </el-input>
-              <el-cascader
-                v-model="county"
-                class="login-input"
-                :options="options"
-                placeholder="省/市/区"
-                @change="changeCounty"
-              ></el-cascader>
-              <el-input
-                v-model="ruleForm.password"
-                type="password"
-                class="login-input"
-                placeholder="请输入详细地址"
-                size="large"
-              >
-                <i slot="prefix" class="el-input__icon el-icon-lock"></i>
-              </el-input>
-            </div>
-            <div class="btn-regist">立即注册</div>
-          </template>
-        </div>
       </div>
       <div class="right-box">
         <img src="../../assets/img/loginBg.png" alt class="right-img" />
@@ -283,7 +220,7 @@
 </template>
 <script type="text/ecmascript-6">
 import api from "@/api/api_login";
-// import WBT from "@/libs/kit/webSocket"
+import WBT from "@/libs/kit/webSocket"
 import {computedRoleRouter} from '@/libs/role'
 import currRouter from '@/router/addRouter'
 import { mapActions } from 'vuex';
@@ -484,11 +421,11 @@ export default {
           userId = res.object.user.id
           roleId = res.object.user.roleId
           this.saveUserInfo(res.object.user)
-          // this.connactWebSocket({
-          //   from: 'operation',
-          //   userId: res.object.user.id,
-          //   accessToken: res.object.accessToken
-          // })
+          this.connactWebSocket({
+            from: 'operation',
+            userId: userId,
+            accessToken: res.object.accessToken
+          })
           api.queryUserVueRouterList({
             userToken: res.object.accessToken,
             system: 'operation',
@@ -513,9 +450,12 @@ export default {
         });
     },
     connactWebSocket ($params) {
-      // const url = `www.intranet.aduer.com/ws?from=operation&userId=${$params.userId}&accessToken=${$params.accessToken}`
+      const url = `ws://www.intranet.aduer.com/ws?from=${$params.from}&userId=${$params.userId}&accessToken=${$params.accessToken}`
+      const webSocket = new WBT(url)
       // const webSocket = new WebSocket(url)
-      api.getWebSocket($params)
+      console.log(webSocket);
+      webSocket.initWs();
+      // api.getWebSocket($params)
       // return webSocket
     },
     addRoutes() {
