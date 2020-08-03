@@ -6,14 +6,14 @@
 
     <transition name="fade">
       <div>
-        <el-alert
-          v-if="showComponents.showRejectTitle"
-          class="detail-alert"
-          :title="rejectTitle"
-          type="info"
-          :closable="false"
-          show-icon
-        ></el-alert>
+<!--        <el-alert-->
+<!--          v-if="showComponents.showRejectTitle"-->
+<!--          class="detail-alert"-->
+<!--          :title="ruleForm.reason"-->
+<!--          type="info"-->
+<!--          :closable="false"-->
+<!--          show-icon-->
+<!--        ></el-alert>-->
         <detailMode
           :img-width="4"
           :rule-form="ruleForm"
@@ -22,13 +22,13 @@
         >
           <template v-slot="{ currentType }">
             <div class="current-type">
-              <template v-if="currentType === 'pass'">
+              <template v-if="currentType === 'pass' || currentType === 'channelPass'">
                 <img :src="passImg" alt />
               </template>
-              <template v-if="currentType === 'checking'">
+              <template v-if="currentType === 'channelAudit' || currentType === 'platformAudit' || currentType === 'waitChannelAudit'">
                 <img :src="approvalImg" alt />
               </template>
-              <template v-if="currentType === 'reject'">
+              <template v-if="currentType === 'reject' || currentType === 'channelReject' || currentType === 'platformReject' || currentType === 'preAuditReject'">
                 <img :src="refuseImg" alt />
               </template>
             </div>
@@ -123,7 +123,6 @@ export default {
       approvalImg: approvalImg,
       fromConfigData: {},
       drawer: false,
-      rejectTitle: "驳回原因：商户名称与营业执照不符合",
       showComponents: {
         showRejectTitle: false,
         showOperBtns: false,
@@ -131,10 +130,7 @@ export default {
       },
       // pass通过 preApproval预审核 checking审核中 reject驳回
       currentType: "",
-      ruleForm: {
-        baseData: {},
-        appealData: {}
-      },
+      ruleForm: {},
       configData: {
         baseData: {
           name: "基本信息",
@@ -244,12 +240,7 @@ export default {
           this.$set(this.showComponents, "showRejectTitle", true);
           this.$set(this.showComponents, "showOperBtns", false);
           break;
-        case "platformAudit":
-          this.$set(this.showComponents, "showDownload", true);
-          this.$set(this.showComponents, "showRejectTitle", false);
-          this.$set(this.showComponents, "showOperBtns", true);
-          break;
-        case "platformReject":
+        case "preAuditReject":
           this.$set(this.showComponents, "showDownload", true);
           this.$set(this.showComponents, "showRejectTitle", true);
           this.$set(this.showComponents, "showOperBtns", false);
@@ -270,7 +261,7 @@ export default {
           this.$set(this.showComponents, "showOperBtns", false);
           break;
         case "waitPreAudit":
-          this.$set(this.showComponents, "showDownload", true);
+          this.$set(this.showComponents, "showDownload", false);
           this.$set(this.showComponents, "showRejectTitle", false);
           this.$set(this.showComponents, "showOperBtns", true);
           break;
@@ -286,7 +277,6 @@ export default {
     this.getRecord();
   },
   mounted() {
-    this.currentType = "preApproval";
   },
   methods: {
     getDetail() {
@@ -309,17 +299,38 @@ export default {
       });
     },
     confirm($data) {
-      api
-        .updateOfPreReject({
-          id: 1,
+      if (!$data.reason) {
+        this.$message({
+          message: '请填写驳回理由',
+          type: 'warning'
+        })
+        return false
+      } else {
+        api.updateOfPreReject({
+          id: this.id,
           reason: $data.reason
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '已驳回',
+              type: 'success'
+            })
+            this.getDetail()
+            this.getRecord()
+            this.drawer = false
+          } else {
+            this.$message({
+              message: res.errorMessage,
+              type: 'success'
+            })
+          }
+        }).catch(err => {
+          this.$message({
+            message: err.errorMessage,
+            type: 'success'
+          })
         })
-        .then(res => {
-          this.$message("已驳回");
-        })
-        .catch(err => {
-          this.$message(err);
-        });
+      }
     },
     handleEdit($ruleForm) {
       console.log($ruleForm);
@@ -327,26 +338,37 @@ export default {
       this.fromConfigData = FORM_CONFIG.detailEdit;
     },
     onClick_sign() {
-      api
-        .updateOfPrePass({
-          id: 1
+      api.updateOfPrePass({
+        id: this.id
+      }).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            message: '已通过',
+            type: 'success'
+          })
+          this.getRecord()
+          this.getDetail()
+        } else {
+          this.$message({
+            message: res.errorMessage,
+            type: 'info'
+          })
+        }
+      }).catch(err => {
+        this.$message({
+          message: err.errorMessage,
+          type: 'info'
         })
-        .then(res => {
-          this.$message("成功通过!");
-        })
-        .catch(err => {
-          this.$message(err);
-        });
+      });
     },
     onClick_download() {
-      api
-        .getDownloadUrl({
-          id: 1
-        })
-        .then(res => {
-          window.open(res.object);
-        })
-        .catch();
+      api.getDownloadUrl({
+        id: this.id
+      }).then(res => {
+        console.log(res)
+        debugger
+        // window.open(res.object);
+      }).catch();
     },
     cancel() {
       this.drawer = false;
@@ -373,6 +395,7 @@ export default {
   display: flex;
   justify-content: center;
   text-align: center;
+  margin-bottom: 50px;
   .btn_download {
     font-size: 14px;
     font-weight: 400;

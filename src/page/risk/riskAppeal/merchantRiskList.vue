@@ -48,7 +48,6 @@ export default {
       searchConfig: SEARCH_CONFIG,
       configData: LERISKLIST_CONFIG,
       testData: [],
-      direction: "rtl",
       searchHeight: "260",
       drawer: false,
       params: {},
@@ -60,14 +59,20 @@ export default {
     cancel() {
       this.drawer = false;
     },
-    handleDetail() {
+    handleDetail(row) {
       this.$router.push({
-        path: "/risk/riskAppeal/merchantRiskList/detail"
+        path: "/risk/riskAppeal/merchantRiskList/detail",
+        query: {
+          id: row.id
+        }
       });
     },
-    handleChecking() {
+    handleChecking(row) {
       this.$router.push({
-        path: "/risk/riskAppeal/merchantRiskList/detail"
+        path: "/risk/riskAppeal/merchantRiskList/detail",
+        query: {
+          id: row.id
+        }
       });
     },
     search($ruleForm) {

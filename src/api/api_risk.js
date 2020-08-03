@@ -24,16 +24,16 @@ export default {
   // 乐刷风控-列表
   leshuaQueryByPage: (params) => API.GET('/operation/v1/merchantBanAppeal/leshua/queryByCondition', params),
   // 平台风控-列表
-  midPlatformQueryByPage: (params) => API.GET('/operation/v1/merchantBanAppeal/midPlatform/queryByPage', params),
+  midPlatformQueryByPage: (params) => API.GET('/operation/v1/merchantBanAppeal/midPlatform/queryByCondition', params),
   // 风控申诉-详情
   appealGetData: (params) => API.GET('/operation/v1/merchantBanAppeal/getDetail', params),
   midPlatformGetDetail: (params) => API.POST('/operation/v1/merchantBanAppeal/midPlatform/getDetail', params),
   // 乐刷风控-通过
-  leshuaUpdateOfPass: (params) => API.POST('/operation/v1/merchantBanAppeal/leshua/updateOfPass', params),
+  leshuaUpdateOfPass: (params) => API.POST('/operation/v1/merchantBanAppeal/leshua/updateOfPass', params, { changeContent: true }),
   // 平台风控-通过
-  midPlatformUpdateOfPass: (params) => API.POST('/operation/v1/merchantBanAppeal/midPlatform/updateOfPass', params),
+  midPlatformUpdateOfPass: (params) => API.POST('/operation/v1/merchantBanAppeal/midPlatform/updateOfPass', params, { changeContent: true }),
   // 乐刷风控-预审核通过
-  updateOfPrePass: (params) => API.POST('/operation/v1/merchantBanAppeal/leshua/updateOfPrePass', params),
+  updateOfPrePass: (params) => API.POST('/operation/v1/merchantBanAppeal/leshua/updateOfPrePass', params, { changeContent: true }),
   // 乐刷风控-驳回
   leshuaUpdateOfReject: (params) => API.POST('/operation/v1/merchantBanAppeal/leshua/updateOfReject', params),
   // 平台风控-驳回
@@ -43,7 +43,7 @@ export default {
   // 审核记录-列表
   queryByCondition: (params) => API.GET('/operation/v1/merchantBanAppealAuditLog/queryByCondition', params),
   // 乐刷风控-下载资料包
-  getDownloadUrl: (params) => API.GET('/operation/v1/leshua/getDownloadUrl', params),
-  // 乐刷_审核状态下拉列表
-  leshuaGetStatus: () => API.GET('/operation/v1/merchantBanAppeal/leshua/leshuaGetStatus')
+  getDownloadUrl: (params) => API.GET('/operation/v1/merchantBanAppeal/leshua/getDownloadUrl', params),
+  // 平台风控-详情
+  banGetDetail: (params) => API.GET('/operation/v1/merchantBanAppeal/getDetail', params)
 };

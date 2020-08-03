@@ -9,7 +9,7 @@
         <el-alert
           v-if="showComponents.showRejectTitle"
           class="detail-alert"
-          :title="rejectTitle"
+          :title="'驳回原因：' + ruleForm.reason"
           type="info"
           :closable="false"
           show-icon
@@ -22,7 +22,7 @@
           ></detailMode>
           <detailMode
             :img-width="4"
-            :rule-form="ruleForm.serviceSetupData"
+            :rule-form="ruleForm"
             :config-data="configData.serviceSetupData"
           ></detailMode>
         </div>
@@ -60,7 +60,6 @@ export default {
       agentNo: '',
       fromConfigData: {},
       drawer: false,
-      rejectTitle: "驳回原因：商户名称与营业执照不符合",
       showComponents: {
         showRejectTitle: false,
         showOperBtns: false,
@@ -79,21 +78,21 @@ export default {
             },
             {
               name: "账号类型",
-              key: "type"
+              key: "bankAccountType"
             },
             {
               name: "营业执照",
-              key: "pic",
+              key: "businessLicenseImg",
               type: "image"
             },
             {
               name: "法人身份证正面照",
-              key: "pic2",
+              key: "idPortraitImg",
               type: "image"
             },
             {
               name: "法人身份证反面照",
-              key: "pic3",
+              key: "idEmblemImg",
               type: "image"
             },
 
@@ -107,7 +106,7 @@ export default {
             },
             {
               name: "法人手机号",
-              key: "phone"
+              key: "personMobile"
             },
             {
               name: "地区",
@@ -127,26 +126,26 @@ export default {
         serviceSetupData: {
           name: "下级服务商设置",
           items: [
-            // {
-            //   name: "服务区域",
-            //   key: "address"
-            // },
-            // {
-            //   name: "服务方式",
-            //   key: "way"
-            // },
-            // {
-            //   name: "微信/支付宝费率",
-            //   key: "aliWxPerc"
-            // },
-            // {
-            //   name: "云闪付费率（单笔≤1000元）",
-            //   key: "yunLessPerc"
-            // },
-            // {
-            //   name: "云闪付费率（单笔＞1000元）",
-            //   key: "yunMorePerc"
-            // }
+            {
+              name: "服务区域",
+              key: "address"
+            },
+            {
+              name: "服务方式",
+              key: "way"
+            },
+            {
+              name: "微信/支付宝费率",
+              key: "alipayRate"
+            },
+            {
+              name: "云闪付费率（单笔≤1000元）",
+              key: "cloudPayLe1000Rate"
+            },
+            {
+              name: "云闪付费率（单笔＞1000元）",
+              key: "cloudPayGt1000Rate"
+            }
           ]
         }
       }
@@ -155,16 +154,15 @@ export default {
   watch: {
     currentType: function($val) {
       switch ($val) {
-        case "pass":
-          this.$set(this.showComponents, "showOtherEdit", true);
-          break;
-        case "preApproval":
+        case "audit":
           this.$set(this.showComponents, "showOperBtns", true);
           break;
-        case "checking":
+        case "success":
+          this.$set(this.showComponents, "showOperBtns", false);
           break;
         case "reject":
           this.$set(this.showComponents, "showRejectTitle", true);
+          this.$set(this.showComponents, "showOperBtns", false);
           break;
 
         default:
@@ -181,35 +179,69 @@ export default {
       api.getSubAgentDetail({
         agentNo: this.agentNo
       }).then(res => {
+        res.object.cloudPayLe1000Rate = res.object.cloudPayLe1000Rate + '‰'
+        res.object.cloudPayGt1000Rate = res.object.cloudPayGt1000Rate + '‰'
+        res.object.alipayRate = res.object.alipayRate + '‰'
+        if (res.object.bankAccountType === 'public') {
+          res.object.bankAccountType = '对公'
+        }
+        if (res.object.bankAccountType === 'private') {
+          res.object.bankAccountType = '对私'
+        }
         this.ruleForm = res.object
+        this.currentType = res.object.contractStatus
       }).catch();
     },
     confirm($data) {
-      console.log($data);
-      api
-        .updateSubAuditStatusOfReject({
-          agentNo: "",
+      if (!$data.reason) {
+        this.$message({
+          message: '请选择/填写驳回理由',
+          type: 'warning'
+        })
+        return false
+      } else {
+        api.updateSubAuditStatusOfReject({
+          agentNo: this.agentNo,
           reason: $data["reason"]
-        })
-        .then(res => {
-          this.$message("已驳回");
-          this.drawer = false;
-        })
-        .catch(err => {
-          this.$message(err);
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '已驳回',
+              type: 'success'
+            })
+            this.drawer = false;
+            this.getServiceData()
+          }
+        }).catch(err => {
+          this.$message({
+            message: err.errorMessage,
+            type: 'info'
+          });
         });
+      }
     },
     onClick_sign() {
-      api
-        .updateSubAuditStatusOfPass({
-          agentNo: ""
+      api.updateSubAuditStatusOfPass({
+        agentNo: this.agentNo
+      }).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            message: '已通过',
+            type: 'success'
+          })
+          this.getServiceData()
+        } else {
+          this.$message({
+            message: res.errorMessage,
+            type: 'info'
+          })
+        }
+      }).catch(err => {
+        this.$message({
+          message: err.errorMessage,
+          type: 'info'
         })
-        .then(res => {
-          this.$message("已通过");
-        })
-        .catch(err => {
-          this.$message(err);
-        });
+      });
     },
     cancel() {
       this.drawer = false;

@@ -33,20 +33,16 @@ export const SEARCH_CONFIG = {
       style: 'width:294px',
       options: [
         {
-          label: '全部',
-          value: ''
+          label: '已通过',
+          value: 'channelPass'
         },
         {
-          label: '待审核',
+          label: '已驳回',
+          value: 'channelReject'
+        },
+        {
+          label: '预审核',
           value: 'waitPreAudit'
-        },
-        {
-          label: '审核通过',
-          value: 'pass'
-        },
-        {
-          label: '驳回',
-          value: 'reject'
         }
       ]
     },
