@@ -74,9 +74,12 @@ export default {
     cancel() {
       this.drawer = false;
     },
-    handleDetail() {
+    handleDetail(row) {
       this.$router.push({
-        path: "/risk/riskAppeal/leRiskList/detail"
+        path: "/risk/riskAppeal/leRiskList/detail",
+        query: {
+          id: row.id
+        }
       });
     },
     handlePreApprove() {},

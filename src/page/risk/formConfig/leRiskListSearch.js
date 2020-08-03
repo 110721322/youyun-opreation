@@ -1,5 +1,5 @@
 import apiAgent from "@/api/api_agent.js";
-
+import api from "@/api/api_risk"
 export const SEARCH_CONFIG = {
   formData: [
     {
@@ -37,16 +37,52 @@ export const SEARCH_CONFIG = {
       style: 'width:294px',
       options: [
         {
-          label: '待审核',
-          value: 0
-        },
-        {
-          label: '审核通过',
-          value: 1
+          label: '通过',
+          value: 'pass'
         },
         {
           label: '驳回',
-          value: 2
+          value: 'reject'
+        },
+        {
+          label: '等待通道审核',
+          value: 'waitChannelAudit'
+        },
+        {
+          label: '通道审核中',
+          value: 'channelAudit'
+        },
+        {
+          label: '通道通过',
+          value: 'channelPass'
+        },
+        {
+          label: '通道驳回',
+          value: 'channelReject'
+        },
+        {
+          label: '通道审核中',
+          value: 'channelAudit'
+        },
+        {
+          label: '待开通',
+          value: 'nonOpen'
+        },
+        {
+          label: '平台审核中',
+          value: 'platformAudit'
+        },
+        {
+          label: '平台驳回',
+          value: 'platformReject'
+        },
+        {
+          label: '等待通道审核',
+          value: 'waitChannelAudit'
+        },
+        {
+          label: '等待预审核',
+          value: 'waitPreAudit'
         }
       ]
     },
@@ -61,5 +97,16 @@ export const SEARCH_CONFIG = {
         valueName: 'operationName',
         method: 'get'
       }
-    }]
+    },
+    {
+      type: 1,
+      label: '状态',
+      key: 'status',
+      style: 'width:294px',
+      urlOptions: {
+        url: api.leshuaGetStatus,
+        method: 'get'
+      }
+    }
+  ]
 }

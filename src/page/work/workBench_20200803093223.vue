@@ -12,10 +12,6 @@
 <script>
 import api from "@/api/api_workBench";
 import detailMode from "@/components/detailMode/detailMode3.vue";
-import { TODO_BTN, MERCHANT_ENTRY_AUDIT, LOWER_AGENT_ENTRY,
-  PARTNER_ENTRY_AUDIT, AGENT_COMMISSION_SETTLE, DEVICE_UNBIND,
-  AGENT_ANNOUNCE, MERCHANT_DATA, AGENT_DATA,
-  DEVICE_DATA } from "../../libs/data/permissionBtns";
 // import search from '@/components/search/search.vue';
 // import BaseCrud from '@/components/table/BaseCrud.vue';
 // import { USER_CONFIG } from './tableConfig/merchantConfig';
@@ -35,7 +31,7 @@ export default {
                 imgUrl: "",
                 dotNum: 5,
                 text: "待办事项",
-                permission: TODO_BTN,
+                permission: 'merchant',
                 path: "/work/todo"
               }
             ]
@@ -53,22 +49,19 @@ export default {
               {
                 imgUrl: "",
                 text: "商户入件审核",
-                permission: MERCHANT_ENTRY_AUDIT
+                permission: 'service'
               },
               {
                 imgUrl: "",
-                text: "下级服务商入件审核",
-                permission: LOWER_AGENT_ENTRY
+                text: "下级服务商入件审核"
               },
               {
                 imgUrl: "",
-                text: "合伙人入件审核",
-                permission: PARTNER_ENTRY_AUDIT
+                text: "合伙人入件审核"
               },
               {
                 imgUrl: "",
-                text: "服务商佣金结算",
-                permission: AGENT_COMMISSION_SETTLE
+                text: "服务商佣金结算"
               }
             ]
           },
@@ -77,14 +70,12 @@ export default {
             list: [
               {
                 imgUrl: "",
-                text: "设备解绑",
-                permission: DEVICE_UNBIND
+                text: "设备解绑"
               },
               {
                 imgUrl: "",
                 text: "公告",
-                path: "/message/serviceAnnouncementList",
-                permission: AGENT_ANNOUNCE
+                path: "/message/serviceAnnouncementList"
               },
               {
                 imgUrl: "",
@@ -98,18 +89,15 @@ export default {
             list: [
               {
                 imgUrl: "",
-                text: "商户数据",
-                permission: MERCHANT_DATA
+                text: "商户数据"
               },
               {
                 imgUrl: "",
-                text: "服务商数据",
-                permission: AGENT_DATA
+                text: "服务商数据"
               },
               {
                 imgUrl: "",
-                text: "设备数据",
-                permission: DEVICE_DATA
+                text: "设备数据"
               }
             ]
           }
@@ -118,7 +106,7 @@ export default {
     };
   },
   mounted() {
-    // this.getData();
+    this.getData();
   },
   methods: {
     getData() {

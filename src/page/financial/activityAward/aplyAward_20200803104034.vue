@@ -158,7 +158,7 @@ export default {
       this.drawer = true
     },
     confirm($filel) {
-      // console.log($filel)
+      console.log($filel)
       api_statistice.excelTemplate({
         param: $filel.date,
         type: "dragonflyInput",
@@ -168,7 +168,6 @@ export default {
       }).catch(err => {
         console.log(err)
       })
-      this.drawer = false
     },
     cancel() {
       this.drawer = false

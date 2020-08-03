@@ -8,7 +8,7 @@
     </div>
     <slot name="step"></slot>
     <div v-for="(child, key) of configData.child" :key="key" class="con_box">
-      <template v-if="child.models && child.models.length > 0" >
+      <template v-if="child.models && child.models.length > 0">
         <div class="title">
           {{ child.name }}
           <slot name="operatingItem">
