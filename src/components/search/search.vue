@@ -61,7 +61,6 @@ import DateSelect from "./components/DateSelect.vue";
 import DatePicker from "./components/DatePicker.vue";
 import SelectInput from "./components/SelectInput.vue";
 import Cascader from "./components/Cascader.vue";
-import api_statistice from "@/api/api_statistice";
 
 export default {
   name: "Search",
@@ -139,20 +138,11 @@ export default {
   watch: {},
   created() {
     this.init();
-    this.getDate();
     // console.log(this.formBaseData);
   },
   methods: {
     handleDataSelect($time) {
       this.$emit("dataSelect", $time);
-    },
-    getDate() {
-      api_statistice.selectAgentDataByPage({
-      }).then(res => {
-      }).catch(err => {
-        console.log(err)
-      })
-      // console.log(this.formKeys)
     },
     init() {
       if (this.formBaseData.length > 0) {
