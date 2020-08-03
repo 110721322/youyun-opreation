@@ -27,7 +27,6 @@ export default {
   midPlatformQueryByPage: (params) => API.GET('/operation/v1/merchantBanAppeal/midPlatform/queryByPage', params),
   // 风控申诉-详情
   appealGetData: (params) => API.GET('/operation/v1/merchantBanAppeal/getDetail', params),
-  leshuaGetDetail: (params) => API.POST('/operation/v1/merchantBanAppeal/leshua/getDetail', params),
   midPlatformGetDetail: (params) => API.POST('/operation/v1/merchantBanAppeal/midPlatform/getDetail', params),
   // 乐刷风控-通过
   leshuaUpdateOfPass: (params) => API.POST('/operation/v1/merchantBanAppeal/leshua/updateOfPass', params),
@@ -44,5 +43,7 @@ export default {
   // 审核记录-列表
   queryByCondition: (params) => API.GET('/operation/v1/merchantBanAppealAuditLog/queryByCondition', params),
   // 乐刷风控-下载资料包
-  getDownloadUrl: (params) => API.GET('/operation/v1/leshua/getDownloadUrl', params)
+  getDownloadUrl: (params) => API.GET('/operation/v1/leshua/getDownloadUrl', params),
+  // 乐刷_审核状态下拉列表
+  leshuaGetStatus: () => API.GET('/operation/v1/merchantBanAppeal/leshua/leshuaGetStatus')
 };
