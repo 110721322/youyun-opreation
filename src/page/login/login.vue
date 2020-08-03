@@ -450,7 +450,7 @@ export default {
         });
     },
     connactWebSocket ($params) {
-      const url = `ws://www.intranet.aduer.com/ws?from=${$params.from}&userId=${$params.userId}&accessToken=${$params.accessToken}`
+      const url = `ws://192.168.2.49:10443/ws?from=${$params.from}&userId=${$params.userId}&accessToken=${$params.accessToken}`
       const webSocket = new WBT(url)
       // const webSocket = new WebSocket(url)
       console.log(webSocket);
