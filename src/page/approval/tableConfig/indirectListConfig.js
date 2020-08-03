@@ -13,24 +13,19 @@ export const INDIRECTLIST_CONFIG = {
     {
       label: '通道情况 ',
       width: '200px',
-      customHead: true,
-      prop: "channel"
-      // render: (h, params) => {
-      //   // return h(
-      //   //   'span', '乐刷'
-      //   // )
-      //   const lists = params.row.channelStatusList;
-      //   lists.forEach(v => {
-      //     return h(
-      //       'span',
-      //       {
-      //         props: {
-      //
-      //         }
-      //       }
-      //     )
-      //   })
-      // }
+      channelHead: true,
+      prop: "channelStatusList",
+      render: (h, params) => {
+        const status = params.row.channelStatusList;
+        return h('div', {
+          'class': "status-box"
+        }, [status.map(function ($item) {
+          return [h('span', {
+            'class': "dot " + $item.channelStatus
+          }), $item.channel]
+        })]
+        );
+      }
     },
     {
       label: '入件时间',

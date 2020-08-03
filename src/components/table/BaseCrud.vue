@@ -383,7 +383,29 @@ export default {
   &.unused {
     background-color: #9c9c9c;
   }
+  &.channelReject {
+    background-color: #f5222d;
+  }
+  &.nonOpen {
+    background-color: #9c9c9c;
+  }
+  &.platformAudit {
+    background-color: #ffc620;
+  }
+  &.channelAudit {
+    background-color: #ffc620;
+  }
+  &.platformReject {
+    background-color: #f5222d;
+  }
+  &.channelReject {
+    background-color: #f5222d;
+  }
+  &.channelPass {
+    background-color: #52c41a;
+  }
 }
+
 </style>
 <style>
 .hide-expand-icon .el-table__expand-icon {

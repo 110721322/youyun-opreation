@@ -9,7 +9,7 @@
         <el-alert
           v-if="showComponents.showRejectTitle"
           class="detail-alert"
-          :title="rejectTitle"
+          :title="'驳回原因:'+ ruleForm.reason"
           type="info"
           :closable="false"
           show-icon
@@ -69,6 +69,7 @@ export default {
 
   data() {
     return {
+      id: '',
       passImg: passImg,
       refuseImg: refuseImg,
       approvalImg: approvalImg,
@@ -82,66 +83,39 @@ export default {
       phone: "13123465748",
       // pass通过 preApproval预审核 checking审核中 reject驳回
       currentType: "",
-      ruleForm: {
-        baseData: {
-          merName: "329438980213098094",
-          address: "浙江省杭州市西湖区黄姑山路工专路交叉路口",
-          kind: "餐饮类",
-          peopleName: "金柒柒",
-          phone: "18409098920",
-          idCard: "3310281995009208899"
-        },
-        appealData: {
-          pic:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic2:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic3:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic4:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic5:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic6:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic7:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic8:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          pic9:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          video:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
-        }
-      },
+      ruleForm: {},
       configData: {
         baseData: {
           name: "基本信息",
           items: [
             {
-              name: "商户ID",
-              key: "merhantNo"
-            },
-            {
               name: "商户名称",
               key: "merchantName"
             },
             {
-              name: "乐刷商户号",
-              key: "channelMerchantNo"
+              name: "营业执照编号",
+              key: "shopLicenseNo"
             },
             {
-              name: "所属服务商ID",
-              key: "agentNo"
+              name: "法人姓名",
+              key: "lawPerson"
             },
 
             {
-              name: "所属服务商名称",
-              key: "agentName"
+              name: "法人手机号",
+              key: "lawMobile"
             },
             {
-              name: "商户经营情况",
-              key: "remark"
+              name: "法人身份证号",
+              key: "idCardNo"
+            },
+            {
+              name: '银行卡号',
+              key: 'bankCardNo'
+            },
+            {
+              name: '商户地址',
+              key: 'merchantAddress'
             }
           ]
         },
@@ -207,14 +181,16 @@ export default {
   watch: {
     currentType: function($val) {
       switch ($val) {
-        case "pass":
-          break;
-        case "preApproval":
-          break;
-        case "checking":
+        case "waitPreAudit":
+          this.$set(this.showComponents, "showRejectTitle", false);
           this.$set(this.showComponents, "showOperBtns", true);
           break;
-        case "reject":
+        case "channelPass":
+          this.$set(this.showComponents, "showRejectTitle", false);
+          this.$set(this.showComponents, "showOperBtns", false);
+          break;
+        case "channelReject":
+          this.$set(this.showComponents, "showOperBtns", false);
           this.$set(this.showComponents, "showRejectTitle", true);
           break;
 
@@ -223,38 +199,57 @@ export default {
       }
     }
   },
+  created() {
+    this.id = this.$route.query.id
+  },
   mounted() {
-    this.currentType = "checking";
     this.getDetail();
   },
   methods: {
     confirm($data) {
-      api
-        .midPlatformUpdateOfReject({
-          id: 1,
+      if (!$data.reason) {
+        this.$message({
+          message: '请填写必填信息',
+          type: 'warning'
+        })
+      } else {
+        api.banGetDetail({
+          id: this.id,
           reason: $data.reason
-        })
-        .then(res => {
-          this.$message("已驳回");
-        })
-        .catch(err => {
-          this.$message(err);
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '已驳回',
+              type: 'info'
+            });
+            this.getDetail()
+            this.drawer = false
+          } else {
+            this.$message({
+              message: res.errorMessage,
+              type: 'info'
+            });
+          }
+        }).catch(err => {
+          this.$message({
+            message: err.errorMessage,
+            type: 'info'
+          });
         });
+      }
     },
     getDetail() {
-      api
-        .midPlatformGetDetail({
-          id: 1
-        })
-        .then(res => {
-          this.ruleForm = res.object;
-        })
-        .catch(err => {
-          this.$message(err);
-        });
+      api.appealGetData({
+        id: this.id
+      }).then(res => {
+        console.log(res)
+        this.ruleForm = res.object;
+        this.currentType = res.object.status
+      }).catch(err => {
+        this.$message(err);
+      });
     },
     handleEdit($ruleForm) {
-      console.log($ruleForm);
       this.drawer = true;
       this.fromConfigData = FORM_CONFIG.detailEdit;
     },
@@ -269,25 +264,34 @@ export default {
           cancelButtonText: "取消",
           dangerouslyUseHTMLString: true
         }
-      )
-        .then(() => {
-          api
-            .midPlatformUpdateOfPass({
-              id: 1
+      ).then(() => {
+        api.midPlatformUpdateOfPass({
+          id: this.id
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '删除成功',
+              type: 'success'
             })
-            .then(res => {
-              this.$message("删除成功!");
+            this.getDetail()
+          } else {
+            this.$message({
+              message: res.errorMessage,
+              type: 'success'
             })
-            .catch(err => {
-              this.$message(err);
-            });
-        })
-        .catch(() => {
+          }
+        }).catch(err => {
           this.$message({
-            type: "info",
-            message: "已取消"
+            message: err.errorMessage,
+            type: 'info'
           });
         });
+      }).catch(() => {
+        this.$message({
+          type: "info",
+          message: "已取消"
+        });
+      });
     },
     cancel() {
       this.drawer = false;

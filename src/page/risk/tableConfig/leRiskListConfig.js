@@ -30,11 +30,6 @@ export const LERISKLIST_CONFIG = {
             'span', '通道审核中'
           )
         }
-        if (params.row.status === 'channelPass') {
-          return h(
-            'span', '通道通过'
-          )
-        }
         if (params.row.status === 'channelReject') {
           return h(
             'span', '通道驳回'
@@ -45,24 +40,14 @@ export const LERISKLIST_CONFIG = {
             'span', '待开通'
           )
         }
-        if (params.row.status === 'pass') {
+        if (params.row.status === 'channelPass') {
           return h(
-            'span', '通过'
+            'span', '已通过'
           )
         }
-        if (params.row.status === 'platformAudit') {
+        if (params.row.status === 'preAuditReject') {
           return h(
-            'span', '平台审核中'
-          )
-        }
-        if (params.row.status === 'platformReject') {
-          return h(
-            'span', '平台驳回'
-          )
-        }
-        if (params.row.status === 'reject') {
-          return h(
-            'span', '驳回'
+            'span', '预审核驳回'
           )
         }
         if (params.row.status === 'waitChannelAudit') {
@@ -117,7 +102,7 @@ export const LERISKLIST_CONFIG = {
         emitName: 'pass',
         type: 'text',
         isShow: ($item) => {
-          if ($item.status === 'channelAudit' || $item.status === 'channelPass' || $item.status === 'platformAudit' || $item.status === 'waitChannelAudit') {
+          if ($item.status === 'channelAudit' || $item.status === 'platformAudit' || $item.status === 'waitChannelAudit') {
             return true;
           } else {
             return false
@@ -129,7 +114,7 @@ export const LERISKLIST_CONFIG = {
         emitName: 'reject',
         type: 'text',
         isShow: ($item) => {
-          if ($item.status === 'channelAudit' || $item.status === 'channelPass' || $item.status === 'platformAudit' || $item.status === 'waitChannelAudit') {
+          if ($item.status === 'channelAudit' || $item.status === 'platformAudit' || $item.status === 'waitChannelAudit') {
             return true;
           } else {
             return false

@@ -58,6 +58,7 @@ export default {
   components: { Search, BaseCrud, Form },
   data() {
     return {
+      id: '',
       fromConfigData: {},
       searchConfig: SEARCH_CONFIG,
       configData: LERISKLIST_CONFIG,
@@ -82,50 +83,86 @@ export default {
         }
       });
     },
-    handlePreApprove() {},
+    handlePreApprove(row) {
+      this.$router.push({
+        path: "/risk/riskAppeal/leRiskList/detail",
+        query: {
+          id: row.id
+        }
+      });
+    },
     confirm($data) {
-      api
-        .leshuaUpdateOfReject({
-          id: 1,
+      if (!$data.reason) {
+        this.$message({
+          message: '请填写驳回理由',
+          type: 'warning'
+        })
+        return false
+      } else {
+        api.leshuaUpdateOfReject({
+          id: this.id,
           reason: $data["reason"]
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '已驳回',
+              type: 'success'
+            })
+            this.drawer = false
+            this.$refs.table.getData()
+          } else {
+            this.$message({
+              message: res.errorMessage,
+              type: 'info'
+            })
+          }
+        }).catch(err => {
+          this.$message({
+            message: err.errorMessage,
+            type: 'info'
+          })
         })
-        .then(res => {
-          this.$message("已驳回");
-        })
-        .catch(err => {
-          this.$message(err);
-        });
+      }
     },
     handlePass(data) {
       this.$confirm("确认通过吗?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
-      })
-        .then(() => {
-          api
-            .leshuaUpdateOfPass({
-              id: 1
+      }).then(() => {
+        api.leshuaUpdateOfPass({
+          id: data.id
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '已通过',
+              type: 'success'
             })
-            .then(res => {
-              this.$message("成功通过!");
+            this.$refs.table.getData()
+          } else {
+            this.$message({
+              message: res.errorMessage,
+              type: 'success'
             })
-            .catch(err => {
-              this.$message(err);
-            });
-        })
-        .catch(() => {
+          }
+        }).catch(err => {
           this.$message({
-            type: "info",
-            message: "已取消"
-          });
+            message: err.errorMessage,
+            type: 'success'
+          })
         });
+      }).catch(() => {
+        this.$message({
+          type: "info",
+          message: "已取消"
+        });
+      });
     },
-    handleReject() {
+    handleReject(row) {
       this.drawer = true;
+      this.id = row.id
       this.fromConfigData = FORM_CONFIG.rejectData;
     },
     search($ruleForm) {
-      console.log($ruleForm);
       const params = {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,

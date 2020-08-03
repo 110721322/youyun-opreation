@@ -23,7 +23,24 @@ export const LERISKLIST_CONFIG = {
     {
       label: '状态',
       prop: 'status',
-      width: '150px'
+      width: '150px',
+      render: (h, params) => {
+        if (params.row.status === 'channelReject') {
+          return h(
+            'span', '已驳回'
+          )
+        }
+        if (params.row.status === 'channelPass') {
+          return h(
+            'span', '已通过'
+          )
+        }
+        if (params.row.status === 'waitPreAudit') {
+          return h(
+            'span', '预审核'
+          )
+        }
+      }
     }
   ],
 
@@ -41,7 +58,7 @@ export const LERISKLIST_CONFIG = {
         emitName: 'detail',
         type: 'text',
         isShow: ($item) => {
-          if ($item.showDetail) {
+          if ($item.status !== 'waitPreAudit') {
             return true;
           } else {
             return false
@@ -53,7 +70,7 @@ export const LERISKLIST_CONFIG = {
         emitName: 'checking',
         type: 'text',
         isShow: ($item) => {
-          if ($item.showChecking) {
+          if ($item.status === 'waitPreAudit') {
             return true;
           } else {
             return false
