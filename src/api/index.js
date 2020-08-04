@@ -12,7 +12,7 @@ import * as g from '../libs/global';
 // axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
 // axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? web_config.devServer : web_config.server;
 // axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
-axios.defaults.baseURL = g.config.server;
+// axios.defaults.baseURL = g.config.server;
 
 axios.defaults.timeout = g.config.timeout;
 axios.defaults.withCredentials = true;

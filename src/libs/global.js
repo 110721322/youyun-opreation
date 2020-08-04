@@ -12,11 +12,11 @@ function getConfig () {
   let config;
   console.log('dev', process.env.NODE_ENV);
 
-  if (process.env.VUE_APP_ENV_CONFIG === 'dev') {
+  if (process.env.NODE_ENV === 'dev') {
     config = devConfig;
-  } else if (process.env.VUE_APP_ENV_CONFIG === 'test') {
+  } else if (process.env.NODE_ENV === 'test') {
     config = testConfig;
-  } else if (process.env.VUE_APP_ENV_CONFIG === 'production') {
+  } else if (process.env.NODE_ENV === 'production') {
     config = prodConfig;
   } else {
     config = devConfig;

@@ -461,11 +461,11 @@ export default {
       const roleId = res.object.user.roleId
       this.saveAccessToken(res.object.accessToken)
       this.saveUserInfo(res.object.user)
-      this.connactWebSocket({
-        from: 'operation',
-        userId: userId,
-        accessToken: res.object.accessToken
-      })
+      // this.connactWebSocket({
+      //   from: 'operation',
+      //   userId: userId,
+      //   accessToken: res.object.accessToken
+      // })
       api.queryUserVueRouterList({
         userToken: res.object.accessToken,
         system: 'operation',
