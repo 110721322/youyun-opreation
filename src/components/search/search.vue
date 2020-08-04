@@ -36,7 +36,7 @@
       <div class="btn_list" style="margin-bottom:0">
         <el-button v-has="permission.search" type="primary" size="large" @click="handleClick">搜索</el-button>
         <el-button plain size="large" @click="resetForm">重置</el-button>
-        <div v-has="permission.condition" v-show="!isShowAll" class="open_btn" @click="onClick_openOrClose">
+        <div v-show="!isShowAll" v-has="permission.condition" class="open_btn" @click="onClick_openOrClose">
           <span v-show="!isOpen">展开</span>
           <span v-show="isOpen">收起</span>
 

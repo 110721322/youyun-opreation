@@ -6,7 +6,7 @@
           <img src="../../assets/img/loginLogo.png" alt class="logo-img" />
         </div>
         <div class="title">智慧办公系统</div>
-        <div class="login-content">
+        <div v-if="isLogin" class="login-content">
           <template v-if="activeType==='accountLogin'">
             <div class="type-box">
               <span class="active-type" @click="toAccountLogin">账号密码登录</span>
@@ -31,7 +31,7 @@
                 <i slot="prefix" class="el-input__icon el-icon-lock"></i>
               </el-input>
             </div>
-            <div class="forget-box" @click="toChangePasswd">忘记密码</div>
+            <div class="forget-box" style="cursor: pointer;" @click="toChangePasswd">忘记密码</div>
             <div class="btn-box">
               <el-button type="primary" class="login-btn" @click="onClick_passwdLogin">登录</el-button>
             </div>
@@ -45,6 +45,7 @@
               <el-input
                 v-model="ruleForm2.phone"
                 class="login-input"
+                name="codePhone"
                 placeholder="请输入手机号"
                 size="large"
               >
@@ -54,6 +55,7 @@
                 v-model="ruleForm2.verification"
                 type="password"
                 class="login-input"
+                name="code"
                 placeholder="请输入验证码"
                 size="large"
               >
@@ -110,6 +112,7 @@
             <div class="btn-box">
               <el-button type="primary" class="login-btn" @click="setNewPasswd">下一步</el-button>
             </div>
+            <div class="bottom-box">已有账号？<span @click="toAccountLogin">立即登录</span></div>
           </template>
           <template v-if="activeType==='setNewPasswd'">
             <div class="type-box">
@@ -137,122 +140,72 @@
             <div class="btn-box">
               <el-button type="primary" class="login-btn" @click="onClick_changePassword">确定</el-button>
             </div>
+            <div class="bottom-box">已有账号？<span @click="toAccountLogin">立即登录</span></div>
           </template>
-          <template v-if="activeType==='wxScan'">
-            <div class="content-title">请微信扫码后，填写信息</div>
-            <div class="content-img">
-              <img src alt class="qrcode" />
-            </div>
-            <div class="content-box--btn">
-              <el-button type="primary" class="content-btn">已完善</el-button>
-            </div>
-          </template>
-          <template v-if="activeType==='contactSuper'">
-            <div class="content-title">请联系主管补充资料</div>
-            <div class="content-img">
-              <img src="../../assets/img/superBg.png" alt class="contact-img" />
-            </div>
-            <div class="content-box--btn">
-              <el-button type="primary" class="content-btn">已补充</el-button>
-            </div>
-          </template>
-          <div class="bottom-box">没有账号？<span @click="onClick_register">立即注册</span></div>
+          <div class="bottom-box">没有账号？<span @click="onClick_changeregister">立即注册</span></div>
         </div>
-        <div v-show="false" class="regist-content">
-          <template>
-            <div class="regist-title">服务商账户注册</div>
-            <div class="input-box">
-              <el-input
-                v-model="ruleForm.phone"
-                class="login-input"
-                placeholder="请输入手机号"
-                size="large"
-              >
-                <i slot="prefix" class="el-input__icon el-icon-user"></i>
-              </el-input>
-              <el-input
-                v-model="ruleForm.password"
-                type="password"
-                class="login-input"
-                placeholder="请输入验证码"
-                size="large"
-              >
-                <i slot="prefix" class="el-input__icon el-icon-lock"></i>
-                <template slot="append">
-                  <span
-                    v-if="countLoginTime<=0"
-                    class="verification-btn"
-                    @click="onClick_sendLoginCode"
-                  >获取验证码</span>
-                </template>
-              </el-input>
-              <el-input
-                v-model="ruleForm.password"
-                type="password"
-                class="login-input"
-                placeholder="请输入新密码"
-                size="large"
-              >
-                <i slot="prefix" class="el-input__icon el-icon-lock"></i>
-              </el-input>
-              <el-input
-                v-model="ruleForm.password"
-                type="password"
-                class="login-input"
-                placeholder="再次确认新密码"
-                size="large"
-              >
-                <i slot="prefix" class="el-input__icon el-icon-lock"></i>
-              </el-input>
-            </div>
-            <div class="btn-box">
-              <el-button type="primary" class="login-btn" @click="onClick_newregist">立即注册</el-button>
-            </div>
-            <div class="bottom-box">已有账号？<span @click="onClick_changelogin">立即登录</span></div>
-          </template>
-        </div>
-        <div class="check-box">
+        <div v-else class="regist-content">
           <template>
             <div class="regist-title">服务商账户注册</div>
             <div class="input-box">
               <template>
-                <el-radio v-model="radio" label="1">企业商户</el-radio>
-                <el-radio v-model="radio" label="2">个人商户</el-radio>
+                <el-radio v-model="registerForm.businessType" label="1">企业商户</el-radio>
+                <el-radio v-model="registerForm.businessType" label="2">个人商户</el-radio>
               </template>
               <el-input
-                v-model="ruleForm.phone"
+                v-model="registerForm.company"
                 class="login-input"
+                type="text"
                 placeholder="请输入公司名称"
+                size="large"
+              >
+                <i slot="prefix" class="el-input__icon el-icon-office-building"></i>
+              </el-input>
+              <el-input
+                v-model="registerForm.personName"
+                type="text"
+                class="login-input"
+                placeholder="请输入法人姓名"
                 size="large"
               >
                 <i slot="prefix" class="el-input__icon el-icon-user"></i>
               </el-input>
               <el-input
-                v-model="ruleForm.password"
-                type="password"
-                class="login-input"
-                placeholder="请输入法人姓名"
-                size="large"
-              >
-                <i slot="prefix" class="el-input__icon el-icon-lock"></i>
-              </el-input>
-              <el-input
-                v-model="ruleForm.password"
-                type="password"
+                v-model="registerForm.personMobile"
+                type="text"
                 class="login-input"
                 placeholder="请输入法人手机号"
                 size="large"
               >
+                <i slot="prefix" class="el-input__icon el-icon-phone"></i>
+              </el-input>
+              <el-input
+                v-model="registerForm.phone"
+                type="text"
+                class="login-input"
+                placeholder="请输入登录手机号"
+                size="large"
+              >
+                <i slot="prefix" class="el-input__icon el-icon-phone"></i>
+              </el-input>
+              <el-input
+                v-model="registerForm.password"
+                autocomplete="off"
+                type="password"
+                class="login-input"
+                placeholder="请输入密码"
+                size="large"
+              >
                 <i slot="prefix" class="el-input__icon el-icon-lock"></i>
               </el-input>
               <el-input
-                v-model="ruleForm.password"
-                type="password"
+                v-model="registerForm.email"
+                type="text"
                 class="login-input"
                 placeholder="请输入邮箱"
                 size="large"
               >
-                <i slot="prefix" class="el-input__icon el-icon-lock"></i>
+                <i slot="prefix" class="el-input__icon el-icon-message"></i>
               </el-input>
               <el-cascader
                 v-model="county"
@@ -262,17 +215,18 @@
                 @change="changeCounty"
               ></el-cascader>
               <el-input
-                v-model="ruleForm.password"
-                type="password"
+                v-model="registerForm.address"
+                type="text"
                 class="login-input"
                 placeholder="请输入详细地址"
                 size="large"
               >
-                <i slot="prefix" class="el-input__icon el-icon-lock"></i>
+                <i slot="prefix" class="el-input__icon el-icon-location-information"></i>
               </el-input>
             </div>
-            <div class="btn-regist">立即注册</div>
+            <div class="btn-regist" @click="onClick_register">立即注册</div>
           </template>
+          <div class="bottom-box">已有账号？<span @click="onClick_changelogin">立即登录</span></div>
         </div>
       </div>
       <div class="right-box">
@@ -284,10 +238,12 @@
 <script type="text/ecmascript-6">
 import api from "@/api/api_login";
 // import WBT from "@/libs/kit/webSocket"
+import io from "socket.io-client"
 import {computedRoleRouter} from '@/libs/role'
 import currRouter from '@/router/addRouter'
 import { mapActions } from 'vuex';
 import store from '@/store';
+import areaData from "@/assets/data/areaData";
 // import * as g from '@/libs/global';
 
 export default {
@@ -296,7 +252,7 @@ export default {
     return {
       radio: '1',
       county: '',
-      options: [],
+      options: areaData,
       isRegister: false,
       isLogin: true,
       loading: false,
@@ -315,6 +271,19 @@ export default {
       ruleForm4: {
         newPasswd: "",
         newPasswdAgain: ""
+      },
+      registerForm: {
+        businessType: null,
+        company: null,
+        personName: null,
+        personMobile: null,
+        email: null,
+        address: null,
+        provinceCode: null,
+        cityCode: null,
+        areaCode: null,
+        phone: '',
+        password: ''
       },
       rules: {
         phone: [
@@ -343,7 +312,11 @@ export default {
     ...mapActions([
       'saveAccessToken', 'saveUserInfo', 'setRolePermission', 'saveRoutersArr'
     ]),
-    changeCounty() {},
+    changeCounty($codes) {
+      this.registerForm['provinceCode'] = $codes[0];
+      this.registerForm['cityCode'] = $codes[1];
+      this.registerForm['areaCode'] = $codes[2];
+    },
     onClick_changePassword() {
       if (!this.ruleForm4.newPasswd) {
         this.$alert("请输入新密码");
@@ -374,30 +347,29 @@ export default {
         });
     },
     onClick_sendLoginCode() {
+      const that = this;
       if (!this.ruleForm2.phone) {
         this.$alert("请输入手机号");
         return;
       }
-      this.countLoginTime = 60;
-      const interval = setInterval(() => {
-        if (this.countLoginTime > 0) {
-          this.countLoginTime--;
-        } else {
-          clearInterval(interval);
-        }
-      }, 1000);
-
       api
         .getSmsCode({
-          userName: this.ruleForm2.phone
+          phone: this.ruleForm2.phone,
+          system: 'operation'
         })
         .then(res => {
+          this.countLoginTime = 60;
+          const interval = setInterval(() => {
+            if (that.countLoginTime > 0) {
+              that.countLoginTime--;
+            } else {
+              clearInterval(interval);
+            }
+          }, 1000);
           this.$message("已发送");
         })
-        .catch(err => {
+        .catch(() => {
           this.countLoginTime = 0;
-          clearInterval(interval);
-          this.$message(err);
         });
     },
     onClick_sendChangeCode() {
@@ -463,7 +435,6 @@ export default {
       this.activeType = "verificationLogin";
     },
     onClick_passwdLogin() {
-      let userId, roleId;
       if (!this.ruleForm.phone) {
         this.$alert("请输入账号");
         return;
@@ -479,44 +450,44 @@ export default {
           type: 'password',
           system: 'operation'
         })
-        .then(res => {
-          this.saveAccessToken(res.object.accessToken)
-          userId = res.object.user.id
-          roleId = res.object.user.roleId
-          this.saveUserInfo(res.object.user)
-          // this.connactWebSocket({
-          //   from: 'operation',
-          //   userId: res.object.user.id,
-          //   accessToken: res.object.accessToken
-          // })
-          api.queryUserVueRouterList({
-            userToken: res.object.accessToken,
-            system: 'operation',
-            userId: userId,
-            roleId: roleId
-          }).then(res => {
-            computedRoleRouter(res.object)
-            this.addRoutes();
-            if (this.$route.query.redirect) {
-              this.$router.push({ path: `${this.$route.query.redirect}` });
-            } else {
-              this.$router.push(`/index`);
-            }
-          }).catch(err => {
-            console.log(err)
-          })
-          // this.saveUserInfo(res.object.user)
-          // this.setRolePermission(['merchant'])
-        })
-        .catch(err => {
-          this.$alert(err);
-        });
+        .then(res => this.loginCallBack(res))
+    },
+    /**
+     * 登录成功回调
+     * @param res
+     */
+    loginCallBack(res) {
+      const userId = res.object.user.id
+      const roleId = res.object.user.roleId
+      this.saveAccessToken(res.object.accessToken)
+      this.saveUserInfo(res.object.user)
+      this.connactWebSocket({
+        from: 'operation',
+        userId: userId,
+        accessToken: res.object.accessToken
+      })
+      api.queryUserVueRouterList({
+        userToken: res.object.accessToken,
+        system: 'operation',
+        userId: userId,
+        roleId: roleId
+      }).then(res => {
+        computedRoleRouter(res.object)
+        this.addRoutes();
+        if (this.$route.query.redirect) {
+          this.$router.push({ path: `${this.$route.query.redirect}` });
+        } else {
+          this.$router.push(`/index`);
+        }
+      })
     },
     connactWebSocket ($params) {
-      // const url = `www.intranet.aduer.com/ws?from=operation&userId=${$params.userId}&accessToken=${$params.accessToken}`
-      // const webSocket = new WebSocket(url)
-      api.getWebSocket($params)
-      // return webSocket
+      const url = `http://192.168.2.49:10443/ws?from=${$params.from}&userId=${$params.userId}&accessToken=${$params.accessToken}`
+      const webSocket = io(url, {transports: ['websocket']})
+      webSocket.on('connect', function() {
+        console.log('连上了')
+      });
+      console.log(webSocket);
     },
     addRoutes() {
       const menuItems = store.state.role.routes;
@@ -535,76 +506,30 @@ export default {
       }
       api
         .login({
-          loginType: 2,
+          type: 'message',
           code: this.ruleForm2.verification,
-          id: 40290,
-          userName: this.ruleForm2.phone
+          system: 'operation',
+          phone: this.ruleForm2.phone
         })
-        .then(res => {
-          if (this.$route.query.redirect) {
-            this.$router.push({ path: `${this.$route.query.redirect}` });
-          } else {
-            this.$router.push(`/index`);
-          }
-        })
-        .catch(err => {
-          this.$alert(err);
-        });
+        .then(res => this.loginCallBack(res))
     },
-    onClick_register() {
+    onClick_changeregister() {
       this.isRegister = true
       this.isLogin = false
     },
-    onClick_newregist() {},
     onClick_changelogin() {
       this.isRegister = false
       this.isLogin = true
+    },
+    onClick_register() {
+      api.registerTopAgent(this.registerForm).then(res => {
+        this.$message({
+          type: 'succcess',
+          message: '注册成功，前往登陆'
+        })
+        this.onClick_changelogin();
+      })
     }
-    // onClick_login(formName) {
-    //   this.$refs[formName].validate(valid => {
-    //     if (valid) {
-    //       this.loading = true;
-    //       api
-    //         .login({
-    //           loginAccount: this.ruleForm.account,
-    //           loginPassword: this.ruleForm.password
-    //         })
-    //         .then(result => {
-    //           this.loading = false;
-    //           window.localStorage.setItem(
-    //             "token-merchant",
-    //             result.object.userToken
-    //           );
-    //           let merchantUser = JSON.stringify(result.object.merchantUser);
-    //           window.localStorage.setItem("userInfo-merchant", merchantUser);
-
-    //           g.fun.getMenuList(() => {
-    //             this.$router.replace({
-    //               path: g.menuModel.list[0].url,
-    //               query: {
-    //                 roleType:
-    //                   g.menuModel.list[0].menuName.indexOf("-") !== -1
-    //                     ? g.menuModel.list[0].menuName.substring(
-    //                         g.menuModel.list[0].menuName.length - 1,
-    //                         g.menuModel.list[0].menuName.length
-    //                       )
-    //                     : ""
-    //               }
-    //             });
-    //           });
-    //         })
-    //         .catch(() => {
-    //           this.loading = false;
-    //           this.ruleForm = {
-    //             account: "",
-    //             password: ""
-    //           };
-    //         });
-    //     } else {
-    //       return false;
-    //     }
-    //   });
-    // }
   }
 };
 </script>
