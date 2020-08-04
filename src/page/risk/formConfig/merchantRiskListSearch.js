@@ -33,16 +33,20 @@ export const SEARCH_CONFIG = {
       style: 'width:294px',
       options: [
         {
+          label: '全部',
+          value: ''
+        },
+        {
           label: '待审核',
-          value: 0
+          value: 'waitPreAudit'
         },
         {
           label: '审核通过',
-          value: 1
+          value: 'pass'
         },
         {
           label: '驳回',
-          value: 2
+          value: 'reject'
         }
       ]
     },

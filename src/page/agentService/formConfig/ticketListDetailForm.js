@@ -1,5 +1,5 @@
 import { setRules } from '@/libs/kit/formFns.js'
-
+import store from "@/store";
 export const FORM_CONFIG = {
   replyData: {
     title: '工单回复',
@@ -24,21 +24,8 @@ export const FORM_CONFIG = {
         type: 1,
         label: '处理人员',
         key: 'operatorId',
-        initVal: "0",
-        options: [
-          {
-            label: '川菜',
-            value: '0'
-          },
-          {
-            label: '粤菜',
-            value: '1'
-          },
-          {
-            label: '杭帮菜',
-            value: '2'
-          }
-        ],
+        initVal: "",
+        options: store.state.system.employeeList,
         rules: setRules('广告名称').isRequired.get
       }
     ]

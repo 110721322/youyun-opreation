@@ -3,7 +3,9 @@ import * as g from '../libs/global';
 
 export default {
   // 导入商户蜻蜓活动奖励excel
-  merchantinput: (params, config) => API.POST(g.config.server + '/operation/v1/dragonfly/reward/merchant/input', params, config),
+  merchantinput: (params) => API.POST(g.config.server + '/operation/v1/dragonfly/reward/merchant/input', params),
+  // Excel上传
+  excelTemplate: (params) => API.POST(g.config.server + '/operation/v1/excelTemplate/upload', params),
   // 服务商蜻蜓奖励分页查询
   queryByPage: (params) => API.GET(g.config.server + '/operation/v1/dragonfly/reward/agent/queryByPage', params),
   // 商户蜻蜓奖励明细分页查询

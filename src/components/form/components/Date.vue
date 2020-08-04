@@ -81,7 +81,6 @@ export default {
         if (this.formItem.isSelectToday) {
           this.dateList[0].label = "今天";
         }
-
         if (this.type === "datetimerange") {
           this.defaultTime = ["00:00:00", "23:59:59"];
         }
@@ -93,7 +92,6 @@ export default {
     if (this.formItem.isSelectToday) {
       this.dateList[0].label = "今天";
     }
-
     if (this.type === "datetimerange") {
       this.defaultTime = ["00:00:00", "23:59:59"];
     }

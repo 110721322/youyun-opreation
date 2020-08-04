@@ -19,13 +19,13 @@ export const TABLE_CONFIG = {
     },
     {
       label: '联系人',
-      prop: 'buyerJsonVO.buyerName',
+      prop: 'buyerName',
       // prop: [{ key: "name" }, { key: "phone"}],
       width: '90px'
     },
     {
       label: '订单状态',
-      prop: 'status',
+      prop: 'statusDesc',
       width: '90px'
     },
     {
@@ -35,7 +35,7 @@ export const TABLE_CONFIG = {
     },
     {
       label: '订单类型',
-      prop: 'outputType'
+      prop: 'outputTypeDesc'
     }
   ],
   // crud的模态框表单配置，可配置表单类型，验证规则，是否必填,col-span布局可通过span参数配置

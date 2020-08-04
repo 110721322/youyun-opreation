@@ -125,12 +125,14 @@
 
 <script>
 import api from "@/api/api_dataMarket";
+import api_dataMarket from "@/api/api_dataMarket";
 import dataItem from "./components/dataItem.vue";
 import search from "@/components/search/search.vue";
 // import BaseCrud from '@/components/table/BaseCrud.vue';
 import { FORM_CONFIG, FORM_CONFIG2 } from "./formConfig/dataViewSearch";
 import smileImg from "@/assets/img/smile.png";
 import toggleImg from "@/assets/img/toggle.png";
+import {mapActions} from "vuex";
 export default {
   name: "Theme",
   components: { search, dataItem },
@@ -607,8 +609,35 @@ export default {
   },
   mounted() {
     this.init();
+    this.queryInit();
   },
   methods: {
+    ...mapActions(['setLabelList', 'setRegionList', 'setUserList']),
+    queryInit() {
+      api_dataMarket.queryInit().then(res => {
+        const labelList = res.object.labelList.map($ele => {
+          return {
+            label: $ele.name,
+            value: $ele.id
+          }
+        })
+        const regionList = res.object.regionSetList.map($ele => {
+          return {
+            label: $ele.regionName,
+            value: $ele.regionCode
+          }
+        })
+        const userList = res.object.userDTOList.map($ele => {
+          return {
+            label: $ele.jobName || $ele.name,
+            value: $ele.id
+          }
+        })
+        this.setLabelList(labelList)
+        this.setRegionList(regionList)
+        this.setUserList(userList)
+      })
+    },
     handleCheckAllChange() {},
     handleChecked() {},
     showRightbar() {

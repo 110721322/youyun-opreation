@@ -250,7 +250,7 @@ export default {
       this.listLoading = true;
       this.queryParams.currentPage = this.currentPage;
       this.queryParams.pageSize = this.currentPageSize;
-      this.queryParams = Object.assign({}, this.params);
+      Object.assign(this.queryParams, this.params);
       this.apiService(this.queryParams)
         .then(res => {
           // debugger;

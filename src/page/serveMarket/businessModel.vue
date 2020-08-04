@@ -8,21 +8,21 @@
       <div class="p_head">业务模式</div>
       <div class="card">
         <div class="card_content">
-          <div class="card_list">
+          <div class="card_list" v-for="(item,index) in modelList" :key="index">
             <!--                        <img class="back_img" src="" alt="">-->
             <div class="card_title">
-              <span>小马哥代理</span>
+              <span>{{item.productName}}</span>
               <img src="../../assets/img/xmg.png" alt="" class="card_img">
             </div>
-            <div class="card_subtitle">添加的下级服务商直接走小马哥代理，安全稳定。小马哥提供系统升级及维护</div>
+            <div class="card_subtitle">{{item.productDesc}}</div>
             <div class="card_btn">
               <button class="buy_btn" @click="onclick_btn">我要续费</button>
-              <div class="buy_title">已购买该服务，到期时间：2020-10-10</div>
+              <div class="buy_title">已购买该服务，到期时间：{{item.expireDate}}</div>
             </div>
           </div>
-          <div class="card_list">
+          <!-- <div class="card_list"> -->
             <!--                        <img class="back_img" src="" alt="">-->
-            <div class="card_title">
+            <!-- <div class="card_title">
               <span>oem贴牌代理</span>
               <img src="../../assets/img/ome_logo.png" alt="" class="card_img">
             </div>
@@ -32,9 +32,9 @@
               <div class="buy_title" style="display: none;">已购买该服务，到期时间：2020-10-10</div>
             </div>
           </div>
-          <div class="card_list">
+          <div class="card_list"> -->
             <!--                        <img class="back_img" src="" alt="">-->
-            <div class="card_title">
+            <!-- <div class="card_title">
               <span>新源码</span>
               <img src="../../assets/img/new_logo.png" alt="" class="card_img">
             </div>
@@ -42,8 +42,8 @@
             <div class="card_btn">
               <button class="btn" @click="onclick_buybtn1">立即购买</button>
               <div class="buy_title" style="display: none;">已购买该服务，到期时间：2020-10-10</div>
-            </div>
-          </div>
+            </div> -->
+          <!-- </div> -->
         </div>
       </div>
     </div>
@@ -51,7 +51,16 @@
 </template>
 
 <script>
+import api from "@/api/api_serveMarket";
 export default {
+  data() {
+    return {
+      modelList: []
+    }
+  },
+  created() {
+    this.getModel()
+  },
   methods: {
     onclick_btn() {
       this.$router.push({ path: "/serveMarket/businessModel/detail" });
@@ -61,6 +70,14 @@ export default {
     },
     onclick_buybtn1() {
       this.$router.push({ path: "/serveMarket/businessModel/newdetail" });
+    },
+    getModel() {
+      api.selectModuleProduct({
+        moduleCode: 'businessMode'
+      }).then(res => {
+        const modelList = res.object
+        this.modelList = modelList
+      })
     }
   }
 }

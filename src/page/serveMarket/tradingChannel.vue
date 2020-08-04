@@ -2,14 +2,14 @@
   <div class="main_page">
     <router-view v-if="this.$route.path.indexOf('/lsBuyIndex') !== -1" />
     <div v-else class="content">
-      <div class="card">
+      <div class="card" v-for="(item,index) in tradeList" :key="index">
         <div class="top">
           <div class="left_img">
             <img src="../../assets/img/leshua_icon.png" alt="">
           </div>
           <div class="right_info">
-            <div class="card_title">乐刷通道</div>
-            <div class="card_subtitle">帮您对接您沟通的乐刷通道，直接与第三方进行结算</div>
+            <div class="card_title">{{item.productName}}</div>
+            <div class="card_subtitle">{{item.productDesc}}</div>
           </div>
         </div>
         <ul class="descript">
@@ -28,11 +28,28 @@
 </template>
 
 <script>
+import api from "@/api/api_serveMarket";
 export default {
+  data() {
+    return {
+      tradeList: []
+    }
+  },
+  created() {
+    this.getModel()
+  },
   methods: {
     onclick_buy() {
       this.$router.push({
         path: "/serveMarket/tradingChannel/lsBuyIndex"
+      })
+    },
+    getModel() {
+      api.selectModuleProduct({
+        moduleCode: 'payChannel'
+      }).then(res => {
+        const modelList = res.object
+        this.modelList = modelList
       })
     }
   }

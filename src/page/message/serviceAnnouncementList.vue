@@ -49,7 +49,6 @@ export default {
   data() {
     return {
       searchMaxHeight: "300",
-
       configData: USER_CONFIG,
       testData: [],
       searchConfig: SEARCH_CONFIG,
@@ -59,8 +58,9 @@ export default {
   },
   created() {
     this.params = {
+      to: 'agent',
       title: "",
-      messageType: 1
+      messageType: 0
     };
   },
   mounted() {},
@@ -68,7 +68,10 @@ export default {
     handelEdit($row) {
       console.log($row);
       this.$router.push({
-        path: "/message/serviceAnnouncementList/detail"
+        path: "/message/serviceAnnouncementList/detail",
+        query: {
+          id: $row.id
+        }
       });
     },
     onClick_addAnnouncement() {
@@ -88,7 +91,7 @@ export default {
         .then(() => {
           api
             .delete({
-              id: "无",
+              id: "",
               deleted: true
             })
             .then(res => {
@@ -105,7 +108,8 @@ export default {
       console.log($ruleForm);
       const params = {
         title: $ruleForm.title,
-        messageType: $ruleForm.messageType
+        messageType: $ruleForm.messageType,
+        to: 'agent'
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;

@@ -102,6 +102,9 @@ export default {
   // 订单管理
   hardwarePageOrder: (params) => API.GET(g.config.server + 'operation/v1/deviceOrder/hardwarePageOrder', params),
   hardwareDetail: (params) => API.GET(g.config.server + 'operation/v1/deviceOrder/hardwareDetail', params),
+  getAgentNosByAgentName: (params) => API.GET(g.config.server + 'operation/v1/deviceOrder/getAgentNosByAgentName', params),
+  getMerchantNosByMerchantName: (params) => API.GET(g.config.server + 'operation/v1/deviceOrder/getMerchantNosByMerchantName', params),
+  orderStatus: (params) => API.GET(g.config.server + 'operation/v1/deviceOrder/orderStatus', params),
   // 广告权限
   advertPrivilege: (params) => API.GET(g.config.server + 'operation/v1/advertPrivilege/queryByPage', params),
   advertPrivilegeUpdate: (params) => API.POST(g.config.server + 'operation/v1/advertPrivilege/update', params),
