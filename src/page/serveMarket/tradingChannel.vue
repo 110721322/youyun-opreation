@@ -2,14 +2,14 @@
   <div class="main_page">
     <router-view v-if="this.$route.path.indexOf('/lsBuyIndex') !== -1" />
     <div v-else class="content">
-      <div class="card" v-for="(item,index) in tradeList" :key="index">
+      <div v-for="(item,index) in tradeList" :key="index" class="card">
         <div class="top">
           <div class="left_img">
             <img src="../../assets/img/leshua_icon.png" alt="">
           </div>
           <div class="right_info">
-            <div class="card_title">{{item.productName}}</div>
-            <div class="card_subtitle">{{item.productDesc}}</div>
+            <div class="card_title">{{ item.productName }}</div>
+            <div class="card_subtitle">{{ item.productDesc }}</div>
           </div>
         </div>
         <ul class="descript">

@@ -1,5 +1,5 @@
 <template>
-  <div class v-if="channelStatusList.length > 0">
+  <div v-if="channelStatusList.length > 0" class>
     <div class="tab_head">
       <span class="title">商户预审核信息</span>
       <el-menu
@@ -8,10 +8,10 @@
         mode="horizontal"
         @select="handleSelect"
       >
-        <el-menu-item v-for="(item, index) in channelStatusList" :index="index" :key="index">
-          <i class="dot" v-if="item.channelCode === 'leShua'"></i>
-          <i class="dot dotRed" v-if="item.channelCode === 'newLand'"></i>
-          {{item.channel}}
+        <el-menu-item v-for="(item, index) in channelStatusList" :key="index" :index="index">
+          <i v-if="item.channelCode === 'leShua'" class="dot"></i>
+          <i v-if="item.channelCode === 'newLand'" class="dot dotRed"></i>
+          {{ item.channel }}
         </el-menu-item>
       </el-menu>
     </div>

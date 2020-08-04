@@ -6,7 +6,7 @@
         <li><span>活动名称：</span><span>{{ activityDetail.activityName }}</span><span>{{ stateMap[activityDetail.state] }}</span></li>
         <li><span>优惠码面值：</span><span>{{ activityDetail.promoCodeAmount }}元</span></li>
         <li><span>截止活动时间：</span><span>{{ activityDetail.activityEndTime }}</span></li>
-        <li><span>优惠码使用有限期：</span><span>{{promoCodeTime}}</span></li>
+        <li><span>优惠码使用有限期：</span><span>{{ promoCodeTime }}</span></li>
         <li><span>发放数量：</span><span>{{ activityDetail.promoCodeCount }}</span></li>
         <li><span>活动主标题：</span><span>{{ activityDetail.activityName }}</span></li>
         <li><span>活动副标题：</span><span>{{ activityDetail.activitySubName }}</span></li>

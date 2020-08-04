@@ -27,7 +27,7 @@
         <div class="sub-title">扫脸时代感恩回馈</div>
         <div class="title">支付立减优惠码，等你来抢</div>
       </div>
-      <div class="right-area" v-show="firstStep===1 && secondStep===0">
+      <div v-show="firstStep===1 && secondStep===0" class="right-area">
         <div class="right-head">
           <span></span>
           <span>优惠码设置</span>
@@ -44,7 +44,7 @@
           </div>
         </div>
       </div>
-      <div class="right-area" v-show="secondStep===1 && thirdStep===0">
+      <div v-show="secondStep===1 && thirdStep===0" class="right-area">
         <div class="right-head">
           <span></span>
           <span>页面设置</span>
@@ -79,7 +79,7 @@
           <div class="third_title"><span>2</span><span>发给服务商扫码/进入链接进行领取</span></div>
           <p>优惠码领取链接</p>
           <!-- <div class="text-info">http://192.168.2.7/yx/sy/#id=hbdaqk&p=%E7%99%BB%E5%BD%95%E9%A1%B5&g=1</div> -->
-          <div class="text-info">{{activityDetail.shortUrl}}</div>
+          <div class="text-info">{{ activityDetail.shortUrl }}</div>
           <button class="down" @click="copyActiveCode($event,activityDetail.shortUrl )">复制链接</button>
         </div>
       </div>

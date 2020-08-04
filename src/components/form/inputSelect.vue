@@ -1,7 +1,7 @@
 <template>
   <div>
     <div :class="selectClass">
-        <el-select
+      <el-select
         v-model="ruleForm[formItem.key]"
         :multiple="isArray(formItem.initVal)"
         :filterable="formItem.isSearch"
@@ -11,34 +11,34 @@
         :remote-method="remoteMethod"
         :disabled="formItem.isDisabled"
         style="margin-bottom:22px;width:294px"
-        >
-            <el-option
-                v-for="item in selectOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-            ></el-option>
-        </el-select>
+      >
+        <el-option
+          v-for="item in selectOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></el-option>
+      </el-select>
     </div>
     <div v-if="ruleForm[formItem.key] === 0 || !ruleForm[formItem.key]">
-        <el-input
+      <el-input
         v-model="inputForm"
         class="input-with-select"
         @input="onInput"
-        ></el-input>
-        <el-select
+      ></el-input>
+      <el-select
         slot="prepend"
         v-model="inputSelect"
         style="width:146px"
         placeholder="请选择"
         @change="onSelect"
-        >
-            <el-option label="天" :value="0"></el-option>
-            <el-option label="小时" :value="1"></el-option>
-        </el-select>
+      >
+        <el-option label="天" :value="0"></el-option>
+        <el-option label="小时" :value="1"></el-option>
+      </el-select>
     </div>
     <div v-else>
-        <el-date-picker
+      <el-date-picker
         v-model="timeInterval"
         style="float: left;"
         size="large"
@@ -50,7 +50,7 @@
         :default-time="defaultTime"
         :picker-options="pickerOptions"
         @change="onChage"
-        />
+      />
     </div>
   </div>
 </template>

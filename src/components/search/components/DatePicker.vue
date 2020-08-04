@@ -1,6 +1,6 @@
 <template>
   <div>
-  <el-date-picker
+    <el-date-picker
       v-model="timeInterval"
       style="float: left;"
       size="large"

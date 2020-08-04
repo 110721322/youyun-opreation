@@ -11,7 +11,7 @@ export default {
   // 商户蜻蜓奖励明细分页查询
   merchantqueryByPage: (params) => API.GET(g.config.server + '/operation/v1/dragonfly/reward/merchant/queryByPage', params),
   // 分润统计-服务商分润统计-按支付方式,通道统计
-  selectAgentDataByPage: (params) => API.POST(g.config.server + '/operation/v1/topAgentStatistics/selectAgentDataByPage', params),
+  selectAgentDataByPage: (params) => API.POST(g.config.server + '/operation/v1/topAgentStatistics/selectAgentDataByPage', params, {changeContent: true}),
   // 分润统计-服务商分润统计-间连分润统计
   selectIndirectDataByPage: (params) => API.POST(g.config.server + '/operation/v1/topAgentStatistics/selectIndirectDataByPage', params),
   // 代理商下的商户明细
@@ -35,5 +35,13 @@ export default {
   // 佣金结算
   SettlequeryByPage: (params) => API.POST(g.config.server + 'operation/v1/topAgentSettle/queryByPage', params),
   // 佣金结算
-  submitSettle: (params) => API.POST(g.config.server + 'operation/v1/topAgentSettle/submitSettle', params)
+  submitSettle: (params) => API.POST(g.config.server + 'operation/v1/topAgentSettle/submitSettle', params),
+  // 支付宝服务商分润奖励分页查询
+  aliAgents: (params) => API.GET(g.config.server + '/operation/v1/direct/reward/aliAgents', params),
+  // 支付宝商户分润奖励明细分页查询
+  aliMerchants: (params) => API.GET(g.config.server + '/operation/v1/direct/reward/aliMerchants', params),
+  // 微信服务商分润奖励分页查询
+  wxAgents: (params) => API.GET(g.config.server + '/operation/v1/direct/reward/wxAgents', params),
+  // 微信商户分润奖励明细分页查询
+  wxMerchants: (params) => API.GET(g.config.server + '/operation/v1/direct/reward/wxMerchants', params)
 }

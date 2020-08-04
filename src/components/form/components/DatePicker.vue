@@ -10,7 +10,8 @@
       :picker-options="pickerOptions"
       :value-format="format"
       @change="onChage"
-    ></el-date-picker>
+    >
+    </el-date-picker>
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -36,26 +37,21 @@ export default {
   },
   data() {
     return {
-      defaultTime: "",
+      timeInterval: null,
       placeholder: this.formItem.placeholder,
       datatype: this.formItem.datatype,
       format: this.formItem.format
     };
   },
-  computed: {
-    timeInterval() {
-      if (this.formItem.key) {
-        return this.ruleForm[this.formItem.key]
-      }
-      return null
-    }
+  watch: {
+
   },
-  watch: {},
   created() {
-    console.log(this.placeholder);
+    console.log(this.placeholder)
   },
   methods: {
     onChage($data) {
+      console.log($data)
       this.$emit("select", $data);
       this.ruleForm[this.formItem.key] = $data;
     }

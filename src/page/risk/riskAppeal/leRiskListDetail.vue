@@ -40,35 +40,35 @@
           <div v-for="(item,index) in appealData" :key="index" class="item">
             <div class="time">{{ item.createTime }}</div>
             <div class="channel">{{ item.operationName }}</div>
-            <div class="status" v-if="item.auditStatus === 'pass'">
+            <div v-if="item.auditStatus === 'pass'" class="status">
               <span class="dot" :class="item.dotName"></span>
               通过
             </div>
-            <div class="status" v-if="item.auditStatus === 'reject'">
+            <div v-if="item.auditStatus === 'reject'" class="status">
               <span class="dot reject" :class="item.dotName"></span>
               驳回
             </div>
-            <div class="status" v-if="item.auditStatus === 'channelAudit'">
+            <div v-if="item.auditStatus === 'channelAudit'" class="status">
               <span class="dot unused" :class="item.dotName"></span>
               通道审核中
             </div>
-            <div class="status" v-if="item.auditStatus === 'channelPass'">
+            <div v-if="item.auditStatus === 'channelPass'" class="status">
               <span class="dot" :class="item.dotName"></span>
               通道通过
             </div>
-            <div class="status" v-if="item.auditStatus === 'channelReject'">
+            <div v-if="item.auditStatus === 'channelReject'" class="status">
               <span class="dot reject" :class="item.dotName"></span>
               通道驳回
             </div>
-            <div class="status" v-if="item.auditStatus === 'nonOpen'">
+            <div v-if="item.auditStatus === 'nonOpen'" class="status">
               <span class="dot review" :class="item.dotName"></span>
               待开通
             </div>
-            <div class="status" v-if="item.auditStatus === 'platformAudit'">
+            <div v-if="item.auditStatus === 'platformAudit'" class="status">
               <span class="dot unused" :class="item.dotName"></span>
               平台审核中
             </div>
-            <div class="status" v-if="item.auditStatus === 'platformReject'">
+            <div v-if="item.auditStatus === 'platformReject'" class="status">
               <span class="dot reject" :class="item.dotName"></span>
               平台驳回
             </div>
