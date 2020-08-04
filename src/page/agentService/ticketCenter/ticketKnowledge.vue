@@ -237,7 +237,6 @@ export default {
               secondClass: this.secondClass,
               answerContent: $data.answerContent,
               firstClass: this.firstClass,
-              isDeleted: false,
               id: this.activeRow.id
             })
             .then(res => {
@@ -268,8 +267,7 @@ export default {
         api
           .updateFirstClass({
             id: $data.id,
-            menuName: $data.menuName,
-            isDeleted: ""
+            menuName: $data.menuName
           })
           .then(res => {
             this.$set($data, "isEdit", false);
@@ -489,7 +487,6 @@ export default {
               secondClass: this.secondClass,
               answerContent: $data.answerContent,
               firstClass: this.firstClass,
-              isDeleted: 1,
               id: $data.id
             })
             .then(res => {
