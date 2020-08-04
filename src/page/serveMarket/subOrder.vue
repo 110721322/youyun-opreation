@@ -17,9 +17,9 @@
           <span>价格（元）</span>
         </li>
         <li>
-          <span>小马哥代理</span>
-          <span>1年</span>
-          <span>10000</span>
+          <span>{{ modelName }}</span>
+          <span>{{ comboItem.comboName }}</span>
+          <span>{{ comboItem.comboAmount }}</span>
         </li>
         <li>
           <div class="coupon">
@@ -32,7 +32,7 @@
     </div>
     <div class="bottom">
       <div class="bottom_content">
-        <div class="amount">实际付款:<span>10000</span></div>
+        <div class="amount">实际付款:<span>{{ comboItem.comboAmount }}</span></div>
         <button class="sub_btn" @click="onClick_submit">提交订单</button>
       </div>
     </div>
@@ -43,8 +43,14 @@
 export default {
   data() {
     return {
-      input: ''
+      input: '',
+      comboItem: {},
+      modelName: ''
     }
+  },
+  created() {
+    this.comboItem = JSON.parse(localStorage.getItem('comboItem'))
+    this.modelName = localStorage.getItem('modelName')
   },
   methods: {
     onClick_submit() {

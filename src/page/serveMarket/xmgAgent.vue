@@ -3,7 +3,7 @@
     <div class="top_content">
       <div class="warn" v-if="showTip">
         <div class="left_icon">i</div>
-        <span>已购买该服务，有效期到：{{expireDate}} 。再次购买后服务到期时间将累加</span>
+        <span>已购买该服务，有效期到：{{ expireDate }} 。再次购买后服务到期时间将累加</span>
         <img src="../../assets/img/cancle.png" alt="" @click="closeWarn">
       </div>
       <div class="buy_info">
@@ -23,7 +23,7 @@
             </div>
             <div class="price">
               <span class="select_name">购买价格</span>
-              <span class="data_price"><span>¥</span>{{comboPrice}}</span>
+              <span class="data_price"><span>¥</span>{{ comboPrice }}</span>
             </div>
           </div>
           <button class="buy_serve" @click="onclick_buyserve">购买服务</button>
@@ -74,7 +74,8 @@ export default {
       comboPrice: 0,
       buyStatus: null,
       expireDate: '',
-      showTip: false
+      showTip: false,
+      comboItem: {}
     }
   },
   created() {
@@ -88,10 +89,13 @@ export default {
   },
   methods: {
     onclick_selectDate(data, index) {
+      this.comboItem = data
       this.comboPrice = data.comboAmount
       this.selectIndex = index
     },
     onclick_buyserve() {
+      localStorage.setItem('comboItem', JSON.stringify(this.comboItem))
+      localStorage.setItem('modelName', '小马哥代理')
       this.$router.push({
         path: "/serveMarket/businessModel/subOrder"
       });
@@ -101,6 +105,7 @@ export default {
         productCode: this.productCode
       }).then(res => {
         this.comboList = res.object || []
+        this.comboItem = this.comboList[this.selectIndex] || {}
         this.comboPrice = this.comboList[this.selectIndex].comboAmount || 0
       })
     },
