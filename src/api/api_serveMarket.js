@@ -51,5 +51,7 @@ export default {
   // 查询产品套餐
   selectProductCombo: (params) => API.GET('/operation/v1/market/selectProductCombo', params),
   // 顶级服务商订单查询
-  selectTopAgentOrder: (params) => API.GET('/operation/v1/market/selectTopAgentOrder', params)
+  selectTopAgentOrder: (params) => API.GET('/operation/v1/market/selectTopAgentOrder', params),
+  // 已获得的优惠码
+  getPromoCodeListByChannelAgentCode: (params) => API.POST('/operation/v1/promoCode/getPromoCodeListByChannelAgentCode', params)
 };

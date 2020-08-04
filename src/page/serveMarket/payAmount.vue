@@ -11,9 +11,9 @@
     <div class="content">
       <div class="content_title">订单支付</div>
       <ul class="select">
-        <li><span>服务类型：</span><span>小马哥代理</span></li>
-        <li><span>服务时间：</span><span>1年</span></li>
-        <li><span>支付金额：</span><span style="color: #F5222D; font-size: 20px; font-weight: 500;">10000</span><span>元</span></li>
+        <li><span>服务类型：</span><span>{{ modelName }}</span></li>
+        <li><span>服务时间：</span><span>{{ comboItem.comboName }}</span></li>
+        <li><span>支付金额：</span><span style="color: #F5222D; font-size: 20px; font-weight: 500;">{{ comboItem.comboAmount }}</span><span>元</span></li>
         <li><span>支付方式：</span><div v-for="(item, index) in payWay" :key="index" class="pay_way" :class="selectIndex===index? 'pay_select': ''" @click="onClick_select(index)">{{ item.value }}</div></li>
         <li v-if="selectIndex===0"><img src="../../assets/img/qr_code.jpg" alt=""></li>
         <div v-if="selectIndex===0" class="descript">
@@ -41,29 +41,36 @@
           </div>
         </li>
         <p v-if="selectIndex===1">查看示例</p>
-        <button v-if="selectIndex===1" class="option_btn" @click="onClick_tostatus">我已完成</button>
+        <button class="option_btn" @click="onClick_tostatus">我已完成</button>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
+import api from "@/api/api_serveMarket";
 export default {
   data() {
     return {
       payWay: [
         {
-          id: 1,
+          id: 2,
           value: '扫码支付'
         },
         {
-          id: 2,
+          id: 1,
           value: '对公转账'
         }
       ],
       selectIndex: 0,
-      imageUrl: ''
+      imageUrl: '',
+      modelName: '',
+      comboItem: {}
     }
+  },
+  created() {
+    this.comboItem = JSON.parse(localStorage.getItem('comboItem'))
+    this.modelName = localStorage.getItem('modelName')
   },
   methods: {
     onClick_select(index) {
@@ -85,8 +92,20 @@ export default {
       return isJPG && isLt2M;
     },
     onClick_tostatus() {
-      this.$router.push({
-        path: "/serveMarket/businessModel/payStatus"
+      const params = {
+        comboId: this.comboItem.id,
+        payType: this.payWay[this.selectIndex].id,
+        productName: this.modelName,
+        promoCodeId: '',
+        voucher: ''
+      }
+      api.createOrder(params).then(res => {
+        if (res.object) {
+          this.$router.push({
+            path: "/serveMarket/businessModel/payStatus"
+          })
+        }
+        console.log(res.object)
       })
     }
   }
