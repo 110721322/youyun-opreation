@@ -104,12 +104,14 @@
 </template>
 <script>
 import api from "@/api/api_risk";
+import zipApi from "@/api/api_common";
 import passImg from "@/assets/img/pass.png";
 import refuseImg from "@/assets/img/refuse.png";
 import approvalImg from "@/assets/img/approval.png";
 import detailMode from "@/components/detailMode/detailMode2.vue";
 import Form from "@/components/form/index.vue";
 import { FORM_CONFIG } from "../formConfig/leRiskListDetailConfig";
+import * as g from '@/libs/global';
 
 export default {
   name: "LeRiskListDetail",
@@ -365,10 +367,23 @@ export default {
       api.getDownloadUrl({
         id: this.id
       }).then(res => {
-        console.log(res)
-        debugger
+        const key = res.object.taskKey
+        this.getZip(key)
         // window.open(res.object);
       }).catch();
+    },
+    getZip(key) {
+      zipApi.zipTask({
+        key: key
+      }).then(res => {
+        window.location.href = g.config.server + `/common/v1/progress/result?key=${key}`;
+        // const str = res.object.split('/')
+        // console.log(str[0])
+        // console.log(str[1])
+        // if (str[0] === str[1]) {
+        // window.location.href = zipApi.zipResult({key: key})
+        // }
+      })
     },
     cancel() {
       this.drawer = false;
