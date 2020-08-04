@@ -13,7 +13,7 @@
       <ul class="select">
         <li><span>服务类型：</span><span>{{ modelName }}</span></li>
         <li><span>服务时间：</span><span>{{ comboItem.comboName }}</span></li>
-        <li><span>支付金额：</span><span style="color: #F5222D; font-size: 20px; font-weight: 500;">{{ comboItem.comboAmount }}</span><span>元</span></li>
+        <li><span>支付金额：</span><span style="color: #F5222D; font-size: 20px; font-weight: 500;">{{ amount }}</span><span>元</span></li>
         <li><span>支付方式：</span><div v-for="(item, index) in payWay" :key="index" class="pay_way" :class="selectIndex===index? 'pay_select': ''" @click="onClick_select(index)">{{ item.value }}</div></li>
         <li v-if="selectIndex===0"><img src="../../assets/img/qr_code.jpg" alt=""></li>
         <div v-if="selectIndex===0" class="descript">
@@ -62,15 +62,17 @@ export default {
           value: '对公转账'
         }
       ],
-      selectIndex: 0,
+      selectIndex: 1,
       imageUrl: '',
       modelName: '',
-      comboItem: {}
+      comboItem: {},
+      amount: 0
     }
   },
   created() {
     this.comboItem = JSON.parse(localStorage.getItem('comboItem'))
     this.modelName = localStorage.getItem('modelName')
+    this.amount = localStorage.getItem('amount')
   },
   methods: {
     onClick_select(index) {
@@ -96,7 +98,7 @@ export default {
         comboId: this.comboItem.id,
         payType: this.payWay[this.selectIndex].id,
         productName: this.modelName,
-        promoCodeId: '',
+        promoCodeId: localStorage.getItem('promoCodeId') || '',
         voucher: ''
       }
       api.createOrder(params).then(res => {
@@ -250,6 +252,7 @@ export default {
     width: 100px;
     height: 100px;
     display: block;
+    object-fit: cover;
   }
   .select p {
     color: #1989FA;

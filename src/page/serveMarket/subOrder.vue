@@ -24,15 +24,16 @@
         <li>
           <div class="coupon">
             <div class="coupon_title">优惠码</div>
-            <input v-model="input" placeholder="请输入" class="coupon_input">
-            <button class="coupon_btn">验证优惠码</button>
+            <el-select v-model="promoCodeId" placeholder="请选择" @change="promoSelect">
+              <el-option v-for="(item,index) in promoCodeList" :key="index" :label="item.promoCodeNo" :value="item.id"></el-option>
+            </el-select>
           </div>
         </li>
       </ul>
     </div>
     <div class="bottom">
       <div class="bottom_content">
-        <div class="amount">实际付款:<span>{{ comboItem.comboAmount }}</span></div>
+        <div class="amount">实际付款:<span>{{ amount }}</span></div>
         <button class="sub_btn" @click="onClick_submit">提交订单</button>
       </div>
     </div>
@@ -40,23 +41,51 @@
 </template>
 
 <script>
+import api from "@/api/api_serveMarket";
 export default {
   data() {
     return {
-      input: '',
+      promoCodeId: '',
       comboItem: {},
-      modelName: ''
+      modelName: '',
+      promoCodeList: [],
+      amount: 0
     }
   },
   created() {
     this.comboItem = JSON.parse(localStorage.getItem('comboItem'))
     this.modelName = localStorage.getItem('modelName')
+    this.amount = this.comboItem.comboAmount
+
+    this.getPromoCode()
   },
   methods: {
     onClick_submit() {
+      if (this.promoCodeId) {
+        localStorage.setItem('promoCodeId', this.promoCodeId)
+        localStorage.setItem('amount', this.amount)
+      }
       this.$router.push({
         path: "/serveMarket/businessModel/payAmount"
       })
+    },
+    getPromoCode() {
+      api.getPromoCodeListByChannelAgentCode({}).then(res => {
+        if (res.object) {
+          this.promoCodeList = res.object || []
+        }
+      })
+    },
+    promoSelect($val) {
+      if (this.promoCodeId) {
+        let codeAmount = 0
+        this.promoCodeList.forEach((item, index) => {
+          if (item.id === this.promoCodeId) {
+            codeAmount = item.promoCodeAmount
+          }
+        })
+        this.amount = this.comboItem.comboAmount - codeAmount
+      }
     }
   }
 }
