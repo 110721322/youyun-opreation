@@ -8,21 +8,21 @@
       <div class="p_head">业务模式</div>
       <div class="card">
         <div class="card_content">
-          <div class="card_list" v-for="(item,index) in modelList" :key="index">
+          <div v-for="(item,index) in modelList" :key="index" class="card_list">
             <!--                        <img class="back_img" src="" alt="">-->
             <div class="card_title">
-              <span>{{item.productName}}</span>
+              <span>{{ item.productName }}</span>
               <img src="../../assets/img/xmg.png" alt="" class="card_img">
             </div>
-            <div class="card_subtitle">{{item.productDesc}}</div>
+            <div class="card_subtitle">{{ item.productDesc }}</div>
             <div class="card_btn">
               <button class="buy_btn" @click="onclick_btn">我要续费</button>
-              <div class="buy_title">已购买该服务，到期时间：{{item.expireDate}}</div>
+              <div class="buy_title">已购买该服务，到期时间：{{ item.expireDate }}</div>
             </div>
           </div>
           <!-- <div class="card_list"> -->
-            <!--                        <img class="back_img" src="" alt="">-->
-            <!-- <div class="card_title">
+          <!--                        <img class="back_img" src="" alt="">-->
+          <!-- <div class="card_title">
               <span>oem贴牌代理</span>
               <img src="../../assets/img/ome_logo.png" alt="" class="card_img">
             </div>
@@ -33,8 +33,8 @@
             </div>
           </div>
           <div class="card_list"> -->
-            <!--                        <img class="back_img" src="" alt="">-->
-            <!-- <div class="card_title">
+          <!--                        <img class="back_img" src="" alt="">-->
+          <!-- <div class="card_title">
               <span>新源码</span>
               <img src="../../assets/img/new_logo.png" alt="" class="card_img">
             </div>

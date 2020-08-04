@@ -36,7 +36,7 @@
       <div class="btn_list" style="margin-bottom:0">
         <el-button v-has="permission.search" type="primary" size="large" @click="handleClick">搜索</el-button>
         <el-button plain size="large" @click="resetForm">重置</el-button>
-        <div v-has="permission.condition" v-show="!isShowAll" class="open_btn" @click="onClick_openOrClose">
+        <div v-show="!isShowAll" v-has="permission.condition" class="open_btn" @click="onClick_openOrClose">
           <span v-show="!isOpen">展开</span>
           <span v-show="isOpen">收起</span>
 
@@ -61,7 +61,7 @@ import DateSelect from "./components/DateSelect.vue";
 import DatePicker from "./components/DatePicker.vue";
 import SelectInput from "./components/SelectInput.vue";
 import Cascader from "./components/Cascader.vue";
-import api_statistice from "@/api/api_statistice";
+// import api_statistice from "@/api/api_statistice";
 import TicketAddForm from "./../form/ticketAddForm.vue";
 
 export default {
@@ -141,21 +141,21 @@ export default {
   watch: {},
   created() {
     this.init();
-    this.getDate();
+    // this.getDate();
     // console.log(this.formBaseData);
   },
   methods: {
     handleDataSelect($time) {
       this.$emit("dataSelect", $time);
     },
-    getDate() {
-      api_statistice.selectAgentDataByPage({
-      }).then(res => {
-      }).catch(err => {
-        console.log(err)
-      })
-      // console.log(this.formKeys)
-    },
+    // getDate() {
+    //   api_statistice.selectAgentDataByPage({
+    //   }).then(res => {
+    //   }).catch(err => {
+    //     console.log(err)
+    //   })
+    // console.log(this.formKeys)
+    // },
     init() {
       if (this.formBaseData.length > 0) {
         for (const iterator of this.formBaseData) {

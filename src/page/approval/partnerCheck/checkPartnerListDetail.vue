@@ -15,8 +15,8 @@
           show-icon
         ></el-alert>
         <div>
-          <detailMode :img-width="4" :rule-form="ruleForm" v-if="ruleForm.jobType === '拓展员'" :config-data="configData.baseData1"></detailMode>
-          <detailMode :img-width="4" :rule-form="ruleForm" v-if="ruleForm.jobType === '入件操作员'" :config-data="configData.baseData2"></detailMode>
+          <detailMode v-if="ruleForm.jobType === '拓展员'" :img-width="4" :rule-form="ruleForm" :config-data="configData.baseData1"></detailMode>
+          <detailMode v-if="ruleForm.jobType === '入件操作员'" :img-width="4" :rule-form="ruleForm" :config-data="configData.baseData2"></detailMode>
         </div>
         <div v-if="showComponents.showOperBtns" class="btn-box">
           <div class="btn_pass" @click="onClick_sign">通过</div>

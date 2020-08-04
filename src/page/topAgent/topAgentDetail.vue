@@ -2,7 +2,7 @@
   <div class>
     <div class="p_head_detail" :class="[activeClass]">
       <div class="top">
-        <span>{{ruleForm.channelAgentName}}</span>
+        <span>{{ ruleForm.channelAgentName }}</span>
       </div>
     </div>
 

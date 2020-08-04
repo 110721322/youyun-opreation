@@ -2,7 +2,7 @@
   <div class="data-item">
     <div class="title">
       {{ title }}
-      <span v-has="permission.searchMore" v-if="isShowMore" class="show-more" @click="onClick_showMore">查看更多</span>
+      <span v-if="isShowMore" v-has="permission.searchMore" class="show-more" @click="onClick_showMore">查看更多</span>
     </div>
     <div v-if="radio" class="tags">
       <el-radio-group v-model="radio.radio" @change="handleChange">

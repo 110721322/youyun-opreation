@@ -35,7 +35,7 @@
                 <el-form label-position="left" inline class="demo-table-expand">
                   <div v-for="(item,index) in row.infoVOList" :key="index" class="form-box">
                     <el-form-item :label="item.deviceModel+':'">
-                      <span>{{item.count}}台</span>
+                      <span>{{ item.count }}台</span>
                     </el-form-item>
                   </div>
                 </el-form>

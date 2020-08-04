@@ -13,9 +13,9 @@
       <ul class="detail" style="margin-bottom: 42px;">
         <div class="top-title">部署信息</div>
         <li><span>阿里云帐号：</span><span>{{ detail.aliyunAccount }}</span></li>
-        <li><span>阿里云密码：</span><span>{{ aliSeeFlag ? detail.aliyunPassword : '********' }}</span><img :src="aliSeeFlag ? seePassword : hidePassword" @click="aliSeeFlag = !aliSeeFlag" alt=""></li>
+        <li><span>阿里云密码：</span><span>{{ aliSeeFlag ? detail.aliyunPassword : '********' }}</span><img :src="aliSeeFlag ? seePassword : hidePassword" alt="" @click="aliSeeFlag = !aliSeeFlag"></li>
         <li><span>乐刷帐号：</span><span>{{ detail.leshuaAccount }}</span></li>
-        <li><span>乐刷密码：</span><span>{{ lsSeeFlag ? detail.leshuaPassword : '********' }}</span><img :src="lsSeeFlag ? seePassword : hidePassword" @click="lsSeeFlag = !lsSeeFlag" alt=""></li>
+        <li><span>乐刷密码：</span><span>{{ lsSeeFlag ? detail.leshuaPassword : '********' }}</span><img :src="lsSeeFlag ? seePassword : hidePassword" alt="" @click="lsSeeFlag = !lsSeeFlag"></li>
         <li><span>联系人：</span><span>{{ detail.contactPerson }}</span></li>
         <li><span>联系电话：</span><span>{{ detail.contactMobile }}</span></li>
       </ul>

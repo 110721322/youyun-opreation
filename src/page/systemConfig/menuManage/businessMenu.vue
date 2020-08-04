@@ -68,7 +68,7 @@ export default {
   methods: {
     search() {
       // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
+      // console.log(this.ruleForm);
     },
     selectionChange($val) {
       // eslint-disable-next-line no-console

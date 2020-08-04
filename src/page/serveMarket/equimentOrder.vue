@@ -45,7 +45,7 @@
             <li>{{ item.salePrice*enterInfo.count || item.shopSubtotal }}</li>
           </div>
         </div>
-        <div class="right-amount" :style="{'height':goodsData.length*92+'px', 'line-height': goodsData.length*92+'px'}">{{enterType === 1?goodsData[0].salePrice*enterInfo.count : totalAmount }}</div>
+        <div class="right-amount" :style="{'height':goodsData.length*92+'px', 'line-height': goodsData.length*92+'px'}">{{ enterType === 1?goodsData[0].salePrice*enterInfo.count : totalAmount }}</div>
       </div>
     </div>
     <div class="bottom-btn">
