@@ -1,4 +1,6 @@
 const webpack = require('webpack')
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const productionGzipExtensions = ['js', 'css']
 const path = require('path')
 
 const resolve = (dir) => {
@@ -15,6 +17,36 @@ module.exports = {
         '@': resolve('src')
       }
     },
+    devServer: {
+      port: 8080,
+      proxy: {
+        '/operation': {
+          target: process.env.VUE_APP_BASEURL,
+          changeOrigin: true
+        },
+        '/common': {
+          target: process.env.VUE_APP_COMMONURL,
+          changeOrigin: true
+        },
+        '/agent': {
+          target: process.env.VUE_APP_AGENTURL,
+          changeOrigin: true
+        }
+      }
+    },
+    plugins: [
+      // 下面是下载的插件的配置
+      new CompressionWebpackPlugin({
+        algorithm: 'gzip',
+        test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
+        threshold: 10240,
+        minRatio: 0.8
+      }),
+      new webpack.optimize.LimitChunkCountPlugin({
+        maxChunks: 5,
+        minChunkSize: 100
+      })
+    ],
     output: { // 输出重构  打包编译后的 文件名称  【模块名称.版本号.时间戳】
       filename: `[name].${process.env.VUE_APP_Version}.${Timestamp}.js`,
       chunkFilename: `[name].${process.env.VUE_APP_Version}.${Timestamp}.js`
