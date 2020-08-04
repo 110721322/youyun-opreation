@@ -16,7 +16,7 @@
             </div>
             <div class="card_subtitle">{{ item.productDesc }}</div>
             <div class="card_btn">
-              <button class="buy_btn" @click="onclick_btn(item)">{{item.buyStatus===0 ? '立即购买' : '立即进入'}}</button>
+              <button class="buy_btn" @click="onclick_btn(item)">{{ item.buyStatus===0 ? '立即购买' : '立即进入' }}</button>
               <div v-if="item.buyStatus===1" class="buy_title">已购买该服务，到期时间：{{ item.expireDate }}</div>
             </div>
           </div>

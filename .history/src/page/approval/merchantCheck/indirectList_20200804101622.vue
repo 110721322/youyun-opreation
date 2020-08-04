@@ -33,29 +33,29 @@
           @detail="handleDetail"
           @record="handleRecord"
         >
-        <!--          <div slot="header" slot-scope="channelStatusList">-->
-        <!--            <div slot="channelStatusList" v-for="(item1, index) in channelStatusList" :key="index">-->
-        <!--              <span>{{item1.channel}}</span>-->
-        <!--            </div>-->
+<!--          <div slot="header" slot-scope="channelStatusList">-->
+<!--            <div slot="channelStatusList" v-for="(item1, index) in channelStatusList" :key="index">-->
+<!--              <span>{{item1.channel}}</span>-->
+<!--            </div>-->
 
-        <!--            <el-tooltip class="item" effect="dark" content="Top Center 提示文字" placement="top">-->
-        <!--              <div slot="content">-->
-        <!--                <div>-->
-        <!--                  <span class="dot opened"></span>已开通-->
-        <!--                </div>-->
-        <!--                <div>-->
-        <!--                  <span class="dot review"></span>审核中-->
-        <!--                </div>-->
-        <!--                <div>-->
-        <!--                  <span class="dot reject"></span>驳回-->
-        <!--                </div>-->
-        <!--                <div>-->
-        <!--                  <span class="dot unused"></span>未审核-->
-        <!--                </div>-->
-        <!--              </div>-->
-        <!--              <i class="el-icon-info" />-->
-        <!--            </el-tooltip>-->
-        <!--          </div>-->
+<!--            <el-tooltip class="item" effect="dark" content="Top Center 提示文字" placement="top">-->
+<!--              <div slot="content">-->
+<!--                <div>-->
+<!--                  <span class="dot opened"></span>已开通-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                  <span class="dot review"></span>审核中-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                  <span class="dot reject"></span>驳回-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                  <span class="dot unused"></span>未审核-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <i class="el-icon-info" />-->
+<!--            </el-tooltip>-->
+<!--          </div>-->
         </BaseCrud>
       </div>
     </div>

@@ -6,14 +6,14 @@
 
     <transition name="fade">
       <div>
-        <!--        <el-alert-->
-        <!--          v-if="showComponents.showRejectTitle"-->
-        <!--          class="detail-alert"-->
-        <!--          :title="ruleForm.reason"-->
-        <!--          type="info"-->
-        <!--          :closable="false"-->
-        <!--          show-icon-->
-        <!--        ></el-alert>-->
+<!--        <el-alert-->
+<!--          v-if="showComponents.showRejectTitle"-->
+<!--          class="detail-alert"-->
+<!--          :title="ruleForm.reason"-->
+<!--          type="info"-->
+<!--          :closable="false"-->
+<!--          show-icon-->
+<!--        ></el-alert>-->
         <detailMode
           :img-width="4"
           :rule-form="ruleForm"

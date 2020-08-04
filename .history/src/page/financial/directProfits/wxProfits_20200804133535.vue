@@ -5,7 +5,7 @@
     <div class="form-table">
       <div class="table-content">
         <div class="form-title">
-          <span>支付宝直连分润列表</span>
+          <span>微信直连分润列表</span>
           <ul>
             <li @click="openDraw">直连分润导入</li>
           </ul>
@@ -83,7 +83,7 @@ import {SEARARD_CONFIG} from "../formConfig/aplyAward";
 import api_statistice from "@/api/api_statistice";
 
 export default {
-  name: "AliProfits",
+  name: "WxProfits",
   components: {
     Search,
     BaseCrud,
@@ -95,8 +95,8 @@ export default {
       searchConfig: SEARCH_CONFIG,
       configData: SERVICE_CONFIG,
       aplyAwardData: SEARARD_CONFIG,
+      api: api_statistice.wxAgents,
       drawer: false,
-      api: api_statistice.aliAgents,
       params: {},
       tradeMonth: '',
       testData: []
@@ -116,15 +116,17 @@ export default {
         tradeMonth: this.tradeMonth
       }
     }
+    // this.ruleform()
   },
   methods: {
     search($ruleform) {
-      console.log($ruleform)
+      // console.log('adefe0', $ruleform.date)
       this.params = {
         tradeMonth: $ruleform.date ? $ruleform.date : this.tradeMonth,
-        agentNo: $ruleform.inputSelect === 'agentNo' ? $ruleform.inputForm : "",
-        agentName: $ruleform.inputSelect === 'agentName' ? $ruleform.inputForm : ""
+        agentNo: $ruleform.inputSelect === 'merchantNo' ? $ruleform.inputForm : "",
+        agentName: $ruleform.inputSelect === 'merchantName' ? $ruleform.inputForm : ""
       }
+      // console.log(this.params)
     },
     openDraw() {
       this.drawer = true
@@ -132,8 +134,8 @@ export default {
     confirm($filel) {
       console.log($filel)
       api_statistice.excelTemplate({
-        rewardDate: $filel.date,
-        type: "alipayRewardInput",
+        param: $filel.date,
+        type: "wxRewardInput",
         url: $filel.excil.dialogImagePath + $filel.excil.dialogImageUrl
       }).then(res => {
         console.log(res)
@@ -145,9 +147,9 @@ export default {
     cancel() {
       this.drawer = false
     },
-    handleDetail($row) {
+    handleDetail() {
       this.$router.push({
-        path: '/financial/directProfits/aliProfits/profitsDetail'
+        path: '/financial/directProfits/wxProfits/profitsDetail'
       })
     }
   }

@@ -1,6 +1,5 @@
 <template>
   <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/profitsDetail') !== -1" />
     <Search open-height="200" :form-base-data="searchConfig.formData" @search="search" />
     <div class="form-table">
       <div class="table-content">
@@ -147,7 +146,7 @@ export default {
     },
     handleDetail($row) {
       this.$router.push({
-        path: '/financial/directProfits/aliProfits/profitsDetail'
+        path: '/financial/profitsDetail'
       })
     }
   }

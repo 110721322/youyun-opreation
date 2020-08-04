@@ -348,10 +348,10 @@ const asyncRoutes = {
         name: 'profitsDetail',
         meta: {
           title: '商户明细',
-          subMenuName: '',
+          fatherName: 'aliProfits',
           icon: 'profitsDetail'
         },
-        component: () => import('@/page/financial/directProfits/profitsDetail.vue')
+        component: () => import('@/page/financial/directProfits/aliProfits/profitsDetail.vue')
       }
     ]
   },
@@ -370,24 +370,24 @@ const asyncRoutes = {
         name: 'profitsDetail',
         meta: {
           title: '商户明细',
-          subMenuName: '',
+          fatherName: 'wxProfits',
           icon: 'profitsDetail'
         },
         component: () => import('@/page/financial/directProfits/profitsDetail.vue')
       }
     ]
   },
-  // 'profitsDetail': {
-  //   path: 'profitsDetail',
-  //   name: 'profitsDetail',
-  //   meta: {
-  //     title: '商户明细',
-  //     subMenuName: '',
-  //     icon: 'profitsDetail'
-  //   },
-  //   component: () => import('@/page/financial/directProfits/profitsDetail.vue'),
-  //   children: []
-  // },
+  'profitsDetail': {
+    path: 'profitsDetail',
+    name: 'profitsDetail',
+    meta: {
+      title: '商户明细',
+      subMenuName: '',
+      icon: 'profitsDetail'
+    },
+    component: () => import('@/page/financial/directProfits/profitsDetail.vue'),
+    children: []
+  },
   'coupon': {
     path: 'coupon',
     name: 'coupon',

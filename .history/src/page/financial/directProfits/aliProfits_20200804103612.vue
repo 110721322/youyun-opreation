@@ -1,6 +1,5 @@
 <template>
   <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/profitsDetail') !== -1" />
     <Search open-height="200" :form-base-data="searchConfig.formData" @search="search" />
     <div class="form-table">
       <div class="table-content">
@@ -119,11 +118,11 @@ export default {
   },
   methods: {
     search($ruleform) {
-      console.log($ruleform)
+      console.log('11111', $ruleform)
       this.params = {
         tradeMonth: $ruleform.date ? $ruleform.date : this.tradeMonth,
-        agentNo: $ruleform.inputSelect === 'agentNo' ? $ruleform.inputForm : "",
-        agentName: $ruleform.inputSelect === 'agentName' ? $ruleform.inputForm : ""
+        agentNo: $ruleform.inputSelect === 'merchantNo' ? $ruleform.inputForm : "",
+        agentName: $ruleform.inputSelect === 'merchantName' ? $ruleform.inputForm : ""
       }
     },
     openDraw() {
@@ -147,7 +146,7 @@ export default {
     },
     handleDetail($row) {
       this.$router.push({
-        path: '/financial/directProfits/aliProfits/profitsDetail'
+        path: '/financial/directProfits/profitsDetail'
       })
     }
   }

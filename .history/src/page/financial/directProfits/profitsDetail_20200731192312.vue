@@ -1,19 +1,15 @@
 <template>
   <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/profitsDetail') !== -1" />
+    <div class="tab_head">
+      <span class="title">商户明细</span>
+    </div>
     <Search open-height="200" :form-base-data="searchConfig.formData" @search="search" />
     <div class="form-table">
       <div class="table-content">
-        <div class="form-title">
-          <span>支付宝直连分润列表</span>
-          <ul>
-            <li @click="openDraw">直连分润导入</li>
-          </ul>
-        </div>
         <BaseCrud
           ref="table"
           :params="params"
-          :api-service="api"
+          :api-service="null"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
           :grid-data="testData"
@@ -38,14 +34,7 @@
         <span>导入奖励名单</span>
         <img src="../../../assets/img/cancle.png" alt="" @click="drawer = false">
       </div>
-      <Form
-        :show-foot-btn="aplyAwardData.showFootBtn"
-        label-width="130px"
-        :form-base-data="aplyAwardData.formData"
-        @confirm="confirm"
-        @cancel="cancel"
-      ></Form>
-      <!-- <div class="content">
+      <div class="content">
         <el-form ref="form" :model="form" label-width="160px">
           <el-form-item label="奖励核算时间:">
             <el-date-picker
@@ -68,7 +57,7 @@
           <el-button type="primary">确定</el-button>
           <el-button plain>取消</el-button>
         </div>
-      </div> -->
+      </div>
     </el-drawer>
   </div>
 </template>
@@ -76,78 +65,54 @@
 <script>
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
-import Form from "@/components/form/index.vue";
 import {SEARCH_CONFIG} from "../formConfig/aliProfitsSearch";
-import {SERVICE_CONFIG} from "../tableConfig/aliProfitsConfig";
-import {SEARARD_CONFIG} from "../formConfig/aplyAward";
-import api_statistice from "@/api/api_statistice";
+import {SERVICE_CONFIG} from "../tableConfig/aliDetailConfig";
 
 export default {
   name: "AliProfits",
   components: {
-    Search,
-    BaseCrud,
-    Form
+    Search, BaseCrud
   },
   data() {
     return {
       searchHeight: "260",
       searchConfig: SEARCH_CONFIG,
       configData: SERVICE_CONFIG,
-      aplyAwardData: SEARARD_CONFIG,
       drawer: false,
-      api: api_statistice.aliAgents,
       params: {},
-      tradeMonth: '',
-      testData: []
+      testData: [
+        {
+          time: '2020-06-18',
+          topSrevice: '紫菜麻辣烫',
+          amount: '22555',
+          user: '253',
+          total: '4555'
+        }
+      ]
     }
   },
   mounted() {
-    // this.getData()
-    var myDate = new Date()
-    if (myDate.getMonth() < 10) {
-      this.tradeMonth = myDate.getFullYear() + "-" + "0" + myDate.getMonth() + "-" + "01"
-      this.params = {
-        tradeMonth: this.tradeMonth
-      }
-    } else {
-      this.tradeMonth = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + "01"
-      this.params = {
-        tradeMonth: this.tradeMonth
-      }
-    }
+    this.getData()
   },
   methods: {
-    search($ruleform) {
-      console.log($ruleform)
-      this.params = {
-        tradeMonth: $ruleform.date ? $ruleform.date : this.tradeMonth,
-        agentNo: $ruleform.inputSelect === 'agentNo' ? $ruleform.inputForm : "",
-        agentName: $ruleform.inputSelect === 'agentName' ? $ruleform.inputForm : ""
-      }
+    search() {},
+    getData() {
+      this.testData = [
+        {
+          time: '2020-06-18',
+          topSrevice: '紫菜麻辣烫',
+          active: '22555',
+          user: '253',
+          total: '4555'
+        }
+      ]
     },
     openDraw() {
       this.drawer = true
     },
-    confirm($filel) {
-      console.log($filel)
-      api_statistice.excelTemplate({
-        rewardDate: $filel.date,
-        type: "alipayRewardInput",
-        url: $filel.excil.dialogImagePath + $filel.excil.dialogImageUrl
-      }).then(res => {
-        console.log(res)
-      }).catch(err => {
-        console.log(err)
-      })
-      this.drawer = false
-    },
-    cancel() {
-      this.drawer = false
-    },
-    handleDetail($row) {
+    handleDetail() {
       this.$router.push({
-        path: '/financial/directProfits/aliProfits/profitsDetail'
+        path: '/financial/directProfits/profitsDetail'
       })
     }
   }

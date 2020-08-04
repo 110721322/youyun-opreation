@@ -147,7 +147,7 @@ export default {
     },
     handleDetail($row) {
       this.$router.push({
-        path: '/financial/directProfits/aliProfits/profitsDetail'
+        path: '/financial/directProfits/profitsDetail'
       })
     }
   }
