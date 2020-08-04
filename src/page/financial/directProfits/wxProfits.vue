@@ -1,5 +1,6 @@
 <template>
   <div class="main_page">
+    <router-view v-if="this.$route.path.indexOf('/profitsDetail') !== -1" />
     <Search open-height="200" :form-base-data="searchConfig.formData" @search="search" />
     <div class="form-table">
       <div class="table-content">
@@ -98,7 +99,8 @@ export default {
       drawer: false,
       params: {},
       tradeMonth: '',
-      testData: []
+      testData: [],
+      apiserver: api_statistice.wxMerchants
     }
   },
   mounted() {
@@ -146,9 +148,15 @@ export default {
     cancel() {
       this.drawer = false
     },
-    handleDetail() {
+    handleDetail($row) {
       this.$router.push({
-        path: '/financial/directProfits/profitsDetail'
+        path: '/financial/directProfits/wxProfits/profitsDetail',
+        query: {
+          agentNo: $row.agentNo,
+          tradeMonth: this.params.tradeMonth,
+          merchantName: $row.merchantName,
+          apiserver: this.apiserver
+        }
       })
     }
   }

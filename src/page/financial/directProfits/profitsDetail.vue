@@ -25,7 +25,7 @@
         ></BaseCrud>
       </div>
     </div>
-    <el-drawer
+    <!-- <el-drawer
       title="我是标题"
       :visible.sync="drawer"
       :with-header="false"
@@ -58,7 +58,7 @@
           <el-button plain>取消</el-button>
         </div>
       </div>
-    </el-drawer>
+    </el-drawer> -->
   </div>
 </template>
 
@@ -67,6 +67,7 @@ import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import {SEARCH_CONFIG} from "../formConfig/aliProfitsSearch";
 import {SERVICE_CONFIG} from "../tableConfig/aliDetailConfig";
+// import api_statistice from "@/api/api_statistice";
 
 export default {
   name: "AliProfits",
@@ -92,6 +93,13 @@ export default {
     }
   },
   mounted() {
+    this.agentNo = this.$route.query.agentNo
+    this.rewardDate = this.$route.query.tradeMonth
+    this.merchantName = this.$route.query.merchantName
+    this.params = {
+      agentNo: this.agentNo,
+      tradeMonth: this.rewardDate
+    }
     this.getData()
   },
   methods: {

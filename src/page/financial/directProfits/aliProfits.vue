@@ -1,5 +1,6 @@
 <template>
   <div class="main_page">
+    <router-view v-if="this.$route.path.indexOf('/profitsDetail') !== -1" />
     <Search open-height="200" :form-base-data="searchConfig.formData" @search="search" />
     <div class="form-table">
       <div class="table-content">
@@ -99,15 +100,6 @@ export default {
       params: {},
       tradeMonth: '',
       testData: []
-      // testData: [
-      //   {
-      //     time: '2020-06-18',
-      //     topSrevice: '紫菜麻辣烫',
-      //     amount: '22555',
-      //     user: '253',
-      //     total: '4555'
-      //   }
-      // ]
     }
   },
   mounted() {
@@ -124,29 +116,16 @@ export default {
         tradeMonth: this.tradeMonth
       }
     }
-    // this.ruleform()
   },
   methods: {
     search($ruleform) {
-      // console.log('adefe0', $ruleform.date)
+      console.log($ruleform)
       this.params = {
         tradeMonth: $ruleform.date ? $ruleform.date : this.tradeMonth,
-        agentNo: $ruleform.inputSelect === 'merchantNo' ? $ruleform.inputForm : "",
-        agentName: $ruleform.inputSelect === 'merchantName' ? $ruleform.inputForm : ""
+        agentNo: $ruleform.inputSelect === 'agentNo' ? $ruleform.inputForm : "",
+        agentName: $ruleform.inputSelect === 'agentName' ? $ruleform.inputForm : ""
       }
-      // console.log(this.params)
     },
-    // getData() {
-    //   this.testData = [
-    //     {
-    //       time: '2020-06-18',
-    //       topSrevice: '紫菜麻辣烫',
-    //       active: '22555',
-    //       user: '253',
-    //       total: '4555'
-    //     }
-    //   ]
-    // },
     openDraw() {
       this.drawer = true
     },
@@ -168,7 +147,7 @@ export default {
     },
     handleDetail($row) {
       this.$router.push({
-        path: '/financial/directProfits/profitsDetail'
+        path: '/financial/directProfits/aliProfits/profitsDetail'
       })
     }
   }

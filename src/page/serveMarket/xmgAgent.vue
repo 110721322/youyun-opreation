@@ -1,7 +1,7 @@
 <template>
   <div class="main_page">
     <div class="top_content">
-      <div class="warn" v-if="showTip">
+      <div v-if="showTip" class="warn">
         <div class="left_icon">i</div>
         <span>已购买该服务，有效期到：{{ expireDate }} 。再次购买后服务到期时间将累加</span>
         <img src="../../assets/img/cancle.png" alt="" @click="closeWarn">
