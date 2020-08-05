@@ -52,7 +52,6 @@ export default {
       agentPartnerNo: '',
       fromConfigData: {},
       drawer: false,
-      rejectTitle: "驳回原因：商户名称与营业执照不符合",
       showComponents: {
         showRejectTitle: false,
         showOperBtns: false,
@@ -171,7 +170,7 @@ export default {
           break;
         case "reject":
           this.showComponents.showRejectTitle = true;
-          this.this.showComponents.showOperBtns = false;
+          this.showComponents.showOperBtns = false;
           break;
 
         default:
@@ -189,13 +188,14 @@ export default {
       api.getDetailByPartnerNo({
         agentPartnerNo: this.agentPartnerNo
       }).then(res => {
-        if (res.object.jobType === 'expand') {
+        if (res.object.jobType === 'expander') {
           res.object.jobType = '拓展员'
         }
-        if (res.object.jobType === 'join') {
+        if (res.object.jobType === 'inboundMen') {
           res.object.jobType = '入件操作员'
         }
         this.ruleForm = res.object
+        console.log(this.ruleForm)
         this.currentType = res.object.contractStatus
       })
     },
