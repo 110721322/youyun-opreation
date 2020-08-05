@@ -118,7 +118,7 @@ export default {
   queryAllPrivilegeType: (params) => API.GET('/operation/v1/advertDistribute/queryAllPrivilegeType', params),
   queryAllAdvertDistributeType: (params) => API.GET('/operation/v1/advertDistribute/queryAllAdvertDistributeType', params),
   advertQueryById: (params) => API.GET('/operation/v1/advert/queryById', params),
-  putList: (params) => API.POST('/operation/v1/advertDistribute/queryByPage', params),
+  putList: (params) => API.GET('/operation/v1/advertDistribute/queryByPage', params),
   advertDistributeAdd: (params) => API.POST('/operation/v1/advertDistribute/add', params),
   advertDistributeUpdate: (params) => API.GET('/operation/v1/advertDistribute/update', params),
   // 运营结算审核

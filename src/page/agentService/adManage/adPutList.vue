@@ -52,12 +52,7 @@ export default {
       configData: TABLE_CONFIG,
       fromConfigData: {},
       testData: [],
-      params: {
-        advertType: "",
-        distributeType: "",
-        operationId: "",
-        status: ""
-      },
+      params: {},
       api: apiAgent.putList
     };
   },

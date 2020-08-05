@@ -194,8 +194,11 @@ export default {
         if (res.object.jobType === 'inboundMen') {
           res.object.jobType = '入件操作员'
         }
+        res.object.cloudPayGt1000Rate = res.object.cloudPayGt1000Rate + '‰'
+        res.object.cloudPayLe1000Rate = res.object.cloudPayLe1000Rate + '‰'
+        res.object.kickbackPercent = res.object.kickbackPercent + '‰'
+        res.object.alipayRate = res.object.alipayRate + '‰'
         this.ruleForm = res.object
-        console.log(this.ruleForm)
         this.currentType = res.object.contractStatus
       })
     },
