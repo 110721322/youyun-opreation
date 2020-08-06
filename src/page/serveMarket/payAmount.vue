@@ -28,16 +28,7 @@
         <li v-if="selectIndex===1">
           <span>上传凭证：</span>
           <div class="photo">
-            <el-upload
-              class="avatar-uploader"
-              action="https://jsonplaceholder.typicode.com/posts/"
-              :show-file-list="false"
-              :on-success="handleAvatarSuccess"
-              :before-upload="beforeAvatarUpload"
-            >
-              <img v-if="imageUrl" :src="imageUrl" class="avatar">
-              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-            </el-upload>
+            <Upload :formItem="formItem" :ruleForm="ruleForm" />
           </div>
         </li>
         <p v-if="selectIndex===1">查看示例</p>
@@ -49,7 +40,11 @@
 
 <script>
 import api from "@/api/api_serveMarket";
+import Upload from "@/components/form/components/Upload.vue";
 export default {
+  components: {
+    Upload
+  },
   data() {
     return {
       payWay: [
@@ -63,43 +58,36 @@ export default {
         }
       ],
       selectIndex: 1,
-      imageUrl: '',
       modelName: '',
       comboItem: {},
-      amount: 0
+      amount: 0,
+      formItem: {
+        key: 'imgUrl'
+      },
+      ruleForm: {}
     }
   },
   created() {
     this.comboItem = JSON.parse(localStorage.getItem('comboItem'))
-    this.modelName = localStorage.getItem('modelName')
+    this.modelName = JSON.parse(localStorage.getItem('productItem')).productName
     this.amount = localStorage.getItem('amount')
   },
   methods: {
     onClick_select(index) {
+      if (index === 0) {
+        this.$message.error('暂不支持扫码支付');
+        return;
+      }
       this.selectIndex = index
     },
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg';
-      const isLt2M = file.size / 1024 / 1024 < 2;
-
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!');
-      }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!');
-      }
-      return isJPG && isLt2M;
-    },
     onClick_tostatus() {
+      const imageUrl = this.ruleForm.imgUrl.dialogImagePath + this.ruleForm.imgUrl.dialogImageUrl
       const params = {
         comboId: this.comboItem.id,
         payType: this.payWay[this.selectIndex].id,
         productName: this.modelName,
         promoCodeId: localStorage.getItem('promoCodeId') || '',
-        voucher: ''
+        voucher: imageUrl
       }
       api.createOrder(params).then(res => {
         if (res.object) {
@@ -229,10 +217,10 @@ export default {
       overflow: hidden;
   }
   .select li .photo {
-    width: 100px;
+    /* width: 100px;
     height: 100px;
     border: 1px dashed #d9d9d9;
-    border-radius: 6px;
+    border-radius: 6px; */
     cursor: pointer;
     position: relative;
     overflow: hidden;

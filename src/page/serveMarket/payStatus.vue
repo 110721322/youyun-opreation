@@ -12,9 +12,9 @@
       <div class="order_pohto"><img src="../../assets/img/order_photo.png" alt=""></div>
       <p class="title">提交成功，等待审核</p>
       <ul class="card">
-        <li><span>服务类型：</span><span>小马哥代理</span></li>
-        <li><span>服务时间：</span><span>1年</span></li>
-        <li><span>支付金额：</span><span style="color: #F5222D; font-size: 20px; font-weight: 500;">10000</span><span>元</span></li>
+        <li><span>服务类型：</span><span>{{ modelName }}</span></li>
+        <li><span>服务时间：</span><span>{{ comboItem.comboName }}</span></li>
+        <li><span>支付金额：</span><span style="color: #F5222D; font-size: 20px; font-weight: 500;">{{ amount }}</span><span>元</span></li>
         <li><span>支付方式：</span><div class="pay_way">对公转账</div></li>
         <li><span>打款账号：</span><span>3301040160001013187</span></li>
         <li><span>开户银行：</span><span>杭州银行滨江支行</span></li>
@@ -24,7 +24,7 @@
         </div>
       </ul>
     </div>
-    <div class="status">
+    <div class="status" style="display: none;">
       <div class="order_pohto">
         <img src="../../assets/img/order_success.png" alt="">
         <img src="../../assets/img/order_fail.png" alt="" style="display: none;">
@@ -39,7 +39,19 @@
 
 <script>
 export default {
-
+  data() {
+    return {
+      modelName: '',
+      comboItem: {},
+      amount: 0
+    }
+  },
+  created() {
+    this.comboItem = JSON.parse(localStorage.getItem('comboItem'))
+    this.modelName = JSON.parse(localStorage.getItem('productItem')).productName
+    this.amount = localStorage.getItem('amount')
+  },
+  methods: {}
 }
 </script>
 

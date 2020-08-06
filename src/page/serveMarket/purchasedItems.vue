@@ -1,9 +1,9 @@
 <template>
   <div class="main_page">
     <ul class="top-table">
-      <li v-for="(item, index) in selectIndex" :key="index" class="noselect" :class="selectData===index? 'isselect': ''" @click="onClick_select(index)">{{ item.value }}</li>
+      <li v-for="(item, index) in selectData" :key="index" class="noselect" :class="selectIndex===index? 'isselect': ''" @click="onClick_select(item.value)">{{ item.label }}</li>
     </ul>
-    <div v-if="selectData===0" class="tab-list">
+    <div v-if="selectIndex===0" class="tab-list">
       <BaseCrud
         ref="table"
         :grid-config="configData.gridConfig"
@@ -19,7 +19,7 @@
       >
       </BaseCrud>
     </div>
-    <div v-if="selectData===1" class="tab-list">
+    <div v-if="selectIndex===1" class="tab-list">
       <BaseCrud
         ref="table"
         :grid-config="configData1.gridConfig"
@@ -35,7 +35,7 @@
       >
       </BaseCrud>
     </div>
-    <div v-if="selectData===2" class="tab-list">
+    <div v-if="selectIndex===2" class="tab-list">
       <BaseCrud
         ref="table"
         :grid-config="configData2.gridConfig"
@@ -59,23 +59,24 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import {BUSINESS_CONFIG} from "../serveMarket/tableConfig/businessModelConfig";
 import {LS_CONFIG} from "../serveMarket/tableConfig/lsConfig";
 import {BRAND_CONFIG} from "../serveMarket/tableConfig/brandConfig";
+import api from "@/api/api_serveMarket";
 export default {
   components: { BaseCrud },
   data() {
     return {
-      selectData: 0,
-      selectIndex: [
+      selectIndex: 0,
+      selectData: [
         {
-          value: '业务模式',
-          id: 1
+          value: 'businessMode',
+          label: '业务模式'
         },
         {
-          value: '交易通道',
-          id: 2
+          value: 'payChannel',
+          label: '交易通道'
         },
         {
-          value: '品牌定制',
-          id: 3
+          value: 'brandCustom',
+          label: '品牌定制'
         }
       ],
       configData: BUSINESS_CONFIG,
@@ -88,21 +89,29 @@ export default {
     }
   },
   mounted() {
+    this.params = {
+      moduleCode: this.selectData[this.selectIndex].value
+    }
     this.getData()
   },
   methods: {
     getData() {
-      this.testData = [
-        {
-          id: '1',
-          createTime: '2020-06-12 15:04:30',
-          type: '小马哥代理',
-          relax: '1000',
-          price: '5000',
-          payWay: '微信支付',
-          status: '已完成'
+      api.selectTopAgentOrder(this.params).then(res => {
+        if (res.object) {
+          this.testData = []
+          this.testData1 = []
+          this.testData2 = []
+          if (this.selectIndex === 0) {
+            this.testData = res.object || []
+          }
+          if (this.selectIndex === 1) {
+            this.testData1 = res.object || []
+          }
+          if (this.selectIndex === 2) {
+            this.testData2 = res.object || []
+          }
         }
-      ]
+      })
     },
     onClick_select(index) {
       this.selectData = index

@@ -5,21 +5,26 @@
         <img src="../../assets/img/leshua_icon.png" alt="">
       </div>
       <div class="right_info">
-        <div class="right_title">乐刷通道</div>
-        <div class="right_subtitle">帮您对接您沟通的乐刷通道，直接与第三方进行结算</div>
+        <div class="right_title">{{ productItem.productName }}</div>
+        <div class="right_subtitle">{{ productItem.productDesc }}</div>
       </div>
     </div>
     <div class="buy_info">
       <div class="buy_time">
-        <div class="time"><span>服务时间</span><span>长期</span></div>
-        <div class="price"><span>购买价格</span><span>¥</span><span>5000</span></div>
+        <div class="time">
+          <span class="select_name">服务时间</span>
+          <div v-for="(item, index) in comboList" :key="index" class="select_btn" :class="selectIndex===index? 'select_show' : ''">
+            <button @click="onclick_selectDate(item,index)">{{ item.comboName }}</button>
+          </div>
+        </div>
+        <div class="price"><span>购买价格</span><span>¥</span><span>{{ comboPrice }}</span></div>
       </div>
       <div class="buy_option">
-        <button class="buy_btn">购买服务</button>
+        <button class="buy_btn" @click="onclick_buyserve">购买服务</button>
       </div>
 
     </div>
-    <div class="content">
+    <div v-if="productItem.buyStatus===1" class="content">
       <div class="title">定制详情</div>
       <div class="descript">需要您先到乐刷官方申请账号，把以下所需字段获取到并填写后提交，具体的操作流程可查看<span style="color: #1989FA;">《乐刷通道接入指南》</span>如有疑问可咨询：400-887-8292</div>
       <lsBuyEdit
@@ -41,7 +46,7 @@
         <li><span>云闪付费率:<br />(大于1000)</span><span>3‰</span></li>
       </ul>
     </div>
-    <div class="operation">
+    <div v-else class="operation">
       <div class="operation_title">操作流程</div>
       <div class="operation_step">
         <div class="left_step">步骤一:</div>
@@ -77,12 +82,50 @@
 <script>
 import lsBuyEdit from "@/components/form/announcementEditForm.vue";
 import { FORM_CONFIG } from "./formConfig/lsBuyConfig";
+import api from "@/api/api_serveMarket";
 export default {
   components: { lsBuyEdit },
   data() {
     return {
-      fromConfigData: FORM_CONFIG.sendMessageData
+      fromConfigData: FORM_CONFIG.sendMessageData,
+      selectIndex: 0,
+      comboList: [],
+      comboPrice: 0,
+      showTip: false,
+      comboItem: {},
+      productItem: {}
     }
+  },
+  created() {
+    this.productItem = JSON.parse(localStorage.getItem('productItem'))
+    this.getModelDetail()
+  },
+  methods: {
+    getModelDetail() {
+      api.selectProductCombo({
+        productCode: this.productItem.productCode
+      }).then(res => {
+        if (res.object) {
+          this.comboList = res.object || []
+          this.comboItem = this.comboList[this.selectIndex] || {}
+          this.comboPrice = this.comboList[this.selectIndex].comboAmount || 0
+        }
+      })
+    },
+    onclick_selectDate(data, index) {
+      this.comboItem = data
+      this.comboPrice = data.comboAmount
+      this.selectIndex = index
+    },
+    onclick_buyserve() {
+      localStorage.setItem('comboItem', JSON.stringify(this.comboItem))
+      if (this.comboItem.id) {
+        this.$router.push({
+          path: "/serveMarket/businessModel/subOrder"
+        });
+      }
+    },
+    handleCommit() {}
   }
 }
 </script>
@@ -144,6 +187,38 @@ export default {
     margin-bottom: 22px;
     align-items: center;
   }
+  .select_name {
+  color: #909399;
+  font-size: 16px;
+}
+.select_btn.select_show{
+  width: 90px;
+  height: 28px;
+  text-align: center;
+  line-height: 28px;
+  border-radius: 3px;
+  border:1px solid #1989FA;
+  color: #1989FA;
+  font-size: 12px;
+  margin-right: 16px;
+}
+.select_btn.select_show button {
+  color: #1989FA;
+}
+.select_btn {
+  width: 90px;
+  height: 28px;
+  text-align: center;
+  line-height: 28px;
+  border-radius: 3px;
+  border:1px solid #C7C8CD;
+  color: #606266;
+  font-size: 12px;
+  margin-right: 16px;
+}
+.select_btn button {
+  color: #606266;
+}
   .price {
     display: flex;
     align-items: baseline;

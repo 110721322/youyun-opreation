@@ -54,17 +54,16 @@ export default {
   },
   created() {
     this.comboItem = JSON.parse(localStorage.getItem('comboItem'))
-    this.modelName = localStorage.getItem('modelName')
+    this.modelName = JSON.parse(localStorage.getItem('productItem')).productName
     this.amount = this.comboItem.comboAmount
-
     this.getPromoCode()
   },
   methods: {
     onClick_submit() {
       if (this.promoCodeId) {
         localStorage.setItem('promoCodeId', this.promoCodeId)
-        localStorage.setItem('amount', this.amount)
       }
+      localStorage.setItem('amount', this.amount)
       this.$router.push({
         path: "/serveMarket/businessModel/payAmount"
       })

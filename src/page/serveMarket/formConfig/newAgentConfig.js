@@ -8,7 +8,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '阿里云账号',
-        key: 'alyuser',
+        key: 'aliyunAccount',
         initVal: '',
         rules: setRules('阿里云账号').isRequired.get,
         inputType: "input",
@@ -19,7 +19,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '阿里云密码',
-        key: 'alypassword',
+        key: 'aliyunPassword',
         initVal: '',
         rules: setRules('阿里云密码').isRequired.get,
         inputType: "input",
@@ -30,7 +30,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '乐刷账号',
-        key: 'lsuser',
+        key: 'leshuaAccount',
         initVal: '',
         rules: setRules('乐刷账号').isRequired.get,
         inputType: "input",
@@ -41,7 +41,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '乐刷密码',
-        key: 'lspassword',
+        key: 'leshuaPassword',
         initVal: '',
         rules: setRules('阿里云账号').isRequired.get,
         inputType: "input",
@@ -52,7 +52,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '联系人',
-        key: 'userName',
+        key: 'contactPerson',
         initVal: '',
         rules: setRules('联系人').isRequired.get,
         inputType: "input",
@@ -63,7 +63,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '联系电话',
-        key: 'mobile',
+        key: 'contactMobile',
         initVal: '',
         rules: setRules('联系电话').isRequired.get,
         inputType: "input",

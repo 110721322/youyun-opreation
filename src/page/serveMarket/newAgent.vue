@@ -1,44 +1,44 @@
 <template>
   <div class="main_page">
     <div class="top_content">
-      <div class="warn">
+      <div v-if="productItem.buyStatus === 1" class="warn">
         <div class="left_icon">i</div>
-        <span>已购买该服务，有效期到：2020-10-10 。再次购买后服务到期时间将累加</span>
+        <span>已购买该服务，有效期到：{{ productItem.expireDate }} 。再次购买后服务到期时间将累加</span>
         <img src="../../assets/img/cancle.png" alt="">
       </div>
-      <div class="start warn">
+      <div v-if="productItem.buyStatus === 1&&detail.status===2" class="start warn">
         <div class="left_icon">i</div>
         <span>服务器部署中，请耐心等待~ 部署时间2~7个工作日</span>
       </div>
-      <div class="finish warn">
+      <div v-if="productItem.buyStatus === 1&&detail.status===3" class="finish warn">
         <img class="left_photo" src="../../assets/img/order_success.png" alt="">
-        <span>服务器部署中，请耐心等待~ 部署时间2~7个工作日</span>
+        <span>服务器部署成功</span>
       </div>
       <div class="buy_info">
         <img class="buy_img" src="../../assets/img/new_image.png" alt="">
         <div class="buy_all">
           <div class="first_body">
-            <div class="buy_title">新源码</div>
-            <div class="buy_subtitle">支持接入自己的交易通道，且提供服务器独立部署</div>
+            <div class="buy_title">{{ productItem.productName }}</div>
+            <div class="buy_subtitle">{{ productItem.productDesc }}</div>
             <img class="buy_photo" src="" alt="">
           </div>
           <div class="second_body">
             <div class="select_date">
               <span class="select_name">服务时间</span>
-              <div v-for="(item, index) in selectMounth" :key="index" class="select_btn" :class="selectIndex===index? 'select_show' : ''">
-                <button @click="onclick_selectDate(index)">{{ item.value }}</button>
+              <div v-for="(item, index) in comboList" :key="index" class="select_btn" :class="selectIndex===index? 'select_show' : ''">
+                <button @click="onclick_selectDate(item,index)">{{ item.comboName }}</button>
               </div>
             </div>
             <div class="price">
               <span class="select_name">购买价格</span>
-              <span class="data_price"><span>¥</span>1000</span>
+              <span class="data_price"><span>¥</span>{{ comboPrice }}</span>
             </div>
           </div>
           <button class="buy_serve" @click="onclick_buyserve">购买服务</button>
         </div>
       </div>
     </div>
-    <div class="operation">
+    <div v-if="productItem.buyStatus===0" class="operation">
       <div class="operation_title">操作流程</div>
       <div class="operation_step">
         <div class="left_step">步骤一:</div>
@@ -68,7 +68,7 @@
         </ul>
       </div>
     </div>
-    <div class="serve">
+    <div v-else class="serve">
       <div class="serve_title">服务器部署</div>
       <ul class="serve_desc">
         <li>1、按照要求购买阿里云服务器，具体要求及购买流程可查看<span style="color: #1989FA">《服务器购买要求及操作流程》</span></li>
@@ -76,23 +76,24 @@
         <li>3、填写相关字段信息，由有云审核后进行部署（预计2~7个工作日）</li>
         <li>4、如有疑问可咨询：400-887-8292</li>
       </ul>
+      <div v-if="detail.status===2||detail.status===3" class="info">
+        <ul>
+          <li><span>阿里云帐号：</span><span>{{ detail.aliyunAccount }}</span></li>
+          <li><span>阿里云密码：</span><span>{{ showPassword?detail.aliyunPassword:'********' }}</span><img @click="showPassword=!showPassword" src="../../assets/img/see_password.png" alt=""></li>
+          <li><span>联系人：</span><span>{{ detail.contactPerson }}</span></li>
+        </ul>
+        <ul>
+          <li><span>乐刷账号：</span><span>{{ detail.leshuaAccount }}</span></li>
+          <li><span>乐刷密码：</span><span>{{ showPassword2?detail.leshuaPassword:'********' }}</span><img @click="showPassword2=!showPassword2" src="../../assets/img/hide_password.png" alt=""></li>
+          <li><span>联系电话：</span><span>{{ detail.contactMobile }}</span></li>
+        </ul>
+      </div>
       <newAgentEdit
+        v-else
         :form-base-data="fromConfigData.formData"
         :label-width="'auto'"
         @commit="handleCommit"
       ></newAgentEdit>
-      <div class="info">
-        <ul>
-          <li><span>阿里云帐号：</span><span>247394739493792</span></li>
-          <li><span>阿里云密码：</span><span>**************</span><img src="../../assets/img/see_password.png" alt=""></li>
-          <li><span>联系人：</span><span>红莲</span></li>
-        </ul>
-        <ul>
-          <li><span>乐刷账号：</span><span>247394739493792</span></li>
-          <li><span>乐刷密码：</span><span>chkh18jsi</span><img src="../../assets/img/hide_password.png" alt=""></li>
-          <li><span>联系电话：</span><span>13350987890</span></li>
-        </ul>
-      </div>
     </div>
     <el-dialog
       title="操作成功"
@@ -114,34 +115,71 @@
 <script>
 import newAgentEdit from "@/components/form/announcementEditForm.vue";
 import { FORM_CONFIG } from "./formConfig/newAgentConfig";
-
+import api from "@/api/api_serveMarket";
+import apiAgent from "@/api/api_agent";
 export default {
   components: { newAgentEdit },
   data () {
     return {
-      selectMounth: [
-        {
-          id: 1,
-          value: '长期'
-        }
-      ],
+      comboList: [],
+      comboPrice: 0,
+      comboItem: {},
+      productItem: {},
       selectIndex: 0,
       fromConfigData: FORM_CONFIG.sendMessageData,
       centerDialogVisible: false,
+      showPassword: false,
+      showPassword2: false,
       imgUrl: "https://pics7.baidu.com/feed/2f738bd4b31c8701e3ae9137d62254290608ffaf.jpeg?token=638e9b2296a837b445f9de64cce7c7b9"
     }
   },
+  created() {
+    this.productItem = JSON.parse(localStorage.getItem('productItem'))
+    this.getModelDetail()
+    if (this.productItem.buyStatus === 1) {
+      this.getSourceCodeDeployDetail()
+    }
+  },
   methods: {
-    onclick_selectDate(index) {
+    onclick_selectDate(data, index) {
+      this.comboItem = data
+      this.comboPrice = data.comboAmount
       this.selectIndex = index
     },
     onclick_buyserve() {
-      this.$router.push({
-        path: "/serveMarket/businessModel/subOrder"
-      });
+      localStorage.setItem('comboItem', JSON.stringify(this.comboItem))
+      if (this.comboItem.id) {
+        this.$router.push({
+          path: "/serveMarket/businessModel/subOrder"
+        });
+      }
     },
-    handleCommit() {
-      this.centerDialogVisible = true
+    getModelDetail() {
+      api.selectProductCombo({
+        productCode: this.productItem.productCode
+      }).then(res => {
+        if (res.object) {
+          this.comboList = res.object || []
+          this.comboItem = this.comboList[this.selectIndex] || {}
+          this.comboPrice = this.comboList[this.selectIndex].comboAmount || 0
+        }
+      })
+    },
+    handleCommit($val) {
+      api.saveSourceCodeConfig({
+        ...$val
+      }).then(res => {
+        if (res.object) {
+          this.centerDialogVisible = true
+        }
+      })
+    },
+    getSourceCodeDeployDetail() {
+      apiAgent.getSourceCodeDeployDetail({}).then(res => {
+        if (res.object) {
+          this.detail = res.object;
+        }
+      })
     }
   }
 }

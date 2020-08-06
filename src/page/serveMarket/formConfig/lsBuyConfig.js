@@ -8,7 +8,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '乐刷代理商ID',
-        key: 'lsId',
+        key: '0',
         initVal: '',
         inputType: "input",
         row: 1,
@@ -28,7 +28,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '微信公众号APPID',
-        key: 'lsId',
+        key: '1',
         initVal: '',
         inputType: "input",
         row: 1,
@@ -38,7 +38,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '支付宝PID',
-        key: 'lsId',
+        key: '2',
         initVal: '',
         inputType: "input",
         row: 1,
@@ -48,7 +48,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '交易加密key',
-        key: 'lsId',
+        key: '3',
         initVal: '',
         inputType: "input",
         row: 1,
@@ -58,7 +58,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '微信费率',
-        key: 'lsId',
+        key: '4',
         initVal: '',
         inputType: "input",
         row: 1,
@@ -68,7 +68,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '云闪付费率(单笔<=1000)',
-        key: 'lsId',
+        key: '5',
         initVal: '',
         inputType: "input",
         row: 1,
@@ -78,7 +78,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '云闪付费率(单笔>=1000)',
-        key: 'lsId',
+        key: '6',
         initVal: '',
         inputType: "input",
         row: 1,

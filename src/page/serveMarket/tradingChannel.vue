@@ -17,7 +17,7 @@
           <li><img src="" alt=""><span>通道方直接结算</span></li>
           <li><img src="" alt=""><span>万千商户选择</span></li>
         </ul>
-        <button class="btn" @click="onclick_buy">立即购买</button>
+        <button class="btn" @click="onclick_buy(item)">{{ item.buyStatus===0 ? '立即购买' : '立即进入' }}</button>
       </div>
       <div class="more">
         <img src="../../assets/img/more_icon.png" alt="">
@@ -39,17 +39,16 @@ export default {
     this.getModel()
   },
   methods: {
-    onclick_buy() {
-      this.$router.push({
-        path: "/serveMarket/tradingChannel/lsBuyIndex"
-      })
+    onclick_buy($data) {
+      localStorage.setItem('productItem', JSON.stringify($data))
+      this.$router.push({path: "/serveMarket/tradingChannel/lsBuyIndex", query: {productCode: $data.productCode, buyStatus: $data.buyStatus, expireDate: $data.expireDate}})
     },
     getModel() {
       api.selectModuleProduct({
         moduleCode: 'payChannel'
       }).then(res => {
-        const modelList = res.object
-        this.modelList = modelList
+        const tradeList = res.object
+        this.tradeList = tradeList
       })
     }
   }
