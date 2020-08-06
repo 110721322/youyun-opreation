@@ -10,7 +10,7 @@ export const CHECKPARTNERLIST_CONFIG = {
       prop: 'jobType',
       width: '150px',
       render: (h, params) => {
-        if (params.row.jobType === 'join') {
+        if (params.row.jobType === 'inboundMen') {
           return h(
             'span', '入件操作员'
           )
