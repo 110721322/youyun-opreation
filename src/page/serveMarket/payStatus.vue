@@ -20,7 +20,7 @@
         <li><span>开户银行：</span><span>杭州银行滨江支行</span></li>
         <div class="voucher">
           <span>打款凭证：</span>
-          <img src="../../assets/img/qr_code.jpg" alt="">
+          <img :src="voucher" alt="">
         </div>
       </ul>
     </div>
@@ -43,13 +43,15 @@ export default {
     return {
       modelName: '',
       comboItem: {},
-      amount: 0
+      amount: 0,
+      voucher: ''
     }
   },
   created() {
     this.comboItem = JSON.parse(localStorage.getItem('comboItem'))
     this.modelName = JSON.parse(localStorage.getItem('productItem')).productName
     this.amount = localStorage.getItem('amount')
+    this.voucher = localStorage.getItem('voucher')
   },
   methods: {}
 }
@@ -150,6 +152,7 @@ export default {
     width: 100px;
     height: 100px;
     border-radius: 4px;
+    object-fit: cover;
     border: 1px dashed #DCDFE6;
   }
   .status {

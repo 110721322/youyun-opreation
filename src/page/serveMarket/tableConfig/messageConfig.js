@@ -2,17 +2,17 @@ export const USER_CONFIG = {
   gridConfig: [
     {
       label: '序号',
-      prop: 'id',
+      prop: 'index',
       width: '150px'
     },
     {
       label: '充值时间',
-      prop: 'createTime',
+      prop: 'payTime',
       width: '200px'
     },
     {
       label: '充值数量(条)',
-      prop: 'num',
+      prop: 'comboCount',
       width: '200px'
     },
     {
@@ -22,17 +22,17 @@ export const USER_CONFIG = {
     },
     {
       label: '支付金额',
-      prop: 'createTime',
+      prop: 'comboAmount',
       width: '200px'
     },
     {
       label: '支付方式',
-      prop: 'createTime',
+      prop: 'payTypeName',
       width: '200px'
     },
     {
       label: '订单状态',
-      prop: 'createTime',
+      prop: 'statusName',
       width: '200px'
     }
   ],

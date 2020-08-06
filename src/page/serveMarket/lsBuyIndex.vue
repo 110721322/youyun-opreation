@@ -35,15 +35,15 @@
       ></lsBuyEdit>
       <ul class="fill_info">
         <li><span>乐刷代理商ID:</span><span>9388503</span></li>
-        <li><span>代理商ID:</span><span>9388503</span></li>
-        <li><span>微信公众号APPID:</span><span>*****************</span><img src="../../assets/img/see_password.png" alt=""></li>
-        <li><span>支付宝PID:</span><span>1122334455</span><img src="../../assets/img/hide_password.png" alt=""></li>
-        <li><span>交易加密key:</span><span>*****************</span><img src="../../assets/img/see_password.png" alt=""></li>
+        <li><span>代理商ID:</span><span>{{ detail.channelAgentId }}</span></li>
+        <li><span>微信公众号APPID:</span><span>{{ showPassword?detail.aliyunPassword:'********' }}</span><img @click="showPassword=!showPassword" src="../../assets/img/see_password.png" alt=""></li>
+        <li><span>支付宝PID:</span><span>{{ detail.channelAgentId }}</span><img src="../../assets/img/hide_password.png" alt=""></li>
+        <li><span>交易加密key:</span><span>{{ showPassword2?detail.aliyunPassword:'********' }}</span><img @click="showPassword2=!showPassword2" src="../../assets/img/see_password.png" alt=""></li>
         <li><span>支付宝费率:</span><span>3‰</span></li>
-        <li><span>微信费率:</span><span>3‰</span></li>
-        <li><span>支付宝费率:</span><span>3‰</span></li>
-        <li><span>云闪付费率:<br />(小于1000)</span><span>3‰</span></li>
-        <li><span>云闪付费率:<br />(大于1000)</span><span>3‰</span></li>
+        <li><span>微信费率:</span><span>{{ detail.wechatPayRate }}‰</span></li>
+        <li><span>支付宝费率:</span><span>{{ detail.alipayRate }}‰</span></li>
+        <li><span>云闪付费率:<br />(小于1000)</span><span>{{ detail.cloudPayLe1000Rate }}‰</span></li>
+        <li><span>云闪付费率:<br />(大于1000)</span><span>{{ detail.cloudPayGt1000Rate }}‰</span></li>
       </ul>
     </div>
     <div v-else class="operation">
@@ -93,7 +93,9 @@ export default {
       comboPrice: 0,
       showTip: false,
       comboItem: {},
-      productItem: {}
+      productItem: {},
+      showPassword: false,
+      showPassword2: false
     }
   },
   created() {
@@ -125,7 +127,16 @@ export default {
         });
       }
     },
-    handleCommit() {}
+    handleCommit($val) {
+      api.saveLeShuaConfig({
+        ...$val
+      }).then(res => {
+        if (res.object) {
+          this.$message.success('成功')
+          this.$router.go(-1)
+        }
+      })
+    }
   }
 }
 </script>

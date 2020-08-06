@@ -1,7 +1,7 @@
 <template>
   <div class="main_page">
     <ul class="top-table">
-      <li v-for="(item, index) in selectData" :key="index" class="noselect" :class="selectIndex===index? 'isselect': ''" @click="onClick_select(item.value)">{{ item.label }}</li>
+      <li v-for="(item, index) in selectData" :key="index" class="noselect" :class="selectIndex===index? 'isselect': ''" @click="onClick_select(item.value,index)">{{ item.label }}</li>
     </ul>
     <div v-if="selectIndex===0" class="tab-list">
       <BaseCrud
@@ -14,7 +14,7 @@
         :is-async="true"
         :is-select="false"
         :params="params"
-        :api-service="null"
+        :api-service="api"
         :hide-edit-area="true"
       >
       </BaseCrud>
@@ -30,7 +30,7 @@
         :is-async="true"
         :is-select="false"
         :params="params"
-        :api-service="null"
+        :api-service="api"
         :hide-edit-area="true"
       >
       </BaseCrud>
@@ -46,7 +46,7 @@
         :is-async="true"
         :is-select="false"
         :params="params"
-        :api-service="null"
+        :api-service="api"
         :hide-edit-area="true"
       >
       </BaseCrud>
@@ -85,38 +85,20 @@ export default {
       params: {},
       testData: [],
       testData1: [],
-      testData2: []
+      testData2: [],
+      api: api.selectTopAgentOrder
     }
   },
   mounted() {
     this.params = {
       moduleCode: this.selectData[this.selectIndex].value
     }
-    this.getData()
   },
   methods: {
-    getData() {
-      api.selectTopAgentOrder(this.params).then(res => {
-        if (res.object) {
-          this.testData = []
-          this.testData1 = []
-          this.testData2 = []
-          if (this.selectIndex === 0) {
-            this.testData = res.object || []
-          }
-          if (this.selectIndex === 1) {
-            this.testData1 = res.object || []
-          }
-          if (this.selectIndex === 2) {
-            this.testData2 = res.object || []
-          }
-        }
-      })
-    },
-    onClick_select(index) {
-      this.selectData = index
-      if (index === 0) {
-        this.getData()
+    onClick_select(data, index) {
+      this.selectIndex = index
+      this.params = {
+        moduleCode: this.selectData[this.selectIndex].value
       }
     }
   }

@@ -18,7 +18,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '代理商ID',
-        key: 'id',
+        key: 'channelAgentId',
         initVal: '',
         inputType: "input",
         row: 1,
@@ -38,7 +38,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '支付宝PID',
-        key: '2',
+        key: 'alipayRate',
         initVal: '',
         inputType: "input",
         row: 1,
@@ -58,7 +58,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '微信费率',
-        key: '4',
+        key: 'wechatPayRate',
         initVal: '',
         inputType: "input",
         row: 1,
@@ -68,7 +68,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '云闪付费率(单笔<=1000)',
-        key: '5',
+        key: 'cloudPayLe1000Rate',
         initVal: '',
         inputType: "input",
         row: 1,
@@ -78,7 +78,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '云闪付费率(单笔>=1000)',
-        key: '6',
+        key: 'cloudPayGt1000Rate',
         initVal: '',
         inputType: "input",
         row: 1,

@@ -91,7 +91,7 @@ export default {
     },
     onclick_buyserve() {
       localStorage.setItem('comboItem', JSON.stringify(this.comboItem))
-      if (this.comboItem.id) {
+      if (this.comboItem) {
         this.$router.push({
           path: "/serveMarket/businessModel/subOrder"
         });

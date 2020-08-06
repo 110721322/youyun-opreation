@@ -82,12 +82,13 @@ export default {
     },
     onClick_tostatus() {
       const imageUrl = this.ruleForm.imgUrl.dialogImagePath + this.ruleForm.imgUrl.dialogImageUrl
+      localStorage.setItem('voucher', imageUrl)
       const params = {
         comboId: this.comboItem.id,
         payType: this.payWay[this.selectIndex].id,
         productName: this.modelName,
         promoCodeId: localStorage.getItem('promoCodeId') || '',
-        voucher: imageUrl
+        voucher: this.ruleForm.imgUrl.dialogImageUrl
       }
       api.createOrder(params).then(res => {
         if (res.object) {

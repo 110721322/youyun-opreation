@@ -155,8 +155,8 @@ export default {
       this.showTip = false
     },
     onClick_submit() {
-      const agentLogo = this.ruleForm.imgUrl.dialogImagePath + this.ruleForm.imgUrl.dialogImageUrl
-      const merchantLogo = this.ruleForm2.imgUrl.dialogImagePath + this.ruleForm2.imgUrl.dialogImageUrl
+      const agentLogo = this.ruleForm.imgUrl.dialogImageUrl
+      const merchantLogo = this.ruleForm2.imgUrl.dialogImageUrl
       api.saveOEMConfig({
         agentLogo: agentLogo,
         merchantLogo: merchantLogo

@@ -126,11 +126,12 @@ export default {
       })
     },
     handleCommit($val) {
-      api.saveLeShuaConfig({
+      api.customDomainGeneration({
         ...$val
       }).then(res => {
         if (res.object) {
-          this.centerDialogVisible = true
+          this.$message.success('成功')
+          this.$router.go(-1)
         }
       })
     },

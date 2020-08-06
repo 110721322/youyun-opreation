@@ -2,37 +2,37 @@ export const LS_CONFIG = {
   gridConfig: [
     {
       label: '序号',
-      prop: 'id',
+      prop: 'index',
       width: '60px'
     },
     {
       label: '购买时间',
-      prop: 'createTime',
+      prop: 'payTime',
       width: '120px'
     },
     {
       label: '通道名称',
-      prop: 'name',
+      prop: 'productName',
       width: '120px'
     },
     {
       label: '服务时长',
-      prop: 'long',
+      prop: 'comboName',
       width: '120px'
     },
     {
       label: '支付金额(元)',
-      prop: 'price',
+      prop: 'actualAmount',
       width: '120px'
     },
     {
       label: '支付方式',
-      prop: 'payWay',
+      prop: 'payTypeName',
       width: '120px'
     },
     {
       label: '订单状态',
-      prop: 'status',
+      prop: 'statusName',
       width: '120px'
     }
   ],

@@ -54,5 +54,7 @@ export default {
   // 已获得的优惠码
   getPromoCodeListByChannelAgentCode: (params) => API.POST('/operation/v1/promoCode/getPromoCodeListByChannelAgentCode', params),
   // 域名定制-定制详情
-  domainGenerationDetail: (params) => API.GET('/operation/v1/market/domainGenerationDetail', params)
+  domainGenerationDetail: (params) => API.GET('/operation/v1/market/domainGenerationDetail', params),
+  // 短信充值-剩余接口数量查询
+  getSmsCount: (params) => API.GET('/operation/v1/market/getSmsCount', params)
 };

@@ -41,7 +41,7 @@ export default {
   methods: {
     onclick_buy($data) {
       localStorage.setItem('productItem', JSON.stringify($data))
-      this.$router.push({path: "/serveMarket/tradingChannel/lsBuyIndex", query: {productCode: $data.productCode, buyStatus: $data.buyStatus, expireDate: $data.expireDate}})
+      this.$router.push({path: "/serveMarket/tradingChannel/lsBuyIndex"})
     },
     getModel() {
       api.selectModuleProduct({

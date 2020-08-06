@@ -129,8 +129,7 @@ export default {
       fromConfigData: FORM_CONFIG.sendMessageData,
       centerDialogVisible: false,
       showPassword: false,
-      showPassword2: false,
-      imgUrl: "https://pics7.baidu.com/feed/2f738bd4b31c8701e3ae9137d62254290608ffaf.jpeg?token=638e9b2296a837b445f9de64cce7c7b9"
+      showPassword2: false
     }
   },
   created() {
@@ -472,4 +471,3 @@ export default {
     height: 16px;
   }
 </style>
-
