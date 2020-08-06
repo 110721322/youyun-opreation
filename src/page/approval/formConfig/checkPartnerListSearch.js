@@ -45,11 +45,11 @@ export const SEARCH_CONFIG = {
       options: [
         {
           label: '拓展员',
-          value: 'expand'
+          value: 'expander'
         },
         {
           label: '入件操作员',
-          value: 'join'
+          value: 'inboundMen'
         }
       ]
     },

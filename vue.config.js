@@ -41,10 +41,6 @@ module.exports = {
         test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
         threshold: 10240,
         minRatio: 0.8
-      }),
-      new webpack.optimize.LimitChunkCountPlugin({
-        maxChunks: 5,
-        minChunkSize: 100
       })
     ],
     output: { // 输出重构  打包编译后的 文件名称  【模块名称.版本号.时间戳】

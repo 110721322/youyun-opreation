@@ -27,6 +27,11 @@ axios.interceptors.request.use((config) => {
   // console.log(config);
   // 参数格式为form data(默认request payload)
 
+  for (const field in config.data) {
+    if (g.utils.isNull(config.data[field]) || g.utils.isUndefined(config.data[field])) {
+      config.data[field] = '';
+    }
+  }
   if (config.method === 'post' && config.needFormData) {
     config.data.merchantNo = localStorage.getItem('userInfo-merchant') ? JSON.parse(localStorage.getItem('userInfo-merchant')).merchantNo : '';
     config.data = qs.stringify(config.data);

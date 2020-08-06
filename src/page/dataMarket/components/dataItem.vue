@@ -16,7 +16,7 @@
     <div v-if="isShowLine" class="line"></div>
 
     <template v-if="isShowPie">
-      <pie :pie-option="pieOption" :ref-name="piwRefName" :data-list="dataList"></pie>
+      <pie ref="pie" :pie-option="pieOption" :ref-name="piwRefName" :data-list="dataList"></pie>
     </template>
 
     <div v-if="isShowTable" class="table-box">
@@ -70,12 +70,23 @@ export default {
   data() {
     return {};
   },
+  watch: {
+    dataList: {
+      handler() {
+        this.setOption()
+      },
+      deep: true
+    }
+  },
   methods: {
     handleChange($value) {
-      this.$emit("radioChange", $value);
+      this.$emit("radioChange", $value, this.radio.key);
     },
     onClick_showMore() {
       this.$emit("showMore");
+    },
+    setOption() {
+      this.$refs.pie.init()
     }
   }
 };
