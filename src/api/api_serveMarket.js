@@ -56,5 +56,7 @@ export default {
   // 域名定制-定制详情
   domainGenerationDetail: (params) => API.GET('/operation/v1/market/domainGenerationDetail', params),
   // 短信充值-剩余接口数量查询
-  getSmsCount: (params) => API.GET('/operation/v1/market/getSmsCount', params)
+  getSmsCount: (params) => API.GET('/operation/v1/market/getSmsCount', params),
+  // 乐刷通道配置信息详情
+  getLeShuaDetail: (params) => API.GET('/operation/v1/market/getLeShuaDetail', params)
 };

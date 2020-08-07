@@ -8,16 +8,6 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '乐刷代理商ID',
-        key: '0',
-        initVal: '',
-        inputType: "input",
-        row: 1,
-        style: 'width:364px',
-        placeholder: '请输入'
-      },
-      {
-        type: 0,
-        label: '代理商ID',
         key: 'channelAgentId',
         initVal: '',
         inputType: "input",
@@ -27,8 +17,18 @@ export const FORM_CONFIG = {
       },
       {
         type: 0,
+        label: '代理商ID',
+        key: 'channelAgentCode',
+        initVal: '',
+        inputType: "input",
+        row: 1,
+        style: 'width:364px',
+        placeholder: '请输入'
+      },
+      {
+        type: 0,
         label: '微信公众号APPID',
-        key: '1',
+        key: 'weChatOfficialAccountId',
         initVal: '',
         inputType: "input",
         row: 1,
@@ -38,7 +38,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '支付宝PID',
-        key: 'alipayRate',
+        key: 'sysServiceProviderId',
         initVal: '',
         inputType: "input",
         row: 1,
@@ -48,7 +48,17 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '交易加密key',
-        key: '3',
+        key: 'requestKey',
+        initVal: '',
+        inputType: "input",
+        row: 1,
+        style: 'width:364px',
+        placeholder: '请输入'
+      },
+      {
+        type: 0,
+        label: '支付宝费率',
+        key: 'alipayRate',
         initVal: '',
         inputType: "input",
         row: 1,
