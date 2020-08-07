@@ -1,4 +1,3 @@
-import areaData from "@/assets/data/areaData";
 import store from "@/store"
 import { AGENT_SEARCH_CONDITION } from "../../../libs/data/permissionBtns";
 
@@ -17,7 +16,7 @@ export const FORM_CONFIG = {
     {
       type: 10,
       label: '精准筛选',
-      key: '',
+      key: 'agent',
       class: 'max-width',
       options: [
         {
@@ -34,32 +33,24 @@ export const FORM_CONFIG = {
     {
       type: 1,
       label: '标签',
-      key: 'tags',
+      key: 'positionLabelId',
       style: 'width:294px',
-      options: store.state.dataMarket.labelList
+      options: store.state.dataMarket.tradeLabelList
     },
     {
       type: 1,
       label: '所属大区',
-      key: 'region',
+      key: 'regionCode',
       style: 'width:294px',
       labelWidth: '185px',
-      options: store.state.dataMarket.regionList
-    },
-    {
-      type: 8,
-      label: '服务地区',
-      key: 'area',
-      style: 'width:294px',
-      class: "clear_both",
-      options: areaData
+      options: store.state.dataMarket.tradeRegionList
     },
     {
       type: 1,
       label: '所属运营',
-      key: 'oper',
+      key: 'operationId',
       labelWidth: '185px',
-      options: store.state.dataMarket.userList
+      options: store.state.dataMarket.tradeUserList
     }
   ]
 }

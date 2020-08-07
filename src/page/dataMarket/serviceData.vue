@@ -9,78 +9,72 @@
           <span>自定义设置</span>
         </div>
       </div>
-      <div class="title">服务器数量分布</div>
-      <div class="map-box">
-        <div class="chart-box">
-          <div ref="echartsMap" class="chart-panel"></div>
-        </div>
-        <div class="data-box">
-          <div class="data-title">
-            省份分布排行榜
-            <span class="all-num">共{{ mapData.length }}个</span>
+      <template v-if="hasPermission('agentCount')">
+        <div class="title">服务器数量分布</div>
+        <div class="map-box">
+          <div class="chart-box">
+            <div ref="echartsMap" class="chart-panel"></div>
           </div>
-          <div v-for="(item,index) in mapData" :key="index" class="data-item">
-            <div class="data-left">
-              <span :class="['index',index<=2?'hightlight':'normal']">{{ index+1 }}</span>
-              {{ item.name }}
+          <div class="data-box">
+            <div class="data-title">
+              省份分布排行榜
+              <span class="all-num">共{{ mapData.length }}个</span>
             </div>
-            <div class="data-right">
-              <span>{{ item.topAgentNumbers }}</span> |
-              <span class="perc">{{ item.ratio }}</span>
+            <div v-for="(item,index) in mapData" :key="index" class="data-item">
+              <div class="data-left">
+                <span :class="['index',index<=2?'hightlight':'normal']">{{ index+1 }}</span>
+                {{ item.name }}
+              </div>
+              <div class="data-right">
+                <span>{{ item.topAgentNumbers }}</span> |
+                <span class="perc">{{ item.ratio }}</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="service-box">
-        <pie
-          v-for="(item, index) in pieOptionList"
-          :key="index"
-          :pie-option="item"
-          :data-list="item.dataList"
-          :ref-name="'echartPie0'"
-          :pie-style="pieStyle"
-        ></pie>
-      </div>
+        <div class="service-box">
+          <pie
+            v-for="(item, index) in pieOptionList"
+            :key="index"
+            :pie-option="item"
+            :data-list="item.dataList"
+            :ref-name="'echartPie' + index"
+            :pie-style="pieStyle"
+          ></pie>
+        </div>
+      </template>
       <search
+        v-if="hasPermission('agentAverageTrend') || hasPermission('amountRank') || hasPermission('addMerchantRank') || hasPermission('faceOrderRank')"
         :is-show-all="true"
         :form-base-data="searchConfig.formData"
         :show-foot-btn="searchConfig.showFootBtn"
         @dataSelect="handleDataSelect"
         @search="search"
       />
-      <div class="title">商户平均交易额走势</div>
-      <div class="trend-box">
-        <div class="chart-box">
-          <div ref="echartsLine" class="chart-panel"></div>
+      <template v-if="hasPermission('agentAverageTrend')">
+        <div class="title">商户平均交易额走势</div>
+        <div class="trend-box">
+          <div class="chart-box">
+            <div ref="echartsLine" class="chart-panel"></div>
+          </div>
         </div>
-        <div class="data-box">
-          <dataItem
-            :is-show-table="true"
-            :title="'总交易额排行榜'"
-            :is-show-more="true"
-            :config-data="tableConfigData5"
-            :permission="tableConfigData5.permission"
-            :item-test-data="testData5"
-            :is-show-line="false"
-            :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
-            @showMore="handleShowMore"
-          ></dataItem>
-        </div>
-      </div>
+      </template>
       <div class="pie-box">
-        <data-item
-          class="pie-item"
-          :radio="radioListData[0]"
-          :title="'交易额涨跌排行'"
-          :config-data="tableConfigData"
-          :permission="tableConfigData.permission"
-          :is-show-more="true"
-          :is-show-table="true"
-          :item-test-data="testData"
-          :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
-          @radioChange="handleTradeAmountChange"
-        />
         <dataItem
+          v-if="hasPermission('amountRank')"
+          class="pie-item"
+          :is-show-table="true"
+          :title="'总交易额排行榜'"
+          :is-show-more="true"
+          :config-data="tableConfigData5"
+          :permission="tableConfigData5.permission"
+          :item-test-data="testData5"
+          :is-show-line="false"
+          :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
+          @showMore="handleShowMore('tradeAmount')"
+        ></dataItem>
+        <dataItem
+          v-if="hasPermission('addMerchantRank')"
           class="pie-item"
           :title="'新增商户数量排行'"
           :config-data="tableConfigData2"
@@ -89,10 +83,11 @@
           :is-show-table="true"
           :item-test-data="testData2"
           :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
-          @showMore="handleShowMore"
+          @showMore="handleShowMore('newMerchantCount')"
         />
       </div>
       <div class="pie-box">
+        <!--1.1期不做会员
         <dataItem
           class="pie-item"
           :radio="radioListData[1]"
@@ -105,8 +100,9 @@
           :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
           @showMore="handleShowMore"
           @radioChange="handleTradeAmountChange"
-        />
+        />-->
         <dataItem
+          v-if="hasPermission('faceOrderRank')"
           class="pie-item"
           :radio="radioListData[2]"
           :title="'刷脸订单排行'"
@@ -132,13 +128,13 @@
           </div>
           <div class="draw-checkbox">
             <el-checkbox-group v-model="checkedSelect" @change="handleChecked">
-              <el-checkbox v-for="(item, index) in checkIndex" :key="index" :label="item">{{ item }}</el-checkbox>
+              <el-checkbox v-for="(item, index) in checkIndex" :key="index" :label="item.value">{{ item.label }}</el-checkbox>
             </el-checkbox-group>
           </div>
           <div class="bottom-btn">
             <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" @change="handleCheckAllChange">全选</el-checkbox>
             <div class="btn">
-              <button>确定</button>
+              <button @click="saveUserDiagrams">确定</button>
               <button @click="cancleClose">取消</button>
             </div>
           </div>
@@ -176,10 +172,26 @@ export default {
   },
   data() {
     return {
-      isIndeterminate: true,
-      checkAll: false,
+      pagePermission: [],
       checkedSelect: [],
-      checkIndex: ['服务商数量分布', '会员商户排行', '服务商平均交易走势', '交易趋势', '大区交易占比', '行业交易占比'],
+      checkIndex: [
+        {
+          label: '服务商数量分布',
+          value: "agentCount"
+        }, {
+          label: '服务商平均交易走势',
+          value: 'agentAverageTrend'
+        }, {
+          label: '总交易排行榜',
+          value: 'amountRank'
+        }, {
+          label: '新增商户数量排行',
+          value: 'addMerchantRank'
+        }, {
+          label: '刷脸订单排行',
+          value: 'faceOrderRank'
+        }
+      ],
       drawer: false,
       mapData: [],
       searchConfig: FORM_CONFIG2,
@@ -228,36 +240,45 @@ export default {
       lineOption: lineOption,
       echartsMap: null,
       myChartLine: null,
-      beginDate: null,
-      endDate: null,
-      agentType: 1,
-      agentType2: 1,
-      agentType3: 1
+      ruleForm: {},
+      agentType: '1'
     };
   },
   computed: {
-    //  服务商大区分布饼状图配置
+    isIndeterminate() {
+      return (this.checkedSelect.length > 0 && this.checkedSelect.length < 5);
+    },
+    checkAll: {
+      get() {
+        return this.checkedSelect.length === 5;
+      },
+      set(val) {}
+    },
+    // 服务商大区分布饼状图配置
     pieOptionList() {
       const that = this;
-      const agentRegion = {
-        dataList: this.agentRegionRatio.map((item, index) => { return mapDataList(item, index, 'regionName') }),
-        seriesData: this.agentRegionRatio.map((item, index) => { return mapSeriesData(item, index, 'regionName') })
-      };
-      const agentLevel = {
-        dataList: this.agentLevelRatio.map((item, index) => { return mapDataList(item, index, 'gradeName') }),
-        seriesData: this.agentLevelRatio.map((item, index) => { return mapSeriesData(item, index, 'gradeName') })
-      };
-      const agentType = {
-        dataList: this.agentTypeRatio.map((item, index) => { return mapDataList(item, index, 'typeName') }),
-        seriesData: this.agentTypeRatio.map((item, index) => { return mapSeriesData(item, index, 'typeName') })
-      };
-      pieOptionList[0].dataList = agentRegion.dataList;
-      pieOptionList[0].series[0].data = agentRegion.seriesData;
-      pieOptionList[1].dataList = agentLevel.dataList;
-      pieOptionList[1].series[0].data = agentLevel.seriesData;
-      pieOptionList[2].dataList = agentType.dataList;
-      pieOptionList[2].series[0].data = agentType.seriesData;
-      return pieOptionList;
+      const optionList = this.$g.utils.deepClone(pieOptionList); // 注 若不深拷贝，watch中监听的是内存地址，内存地址始终没有发生改变，所以不会触发监听事件
+      if (this.agentRegionRatio.length || this.agentLevelRatio.length || this.agentTypeRatio.length) {
+        const agentRegion = {
+          dataList: this.agentRegionRatio.map((item, index) => { return mapDataList(item, index, 'regionName') }),
+          seriesData: this.agentRegionRatio.map((item, index) => { return mapSeriesData(item, index, 'regionName') })
+        };
+        const agentLevel = {
+          dataList: this.agentLevelRatio.map((item, index) => { return mapDataList(item, index, 'gradeName') }),
+          seriesData: this.agentLevelRatio.map((item, index) => { return mapSeriesData(item, index, 'gradeName') })
+        };
+        const agentType = {
+          dataList: this.agentTypeRatio.map((item, index) => { return mapDataList(item, index, 'typeName') }),
+          seriesData: this.agentTypeRatio.map((item, index) => { return mapSeriesData(item, index, 'typeName') })
+        };
+        optionList[0].dataList = agentRegion.dataList;
+        optionList[0].series[0].data = agentRegion.seriesData;
+        optionList[1].dataList = agentLevel.dataList;
+        optionList[1].series[0].data = agentLevel.seriesData;
+        optionList[2].dataList = agentType.dataList;
+        optionList[2].series[0].data = agentType.seriesData;
+      }
+      return optionList;
 
       function mapDataList($item, $index, $key) {
         return {
@@ -276,20 +297,51 @@ export default {
       }
     }
   },
-  mounted() {
-    this.queryAllProvinceCount();
-    // this.init();
-    // this.getData();
-    // this.initMap();
-    // 获取数据
-    this.queryAgentRatio();
-    this.showLine();
+  created() {
+    this.init();
   },
   methods: {
-    handleCheckAllChange() {},
+    init() {
+      this.queryUserDiagram().then(() => {
+        this.$nextTick(() => {
+          this.queryAllProvinceCount();
+          // 获取数据
+          this.queryAgentRatio();
+        })
+        this.search();
+      })
+    },
+    handleCheckAllChange() {
+      if (this.checkedSelect.length < 5) {
+        this.checkedSelect = this.checkIndex.map(item => {
+          return item.value;
+        })
+      } else {
+        this.checkedSelect = [];
+      }
+    },
     handleChecked() {},
+    queryUserDiagram() {
+      return api.queryUserDiagram('agent').then(res => {
+        this.pagePermission = this.$g.utils.isArr(res.object) ? res.object : [];
+      })
+    },
     showRightbar() {
+      this.checkedSelect = this.pagePermission;
       this.drawer = true
+    },
+    // 是否有模块权限
+    hasPermission($permission) {
+      return this.pagePermission.filter(item => $permission === item).length > 0
+    },
+    saveUserDiagrams() {
+      api.saveUserDiagrams({
+        diagramType: 'agent',
+        diagrams: this.checkedSelect.join(',')
+      }).then(res => {
+        this.init();
+        this.drawer = false;
+      })
     },
     cancleClose() {
       this.drawer = false
@@ -297,83 +349,13 @@ export default {
     // 交易额涨跌排行切换
     handleTradeAmountChange($data) {
       this.agentType = $data;
-      this.queryAgentTradeAmountPerRank();
-    },
-    queryAgentTradeAmountPerRank() {
-      api
-        .queryAgentTradeAmountPerRank({
-          beginDate: this.beginDate,
-          endDate: this.endDate,
-          top: 216,
-          type: this.agentType
-        })
-        .then(res => {
-          this.testData = res.object;
-        })
-        .catch(err => {
-          this.$message(err);
-        });
-    },
-    // 新增商户数量排行
-    queryNewMerchantRank() {
-      api
-        .queryNewMerchantRank({
-          beginDate: this.beginDate,
-          endDate: this.endDate,
-          top: 216,
-          type: this.agentType2
-        })
-        .then(res => {
-          this.testData2 = res.object;
-        })
-        .catch(err => {
-          this.$message(err);
-        });
-    },
-    // 会员商户排行切换
-    // handleAgentFaceChange($data) {
-    //   this.agentType = $data;
-    //   this.queryAgentFaceTradeAmountRank();
-    // },
-    // queryAgentFaceTradeAmountRank() {
-    //   api
-    //     .queryAgentFaceTradeAmountRank({
-    //       beginDate: this.beginDate,
-    //       endDate: this.endDate,
-    //       top: 216,
-    //       type: this.agentType
-    //     })
-    //     .then(res => {
-    //       // this.mapData = res.object;
-    //     })
-    //     .catch(err => {
-    //       this.$message(err);
-    //     });
-    // },
-    // 刷脸订单排行
-    handleAgentFaceChange($data) {
-      this.agentType = $data;
-      this.queryAgentFaceTradeAmountRank();
-    },
-    queryAgentFaceTradeAmountRank() {
-      api
-        .queryAgentFaceTradeAmountRank({
-          beginDate: this.beginDate,
-          endDate: this.endDate,
-          top: 216,
-          type: this.agentType
-        })
-        .then(res => {
-          // this.mapData = res.object;
-        })
-        .catch(err => {
-          this.$message(err);
-        });
+      this.queryAgentFaceTradeRank();
     },
     // 服务商平均交易额走势
-    queryAgentDailyAverageTrade($params) {
+    queryAgentDailyAverageTrade() {
+      if (!this.hasPermission('agentAverageTrend')) return;
       api
-        .queryAgentDailyAverageTrade($params)
+        .queryAgentDailyAverageTrade(this.ruleForm)
         .then(res => {
           this.lineOption.xAxis[0].data = this.$g.utils.isArr(res.object.date) ? res.object.date : [];
           this.lineOption.series[0].data = this.$g.utils.isArr(res.object.avgAmount) ? res.object.avgAmount : [];
@@ -381,19 +363,62 @@ export default {
         })
     },
     // 总交易排行榜
-    queryAgentTradeAmountRank($params) {
-      $params.top = 3;
+    queryAgentTradeAmountRank() {
+      if (!this.hasPermission('amountRank')) return;
+      const params = this.ruleForm;
+      params.top = 6;
       api
-        .queryAgentTradeAmountRank($params)
+        .queryAgentTradeAmountRank(params)
         .then(res => {
           this.testData5 = res.object;
         })
-        .catch(err => {
-          this.$message(err);
-        });
+    },
+    // 新增商户数量排行
+    queryNewMerchantRank() {
+      if (!this.hasPermission('addMerchantRank')) return;
+      const params = this.ruleForm;
+      params.top = 6;
+      api
+        .queryNewMerchantRank(params)
+        .then(res => {
+          this.testData2 = res.object;
+        })
+    },
+    // 服务商交易统计-服务商刷脸订单排行
+    queryAgentFaceTradeRank() {
+      if (!this.hasPermission('faceOrderRank')) return;
+      const params = this.ruleForm;
+      params.top = 3;
+      if (this.agentType === '1') {
+        api
+          .queryAgentFaceTradeAmountRank(params)
+          .then(res => {
+            this.tableConfigData4.gridConfig[2] = {
+              label: "刷脸交易额",
+              prop: "actualAmount",
+              width: "176px",
+              formatter($row) {
+                return '¥' + $row['actualAmount'];
+              }
+            }
+            this.testData4 = res.object
+          })
+      } else {
+        api
+          .queryAgentFaceTradeCountRank(params)
+          .then(res => {
+            this.tableConfigData4.gridConfig[2] = {
+              label: "刷脸交易笔数",
+              prop: "tradeCount",
+              width: "176px"
+            }
+            this.testData4 = res.object;
+          })
+      }
     },
     // 地图服务商数据
-    queryAllProvinceCount($ruleForm) {
+    queryAllProvinceCount() {
+      if (!this.hasPermission('agentCount')) return;
       api
         .queryAllProvinceCount({})
         .then(res => {
@@ -412,7 +437,8 @@ export default {
         })
     },
     // 大区占比
-    queryAgentRatio($ruleForm) {
+    queryAgentRatio() {
+      if (!this.hasPermission('agentCount')) return;
       axios.all([api.queryRegionRatio(), api.queryGradeRatio(), api.queryTypeRatio()]).then(
         axios.spread((res1, res2, res3) => {
           this.agentRegionRatio = this.$g.utils.isArr(res1.object) ? res1.object : [];
@@ -422,28 +448,35 @@ export default {
       )
     },
     handleDataSelect($time) {
-      this.search({
-        date: $time
+      this.$nextTick(() => {
+        this.search({
+          date: $time
+        })
       })
     },
     search($ruleForm) {
-      const params = {
-        beginDate: $ruleForm.date[0],
-        endDate: $ruleForm.date[1]
+      if ($ruleForm) {
+        this.ruleForm = {
+          beginDate: $ruleForm.date[0],
+          endDate: $ruleForm.date[1]
+        };
       }
-      this.queryAgentDailyAverageTrade(params);
-      // this.queryAgentTradeAmountRank(params);
-      // this.queryAgentTradeAmountPerRank(params);
-      // this.queryNewMerchantRank(params);
+      if (JSON.stringify(this.ruleForm) === "{}") return;
+      this.queryAgentDailyAverageTrade();
+      this.queryAgentTradeAmountRank();
+      this.queryNewMerchantRank();
+      this.queryAgentFaceTradeRank();
     },
-    handleShowMore() {
-      this.$router.push({ path: "/dataMarket/serviceData/detail" });
+    handleShowMore($sortField) {
+      this.$router.push({ path: "/dataMarket/serviceData/detail", query: {
+        sortField: $sortField || "tradeAmount"
+      } });
     },
     showLine() {
       // 基于准备好的dom，初始化echarts实例
       const that = this;
-      if (!this.$refs.echartsLine) return;
-      if (!this.myChartLine) {
+      const canvasId = this.$refs.echartsLine.getAttribute('_echarts_instance_') // 判断是否为同一实例画板
+      if (!this.myChartLine || this.myChartLine.id !== canvasId) {
         this.myChartLine = this.$echarts.init(this.$refs.echartsLine);
       }
 
@@ -453,30 +486,15 @@ export default {
         that.myChartLine.resize();
       });
     },
-    getData() {
-      this.testData3 = [
-        {
-          rank: "1",
-          name: "利郎男装有限公司",
-          new: "128%",
-          perc: "128%"
-        },
-        {
-          rank: "2",
-          name: "利郎男装有限公司",
-          new: "128%",
-          perc: "128%"
-        }
-      ];
-    },
     /**
      * 数量分布地图
      */
     initMap() {
       if (!this.$refs.echartsMap) return;
       const that = this;
+      const canvasId = this.$refs.echartsMap.getAttribute('_echarts_instance_') // 判断是否为同一实例画板
       this.mapOption.series[0].data = this.mapData;
-      if (!this.echartsMap) {
+      if (!this.echartsMap || this.echartsMap.id !== canvasId) {
         this.echartsMap = echarts.init(this.$refs.echartsMap);
       }
       this.echartsMap.setOption(this.mapOption);
@@ -551,7 +569,7 @@ export default {
   overflow: hidden;
   background-color: #ffffff;
   .chart-box {
-    width: 70%;
+    width: 100%;
     height: 350px;
     position: relative;
     .chart-panel {

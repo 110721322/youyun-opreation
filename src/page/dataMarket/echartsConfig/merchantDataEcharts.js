@@ -1,3 +1,4 @@
+
 export const mapOption = {
   tooltip: {
     triggerOn: "mousemove"
@@ -84,7 +85,7 @@ export const pieOptionList = [
   {
     dataList: [],
     title: {
-      text: "服务商大区分布",
+      text: "新增商户数大区占比",
       left: "center",
       textStyle: {
         color: "rgba(0,0,0,0.85)",
@@ -97,7 +98,7 @@ export const pieOptionList = [
     },
     series: [
       {
-        name: "服务商大区分布",
+        name: "新增商户数行业占比",
         type: "pie",
         avoidLabelOverlap: false,
         radius: ["40%", "80%"],
@@ -111,14 +112,20 @@ export const pieOptionList = [
             show: false
           }
         },
-        data: []
+        data: [
+          { value: 0.36, name: "华东", itemStyle: { color: "#00A1FF" } },
+          { value: 0.2, name: "华中", itemStyle: { color: "#37CBCB" } },
+          { value: 0.1, name: "华北", itemStyle: { color: "#FAD337" } },
+          { value: 0.09, name: "华南", itemStyle: { color: "#F2637B" } },
+          { value: 0.09, name: "华西", itemStyle: { color: "#975FE4" } }
+        ]
       }
     ]
   },
   {
     dataList: [],
     title: {
-      text: "服务商等级分布",
+      text: "交易额行业占比",
       left: "center",
       textStyle: {
         color: "rgba(0,0,0,0.85)",
@@ -131,7 +138,7 @@ export const pieOptionList = [
     },
     series: [
       {
-        name: "服务商等级分布",
+        name: "交易额大区占比",
         type: "pie",
         avoidLabelOverlap: false,
         radius: ["40%", "80%"],
@@ -145,45 +152,57 @@ export const pieOptionList = [
             show: false
           }
         },
-        data: []
-      }
-    ]
-  },
-  {
-    dataList: [],
-    title: {
-      text: "服务商类型分布",
-      left: "center",
-      textStyle: {
-        color: "rgba(0,0,0,0.85)",
-        fontSize: 14
-      }
-    },
-    tooltip: {
-      trigger: "item",
-      formatter: "{b}: {c} ({d}%)"
-    },
-    series: [
-      {
-        name: "服务商类型分布",
-        type: "pie",
-        avoidLabelOverlap: false,
-        radius: ["40%", "80%"],
-        label: {
-          normal: {
-            show: false
-          }
-        },
-        labelLine: {
-          normal: {
-            show: false
-          }
-        },
-        data: []
+        data: [
+          { value: 0.36, name: "华东", itemStyle: { color: "#00A1FF" } },
+          { value: 0.2, name: "华中", itemStyle: { color: "#37CBCB" } },
+          { value: 0.1, name: "华北", itemStyle: { color: "#FAD337" } },
+          { value: 0.09, name: "华南", itemStyle: { color: "#F2637B" } },
+          { value: 0.09, name: "华西", itemStyle: { color: "#975FE4" } }
+        ]
       }
     ]
   }
 ]
+
+export const averagePieOption = {
+  title: {
+    text: "新增商户平均交易笔数概况",
+    left: "center",
+    textStyle: {
+      color: "rgba(0,0,0,0.85)",
+      fontSize: 14
+    }
+  },
+  tooltip: {
+    trigger: "item",
+    formatter: "{b}: {c} ({d}%)"
+  },
+  series: [
+    {
+      name: "新增商户平均交易笔数概况",
+      type: "pie",
+      avoidLabelOverlap: false,
+      radius: ["40%", "80%"],
+      label: {
+        normal: {
+          show: false
+        }
+      },
+      labelLine: {
+        normal: {
+          show: false
+        }
+      },
+      data: [
+        { value: 0.36, name: "华东", itemStyle: { color: "#00A1FF" } },
+        { value: 0.2, name: "华中", itemStyle: { color: "#37CBCB" } },
+        { value: 0.1, name: "华北", itemStyle: { color: "#FAD337" } },
+        { value: 0.09, name: "华南", itemStyle: { color: "#F2637B" } },
+        { value: 0.09, name: "华西", itemStyle: { color: "#975FE4" } }
+      ]
+    }
+  ]
+}
 
 export const lineOption = {
   tooltip: {
@@ -193,8 +212,7 @@ export const lineOption = {
       label: {
         backgroundColor: "#6a7985"
       }
-    },
-    formatter: "{b0}<br />{a0}: ¥ {c0}"
+    }
   },
   grid: {
     top: "50",
@@ -261,17 +279,6 @@ export const lineOption = {
           global: false // 缺省为 false
         }
       },
-      // emphasis: {
-      //   itemStyle: {
-      //     // 高亮时点的颜色。
-      //     color: "blue"
-      //   },
-      //   label: {
-      //     show: true,
-      //     // 高亮时标签的文字。
-      //     formatter: "This is a emphasis label."
-      //   }
-      // },
       itemStyle: {
         normal: {
           color: "#1890FF",

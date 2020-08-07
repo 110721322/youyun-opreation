@@ -27,7 +27,6 @@
 import api from "@/api/api_dataMarket";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
-import { mapActions } from 'vuex'
 
 import { FORM_CONFIG } from "./formConfig/serviceDataDetailSearch";
 import { MERCHANTDATADETAILCONFIG } from "./tableConfig/serviceDataDetailConfig";
@@ -41,63 +40,41 @@ export default {
       testData: [],
       searchHeight: "320",
       params: {
+        agentNo: null,
+        agentName: null,
+        positionLabelId: null,
         beginDate: this.$g.utils.getToday(),
         endDate: this.$g.utils.getToday(),
-        channelAgentCode: null,
-        labelId: null,
+        sortField: this.$route.query.sortField ? this.$route.query.sortField : 'tradeAmount',
+        sortRule: 'desc',
         regionCode: null,
-        provinceCode: null,
-        cityCode: null,
         operationId: null,
         currentPage: 0,
         pageSize: 10
       },
-      api: api.selectTradeDailyByPage
+      api: api.queryAgentTradeList
     };
   },
   mounted() {
-    this.queryInit();
+    this.tradeDataQueryInit();
   },
   methods: {
-    ...mapActions(['setLabelList', 'setRegionList', 'setUserList']),
     search($ruleForm) {
-      const params = {
+      this.params = {
+        [$ruleForm.agent]: $ruleForm['agentVal'],
+        positionLabelId: $ruleForm['positionLabelId'],
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,
-        category: $ruleForm.category,
-        provinceCode: $ruleForm.addressObj
-          ? $ruleForm.addressObj[0].value
-          : null,
-        cityCode: $ruleForm.addressObj ? $ruleForm.addressObj[1].value : null
-        // 是否开通会员
+        sortField: this.params.sortField,
+        sortRule: this.params.sortRule,
+        regionCode: $ruleForm['regionCode'],
+        operationId: $ruleForm['operationId'],
+        currentPage: this.params.currentPage,
+        pageSize: this.params.pageSize
       };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
-      this.params = params;
     },
-    queryInit() {
-      api.queryInit().then(res => {
-        const labelList = res.object.labelList.map($ele => {
-          return {
-            label: $ele.name,
-            value: $ele.id
-          }
-        })
-        const regionList = res.object.regionSetList.map($ele => {
-          return {
-            label: $ele.regionName,
-            value: $ele.regionCode
-          }
-        })
-        const userList = res.object.userDTOList.map($ele => {
-          return {
-            label: $ele.jobName || $ele.name,
-            value: $ele.id
-          }
-        })
-        this.setLabelList(labelList)
-        this.setRegionList(regionList)
-        this.setUserList(userList)
-      })
+    tradeDataQueryInit() {
+      api.tradeDataQueryInit()
     }
   }
 };
