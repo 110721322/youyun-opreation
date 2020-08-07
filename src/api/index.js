@@ -3,16 +3,7 @@ import qs from 'qs';
 import { Loading, Message } from 'element-ui';
 import store from '@/store';
 import router from "@/router"
-// import Vue from 'vue';
-// import web_config from 'libs/config/config';
 import * as g from '../libs/global';
-
-// const _this = new Vue();
-// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-// axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
-// axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? web_config.devServer : web_config.server;
-// axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
-// axios.defaults.baseURL = g.config.server;
 
 axios.defaults.timeout = g.config.timeout;
 axios.defaults.withCredentials = true;
@@ -24,7 +15,6 @@ axios.interceptors.request.use((config) => {
   config.headers.common.userToken = localStorage.getItem('token-merchant') || '';
   config.headers.common.client = 'WEB';
   config.headers.common.Access_token = localStorage.getItem('accessToken') || ''
-  // console.log(config);
   // 参数格式为form data(默认request payload)
 
   for (const field in config.data) {
@@ -35,12 +25,6 @@ axios.interceptors.request.use((config) => {
   if (config.method === 'post' && config.needFormData) {
     config.data.merchantNo = localStorage.getItem('userInfo-merchant') ? JSON.parse(localStorage.getItem('userInfo-merchant')).merchantNo : '';
     config.data = qs.stringify(config.data);
-  } else if (config.method === 'post' && Object.keys(config.data).length === 1) {
-    if (!config.changeContent) {
-      config.data = qs.stringify(config.data);
-    }
-  } else if (config.method === 'get') {
-    // config.params.merchantNo = localStorage.getItem('userInfo-merchant') ? JSON.parse(localStorage.getItem('userInfo-figmerchant')).merchantNo : '';
   }
   if (JSON.stringify(config.data) === "{}") {
     config.data = null;

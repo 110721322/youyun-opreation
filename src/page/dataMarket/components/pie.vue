@@ -15,7 +15,12 @@
 <script>
 export default {
   name: "Pie",
-  props: ["pieOption", "refName", "dataList", "pieStyle"],
+  props: {
+    pieOption: Object,
+    refName: String,
+    dataList: Array,
+    pieStyle: Object
+  },
   data() {
     return {
       myChartBar: null
@@ -24,6 +29,7 @@ export default {
   watch: {
     pieOption: {
       handler() {
+        console.log('draw');
         this.init();
       },
       deep: true
@@ -40,7 +46,9 @@ export default {
       }
 
       // 绘制图表
-      this.myChartBar.setOption(this.pieOption);
+      this.$nextTick(() => {
+        this.myChartBar.setOption(this.pieOption);
+      })
     }
   }
 };

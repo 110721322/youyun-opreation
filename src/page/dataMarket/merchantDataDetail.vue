@@ -40,37 +40,42 @@ export default {
       testData: [],
       searchHeight: "380",
       params: {
+        agentNo: null,
+        agentName: null,
+        merchantName: null,
+        merchantNo: null,
         beginDate: this.$g.utils.getToday(),
         endDate: this.$g.utils.getToday(),
-        agentNo: "6cw",
-        provinceCode: "xvf",
-        cityCode: "wd3",
-        agentName: "fjd",
-        pageSize: 0,
-        merchantName: "tnj",
-        channelAgentCode: "u1u",
-        category: "y76",
+        sortField: this.$route.query.sortField ? this.$route.query.sortField : 'tradeAmount',
+        sortRule: 'desc',
+        provinceCode: null,
+        cityCode: null,
+        category: null,
         currentPage: 0,
-        merchantNo: "x2b"
+        pageSize: 10
       },
       api: api.queryTradeSummaryAndCycleByCondition
     };
   },
-  mounted() {},
+  mounted() {
+    this.tradeDataQueryInit();
+  },
   methods: {
     search($ruleForm) {
-      const params = {
+      this.params = {
+        [$ruleForm.field]: $ruleForm['fieldVal'],
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,
-        category: $ruleForm.category,
-        provinceCode: $ruleForm.addressObj
-          ? $ruleForm.addressObj[0].value
-          : null,
-        cityCode: $ruleForm.addressObj ? $ruleForm.addressObj[1].value : null
-        // 是否开通会员
+        sortField: this.params.sortField,
+        sortRule: this.params.sortRule,
+        provinceCode: $ruleForm['area'] ? $ruleForm['area'][0] : null,
+        cityCode: $ruleForm['area'] ? $ruleForm['area'][1] : null,
+        currentPage: this.params.currentPage,
+        pageSize: this.params.pageSize
       };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
-      this.params = params;
+    },
+    tradeDataQueryInit() {
+      api.tradeDataQueryInit()
     }
   }
 };

@@ -76,13 +76,16 @@ export const MERCHANTDATACONFIG3 = {
     },
     {
       label: "商户名称",
-      prop: "merchantNo",
+      prop: "merchantName",
       width: "176px"
     },
     {
       label: "交易额",
       prop: "tradeAmount",
-      width: "70px"
+      width: "70px",
+      formatter($row) {
+        return "¥" + $row['tradeAmount']
+      }
     }
   ]
 }

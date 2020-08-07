@@ -7,89 +7,100 @@
         <span>自定义设置</span>
       </div>
     </div>
-    <search
-      :open-height="searchMaxHeight"
-      :form-base-data="searchConfig.formData"
-      :show-foot-btn="searchConfig.showFootBtn"
-      :permission="searchConfig.permission"
-      @dataSelect="handleDataSelect"
-      @search="search"
-    />
-    <div class="d-box">
-      <el-menu
-        :default-active="activeIndex"
-        class="el-menu-demo"
-        mode="horizontal"
-        @select="handleSelect"
-      >
-        <el-menu-item index="1">全部订单</el-menu-item>
-        <el-menu-item index="2">微信</el-menu-item>
-        <el-menu-item index="3">支付宝</el-menu-item>
-        <el-menu-item index="4">云闪付</el-menu-item>
-        <el-menu-item index="5">银联</el-menu-item>
-      </el-menu>
-      <div class="echarts-box">
-        <div class="data-box">
-          <div v-for="(item, index) in amountList" :key="index" class="data-item">
-            <div class="title">{{ item.title }}</div>
-            <div class="amount-all">
-              <span class="amount-icon">{{ item.type === 'amount' ? '¥' : '' }}</span>
-              {{ item.amountAll }}
-            </div>
-            <el-tooltip class="item" effect="dark" :content="item.tooltip" placement="bottom">
-              <div class="progress-box">
-                <img :src="smileImg" class="data-img" />
-                <el-progress
-                  :percentage="item.ratio"
-                  color="rgba(58,189,45,1)"
-                  class="progress"
-                  :show-text="false"
-                />
-                <span class="amount-face">{{ item.type === 'amount' ? '¥' : '' }} {{ item.amountFace }}</span>
+    <template v-if="hasPermission('tradeTrend')">
+      <search
+        :open-height="searchMaxHeight"
+        :form-base-data="searchConfig.formData"
+        :show-foot-btn="searchConfig.showFootBtn"
+        :permission="searchConfig.permission"
+        @dataSelect="handleDataSelect"
+        @search="search"
+      />
+      <div class="d-box">
+        <el-menu
+          :default-active="activeIndex"
+          class="el-menu-demo"
+          mode="horizontal"
+          @select="handleSelect"
+        >
+          <el-menu-item index="1">全部订单</el-menu-item>
+          <el-menu-item index="2">微信</el-menu-item>
+          <el-menu-item index="3">支付宝</el-menu-item>
+          <el-menu-item index="4">云闪付</el-menu-item>
+          <el-menu-item index="5">银联</el-menu-item>
+        </el-menu>
+        <div class="echarts-box">
+          <div class="data-box">
+            <div v-for="(item, index) in amountList" :key="index" class="data-item">
+              <div class="title">{{ item.title }}</div>
+              <div class="amount-all">
+                <span class="amount-icon">{{ item.type === 'amount' ? '¥' : '' }}</span>
+                {{ item.amountAll }}
               </div>
-            </el-tooltip>
-            <div
-              :class="[radio === index ? 'check-radio' : 'uncheck-radio']"
-              @click="onClick_changeRadio(index)"
-            />
-          </div>
-        </div>
-        <div class="right">
-          <div class="tip">
-            <span class="dot_blue" />{{ lineOption.series[1].name }}
-            <span class="dot_green" />{{ lineOption.series[0].name }}
-            <div class="change-btn" style="cursor: pointer;" @click="onClick_changeArts">
-              <img :src="toggleImg" class="change-icon" />
-              {{ isLineShow ? '切换柱状图' : '切换折线图' }}
+              <el-tooltip class="item" effect="dark" :content="item.tooltip" placement="bottom">
+                <div class="progress-box">
+                  <img :src="smileImg" class="data-img" />
+                  <el-progress
+                    :percentage="item.ratio"
+                    color="rgba(58,189,45,1)"
+                    class="progress"
+                    :show-text="false"
+                  />
+                  <span class="amount-face">{{ item.type === 'amount' ? '¥' : '' }} {{ item.amountFace }}</span>
+                </div>
+              </el-tooltip>
+              <div
+                :class="[radio === index ? 'check-radio' : 'uncheck-radio']"
+                @click="onClick_changeRadio(index)"
+              />
             </div>
           </div>
-          <div class="chart-box">
-            <div
-              ref="echarts"
-              class="chart-panel"
-            />
+          <div class="right">
+            <div class="tip">
+              <span class="dot_blue" />{{ lineOption.series[1].name }}
+              <span class="dot_green" />{{ lineOption.series[0].name }}
+              <div class="change-btn" style="cursor: pointer;" @click="onClick_changeArts">
+                <img :src="toggleImg" class="change-icon" />
+                {{ isLineShow ? '切换柱状图' : '切换折线图' }}
+              </div>
+            </div>
+            <div class="chart-box">
+              <div
+                ref="echarts"
+                class="chart-panel"
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </template>
     <search
+      v-if="hasPermission('regionTradeRatio') || hasPermission('industryTradeRatio')"
       :is-show-all="true"
       :form-base-data="searchConfig2.formData"
       @search="search2"
       @dataSelect="handleDataSelect2"
     />
     <div class="pie-box">
-      <div v-for="(item, index) in pieList" :key="index" class="pie-item">
-        <dataItem
-          :radio="item.radio"
-          :title="item.title"
-          :pie-option="pieOptionList[index]"
-          :piw-ref-name="`echartsPie${index}`"
-          :data-list="item.dataList"
-          :is-show-pie="true"
-          @radioChange="radioChange"
-        />
-      </div>
+      <template
+        v-for="(item, index) in pieList"
+      >
+        <div
+          v-if="hasPermission(item.permission)"
+          :key="index"
+          class="pie-item"
+        >
+          <dataItem
+            :radio="item.radio"
+            :title="item.title"
+            :pie-option="pieOptionList[index]"
+            :piw-ref-name="`echartsPie${index}`"
+            :data-list="item.dataList"
+            :is-show-pie="true"
+            @radioChange="radioChange"
+          />
+        </div>
+      </template>
     </div>
     <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size="40%">
       <div class="draw-title">权限设置</div>
@@ -103,13 +114,13 @@
         </div>
         <div class="draw-checkbox">
           <el-checkbox-group v-model="checkedSelect" @change="handleChecked">
-            <el-checkbox v-for="(item, index) in checkIndex" :key="index" :label="item">{{ item }}</el-checkbox>
+            <el-checkbox v-for="(item, index) in checkIndex" :key="index" :label="item.value">{{ item.label }}</el-checkbox>
           </el-checkbox-group>
         </div>
         <div class="bottom-btn">
           <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" @change="handleCheckAllChange">全选</el-checkbox>
           <div class="btn">
-            <button>确定</button>
+            <button @click="saveUserDiagrams">确定</button>
             <button @click="cancleClose">取消</button>
           </div>
         </div>
@@ -123,7 +134,6 @@ import api from "@/api/api_dataMarket";
 import api_dataMarket from "@/api/api_dataMarket";
 import dataItem from "./components/dataItem.vue";
 import search from "@/components/search/search.vue";
-import axios from 'axios';
 import { FORM_CONFIG, FORM_CONFIG2 } from "./formConfig/dataViewSearch";
 import { lineOption, barOption, pieOptionList } from "./echartsConfig/transactionDataEcharts";
 import smileImg from "@/assets/img/smile.png";
@@ -135,10 +145,20 @@ export default {
   components: { search, dataItem },
   data() {
     return {
-      isIndeterminate: true,
-      checkAll: false,
+      pagePermission: [],
       checkedSelect: [],
-      checkIndex: ['交易趋势', '大区交易占比', '行业交易占比'],
+      checkIndex: [
+        {
+          label: '交易趋势',
+          value: "tradeTrend"
+        }, {
+          label: '大区交易占比',
+          value: 'regionTradeRatio'
+        }, {
+          label: '行业交易占比',
+          value: 'industryTradeRatio'
+        }
+      ],
       drawer: false,
       smileImg: smileImg,
       toggleImg: toggleImg,
@@ -152,6 +172,7 @@ export default {
       pieList: [
         {
           title: '大区交易占比',
+          permission: 'regionTradeRatio',
           radio: {
             radio: "0",
             key: 'region',
@@ -165,6 +186,7 @@ export default {
         },
         {
           title: '行业交易占比',
+          permission: 'industryTradeRatio',
           radio: {
             radio: "0",
             key: 'industry',
@@ -207,28 +229,22 @@ export default {
         wechatTradeAmount: null,
         wechatTradeCount: null
       },
-      regionDataList: [
-        {
-          tradeAmountRatio: 21,
-          tradeCountRatio: 60,
-          regionName: '华中'
-        },
-        {
-          tradeAmountRatio: 78,
-          tradeCountRatio: 40,
-          regionName: '华北'
-        }
-      ], // 大区交易占比数据
-      industryDataList: [
-        {
-          tradeAmountRatio: 21,
-          tradeCountRatio: 21,
-          categoryName: '餐饮'
-        }
-      ] //  行业交易占比数据
+      regionDataList: [], // 大区交易占比数据
+      industryDataList: [], //  行业交易占比数据
+      ruleForm: {},
+      ruleForm2: {}
     };
   },
   computed: {
+    isIndeterminate() {
+      return (this.checkedSelect.length > 0 && this.checkedSelect.length < 3);
+    },
+    checkAll: {
+      get() {
+        return this.checkedSelect.length === 3;
+      },
+      set(val) {}
+    },
     // 计算订单交易额及订单笔数
     amountList() {
       const statisticsMaps = new Map([
@@ -474,10 +490,8 @@ export default {
       })
     },
     init() {
-      this.drawEcharts();
+      this.queryUserDiagram();
     },
-    handleCheckAllChange() {},
-    handleChecked() {},
     radioChange($value, $key) {
       const that = this;
       if ($key === 'region') {
@@ -494,18 +508,50 @@ export default {
         that.pieList[1].radio.val = $value;
       }
     },
+    handleCheckAllChange() {
+      if (this.checkedSelect.length < 3) {
+        this.checkedSelect = this.checkIndex.map(item => {
+          return item.value;
+        })
+      } else {
+        this.checkedSelect = [];
+      }
+    },
+    handleChecked() {},
+    queryUserDiagram() {
+      api.queryUserDiagram('deal').then(res => {
+        this.pagePermission = this.$g.utils.isArr(res.object) ? res.object : [];
+        this.search();
+        this.search2();
+      })
+    },
     showRightbar() {
+      this.checkedSelect = this.pagePermission;
       this.drawer = true
+    },
+    // 是否有模块权限
+    hasPermission($permission) {
+      return this.pagePermission.filter(item => $permission === item).length > 0
+    },
+    saveUserDiagrams() {
+      api.saveUserDiagrams({
+        diagramType: 'deal',
+        diagrams: this.checkedSelect.join(',')
+      }).then(res => {
+        this.queryUserDiagram();
+        this.drawer = false;
+      })
     },
     cancleClose() {
       this.drawer = false
     },
     // 各支付方式的总交易额/交易笔数
     queryTradeByType($ruleForm) {
+      if (!this.hasPermission('tradeTrend')) return;
       api
         .queryTradeByType({
-          beginDate: $ruleForm.date[0] || '',
-          endDate: $ruleForm.date[1] || '',
+          beginDate: $ruleForm.date ? $ruleForm.date[0] : '',
+          endDate: $ruleForm.date ? $ruleForm.date[1] : '',
           agentGrade: $ruleForm.agentGrade,
           provinceCode: $ruleForm.area ? $ruleForm.area[0] : '',
           cityCode: $ruleForm.area ? $ruleForm.area[1] : '',
@@ -519,11 +565,15 @@ export default {
         })
     },
     handleDataSelect($time) {
-      this.queryTradeByType({date: $time})
+      this.$nextTick(() => {
+        this.search({date: $time})
+      })
     },
     // 第一行第二个饼图切换
     handleDataSelect2($time) {
-      this.search2({date: $time})
+      this.$nextTick(() => {
+        this.search2({date: $time})
+      })
     },
     onClick_changeArts() {
       this.isLineShow = !this.isLineShow;
@@ -536,7 +586,8 @@ export default {
     // 绘制图表
     drawEcharts() {
       const that = this;
-      if (!this.myChart) {
+      const canvasId = this.$refs.echarts.getAttribute('_echarts_instance_') // 判断是否为同一实例画板
+      if (!this.myChart || this.myChart.id !== canvasId) {
         this.myChart = this.$echarts.init(this.$refs.echarts);
       }
 
@@ -551,20 +602,30 @@ export default {
       });
     },
     search($ruleForm) {
-      this.queryTradeByType($ruleForm);
+      if ($ruleForm) {
+        this.ruleForm = $ruleForm;
+      }
+      if (JSON.stringify(this.ruleForm) === "{}") return;
+      this.queryTradeByType(this.ruleForm);
     },
     search2($ruleForm) {
-      const params = {
-        beginDate: $ruleForm.date[0] || '',
-        endDate: $ruleForm.date[1] || ''
+      if ($ruleForm) {
+        this.ruleForm2 = {
+          beginDate: $ruleForm.date[0] || '',
+          endDate: $ruleForm.date[1] || ''
+        }
       }
-      //  接口并发
-      axios.all([api.tradeDataQueryRegionTradeSummaryByCondition(params), api.queryCategoryIndustryByCondition(params)]).then(
-        axios.spread((res1, res2) => {
-          this.regionDataList = res1.object;
-          this.industryDataList = res2.object;
+      if (JSON.stringify(this.ruleForm2) === "{}") return;
+      if (this.hasPermission('regionTradeRatio')) {
+        api.tradeDataQueryRegionTradeSummaryByCondition(this.ruleForm2).then(res => {
+          this.regionDataList = this.$g.utils.isArr(res.object) ? res.object : [];
         })
-      )
+      }
+      if (this.hasPermission('industryTradeRatio')) {
+        api.queryCategoryIndustryByCondition(this.ruleForm2).then(res => {
+          this.industryDataList = this.$g.utils.isArr(res.object) ? res.object : [];
+        })
+      }
     },
     handleSelect($index) {
       switch ($index) {
