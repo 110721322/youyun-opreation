@@ -779,6 +779,50 @@ export default {
       api.queryPlanList({
         relateCode: this.$route.query.agentNo
       }).then(res => {
+        res.datas.forEach(m => {
+          if (m.theme === 'dailyTalk') {
+            m.themeName = '日常沟通'
+            if (m.subTheme === 'question') {
+              m.subThemeName = '问题处理'
+            }
+            if (m.subTheme === 'guest') {
+              m.subThemeName = '客情维护'
+            }
+            if (m.subTheme === 'train') {
+              m.subThemeName = '通知'
+            }
+            if (m.subTheme === 'notify') {
+              m.subThemeName = '培训'
+            }
+          }
+          if (m.theme === 'dailyTask') {
+            m.themeName = '日常沟通'
+            if (m.subTheme === 'settleFail') {
+              m.subThemeName = '结算失败'
+            }
+            if (m.subTheme === 'msgRecharge') {
+              m.subThemeName = '短信充值'
+            }
+            if (m.subTheme === 'priceException') {
+              m.subThemeName = '客单价异常'
+            }
+            if (m.subTheme === 'tradeException') {
+              m.subThemeName = '交易数据异常'
+            }
+          }
+          if (m.theme === 'newTalk') {
+            m.themeName = '新单沟通选项'
+            if (m.subTheme === 'open') {
+              m.subThemeName = '开户'
+            }
+            if (m.subTheme === 'customerInfo') {
+              m.subThemeName = '了解客户信息'
+            }
+            if (m.subTheme === 'teaching') {
+              m.subThemeName = '新单教学'
+            }
+          }
+        })
         this.channelList = res.datas
       }).catch(() => {
       })
