@@ -7,7 +7,7 @@ export const SEARCH_CONFIG = {
       datatype: 'date',
       class: 'max-width',
       labelWidth: '100px',
-      format: 'yyyy-MM-dd'
+      format: 'yyyy-MM-dd HH:mm:ss'
     },
     {
       type: 10,
@@ -16,11 +16,11 @@ export const SEARCH_CONFIG = {
       class: 'max-width',
       options: [
         {
-          label: '服务商ID',
+          label: '商户ID',
           value: 'agentNo'
         },
         {
-          label: '服务商名称',
+          label: '商户名称',
           value: 'agentName'
         }
       ],

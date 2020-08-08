@@ -99,7 +99,8 @@ export default {
       api: api_statistice.aliAgents,
       params: {},
       tradeMonth: '',
-      testData: []
+      testData: [],
+      apiserver: api_statistice.aliMerchants
     }
   },
   mounted() {
@@ -108,12 +109,12 @@ export default {
     if (myDate.getMonth() < 10) {
       this.tradeMonth = myDate.getFullYear() + "-" + "0" + myDate.getMonth() + "-" + "01"
       this.params = {
-        tradeMonth: this.tradeMonth
+        tradeMonth: this.tradeMonth + " 00:00:00"
       }
     } else {
       this.tradeMonth = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + "01"
       this.params = {
-        tradeMonth: this.tradeMonth
+        tradeMonth: this.tradeMonth + " 00:00:00"
       }
     }
   },
@@ -132,9 +133,9 @@ export default {
     confirm($filel) {
       console.log($filel)
       api_statistice.excelTemplate({
-        rewardDate: $filel.date,
+        param: $filel.date,
         type: "alipayRewardInput",
-        url: $filel.excil.dialogImagePath + $filel.excil.dialogImageUrl
+        url: $filel.excil.dialogImageUrl
       }).then(res => {
         console.log(res)
       }).catch(err => {
@@ -147,7 +148,13 @@ export default {
     },
     handleDetail($row) {
       this.$router.push({
-        path: '/financial/directProfits/aliProfits/profitsDetail'
+        path: '/financial/directProfits/aliProfits/profitsDetail',
+        query: {
+          agentNo: $row.agentNo,
+          tradeMonth: this.params.tradeMonth,
+          merchantName: $row.merchantName,
+          apiserver: this.apiserver
+        }
       })
     }
   }
