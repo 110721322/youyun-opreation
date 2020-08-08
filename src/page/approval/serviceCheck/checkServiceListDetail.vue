@@ -50,6 +50,7 @@ import api from "@/api/api_merchantAudit";
 import detailMode from "@/components/detailMode/detailMode2.vue";
 import Form from "@/components/form/index.vue";
 import { FORM_CONFIG } from "./../formConfig/checkServiceDetailConfig";
+import areaData from "@/assets/data/areaData";
 
 export default {
   name: "CheckServiceListDetail",
@@ -128,7 +129,7 @@ export default {
           items: [
             {
               name: "服务区域",
-              key: "address"
+              key: "activeScope"
             },
             {
               name: "服务方式",
@@ -154,6 +155,9 @@ export default {
   watch: {
     currentType: function($val) {
       switch ($val) {
+        case "waitSign":
+          this.$set(this.showComponents, "showOperBtns", true);
+          break
         case "audit":
           this.$set(this.showComponents, "showOperBtns", true);
           break;
@@ -188,6 +192,25 @@ export default {
         if (res.object.bankAccountType === 'private') {
           res.object.bankAccountType = '对私'
         }
+        var result = this.$g.utils.getNestedArr(areaData, 'children')
+        result.forEach(m => {
+          if (res.object.cityCode === m.value) {
+            res.object.cityName = m.label
+          }
+          if (res.object.areaCode === m.value) {
+            res.object.areaName = m.label
+          }
+          if (res.object.provinceCode === m.value) {
+            res.object.provinceName = m.label
+          }
+          if (res.object.activeScopeCityCode === m.value) {
+            res.object.activeScopeCityName = m.label
+          }
+          if (res.object.activeScopeProvinceCode === m.value) {
+            res.object.activeScopeProvinceName = m.label
+          }
+        })
+        res.object.activeScope = res.object.activeScopeProvinceName + res.object.activeScopeCityName
         this.ruleForm = res.object
         this.currentType = res.object.contractStatus
       }).catch();
