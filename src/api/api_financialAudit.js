@@ -15,5 +15,14 @@ export default {
   financeReject: (params) => API.GET('/operation/v1/agentSettle/financeReject', params),
   deviceAuditPage: (params) => API.GET('/operation/v1/financeAudit/deviceAuditPage', params),
   deviceAuditPass: (params) => API.POST('/operation/v1/financeAudit/deviceAuditPass', params),
-  deviceAuditReject: (params) => API.POST('/operation/v1/financeAudit/deviceAuditReject', params)
+  deviceAuditReject: (params) => API.POST('/operation/v1/financeAudit/deviceAuditReject', params),
+  // 顶级佣金审核-运营审核列表查询
+  topListOperationSettle: (params) => API.POST('/operation/v1/topAgentAudit/topListOperationSettle', params),
+  // 顶级佣金审核-运营审核通过
+  topOperationSuccess: (params) => API.POST('/operation/v1/topAgentAudit/operationSuccess', params),
+  // 顶级佣金审核-运营审核拒绝
+  topOperationReject: (params) => API.POST('/operation/v1/topAgentAudit/operationReject', params),
+  // 顶级佣金审核-审核通过、驳回前的查询
+  topQueryDetail: (params) => API.POST('/operation/v1/topAgentAudit/queryDetail', params),
+  topQueryTypeMonthDetail: (params) => API.POST('/operation/v1/topAgentAudit/queryTypeMonthDetail', params)
 };

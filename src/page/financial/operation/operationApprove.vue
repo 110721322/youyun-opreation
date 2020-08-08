@@ -20,7 +20,7 @@
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
         :header-cell-style="headerCellStyle"
-        :api-service="null"
+        :api-service="api"
         :params="params"
         @detail="onClick_detail"
         @reject="onClick_reject"
@@ -38,8 +38,8 @@
               <img class="process-icon" :src="item.icon" />
             </div>
             <div class="label">
-              {{ item.label }}
-              <span v-if="item.name" class="name">{{ item.name }}</span>
+              {{ item.desc }}
+              <span v-if="item.username" class="name">{{ item.username }}</span>
             </div>
             <div class="time">{{ item.time }}</div>
           </div>
@@ -96,11 +96,11 @@ export default {
       direction: "rtl",
       arrow: arrowImg,
       params: {
-        agentNo: "",
-        agentName: "",
-        settleStatus: ""
+        beginTime: this.$g.utils.getToday(),
+        endTime: this.$g.utils.getToday(),
+        typeFlag: 0
       },
-      api: api.listOperationSettle,
+      api: api.topListOperationSettle,
       formStatus: null,
       activeRow: {}
     };
@@ -110,10 +110,9 @@ export default {
     confirm($data) {
       switch (this.formStatus) {
         case "reject":
-          api.operationReject({
-            recordId: this.activeRow.recordId,
-            rejectReason: $data.reason,
-            userId: this.activeRow.userId
+          api.topOperationReject({
+            id: this.activeRow.recordId,
+            rejectReason: $data.reason
           }).then(res => {
             this.$message("已驳回");
             this.drawer = false;
@@ -121,11 +120,10 @@ export default {
             this.$message(err);
           });
           break;
-        case "adopt":api.operationSuccess({
-          recordId: this.activeRow.recordId,
+        case "adopt":api.topOperationSuccess({
+          id: this.activeRow.recordId,
           adviseCommission: $data.adviseCommission,
-          operationRemark: $data.operationRemark,
-          userId: this.activeRow.userId
+          operationRemark: $data.operationRemark
         }).then(res => {
           this.$message("已通过");
           this.drawer = false;
@@ -140,9 +138,10 @@ export default {
       // eslint-disable-next-line no-console
       console.log($ruleForm);
       this.params = {
-        agentNo: "",
-        agentName: "",
-        settleStatus: $ruleForm.settleStatus || ""
+        // settleStatus: $ruleForm.settleStatus || "",
+        typeFlag: '0',
+        beginTime: $ruleForm.date[0] || '',
+        endTime: $ruleForm.date[1] || ''
       };
       this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
     },
@@ -153,20 +152,44 @@ export default {
       });
     },
     onClick_reject($row) {
-      api.queryDetail({
-        recordId: this.recordId || 1
+      api.topQueryDetail({// 通过/驳回详情
+        id: $row.id
       }).then(res => {
         // 编辑前重赋值
         FORM_CONFIG.rejectData.formData.forEach((item, index) => {
           item.initVal = res.object[item.key];
         });
+        FORM_CONFIG.rejectData.processData = res.object.map
         this.activeRow = $row;
         this.formStatus = "reject";
         this.fromConfigData = FORM_CONFIG.rejectData;
         this.drawer = true;
-      }).catch(err => {
-        this.$message(err);
-      });
+      })
+      api.topQueryTypeMonthDetail({
+        idList: $row.agentTradeIdList
+      }).then(res => {
+        if (res.object) {
+          var keyArr = []
+          res.object.forEach((a, b) => {
+            res.object.forEach((c, d) => {
+              if (a.settleType === c.settleType) {
+                keyArr.push({'settleType': b.settleType})
+              }
+            })
+          })
+          // var newArr = []
+          console.log(1111111, keyArr)
+          if (keyArr.length > 0) {
+            keyArr.forEach((item, index) => {
+              res.object.forEach((dItem, dIndex) => {
+                if (item.settleType === dItem.settleType) {
+                  item.dateArr.push(dItem.settleTypeName + '[' + dItem.tradeMonth + ']')
+                }
+              })
+            })
+          }
+        }
+      })
     },
     onClick_adopt($row) {
       api.queryDetail({
@@ -180,9 +203,7 @@ export default {
         this.formStatus = "adopt";
         this.fromConfigData = FORM_CONFIG.adoptData;
         this.drawer = true;
-      }).catch(err => {
-        this.$message(err);
-      });
+      })
       this.activeRow = $row;
       this.formStatus = "adopt";
       this.fromConfigData = FORM_CONFIG.adoptData;

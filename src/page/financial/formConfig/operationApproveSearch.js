@@ -32,7 +32,7 @@ export const SEARCH_CONFIG = {
       labelWidth: '100px',
       options: [
         {
-          label: '川菜',
+          label: '全部',
           value: 0
         },
         {
