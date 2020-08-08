@@ -109,12 +109,12 @@ export default {
     if (myDate.getMonth() < 10) {
       this.tradeMonth = myDate.getFullYear() + "-" + "0" + myDate.getMonth() + "-" + "01"
       this.params = {
-        tradeMonth: this.tradeMonth
+        tradeMonth: this.tradeMonth + " 00:00:00"
       }
     } else {
       this.tradeMonth = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + "01"
       this.params = {
-        tradeMonth: this.tradeMonth
+        tradeMonth: this.tradeMonth + " 00:00:00"
       }
     }
     // this.ruleform()
@@ -137,7 +137,7 @@ export default {
       api_statistice.excelTemplate({
         param: $filel.date,
         type: "wxRewardInput",
-        url: $filel.excil.dialogImagePath + $filel.excil.dialogImageUrl
+        url: $filel.excil.dialogImageUrl
       }).then(res => {
         console.log(res)
       }).catch(err => {

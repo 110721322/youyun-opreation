@@ -42,5 +42,11 @@ export default {
   // 微信服务商分润奖励分页查询
   wxAgents: (params) => API.GET('/operation/v1/direct/reward/wxAgents', params),
   // 微信商户分润奖励明细分页查询
-  wxMerchants: (params) => API.GET('/operation/v1/direct/reward/wxMerchants', params)
+  wxMerchants: (params) => API.GET('/operation/v1/direct/reward/wxMerchants', params),
+  // 按支付方式统计分润，按通道分页统计，顶级代理商列表数据
+  selectTopAgentDataByPage: (params) => API.POST('/operation/v1/topAgentStatistics/selectTopAgentDataByPage', params),
+  // 顶级代理商下的商户明细
+  selectTopAgentMerchantDetailByPage: (params) => API.POST('/operation/v1/topAgentStatistics/selectTopAgentMerchantDetailByPage', params),
+  // 通过商户名称模糊查询商户编号
+  selectByName: (params) => API.GET('/operation/v1/topAgentStatistics/selectByName', params)
 }

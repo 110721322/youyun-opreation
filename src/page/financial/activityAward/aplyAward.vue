@@ -128,11 +128,12 @@ export default {
       this.drawer = true
     },
     confirm($filel) {
-      console.log($filel)
+      // console.log($filel)
+      // $filel.excil.dialogImagePath +
       api_statistice.excelTemplate({
         param: $filel.date,
         type: "dragonflyInput",
-        url: $filel.excil.dialogImagePath + $filel.excil.dialogImageUrl
+        url: $filel.excil.dialogImageUrl
       }).then(res => {
         console.log(res)
       }).catch(err => {

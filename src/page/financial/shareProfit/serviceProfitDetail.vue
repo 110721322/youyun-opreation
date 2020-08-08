@@ -44,16 +44,31 @@ export default {
       configData: SERVICE_CONFIG,
       testData: [],
       params: {},
+      // selectname: ''
+      api: ""
       // currentPage: 1,
       // this.$route.query.tradeMonth
-      api: api_statistice.selectMerchantDataByPage
       // searchHeight: 88
     }
   },
-  mounted() {
-    // this.getDate();
+  computed: {
+    // api() {
+    //   if (this.selectname === 1) {
+    //     return api_statistice.selectByName
+    //   } else {
+    //     return api_statistice.selectMerchantDataByPage
+    //   }
+    // }
   },
+  mounted() {},
   created() {
+    if (this.$route.query.mainIndex === 1) {
+      this.api = api_statistice.selectMerchantDataByPage
+      this.configData = SERVICE_CONFIG
+    } else {
+      this.api = api_statistice.selectTopAgentMerchantDetailByPage
+      this.configData = SERVICE_CONFIG
+    }
     this.agentNo = this.$route.query.agentNo
     this.tradeMonth = this.$route.query.tradeMonth
     this.params = {
@@ -63,12 +78,23 @@ export default {
   },
   methods: {
     search($ruleform) {
-      this.params = {
-        agentNo: this.agentNo,
-        tradeMonth: this.tradeMonth
-      }
-      this.params[$ruleform.inputSelect] = $ruleform.inputForm
-      console.log(this.params)
+      // this.selectname = 1
+      // this.params[$ruleform.inputSelect] = $ruleform.inputForm
+      // console.log($ruleform.inputForm.object)
+      api_statistice
+        .selectByName({
+          merchantName: $ruleform.inputForm
+        })
+        .then(result => {
+          console.log(result.object[0].merchantNo)
+          this.params = {
+            merchantNo: $ruleform.inputForm ? result.object[0].merchantNo : "",
+            tradeMonth: this.tradeMonth
+          }
+        })
+        .catch(err => {
+          console.error(err);
+        });
     }
   },
   DateNo() {
