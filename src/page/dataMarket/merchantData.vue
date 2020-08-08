@@ -10,130 +10,89 @@
         </div>
       </div>
       <search
+        v-if="hasPermission('merchantCount') || hasPermission('merchantRegionRatio') || hasPermission('merchantIndustryRatio')
+          || hasPermission('merchantAverageTrend') || hasPermission('merchantAmountRank') || hasPermission('merchantAverageRatio')"
         :is-show-all="true"
         :form-base-data="searchConfig.formData"
         :show-foot-btn="searchConfig.showFootBtn"
         @dataSelect="handleDataSelect"
         @search="search"
       />
-      <div class="title2">新增商户数分布</div>
-      <div class="map-box">
-        <div class="chart-box">
-          <div ref="echartsMap" class="chart-panel"></div>
-        </div>
-        <div class="data-box">
-          <div class="data-title">
-            新增商户数省份排行榜
-            <span class="all-num">共33940个</span>
+      <template v-if="hasPermission('merchantCount')">
+        <div class="title2">新增商户数分布</div>
+        <div class="map-box">
+          <div class="chart-box">
+            <div ref="echartsMap" class="chart-panel"></div>
           </div>
-          <div v-for="(item,index) in mapData" :key="index" class="data-item">
-            <div class="data-left">
-              <span :class="['index',index<=2?'hightlight':'normal']">{{ index+1 }}</span>
-              {{ item.provinceName }}
+          <div class="data-box">
+            <div class="data-title">
+              新增商户数省份排行榜
+              <span class="all-num">共{{ mapData.length }}个</span>
             </div>
-            <div class="data-right">
-              <span>{{ item.count }}</span> |
-              <span class="perc">{{ item.ratio }}</span>
+            <div v-for="(item,index) in mapData" :key="index" class="data-item">
+              <div class="data-left">
+                <span :class="['index',index<=2?'hightlight':'normal']">{{ index+1 }}</span>
+                {{ item.name }}
+              </div>
+              <div class="data-right">
+                <span>{{ item.count }}</span> |
+                <span class="perc">{{ item.ratio }}%</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </template>
       <div class="pie-box">
-        <div class="pie-item">
-          <dataItem
-            :radio="radioListData[0]"
-            :title="titleList[0].name"
-            :pie-option="pieOptionList[0]"
-            :piw-ref-name="`echartsPie${0}`"
-            :data-list="dataList[0]"
-            :is-show-pie="true"
-            @radioChange="handleRegionRadioChange"
-          />
-        </div>
-        <div class="pie-item">
-          <dataItem
-            :radio="radioListData[1]"
-            :title="titleList[1].name"
-            :pie-option="pieOptionList[1]"
-            :piw-ref-name="`echartsPie${1}`"
-            :data-list="dataList[1]"
-            :is-show-pie="true"
-            @radioChange="handleCategoryRadioChange"
-          />
-        </div>
+        <template v-for="(item, index) in pieList">
+          <div v-if="hasPermission(item.permission)" :key="index" class="pie-item">
+            <dataItem
+              :radio="item.radio"
+              :title="item.title"
+              :pie-option="pieOptionList[index]"
+              :piw-ref-name="`echartsPie${index}`"
+              :data-list="item.dataList"
+              :is-show-pie="true"
+              @radioChange="handleRegionRadioChange"
+            />
+          </div>
+        </template>
       </div>
-      <div class="title">商户平均交易额走势</div>
-      <div class="trend-box">
-        <div class="chart-box">
-          <div ref="echartsLine" class="chart-panel"></div>
+      <template v-if="hasPermission('merchantAverageTrend')">
+        <div class="title">商户平均交易额走势</div>
+        <div class="trend-box">
+          <div class="chart-box">
+            <div ref="echartsLine" class="chart-panel"></div>
+          </div>
         </div>
-        <div class="data-box">
+      </template>
+      <div class="pie-box">
+        <div v-if="hasPermission('merchantAmountRank')" class="pie-item">
           <dataItem
-            :radio="radioListData2[3]"
+            :radio="tradeRankRadio"
             :is-show-table="true"
             :title="'总交易额排行榜'"
             :is-show-more="true"
             :config-data="tableConfigData3"
             :permission="tableConfigData3.permission"
-            :item-test-data="testData3"
+            :item-test-data="tradeRank"
             :is-show-line="false"
             :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
-            @showMore="handleShowMore"
-            @radioChange="handleTradeTopChange"
+            @showMore="handleShowMore('tradeAmount')"
+            @radioChange="handleRegionRadioChange"
           ></dataItem>
         </div>
-      </div>
-      <div class="pie-box">
-        <div class="pie-item">
+        <div v-if="hasPermission('merchantAverageRatio')" class="pie-item">
           <dataItem
-            :radio="radioListData2[0]"
-            :title="titleList2[0].name"
-            :pie-option="pieOptionList2[0]"
-            :piw-ref-name="`echartsPie2${0}`"
-            :data-list="dataList2[0]"
+            :radio="averagePieRadio.radio"
+            :title="averagePieRadio.title"
+            :pie-option="averagePieOption"
+            :piw-ref-name="`echartsPie3`"
+            :data-list="averagePieRadio.dataList"
             :is-show-pie="true"
             :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
-            @radioChange="handleTradeCountRatioChange"
+            @radioChange="handleRegionRadioChange"
           />
         </div>
-        <div class="pie-item">
-          <dataItem
-            :radio="radioListData2[1]"
-            :title="titleList2[1].name"
-            :pie-option="pieOptionList2[1]"
-            :piw-ref-name="`echartsPie2${1}`"
-            :data-list="dataList2[1]"
-            :is-show-pie="true"
-            :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
-            @radioChange="handleTradeRiseRatioChange"
-          />
-        </div>
-      </div>
-      <div class="pie-box">
-        <dataItem
-          class="pie-item"
-          :title="'无交易商户上期排行'"
-          :config-data="tableConfigData"
-          :permission="tableConfigData.permission"
-          :is-show-more="true"
-          :is-show-table="true"
-          :item-test-data="testData"
-          :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
-          @showMore="handleShowMore"
-        />
-        <dataItem
-          :radio="radioListData2[2]"
-          class="pie-item"
-          :title="'交易额涨跌排行'"
-          :config-data="tableConfigData2"
-          :permission="tableConfigData2.permission"
-          :is-show-more="true"
-          :is-show-table="true"
-          :item-test-data="testData2"
-          :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
-          @showMore="handleShowMore"
-          @radioChange="handleTradeCountRatioChange2"
-        />
       </div>
       <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size="40%">
         <div class="draw-title">权限设置</div>
@@ -147,13 +106,13 @@
           </div>
           <div class="draw-checkbox">
             <el-checkbox-group v-model="checkedSelect" @change="handleChecked">
-              <el-checkbox v-for="(item, index) in checkIndex" :key="index" :label="item">{{ item }}</el-checkbox>
+              <el-checkbox v-for="(item, index) in checkIndex" :key="index" :label="item.value">{{ item.label }}</el-checkbox>
             </el-checkbox-group>
           </div>
           <div class="bottom-btn">
             <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" @change="handleCheckAllChange">全选</el-checkbox>
             <div class="btn">
-              <button>确定</button>
+              <button @click="saveUserDiagrams">确定</button>
               <button @click="cancleClose">取消</button>
             </div>
           </div>
@@ -167,13 +126,16 @@ import api from "@/api/api_dataMarket";
 import dataItem from "./components/dataItem.vue";
 import search from "@/components/search/search.vue";
 import {
-  MERCHANTDATACONFIG1,
-  MERCHANTDATACONFIG2,
   MERCHANTDATACONFIG3
 } from "./tableConfig/merchantDataConfig";
 import { FORM_CONFIG2 } from "./formConfig/dataViewSearch";
+import { mapOption, pieOptionList, averagePieOption, lineOption } from "./echartsConfig/merchantDataEcharts";
+import { pieList, tradeRankRadio, averagePieRadio } from "./radioConfig/merchantDataRadio";
 import echarts from "echarts";
 import "./../../libs/kit/china";
+import areaData from "../../assets/data/areaData";
+import provinceData from "../../assets/data/provinceData";
+var colors = ['#00a1ff', '#37cbcb', '#fad337', '#f2637b', '#975fe4']
 
 export default {
   name: "MerchantData",
@@ -183,883 +145,397 @@ export default {
   },
   data() {
     return {
-      isIndeterminate: true,
-      checkAll: false,
+      pagePermission: [],
       checkedSelect: [],
-      checkIndex: ['商户数大区占比', '商户交易涨跌概况占比', '商户数行业占比', '无交易商户上期排行', '商户平均交易额走势', '交易额涨跌排行'],
-      drawer: false,
-      mapData: [
-        { name: "安徽省", num: "323,209", perc: "36%" },
-        { name: "甘肃省", num: "323,209", perc: "36%" },
-        { name: "安徽省", num: "323,209", perc: "36%" },
-        { name: "香港特别行政区", num: "323,209", perc: "36%" },
-        { name: "安徽省", num: "323,209", perc: "36%" },
-        { name: "山西省", num: "234", perc: "36%" },
-        { name: "山西省", num: "234", perc: "36%" },
-        { name: "山西省", num: "234", perc: "36%" }
+      checkIndex: [
+        {
+          label: '新增商户数分布',
+          value: "merchantCount"
+        }, {
+          label: '大区占比',
+          value: 'merchantRegionRatio'
+        }, {
+          label: '行业占比',
+          value: 'merchantIndustryRatio'
+        }, {
+          label: '商户平均交易额走势',
+          value: 'merchantAverageTrend'
+        }, {
+          label: '总交易额排行榜',
+          value: 'merchantAmountRank'
+        }, {
+          label: '平均交易笔数分布',
+          value: 'merchantAverageRatio'
+        }
       ],
+      drawer: false,
+      mapData: [],
+      regionDataList: [], //  商户数大区占比数据
+      industryDataList: [], // 商户数行业占比数据
+      averageDataList: [], // 平均交易笔数数据
       searchConfig: FORM_CONFIG2,
       searchMaxHeight: "300",
-      testData: [],
-      testData2: [],
-      testData3: [],
-      tableConfigData: MERCHANTDATACONFIG1,
-      tableConfigData2: MERCHANTDATACONFIG2,
+      tradeRank: [],
       tableConfigData3: MERCHANTDATACONFIG3,
-      titleList: [{ name: "商户数大区占比" }, { name: "商户数行业占比" }],
-      radioListData: [
-        {
-          radio: "1",
-          namelist: [
-            { name: "新增商户", label: "1" },
-            { name: "交易商户", label: "2" },
-            { name: "流失商户", label: "3" }
-          ]
-        },
-        {
-          radio: "1",
-          namelist: [
-            { name: "新增商户", label: "1" },
-            { name: "交易商户", label: "2" },
-            { name: "流失商户", label: "3" }
-          ]
-        }
-      ],
-      dataList: [
-        [
-          {
-            title: "华东",
-            className: ["dot", "dot_d"],
-            perc: "36%"
-          },
-          {
-            title: "华中",
-            className: ["dot", "dot_z"],
-            perc: "20%"
-          },
-          {
-            title: "华北",
-            className: ["dot", "dot_b"],
-            perc: "10%"
-          },
-          {
-            title: "华南",
-            className: ["dot", "dot_n"],
-            perc: "36%"
-          },
-          {
-            title: "华西",
-            className: ["dot", "dot_x"],
-            perc: "36%"
-          }
-        ],
-        [
-          {
-            title: "房产汽车类",
-            className: ["dot", "dot_d"],
-            perc: "36%"
-          },
-          {
-            title: "民生类",
-            className: ["dot", "dot_z"],
-            perc: "20%"
-          },
-          {
-            title: "一般类",
-            className: ["dot", "dot_b"],
-            perc: "10%"
-          },
-          {
-            title: "批发类",
-            className: ["dot", "dot_n"],
-            perc: "36%"
-          },
-          {
-            title: "餐娱类",
-            className: ["dot", "dot_x"],
-            perc: "36%"
-          }
-        ]
-      ],
-      pieOptionList: [
-        {
-          title: {
-            text: "新增商户数大区占比",
-            left: "center",
-            textStyle: {
-              color: "rgba(0,0,0,0.85)",
-              fontSize: 14
-            }
-          },
-          tooltip: {
-            trigger: "item",
-            formatter: "{b}: {c} ({d}%)"
-          },
-          series: [
-            {
-              name: "新增商户数行业占比",
-              type: "pie",
-              avoidLabelOverlap: false,
-              radius: ["40%", "80%"],
-              label: {
-                normal: {
-                  show: false
-                }
-              },
-              labelLine: {
-                normal: {
-                  show: false
-                }
-              },
-              data: [
-                { value: 0.36, name: "华东", itemStyle: { color: "#00A1FF" } },
-                { value: 0.2, name: "华中", itemStyle: { color: "#37CBCB" } },
-                { value: 0.1, name: "华北", itemStyle: { color: "#FAD337" } },
-                { value: 0.09, name: "华南", itemStyle: { color: "#F2637B" } },
-                { value: 0.09, name: "华西", itemStyle: { color: "#975FE4" } }
-              ]
-            }
-          ]
-        },
-        {
-          title: {
-            text: "交易额行业占比",
-            left: "center",
-            textStyle: {
-              color: "rgba(0,0,0,0.85)",
-              fontSize: 14
-            }
-          },
-          tooltip: {
-            trigger: "item",
-            formatter: "{b}: {c} ({d}%)"
-          },
-          series: [
-            {
-              name: "交易额大区占比",
-              type: "pie",
-              avoidLabelOverlap: false,
-              radius: ["40%", "80%"],
-              label: {
-                normal: {
-                  show: false
-                }
-              },
-              labelLine: {
-                normal: {
-                  show: false
-                }
-              },
-              data: [
-                { value: 0.36, name: "华东", itemStyle: { color: "#00A1FF" } },
-                { value: 0.2, name: "华中", itemStyle: { color: "#37CBCB" } },
-                { value: 0.1, name: "华北", itemStyle: { color: "#FAD337" } },
-                { value: 0.09, name: "华南", itemStyle: { color: "#F2637B" } },
-                { value: 0.09, name: "华西", itemStyle: { color: "#975FE4" } }
-              ]
-            }
-          ]
-        }
-      ],
-      titleList2: [
-        { name: "平均交易笔数分布" },
-        { name: "商户交易涨跌概况占比" }
-      ],
-      radioListData2: [
-        {
-          radio: "1",
-          namelist: [
-            { name: "新增商户", label: "1" },
-            { name: "交易商户", label: "2" }
-          ]
-        },
-        {
-          radio: "1",
-          namelist: [
-            { name: "新增商户", label: "1" },
-            { name: "交易商户", label: "2" }
-          ]
-        },
-        {
-          radio: "1",
-          namelist: [
-            { name: "涨幅排行", label: "1" },
-            { name: "跌幅排行", label: "2" }
-          ]
-        },
-        {
-          radio: "1",
-          namelist: [
-            { name: "新增商户", label: "1" },
-            { name: "交易商户", label: "2" }
-          ]
-        }
-      ],
-      dataList2: [
-        [
-          {
-            title: "1000笔以上",
-            className: ["dot", "dot_d"],
-            perc: "36%"
-          },
-          {
-            title: "101-1000笔",
-            className: ["dot", "dot_z"],
-            perc: "20%"
-          },
-          {
-            title: "11-100笔",
-            className: ["dot", "dot_b"],
-            perc: "10%"
-          },
-          {
-            title: "1-10笔",
-            className: ["dot", "dot_n"],
-            perc: "36%"
-          }
-        ],
-        [
-          {
-            title: "大幅上涨",
-            className: ["dot", "dot_d"],
-            perc: "36%"
-          },
-          {
-            title: "小幅上涨",
-            className: ["dot", "dot_z"],
-            perc: "20%"
-          },
-          {
-            title: "小幅下跌",
-            className: ["dot", "dot_b"],
-            perc: "10%"
-          },
-          {
-            title: "异常下跌",
-            className: ["dot", "dot_n"],
-            perc: "36%"
-          }
-        ]
-      ],
-      pieOptionList2: [
-        {
-          title: {
-            text: "新增商户平均交易笔数概况",
-            left: "center",
-            textStyle: {
-              color: "rgba(0,0,0,0.85)",
-              fontSize: 14
-            }
-          },
-          tooltip: {
-            trigger: "item",
-            formatter: "{b}: {c} ({d}%)"
-          },
-          series: [
-            {
-              name: "新增商户平均交易笔数概况",
-              type: "pie",
-              avoidLabelOverlap: false,
-              radius: ["40%", "80%"],
-              label: {
-                normal: {
-                  show: false
-                }
-              },
-              labelLine: {
-                normal: {
-                  show: false
-                }
-              },
-              data: [
-                { value: 0.36, name: "华东", itemStyle: { color: "#00A1FF" } },
-                { value: 0.2, name: "华中", itemStyle: { color: "#37CBCB" } },
-                { value: 0.1, name: "华北", itemStyle: { color: "#FAD337" } },
-                { value: 0.09, name: "华南", itemStyle: { color: "#F2637B" } },
-                { value: 0.09, name: "华西", itemStyle: { color: "#975FE4" } }
-              ]
-            }
-          ]
-        },
-        {
-          title: {
-            text: "新增商户交易涨跌概况",
-            left: "center",
-            textStyle: {
-              color: "rgba(0,0,0,0.85)",
-              fontSize: 14
-            }
-          },
-          tooltip: {
-            trigger: "item",
-            formatter: "{b}: {c} ({d}%)"
-          },
-          series: [
-            {
-              name: "新增商户交易涨跌概况",
-              type: "pie",
-              avoidLabelOverlap: false,
-              radius: ["40%", "80%"],
-              label: {
-                normal: {
-                  show: false
-                }
-              },
-              labelLine: {
-                normal: {
-                  show: false
-                }
-              },
-              data: [
-                { value: 0.36, name: "华东", itemStyle: { color: "#00A1FF" } },
-                { value: 0.2, name: "华中", itemStyle: { color: "#37CBCB" } },
-                { value: 0.1, name: "华北", itemStyle: { color: "#FAD337" } },
-                { value: 0.09, name: "华南", itemStyle: { color: "#F2637B" } },
-                { value: 0.09, name: "华西", itemStyle: { color: "#975FE4" } }
-              ]
-            }
-          ]
-        }
-      ],
-      lineOption: {
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "cross",
-            label: {
-              backgroundColor: "#6a7985"
-            }
-          }
-        },
-        grid: {
-          top: "50",
-          left: "3%",
-          right: "4%",
-          bottom: "3%",
-          containLabel: true
-        },
-        xAxis: [
-          {
-            type: "category",
-            boundaryGap: false,
-            data: [
-              "12-23",
-              "12-23",
-              "12-23",
-              "12-23",
-              "12-23",
-              "12-23",
-              "12-23",
-              "12-23",
-              "12-23",
-              "12-23",
-              "12-23",
-              "12-23"
-            ]
-          }
-        ],
-        yAxis: [
-          {
-            type: "value",
-            splitLine: {
-              lineStyle: {
-                type: "dashed"
-              }
-            }
-          }
-        ],
-        series: [
-          {
-            name: "商户平均交易额",
-            type: "line",
-            lineStyle: {
-              color: "#1890FF"
-            },
-            // symbol: "none",
-            areaStyle: {
-              color: {
-                type: "linear",
-                x: 0,
-                y: 0,
-                x2: 0,
-                y2: 1,
-                colorStops: [
-                  {
-                    offset: 0,
-                    color: "#4EA6FF" // 0% 处的颜色
-                  },
-                  {
-                    offset: 1,
-                    color: "#ffffff" // 100% 处的颜色
-                  }
-                ],
-                global: false // 缺省为 false
-              }
-            },
-            itemStyle: {
-              normal: {
-                color: "#1890FF",
-                lineStyle: {
-                  color: "#1890FF"
-                }
-              }
-            },
-            data: [120, 132, 101, 134, 90, 230, 210, 101, 134, 90, 230, 330]
-          }
-        ]
-      },
-      beginDate: null,
-      endDate: null,
-      merchantType: 1,
-      merchantType2: 1,
-      merchantType3: 1,
-      merchantType4: 1,
-      merchantType5: 1,
-      merchantType6: null,
-      tradeType: 1
+      pieList: pieList, //  大区交易占比,行业占比数据
+      mapOption: mapOption,
+      tradeRankRadio: tradeRankRadio,
+      averagePieRadio: averagePieRadio,
+      lineOption: lineOption,
+      ruleForm: {},
+      echartsMap: null,
+      myChartLine: null
     };
   },
-  created() {},
-  mounted() {
-    this.init();
-    this.initMap();
-    // 获取数据
-    this.queryRegionTradeSummaryByCondition();
-    this.queryCategoryTradeSummaryByCondition();
-    this.queryTradeTop5ByCondition();
-    this.selectNonTradeTop5ByCondition();
-    this.queryTradeRiseRatioTop5ByCondition();
+  computed: {
+    isIndeterminate() {
+      return (this.checkedSelect.length > 0 && this.checkedSelect.length < 6);
+    },
+    checkAll: {
+      get() {
+        return this.checkedSelect.length === 6;
+      },
+      set(val) {}
+    },
+    // 商户大区行业占比饼状图配置
+    pieOptionList() {
+      const that = this;
+      const pieDataList = [
+        {title: '大区占比', seriesData: []},
+        {title: '行业占比', seriesData: []}
+      ];
+      this.pieList.forEach(($item, $index) => {
+        mapPieData($item.radio.val, $index)
+        // 更新图表标题
+        const radio = $item.radio.namelist.filter($radio => $radio.label === $item.radio.val)[0];
+        pieDataList[$index].title = radio.name + pieDataList[$index].title;
+        // 初始化图表文字数据
+        $item.dataList = pieDataList[$index].seriesData.map($data => {
+          return {
+            title: $data.name,
+            color: $data.itemStyle.color,
+            perc: that.$g.utils.AccMul($data.value) + '%'
+          }
+        })
+      })
+      // 初始化图表绘制数据
+      return pieOptionList.map((item, index) => {
+        item.title.text = pieDataList[index].title;
+        item.series[0].name = pieDataList[index].title;
+        item.series[0].data = pieDataList[index].seriesData;
+        return item;
+      });
+      // 筛选绘图数据
+      function mapPieData($key, $index) {
+        if ($index === 0) {
+          if (that.$g.utils.isArr(that.regionDataList) && that.regionDataList.length > 0) {
+            pieDataList[$index].seriesData = that.regionDataList.map((item, idx) => {
+              return {
+                value: that.$g.utils.AccMul(item.ratio),
+                name: item.regionName,
+                itemStyle: {color: colors[idx]}
+              }
+            })
+          } else {
+            pieDataList[$index].seriesData = [];
+          }
+        } else {
+          if (that.$g.utils.isArr(that.industryDataList) && that.industryDataList.length > 0) {
+            pieDataList[$index].seriesData = that.industryDataList.map((item, idx) => {
+              return {
+                value: that.$g.utils.AccMul(item.ratio),
+                name: item.categoryName,
+                itemStyle: {color: colors[idx]}
+              }
+            })
+          } else {
+            pieDataList[$index].seriesData = [];
+          }
+        }
+      }
+    },
+    averagePieOption() {
+      const that = this;
+      const averagePieRadio = this.averagePieRadio
+      const pieData = {title: '平均交易笔数概况', seriesData: []};
+
+      mapPieData()
+      // 更新图表标题
+      const radio = averagePieRadio.radio.namelist.filter($radio => $radio.label === averagePieRadio.radio.val)[0];
+      pieData.title = radio.name + pieData.title;
+      // 初始化图表文字数据
+      averagePieRadio.dataList = pieData.seriesData.map($data => {
+        return {
+          title: $data.name,
+          color: $data.itemStyle.color,
+          perc: that.$g.utils.AccMul($data.value) + '%'
+        }
+      })
+      // 初始化图表绘制数据
+      averagePieOption.title.text = pieData.title;
+      averagePieOption.series[0].name = pieData.title;
+      averagePieOption.series[0].data = pieData.seriesData;
+      return averagePieOption;
+      // 筛选绘图数据
+      function mapPieData() {
+        if (that.$g.utils.isArr(that.averageDataList) && that.averageDataList.length > 0) {
+          pieData.seriesData = that.averageDataList.map((item, idx) => {
+            return {
+              value: that.$g.utils.AccMul(item.ratio),
+              name: item.name,
+              itemStyle: {color: colors[idx]}
+            }
+          })
+        } else {
+          pieData.seriesData = [];
+        }
+      }
+    }
   },
+  created() {
+    this.init();
+  },
+  mounted() {},
   methods: {
-    handleCheckAllChange() {},
+    init() {
+      this.queryUserDiagram().then(() => {
+        this.search();
+      })
+    },
+    handleCheckAllChange() {
+      if (this.checkedSelect.length < 6) {
+        this.checkedSelect = this.checkIndex.map(item => {
+          return item.value;
+        })
+      } else {
+        this.checkedSelect = [];
+      }
+    },
     handleChecked() {},
+    queryUserDiagram() {
+      return api.queryUserDiagram('merchant').then(res => {
+        this.pagePermission = this.$g.utils.isArr(res.object) ? res.object : [];
+      })
+    },
     showRightbar() {
+      this.checkedSelect = this.pagePermission;
       this.drawer = true
+    },
+    // 是否有模块权限
+    hasPermission($permission) {
+      return this.pagePermission.filter(item => $permission === item).length > 0
+    },
+    saveUserDiagrams() {
+      api.saveUserDiagrams({
+        diagramType: 'merchant',
+        diagrams: this.checkedSelect.join(',')
+      }).then(res => {
+        this.init();
+        this.drawer = false;
+      })
     },
     cancleClose() {
       this.drawer = false
     },
-    // 交易额涨跌排行
-    handleTradeCountRatioChange2($data) {
-      this.tradeType = $data;
-      this.queryTradeRiseRatioTop5ByCondition();
-    },
-    queryTradeRiseRatioTop5ByCondition() {
-      api
-        .queryTradeRiseRatioTop5ByCondition({
-          beginDate: this.beginDate,
-          endDate: this.endDate,
-          merchantType: this.merchantType6 || 1,
-          tradeType: this.tradeType
-        })
-        .then(res => {
-          this.testData2 = res.object;
-        })
-        .catch(err => {
-          this.$message(err);
-        });
-    },
-    // 无交易商户上期排行
-    selectNonTradeTop5ByCondition() {
-      api
-        .selectNonTradeTop5ByCondition({
-          beginDate: this.beginDate,
-          endDate: this.endDate
-        })
-        .then(res => {
-          this.testData = res.object;
-        })
-        .catch(err => {
-          this.$message(err);
-        });
-    },
-    // 第二行第一个饼图切换
-    handleTradeCountRatioChange($data) {
-      this.merchantType4 = $data;
-      this.queryTradeCountRatioByCondition();
-    },
-    queryTradeCountRatioByCondition() {
-      api
-        .queryTradeCountRatioByCondition({
-          beginDate: this.beginDate,
-          endDate: this.endDate,
-          merchantType: this.merchantType4
-        })
-        .then(res => {
-          // this.mapData = res.object;
-        })
-        .catch(err => {
-          this.$message(err);
-        });
-    },
-    // 第二行第二个饼图切换
-    handleTradeRiseRatioChange($data) {
-      this.merchantType5 = $data;
-      this.selectTradeRiseRatioRoughByCondition();
-    },
-    selectTradeRiseRatioRoughByCondition() {
-      api
-        .selectTradeRiseRatioRoughByCondition({
-          beginDate: this.beginDate,
-          endDate: this.endDate,
-          merchantType: this.merchantType5
-        })
-        .then(res => {
-          // this.mapData = res.object;
-        })
-        .catch(err => {
-          this.$message(err);
-        });
-    },
-    // 交易额排行
-    handleTradeTopChange($data) {
-      this.merchantType3 = $data;
-      this.queryTradeTop5ByCondition();
-    },
-    queryTradeTop5ByCondition() {
-      api
-        .queryTradeTop5ByCondition({
-          beginDate: this.beginDate,
-          endDate: this.endDate,
-          merchantType: this.merchantType3
-        })
-        .then(res => {
-          this.testData3 = res.object;
-        })
-        .catch(err => {
-          this.$message(err);
-        });
-    },
-    // 商户平均交易额走势折线图数据获取
-    queryDailyTradeAvgByCondition() {
-      api
-        .queryDailyTradeAvgByCondition({
-          beginDate: this.beginDate,
-          endDate: this.endDate
-        })
-        .then(res => {
-          // this.mapData = res.object;
-        })
-        .catch(err => {
-          this.$message(err);
-        });
-    },
-    // 第一行第一个饼图切换
-    handleRegionRadioChange($data) {
-      this.merchantType = $data;
-      this.queryRegionTradeSummaryByCondition();
-    },
-    queryRegionTradeSummaryByCondition() {
-      api
-        .queryRegionTradeSummaryByCondition({
-          beginDate: this.beginDate,
-          endDate: this.endDate,
-          merchantType: this.merchantType
-        })
-        .then(res => {
-          // this.mapData = res.object;
-        })
-        .catch(err => {
-          this.$message(err);
-        });
-    },
-    // 第一行第二个饼图切换
-    handleCategoryRadioChange($data) {
-      this.merchantType2 = $data;
-      this.queryCategoryTradeSummaryByCondition();
-    },
-    queryCategoryTradeSummaryByCondition() {
-      api
-        .queryRegionTradeSummaryByCondition({
-          beginDate: this.beginDate,
-          endDate: this.endDate,
-          merchantType: this.merchantType2
-        })
-        .then(res => {
-          // this.mapData = res.object;
-        })
-        .catch(err => {
-          this.$message(err);
-        });
+    // 所有切换按钮事件 新增商户/交易商户/流失商户
+    handleRegionRadioChange($value, $key) {
+      const that = this;
+      switch ($key) {
+        case 'region':
+          region();
+          break;
+        case 'industry':
+          industry();
+          break;
+        case 'tradeRank':
+          tradeRank();
+          break;
+        case 'averagePie':
+          averagePie();
+          break;
+        default:
+          region();
+          break;
+      }
+      function region() {
+        that.pieList[0].radio.val = $value;
+        that.selectRegionMerchantCount();
+      }
+      function industry() {
+        that.pieList[1].radio.val = $value;
+        that.selectCategoryMerchantCount();
+      }
+      function tradeRank() {
+        that.tradeRankRadio.val = $value;
+        that.queryTradeTop5ByCondition();
+      }
+      function averagePie() {
+        that.averagePieRadio.radio.val = $value;
+        that.queryTradeCountRatio();
+      }
     },
     // 地图数据分布与排行榜
     merchantDataQueryAllProvinceCountAndRank() {
+      if (!this.hasPermission('merchantCount')) return;
       api
-        .merchantDataQueryAllProvinceCountAndRank({
-          beginDate: this.beginDate,
-          endDate: this.endDate
-        })
+        .merchantDataQueryAllProvinceCountAndRank(this.ruleForm)
         .then(res => {
-          this.mapData = res.object;
+          if (this.$g.utils.isArr(res.object)) {
+            this.mapData = res.object.map($item => {
+              areaData.forEach(($province, $index) => {
+                if ($item.provinceCode === $province.value) {
+                  $item.name = provinceData[$index].name
+                }
+              })
+              $item.value = $item.count;
+              return $item;
+            }).sort(($ele1, $ele2) => {
+              return $ele2.count - $ele1.count
+            })
+          } else {
+            this.mapData = [];
+          }
+          this.initMap()
         })
-        .catch(err => {
-          this.$message(err);
-        });
+    },
+    // 商户数据-大区占比
+    selectRegionMerchantCount() {
+      if (!this.hasPermission('merchantRegionRatio')) return;
+      const params = {
+        type: this.pieList[0].radio.val
+      };
+      Object.assign(params, this.ruleForm);
+      api.selectRegionMerchantCount(params)
+        .then(res => {
+          this.regionDataList = res.object;
+        })
+    },
+    // 商户数据-行业占比
+    selectCategoryMerchantCount() {
+      if (!this.hasPermission('merchantIndustryRatio')) return;
+      const params = {
+        type: this.pieList[1].radio.val
+      };
+      Object.assign(params, this.ruleForm);
+      api.selectCategoryMerchantCount(params)
+        .then(res => {
+          this.industryDataList = res.object;
+        })
+    },
+    // 商户平均交易额走势折线图数据获取
+    queryDailyTradeAvg() {
+      if (!this.hasPermission('merchantAverageTrend')) return;
+      api
+        .queryDailyTradeAvg(this.ruleForm)
+        .then(res => {
+          this.lineOption.xAxis[0].data = this.$g.utils.isArr(res.object.dateArr) ? res.object.dateArr : [];
+          this.lineOption.series[0].data = this.$g.utils.isArr(res.object.tradeAmountArr) ? res.object.tradeAmountArr : [];
+          this.showLine();
+        })
+    },
+    // 交易额排行
+    queryTradeTop5ByCondition() {
+      if (!this.hasPermission('merchantAmountRank')) return;
+      const params = {
+        type: this.tradeRankRadio.val,
+        top: 6
+      }
+      Object.assign(params, this.ruleForm);
+      api
+        .queryTradeTop5ByCondition(params)
+        .then(res => {
+          this.tradeRank = this.$g.utils.isArr(res.object) ? res.object : [];
+        })
+    },
+    // 平均交易笔数分布
+    queryTradeCountRatio() {
+      if (!this.hasPermission('merchantAverageRatio')) return;
+      const params = {
+        type: this.averagePieRadio.radio.val
+      }
+      Object.assign(params, this.ruleForm);
+      api
+        .queryTradeCountRatio(params)
+        .then(res => {
+          if (this.$g.utils.isObj(res.object)) {
+            this.averageDataList = [
+              {
+                ratio: res.object.ratio1,
+                name: "1-10笔比例"
+              },
+              {
+                ratio: res.object.ratio2,
+                name: "11-100笔比例"
+              },
+              {
+                ratio: res.object.ratio3,
+                name: "101-1000笔比例"
+              },
+              {
+                ratio: res.object.ratio4,
+                name: "1001笔以上"
+              }
+            ]
+          } else {
+            this.averageDataList = [];
+          }
+        })
     },
     handleDataSelect($time) {
-      this.beginDate = $time[0];
-      this.endDate = $time[1];
-      api
-        .merchantDataQueryAllProvinceCountAndRank({
-          beginDate: this.beginDate,
-          endDate: this.endDate
+      this.$nextTick(() => {
+        this.search({
+          date: $time
         })
-        .then(res => {
-          this.mapData = res.object;
-        })
-        .catch(err => {
-          this.$message(err);
-        });
+      })
     },
-    init() {
-      this.showLine();
-    },
-    handleShowMore() {
-      this.$router.push({ path: "/dataMarket/merchantData/detail" });
+    handleShowMore($sortField) {
+      this.$router.push({ path: "/dataMarket/merchantData/detail", query: {
+        sortField: $sortField || "tradeAmount"
+      }});
     },
     showLine() {
       // 基于准备好的dom，初始化echarts实例
-      if (this.$refs.echartsLine) {
-        const myChartLine = this.$echarts.init(this.$refs.echartsLine);
-
-        // 绘制图表
-        myChartLine.setOption(this.lineOption);
-        window.addEventListener("resize", function() {
-          myChartLine.resize();
-        });
+      const that = this;
+      const canvasId = this.$refs.echartsLine.getAttribute('_echarts_instance_') // 判断是否为同一实例画板
+      if (!this.myChartLine || this.myChartLine.id !== canvasId) {
+        this.myChartLine = this.$echarts.init(this.$refs.echartsLine);
       }
+
+      // 绘制图表
+      this.myChartLine.setOption(this.lineOption);
+      window.addEventListener("resize", function() {
+        that.myChartLine.resize();
+      });
     },
     search($ruleForm) {
-      this.beginDate = $ruleForm.date ? $ruleForm.date[0] : null;
-      this.endDate = $ruleForm.date ? $ruleForm.date[1] : null;
+      if ($ruleForm) {
+        this.ruleForm = {
+          beginDate: $ruleForm.date[0],
+          endDate: $ruleForm.date[1]
+        };
+      }
+      if (JSON.stringify(this.ruleForm) === "{}") return;
       this.merchantDataQueryAllProvinceCountAndRank();
+      this.selectRegionMerchantCount();
+      this.selectCategoryMerchantCount();
+      this.queryDailyTradeAvg();
+      this.queryTradeTop5ByCondition();
+      this.queryTradeCountRatio();
     },
+    /**
+     * 数量分布地图
+     */
     initMap() {
       if (!this.$refs.echartsMap) return;
-      const myChart = echarts.init(this.$refs.echartsMap);
-      const dataList = [
-        {
-          name: "南海诸岛",
-          value: 0
-        },
-        {
-          name: "北京",
-          value: 54
-        },
-        {
-          name: "天津",
-          value: 13
-        },
-        {
-          name: "上海",
-          value: 40
-        },
-        {
-          name: "重庆",
-          value: 75
-        },
-        {
-          name: "河北",
-          value: 13
-        },
-        {
-          name: "河南",
-          value: 83
-        },
-        {
-          name: "云南",
-          value: 11
-        },
-        {
-          name: "辽宁",
-          value: 19
-        },
-        {
-          name: "黑龙江",
-          value: 15
-        },
-        {
-          name: "湖南",
-          value: 69
-        },
-        {
-          name: "安徽",
-          value: 60
-        },
-        {
-          name: "山东",
-          value: 39
-        },
-        {
-          name: "新疆",
-          value: 4
-        },
-        {
-          name: "江苏",
-          value: 31
-        },
-        {
-          name: "浙江",
-          value: 104
-        },
-        {
-          name: "江西",
-          value: 36
-        },
-        {
-          name: "湖北",
-          value: 1052
-        },
-        {
-          name: "广西",
-          value: 33
-        },
-        {
-          name: "甘肃",
-          value: 7
-        },
-        {
-          name: "山西",
-          value: 9
-        },
-        {
-          name: "内蒙古",
-          value: 7
-        },
-        {
-          name: "陕西",
-          value: 22
-        },
-        {
-          name: "吉林",
-          value: 4
-        },
-        {
-          name: "福建",
-          value: 18
-        },
-        {
-          name: "贵州",
-          value: 5
-        },
-        {
-          name: "广东",
-          value: 98
-        },
-        {
-          name: "青海",
-          value: 1
-        },
-        {
-          name: "西藏",
-          value: 0
-        },
-        {
-          name: "四川",
-          value: 44
-        },
-        {
-          name: "宁夏",
-          value: 4
-        },
-        {
-          name: "海南",
-          value: 22
-        },
-        {
-          name: "台湾",
-          value: 3
-        },
-        {
-          name: "香港",
-          value: 5
-        },
-        {
-          name: "澳门",
-          value: 5
-        }
-      ];
-      window.onresize = myChart.resize;
-      myChart.setOption({
-        tooltip: {
-          triggerOn: "mousemove"
-        },
-        visualMap: {
-          min: 0,
-          max: 1000,
-          left: 56,
-          bottom: 40,
-          showLabel: !0,
-          text: ["高", "低"],
-          pieces: [
-            {
-              gt: 100,
-              label: "> 100 人",
-              color: "#0050B3"
-            },
-            {
-              gte: 10,
-              lte: 100,
-              label: "10 - 100 人",
-              color: "#1890FF"
-            },
-            {
-              gte: 1,
-              lt: 10,
-              label: "1 - 9 人",
-              color: "#69C0FF"
-            },
-            {
-              gt: 0,
-              lt: 1,
-              label: "1",
-              color: "#BAE7FF"
-            },
-            {
-              value: 0,
-              color: "#E1E9F0"
-            }
-          ],
-          show: !0
-        },
-        geo: {
-          map: "china",
-          roam: !1,
-          scaleLimit: {
-            min: 1,
-            max: 2
-          },
-          zoom: 1.2,
-          top: 45,
-          label: {
-            emphasis: {
-              show: false
-            }
-          },
-          itemStyle: {
-            normal: {
-              borderColor: "#fff",
-              textStyle: {
-                show: false
-              }
-            },
-
-            emphasis: {
-              areaColor: "#FAD337",
-              shadowOffsetX: 0,
-              shadowOffsetY: 0,
-              borderWidth: 0
-            }
-          }
-        },
-        series: [
-          {
-            name: "商户数量",
-            type: "map",
-            geoIndex: 0,
-            data: dataList
-          }
-        ]
+      const that = this;
+      const canvasId = this.$refs.echartsMap.getAttribute('_echarts_instance_') // 判断是否为同一实例画板
+      this.mapOption.series[0].data = this.mapData;
+      if (!this.echartsMap || this.echartsMap.id !== canvasId) {
+        this.echartsMap = echarts.init(this.$refs.echartsMap);
+      }
+      this.echartsMap.setOption(this.mapOption);
+      window.addEventListener("resize", function() {
+        that.echartsMap.resize();
       });
     }
   }
@@ -1119,7 +595,7 @@ export default {
   overflow: hidden;
   background-color: #ffffff;
   .chart-box {
-    width: 70%;
+    width: 100%;
     height: 400px;
     position: relative;
     .chart-panel {
@@ -1154,7 +630,9 @@ export default {
   }
   .data-box {
     width: 30%;
+    height: 428px;
     padding: 28px 60px 0 0;
+    overflow-y: scroll;
     .data-title {
       color: rgba(0, 0, 0, 0.85);
       line-height: 22px;

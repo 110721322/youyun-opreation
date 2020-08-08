@@ -142,6 +142,10 @@ export default {
             }).map($province => {
               return {label: $province.label, value: $province.value};
             })[0];
+          }).filter($province => {
+            if ($province) {
+              return $province;
+            }
           })
           return $area;
         })
@@ -158,6 +162,7 @@ export default {
       this.formStatus = "add";
       this.activeRow = $row;
       this.fromConfigData = FORM_CONFIG.addData;
+      console.log('add');
       this.drawer = true;
     },
     handleClose($regionCode, $provinceCode) {

@@ -1082,7 +1082,8 @@ const asyncRoutes = {
         meta: {
           fatherName: 'merchantData',
           title: '详情',
-          icon: 'merchantDataDetail'
+          icon: 'merchantDataDetail',
+          refreshDom: true
         },
         component: () => import('@/page/dataMarket/merchantDataDetail.vue')
       }
@@ -1103,7 +1104,8 @@ const asyncRoutes = {
         meta: {
           fatherName: 'serviceData',
           title: '详情',
-          icon: 'serviceDataDetail'
+          icon: 'serviceDataDetail',
+          refreshDom: true
         },
         component: () => import('@/page/dataMarket/serviceDataDetail.vue')
       }

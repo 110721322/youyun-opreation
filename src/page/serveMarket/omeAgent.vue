@@ -1,36 +1,36 @@
 <template>
   <div class="main_page">
     <div class="top_content">
-      <div class="warn">
+      <div v-if="showTip" class="warn">
         <div class="left_icon">i</div>
         <span>已购买该服务，有效期到：2020-10-10 。再次购买后服务到期时间将累加</span>
-        <img src="../../assets/img/cancle.png" alt="">
+        <img src="../../assets/img/cancle.png" alt="" @click="closeWarn">
       </div>
       <div class="buy_info">
         <img class="buy_img" src="../../assets/img/oem_image.png" alt="">
         <div class="buy_all">
           <div class="first_body">
-            <div class="buy_title">OEM贴牌</div>
-            <div class="buy_subtitle">可自定义添加品牌logo及名称，强化品牌形象。并且支持接入自己的交易通道，灵活稳定</div>
+            <div class="buy_title">{{ productItem.productName }}</div>
+            <div class="buy_subtitle">{{ productItem.productDesc }}</div>
             <img class="buy_photo" src="" alt="">
           </div>
           <div class="second_body">
             <div class="select_date">
               <span class="select_name">服务时间</span>
-              <div v-for="(item, index) in selectMounth" :key="index" class="select_btn" :class="selectIndex===index? 'select_show' : ''">
-                <button @click="onclick_selectDate(index)">{{ item.value }}个月</button>
+              <div v-for="(item, index) in comboList" :key="index" class="select_btn" :class="selectIndex===index? 'select_show' : ''">
+                <button @click="onclick_selectDate(item,index)">{{ item.comboName }}</button>
               </div>
             </div>
             <div class="price">
               <span class="select_name">购买价格</span>
-              <span class="data_price"><span>¥</span>1000</span>
+              <span class="data_price"><span>¥</span>{{ comboPrice }}</span>
             </div>
           </div>
-          <button class="buy_serve">购买服务</button>
+          <button class="buy_serve" @click="onclick_buyserve">购买服务</button>
         </div>
       </div>
     </div>
-    <div class="operation">
+    <div v-if="productItem.buyStatus===0" class="operation">
       <div class="operation_title">操作流程</div>
       <div class="operation_step">
         <div class="left_step">步骤一:</div>
@@ -60,36 +60,18 @@
         </ul>
       </div>
     </div>
-    <div class="handle">
+    <div v-else class="handle">
       <div class="handel_title">oem贴牌定制</div>
       <div class="upimg">
         <span>服务商后台logo：</span>
         <div class="photo">
-          <el-upload
-            class="avatar-uploader"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload"
-          >
-            <img v-if="imageUrl" :src="imageUrl" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
+          <Upload :formItem="formItem" :ruleForm="ruleForm" />
         </div>
       </div>
       <div class="upimg">
         <span>商户后台logo：</span>
         <div class="photo">
-          <el-upload
-            class="avatar-uploader"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload"
-          >
-            <img v-if="imageUrl" :src="imageUrl" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
+          <Upload :formItem="formItem" :ruleForm="ruleForm2" />
         </div>
       </div>
       <div class="upimg">
@@ -114,49 +96,75 @@
 </template>
 
 <script>
+import api from "@/api/api_serveMarket";
+import Upload from "@/components/form/components/Upload.vue";
 export default {
+  components: {
+    Upload
+  },
   data () {
     return {
-      selectMounth: [
-        {
-          id: 1,
-          value: 1
-        },
-        {
-          id: 2,
-          value: 2
-        },
-        {
-          id: 1,
-          value: 3
-        }
-      ],
       selectIndex: 0,
       imageUrl: '',
-      centerDialogVisible: false
+      centerDialogVisible: false,
+      comboList: [],
+      comboPrice: 0,
+      showTip: false,
+      comboItem: {},
+      productItem: {},
+      formItem: {
+        key: 'imgUrl'
+      },
+      ruleForm: {},
+      ruleForm2: {}
+    }
+  },
+  created() {
+    this.productItem = JSON.parse(localStorage.getItem('productItem'))
+    this.getModelDetail()
+    if (this.productItem.buyStatus) {
+      this.showTip = true
     }
   },
   methods: {
-    onclick_selectDate(index) {
+    onclick_selectDate(data, index) {
+      this.comboItem = data
+      this.comboPrice = data.comboAmount
       this.selectIndex = index
     },
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
+    onclick_buyserve() {
+      localStorage.setItem('comboItem', JSON.stringify(this.comboItem))
+      if (this.comboItem.id) {
+        this.$router.push({
+          path: "/serveMarket/businessModel/subOrder"
+        });
+      }
     },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg';
-      const isLt2M = file.size / 1024 / 1024 < 2;
-
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!');
-      }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!');
-      }
-      return isJPG && isLt2M;
+    getModelDetail() {
+      api.selectProductCombo({
+        productCode: this.productItem.productCode
+      }).then(res => {
+        if (res.object) {
+          this.comboList = res.object || []
+          this.comboItem = this.comboList[this.selectIndex] || {}
+          this.comboPrice = this.comboList[this.selectIndex].comboAmount || 0
+        }
+      })
+    },
+    closeWarn() {
+      this.showTip = false
     },
     onClick_submit() {
-      this.centerDialogVisible = true
+      const agentLogo = this.ruleForm.imgUrl.dialogImageUrl
+      const merchantLogo = this.ruleForm2.imgUrl.dialogImageUrl
+      api.saveOEMConfig({
+        agentLogo: agentLogo,
+        merchantLogo: merchantLogo
+      }).then(res => {
+        if (res.object) {
+          this.centerDialogVisible = true
+        }
+      })
     }
   }
 }
@@ -392,10 +400,10 @@ export default {
     text-align: right;
   }
   .photo {
-    width: 100px;
+    /* width: 100px;
     height: 100px;
     border: 1px dashed #d9d9d9;
-    border-radius: 6px;
+    border-radius: 6px; */
     cursor: pointer;
     position: relative;
     overflow: hidden;

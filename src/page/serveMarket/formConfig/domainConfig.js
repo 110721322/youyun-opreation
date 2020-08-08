@@ -6,7 +6,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '主域名',
-        key: 'lsId',
+        key: 'mainDomain',
         initVal: '',
         inputType: "input",
         row: 1,
@@ -16,7 +16,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: 'oa办公后台',
-        key: 'lsId',
+        key: 'oaDomain',
         initVal: '',
         inputType: "input",
         row: 1,
@@ -26,7 +26,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '服务商后台',
-        key: 'lsId',
+        key: 'agentDomain',
         initVal: '',
         inputType: "input",
         row: 1,
@@ -36,7 +36,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '商户后台',
-        key: 'lsId',
+        key: 'merchantDomain',
         initVal: '',
         inputType: "input",
         row: 1,

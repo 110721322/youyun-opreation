@@ -19,7 +19,7 @@ export const FORM_CONFIG1 = {
       label: '领取截止时间',
       key: 'date',
       dateType: 'datetimerange',
-      rules: setRules('领取截止时间').isRequired.get
+      rules: setRules('领取截止时间').isSelected.get
     },
     {
       type: 15,

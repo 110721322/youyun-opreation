@@ -63,14 +63,19 @@ export default {
   },
   methods: {
     onclick_btn($data) {
-      this.$router.push({ path: "/serveMarket/businessModel/detail", query: {productCode: $data.productCode, buyStatus: $data.buyStatus, expireDate: $data.expireDate} });
+      localStorage.setItem('productItem', JSON.stringify($data))
+      if ($data.productCode === 'platformAgent') {
+        this.$router.push({ path: "/serveMarket/businessModel/detail" });
+      }
+      if ($data.productCode === 'oemAgent') {
+        this.$router.push({ path: "/serveMarket/businessModel/omedetail" });
+      }
+      if ($data.productCode === 'soundCode') {
+        this.$router.push({ path: "/serveMarket/businessModel/newdetail" });
+      }
     },
-    onclick_buybtn() {
-      this.$router.push({ path: "/serveMarket/businessModel/omedetail" });
-    },
-    onclick_buybtn1() {
-      this.$router.push({ path: "/serveMarket/businessModel/newdetail" });
-    },
+    onclick_buybtn() {},
+    onclick_buybtn1() {},
     getModel() {
       api.selectModuleProduct({
         moduleCode: 'businessMode'

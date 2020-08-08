@@ -4,7 +4,7 @@
     <div class="data-list">
       <div v-for="(item,index) in dataList" :key="index" class="data-item">
         <span>
-          <span :class="item.className"></span>
+          <span class="dot" :style="{'background': item.color}"></span>
           {{ item.title }}
         </span>
         <span class="perc">| {{ item.perc }}</span>
@@ -15,9 +15,25 @@
 <script>
 export default {
   name: "Pie",
-  props: ["pieOption", "refName", "dataList", "pieStyle"],
+  props: {
+    pieOption: Object,
+    refName: String,
+    dataList: Array,
+    pieStyle: Object
+  },
   data() {
-    return {};
+    return {
+      myChartBar: null
+    };
+  },
+  watch: {
+    pieOption: {
+      handler() {
+        console.log('draw');
+        this.init();
+      },
+      deep: true
+    }
   },
   mounted() {
     this.init();
@@ -25,10 +41,14 @@ export default {
   methods: {
     init() {
       // 基于准备好的dom，初始化echarts实例
-      const myChartBar = this.$echarts.init(this.$refs[`${this.refName}`]);
+      if (!this.myChartBar) {
+        this.myChartBar = this.$echarts.init(this.$refs[`${this.refName}`]);
+      }
 
       // 绘制图表
-      myChartBar.setOption(this.pieOption);
+      this.$nextTick(() => {
+        this.myChartBar.setOption(this.pieOption);
+      })
     }
   }
 };

@@ -89,12 +89,14 @@ export default {
     }
   },
   created() {
+    this.type = this.formItem.dateType
     if (this.formItem.isSelectToday) {
       this.dateList[0].label = "今天";
     }
     if (this.type === "datetimerange") {
       this.defaultTime = ["00:00:00", "23:59:59"];
     }
+    console.log(this.type, 11111111111111111111)
     this.onClick_item(this.dateList[0]);
   },
   methods: {
