@@ -57,7 +57,7 @@
             v-for="(item,index) in fromConfigData.settlementData.initValArray"
             :key="index"
             class="ellipsis"
-          >{{ item }}</div>
+          >{{ item.settleTypeName+'['+item.dateTxt+']' }}</div>
         </el-form-item>
       </elForm>
       <Form
@@ -173,21 +173,24 @@ export default {
           res.object.forEach((a, b) => {
             res.object.forEach((c, d) => {
               if (a.settleType === c.settleType) {
-                keyArr.push({'settleType': b.settleType})
+                keyArr.push({settleType: a.settleType, dateArr: [], settleTypeName: a.settleTypeName})
               }
             })
           })
           // var newArr = []
-          console.log(1111111, keyArr)
           if (keyArr.length > 0) {
             keyArr.forEach((item, index) => {
               res.object.forEach((dItem, dIndex) => {
                 if (item.settleType === dItem.settleType) {
-                  item.dateArr.push(dItem.settleTypeName + '[' + dItem.tradeMonth + ']')
+                  item.dateArr.push(dItem.tradeMonth)
                 }
               })
             })
+            keyArr.forEach((item, index) => {
+              this.$set(item, 'dateTxt', item.dateArr.join(','))
+            })
           }
+          this.fromConfigData.settlementData.initValArray = keyArr || []
         }
       })
     },
