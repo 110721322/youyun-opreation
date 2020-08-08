@@ -25,6 +25,11 @@ export const CHECKSERVICELIST_CONFIG = {
       prop: 'contractStatus',
       width: '150px',
       render: (h, params) => {
+        if (params.row.contractStatus === 'waitSign') {
+          return h(
+            'span', '待审核'
+          )
+        }
         if (params.row.contractStatus === 'audit') {
           return h(
             'span', '待审核'
@@ -58,7 +63,7 @@ export const CHECKSERVICELIST_CONFIG = {
         emitName: 'detail',
         type: 'text',
         isShow: ($item) => {
-          if ($item.contractStatus !== 'audit') {
+          if ($item.contractStatus !== 'waitSign') {
             return true;
           } else {
             return false
@@ -70,7 +75,7 @@ export const CHECKSERVICELIST_CONFIG = {
         emitName: 'preApprove',
         type: 'text',
         isShow: ($item) => {
-          if ($item.contractStatus === 'audit') {
+          if ($item.contractStatus === 'waitSign') {
             return true;
           } else {
             return false

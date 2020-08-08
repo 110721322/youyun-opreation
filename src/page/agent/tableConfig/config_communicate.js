@@ -11,6 +11,11 @@ export const USER_CONFIG = {
       width: '150px'
     },
     {
+      label: '联系电话',
+      prop: 'phoneNum',
+      width: '150px'
+    },
+    {
       label: '备注',
       prop: 'remark',
       width: '150px'
