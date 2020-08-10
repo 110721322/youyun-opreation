@@ -1,4 +1,4 @@
-export const SEARARD_CONFIG = {
+export const WXMSRARD_CONFIG = {
   formData: [
     {
       type: 11,
@@ -14,7 +14,7 @@ export const SEARARD_CONFIG = {
       type: 'uploadFile',
       label: '上传文件',
       key: 'excil',
-      dateurl: "excel/dragonfly_reward.xls"
+      dateurl: "excel/wx_reward.xls"
     }
   ]
 }

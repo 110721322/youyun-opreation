@@ -102,7 +102,11 @@ export default {
       });
     },
     download() {
-      window.location.href = g.config.server + "operation/v1/excelTemplate/download?url=excel/device_input.xlsx";
+      if (this.formItem.dateurl === "") {
+        window.location.href = g.config.server + "operation/v1/excelTemplate/download?url=excel/device_input.xlsx";
+      } else {
+        window.location.href = g.config.server + "operation/v1/excelTemplate/download?url=" + this.formItem.dateurl;
+      }
     },
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`);
