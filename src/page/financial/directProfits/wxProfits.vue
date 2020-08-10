@@ -79,7 +79,7 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import Form from "@/components/form/index.vue";
 import {SEARCH_CONFIG} from "../formConfig/aliProfitsSearch";
 import {SERVICE_CONFIG} from "../tableConfig/aliProfitsConfig";
-import {SEARARD_CONFIG} from "../formConfig/aplyAward";
+import {WXMSRARD_CONFIG} from "../formConfig/wxAward";
 import api_statistice from "@/api/api_statistice";
 
 export default {
@@ -94,7 +94,7 @@ export default {
       searchHeight: "260",
       searchConfig: SEARCH_CONFIG,
       configData: SERVICE_CONFIG,
-      aplyAwardData: SEARARD_CONFIG,
+      aplyAwardData: WXMSRARD_CONFIG,
       api: api_statistice.wxAgents,
       drawer: false,
       params: {},
