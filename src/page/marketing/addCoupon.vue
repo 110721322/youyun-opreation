@@ -71,9 +71,9 @@
           <div class="third_title"><span>1</span><span>下载二维码/复制领取链接</span></div>
           <p>优惠码领取二维码</p>
           <div class="qd-code">
-            <img :src="activityDetail.qrCodeImageUrl" alt="">
+            <img id="img" :src="activityDetail.qrCodeImageUrl" alt="">
           </div>
-          <button class="down">下载二维码</button>
+          <button class="down" @click="downloadCodeImg">下载二维码</button>
         </div>
         <div class="coupon-form" style="padding: 24px 0 32px 32px;">
           <div class="third_title"><span>2</span><span>发给服务商扫码/进入链接进行领取</span></div>
@@ -107,6 +107,25 @@ export default {
     }
   },
   methods: {
+    downloadCodeImg() {
+      var image = new Image();
+      image.setAttribute("crossOrigin", "anonymous");
+      var _this = this;
+      image.onload = function () {
+        var canvas = document.createElement("canvas");
+        canvas.width = image.width;
+        canvas.height = image.height;
+        var context = canvas.getContext("2d");
+        context.drawImage(image, 0, 0, image.width, image.height);
+        var url = canvas.toDataURL("image/png");// 得到图片的base64编码数据
+        var a = document.createElement("a"); // 生成一个a元素
+        var event = new MouseEvent("click"); // 创建一个单击事件
+        a.download = _this.projectName || "photo"; // 设置图片名称
+        a.href = url; // 将生成的URL设置为a.href属性
+        a.dispatchEvent(event); // 触发a的单击事件
+      };
+      image.src = this.activityDetail.qrCodeImageUrl;
+    },
     onClick_firstbtn() {
       this.ruleForm = this.$refs.firstForm.ruleForm
       this.secondStep = 1
@@ -128,7 +147,7 @@ export default {
         promoCodeTimeFlag: params.promoCodeTimeFlag,
         promoCodeBeginTime: params.dateArr ? params.dateArr[0] : null,
         promoCodeEndTime: params.dateArr ? params.dateArr[1] : null,
-        suffixUrl: ''
+        suffixUrl: 'a.html'
       }).then(res => {
         if (res.object) {
           this.activityDetail = res.object

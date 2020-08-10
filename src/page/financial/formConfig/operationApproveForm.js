@@ -25,7 +25,7 @@ export const FORM_CONFIG = {
         label: '发票照片',
         key: 'expressImg',
         isImage: true,
-        initVal: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+        initVal: ""
       },
       {
         type: 'show',
@@ -62,7 +62,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '驳回原因',
-        key: 'reason',
+        key: 'rejectReason',
         initVal: '',
         inputType: 'textarea',
         rules: setRules('驳回原因').isRequired.get

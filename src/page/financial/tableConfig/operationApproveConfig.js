@@ -7,17 +7,22 @@ export const OPERATIONAPPROVE_CONFIG = {
     },
     {
       label: '结算金额(元) | 实际结算金额(元)',
-      prop: [{ key: 'settleCommission', label: '结算金额:' }, { key: 'actualSettleCommission', label: '实际结算金额:' }],
+      prop: [{ key: 'actualAmount', label: '结算金额:' }, { key: 'actualSettleCommission', label: '实际结算金额:' }],
       width: '250px'
     },
     {
       label: '结算类型',
       prop: 'settleType',
-      width: '90px'
+      width: '90px',
+      render: (h, params) => {
+        if (params.row.settleType) {
+          return h('span', 1)
+        }
+      }
     },
     {
       label: '审核状态',
-      prop: 'settleStatus',
+      prop: 'settleStatusName',
       width: '90px'
 
     },
