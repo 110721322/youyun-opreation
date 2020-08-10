@@ -70,21 +70,12 @@ export const FORM_CONFIG = {
     ]
   },
   adoptData: {
-    title: '驳回',
+    title: '通过',
     showFootBtn: true,
-    processData: [{
-      icon: "",
-      label: "入库",
-      time: "2019-10-12 10:12:21"
-    }, {
-      icon: "",
-      label: "入库",
-      time: "2019-10-12 10:12:21",
-      name: "天阳"
-    }],
+    processData: [],
     settlementData: {
       label: "结算类型",
-      initValArray: ["间连佣金【2019-08、2019-09、2019-10、2019-11…】", "直连佣金【2019-08、2019-09、2019-10、2019-11…】", "银联佣金【2019-08、2019-09、2019-10、2019-11…】"]
+      initValArray: []
     },
     formData: [
       {

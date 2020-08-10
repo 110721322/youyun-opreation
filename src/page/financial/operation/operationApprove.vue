@@ -108,11 +108,13 @@ export default {
   mounted() {},
   methods: {
     confirm($data) {
+      console.log($data)
+      debugger
       switch (this.formStatus) {
         case "reject":
           api.topOperationReject({
-            id: this.activeRow.recordId,
-            rejectReason: $data.reason
+            id: this.activeRow.id,
+            rejectReason: $data.rejectReason
           }).then(res => {
             this.$message("已驳回");
             this.drawer = false;
@@ -121,7 +123,7 @@ export default {
           });
           break;
         case "adopt":api.topOperationSuccess({
-          id: this.activeRow.recordId,
+          id: this.activeRow.id,
           adviseCommission: $data.adviseCommission,
           operationRemark: $data.operationRemark
         }).then(res => {
@@ -153,7 +155,7 @@ export default {
     },
     onClick_reject($row) {
       api.topQueryDetail({// 通过/驳回详情
-        id: $row.id
+        id: $row.id || []
       }).then(res => {
         // 编辑前重赋值
         FORM_CONFIG.rejectData.formData.forEach((item, index) => {
@@ -164,7 +166,30 @@ export default {
         this.formStatus = "reject";
         this.fromConfigData = FORM_CONFIG.rejectData;
         this.drawer = true;
+        this.topQueryTypeMonthDetail($row)
       })
+    },
+    onClick_adopt($row) {
+      api.topQueryDetail({
+        id: $row.id || []
+      }).then(res => {
+        // 编辑前重赋值
+        FORM_CONFIG.adoptData.formData.forEach((item, index) => {
+          item.initVal = res.object[item.key];
+        });
+        FORM_CONFIG.adoptData.processData = res.object.map
+        this.activeRow = $row;
+        this.formStatus = "adopt";
+        this.fromConfigData = FORM_CONFIG.adoptData;
+        this.drawer = true;
+      })
+      this.activeRow = $row;
+      this.formStatus = "adopt";
+      this.fromConfigData = FORM_CONFIG.adoptData;
+      this.drawer = true;
+      this.topQueryTypeMonthDetail($row)
+    },
+    topQueryTypeMonthDetail($row) {
       api.topQueryTypeMonthDetail({
         idList: $row.agentTradeIdList
       }).then(res => {
@@ -193,24 +218,6 @@ export default {
           this.fromConfigData.settlementData.initValArray = keyArr || []
         }
       })
-    },
-    onClick_adopt($row) {
-      api.queryDetail({
-        recordId: this.recordId || 1
-      }).then(res => {
-        // 编辑前重赋值
-        FORM_CONFIG.adoptData.formData.forEach((item, index) => {
-          item.initVal = res.object[item.key];
-        });
-        this.activeRow = $row;
-        this.formStatus = "adopt";
-        this.fromConfigData = FORM_CONFIG.adoptData;
-        this.drawer = true;
-      })
-      this.activeRow = $row;
-      this.formStatus = "adopt";
-      this.fromConfigData = FORM_CONFIG.adoptData;
-      this.drawer = true;
     },
     onClick_reviewing() {
       this.$alert("任务已处理，审批中", "提示信息", {
