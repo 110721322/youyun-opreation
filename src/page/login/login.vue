@@ -227,7 +227,6 @@
 </template>
 <script type="text/ecmascript-6">
 import api from "@/api/api_login";
-import io from "socket.io-client"
 import {computedRoleRouter} from '@/libs/role'
 import currRouter from '@/router/addRouter'
 import { mapActions } from 'vuex';
