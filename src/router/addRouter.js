@@ -696,6 +696,16 @@ const asyncRoutes = {
         name: 'work',
         path: 'work',
         component: () => import('@/page/work/workBench.vue')
+      },
+      {
+        path: 'todo',
+        name: 'workTodo',
+        meta: {
+          title: '待办事项',
+          icon: 'workTodo'
+        },
+        component: () => import('@/page/work/workTodo.vue'),
+        children: []
       }
     ]
   },

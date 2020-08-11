@@ -1,4 +1,3 @@
-import axios from 'axios'
 import * as g from '@/libs/global.js'
 import { rules } from '../rules' // 引入规则配置
 /**
