@@ -1,8 +1,8 @@
 export const OPERATIONAPPROVE_CONFIG = {
   gridConfig: [
     {
-      label: '服务商',
-      prop: [{ key: 'agentName' }, { key: 'agentNo', label: 'ID:' }],
+      label: '顶级服务商',
+      prop: [{ key: 'channelAgentName' }, { key: 'channelAgentCode', label: 'ID:' }],
       width: '90px'
     },
     {
@@ -54,38 +54,38 @@ export const OPERATIONAPPROVE_CONFIG = {
       {
         name: '驳回',
         emitName: 'reject',
-        type: 'text'
-        // isShow: ($row) => {
-        //   if ($row.showReject === true) {
-        //     return true;
-        //   } else {
-        //     return false;
-        //   }
-        // }
+        type: 'text',
+        isShow: ($row) => {
+          if ($row.settleStatus === '61' || $row.settleStatus === '62') {
+            return true;
+          } else {
+            return false;
+          }
+        }
       },
       {
         name: '审核通过',
         emitName: 'adopt',
-        type: 'text'
-        // isShow: ($row) => {
-        //   if ($row.showAdopt === true) {
-        //     return true;
-        //   } else {
-        //     return false;
-        //   }
-        // }
+        type: 'text',
+        isShow: ($row) => {
+          if ($row.settleStatus === '61' || $row.settleStatus === '62') {
+            return true;
+          } else {
+            return false;
+          }
+        }
       },
       {
         name: '审批中',
         emitName: 'reviewing',
-        type: 'text'
-        // isShow: ($row) => {
-        //   if ($row.showReviewing === true) {
-        //     return true;
-        //   } else {
-        //     return false;
-        //   }
-        // }
+        type: 'text',
+        isShow: ($row) => {
+          if ($row.settleStatus === '21' || $row.settleStatus === '22') {
+            return true;
+          } else {
+            return false;
+          }
+        }
       }
     ]
   },

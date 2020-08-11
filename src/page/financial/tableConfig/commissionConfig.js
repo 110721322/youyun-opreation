@@ -1,10 +1,15 @@
 export const TABLE_CONFIG = {
   gridConfig: [
     {
-      label: '服务商',
-      prop: "agentName",
+      label: '顶级服务商',
+      prop: [{ key: 'channelAgentName' }, { key: 'channelAgentCode', label: 'ID:' }],
       width: '90px'
     },
+    // {
+    //   label: '服务商',
+    //   prop: [{ key: 'agentName' }, { key: 'agentNo', label: 'ID:' }],
+    //   width: '90px'
+    // },
     {
       label: '结算金额（元）',
       prop: 'actualAmount',
@@ -28,7 +33,7 @@ export const TABLE_CONFIG = {
     },
     {
       label: '审核状态',
-      prop: 'settleStatus',
+      prop: 'settleStatusName',
       // render: (h, params) => {
       //   const status = params.row.status;
       //   return h('el-tooltip', {
@@ -78,26 +83,26 @@ export const TABLE_CONFIG = {
       {
         name: '驳回',
         emitName: 'reject',
-        type: 'text'
-        // isShow: ($row) => {
-        //   if ($row.showReject === true) {
-        //     return true;
-        //   } else {
-        //     return false;
-        //   }
-        // }
+        type: 'text',
+        isShow: ($row) => {
+          if ($row.settleStatus === '61' || $row.settleStatus === '62') {
+            return true;
+          } else {
+            return false;
+          }
+        }
       },
       {
         name: '通过',
         emitName: 'adopt',
-        type: 'text'
-        // isShow: ($row) => {
-        //   if ($row.showAdopt === true) {
-        //     return true;
-        //   } else {
-        //     return false;
-        //   }
-        // }
+        type: 'text',
+        isShow: ($row) => {
+          if ($row.settleStatus === '61' || $row.settleStatus === '62') {
+            return true;
+          } else {
+            return false;
+          }
+        }
       }
     ]
   },

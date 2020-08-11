@@ -15,8 +15,8 @@ export default {
   selectIndirectDataByPage: (params) => API.POST('/operation/v1/topAgentStatistics/selectIndirectDataByPage', params),
   // 代理商下的商户明细
   selectMerchantDataByPage: (params) => API.POST('/operation/v1/topAgentStatistics/selectMerchantDataByPage', params),
-  // 财务审核列表查询
-  listFinanceSettle: (params) => API.POST('/operation/v1/topAgentAudit/listFinanceSettle', params),
+  // (服务商)财务审核列表查询
+  agentListFinanceSettle: (params) => API.GET('/operation/v1/agentSettle/listFinanceSettle', params),
   // 财务审核拒绝
   financeReject: (params) => API.POST('/operation/v1/agentSettle/financeReject', params),
   // 财务审核通过

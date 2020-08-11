@@ -6,7 +6,13 @@
     <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
 
     <div class="table_box">
+      <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="顶级服务商" name="0"></el-tab-pane>
+        <el-tab-pane label="服务商" name="1"></el-tab-pane>
+      </el-tabs>
       <BaseCrud
+        v-if="activeName==='0'"
+        ref="table"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
         :grid-data="testData"
@@ -21,6 +27,29 @@
         :hide-edit-area="configData.hideEditArea"
         :header-cell-style="headerCellStyle"
         :api-service="api"
+        :params="params"
+        @detail="onClick_detail"
+        @reject="onClick_reject"
+        @adopt="onClick_adopt"
+        @reviewing="onClick_reviewing"
+      ></BaseCrud>
+      <BaseCrud
+        v-else
+        ref="table"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :grid-data="testData"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="200"
+        :is-async="true"
+        :is-select="false"
+        :is-expand="false"
+        :row-key="'id'"
+        :default-expand-all="false"
+        :hide-edit-area="configData.hideEditArea"
+        :header-cell-style="headerCellStyle"
+        :api-service="apiAgent"
         :params="params"
         @detail="onClick_detail"
         @reject="onClick_reject"
@@ -80,7 +109,6 @@ import { FORM_CONFIG } from "../formConfig/operationApproveForm";
 import { SEARCH_CONFIG } from "../formConfig/operationApproveSearch";
 import { OPERATIONAPPROVE_CONFIG } from "../tableConfig/operationApproveConfig";
 import api from "@/api/api_financialAudit.js";
-
 export default {
   name: "Theme",
   components: { Search, BaseCrud, Form },
@@ -95,24 +123,38 @@ export default {
       drawer: false,
       direction: "rtl",
       arrow: arrowImg,
-      params: {
-        beginTime: this.$g.utils.getToday(),
-        endTime: this.$g.utils.getToday(),
-        typeFlag: 0
-      },
+      params: {},
       api: api.topListOperationSettle,
+      apiAgent: api.listOperationSettle,
       formStatus: null,
-      activeRow: {}
+      activeRow: {},
+      activeName: '0'
     };
   },
-  mounted() {},
+  created() {
+    this.params = {
+      beginTime: this.$g.utils.getToday(),
+      endTime: this.$g.utils.getToday(),
+      typeFlag: this.activeName,
+      settleStatus: 0
+    };
+  },
   methods: {
+    handleClick() {
+      this.params.typeFlag = this.activeName
+      this.configData.gridConfig[0].label = this.activeName === '0' ? '顶级服务商' : '服务商'
+      this.configData.gridConfig[0].prop[0].key = this.activeName === '0' ? 'channelAgentName' : 'agentName'
+      this.configData.gridConfig[0].prop[1].key = this.activeName === '0' ? 'channelAgentCode' : 'agentNo'
+      this.$nextTick(() =>
+        this.$refs.table.getData()
+      );
+    },
     confirm($data) {
-      console.log($data)
-      debugger
+      const rejectApi = this.activeName === '0' ? 'topOperationReject' : 'operationReject'
+      const successApi = this.activeName === '0' ? 'topOperationSuccess' : 'operationSuccess'
       switch (this.formStatus) {
         case "reject":
-          api.topOperationReject({
+          api[rejectApi]({
             id: this.activeRow.id,
             rejectReason: $data.rejectReason
           }).then(res => {
@@ -122,7 +164,7 @@ export default {
             this.$message(err);
           });
           break;
-        case "adopt":api.topOperationSuccess({
+        case "adopt":api[successApi]({
           id: this.activeRow.id,
           adviseCommission: $data.adviseCommission,
           operationRemark: $data.operationRemark
@@ -137,10 +179,7 @@ export default {
       }
     },
     search($ruleForm) {
-      // eslint-disable-next-line no-console
-      console.log($ruleForm);
       this.params = {
-        // settleStatus: $ruleForm.settleStatus || "",
         typeFlag: '0',
         beginTime: $ruleForm.date[0] || '',
         endTime: $ruleForm.date[1] || ''
@@ -154,8 +193,9 @@ export default {
       });
     },
     onClick_reject($row) {
-      api.topQueryDetail({// 通过/驳回详情
-        id: $row.id || []
+      const queryDetailApi = this.activeName === '0' ? 'topQueryDetail' : 'queryDetail'
+      api[queryDetailApi]({// 通过/驳回详情
+        id: $row.id || null
       }).then(res => {
         // 编辑前重赋值
         FORM_CONFIG.rejectData.formData.forEach((item, index) => {
@@ -170,8 +210,9 @@ export default {
       })
     },
     onClick_adopt($row) {
-      api.topQueryDetail({
-        id: $row.id || []
+      const queryDetailApi = this.activeName === '0' ? 'topQueryDetail' : 'queryDetail'
+      api[queryDetailApi]({
+        id: $row.id || null
       }).then(res => {
         // 编辑前重赋值
         FORM_CONFIG.adoptData.formData.forEach((item, index) => {
@@ -190,7 +231,8 @@ export default {
       this.topQueryTypeMonthDetail($row)
     },
     topQueryTypeMonthDetail($row) {
-      api.topQueryTypeMonthDetail({
+      const typeMonthDetailApi = this.activeName === '0' ? 'topQueryTypeMonthDetail' : 'queryTypeMonthDetail'
+      api[typeMonthDetailApi]({
         idList: $row.agentTradeIdList
       }).then(res => {
         if (res.object) {
