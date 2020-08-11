@@ -8,7 +8,7 @@ export const WXMSRARD_CONFIG = {
       labelWidth: '100px',
       style: 'width:294px',
       datatype: 'date',
-      format: 'yyyy-MM-dd'
+      format: 'yyyy-MM-dd HH:mm:ss'
     },
     {
       type: 'uploadFile',

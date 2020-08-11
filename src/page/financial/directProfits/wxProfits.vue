@@ -105,25 +105,25 @@ export default {
   },
   mounted() {
     // this.getData()
-    var myDate = new Date()
-    if (myDate.getMonth() < 10) {
-      this.tradeMonth = myDate.getFullYear() + "-" + "0" + myDate.getMonth() + "-" + "01"
-      this.params = {
-        tradeMonth: this.tradeMonth + " 00:00:00"
-      }
-    } else {
-      this.tradeMonth = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + "01"
-      this.params = {
-        tradeMonth: this.tradeMonth + " 00:00:00"
-      }
-    }
+    // var myDate = new Date()
+    // if (myDate.getMonth() < 10) {
+    //   this.rewardDate = myDate.getFullYear() + "-" + "0" + myDate.getMonth() + "-" + "01"
+    //   this.params = {
+    //     tradeMonth: this.tradeMonth + " 00:00:00"
+    //   }
+    // } else {
+    //   this.rewardDate = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + "01"
+    //   this.params = {
+    //     tradeMonth: this.tradeMonth + " 00:00:00"
+    //   }
+    // }
     // this.ruleform()
   },
   methods: {
     search($ruleform) {
       // console.log('adefe0', $ruleform.date)
       this.params = {
-        tradeMonth: $ruleform.date ? $ruleform.date : this.tradeMonth,
+        rewardDate: $ruleform.date ? $ruleform.date : "",
         agentNo: $ruleform.inputSelect === 'merchantNo' ? $ruleform.inputForm : "",
         agentName: $ruleform.inputSelect === 'merchantName' ? $ruleform.inputForm : ""
       }

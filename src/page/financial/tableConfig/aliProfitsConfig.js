@@ -1,7 +1,7 @@
 export const SERVICE_CONFIG = {
   gridConfig: [
     {
-      label: '业务周期',
+      label: '奖励核算时间',
       prop: 'businessDate'
     },
     {

@@ -91,18 +91,18 @@ export default {
   },
   mounted() {
     // this.getData()
-    var myDate = new Date()
-    if (myDate.getMonth() < 10) {
-      this.tradeMonth = myDate.getFullYear() + "-" + "0" + myDate.getMonth() + "-" + "01"
-      this.params = {
-        tradeMonth: this.tradeMonth
-      }
-    } else {
-      this.tradeMonth = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + "01"
-      this.params = {
-        tradeMonth: this.tradeMonth
-      }
-    }
+    // var myDate = new Date()
+    // if (myDate.getMonth() < 10) {
+    //   this.tradeMonth = myDate.getFullYear() + "-" + "0" + myDate.getMonth() + "-" + "01"
+    //   this.params = {
+    //     tradeMonth: this.tradeMonth
+    //   }
+    // } else {
+    //   this.tradeMonth = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + "01"
+    //   this.params = {
+    //     tradeMonth: this.tradeMonth
+    //   }
+    // }
     // this.ruleform()
   },
   methods: {
