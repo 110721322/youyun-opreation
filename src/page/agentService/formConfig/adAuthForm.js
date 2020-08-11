@@ -10,9 +10,9 @@ export const FORM_CONFIG = {
         label: '广告权限',
         key: 'baseData',
         urlOptions: {
-          url: apiAgent.queryAllAdvertType,
-          keyName: 'advertType',
-          valueName: 'advertTypeDesc',
+          url: apiAgent.queryAllPrivilege,
+          keyName: 'privilege',
+          valueName: 'privilegeDesc',
           method: 'get'
         }
       }

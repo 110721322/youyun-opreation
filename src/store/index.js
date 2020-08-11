@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
+import utils from "../libs/kit/utils";
 
 /* 导入模块 */
 import admin from './modules/admin';
@@ -17,9 +18,36 @@ const store = new Vuex.Store({
   modules: {
     admin, role, system, dataMarket
   },
-  strict: process.env.NODE_ENV !== 'prod',
+  mutations: {
+    /**
+     * 重置state
+     * @param $state
+     * @constructor
+     */
+    RESET_STATE ($state) {
+      for (const module in $state) {
+        if ($state.hasOwnProperty(module)) {
+          for (const state in $state[module]) {
+            if ($state[module].hasOwnProperty(state)) {
+              if (utils.isArr($state[module][state])) {
+                $state[module][state] = [];
+              } else {
+                $state[module][state] = null;
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  actions: {
+    resetState: ({ commit }) => {
+      commit('RESET_STATE')
+    }
+  },
+  strict: process.env.NODE_ENV !== 'production',
   plugins: [createPersistedState(
-    {storage: window.sessionStorage}
+    {storage: window.localStorage}
   )]
 })
 

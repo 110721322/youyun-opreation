@@ -53,7 +53,7 @@
               </el-input>
               <el-input
                 v-model="ruleForm2.verification"
-                type="password"
+                type="text"
                 class="login-input"
                 name="code"
                 placeholder="请输入验证码"
@@ -89,8 +89,8 @@
                 <i slot="prefix" class="el-input__icon el-icon-user"></i>
               </el-input>
               <el-input
-                v-model="ruleForm3.verification"
-                type="password"
+                v-model="ruleForm3.code"
+                type="text"
                 class="login-input"
                 placeholder="请输入验证码"
                 size="large"
@@ -108,19 +108,9 @@
                   >{{ countChangeTime + " s" }}</span>
                 </template>
               </el-input>
-            </div>
-            <div class="btn-box">
-              <el-button type="primary" class="login-btn" @click="setNewPasswd">下一步</el-button>
-            </div>
-            <div class="bottom-box">已有账号？<span @click="toAccountLogin">立即登录</span></div>
-          </template>
-          <template v-if="activeType==='setNewPasswd'">
-            <div class="type-box">
-              <span class="active-type">修改密码</span>
-            </div>
-            <div class="input-box">
               <el-input
-                v-model="ruleForm4.newPasswd"
+                v-model="ruleForm3.password"
+                type="password"
                 class="login-input"
                 placeholder="请输入新密码"
                 size="large"
@@ -128,7 +118,7 @@
                 <i slot="prefix" class="el-input__icon el-icon-lock"></i>
               </el-input>
               <el-input
-                v-model="ruleForm4.newPasswdAgain"
+                v-model="ruleForm3.passwordSecond"
                 type="password"
                 class="login-input"
                 placeholder="再次输入新密码"
@@ -237,14 +227,12 @@
 </template>
 <script type="text/ecmascript-6">
 import api from "@/api/api_login";
-// import WBT from "@/libs/kit/webSocket"
 import io from "socket.io-client"
 import {computedRoleRouter} from '@/libs/role'
 import currRouter from '@/router/addRouter'
 import { mapActions } from 'vuex';
 import store from '@/store';
 import areaData from "@/assets/data/areaData";
-// import * as g from '@/libs/global';
 
 export default {
   components: {},
@@ -265,12 +253,11 @@ export default {
         verification: ""
       },
       ruleForm3: {
+        system: 'operation',
         phone: "",
-        verification: ""
-      },
-      ruleForm4: {
-        newPasswd: "",
-        newPasswdAgain: ""
+        code: "",
+        password: "",
+        passwordSecond: ""
       },
       registerForm: {
         businessType: null,
@@ -310,7 +297,7 @@ export default {
   created() {},
   methods: {
     ...mapActions([
-      'saveAccessToken', 'saveUserInfo', 'setRolePermission', 'saveRoutersArr'
+      'saveAccessToken', 'saveUserInfo', 'saveRoutersArr'
     ]),
     changeCounty($codes) {
       this.registerForm['provinceCode'] = $codes[0];
@@ -318,33 +305,35 @@ export default {
       this.registerForm['areaCode'] = $codes[2];
     },
     onClick_changePassword() {
-      if (!this.ruleForm4.newPasswd) {
+      if (!this.ruleForm3.code) {
+        this.$alert("请输入验证码");
+        return;
+      }
+      if (!this.ruleForm3.password) {
         this.$alert("请输入新密码");
         return;
       }
-      if (!this.ruleForm4.newPasswdAgain) {
+      if (!this.ruleForm3.passwordSecond) {
         this.$alert("请再次输入新密码");
         return;
       }
-      if (this.ruleForm4.newPasswd.length < 6) {
+      if (this.ruleForm3.password.length < 6) {
         this.$alert("密码长度不能小于6位");
         return;
       }
-      if (this.ruleForm4.newPasswd !== this.ruleForm4.newPasswdagain) {
+      if (this.ruleForm3.password !== this.ruleForm3.passwordSecond) {
         this.$alert("两次密码输入不一致");
         return;
       }
       api
-        .changePassword({
-          newPassword: this.ruleForm4.newPasswd,
-          confirmPassword: this.ruleForm4.newPasswdAgain
-        })
+        .changePassword(this.ruleForm3)
         .then(res => {
+          this.$message({
+            type: "success",
+            message: "修改成功"
+          })
           this.toAccountLogin();
         })
-        .catch(err => {
-          this.$alert(err);
-        });
     },
     onClick_sendLoginCode() {
       const that = this;
@@ -373,6 +362,7 @@ export default {
         });
     },
     onClick_sendChangeCode() {
+      const that = this;
       if (!this.ruleForm3.phone) {
         this.$alert("请输入手机号");
         return;
@@ -388,42 +378,23 @@ export default {
 
       api
         .getSmsCode({
-          userName: this.ruleForm3.phone
+          phone: this.ruleForm3.phone,
+          system: 'operation'
         })
         .then(res => {
+          this.countLoginTime = 60;
+          const interval = setInterval(() => {
+            if (that.countLoginTime > 0) {
+              that.countLoginTime--;
+            } else {
+              clearInterval(interval);
+            }
+          }, 1000);
           this.$message("已发送");
         })
-        .catch(err => {
-          this.countChangeTime = 0;
-          clearInterval(interval);
-          this.$message(err);
+        .catch(() => {
+          this.countLoginTime = 0;
         });
-    },
-    setNewPasswd() {
-      if (!this.ruleForm3.phone) {
-        this.$alert("请输入手机号");
-        return;
-      }
-      if (!this.ruleForm3.verification) {
-        this.$alert("请输入验证码");
-        return;
-      }
-      api
-        .forgetPassword({
-          loginType: 1,
-          code: this.ruleForm3.verification,
-          id: 40290,
-          userName: this.ruleForm3.phone
-        })
-        .then(res => {
-          this.toSetNewPasswd();
-        })
-        .catch(err => {
-          this.$alert(err);
-        });
-    },
-    toSetNewPasswd() {
-      this.activeType = "setNewPasswd";
     },
     toChangePasswd() {
       this.activeType = "changePasswd";
@@ -457,15 +428,23 @@ export default {
      * @param res
      */
     loginCallBack(res) {
+      if (res.status === 1) {
+        if (res.code === 1010) { // 未注册，前往注册
+          this.onClick_changeregister();
+        } else if (res.code === 1040) { // 审核未通过，前往审核等待页
+          this.$router.push({path: "/registSuccess"})
+        }
+        return;
+      }
       const userId = res.object.user.id
       const roleId = res.object.user.roleId
       this.saveAccessToken(res.object.accessToken)
       this.saveUserInfo(res.object.user)
-      // this.connactWebSocket({
-      //   from: 'operation',
-      //   userId: userId,
-      //   accessToken: res.object.accessToken
-      // })
+      this.connactWebSocket({
+        from: 'operation',
+        userId: userId,
+        accessToken: res.object.accessToken
+      })
       api.queryUserVueRouterList({
         userToken: res.object.accessToken,
         system: 'operation',
@@ -482,12 +461,17 @@ export default {
       })
     },
     connactWebSocket ($params) {
-      const url = `http://192.168.2.49:10443/ws?from=${$params.from}&userId=${$params.userId}&accessToken=${$params.accessToken}`
-      const webSocket = io(url, {transports: ['websocket']})
-      webSocket.on('connect', function() {
-        console.log('连上了')
-      });
-      console.log(webSocket);
+      const from = $params.from ? $params.from : "";
+      const userId = $params.userId ? $params.userId : "";
+      const accessToken = $params.accessToken ? $params.accessToken : "";
+      const ticket = $params.ticket ? $params.ticket : "";
+      let query;
+      if (ticket) {
+        query = {from, ticket};
+      } else {
+        query = {from, userId, accessToken};
+      }
+      return this.saveWebsocketOption(query);
     },
     addRoutes() {
       const menuItems = store.state.role.routes;
@@ -525,9 +509,9 @@ export default {
       api.registerTopAgent(this.registerForm).then(res => {
         this.$message({
           type: 'succcess',
-          message: '注册成功，前往登陆'
-        })
-        this.onClick_changelogin();
+          message: '注册成功'
+        });
+        this.$router.push({path: '/registSuccess'})
       })
     }
   }

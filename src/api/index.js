@@ -12,9 +12,8 @@ axios.defaults.withCredentials = true;
 axios.interceptors.request.use((config) => {
   // 设置全局参数
   config.timeout = 10000;
-  config.headers.common.userToken = localStorage.getItem('token-merchant') || '';
   config.headers.common.client = 'WEB';
-  config.headers.common.Access_token = localStorage.getItem('accessToken') || ''
+  config.headers.common.Access_token = store.state.admin.accessToken || ''
   // 参数格式为form data(默认request payload)
 
   for (const field in config.data) {
@@ -41,6 +40,24 @@ axios.interceptors.response.use((response) => {
   Loading.service().close();
   if (response.data && response.data.status === 0) {
     return response;
+  } else if (response.data && response.data.status === 1 && response.data.code !== null) {
+    if (response.data.code === -1) { // 口令过期
+      Message({
+        message: response.data.errorMessage || "登录失效，请重新登录",
+        duration: 1500,
+        type: 'error'
+      })
+      store.dispatch('resetState');
+      router.replace('/login');
+      return Promise.reject(response.data);
+    } else {
+      Message({
+        message: response.data.errorMessage || "出现错误，请稍后再试",
+        duration: 1500,
+        type: 'warning'
+      })
+      return response;
+    }
   } else {
     Message({
       message: response.data.errorMessage || "出现错误，请稍后再试",
@@ -60,7 +77,7 @@ axios.interceptors.response.use((response) => {
 
       case 401:
         error.message = '未授权，请登录';
-        store.dispatch('saveAccessToken', null);
+        store.dispatch('resetState');
         router.replace('/login');
         break;
 
