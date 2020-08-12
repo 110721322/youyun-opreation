@@ -296,7 +296,7 @@ export default {
   created() {},
   methods: {
     ...mapActions([
-      'saveAccessToken', 'saveUserInfo', 'saveRoutersArr'
+      'saveAccessToken', 'saveUserInfo', 'saveRoutersArr', 'saveWebsocketOption'
     ]),
     changeCounty($codes) {
       this.registerForm['provinceCode'] = $codes[0];
