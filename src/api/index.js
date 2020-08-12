@@ -3,16 +3,7 @@ import qs from 'qs';
 import { Loading, Message } from 'element-ui';
 import store from '@/store';
 import router from "@/router"
-// import Vue from 'vue';
-// import web_config from 'libs/config/config';
 import * as g from '../libs/global';
-
-// const _this = new Vue();
-// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-// axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
-// axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? web_config.devServer : web_config.server;
-// axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
-// axios.defaults.baseURL = g.config.server;
 
 axios.defaults.timeout = g.config.timeout;
 axios.defaults.withCredentials = true;
@@ -21,21 +12,18 @@ axios.defaults.withCredentials = true;
 axios.interceptors.request.use((config) => {
   // 设置全局参数
   config.timeout = 10000;
-  config.headers.common.userToken = localStorage.getItem('token-merchant') || '';
   config.headers.common.client = 'WEB';
-  config.headers.common.Access_token = localStorage.getItem('accessToken') || ''
-  // console.log(config);
+  config.headers.common.Access_token = store.state.admin.accessToken || ''
   // 参数格式为form data(默认request payload)
 
+  for (const field in config.data) {
+    if (g.utils.isNull(config.data[field]) || g.utils.isUndefined(config.data[field])) {
+      config.data[field] = '';
+    }
+  }
   if (config.method === 'post' && config.needFormData) {
     config.data.merchantNo = localStorage.getItem('userInfo-merchant') ? JSON.parse(localStorage.getItem('userInfo-merchant')).merchantNo : '';
     config.data = qs.stringify(config.data);
-  } else if (config.method === 'post' && Object.keys(config.data).length === 1) {
-    if (!config.changeContent) {
-      config.data = qs.stringify(config.data);
-    }
-  } else if (config.method === 'get') {
-    // config.params.merchantNo = localStorage.getItem('userInfo-merchant') ? JSON.parse(localStorage.getItem('userInfo-figmerchant')).merchantNo : '';
   }
   if (JSON.stringify(config.data) === "{}") {
     config.data = null;
@@ -52,6 +40,24 @@ axios.interceptors.response.use((response) => {
   Loading.service().close();
   if (response.data && response.data.status === 0) {
     return response;
+  } else if (response.data && response.data.status === 1 && response.data.code !== null) {
+    if (response.data.code === -1) { // 口令过期
+      Message({
+        message: response.data.errorMessage || "登录失效，请重新登录",
+        duration: 1500,
+        type: 'error'
+      })
+      store.dispatch('resetState');
+      router.replace('/login');
+      return Promise.reject(response.data);
+    } else {
+      Message({
+        message: response.data.errorMessage || "出现错误，请稍后再试",
+        duration: 1500,
+        type: 'warning'
+      })
+      return response;
+    }
   } else {
     Message({
       message: response.data.errorMessage || "出现错误，请稍后再试",
@@ -71,7 +77,7 @@ axios.interceptors.response.use((response) => {
 
       case 401:
         error.message = '未授权，请登录';
-        store.dispatch('saveAccessToken', null);
+        store.dispatch('resetState');
         router.replace('/login');
         break;
 

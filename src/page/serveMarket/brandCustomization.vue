@@ -2,17 +2,17 @@
   <div class="main_page">
     <router-view v-if="this.$route.path.indexOf('/domainCustomer') !== -1" />
     <div v-else class="content">
-      <div class="card">
+      <div class="card" v-for="(item,index) in modelList" :key="index">
         <div class="top">
           <div class="left_img">
             <img src="../../assets/img/domain_photo.png" alt="">
           </div>
           <div class="right_info">
-            <div class="card_title">域名定制</div>
-            <div class="card_subtitle">涉及各个平台，对于域名进行定制</div>
+            <div class="card_title">{{ item.productName }}</div>
+            <div class="card_subtitle">{{ item.productDesc }}</div>
           </div>
         </div>
-        <button class="btn" @click="onclick_buy">立即购买</button>
+        <button class="buy_btn" @click="onclick_btn(item)">{{ item.buyStatus===0 ? '立即购买' : '立即进入' }}</button>
       </div>
       <div class="more">
         <img src="../../assets/img/more_icon.png" alt="">
@@ -23,11 +23,29 @@
 </template>
 
 <script>
+import api from "@/api/api_serveMarket";
 export default {
+  data() {
+    return {
+      modelList: []
+    }
+  },
+  created() {
+    this.getModel()
+  },
   methods: {
-    onclick_buy() {
+    onclick_btn($data) {
+      localStorage.setItem('productItem', JSON.stringify($data))
       this.$router.push({
         path: "/serveMarket/brandCustomization/domainCustomer"
+      })
+    },
+    getModel() {
+      api.selectModuleProduct({
+        moduleCode: 'brandCustom'
+      }).then(res => {
+        const modelList = res.object
+        this.modelList = modelList
       })
     }
   }

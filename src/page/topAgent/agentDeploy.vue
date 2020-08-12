@@ -73,6 +73,7 @@ export default {
       }
     },
     deployStart($row) {
+      console.log($row);
       this.updateTopSourceCodeDeployStatus({
         channelAgentCode: $row.channelAgentCode,
         status: 2

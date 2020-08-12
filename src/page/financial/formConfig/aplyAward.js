@@ -13,7 +13,8 @@ export const SEARARD_CONFIG = {
     {
       type: 'uploadFile',
       label: '上传文件',
-      key: 'excil'
+      key: 'excil',
+      dateurl: "excel/dragonfly_reward.xls"
     }
   ]
 }

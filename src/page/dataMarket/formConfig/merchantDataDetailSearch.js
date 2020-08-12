@@ -1,4 +1,5 @@
 import areaData from "@/assets/data/areaData";
+import store from "@/store";
 import { MERCHANT_SEARCH_CONDITION } from "../../../libs/data/permissionBtns";
 
 export const FORM_CONFIG = {
@@ -16,7 +17,7 @@ export const FORM_CONFIG = {
     {
       type: 10,
       label: '精准筛选',
-      key: '',
+      key: 'field',
       class: 'max-width',
       options: [
         {
@@ -44,48 +45,20 @@ export const FORM_CONFIG = {
       key: 'category',
       style: 'width:294px',
       labelWidth: '100px',
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
-    },
-    {
-      type: 1,
-      label: '是否开通会员',
-      key: 'member',
-      style: 'width:294px',
-      labelWidth: '185px',
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
+      options: store.state.dataMarket.categoryList
     },
     {
       type: 8,
       label: '地区',
       key: 'area',
       style: 'width:294px',
-      options: areaData,
+      options: areaData.map(province => {
+        province.children = province.children.map(city => {
+          city.children = null;
+          return city;
+        })
+        return province;
+      }),
       labelWidth: '100px',
       class: "clear_both"
     }

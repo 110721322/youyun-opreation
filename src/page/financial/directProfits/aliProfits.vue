@@ -1,5 +1,6 @@
 <template>
   <div class="main_page">
+    <router-view v-if="this.$route.path.indexOf('/profitsDetail') !== -1" />
     <Search open-height="200" :form-base-data="searchConfig.formData" @search="search" />
     <div class="form-table">
       <div class="table-content">
@@ -78,7 +79,7 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import Form from "@/components/form/index.vue";
 import {SEARCH_CONFIG} from "../formConfig/aliProfitsSearch";
 import {SERVICE_CONFIG} from "../tableConfig/aliProfitsConfig";
-import {SEARARD_CONFIG} from "../formConfig/aplyAward";
+import {APISRARD_CONFIG} from "../formConfig/apiAward";
 import api_statistice from "@/api/api_statistice";
 
 export default {
@@ -93,69 +94,48 @@ export default {
       searchHeight: "260",
       searchConfig: SEARCH_CONFIG,
       configData: SERVICE_CONFIG,
-      aplyAwardData: SEARARD_CONFIG,
+      aplyAwardData: APISRARD_CONFIG,
       drawer: false,
       api: api_statistice.aliAgents,
       params: {},
       tradeMonth: '',
-      testData: []
-      // testData: [
-      //   {
-      //     time: '2020-06-18',
-      //     topSrevice: '紫菜麻辣烫',
-      //     amount: '22555',
-      //     user: '253',
-      //     total: '4555'
-      //   }
-      // ]
+      testData: [],
+      apiserver: api_statistice.aliMerchants
     }
   },
   mounted() {
     // this.getData()
-    var myDate = new Date()
-    if (myDate.getMonth() < 10) {
-      this.tradeMonth = myDate.getFullYear() + "-" + "0" + myDate.getMonth() + "-" + "01"
-      this.params = {
-        tradeMonth: this.tradeMonth
-      }
-    } else {
-      this.tradeMonth = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + "01"
-      this.params = {
-        tradeMonth: this.tradeMonth
-      }
-    }
-    // this.ruleform()
+    // var myDate = new Date()
+    // if (myDate.getMonth() < 10) {
+    //   this.tradeMonth = myDate.getFullYear() + "-" + "0" + myDate.getMonth() + "-" + "01"
+    //   this.params = {
+    //     tradeMonth: this.tradeMonth + " 00:00:00"
+    //   }
+    // } else {
+    //   this.tradeMonth = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + "01"
+    //   this.params = {
+    //     tradeMonth: this.tradeMonth + " 00:00:00"
+    //   }
+    // }
   },
   methods: {
     search($ruleform) {
-      // console.log('adefe0', $ruleform.date)
+      console.log($ruleform)
       this.params = {
-        tradeMonth: $ruleform.date ? $ruleform.date : this.tradeMonth,
-        agentNo: $ruleform.inputSelect === 'merchantNo' ? $ruleform.inputForm : "",
-        agentName: $ruleform.inputSelect === 'merchantName' ? $ruleform.inputForm : ""
+        rewardDate: $ruleform.date ? $ruleform.date : "",
+        agentNo: $ruleform.inputSelect === 'agentNo' ? $ruleform.inputForm : "",
+        agentName: $ruleform.inputSelect === 'agentName' ? $ruleform.inputForm : ""
       }
-      // console.log(this.params)
     },
-    // getData() {
-    //   this.testData = [
-    //     {
-    //       time: '2020-06-18',
-    //       topSrevice: '紫菜麻辣烫',
-    //       active: '22555',
-    //       user: '253',
-    //       total: '4555'
-    //     }
-    //   ]
-    // },
     openDraw() {
       this.drawer = true
     },
     confirm($filel) {
       console.log($filel)
       api_statistice.excelTemplate({
-        rewardDate: $filel.date,
+        param: $filel.date,
         type: "alipayRewardInput",
-        url: $filel.excil.dialogImagePath + $filel.excil.dialogImageUrl
+        url: $filel.excil.dialogImageUrl
       }).then(res => {
         console.log(res)
       }).catch(err => {
@@ -168,7 +148,13 @@ export default {
     },
     handleDetail($row) {
       this.$router.push({
-        path: '/financial/directProfits/profitsDetail'
+        path: '/financial/directProfits/aliProfits/profitsDetail',
+        query: {
+          agentNo: $row.agentNo,
+          rewardDate: this.params.tradeMonth,
+          merchantName: $row.merchantName,
+          apiserver: this.apiserver
+        }
       })
     }
   }

@@ -54,7 +54,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['saveAccessToken']),
+    ...mapActions(['resetState']),
     toggleSideBar() {
       const openSlider = localStorage.getItem("openSlider");
       // eslint-disable-next-line eqeqeq
@@ -68,12 +68,9 @@ export default {
           userToken: this.$store.state.admin.accessToken
         })
         .then(res => {
-          this.saveAccessToken(null);
+          this.resetState();
           this.$router.replace(`/login?redirect=${this.$route.fullPath}`);
         })
-        .catch(err => {
-          this.$message(err);
-        });
     }
   }
 };

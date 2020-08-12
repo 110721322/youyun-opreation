@@ -224,8 +224,8 @@ export default {
 <style lang="scss" scoped>
 
   .avatar-uploader {
-    width: 294px;
-    min-height: 178px;
+    max-width: 294px;
+    min-height: 148px;
     float: left;
     .avatar {
       width: 100%;
@@ -241,7 +241,11 @@ export default {
   .el-upload img {
     max-width: 294px;
   }
-
+  .el-upload {
+    /deep/ .el-upload--picture-card {
+      overflow: hidden;
+    }
+  }
   .el-upload i {
     position: relative;
     overflow: hidden;
@@ -293,6 +297,7 @@ export default {
       display: block;
       height: 100%;
       margin: 0 auto;
+      object-fit: cover;
     }
   }
 </style>

@@ -14,7 +14,17 @@ export const USER_CONFIG = {
       label: '开通通道情况',
       width: '200px',
       customHead: true,
-      prop: 'channelList'
+      prop: [
+        {
+          key: 'merchantName'
+        },
+        {
+          key: 'merchantName'
+        },
+        {
+          key: 'merchantName'
+        }
+      ]
       // render: (h, params) => {
       //   const status = params.row.channelList;
       //   return h('div', {
@@ -34,7 +44,7 @@ export const USER_CONFIG = {
     },
     {
       label: '所属运营',
-      prop: 'operateUserNo',
+      prop: 'operationName',
       width: '150px'
     }
 

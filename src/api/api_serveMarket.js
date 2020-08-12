@@ -52,5 +52,11 @@ export default {
   // 顶级服务商订单查询
   selectTopAgentOrder: (params) => API.GET('/operation/v1/market/selectTopAgentOrder', params),
   // 已获得的优惠码
-  getPromoCodeListByChannelAgentCode: (params) => API.POST('/operation/v1/promoCode/getPromoCodeListByChannelAgentCode', params)
+  getPromoCodeListByChannelAgentCode: (params) => API.POST('/operation/v1/promoCode/getPromoCodeListByChannelAgentCode', params),
+  // 域名定制-定制详情
+  domainGenerationDetail: (params) => API.GET('/operation/v1/market/domainGenerationDetail', params),
+  // 短信充值-剩余接口数量查询
+  getSmsCount: (params) => API.GET('/operation/v1/market/getSmsCount', params),
+  // 乐刷通道配置信息详情
+  getLeShuaDetail: (params) => API.GET('/operation/v1/market/getLeShuaDetail', params)
 };

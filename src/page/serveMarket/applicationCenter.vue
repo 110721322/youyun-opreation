@@ -2,17 +2,19 @@
   <div class="main_page">
     <router-view v-if="this.$route.path.indexOf('/messageCustomer') !== -1 " />
     <div v-else class="content">
-      <div class="card">
+      <div v-for="(item,index) in modelList" :key="index" class="card">
         <div class="top">
           <div class="left_img">
             <img src="../../assets/img/message_photo.png" alt="">
           </div>
           <div class="right_info">
-            <div class="card_title">短信充值</div>
-            <div class="card_subtitle">短信充值，用于系统/人工发送短信</div>
+            <div class="card_title">{{ item.productName }}</div>
+            <div class="card_subtitle">{{ item.productDesc }}</div>
           </div>
         </div>
-        <button class="btn" @click="onclick_buy">立即购买</button>
+        <div class="card_btn">
+          <button class="buy_btn" @click="onclick_btn(item)">{{ item.buyStatus===0 ? '立即购买' : '立即进入' }}</button>
+        </div>
       </div>
       <div class="more">
         <img src="../../assets/img/more_icon.png" alt="">
@@ -23,11 +25,29 @@
 </template>
 
 <script>
+import api from "@/api/api_serveMarket";
 export default {
+  data() {
+    return {
+      modelList: []
+    }
+  },
+  created() {
+    this.getModel()
+  },
   methods: {
-    onclick_buy() {
+    onclick_btn($data) {
+      localStorage.setItem('productItem', JSON.stringify($data))
       this.$router.push({
         path: "/serveMarket/applicationCenter/messageCustomer"
+      })
+    },
+    getModel() {
+      api.selectModuleProduct({
+        moduleCode: 'applicationCenter'
+      }).then(res => {
+        const modelList = res.object
+        this.modelList = modelList
       })
     }
   }
@@ -55,6 +75,24 @@ export default {
     background: #ffffff;
     padding: 24px 0 24px 24px;
     margin-right: 24px;
+  }
+  .card_btn {
+    width: 100%;
+    display: flex;
+    margin-top: 25px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .buy_btn {
+    width: 112px;
+    height: 40px;
+    background: #1989FA;
+    border: 1px solid #1989FA;
+    line-height: 40px;
+    color: #ffffff;
+    text-align: center;
+    font-size: 14px;
+    border-radius: 4px;
   }
   .top {
     display: flex;

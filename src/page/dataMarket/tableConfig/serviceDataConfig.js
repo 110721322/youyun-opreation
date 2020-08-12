@@ -46,12 +46,12 @@ export const MERCHANTDATACONFIG2 = {
     },
     {
       label: "服务商名称",
-      prop: "channelAgentCode",
+      prop: "agentName",
       width: "196px"
     },
     {
       label: "新增商户数",
-      prop: "newMerchantNum",
+      prop: "newMerchantCount",
       width: "112px"
     }
   ]
@@ -101,18 +101,24 @@ export const MERCHANTDATACONFIG4 = {
     },
     {
       label: "服务商名称",
-      prop: "name",
+      prop: "agentName",
       width: "176px"
     },
     {
       label: "刷脸交易额",
-      prop: "amount",
-      width: "176px"
+      prop: "actualAmount",
+      width: "176px",
+      formatter($row) {
+        return '¥' + $row['actualAmount'];
+      }
     },
     {
       label: "占比",
-      prop: "perc",
-      width: "70px"
+      prop: "ratio",
+      width: "70px",
+      formatter($row) {
+        return $row['ratio'] + '%';
+      }
     }
   ]
 }
@@ -131,13 +137,16 @@ export const MERCHANTDATACONFIG5 = {
     },
     {
       label: "服务商名称",
-      prop: "channelAgentCode",
+      prop: "agentName",
       width: "176px"
     },
     {
       label: "交易额",
-      prop: "tradeAmount",
-      width: "70px"
+      prop: "actualAmount",
+      width: "70px",
+      formatter($row) {
+        return '¥' + $row['actualAmount'];
+      }
     }
   ]
 }

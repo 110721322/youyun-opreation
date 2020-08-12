@@ -1,5 +1,5 @@
 import areaData from "@/assets/data/areaData";
-import apiAgent from "@/api/api_agent.js";
+import apiMerchant from "@/api/api_merchant.js";
 
 export const FORM_CONFIG = {
   formData: [
@@ -48,16 +48,20 @@ export const FORM_CONFIG = {
       style: 'width:294px',
       options: [
         {
-          label: '川菜',
+          label: '乐刷',
           value: "0"
         },
         {
-          label: '粤菜',
+          label: '新大陆',
           value: "1"
         },
         {
-          label: '杭帮菜',
+          label: '支付宝直连',
           value: "2"
+        },
+        {
+          label: '微信直连',
+          value: "3"
         }
       ]
     },
@@ -69,16 +73,20 @@ export const FORM_CONFIG = {
       labelWidth: '185px',
       options: [
         {
-          label: '川菜',
-          value: "0"
+          label: '乐刷',
+          value: "index"
         },
         {
-          label: '粤菜',
+          label: '新大陆',
           value: "1"
         },
         {
-          label: '杭帮菜',
+          label: '支付宝直连',
           value: "2"
+        },
+        {
+          label: '微信直连',
+          value: "3"
         }
       ]
     },
@@ -190,12 +198,12 @@ export const FORM_CONFIG = {
     {
       type: 1,
       label: '所属运营',
-      key: 'operateNo',
+      key: 'name',
       class: "clear_both",
       urlOptions: {
-        url: apiAgent.queryAllOperation,
-        keyName: 'operationId',
-        valueName: 'operationName',
+        url: apiMerchant.queryInit,
+        keyName: 'object.userDTOList[0]',
+        valueName: 'name',
         method: 'get'
       }
     }

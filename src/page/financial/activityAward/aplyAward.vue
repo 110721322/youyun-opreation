@@ -91,18 +91,18 @@ export default {
   },
   mounted() {
     // this.getData()
-    var myDate = new Date()
-    if (myDate.getMonth() < 10) {
-      this.tradeMonth = myDate.getFullYear() + "-" + "0" + myDate.getMonth() + "-" + "01"
-      this.params = {
-        tradeMonth: this.tradeMonth
-      }
-    } else {
-      this.tradeMonth = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + "01"
-      this.params = {
-        tradeMonth: this.tradeMonth
-      }
-    }
+    // var myDate = new Date()
+    // if (myDate.getMonth() < 10) {
+    //   this.tradeMonth = myDate.getFullYear() + "-" + "0" + myDate.getMonth() + "-" + "01"
+    //   this.params = {
+    //     tradeMonth: this.tradeMonth
+    //   }
+    // } else {
+    //   this.tradeMonth = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + "01"
+    //   this.params = {
+    //     tradeMonth: this.tradeMonth
+    //   }
+    // }
     // this.ruleform()
   },
   methods: {
@@ -128,11 +128,12 @@ export default {
       this.drawer = true
     },
     confirm($filel) {
-      console.log($filel)
+      // console.log($filel)
+      // $filel.excil.dialogImagePath +
       api_statistice.excelTemplate({
         param: $filel.date,
         type: "dragonflyInput",
-        url: $filel.excil.dialogImagePath + $filel.excil.dialogImageUrl
+        url: $filel.excil.dialogImageUrl
       }).then(res => {
         console.log(res)
       }).catch(err => {

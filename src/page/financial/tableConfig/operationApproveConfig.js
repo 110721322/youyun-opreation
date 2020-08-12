@@ -1,23 +1,28 @@
 export const OPERATIONAPPROVE_CONFIG = {
   gridConfig: [
     {
-      label: '服务商',
-      prop: [{ key: 'agentName' }, { key: 'agentNo', label: 'ID:' }],
+      label: '顶级服务商',
+      prop: [{ key: 'channelAgentName' }, { key: 'channelAgentCode', label: 'ID:' }],
       width: '90px'
     },
     {
       label: '结算金额(元) | 实际结算金额(元)',
-      prop: [{ key: 'settleCommission', label: '结算金额:' }, { key: 'actualSettleCommission', label: '实际结算金额:' }],
+      prop: [{ key: 'actualAmount', label: '结算金额:' }, { key: 'actualSettleCommission', label: '实际结算金额:' }],
       width: '250px'
     },
     {
       label: '结算类型',
       prop: 'settleType',
-      width: '90px'
+      width: '90px',
+      render: (h, params) => {
+        if (params.row.settleType) {
+          return h('span', 1)
+        }
+      }
     },
     {
       label: '审核状态',
-      prop: 'settleStatus',
+      prop: 'settleStatusName',
       width: '90px'
 
     },
@@ -49,38 +54,38 @@ export const OPERATIONAPPROVE_CONFIG = {
       {
         name: '驳回',
         emitName: 'reject',
-        type: 'text'
-        // isShow: ($row) => {
-        //   if ($row.showReject === true) {
-        //     return true;
-        //   } else {
-        //     return false;
-        //   }
-        // }
+        type: 'text',
+        isShow: ($row) => {
+          if ($row.settleStatus === '61' || $row.settleStatus === '62') {
+            return true;
+          } else {
+            return false;
+          }
+        }
       },
       {
         name: '审核通过',
         emitName: 'adopt',
-        type: 'text'
-        // isShow: ($row) => {
-        //   if ($row.showAdopt === true) {
-        //     return true;
-        //   } else {
-        //     return false;
-        //   }
-        // }
+        type: 'text',
+        isShow: ($row) => {
+          if ($row.settleStatus === '61' || $row.settleStatus === '62') {
+            return true;
+          } else {
+            return false;
+          }
+        }
       },
       {
         name: '审批中',
         emitName: 'reviewing',
-        type: 'text'
-        // isShow: ($row) => {
-        //   if ($row.showReviewing === true) {
-        //     return true;
-        //   } else {
-        //     return false;
-        //   }
-        // }
+        type: 'text',
+        isShow: ($row) => {
+          if ($row.settleStatus === '21' || $row.settleStatus === '22') {
+            return true;
+          } else {
+            return false;
+          }
+        }
       }
     ]
   },

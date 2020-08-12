@@ -1,17 +1,17 @@
 <template>
   <div class="main_page">
     <div class="top_content">
-      <div class="warn" v-if="showTip">
+      <div v-if="showTip" class="warn">
         <div class="left_icon">i</div>
-        <span>已购买该服务，有效期到：{{ expireDate }} 。再次购买后服务到期时间将累加</span>
+        <span>已购买该服务，有效期到：{{ productItem.expireDate }} 。再次购买后服务到期时间将累加</span>
         <img src="../../assets/img/cancle.png" alt="" @click="closeWarn">
       </div>
       <div class="buy_info">
         <img class="buy_img" src="../../assets/img/new_image.png" alt="">
         <div class="buy_all">
           <div class="first_body">
-            <div class="buy_title">小马哥代理</div>
-            <div class="buy_subtitle">添加的下级服务商直接走小马哥代理，安全稳定。小马哥提供系统升级及维护</div>
+            <div class="buy_title">{{ productItem.productName }}</div>
+            <div class="buy_subtitle">{{ productItem.productDesc }}</div>
             <img class="buy_photo" src="" alt="">
           </div>
           <div class="second_body">
@@ -69,21 +69,17 @@ export default {
   data () {
     return {
       selectIndex: 0,
-      productCode: '',
       comboList: [],
       comboPrice: 0,
-      buyStatus: null,
-      expireDate: '',
       showTip: false,
-      comboItem: {}
+      comboItem: {},
+      productItem: {}
     }
   },
   created() {
-    this.buyStatus = this.$route.query.buyStatus || null
-    this.expireDate = this.$route.query.expireDate || ''
-    this.productCode = this.$route.query.productCode || ''
+    this.productItem = JSON.parse(localStorage.getItem('productItem'))
     this.getModelDetail()
-    if (this.$route.query.buyStatus) {
+    if (this.productItem.buyStatus) {
       this.showTip = true
     }
   },
@@ -95,18 +91,21 @@ export default {
     },
     onclick_buyserve() {
       localStorage.setItem('comboItem', JSON.stringify(this.comboItem))
-      localStorage.setItem('modelName', '小马哥代理')
-      this.$router.push({
-        path: "/serveMarket/businessModel/subOrder"
-      });
+      if (this.comboItem) {
+        this.$router.push({
+          path: "/serveMarket/businessModel/subOrder"
+        });
+      }
     },
     getModelDetail() {
       api.selectProductCombo({
-        productCode: this.productCode
+        productCode: this.productItem.productCode
       }).then(res => {
-        this.comboList = res.object || []
-        this.comboItem = this.comboList[this.selectIndex] || {}
-        this.comboPrice = this.comboList[this.selectIndex].comboAmount || 0
+        if (res.object) {
+          this.comboList = res.object || []
+          this.comboItem = this.comboList[this.selectIndex] || {}
+          this.comboPrice = this.comboList[this.selectIndex].comboAmount || 0
+        }
       })
     },
     closeWarn() {

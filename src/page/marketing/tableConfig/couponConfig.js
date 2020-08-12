@@ -99,7 +99,14 @@ export const USER_CONFIG = {
       {
         name: '结束该活动',
         emitName: 'stopAcitive',
-        type: 'text'
+        type: 'text',
+        isShow: ($row) => {
+          if ($row.state === '0') {
+            return true;
+          } else {
+            return false;
+          }
+        }
       }
     ]
   }

@@ -5,8 +5,8 @@
         <img src="../../assets/img/message_photo.png" alt="">
       </div>
       <div class="right_info">
-        <div class="right_title">短信充值</div>
-        <div class="right_subtitle">短信充值，用于系统/人工发送短信</div>
+        <div class="right_title">{{ productItem.productName }}</div>
+        <div class="right_subtitle">{{ productItem.productDesc }}</div>
       </div>
     </div>
     <div class="content">
@@ -16,15 +16,15 @@
         </div>
       </div>
       <div v-if="selectIndex===0" class="message_recharge">
-        <div class="relize">当前剩余短信：<span style="color: #1989FA; font-size: 20px">10</span>条</div>
+        <div class="relize">当前剩余短信：<span style="color: #1989FA; font-size: 20px">{{ codeNum }}</span>条</div>
         <div class="select_package">
           <div class="package_label">短信套餐:</div>
-          <div v-for="(item, index) in packageData" :key="index" class="package_select" :class="packageIndex===index?'ispackage': ''" @click="onclick_package(index)">
-            <p>{{ item.num }}条</p>
-            <p>{{ item.price }}元</p>
+          <div v-for="(item, index) in comboList" :key="index" class="package_select" :class="packageIndex===index?'ispackage': ''" @click="onclick_package(item,index)">
+            <p>{{ item.comboCount }}条</p>
+            <p>{{ item.comboAmount }}元</p>
           </div>
         </div>
-        <div class="pay_price"><span>支付金额:</span><span style="color: #F5222D; font-size: 20px;">10</span><span>元</span></div>
+        <div class="pay_price"><span>支付金额:</span><span style="color: #F5222D; font-size: 20px;">{{ comboPrice }}</span><span>元</span></div>
         <div class="pay_way">
           <div class="pay_label">支付方式:</div>
           <div v-for="(item, index) in wayData" :key="index" class="way" :class="wayIndex===index?'isway':''" @click="onclick_way(index)">{{ item.value }}</div>
@@ -44,21 +44,12 @@
         <div v-if="wayIndex===1" class="code">
           <div class="code_label">打款凭证:</div>
           <div class="photo">
-            <el-upload
-              class="avatar-uploader"
-              action="https://jsonplaceholder.typicode.com/posts/"
-              :show-file-list="false"
-              :on-success="handleAvatarSuccess"
-              :before-upload="beforeAvatarUpload"
-            >
-              <img v-if="imageUrl" :src="imageUrl" class="avatar">
-              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-            </el-upload>
+            <Upload :formItem="formItem" :ruleForm="ruleForm" />
           </div>
         </div>
         <div v-if="wayIndex===1" class="see_model">查看示例</div>
         <div v-if="wayIndex===1" class="sub_btn">
-          <button>提交</button>
+          <button @click="onClick_tostatus">提交</button>
         </div>
       </div>
       <div v-if="selectIndex===1" class="table_box">
@@ -70,6 +61,7 @@
           form-title="用户"
           :is-async="true"
           :is-select="false"
+          :api-service="api"
           :hide-edit-area="true"
           :params="params"
         >
@@ -103,9 +95,10 @@
 // import api from "@/api/api_merchant";
 import { USER_CONFIG } from "./tableConfig/messageConfig";
 import BaseCrud from "@/components/table/BaseCrud.vue";
-
+import api from "@/api/api_serveMarket";
+import Upload from "@/components/form/components/Upload.vue";
 export default {
-  components: { BaseCrud },
+  components: { BaseCrud, Upload },
   data() {
     return {
       menu: [
@@ -114,20 +107,6 @@ export default {
         },
         {
           value: '充值记录'
-        }
-      ],
-      packageData: [
-        {
-          num: '1000',
-          price: '10'
-        },
-        {
-          num: '2000',
-          price: '15'
-        },
-        {
-          num: '5000',
-          price: '35'
         }
       ],
       wayData: [
@@ -140,54 +119,82 @@ export default {
       ],
       selectIndex: 0,
       packageIndex: 0,
-      wayIndex: 0,
+      wayIndex: 1,
       imageUrl: '',
       configData: USER_CONFIG,
-      // api: api.queryPageByCondition,
-      testData: [
-        {
-          id: '1',
-          createTime: "2020-06-10"
-        }
-      ],
-      params: {}
+      api: api.rechargeRecords,
+      testData: [],
+      params: {},
+      comboList: [],
+      comboPrice: 0,
+      showTip: false,
+      comboItem: {},
+      productItem: {},
+      formItem: {
+        key: 'imgUrl'
+      },
+      ruleForm: {},
+      codeNum: 0
     }
   },
+  created() {
+    this.productItem = JSON.parse(localStorage.getItem('productItem'))
+    this.getModelDetail()
+    this.getLastCode()
+  },
   mounted() {
-    this.getTableData();
   },
   methods: {
     onclick_head(index) {
       this.selectIndex = index
     },
-    onclick_package(index) {
+    onclick_package(data, index) {
       this.packageIndex = index
+      this.comboItem = data
+      this.comboPrice = data.comboAmount
     },
     onclick_way(index) {
+      if (index === 0) {
+        return;
+      }
       this.wayIndex = index
     },
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg';
-      const isLt2M = file.size / 1024 / 1024 < 2;
-
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!');
-      }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!');
-      }
-      return isJPG && isLt2M;
-    },
-    getTableData() {
-      this.testData = [
-        {
-          id: '1',
-          createTime: "2020-06-10"
+    // 套餐
+    getModelDetail() {
+      api.selectProductCombo({
+        productCode: this.productItem.productCode
+      }).then(res => {
+        if (res.object) {
+          this.comboList = res.object || []
+          this.comboItem = this.comboList[this.selectIndex] || {}
+          this.comboPrice = this.comboList[this.selectIndex].comboAmount || 0
         }
-      ]
+      })
+    },
+    // 剩余短信
+    getLastCode() {
+      api.getSmsCount({}).then(res => {
+        if (res.object) {
+          this.codeNum = res.object
+        }
+      })
+    },
+    onClick_tostatus() {
+      const imageUrl = this.ruleForm.imgUrl.dialogImagePath + this.ruleForm.imgUrl.dialogImageUrl
+      localStorage.setItem('voucher', imageUrl)
+      const params = {
+        comboId: this.comboItem.id,
+        payType: 1,
+        productName: this.productItem.productName,
+        promoCodeId: '',
+        voucher: this.ruleForm.imgUrl.dialogImageUrl
+      }
+      api.createOrder(params).then(res => {
+        if (res.object) {
+          this.$message.success('成功')
+          this.$router.go(-1)
+        }
+      })
     }
   }
 }
@@ -393,10 +400,10 @@ export default {
     margin-right: 12px;
   }
   .photo {
-    width: 100px;
+    /* width: 100px;
     height: 100px;
     border: 1px dashed #d9d9d9;
-    border-radius: 6px;
+    border-radius: 6px; */
     cursor: pointer;
     position: relative;
     overflow: hidden;

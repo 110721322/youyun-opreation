@@ -18,7 +18,10 @@ export const MERCHANTDATADETAILCONFIG = {
     {
       label: "交易额(元)",
       prop: "actualAmount",
-      width: "100px"
+      width: "100px",
+      formatter($row) {
+        return "¥" + $row['actualAmount']
+      }
     },
     {
       label: "笔数(笔)",
@@ -28,27 +31,26 @@ export const MERCHANTDATADETAILCONFIG = {
     {
       label: "客单价(元)",
       prop: "unitPrice",
-      width: "120px"
+      width: "120px",
+      formatter($row) {
+        return "¥" + $row['unitPrice']
+      }
     },
     {
       label: "交易额环比",
       prop: "amountRatio",
-      width: "120px"
+      width: "120px",
+      formatter($row) {
+        return $row['amountRatio'] + "%"
+      }
     },
     {
       label: "笔数环比",
       prop: "countRatio",
-      width: "120px"
-    },
-    {
-      label: "会员交易额(元)",
-      prop: "memberAmount",
-      width: "120px"
-    },
-    {
-      label: "会员交易笔数(笔)",
-      prop: "memberTimes",
-      width: "140px"
+      width: "120px",
+      formatter($row) {
+        return $row['countRatio'] + "%"
+      }
     }
   ],
   hideEditArea: true

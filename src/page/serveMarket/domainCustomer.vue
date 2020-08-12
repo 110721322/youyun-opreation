@@ -5,36 +5,42 @@
         <img src="../../assets/img/domain_photo.png" alt="">
       </div>
       <div class="right_info">
-        <div class="right_title">域名定制</div>
-        <div class="right_subtitle">涉及各个平台，对于域名进行定制</div>
+        <div class="right_title">{{ productItem.productName }}</div>
+        <div class="right_subtitle">{{ productItem.productDesc }}</div>
       </div>
     </div>
     <div class="buy_info">
       <div class="buy_time">
-        <div class="time"><span>服务时间</span><span>长期</span></div>
-        <div class="price"><span>购买价格</span><span>¥</span><span>5000</span></div>
+        <div class="time">
+          <span>服务时间</span>
+          <div v-for="(item, index) in comboList" :key="index" class="select_btn" :class="selectIndex===index? 'select_show' : ''">
+            <button @click="onclick_selectDate(item,index)">{{ item.comboName }}</button>
+          </div>
+        </div>
+        <div class="price"><span>购买价格</span><span>¥</span><span>{{ comboPrice }}</span></div>
       </div>
       <div class="buy_option">
-        <button class="buy_btn">购买服务</button>
+        <button class="buy_btn" @click="onclick_buyserve">购买服务</button>
       </div>
 
     </div>
-    <div class="content">
+    <div v-if="productItem.buyStatus===1" class="content">
       <div class="title">定制详情</div>
       <div class="descript">可对于二级域名进行定制，例如：主域名输入laoban，则oa办公后台地址为：www.laoban.oa.aduer.com。若需要主域名变更则需订购源码模式，<span style="color: #1989FA;">去订购></span></div>
       <domainEditor
+        v-show="!ifHaveDomain"
         :form-base-data="fromConfigData.formData"
         :label-width="'auto'"
         @commit="handleCommit"
       ></domainEditor>
-      <ul v-show="false" class="fill_info">
-        <li><span>主域名:</span><span>www.laoban.oa.aduer.com</span></li>
-        <li><span>oa办公后台:</span><span>www.laoban.oa.aduer.com</span></li>
-        <li><span>服务商后台:</span><span>www.laoban.fx.aduer.com</span></li>
-        <li><span>商户后台:</span><span>www.laoban.sh.aduer.com</span></li>
+      <ul v-show="ifHaveDomain" class="fill_info">
+        <li><span>主域名:</span><span>{{ detail.mainDomain }}</span></li>
+        <li><span>oa办公后台:</span><span>{{ detail.oaDomain }}</span></li>
+        <li><span>服务商后台:</span><span>{{ detail.agentDomain }}</span></li>
+        <li><span>商户后台:</span><span>{{ detail.merchantDomain }}</span></li>
       </ul>
     </div>
-    <div class="operation">
+    <div v-else class="operation">
       <div class="operation_title">操作说明</div>
       <div class="operation_step">
         <div class="left_step">步骤一:</div>
@@ -70,13 +76,76 @@
 <script>
 import domainEditor from "@/components/form/announcementEditForm.vue";
 import { FORM_CONFIG } from "./formConfig/domainConfig";
+import api from "@/api/api_serveMarket";
 export default {
   components: {
     domainEditor
   },
   data() {
     return {
-      fromConfigData: FORM_CONFIG.sendMessageData
+      fromConfigData: FORM_CONFIG.sendMessageData,
+      comboList: [],
+      comboPrice: 0,
+      comboItem: {},
+      productItem: {},
+      selectIndex: 0,
+      detail: {},
+      ifHaveDomain: false
+    }
+  },
+  created() {
+    this.productItem = JSON.parse(localStorage.getItem('productItem'))
+    this.getModelDetail()
+    if (this.productItem.buyStatus === 1) {
+      this.domainGenerationDetail()
+    }
+  },
+  methods: {
+    onclick_selectDate(data, index) {
+      this.comboItem = data
+      this.comboPrice = data.comboAmount
+      this.selectIndex = index
+    },
+    onclick_buyserve() {
+      localStorage.setItem('comboItem', JSON.stringify(this.comboItem))
+      if (this.comboItem.id) {
+        this.$router.push({
+          path: "/serveMarket/businessModel/subOrder"
+        });
+      }
+    },
+    getModelDetail() {
+      api.selectProductCombo({
+        productCode: this.productItem.productCode
+      }).then(res => {
+        if (res.object) {
+          this.comboList = res.object || []
+          this.comboItem = this.comboList[this.selectIndex] || {}
+          this.comboPrice = this.comboList[this.selectIndex].comboAmount || 0
+        }
+      })
+    },
+    handleCommit($val) {
+      api.customDomainGeneration({
+        ...$val
+      }).then(res => {
+        if (res.object) {
+          this.$message.success('成功')
+          this.$router.go(-1)
+        }
+      })
+    },
+    domainGenerationDetail() {
+      api.domainGenerationDetail({}).then(res => {
+        if (res.object) {
+          this.detail = res.object;
+          if (this.detail.mainDomain || this.detail.oaDomain || this.detail.agentDomain || this.detail.merchantDomain) {
+            this.ifHaveDomain = true
+          } else {
+            this.ifHaveDomain = false
+          }
+        }
+      })
     }
   }
 }

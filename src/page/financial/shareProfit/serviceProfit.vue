@@ -2,6 +2,9 @@
   <div class="main_page">
     <router-view v-if="this.$route.path.indexOf('/serviceProfitDetail') !== -1 || this.$route.path.indexOf('/interconnection') !== -1" />
     <div v-else>
+      <div class="main-top">
+        <div v-for="(item, index) in mainData" :key="index" class="main-item" :class="mainIndex===index? 'isSelect': ''" @click="onClick_main(index)">{{ item.value }}</div>
+      </div>
       <Search
         :open-height="searchHeight"
         :form-base-data="searchConfig.formData"
@@ -61,6 +64,8 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import { SEARCH_CONFIG } from "../formConfig/serviceSearch";
 import { SERVICE_CONFIG } from "../tableConfig/serviceConfig";
 import { SERVICE_CONFIG1 } from "../tableConfig/serviceJianConfig";
+import { TOPVICE_CONFIG1 } from "../tableConfig/TopAgentData";
+import { TOPERVICE_CONFIG } from "../tableConfig/TopConfig";
 import api_statistice from "@/api/api_statistice"
 export default {
   components: { Search, BaseCrud },
@@ -69,7 +74,6 @@ export default {
       searchConfig: SEARCH_CONFIG,
       configData: SERVICE_CONFIG,
       configData1: SERVICE_CONFIG1,
-      api: api_statistice.selectAgentDataByPage,
       testData: [],
       searchHeight: '300',
       agendoquery: '',
@@ -88,28 +92,64 @@ export default {
           id: 2
         }
       ],
-      selectIndex: 0
+      mainData: [
+        {
+          value: '顶级服务商',
+          id: 1
+        },
+        {
+          value: '服务商',
+          id: 2
+        }
+      ],
+      selectIndex: 0,
+      mainIndex: 0
+    }
+  },
+  computed: {
+    api() {
+      if (this.mainIndex === 0) {
+        return api_statistice.selectTopAgentDataByPage
+      } else {
+        return api_statistice.selectAgentDataByPage
+      }
+    },
+    config() {
+      if (this.mainIndex === 1) {
+        [this.configData, this.configData1] = [SERVICE_CONFIG, SERVICE_CONFIG1]
+        return [this.configData, this.configData1]
+      } else {
+        [this.configData, this.configData1] = [TOPERVICE_CONFIG, TOPVICE_CONFIG1]
+        return [this.configData, this.configData1]
+      }
     }
   },
   mounted() {},
   created() {
+    this.api = api_statistice.selectAgentDataByPage
     var myDate = new Date()
     if (myDate.getMonth() < 10) {
       this.tradeMonth = myDate.getFullYear() + "-" + "0" + myDate.getMonth() + "-" + "01"
-      this.params = {
-        tradeMonth: this.tradeMonth
-      }
+      // this.params = {
+      //   tradeMonth: this.tradeMonth
+      // }
     } else {
       this.tradeMonth = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + "01"
-      this.params = {
-        tradeMonth: this.tradeMonth
-      }
+      // this.params = {
+      //   tradeMonth: this.tradeMonth
+      // }
     }
     // this.search()
   },
   methods: {
     onClick_select(index) {
       this.selectIndex = index
+    },
+    onClick_main(index) {
+      this.mainIndex = index
+      this.params = {
+        tradeMonth: this.tradeMonth
+      }
     },
     search($ruleform) {
       // console.log('wafsaefsa', $ruleform.date)
@@ -126,7 +166,8 @@ export default {
         path: '/financial/shareProfit/serviceProfit/serviceProfitDetail',
         query: {
           agentNo: $row.agentNo,
-          tradeMonth: this.params.tradeMonth
+          tradeMonth: this.params.tradeMonth,
+          mainIndex: this.mainIndex
         }
       })
     }
@@ -136,6 +177,26 @@ export default {
 
 <style scoped lang="scss">
   .main_page {
+    .main-top {
+        width: 100%;
+        display: flex;
+        padding: 0 0 26px 32px;
+        background: #ffffff;
+        .main-item {
+          height: 56px;
+          line-height: 56px;
+          color: #606266;
+          font-size: 16px;
+          margin-right: 44px;
+          padding: 0 20px;
+          cursor: pointer;
+        }
+        .main-item.isSelect {
+          color: #1989FA;
+          border-bottom: 1px solid #1989FA;
+          font-weight: 500;
+        }
+      }
     .select {
       width: 100%;
       margin-top: 24px;

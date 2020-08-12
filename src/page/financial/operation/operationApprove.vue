@@ -6,7 +6,13 @@
     <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
 
     <div class="table_box">
+      <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="顶级服务商" name="0"></el-tab-pane>
+        <el-tab-pane label="服务商" name="1"></el-tab-pane>
+      </el-tabs>
       <BaseCrud
+        v-if="activeName==='0'"
+        ref="table"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
         :grid-data="testData"
@@ -20,7 +26,30 @@
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
         :header-cell-style="headerCellStyle"
-        :api-service="null"
+        :api-service="api"
+        :params="params"
+        @detail="onClick_detail"
+        @reject="onClick_reject"
+        @adopt="onClick_adopt"
+        @reviewing="onClick_reviewing"
+      ></BaseCrud>
+      <BaseCrud
+        v-else
+        ref="table"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :grid-data="testData"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="200"
+        :is-async="true"
+        :is-select="false"
+        :is-expand="false"
+        :row-key="'id'"
+        :default-expand-all="false"
+        :hide-edit-area="configData.hideEditArea"
+        :header-cell-style="headerCellStyle"
+        :api-service="apiAgent"
         :params="params"
         @detail="onClick_detail"
         @reject="onClick_reject"
@@ -38,8 +67,8 @@
               <img class="process-icon" :src="item.icon" />
             </div>
             <div class="label">
-              {{ item.label }}
-              <span v-if="item.name" class="name">{{ item.name }}</span>
+              {{ item.desc }}
+              <span v-if="item.username" class="name">{{ item.username }}</span>
             </div>
             <div class="time">{{ item.time }}</div>
           </div>
@@ -57,7 +86,7 @@
             v-for="(item,index) in fromConfigData.settlementData.initValArray"
             :key="index"
             class="ellipsis"
-          >{{ item }}</div>
+          >{{ item.settleTypeName+'['+item.dateTxt+']' }}</div>
         </el-form-item>
       </elForm>
       <Form
@@ -80,7 +109,6 @@ import { FORM_CONFIG } from "../formConfig/operationApproveForm";
 import { SEARCH_CONFIG } from "../formConfig/operationApproveSearch";
 import { OPERATIONAPPROVE_CONFIG } from "../tableConfig/operationApproveConfig";
 import api from "@/api/api_financialAudit.js";
-
 export default {
   name: "Theme",
   components: { Search, BaseCrud, Form },
@@ -95,25 +123,40 @@ export default {
       drawer: false,
       direction: "rtl",
       arrow: arrowImg,
-      params: {
-        agentNo: "",
-        agentName: "",
-        settleStatus: ""
-      },
-      api: api.listOperationSettle,
+      params: {},
+      api: api.topListOperationSettle,
+      apiAgent: api.listOperationSettle,
       formStatus: null,
-      activeRow: {}
+      activeRow: {},
+      activeName: '0'
     };
   },
-  mounted() {},
+  created() {
+    this.params = {
+      beginTime: this.$g.utils.getToday(),
+      endTime: this.$g.utils.getToday(),
+      typeFlag: this.activeName,
+      settleStatus: 0
+    };
+  },
   methods: {
+    handleClick() {
+      this.params.typeFlag = this.activeName
+      this.configData.gridConfig[0].label = this.activeName === '0' ? '顶级服务商' : '服务商'
+      this.configData.gridConfig[0].prop[0].key = this.activeName === '0' ? 'channelAgentName' : 'agentName'
+      this.configData.gridConfig[0].prop[1].key = this.activeName === '0' ? 'channelAgentCode' : 'agentNo'
+      this.$nextTick(() =>
+        this.$refs.table.getData()
+      );
+    },
     confirm($data) {
+      const rejectApi = this.activeName === '0' ? 'topOperationReject' : 'operationReject'
+      const successApi = this.activeName === '0' ? 'topOperationSuccess' : 'operationSuccess'
       switch (this.formStatus) {
         case "reject":
-          api.operationReject({
-            recordId: this.activeRow.recordId,
-            rejectReason: $data.reason,
-            userId: this.activeRow.userId
+          api[rejectApi]({
+            id: this.activeRow.id,
+            rejectReason: $data.rejectReason
           }).then(res => {
             this.$message("已驳回");
             this.drawer = false;
@@ -121,11 +164,10 @@ export default {
             this.$message(err);
           });
           break;
-        case "adopt":api.operationSuccess({
-          recordId: this.activeRow.recordId,
+        case "adopt":api[successApi]({
+          id: this.activeRow.id,
           adviseCommission: $data.adviseCommission,
-          operationRemark: $data.operationRemark,
-          userId: this.activeRow.userId
+          operationRemark: $data.operationRemark
         }).then(res => {
           this.$message("已通过");
           this.drawer = false;
@@ -137,12 +179,10 @@ export default {
       }
     },
     search($ruleForm) {
-      // eslint-disable-next-line no-console
-      console.log($ruleForm);
       this.params = {
-        agentNo: "",
-        agentName: "",
-        settleStatus: $ruleForm.settleStatus || ""
+        typeFlag: '0',
+        beginTime: $ruleForm.date[0] || '',
+        endTime: $ruleForm.date[1] || ''
       };
       this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
     },
@@ -153,40 +193,73 @@ export default {
       });
     },
     onClick_reject($row) {
-      api.queryDetail({
-        recordId: this.recordId || 1
+      const queryDetailApi = this.activeName === '0' ? 'topQueryDetail' : 'queryDetail'
+      api[queryDetailApi]({// 通过/驳回详情
+        id: $row.id || null
       }).then(res => {
         // 编辑前重赋值
         FORM_CONFIG.rejectData.formData.forEach((item, index) => {
           item.initVal = res.object[item.key];
         });
+        FORM_CONFIG.rejectData.processData = res.object.map
         this.activeRow = $row;
         this.formStatus = "reject";
         this.fromConfigData = FORM_CONFIG.rejectData;
         this.drawer = true;
-      }).catch(err => {
-        this.$message(err);
-      });
+        this.topQueryTypeMonthDetail($row)
+      })
     },
     onClick_adopt($row) {
-      api.queryDetail({
-        recordId: this.recordId || 1
+      const queryDetailApi = this.activeName === '0' ? 'topQueryDetail' : 'queryDetail'
+      api[queryDetailApi]({
+        id: $row.id || null
       }).then(res => {
         // 编辑前重赋值
         FORM_CONFIG.adoptData.formData.forEach((item, index) => {
           item.initVal = res.object[item.key];
         });
+        FORM_CONFIG.adoptData.processData = res.object.map
         this.activeRow = $row;
         this.formStatus = "adopt";
         this.fromConfigData = FORM_CONFIG.adoptData;
         this.drawer = true;
-      }).catch(err => {
-        this.$message(err);
-      });
+      })
       this.activeRow = $row;
       this.formStatus = "adopt";
       this.fromConfigData = FORM_CONFIG.adoptData;
       this.drawer = true;
+      this.topQueryTypeMonthDetail($row)
+    },
+    topQueryTypeMonthDetail($row) {
+      const typeMonthDetailApi = this.activeName === '0' ? 'topQueryTypeMonthDetail' : 'queryTypeMonthDetail'
+      api[typeMonthDetailApi]({
+        idList: $row.agentTradeIdList
+      }).then(res => {
+        if (res.object) {
+          var keyArr = []
+          res.object.forEach((a, b) => {
+            res.object.forEach((c, d) => {
+              if (a.settleType === c.settleType) {
+                keyArr.push({settleType: a.settleType, dateArr: [], settleTypeName: a.settleTypeName})
+              }
+            })
+          })
+          // var newArr = []
+          if (keyArr.length > 0) {
+            keyArr.forEach((item, index) => {
+              res.object.forEach((dItem, dIndex) => {
+                if (item.settleType === dItem.settleType) {
+                  item.dateArr.push(dItem.tradeMonth)
+                }
+              })
+            })
+            keyArr.forEach((item, index) => {
+              this.$set(item, 'dateTxt', item.dateArr.join(','))
+            })
+          }
+          this.fromConfigData.settlementData.initValArray = keyArr || []
+        }
+      })
     },
     onClick_reviewing() {
       this.$alert("任务已处理，审批中", "提示信息", {

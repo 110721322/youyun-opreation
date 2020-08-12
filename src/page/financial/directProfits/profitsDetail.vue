@@ -9,7 +9,7 @@
         <BaseCrud
           ref="table"
           :params="params"
-          :api-service="null"
+          :api-service="api"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
           :grid-data="testData"
@@ -21,11 +21,11 @@
           :is-expand="false"
           :row-key="'id'"
           :default-expand-all="false"
-          @detail="handleDetail"
+          :hide-edit-area="true"
         ></BaseCrud>
       </div>
     </div>
-    <el-drawer
+    <!-- <el-drawer
       title="我是标题"
       :visible.sync="drawer"
       :with-header="false"
@@ -58,7 +58,7 @@
           <el-button plain>取消</el-button>
         </div>
       </div>
-    </el-drawer>
+    </el-drawer> -->
   </div>
 </template>
 
@@ -67,6 +67,8 @@ import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import {SEARCH_CONFIG} from "../formConfig/aliProfitsSearch";
 import {SERVICE_CONFIG} from "../tableConfig/aliDetailConfig";
+import {WXRVICE_CONFIG} from "../tableConfig/wxDetailConfig";
+import api_statistice from "@/api/api_statistice";
 
 export default {
   name: "AliProfits",
@@ -77,35 +79,46 @@ export default {
     return {
       searchHeight: "260",
       searchConfig: SEARCH_CONFIG,
-      configData: SERVICE_CONFIG,
+      configData: "",
       drawer: false,
       params: {},
+      api: "",
       testData: [
-        {
-          time: '2020-06-18',
-          topSrevice: '紫菜麻辣烫',
-          amount: '22555',
-          user: '253',
-          total: '4555'
-        }
+        // {
+        //   time: '2020-06-18',
+        //   topSrevice: '紫菜麻辣烫',
+        //   amount: '22555',
+        //   user: '253',
+        //   total: '4555'
+        // }
       ]
     }
   },
   mounted() {
-    this.getData()
+    this.agentNo = this.$route.query.agentNo
+    this.rewardDate = this.$route.query.tradeMonth
+    this.merchantName = this.$route.query.merchantName
+    this.params = {
+      agentNo: this.agentNo,
+      rewardDate: this.rewardDate
+    }
+    if (this.$route.query.apiserver === api_statistice.aliMerchants) {
+      this.api = api_statistice.aliMerchants
+      this.configData = SERVICE_CONFIG
+    } else {
+      this.api = api_statistice.wxMerchants
+      this.api = api_statistice.wxMerchants
+      this.configData = WXRVICE_CONFIG
+    }
   },
   methods: {
-    search() {},
-    getData() {
-      this.testData = [
-        {
-          time: '2020-06-18',
-          topSrevice: '紫菜麻辣烫',
-          active: '22555',
-          user: '253',
-          total: '4555'
-        }
-      ]
+    search($ruleform) {
+      this.params = {
+        agentNo: this.agentNo,
+        merchantNo: $ruleform.inputSelect === 'agentNo' ? $ruleform.inputForm : "",
+        rewardDate: $ruleform.date ? $ruleform.date : this.rewardDate,
+        merchantName: $ruleform.inputSelect === 'agentName' ? $ruleform.inputForm : ""
+      }
     },
     openDraw() {
       this.drawer = true

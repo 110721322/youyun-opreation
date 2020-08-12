@@ -12,5 +12,8 @@ export default {
   },
   SAVE_ROUTERS_ARR(state, $routes) {
     state.routers = $routes;
+  },
+  SAVE_WEBSOCKET_OPTION(state, $option) {
+    state.socketOptions = $option;
   }
 };

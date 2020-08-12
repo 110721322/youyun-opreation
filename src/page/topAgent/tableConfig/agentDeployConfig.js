@@ -89,7 +89,7 @@ export const USER_CONFIG = {
       },
       {
         name: '部署完成',
-        emitName: 'deployStartEnd',
+        emitName: 'deployEnd',
         type: 'text',
         isShow: ($row) => {
           if ($row.status === 2) {
