@@ -109,7 +109,8 @@ export const FORM_CONFIG = {
         type: 0,
         label: '开户支行',
         key: 'bankBranchName',
-        initVal: ''
+        initVal: '',
+        isSearch: true
       }
     ]
   },

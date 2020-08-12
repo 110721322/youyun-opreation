@@ -151,5 +151,9 @@ export default {
   // 更新源码的部署状态
   updateTopSourceCodeDeployStatus: (params) => API.POST('/operation/v1/topAgent/updateSourceCodeDeployStatus', params),
   // 查询顶级服务商源码部署详情
-  getSourceCodeDeployDetail: (params) => API.GET('/operation/v1/topAgent/getSourceCodeDeployDetail', params)
+  getSourceCodeDeployDetail: (params) => API.GET('/operation/v1/topAgent/getSourceCodeDeployDetail', params),
+  // 根据关键字查询支行信息
+  listBankLineByName: (params) => API.GET('agent/v1/merchant/listBankLineByName', params),
+  // 根据联行号查询联行支行
+  getBankLineByNo: (params) => API.GET('agent/v1/merchant/getBankLineByNo', params)
 };

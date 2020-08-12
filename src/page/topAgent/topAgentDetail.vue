@@ -169,7 +169,52 @@
         @cancel="addLiaison = false"
       ></Form>
     </el-drawer>
-
+    <el-drawer :visible.sync="financeDrawer" :with-header="false" size="30%">
+      <div class="financeTitle">财务信息</div>
+      <el-form :model="financeModel">
+        <el-form-item label="结算卡类型" prop="bankAccountType" style="margin: 24px 20% 0 24px;" label-width="120px">
+          <el-select v-model="financeModel.bankAccountType" placeholder="请选择">
+            <el-option
+                v-for="item in accountType"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="银行卡号" prop="bankCardNo" style="margin: 24px 20% 0 24px;" label-width="120px">
+          <el-input placeholder="请输入银行卡号" v-model="financeModel.bankCardNo"></el-input>
+        </el-form-item>
+        <el-form-item label="开户支行" prop="bankContactLine" style="margin: 24px 20% 0 24px;" label-width="120px">
+          <el-select
+              v-model="financeModel.bankContactLine"
+              filterable
+              remote
+              reserve-keyword
+              placeholder="请输入关键词"
+              :remote-method="remoteMethod"
+              @change="handleSelect"
+              :loading="loading">
+            <el-option
+                v-for="item in bankOptions"
+                :key="item.unionCode"
+                :label="item.bankName"
+                :value="item.unionCode">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="开户支行地区" prop="bankArea" style="margin: 24px 20% 0 24px;" label-width="120px">
+          <el-input disabled v-model="area"></el-input>
+        </el-form-item>
+        <el-form-item label="开户名" prop="bankAccountHolder" style="margin: 24px 20% 0 24px;" label-width="120px">
+          <el-input placeholder="请输入开户名" v-model="financeModel.bankAccountHolder"></el-input>
+        </el-form-item>
+      </el-form>
+      <div class="bottom-btn">
+        <el-button type="primary" @click="handel_save">保存</el-button>
+        <el-button @click="handel_cancle">取消</el-button>
+      </div>
+    </el-drawer>
     <el-dialog title="沟通记录详情" :visible.sync="dialogTableVisible">
       <ul class="liaison_detail">
         <li>
@@ -229,13 +274,16 @@ import { FORM_CONFIG } from "./../agent/formConfig/agentDetail";
 import { configData, configData2 } from "./dataConfig/topAgentDetailData";
 import {CONTACTS_CONFIG} from "../agent/formConfig/addContacts";
 import {LISASION} from "../agent/formConfig/addLiasion";
+import areaData from "@/assets/data/areaData";
 
 export default {
   name: "Theme",
   components: { detailMode, detailMode5, BaseCrud, Form },
   data() {
     return {
+      bankName: '',
       channelAgentCode: this.$route.query.channelAgentCode,
+      financeDrawer: false,
       drawer: false,
       buyDeviceDrawer: true,
       dynamicTags: [],
@@ -285,7 +333,6 @@ export default {
       liaisonType: '',
       liaisonConfigData: {}, //  联系人表单
       addLiaison: false, //  添加联系人窗口
-      testData: [],
       tableConfigData: USER_CONFIG,
       tableConfigData2: USER_CONFIG2,
       fromConfigData: [],
@@ -310,7 +357,27 @@ export default {
         }
       ],
       activeClass: "red",
-      activeValue: "情绪客户"
+      activeValue: "情绪客户",
+      financeModel: {
+        bankAccountType: '',
+        bankCardNo: '',
+        bankContactLine: '',
+        bankAccountHolder: ''
+      },
+      accountType: [
+        {
+          label: '对私',
+          value: 'private'
+        },
+        {
+          label: '对公',
+          value: 'public'
+        }
+      ],
+      area: '',
+      loading: false,
+      areaCodeNum: '',
+      bankOptions: []
     };
   },
   mounted() {
@@ -318,6 +385,51 @@ export default {
     this.initCommunication();
   },
   methods: {
+    remoteMethod(query) {
+      if (query !== '') {
+        this.loading = true;
+        setTimeout(() => {
+          this.loading = false;
+          api.listBankLineByName({
+            name: query,
+            limit: 30
+          }).then(res => {
+            if (res.object) {
+              this.bankOptions = res.object
+            }
+          })
+        }, 200);
+      } else {
+        this.bankOptions = [];
+      }
+    },
+    handleSelect(item) {
+      api.getBankLineByNo({
+        unionCode: item
+      }).then(res => {
+        console.log(res)
+        // this.dataForm.bankArea[0] = res.object.provinceCode
+        // this.dataForm.bankArea = res.object.cityCode
+        var provinceName = ''
+        var cityName = ''
+        var areaName = ''
+        var result = this.$g.utils.getNestedArr(areaData, 'children')
+        result.forEach(m => {
+          if (m.value === res.object.provinceCode) {
+            provinceName = m.label
+          }
+          if (m.value === res.object.cityCode) {
+            cityName = m.label
+          }
+          if (m.value === res.object.areaCode) {
+            areaName = m.label
+          }
+        })
+        this.bankName = res.object.bankName
+        this.area = provinceName + '/' + cityName + '/' + areaName
+        this.areaCodeNum = res.object.areaCode
+      })
+    },
     onClick_changeClientType($item) {
       this.activeClass = $item.colorName;
       this.activeValue = $item.value;
@@ -642,12 +754,17 @@ export default {
       this.$router.push("/agent/list/detail");
     },
     itemEdit($model) {
-      this.fromConfigData = FORM_CONFIG[$model];
-      for (const $item of this.fromConfigData.formData) {
-        $item.initVal = this.ruleForm[$item.key];
+      console.log($model)
+      if ($model === 'finance') {
+        this.financeDrawer = true
+      } else {
+        this.fromConfigData = FORM_CONFIG[$model];
+        for (const $item of this.fromConfigData.formData) {
+          $item.initVal = this.ruleForm[$item.key];
+        }
+        this.formType = $model
+        this.drawer = true;
       }
-      this.formType = $model
-      this.drawer = true;
     },
     rateEdit($model) {
       this.drawer = true;
@@ -712,6 +829,22 @@ export default {
           break;
       }
     },
+    handel_save() {
+      var $ruleForm = {
+        bankContactLine: this.financeModel.bankContactLine,
+        bankBranchName: this.bankName,
+        bankArea: this.areaCodeNum,
+        bankCardNo: this.financeModel.bankCardNo,
+        channelAgentCode: this.channelAgentCode,
+        bankAccountType: this.financeModel.bankAccountType,
+        bankAccountHolder: this.financeModel.bankAccountHolder,
+        action: 2
+      }
+      this.updateTopAgentInfo($ruleForm)
+    },
+    handel_cancle() {
+      this.financeDrawer = false
+    },
     /**
      * 更新服务商信息
      */
@@ -722,6 +855,7 @@ export default {
           type: 'success',
           message: '已修改'
         })
+        this.financeDrawer = false
         this.drawer = false;
         this.formType = null;
         this.getAgentDetail();
@@ -1014,4 +1148,31 @@ export default {
   .border_none {
     border: none;
   }
+
+.financeTitle {
+  width: 100%;
+  height: 84px;
+  border-bottom: 1px solid #ececec;
+  line-height: 84px;
+  padding-left: 32px;
+  font-size: 28px;
+  margin-bottom: 32px;
+}
+
+.bottom-btn {
+  width: 30%;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  height: 96px;
+  border-top: 1px solid #ebeef5;
+  justify-content: space-around;
+  display: flex;
+  align-items: center;
+}
+
+.bottom-btn button {
+  width: 131px;
+  height: 44px;
+}
 </style>
