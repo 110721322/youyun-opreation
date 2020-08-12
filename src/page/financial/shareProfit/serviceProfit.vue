@@ -103,7 +103,7 @@ export default {
         }
       ],
       selectIndex: 0,
-      mainIndex: 1
+      mainIndex: 0
     }
   },
   computed: {
@@ -113,6 +113,15 @@ export default {
       } else {
         return api_statistice.selectAgentDataByPage
       }
+    },
+    config() {
+      if (this.mainIndex === 1) {
+        [this.configData, this.configData1] = [SERVICE_CONFIG, SERVICE_CONFIG1]
+        return [this.configData, this.configData1]
+      } else {
+        [this.configData, this.configData1] = [TOPERVICE_CONFIG, TOPVICE_CONFIG1]
+        return [this.configData, this.configData1]
+      }
     }
   },
   mounted() {},
@@ -121,27 +130,20 @@ export default {
     var myDate = new Date()
     if (myDate.getMonth() < 10) {
       this.tradeMonth = myDate.getFullYear() + "-" + "0" + myDate.getMonth() + "-" + "01"
-      this.params = {
-        tradeMonth: this.tradeMonth
-      }
+      // this.params = {
+      //   tradeMonth: this.tradeMonth
+      // }
     } else {
       this.tradeMonth = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + "01"
-      this.params = {
-        tradeMonth: this.tradeMonth
-      }
+      // this.params = {
+      //   tradeMonth: this.tradeMonth
+      // }
     }
     // this.search()
   },
   methods: {
     onClick_select(index) {
       this.selectIndex = index
-      if (this.mainIndex === 1) {
-        this.configData = SERVICE_CONFIG
-        this.configData1 = SERVICE_CONFIG1
-      } else {
-        this.configData = TOPERVICE_CONFIG
-        this.configData1 = TOPVICE_CONFIG1
-      }
     },
     onClick_main(index) {
       this.mainIndex = index

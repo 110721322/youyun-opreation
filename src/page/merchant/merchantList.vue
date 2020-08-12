@@ -77,25 +77,37 @@ export default {
   },
   created() {
     this.params = {
-      useChannelCode: "jr8",
-      endDate: "2020-03-17",
-      provinceCode: "wrn",
-      cityCode: "v7e",
-      newlandMerchantNo: "tsi",
-      agentName: "tn5",
-      channelStatus: "pgi",
-      merchantName: "ylu",
-      beginDate: "2020-03-17",
-      categoryCOde: "hb8",
-      leShuaMerchantNo: "emw",
-      merchantNo: "l2a",
-      channelCode: "ew2",
-      operateNo: "32m"
+      // useChannelCode: "jr8",
+      // endDate: "2020-03-17",
+      // provinceCode: "wrn",
+      // cityCode: "v7e",
+      // newlandMerchantNo: "tsi",
+      // agentName: "tn5",
+      // channelStatus: "pgi",
+      // merchantName: "ylu",
+      // beginDate: "2020-03-17",
+      // categoryCOde: "hb8",
+      // leShuaMerchantNo: "emw",
+      // merchantNo: "l2a",
+      // channelCode: "ew2",
+      // operateNo: "32m"
     };
   },
-  mounted() {},
+  mounted() {
+    this.queryInit()
+  },
   methods: {
-    selectionChange($val) {},
+    queryInit() {
+      api.queryInit({
+      }).then(res => {
+        console.log(res.object)
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    selectionChange($val) {
+      console.log('11111', $val)
+    },
     go_detail() {
       this.$router.push("/merchant/list/detail");
     },
