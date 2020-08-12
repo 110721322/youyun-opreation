@@ -32,16 +32,16 @@ export const SEARCH_CONFIG = {
       labelWidth: '100px',
       options: [
         {
-          label: '全部',
-          value: 0
+          label: '完成',
+          value: 'success'
         },
         {
-          label: '粤菜',
-          value: 1
+          label: '审核中',
+          value: 'audit'
         },
         {
-          label: '杭帮菜',
-          value: 2
+          label: '驳回',
+          value: 'reject'
         }
       ]
     }
