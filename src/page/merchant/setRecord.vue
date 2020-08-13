@@ -70,48 +70,70 @@ export default {
       searchConfig: FORM_CONFIG,
       testData: [],
       isChangeMode: true,
-      modeConfigData: [
-        {
-          title: "商家数量",
-          data: "555个"
-        },
-        {
-          title: "交易金额",
-          data: "555个"
-        },
-        {
-          title: "手续费",
-          data: "555个"
-        },
-        {
-          title: "结算金额",
-          data: "555个"
-        }
-      ],
+      modeConfigData: [],
       params: {},
       api: api.querySettleList
     };
   },
   created() {
     var result = this.$g.utils.getToday1()
-    console.log(result)
+    var settleStatus = this.activeIndex
     this.params = {
       beginDate: result,
-      endDate: result
+      endDate: result,
+      settleStatus: settleStatus === "1" ? "settleFail" : settleStatus === "1" ? "noSettle" : "finishSettle"
     }
+    var merchantNo = ''
+    var merchantName = ''
+    var channelMerchantNo = ''
+    var channel = ''
+    this.getSettle(result, result, merchantNo, merchantName, channelMerchantNo, channel)
   },
   mounted() {},
   methods: {
     search($ruleForm) {
-      console.log($ruleForm);
+      console.log($ruleForm)
+      var settleStatus = this.activeIndex
       const params = {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,
-        channel: $ruleForm.channel
+        channel: $ruleForm.channel,
+        channelMerchantNo: $ruleForm.channelMerchantNo,
+        settleStatus: settleStatus === "1" ? "settleFail" : settleStatus === "1" ? "noSettle" : "finishSettle"
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
-      this.$refs.table.getData();
+      this.getSettle($ruleForm.date[0], $ruleForm.date[1], $ruleForm.inputForm, $ruleForm.inputForm, $ruleForm.channelMerchantNo, $ruleForm.channel)
+    },
+    getSettle(beginDate, endDate, merchantNo, merchantName, channelMerchantNo, channel) {
+      api.getSettleByCondition({
+        beginDate: beginDate,
+        endDate: endDate,
+        merchantNo: merchantNo || null,
+        merchantName: merchantName || null,
+        channelMerchantNo: channelMerchantNo || null,
+        channel: channel || null
+      }).then(res => {
+        console.log(res)
+        this.modeConfigData = [
+          {
+            title: "商家数量",
+            data: res.object.merchantCount
+          },
+          {
+            title: "交易金额",
+            data: res.object.totalActualAmount
+          },
+          {
+            title: "手续费",
+            data: res.object.totalServiceFee
+          },
+          {
+            title: "结算金额",
+            data: res.object.totalSettleAmount
+          }
+        ]
+      })
     },
     selectionChange($val) {},
     go_detail() {
@@ -123,12 +145,15 @@ export default {
       this.activeIndex = $item;
       switch ($item) {
         case "1":
+          this.params.settleStatus = 'settleFail'
           this.configData = ERR_CONFIG;
           break;
         case "2":
+          this.params.settleStatus = 'noSettle'
           this.configData = UNEWTTLED_CONFIG;
           break;
         case "3":
+          this.params.settleStatus = 'finishSettle'
           this.configData = SUCCESS_CONFIG;
           break;
       }
@@ -137,9 +162,9 @@ export default {
         this.isChangeMode = true;
       }, 500);
       // 模拟获取数据
-      setTimeout(() => {
-        this.$refs.table.getData();
-      }, 1000);
+      // setTimeout(() => {
+      //   this.$refs.table.getData();
+      // }, 1000);
     }
   }
 };
@@ -151,5 +176,39 @@ export default {
   padding: 24px;
   overflow: hidden;
   background: #fff;
+}
+
+.d-box {
+  height: 106px;
+  margin: 24px 24px 24px;
+  background: rgba(255, 255, 255, 1);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: center;
+}
+
+.item-box {
+  text-align: center;
+  height: 58px;
+  border-right: 1px solid #e8e8e8;
+  margin-top: 24px;
+  overflow: hidden;
+  width: 50%;
+  .title {
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.45);
+    margin-top: 3px;
+  }
+  .data {
+    font-size: 24px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.85);
+    margin-top: 10px;
+  }
+  &:last-child {
+    border: none;
+  }
 }
 </style>

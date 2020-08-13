@@ -16,11 +16,13 @@ export default {
   // 商户开通的支付渠道信息
   queryActiveChannel: (params) => API.GET('/operation/v1/merchant/queryActiveChannel', params),
   // 商户结算记录-根据条件查询结算汇总记录
-  getSettleSummaryByCondition: (params) => API.POST('/operation/v1/merchant/getSettleSummaryByCondition', params),
+  getSettleByCondition: (params) => API.POST('/operation/v1/merchant/getSettleSummaryByCondition', params),
   // 商户管理-基础数据
   queryInit: (params) => API.POST('/operation/v1/merchant/queryInit', params),
   // 修改商户业务信息
-  saveMerchantBusinessInfo: (params) => API.POST('/operation/v1/merchant/saveMerchantBusinessInfo', params),
+  saveBusinessInfo: (params) => API.POST('/operation/v1/merchant/saveMerchantBusinessInfo', params),
   // 查询商户结算列表
-  querySettleList: (params) => API.POST('/operation/v1/merchant/queryPageMerchantSettleByCondition', params)
+  querySettleList: (params) => API.POST('/operation/v1/merchant/queryPageMerchantSettleByCondition', params),
+  // 商户管理-查询服务商列表
+  selectAgent: (params) => API.GET('/operation/v1/merchant/selectAgentByCondition', params)
 };

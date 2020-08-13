@@ -21,13 +21,16 @@ export const FORM_CONFIG = {
         {
           label: '商户名称',
           value: 'merchantName'
-        },
-        {
-          label: '渠道商户号',
-          value: 'channelMerchantNo'
         }
       ],
       labelWidth: '100px'
+    },
+    {
+      type: 0,
+      label: '渠道商户号',
+      key: 'channelMerchantNo',
+      style: 'width:294px',
+      placeholder: "请输入渠道商户号"
     },
     {
       type: 1,
@@ -36,16 +39,20 @@ export const FORM_CONFIG = {
       style: 'width:294px',
       options: [
         {
-          label: '川菜',
-          value: 0
+          label: '全部',
+          value: ''
         },
         {
-          label: '粤菜',
-          value: 1
+          label: '乐刷',
+          value: 'leShua'
         },
         {
-          label: '杭帮菜',
-          value: 2
+          label: '微信',
+          value: 'weChat'
+        },
+        {
+          label: '支付宝',
+          value: 'alipay'
         }
       ]
     }

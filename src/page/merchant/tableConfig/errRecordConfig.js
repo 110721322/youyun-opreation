@@ -2,12 +2,12 @@ export const ERR_CONFIG = {
   gridConfig: [
     {
       label: '商户',
-      prop: [{ key: 'serviceFee' }, { key: 'merchantNo', label: 'ID:' }],
+      prop: [{ key: 'merchantName' }, { key: 'merchantNo', label: 'ID:' }],
       width: '150px'
     },
     {
       label: '交易通道',
-      prop: [{ key: 'merchantNo' }, { key: 'merchantNo', label: '商户号:' }],
+      prop: [{ key: 'channelName' }, { key: 'channelMerchantNo', label: '商户号:' }],
       width: '150px'
     },
     {
@@ -22,17 +22,17 @@ export const ERR_CONFIG = {
     },
     {
       label: '结算金额（元）',
-      prop: 'settleAmount',
+      prop: 'totalSettleAmount',
       width: '150px'
     },
     {
       label: '交易金额（元）',
-      prop: 'tradeAmount',
+      prop: 'totalActualAmount',
       width: '150px'
     },
     {
       label: '手续费（元）',
-      prop: 'serviceFee',
+      prop: 'totalServiceFee',
       width: '150px'
     },
     {

@@ -1,4 +1,5 @@
 import { setRules } from '@/libs/kit/formFns.js'
+import api from "@/api/api_merchant"
 
 export const CONTACTS_CONFIG = {
   title: '添加备注',
@@ -12,6 +13,21 @@ export const CONTACTS_CONFIG = {
       inputType: 'textarea',
       maxlength: '150',
       rules: setRules('请输入').isRequired.get
+    }
+  ],
+  changeData: [
+    {
+      type: 1,
+      label: '所属服务商',
+      key: 'agentNo',
+      rules: setRules('请输入').isRequired.get,
+      urlOptions: {
+        url: api.selectAgent,
+        keyName: 'agentNo',
+        valueName: 'agentName',
+        method: 'get',
+        params: {}
+      }
     }
   ]
 }

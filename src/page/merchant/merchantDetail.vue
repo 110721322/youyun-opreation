@@ -28,6 +28,7 @@ export default {
   components: { detailMode, Form },
   data() {
     return {
+      openType: '',
       editData: false,
       merchantNo: '',
       commonData: {},
@@ -115,34 +116,62 @@ export default {
       })
     },
     itemEdit() {
+      this.openType = 1
       this.editData = true
+      this.editDataTitle = '业务信息'
+      this.contactConfigData = CONTACTS_CONFIG.changeData
     },
     editMask() {
+      this.openType = 2
       this.editData = true
       this.editDataTitle = '编辑备注'
       this.contactConfigData = CONTACTS_CONFIG.formData
     },
     confirm($data) {
-      console.log($data)
-      if (!$data.remark) {
-        this.$message({
-          message: '请填写备注信息',
-          type: 'warning'
-        })
+      if (this.openType === 2) {
+        if (!$data.remark) {
+          this.$message({
+            message: '请填写备注信息',
+            type: 'warning'
+          })
+        } else {
+          api.modifyRemark({
+            merchantNo: this.merchantNo,
+            remark: $data.remark
+          }).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                message: '修改成功',
+                type: 'success'
+              })
+              this.getBusiness()
+              this.getCommonDetail()
+              this.editData = false
+            }
+          })
+        }
       } else {
-        api.modifyRemark({
-          merchantNo: this.merchantNo,
-          remark: $data.remark
-        }).then(res => {
-          if (res.status === 0) {
-            this.$message({
-              message: '修改成功',
-              type: 'success'
-            })
-            this.getCommonDetail()
-            this.editData = false
-          }
-        })
+        if (!$data.agentNo) {
+          this.$message({
+            message: '请选择所属服务商',
+            type: 'warning'
+          })
+        } else {
+          api.saveBusinessInfo({
+            merchantNo: this.merchantNo,
+            agentNo: $data.agentNo
+          }).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                message: '修改成功',
+                type: 'success'
+              })
+              this.getCommonDetail()
+              this.getBusiness()
+              this.editData = false
+            }
+          })
+        }
       }
     },
     cancel() {

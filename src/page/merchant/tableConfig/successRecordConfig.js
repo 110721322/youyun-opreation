@@ -2,12 +2,12 @@ export const SUCCESS_CONFIG = {
   gridConfig: [
     {
       label: '商户',
-      prop: [{ key: 'tel' }, { key: 'id', label: 'ID:' }],
+      prop: [{ key: 'merchantName' }, { key: 'merchantNo', label: 'ID:' }],
       width: '150px'
     },
     {
       label: '交易通道',
-      prop: [{ key: 'tel' }, { key: 'id', label: '商户号:' }],
+      prop: [{ key: 'channelName' }, { key: 'channelMerchantNo', label: '商户号:' }],
       width: '150px'
     },
     {
@@ -17,22 +17,22 @@ export const SUCCESS_CONFIG = {
     },
     {
       label: '结算日期',
-      prop: 'tel',
+      prop: 'settleDate',
       width: '150px'
     },
     {
       label: '结算金额（元）',
-      prop: 'tel',
+      prop: 'totalSettleAmount',
       width: '150px'
     },
     {
       label: '交易金额（元）',
-      prop: 'tel',
+      prop: 'totalActualAmount',
       width: '150px'
     },
     {
       label: '手续费（元）',
-      prop: 'tel',
+      prop: 'totalServiceFee',
       width: '150px'
     }
 
