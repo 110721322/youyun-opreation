@@ -1,5 +1,5 @@
 import areaData from "@/assets/data/areaData";
-import apiMerchant from "@/api/api_merchant.js";
+import apiAgent from "@/api/api_agent.js";
 
 export const FORM_CONFIG = {
   formData: [
@@ -44,49 +44,20 @@ export const FORM_CONFIG = {
     {
       type: 1,
       label: '使用通道',
-      key: 'channelStatus',
+      key: 'channelCode',
       style: 'width:294px',
       options: [
         {
           label: '乐刷',
-          value: "0"
-        },
-        {
-          label: '新大陆',
-          value: "1"
+          value: "leShua"
         },
         {
           label: '支付宝直连',
-          value: "2"
+          value: "alipay"
         },
         {
           label: '微信直连',
-          value: "3"
-        }
-      ]
-    },
-    {
-      type: 1,
-      label: '行业类目',
-      key: 'categoryCOde',
-      style: 'width:294px',
-      labelWidth: '185px',
-      options: [
-        {
-          label: '乐刷',
-          value: "index"
-        },
-        {
-          label: '新大陆',
-          value: "1"
-        },
-        {
-          label: '支付宝直连',
-          value: "2"
-        },
-        {
-          label: '微信直连',
-          value: "3"
+          value: "weChat"
         }
       ]
     },
@@ -95,115 +66,48 @@ export const FORM_CONFIG = {
       label: '地区',
       key: 'address',
       style: 'width:294px',
-      class: "clear_both",
       options: areaData
     },
     {
       type: 8,
       label: '开通通道详情',
-      key: 'channelCode',
-      style: 'width:294px',
+      key: 'channelStatus',
       labelWidth: '185px',
       options: [
         {
-          'value': '1',
-          'label': '乐刷',
-          'children': [
-            {
-              'value': '1',
-              'label': '已开通'
-            },
-            {
-              'value': '2',
-              'label': '审核中'
-            },
-            {
-              'value': '3',
-              'label': '驳回'
-            },
-            {
-              'value': '4',
-              'label': '未开通'
-            }
-          ]
+          label: '待审核',
+          value: 'nonOpen'
         },
         {
-          'value': '1',
-          'label': '新大陆',
-          'children': [
-            {
-              'value': '1',
-              'label': '已开通'
-            },
-            {
-              'value': '2',
-              'label': '审核中'
-            },
-            {
-              'value': '3',
-              'label': '驳回'
-            },
-            {
-              'value': '4',
-              'label': '未开通'
-            }
-          ]
+          label: '平台审核中',
+          value: 'platformAudit'
         },
         {
-          'value': '1',
-          'label': '支付宝直连',
-          'children': [
-            {
-              'value': '1',
-              'label': '已开通'
-            },
-            {
-              'value': '2',
-              'label': '审核中'
-            },
-            {
-              'value': '3',
-              'label': '驳回'
-            },
-            {
-              'value': '4',
-              'label': '未开通'
-            }
-          ]
+          label: '通道审核中',
+          value: 'channelAudit'
         },
         {
-          'value': '2',
-          'label': '微信直连',
-          'children': [
-            {
-              'value': '1',
-              'label': '已开通'
-            },
-            {
-              'value': '2',
-              'label': '审核中'
-            },
-            {
-              'value': '3',
-              'label': '驳回'
-            },
-            {
-              'value': '4',
-              'label': '未开通'
-            }
-          ]
+          label: '平台驳回',
+          value: 'platformReject'
+        },
+        {
+          label: '通道驳回',
+          value: 'channelReject'
+        },
+        {
+          label: '通过',
+          value: 'channelPass'
         }
       ]
     },
     {
       type: 1,
       label: '所属运营',
-      key: 'name',
-      class: "clear_both",
+      key: 'operationId',
       urlOptions: {
-        url: apiMerchant.queryInit,
-        keyName: 'object.userDTOList[0]',
-        valueName: 'name',
+        url: apiAgent.queryAllOperation,
+        keyName: 'operationId',
+        valueName: 'operationName',
         method: 'get'
       }
     }

@@ -75,24 +75,7 @@ export default {
       api: api.queryPageByCondition
     };
   },
-  created() {
-    this.params = {
-      // useChannelCode: "jr8",
-      // endDate: "2020-03-17",
-      // provinceCode: "wrn",
-      // cityCode: "v7e",
-      // newlandMerchantNo: "tsi",
-      // agentName: "tn5",
-      // channelStatus: "pgi",
-      // merchantName: "ylu",
-      // beginDate: "2020-03-17",
-      // categoryCOde: "hb8",
-      // leShuaMerchantNo: "emw",
-      // merchantNo: "l2a",
-      // channelCode: "ew2",
-      // operateNo: "32m"
-    };
-  },
+  created() {},
   mounted() {
     this.queryInit()
   },
@@ -108,8 +91,13 @@ export default {
     selectionChange($val) {
       console.log('11111', $val)
     },
-    go_detail() {
-      this.$router.push("/merchant/list/detail");
+    go_detail(row) {
+      this.$router.push({
+        path: "/merchant/list/detail",
+        query: {
+          merchantNo: row.merchantNo
+        }
+      });
     },
     search($ruleForm) {
       const params = {
@@ -124,7 +112,6 @@ export default {
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
-      this.$refs.table.getData();
     },
     openAgentManager() {},
     openMerchantManager() {}

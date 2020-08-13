@@ -244,6 +244,17 @@ export default {
     };
     return _time.getFullYear() + '年' + pad((_time.getMonth() + 1), 2) + '月' + pad(_time.getDate(), 2) + '日';
   },
+  // 获取ago当前日期
+  getToday1: (ago = 0) => {
+    var _time = new Date(Date.now() + ago * 24 * 60 * 60 * 1000);
+    var pad = function (n, width, z) {
+      z = z || '0';
+      n = n + '';
+      width = width || 2;
+      return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+    };
+    return _time.getFullYear() + '-' + pad((_time.getMonth() + 1), 2) + '-' + pad(_time.getDate(), 2);
+  },
   // 获取前几个月的日期
   getAMonthAgo: (yue) => {
     var date = new Date();

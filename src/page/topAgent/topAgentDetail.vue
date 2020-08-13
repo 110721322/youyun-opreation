@@ -275,6 +275,7 @@ import { configData, configData2 } from "./dataConfig/topAgentDetailData";
 import {CONTACTS_CONFIG} from "../agent/formConfig/addContacts";
 import {LISASION} from "../agent/formConfig/addLiasion";
 import areaData from "@/assets/data/areaData";
+import store from "@/store"
 
 export default {
   name: "Theme",
@@ -655,7 +656,10 @@ export default {
       }
     },
     getAgentDetail() {
-      api_dataMarket.getTopAgentDetail({channelAgentCode: this.channelAgentCode}).then(res => {
+      api_dataMarket.getTopAgentDetail({
+        channelAgentCode: this.channelAgentCode,
+        roleCode: store.state.admin.userInfo.roleId
+      }).then(res => {
         const ruleForm = res.object;
         const payChannels = res.object.payChannels.map(($item, $index) => {
           return {

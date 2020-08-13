@@ -2,62 +2,49 @@
   <div class="main_page">
     <div class="p_head">商户详情</div>
 
-    <detailMode :rule-form="ruleForm" :config-data="configData" :is-show-edit-btn="true"></detailMode>
-    <detailMode :rule-form="ruleForm" :config-data="configData2"></detailMode>
+    <detailMode :rule-form="businessData" :config-data="configData" :is-show-edit-btn="true" @edit="itemEdit"></detailMode>
+    <detailMode :rule-form="commonData" :config-data="configData2" @modify="editMask"></detailMode>
+    <el-drawer :visible.sync="editData" :with-header="false" size="40%">
+      <div class="p_head">{{editDataTitle}}</div>
+      <Form
+          ref="liaisonRef"
+          :form-base-data="contactConfigData"
+          :show-foot-btn="contactConfigData.showFootBtn"
+          @confirm="confirm"
+          @cancel="cancel"
+      ></Form>
+    </el-drawer>
   </div>
 </template>
 
 <script>
-// import api from "@/api/api_merchant";
+import api from "@/api/api_merchant";
+import Form from "@/components/form/index.vue";
 import detailMode from "@/components/detailMode/detailMode2.vue";
+import { CONTACTS_CONFIG } from "./formConfig/merchantDetailEdit"
 
 export default {
   name: "Theme",
-  components: { detailMode },
+  components: { detailMode, Form },
   data() {
     return {
-      ruleForm: {
-        name: "1",
-        name1: "2",
-        name2: "3",
-        name3: "4",
-        email: "12312312@163.com",
-        pic: "123123"
-      },
+      editData: false,
+      merchantNo: '',
+      commonData: {},
+      businessData: {},
+      ruleForm: {},
+      contactConfigData: {},
+      editDataTitle: '',
       configData: {
         name: "业务信息",
         items: [
           {
             name: "乐刷商户号",
-            key: "merchantName"
-          },
-          {
-            name: "新大陆商户号",
-            key: "merchantNo"
-          },
-          {
-            name: "支付宝通道",
-            key: "name"
-          },
-          {
-            name: "支付后第三方广告",
-            key: "advertStatus"
-          },
-          {
-            name: "开通会员",
-            key: "memberStatus"
+            key: "leShuaMerchantNo"
           },
           {
             name: "所属服务商",
             key: "agentName"
-          },
-          {
-            name: "微信通道",
-            key: "name"
-          },
-          {
-            name: "云闪付通道",
-            key: "pic"
           }
         ]
       },
@@ -66,7 +53,7 @@ export default {
         items: [
           {
             name: "公司名称",
-            key: "name1"
+            key: "merchantName"
           },
           {
             name: "法人姓名",
@@ -90,7 +77,7 @@ export default {
           },
           {
             name: "营业执照编号",
-            key: "name"
+            key: "shopLicenseNo"
           },
           {
             name: "营业执照图",
@@ -99,26 +86,68 @@ export default {
           },
           {
             name: "备注",
-            key: "name",
+            key: "remark",
             type: "edit"
           }
         ]
       }
     };
   },
-  mounted() {
-    // this.getData();
+  created() {
+    this.merchantNo = this.$route.query.merchantNo
+    this.getCommonDetail()
+    this.getBusiness()
   },
+  mounted() {},
   methods: {
-    // getData() {
-    //   api
-    //     .getDetailByMerchantNo({ merchantNo: "" })
-    //     .then(res => {
-    //       this.ruleForm = res.object;
-    //       console.log(res);
-    //     })
-    //     .catch();
-    // }
+    getCommonDetail() {
+      api.getDetailByMerchantNo({
+        merchantNo: this.merchantNo
+      }).then(res => {
+        this.commonData = res.object;
+      }).catch();
+    },
+    getBusiness() {
+      api.getBusinessDetail({
+        merchantNo: this.merchantNo
+      }).then(res => {
+        this.businessData = res.object
+      })
+    },
+    itemEdit() {
+      this.editData = true
+    },
+    editMask() {
+      this.editData = true
+      this.editDataTitle = '编辑备注'
+      this.contactConfigData = CONTACTS_CONFIG.formData
+    },
+    confirm($data) {
+      console.log($data)
+      if (!$data.remark) {
+        this.$message({
+          message: '请填写备注信息',
+          type: 'warning'
+        })
+      } else {
+        api.modifyRemark({
+          merchantNo: this.merchantNo,
+          remark: $data.remark
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '修改成功',
+              type: 'success'
+            })
+            this.getCommonDetail()
+            this.editData = false
+          }
+        })
+      }
+    },
+    cancel() {
+      this.editData = false
+    }
   }
 };
 </script>

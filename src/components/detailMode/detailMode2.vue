@@ -44,7 +44,7 @@
           <i v-if="item.hasIconTime" class="el-icon-time icon-time"></i>
           <el-form-item :label="item.name +(item.hideColon?'':'：') ">
             <span v-if="item.type != 'switch'" class="item-value">{{ ruleForm[item.key] }}</span>
-            <span v-if="item.type == 'edit'" class="edit_btn">修改</span>
+            <span v-if="item.type == 'edit'" class="edit_btn" @click="handel_modify">修改</span>
             <el-switch
               v-if="item.type == 'switch'"
               v-model="ruleForm[item.key]"
@@ -93,6 +93,9 @@ export default {
   methods: {
     onClick_edit() {
       this.$emit("edit", this.ruleForm);
+    },
+    handel_modify() {
+      this.$emit("modify", this.ruleForm);
     }
   }
 };

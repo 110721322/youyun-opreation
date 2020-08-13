@@ -89,23 +89,16 @@ export default {
         }
       ],
       params: {},
-      api: api.queryPageMerchantSettleByCondition
+      api: api.querySettleList
     };
   },
-  beforeCreate() {
+  created() {
+    var result = this.$g.utils.getToday1()
+    console.log(result)
     this.params = {
-      beginDate: "2020-03-17",
-      offset: 0,
-      endDate: "2020-03-17",
-      channelMerchantNo: "li7",
-      channel: "vhu",
-      merchantNoList: [],
-      pageSize: 0,
-      currentPage: 0,
-      settleType: "yjh",
-      merchantNo: "1i2",
-      merchantName: "fa9"
-    };
+      beginDate: result,
+      endDate: result
+    }
   },
   mounted() {},
   methods: {

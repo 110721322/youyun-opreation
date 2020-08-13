@@ -14,28 +14,18 @@ export const USER_CONFIG = {
       label: '开通通道情况',
       width: '200px',
       customHead: true,
-      prop: [
-        {
-          key: 'merchantName'
-        },
-        {
-          key: 'merchantName'
-        },
-        {
-          key: 'merchantName'
-        }
-      ]
-      // render: (h, params) => {
-      //   const status = params.row.channelList;
-      //   return h('div', {
-      //     'class': "status-box"
-      //   }, [status.map(function ($item) {
-      //     return [h('span', {
-      //       'class': "dot " + $item.status
-      //     }), $item.name]
-      //   })]
-      //   );
-      // }
+      prop: 'channelStatusList',
+      render: (h, params) => {
+        const status = params.row.channelStatusList;
+        return h('div', {
+          'class': "status-box"
+        }, [status.map(function ($item) {
+          return [h('span', {
+            'class': "dot " + $item.channelStatus
+          }), $item.channel]
+        })]
+        );
+      }
     },
     {
       label: '创建时间',
@@ -62,17 +52,17 @@ export const USER_CONFIG = {
         name: '详情',
         emitName: 'detail',
         type: 'text'
-      },
-      {
-        name: '服务商后台',
-        emitName: 'openAgentManager',
-        type: 'text'
-      },
-      {
-        name: '商户后台',
-        emitName: 'openMerchantManager',
-        type: 'text'
       }
+      // {
+      //   name: '服务商后台',
+      //   emitName: 'openAgentManager',
+      //   type: 'text'
+      // },
+      // {
+      //   name: '商户后台',
+      //   emitName: 'openMerchantManager',
+      //   type: 'text'
+      // }
     ]
   },
   // 表单基础数据类型，需要预先赋值
