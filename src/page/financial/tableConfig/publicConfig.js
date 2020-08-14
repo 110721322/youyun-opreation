@@ -3,27 +3,27 @@ export const TABLE_CONFIG = {
     {
       label: '创建时间',
       prop: 'createTime',
-      width: '150px'
+      width: '120px'
     },
     {
       label: '服务商名称',
-      prop: 'serviceName',
-      width: '90px'
+      prop: [{key: 'agentName'}, {key: 'agentNo', label: 'ID:'}],
+      width: '120px'
     },
     {
       label: '购买项目',
-      prop: 'outputNo',
-      width: '200px'
+      prop: 'purchaseItem',
+      width: '120px'
     },
     {
       label: '打款金额（元）',
-      prop: 'payPrice',
-      width: '90px'
+      prop: 'amount',
+      width: '120px'
     },
     {
       label: '打款凭证',
       prop: 'voucher',
-      width: '150px',
+      width: '80px',
       type: 'img',
       render: (h, params) => {
         const imgUrl = params.row.voucher;
@@ -36,23 +36,26 @@ export const TABLE_CONFIG = {
       }
     },
     {
-      label: '服务商ID',
-      prop: 'ID',
-      // render: (h, params) => {
-      //   const status = params.row.status;
-      //   return h('el-tooltip', {
-      //     attrs: {
-      //       content: status,
-      //       placement: "top"
-      //     }
-      //   }, status);
-      // },
-      width: '90px'
-    },
-    {
       label: '状态',
-      prop: 'status',
-      width: '90px'
+      prop: 'auditStatus',
+      width: '90px',
+      render: (h, params) => {
+        if (params.row.auditStatus === 0) {
+          return h(
+            'span', '审核中'
+          )
+        }
+        if (params.row.auditStatus === 1) {
+          return h(
+            'span', '通过'
+          )
+        }
+        if (params.row.auditStatus === 2) {
+          return h(
+            'span', '驳回'
+          )
+        }
+      }
     }
   ],
   // crud的模态框表单配置，可配置表单类型，验证规则，是否必填,col-span布局可通过span参数配置
@@ -65,28 +68,40 @@ export const TABLE_CONFIG = {
     view: false,
     expands: [
       {
-        name: '驳回',
-        emitName: 'reject',
-        type: 'text'
-        // isShow: ($row) => {
-        //   if ($row.showReject === true) {
-        //     return true;
-        //   } else {
-        //     return false;
-        //   }
-        // }
-      },
-      {
         name: '通过',
         emitName: 'adopt',
-        type: 'text'
-        // isShow: ($row) => {
-        //   if ($row.showAdopt === true) {
-        //     return true;
-        //   } else {
-        //     return false;
-        //   }
-        // }
+        type: 'text',
+        isShow: ($row) => {
+          if ($row.auditStatus === 0) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      },
+      {
+        name: '驳回',
+        emitName: 'reject',
+        type: 'text',
+        isShow: ($row) => {
+          if ($row.auditStatus === 0) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      },
+      {
+        name: '查看',
+        emitName: 'detail',
+        type: 'text',
+        isShow: ($row) => {
+          if ($row.auditStatus === 2) {
+            return true;
+          } else {
+            return false;
+          }
+        }
       }
     ]
   },

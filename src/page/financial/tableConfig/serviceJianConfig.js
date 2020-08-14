@@ -2,17 +2,11 @@ export const SERVICE_CONFIG1 = {
   gridConfig: [
     {
       label: '服务商',
-      prop: 'agentName',
-      width: '90px'
+      prop: 'agentName'
     },
-    // {
-    //   label: '所属上级服务商',
-    //   prop: 'topSrevice',
-    //   width: '90px'
-    // },
     {
       label: '联系人',
-      prop: 'contact',
+      prop: [{key: 'contact'}, {key: 'bankMobile'}],
       width: '90px'
     },
     {

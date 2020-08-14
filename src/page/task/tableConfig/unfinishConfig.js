@@ -1,21 +1,44 @@
-import { TASK_ALERT } from "../../../libs/data/permissionBtns";
-
 export const UNFINISH_CONFIG = {
   gridConfig: [
     {
-      label: '任务类型',
-      prop: 'type',
+      label: '成员',
+      prop: 'receiverName',
       width: '150px'
     },
     {
-      label: '任务名称',
-      prop: 'taskName',
+      label: '日常任务数量',
+      prop: 'normalTotalCount',
       width: '150px'
     },
     {
-      label: '任务数量',
-      prop: 'num',
+      label: '日常任务完成数量',
+      prop: 'normalDoneCount',
       width: '150px'
+    },
+    {
+      label: '日常任务完成率',
+      prop: 'normalDoneRate',
+      width: '150px'
+    },
+    {
+      label: '单个日常任务平均完成时间',
+      prop: 'normalAverageUsedTime',
+      width: '200px'
+    },
+    {
+      label: '审批任务数量',
+      prop: 'approvalTotalCount',
+      width: '200px'
+    },
+    {
+      label: '审批任务完成率',
+      prop: 'approvalDoneRate',
+      width: '200px'
+    },
+    {
+      label: '单个审批任务完成时间',
+      prop: 'approvalAverageUsedTime',
+      width: '200px'
     }
   ],
   // crud的模态框表单配置，可配置表单类型，验证规则，是否必填,col-span布局可通过span参数配置
@@ -28,18 +51,10 @@ export const UNFINISH_CONFIG = {
     view: false,
     expands: [
       {
-        name: '提醒',
-        emitName: 'notice',
+        name: '详情',
+        emitName: 'detail',
         type: 'text',
-        style: 'color:#1989FA',
-        permission: TASK_ALERT, //  提醒按钮权限
-        isShow: item => {
-          if (item.isChild) {
-            return false
-          } else {
-            return true
-          }
-        }
+        style: 'color:#1989FA'
       }
     ]
   },

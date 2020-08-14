@@ -16,10 +16,6 @@ export const SEARCH_CONFIG = {
         {
           label: '服务商ID',
           value: 'agentNo'
-        },
-        {
-          label: '服务商名称',
-          value: 'agentName'
         }
       ],
       labelWidth: '100px'
@@ -27,20 +23,24 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '审核状态',
-      key: 'status',
+      key: 'auditStatus',
       style: 'width:294px',
       labelWidth: '100px',
       options: [
         {
-          label: '川菜',
+          label: '全部',
+          value: ''
+        },
+        {
+          label: '待审核',
           value: 0
         },
         {
-          label: '粤菜',
+          label: '审核通过',
           value: 1
         },
         {
-          label: '杭帮菜',
+          label: '审核驳回',
           value: 2
         }
       ]

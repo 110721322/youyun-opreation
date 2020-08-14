@@ -113,20 +113,11 @@ export default {
       } else {
         return api_statistice.selectAgentDataByPage
       }
-    },
-    config() {
-      if (this.mainIndex === 1) {
-        [this.configData, this.configData1] = [SERVICE_CONFIG, SERVICE_CONFIG1]
-        return [this.configData, this.configData1]
-      } else {
-        [this.configData, this.configData1] = [TOPERVICE_CONFIG, TOPVICE_CONFIG1]
-        return [this.configData, this.configData1]
-      }
     }
   },
   mounted() {},
   created() {
-    this.api = api_statistice.selectAgentDataByPage
+    this.api = api_statistice.selectTopAgentDataByPage
     var myDate = new Date()
     if (myDate.getMonth() < 10) {
       this.tradeMonth = myDate.getFullYear() + "-" + "0" + myDate.getMonth() + "-" + "01"
@@ -139,6 +130,10 @@ export default {
       //   tradeMonth: this.tradeMonth
       // }
     }
+    if (this.mainIndex === 0) {
+      this.configData = TOPERVICE_CONFIG
+      this.configData1 = TOPVICE_CONFIG1
+    }
     // this.search()
   },
   methods: {
@@ -150,26 +145,43 @@ export default {
       this.params = {
         tradeMonth: this.tradeMonth
       }
-    },
-    search($ruleform) {
-      // console.log('wafsaefsa', $ruleform.date)
-      this.params = {
-        tradeMonth: $ruleform.date ? $ruleform.date + "-" + "01" : this.tradeMonth
-        // currentPage: 1,
-        // pageSize: 10
-        // agentNo: $ruleform.inputSelect === 'merchantNo' ? $ruleform.inputForm : "",
-        // channelAgentCode: $ruleform.inputSelect === 'merchantName' ? $ruleform.inputForm : ""
+      if (this.mainIndex === 0) {
+        this.configData = TOPERVICE_CONFIG
+        this.configData1 = TOPVICE_CONFIG1
+      } else if (this.mainIndex === 1) {
+        this.configData = SERVICE_CONFIG
+        this.configData1 = SERVICE_CONFIG1
       }
     },
+    search($ruleform) {
+      this.params = {
+        tradeMonth: $ruleform.date ? $ruleform.date + "-" + "01" : this.tradeMonth
+      }
+      this.tradeMonth = $ruleform.date ? $ruleform.date + "-" + "01" : this.tradeMonth
+    },
     handleDetail($row) {
-      this.$router.push({
-        path: '/financial/shareProfit/serviceProfit/serviceProfitDetail',
-        query: {
-          agentNo: $row.agentNo,
-          tradeMonth: this.params.tradeMonth,
-          mainIndex: this.mainIndex
-        }
-      })
+      if (this.mainIndex === 0) {
+        this.$router.push({
+          path: '/financial/shareProfit/serviceProfit/serviceProfitDetail',
+          query: {
+            enterType: 0,
+            agentNo: $row.channelAgentCode,
+            tradeMonth: this.tradeMonth,
+            mainIndex: this.mainIndex
+          }
+        })
+      }
+      if (this.mainIndex === 1) {
+        this.$router.push({
+          path: '/financial/shareProfit/serviceProfit/serviceProfitDetail',
+          query: {
+            enterType: 1,
+            agentNo: $row.agentNo,
+            tradeMonth: this.tradeMonth,
+            mainIndex: this.mainIndex
+          }
+        })
+      }
     }
   }
 }

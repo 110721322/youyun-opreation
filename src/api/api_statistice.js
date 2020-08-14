@@ -48,5 +48,11 @@ export default {
   // 顶级代理商下的商户明细
   selectTopAgentMerchantDetailByPage: (params) => API.POST('/operation/v1/topAgentStatistics/selectTopAgentMerchantDetailByPage', params),
   // 通过商户名称模糊查询商户编号
-  selectByName: (params) => API.GET('/operation/v1/topAgentStatistics/selectByName', params)
+  selectByName: (params) => API.GET('/operation/v1/topAgentStatistics/selectByName', params),
+  // 财务审核-对公转账审核列表
+  transferListL: (params) => API.GET('/operation/v1/corporateTransfer/queryByPage', params),
+  // 财务审核-对公转账审核-驳回
+  rejectTransfer: (params) => API.GET('operation/v1/corporateTransfer/reject', params),
+  // 财务审核-对公转账审核-通过
+  passTransfer: (params) => API.POST('/operation/v1/financeAudit/deviceAuditPass', params)
 }

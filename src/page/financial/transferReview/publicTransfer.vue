@@ -9,6 +9,7 @@
 
       <div class="table_box">
         <BaseCrud
+           ref="table"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
           :grid-data="testData"
@@ -22,7 +23,7 @@
           :default-expand-all="false"
           :hide-edit-area="configData.hideEditArea"
           :header-cell-style="headerCellStyle"
-          :api-service="null"
+          :api-service="api"
           :params="params"
           @detail="onClick_detail"
           @reject="onClick_reject"
@@ -41,6 +42,15 @@
           @confirm="confirm"
         ></Form>
       </el-drawer>
+      <el-dialog
+          title="驳回理由"
+          :visible.sync="dialogVisible"
+          width="30%">
+        <span>{{reason}}</span>
+        <span slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -51,7 +61,7 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import { FORM_CONFIG } from "../formConfig/publicForm";
 import { SEARCH_CONFIG } from "../formConfig/publicSearch";
 import { TABLE_CONFIG } from "../tableConfig/publicConfig";
-import api from "@/api/api_financialAudit.js";
+import api from "@/api/api_statistice";
 
 export default {
   name: "Theme",
@@ -65,48 +75,58 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl",
-      params: {
-        status: "",
-        beginTime: "",
-        endTime: ""
-      },
+      params: {},
       formStatus: null,
-      api: api.deviceAuditPage
+      api: api.transferListL,
+      id: '',
+      dialogVisible: false,
+      reason: ''
     };
   },
   mounted() {},
   methods: {
     confirm($data) {
-      switch (this.formStatus) {
-        case "reject":api.deviceAuditReject({
-          id: this.activeRow.id,
-          rejectRemark: $data.rejectRemark
+      if (!$data.reason) {
+        this.$message({
+          message: '请填写驳回理由',
+          type: 'warning'
+        })
+        return false
+      } else {
+        api.rejectTransfer({
+          reason: $data.reason,
+          id: this.id
         }).then(res => {
-          this.$message("已驳回");
-          this.drawer = false;
-        }).catch(err => {
-          this.$message(err);
-        }); break; default:break;
+          if (res.status === 0) {
+            this.$message({
+              message: '已驳回',
+              type: 'success'
+            })
+            this.drawer = false
+            this.$refs.table.getData()
+          } else {
+            this.$message({
+              message: res.errorMessage,
+              type: 'info'
+            })
+          }
+        })
       }
     },
     search($ruleForm) {
-      // eslint-disable-next-line no-console
-      console.log($ruleForm);
       this.params = {
         beginTime: $ruleForm.date ? $ruleForm.date[0] : null,
         endTime: $ruleForm.date ? $ruleForm.date[1] : null,
-        status: $ruleForm.status || ""
+        auditStatus: $ruleForm.auditStatus
       };
       this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
     },
-    onClick_detail() {
-      this.$router.push({
-        // path: "/transferReview/financialAudit/financialSettlement/detail"
-      });
+    onClick_detail($row) {
+      this.reason = $row.reason
+      this.dialogVisible = true
     },
     onClick_reject($row) {
-      this.activeRow = $row;
+      this.id = $row.id
       this.formStatus = "reject";
       this.fromConfigData = FORM_CONFIG.rejectData;
       this.drawer = true;
@@ -117,17 +137,28 @@ export default {
         confirmButtonText: "确认",
         cancelButtonText: "取消"
       }).then(() => {
-        api.deviceAuditPass({
+        api.passTransfer({
           id: $row.id
-        }).then(result => {
-          this.$message({
-            type: "info",
-            message: "已通过"
-          });
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              type: "success",
+              message: "已通过"
+            });
+            this.$refs.table.getData()
+          }
         }).catch(err => {
-          console.error(err);
+          this.$message({
+            message: err.errorMessage,
+            type: 'warning'
+          })
         });
-      }).catch(() => {});
+      }).catch(() => {
+        this.$message({
+          message: '取消操作',
+          type: 'info'
+        })
+      });
     },
     cancel() {
       this.drawer = false;
@@ -143,5 +174,10 @@ export default {
     padding: 24px;
     overflow: hidden;
     background: #fff;
+  }
+
+  .el-table td div {
+    width: 80px;
+    height: 80px;
   }
 </style>

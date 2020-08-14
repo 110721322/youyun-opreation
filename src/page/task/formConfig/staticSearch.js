@@ -1,71 +1,26 @@
-import { TASK_SEARCH_1 } from "../../../libs/data/permissionBtns";
-
+import api from "@/api/api_task"
 export const FORM_CONFIG = {
-  permission: {
-    search: TASK_SEARCH_1
-  },
   formData: [
     {
-      type: 1,
-      label: '任务类型',
-      key: 'taskType',
-      style: 'width:294px',
-      labelWidth: '100px',
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
-    },
-    {
-      type: 1,
-      label: '任务名称',
-      key: 'name',
-      style: 'width:294px',
-      labelWidth: '100px', options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
+      type: 9,
+      label: '筛选时间',
+      key: 'date',
+      datatype: 'datetimerange',
+      class: 'max-width',
+      labelWidth: '100px'
     },
     {
       type: 1,
       label: '成员',
-      key: 'member',
+      key: 'recevierId',
       style: 'width:294px',
       labelWidth: '100px',
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
+      urlOptions: {
+        url: api.queryAllEmployeeList,
+        method: 'post',
+        keyName: 'id',
+        valueName: 'name'
+      }
     }
   ]
 }

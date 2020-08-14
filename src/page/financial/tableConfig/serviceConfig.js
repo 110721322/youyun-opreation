@@ -5,20 +5,14 @@ export const SERVICE_CONFIG = {
       prop: 'agentName',
       width: '90px'
     },
-    // {
-    //   label: '所属上级服务商',
-    //   prop: 'topSrevice',
-    //   width: '90px'
-    // },
     {
       label: '联系人',
-      prop: 'contact',
+      prop: [{key: 'contact'}, {key: 'bankMobile'}],
       width: '90px'
     },
     {
       label: '结算账号',
-      prop: 'settleAccount',
-      // prop: [{ key: "name" }, { key: "phone"}],
+      prop: [{ key: "settleBankName" }, { key: "settleAccount"}],
       width: '90px'
     },
     {

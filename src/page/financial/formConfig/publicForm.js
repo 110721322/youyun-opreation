@@ -9,7 +9,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '驳回原因',
-        key: 'rejectRemark',
+        key: 'reason',
         initVal: '',
         inputType: 'textarea',
         rules: setRules('驳回原因').isRequired.get

@@ -453,6 +453,29 @@ const asyncRoutes = {
     component: () => import('@/page/financial/shareProfit/interconnection.vue'),
     children: []
   },
+  'statistics': {
+    path: 'statistics',
+    name: 'statistics',
+    meta: {
+      title: '成员效率',
+      subMenuName: 'statistics',
+      icon: 'statistics'
+    },
+    component: () => import('@/page/task/statistics.vue')
+    // children: [
+    //   {
+    //     'statisticsDetail': {
+    //       path: 'statisticsDetail',
+    //       name: 'statisticsDetail',
+    //       meta: {
+    //         title: '工作任务统计',
+    //         icon: 'statisticsDetail'
+    //       },
+    //       component: () => import('@/page/task/statisticsDetail.vue')
+    //     }
+    //   }
+    // ]
+  },
   'hardwareOrder': {
     path: 'hardwareOrder',
     name: 'hardwareOrder',
@@ -1016,16 +1039,6 @@ const asyncRoutes = {
       title: '运营数据',
       icon: 'task'
     },
-    children: []
-  },
-  'statisticsDetail': {
-    path: 'statisticsDetail',
-    name: 'statisticsDetail',
-    meta: {
-      title: '工作任务统计',
-      icon: 'statisticsDetail'
-    },
-    component: () => import('@/page/task/statisticsDetail.vue'),
     children: []
   },
   'publicTransfer': {
