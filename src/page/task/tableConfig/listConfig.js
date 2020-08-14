@@ -6,7 +6,7 @@ export const UNFINISH_CONFIG = {
       width: '150px'
     },
     {
-      label: '任务名称',
+      label: '日常任务数量',
       prop: 'normalTotalCount',
       width: '150px'
     },

@@ -7,6 +7,7 @@ export default {
   queryAllEmployeeList: () => API.POST('/operation/v1/employee/queryAllEmployeeList'),
   // 查询所有待办事项类型
   queryTaskType: () => API.GET('/operation/v1/workbench/taskType/queryAllTaskTypeList'),
-  queryOperationAllTaskMenu: (params) => API.GET('/operation/v1/workbench/task/queryOperationAllTaskMenu', params),
+  // 成员效率-查询某个状态下的待办事项类型统计列表
+  queryTaskList: (params) => API.GET('/operation/v1/workbench/task/queryOperationAllTaskMenu', params),
   queryOperationTaskList: (params) => API.GET('/operation/v1/workbench/task/queryOperationTaskList', params)
 };

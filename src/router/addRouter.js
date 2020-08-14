@@ -461,20 +461,18 @@ const asyncRoutes = {
       subMenuName: 'statistics',
       icon: 'statistics'
     },
-    component: () => import('@/page/task/statistics.vue')
-    // children: [
-    //   {
-    //     'statisticsDetail': {
-    //       path: 'statisticsDetail',
-    //       name: 'statisticsDetail',
-    //       meta: {
-    //         title: '工作任务统计',
-    //         icon: 'statisticsDetail'
-    //       },
-    //       component: () => import('@/page/task/statisticsDetail.vue')
-    //     }
-    //   }
-    // ]
+    component: () => import('@/page/task/statistics.vue'),
+    children: [
+      {
+        path: 'statisticsDetail',
+        name: 'statisticsDetail',
+        meta: {
+          title: '工作任务统计',
+          icon: 'statisticsDetail'
+        },
+        component: () => import('@/page/task/statisticsDetail.vue')
+      }
+    ]
   },
   'hardwareOrder': {
     path: 'hardwareOrder',

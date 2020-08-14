@@ -72,7 +72,7 @@ import DataMode from "@/components/dataMode/dataMode.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { FINISH_CONFIG } from "./tableConfig/finishConfig";
 import { UNFINISH_CONFIG } from "./tableConfig/unfinishConfig";
-import { FORM_CONFIG } from "./formConfig/staticSearch";
+import { FORM_CONFIG } from "./formConfig/staticDetailSearch";
 import {TASK_SEARCH_1, TASK_SEARCH_2 } from "../../libs/data/permissionBtns";
 
 export default {
@@ -94,18 +94,17 @@ export default {
       testData: [],
       isChangeMode: true,
       params: {},
-      api: api.queryOperationTaskList
+      api: '',
+      receiverId: ''
     };
   },
   created() {
+    this.receiverId = this.$route.query.receiverId
     this.params = {
-      receiverId: 1,
-      undoType: 1,
-      taskType: 1,
-      pageSize: 1,
-      currentPage: 1,
-      status: ""
+      receiverId: this.receiverId,
+      status: this.activeIndex === '2' ? 'initiated' : ''
     };
+    this.api = api.queryTaskList
   },
   mounted() {
     this.queryOperationAllTaskMenu();
