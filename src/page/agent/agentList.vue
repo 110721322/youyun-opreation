@@ -226,7 +226,14 @@ export default {
         path: "/agent/list/addAgent"
       })
     },
-    onCompletion() {}
+    onCompletion($row) {
+      this.$router.push({
+        path: "/agent/list/detail",
+        query: {
+          agentNo: $row.agentNo
+        }
+      });
+    }
   }
 };
 </script>

@@ -27,10 +27,10 @@
           <BaseCrud
             ref="table"
             :params="params"
-            :api-service="api"
+            :api-service="false"
             :grid-config="configData.gridConfig"
             :grid-btn-config="configData.gridBtnConfig"
-            :grid-data="testData"
+            :grid-data="taskList.datas"
             :form-config="configData.formConfig"
             :form-data="configData.formModel"
             :grid-edit-width="300"
@@ -82,12 +82,7 @@ export default {
   data() {
     return {
       searchConfig: FORM_CONFIG,
-      modeConfigData: [
-        {
-          title: "任务总数",
-          data: "555个"
-        }
-      ],
+      modeConfigData: [],
       searchMaxHeight: "260",
       activeIndex: "1",
       configData: UNFINISH_CONFIG,
@@ -95,36 +90,52 @@ export default {
       isChangeMode: true,
       params: {},
       api: '',
-      receiverId: ''
+      receiverId: '',
+      taskList: {}
     };
   },
   created() {
     this.receiverId = this.$route.query.receiverId
     this.params = {
       receiverId: this.receiverId,
-      status: this.activeIndex === '2' ? 'initiated' : ''
+      status: this.activeIndex === '2' ? 'initiated' : 'undo'
     };
+    this.queryTask()
     this.api = api.queryTaskList
   },
   mounted() {
-    this.queryOperationAllTaskMenu();
+    // this.queryOperationAllTaskMenu();
   },
   methods: {
-    queryOperationAllTaskMenu() {
-      api
-        .queryOperationAllTaskMenu({
-          receiverId: 1,
-          undoType: 1,
-          taskType: 1,
-          status: "undo",
-          taskOwner: ""
-        })
-        .then(res => {
-          console.log(res.object);
-          this.modeConfigData[0].data = res.object.totalCount;
-        })
-        .catch();
+    queryTask() {
+      api.queryTaskList({
+        receiverId: this.receiverId,
+        status: this.activeIndex === '2' ? 'initiated' : 'undo'
+      }).then(res => {
+        this.taskList = res.object
+        this.modeConfigData = [
+          {
+            title: "任务总数",
+            data: res.object.totalCount
+          }
+        ]
+      })
     },
+    // queryOperationAllTaskMenu() {
+    //   api
+    //     .queryOperationAllTaskMenu({
+    //       receiverId: 1,
+    //       undoType: 1,
+    //       taskType: 1,
+    //       status: "undo",
+    //       taskOwner: ""
+    //     })
+    //     .then(res => {
+    //       console.log(res.object);
+    //       this.modeConfigData[0].data = res.object.totalCount;
+    //     })
+    //     .catch();
+    // },
     handleSelect($item) {
       // eslint-disable-next-line no-console
       this.activeIndex = $item;

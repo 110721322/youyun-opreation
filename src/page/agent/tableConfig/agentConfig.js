@@ -29,7 +29,7 @@ export const USER_CONFIG = {
     {
       label: '状态',
       prop: 'contractStatus',
-
+      width: '185px',
       render: (h, params) => {
         if (params.row.contractStatus === 'success') {
           return h(
@@ -43,6 +43,42 @@ export const USER_CONFIG = {
             '审核通过'
           );
         }
+        if (params.row.contractStatus === 'reject') {
+          return h(
+            'el-tag',
+            {
+              props: {
+                size: 'medium ',
+                type: 'danger'
+              }
+            },
+            '审核拒绝'
+          );
+        }
+        if (params.row.contractStatus === 'wait') {
+          return h(
+            'el-tag',
+            {
+              props: {
+                size: 'medium ',
+                type: 'info'
+              }
+            },
+            '待审核'
+          );
+        }
+        if (params.row.contractStatus === 'audit') {
+          return h(
+            'el-tag',
+            {
+              props: {
+                size: 'medium ',
+                type: ''
+              }
+            },
+            '审核中'
+          );
+        }
       }
     },
     {
@@ -52,7 +88,7 @@ export const USER_CONFIG = {
     },
     {
       label: '服务地区',
-      prop: 'activeScopeType',
+      prop: 'activeScopeProvinceName',
       width: '150px'
     },
     {
@@ -119,17 +155,17 @@ export const USER_CONFIG = {
             return false;
           }
         }
-      },
-      {
-        name: '服务商后台',
-        emitName: 'openAgentManager',
-        type: 'text'
-      },
-      {
-        name: '商户列表',
-        emitName: 'goMerchantList',
-        type: 'text'
       }
+      // {
+      //   name: '服务商后台',
+      //   emitName: 'openAgentManager',
+      //   type: 'text'
+      // },
+      // {
+      //   name: '商户列表',
+      //   emitName: 'goMerchantList',
+      //   type: 'text'
+      // }
     ]
   },
   // 表单基础数据类型，需要预先赋值
