@@ -52,7 +52,7 @@ export default {
   // 财务审核-对公转账审核列表
   transferListL: (params) => API.GET('/operation/v1/corporateTransfer/queryByPage', params),
   // 财务审核-对公转账审核-驳回
-  rejectTransfer: (params) => API.GET('operation/v1/corporateTransfer/reject', params),
+  rejectTransfer: (params) => API.GET('/operation/v1/corporateTransfer/reject', params),
   // 财务审核-对公转账审核-通过
-  passTransfer: (params) => API.POST('/operation/v1/financeAudit/deviceAuditPass', params)
+  passTransfer: (params) => API.POST('/operation/v1/corporateTransfer/pass', params)
 }
