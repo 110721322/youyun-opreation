@@ -155,5 +155,7 @@ export default {
   // 根据关键字查询支行信息
   listBankLineByName: (params) => API.GET('agent/v1/merchant/listBankLineByName', params),
   // 根据联行号查询联行支行
-  getBankLineByNo: (params) => API.GET('agent/v1/merchant/getBankLineByNo', params)
+  getBankLineByNo: (params) => API.GET('agent/v1/merchant/getBankLineByNo', params),
+  // 更新服务商续费金额
+  updateRenewAmount: (params) => API.POST('operation/v1/agent/updateAgentRenewAmount', params)
 };

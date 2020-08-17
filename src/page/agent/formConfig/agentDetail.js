@@ -301,13 +301,10 @@ export const FORM_CONFIG = {
       },
       {
         type: 0,
-        label: '佣金比例',
+        label: '续费金额',
         key: 'renewValue',
         initVal: '',
-        placeholder: '请输入',
-        isShowSlot: true,
-        showSlotName: '%',
-        rules: setRules('请输入').doubleFloat.get
+        placeholder: '请输入金额'
       }
     ]
   },

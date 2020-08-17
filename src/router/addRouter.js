@@ -194,6 +194,16 @@ const asyncRoutes = {
     },
     children: []
   },
+  // 'companyApproval': {
+  //   path: 'companyApproval',
+  //   name: 'companyApproval',
+  //   component: () => import('@/page/comSettlement/comset'),
+  //   meta: {
+  //     title: '财务结算',
+  //     icon: 'companyApproval'
+  //   },
+  //   children: []
+  // },
   marketing: {
     path: '/marketing',
     name: 'marketing',
@@ -297,6 +307,16 @@ const asyncRoutes = {
           icon: 'comsetDetail'
         },
         component: () => import('@/page/comSettlement/comsetDetail.vue')
+      },
+      {
+        path: 'comsetRecord',
+        name: 'comsetRecord',
+        meta: {
+          title: '结算记录',
+          fatherName: 'comset',
+          icon: 'comsetRecord'
+        },
+        component: () => import('@/page/comSettlement/comsetRecord.vue')
       }
     ]
   },

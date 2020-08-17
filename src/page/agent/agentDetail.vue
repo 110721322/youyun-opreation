@@ -71,14 +71,14 @@
 
           <el-date-picker
             v-model="timeDate"
-            type="datetimerange"
+            type="daterange"
             :picker-options="pickerOptions"
             range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
             align="right"
-            format="yyyy-MM-dd HH:mm:ss"
-            value-format="yyyy-MM-dd HH:mm:ss"
+            format="yyyy-MM-dd"
+            value-format="yyyy-MM-dd"
             class="selectDate"
             @change="dateChange"
           >
@@ -209,6 +209,52 @@
         @cancel="liaisonCancel"
       ></Form>
     </el-drawer>
+    <el-drawer :visible.sync="financeDrawer" :with-header="false" size="30%">
+      <div class="financeTitle">财务信息</div>
+      <el-form :model="financeModel">
+        <el-form-item label="结算卡类型" prop="bankAccountType" style="margin: 24px 20% 0 24px;" label-width="120px">
+          <el-select v-model="financeModel.bankAccountType" placeholder="请选择">
+            <el-option
+                v-for="item in accountType"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="银行卡号" prop="bankCardNo" style="margin: 24px 20% 0 24px;" label-width="120px">
+          <el-input placeholder="请输入银行卡号" v-model="financeModel.bankCardNo"></el-input>
+        </el-form-item>
+        <el-form-item label="开户支行" prop="bankContactLine" style="margin: 24px 20% 0 24px;" label-width="120px">
+          <el-select
+              v-model="financeModel.bankContactLine"
+              filterable
+              remote
+              reserve-keyword
+              placeholder="请输入关键词"
+              :remote-method="remoteMethod"
+              @change="handleSelect"
+              :loading="loading">
+            <el-option
+                v-for="item in bankOptions"
+                :key="item.unionCode"
+                :label="item.bankName"
+                :value="item.unionCode">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="开户支行地区" prop="bankArea" style="margin: 24px 20% 0 24px;" label-width="120px">
+          <el-input disabled v-model="area"></el-input>
+        </el-form-item>
+        <el-form-item label="开户名" prop="bankAccountHolder" style="margin: 24px 20% 0 24px;" label-width="120px">
+          <el-input placeholder="请输入开户名" v-model="financeModel.bankAccountHolder"></el-input>
+        </el-form-item>
+      </el-form>
+      <div class="bottom-btn">
+        <el-button type="primary" @click="handel_save">保存</el-button>
+        <el-button @click="handel_cancle">取消</el-button>
+      </div>
+    </el-drawer>
     <el-dialog title="沟通记录详情" :visible.sync="dialogTableVisible">
       <ul class="liaison_detail">
         <li>
@@ -264,6 +310,7 @@ import { USER_CONFIG, USER_CONFIG2 } from "./tableConfig/config_communicate";
 import { FORM_CONFIG } from "./formConfig/agentDetail";
 import { CONTACTS_CONFIG } from "./formConfig/addContacts"
 import { LISASION } from "./formConfig/addLiasion"
+import areaData from "@/assets/data/areaData";
 
 export default {
   name: "Theme",
@@ -568,7 +615,28 @@ export default {
       editType: '',
       contactsList: [],
       liaisonType: '',
-      summaryInfo: {}
+      summaryInfo: {},
+      financeModel: {
+        bankAccountType: '',
+        bankCardNo: '',
+        bankContactLine: '',
+        bankAccountHolder: ''
+      },
+      accountType: [
+        {
+          label: '对私',
+          value: 'private'
+        },
+        {
+          label: '对公',
+          value: 'public'
+        }
+      ],
+      area: '',
+      loading: false,
+      areaCodeNum: '',
+      bankOptions: [],
+      financeDrawer: false
     };
   },
   created() {
@@ -579,12 +647,10 @@ export default {
     const year = now.getFullYear() // 得到年份
     const month = now.getMonth() + 1// 得到月份
     const date = now.getDate() // 得到日期
-    const hour = '00' // 得到小时
-    const minu = '00' // 得到分钟
     const month1 = month < 10 ? "0" + month : month
     const date1 = date < 10 ? "0" + date : date
-    var start = year + '-' + month1 + '-' + date1 + ' ' + hour + ':' + minu + ':' + '00'
-    var end = year + '-' + month1 + '-' + date1 + ' ' + '23' + ':' + '59' + ':' + '59'
+    var start = year + '-' + month1 + '-' + date1
+    var end = year + '-' + month1 + '-' + date1
     this.timeDate = [start, end]
     this.gatTag()
     this.getSelectSummary(this.timeDate)
@@ -596,6 +662,84 @@ export default {
   },
   mounted() {},
   methods: {
+    remoteMethod(query) {
+      if (query !== '') {
+        this.loading = true;
+        setTimeout(() => {
+          this.loading = false;
+          api.listBankLineByName({
+            name: query,
+            limit: 30
+          }).then(res => {
+            if (res.object) {
+              this.bankOptions = res.object
+            }
+          })
+        }, 200);
+      } else {
+        this.bankOptions = [];
+      }
+    },
+    handleSelect(item) {
+      api.getBankLineByNo({
+        unionCode: item
+      }).then(res => {
+        console.log(res)
+        // this.dataForm.bankArea[0] = res.object.provinceCode
+        // this.dataForm.bankArea = res.object.cityCode
+        var provinceName = ''
+        var cityName = ''
+        var areaName = ''
+        var result = this.$g.utils.getNestedArr(areaData, 'children')
+        result.forEach(m => {
+          if (m.value === res.object.provinceCode) {
+            provinceName = m.label
+          }
+          if (m.value === res.object.cityCode) {
+            cityName = m.label
+          }
+          if (m.value === res.object.areaCode) {
+            areaName = m.label
+          }
+        })
+        this.bankName = res.object.bankName
+        this.area = provinceName + '/' + cityName + '/' + areaName
+        this.areaCodeNum = res.object.areaCode
+      })
+    },
+    handel_save() {
+      if (!this.financeModel.bankAccountType || !this.financeModel.bankCardNo || !this.financeModel.bankContactLine || !this.financeModel.bankAccountHolder) {
+        this.$message({
+          message: '请填写完整信息',
+          type: 'warning'
+        })
+      } else {
+        api.updateFinancial({
+          agentNo: this.$route.query.agentNo,
+          bankAccountHolder: this.financeModel.bankAccountHolder,
+          bankCardNo: this.financeModel.bankCardNo,
+          bankContactLine: this.financeModel.bankContactLine,
+          bankBranchName: this.bankName,
+          bankArea: this.areaCodeNum,
+          bankAccountType: this.financeModel.bankAccountType
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '财务资料更新成功',
+              type: 'success'
+            })
+            this.getDetail(this.$route.query.agentNo)
+            this.editType = ''
+            this.financeDrawer = false
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+      }
+    },
+    handel_cancle() {
+      this.financeDrawer = false
+    },
     // 查询服务商详情
     getDetail(agentNo) {
       api.getAgentDetail({
@@ -848,16 +992,17 @@ export default {
     itemEdit($model) {
       if ($model === 'basicData') {
         this.editType = 'editBasicData'
+        const newFromConfigData = FORM_CONFIG[$model];
+        newFromConfigData.formData.forEach((item, index) => {
+          item.initVal = this.agentDetail[item.key];
+        });
+        this.fromConfigData = newFromConfigData;
+        this.drawer = true;
       }
       if ($model === 'finance') {
         this.editType = 'editFincance'
+        this.financeDrawer = true
       }
-      this.drawer = true;
-      const newFromConfigData = FORM_CONFIG[$model];
-      newFromConfigData.formData.forEach((item, index) => {
-        item.initVal = this.agentDetail[item.key];
-      });
-      this.fromConfigData = newFromConfigData;
     },
     rateEdit($model) {
       if ($model === 'rateInfo') {
@@ -914,28 +1059,28 @@ export default {
           })
         }
       }
-      if (this.editType === 'editFincance') {
-        api.updateFinancial({
-          agentNo: this.$route.query.agentNo,
-          bankAccountHolder: row.bankAccountHolder,
-          bankCardNo: row.bankCardNo,
-          bankArea: row.bankArea,
-          bankBranchName: row.bankBranchName,
-          bankAccountType: row.bankAccountType
-        }).then(res => {
-          if (res.status === 0) {
-            this.$message({
-              message: '财务资料更新成功',
-              type: 'success'
-            })
-            this.getDetail(this.$route.query.agentNo)
-            this.editType = ''
-            this.drawer = false
-          }
-        }).catch(err => {
-          console.log(err)
-        })
-      }
+      // if (this.editType === 'editFincance') {
+      //   api.updateFinancial({
+      //     agentNo: this.$route.query.agentNo,
+      //     bankAccountHolder: row.bankAccountHolder,
+      //     bankCardNo: row.bankCardNo,
+      //     bankArea: row.bankArea,
+      //     bankBranchName: row.bankBranchName,
+      //     bankAccountType: row.bankAccountType
+      //   }).then(res => {
+      //     if (res.status === 0) {
+      //       this.$message({
+      //         message: '财务资料更新成功',
+      //         type: 'success'
+      //       })
+      //       this.getDetail(this.$route.query.agentNo)
+      //       this.editType = ''
+      //       this.drawer = false
+      //     }
+      //   }).catch(err => {
+      //     console.log(err)
+      //   })
+      // }
       if (this.editType === 'editRateInfo') {
         if (!row.wechatPayRate || !row.cloudPayLe1000Rate || !row.cloudPayGt1000Rate) {
           this.$message({
@@ -1020,10 +1165,10 @@ export default {
           })
           return false
         } else {
-          api.addPercentRenew({
+          api.updateRenewAmount({
             agentNo: this.$route.query.agentNo,
             monthCount: row.monthCount,
-            renewType: 'percent',
+            renewType: 'fixed',
             renewValue: row.renewValue
           }).then(res => {
             if (res.status === 0) {
@@ -1414,5 +1559,32 @@ export default {
 
 .talkInfo {
   margin-top: 50px;
+}
+
+.financeTitle {
+  width: 100%;
+  height: 84px;
+  border-bottom: 1px solid #ececec;
+  line-height: 84px;
+  padding-left: 32px;
+  font-size: 28px;
+  margin-bottom: 32px;
+}
+
+.bottom-btn {
+  width: 30%;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  height: 96px;
+  border-top: 1px solid #ebeef5;
+  justify-content: space-around;
+  display: flex;
+  align-items: center;
+}
+
+.bottom-btn button {
+  width: 131px;
+  height: 44px;
 }
 </style>

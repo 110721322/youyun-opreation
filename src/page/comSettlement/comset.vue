@@ -1,6 +1,6 @@
 <template>
   <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/comsetDetail') !== -1" />
+    <router-view v-if="this.$route.path.indexOf('/comsetDetail') !== -1 || this.$route.path.indexOf('/comsetRecord') !== -1" />
     <div v-else>
       <div class="top_head">
         <span>佣金结算</span>
@@ -9,14 +9,14 @@
       </div>
       <div class="content">
         <ul class="content-banner">
-          <li><p>间联佣金(元)</p><p style="color: #262626; line-height: 32px; font-weight: 500; font-size: 20px;">{{ indirectCommission }}</p></li>
-          <li><p>活动奖励(元)</p><p style="color: #1989FA; font-size: 20px; font-weight: 500; line-height: 32px;">{{ activityReward }}</p></li>
+          <li><p>间联佣金(元)</p><p style="color: #262626; line-height: 32px; font-weight: 500; font-size: 20px;">{{ settleNum.indirectCommission || 0 }}</p></li>
+          <li><p>活动奖励(元)</p><p style="color: #1989FA; font-size: 20px; font-weight: 500; line-height: 32px;">{{ settleNum.activityReward || 0 }}</p></li>
           <li>
             <p>总佣金</p>
-            <p style="font-size: 24px; margin-top: 4px; line-height: 24px; font-weight: 500; color: #333333">{{ totalCommission }}</p>
+            <p style="font-size: 24px; margin-top: 4px; line-height: 24px; font-weight: 500; color: #333333">{{ settleNum.totalCommission }}</p>
             <div class="option-btn">
-              <el-button type="primary" @click="drawer=true">立即结算</el-button>
-              <el-button type="primary" plain>结算记录</el-button>
+              <el-button type="primary" @click="settleDrawer">立即结算</el-button>
+              <el-button type="primary" plain @click="handel_record">结算记录</el-button>
             </div>
           </li>
         </ul>
@@ -35,7 +35,7 @@
             :params="typeflage"
             :default-expand-all="false"
             :hide-edit-area="configData.hideEditArea"
-            :api-service="apiSettlequeryByPage"
+            :api-service="api"
             @detail="onClick_detail"
           ></BaseCrud>
         </div>
@@ -86,7 +86,7 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import { SERVICE_CONFIG } from "./tableConfig/comsetConfig";
 import Form from "@/components/form/index.vue";
 import { FORM_CONFIG } from "./formConfig/thirdPartyDetail";
-import api_statistice from "@/api/api_statistice";
+import api from "@/api/api_comSettlement";
 export default {
   components: {
     BaseCrud,
@@ -102,66 +102,93 @@ export default {
       typeflage: {
         typeFlag: 1
       },
-      // api: api_statistice,
+      api: api.queryAllSettle,
       indirectCommission: '',
       activityReward: '',
       totalCommission: '',
-      apiSettlequeryByPage: api_statistice.SettlequeryByPage
+      settleNum: {}
+      // apiSettlequeryByPage: api_statistice.SettlequeryByPage
     }
   },
-  created() {},
+  created() {
+    this.getSettleNum()
+  },
   mounted() {
-    this.apirulefor()
+    // this.apirulefor()
     // this.getData()
   },
   methods: {
-    apirulefor() {
-      api_statistice
-        .querySettleSum({
-        })
-        .then(res => {
-          this.indirectCommission = res.object.indirectCommission
-          this.activityReward = res.object.activityReward
-          this.totalCommission = res.object.totalCommission
-          // console.log(res.object)
-        })
-        .catch(err => {
-          console.error(err);
-        });
+    getSettleNum() {
+      api.querySettleSum({}).then(res => {
+        this.settleNum = res.object
+      })
     },
-    onClick_detail() {
+    // apirulefor() {
+    //   api_statistice
+    //     .querySettleSum({
+    //     })
+    //     .then(res => {
+    //       this.indirectCommission = res.object.indirectCommission
+    //       this.activityReward = res.object.activityReward
+    //       this.totalCommission = res.object.totalCommission
+    //       // console.log(res.object)
+    //     })
+    //     .catch(err => {
+    //       console.error(err);
+    //     });
+    // },
+    onClick_detail($row) {
       this.$router.push({
-        path: '/comSettlement/comset/comsetDetail'
+        path: '/comSettlement/comset/comsetDetail',
+        query: {
+          id: $row.id
+        }
       })
     },
     handleClose() {
       this.drawer = false
     },
+    settleDrawer() {
+      if (this.settleNum.totalAmount === 0) {
+        this.$message({
+          message: '暂无可结算金额',
+          type: 'warning'
+        })
+      } else {
+        this.drawer = true
+      }
+    },
+    handel_record() {
+      console.log(111)
+      this.$router.push({
+        path: '/comSettlement/comset/comsetRecord'
+      })
+    },
     cancel() {},
     confirm($sunmit) {
       console.log($sunmit)
-      api_statistice
-        .submitSettle({
-          expressNumber: $sunmit.date.linkmanName,
-          expressImg: $sunmit.date.photo.dialogImagePath + $sunmit.date.photo.dialogImageUrl,
-          settleCommission: this.totalCommission,
-          // actualAmount: 可结算金额,$sunmit.date.linkmanName,
-          settleAccount: $sunmit.date.linkmanPhone,
-          // settleName: 结算人,$sunmit.date.linkmanName,
-          settleMobile: $sunmit.date.deviceNumLimit,
-          alternatePhone: $sunmit.date.asyncNotifyUrl,
-          // operationId: 所属运营人员,$sunmit.date.linkmanName,
-          settleRemark: $sunmit.date.remark
-          // typeMonthList: 结算类型-结算月份对照$sunmit.date.linkmanName,
-        })
-        .then(res => {
-          // this.activityReward = res.object.activityReward
-          // this.totalCommission = res.object.totalCommission
-          // console.log(res.object)
-        })
-        .catch(err => {
-          console.error(err);
-        });
+      // api_statistice
+      //   .submitSettle({
+      //     expressNumber: $sunmit.date.linkmanName,
+      //     expressImg: $sunmit.date.photo.dialogImagePath + $sunmit.date.photo.dialogImageUrl,
+      //     settleCommission: this.totalCommission,
+      //     // actualAmount: 可结算金额,$sunmit.date.linkmanName,
+      //     settleAccount: $sunmit.date.linkmanPhone,
+      //     // settleName: 结算人,$sunmit.date.linkmanName,
+      //     settleMobile: $sunmit.date.deviceNumLimit,
+      //     alternatePhone: $sunmit.date.asyncNotifyUrl,
+      //     // operationId: 所属运营人员,$sunmit.date.linkmanName,
+      //     settleRemark: $sunmit.date.remark
+      //     // typeMonthList: 结算类型-结算月份对照$sunmit.date.linkmanName,
+      //   })
+      //   .then(res => {
+      //     // this.activityReward = res.object.activityReward
+      //     // this.totalCommission = res.object.totalCommission
+      //     // console.log(res.object)
+      //   })
+      //   .catch(err => {
+      //     console.error(err);
+      //   });
     }
   }
 }
