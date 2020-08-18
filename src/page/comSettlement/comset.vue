@@ -41,38 +41,38 @@
         </div>
       </div>
       <el-drawer
-        :visible.sync="drawer"
-        direction="rtl"
-        :before-close="handleClose"
+          :visible.sync="drawer"
+          direction="rtl"
+          :before-close="handleClose"
       >
         <div slot="title" class="drawer-contenttitle">
           <span>申请结算</span>
         </div>
         <div class="content-draw">
           <div class="content-form">
-            <div class="content-title">结算金额</div>
             <div class="form-select">
               <div class="select">
                 <div class="left-label">结算类型：</div>
-                <el-checkbox-group v-model="isChenk">
-                  <el-checkbox label="间联佣金" class="select-box">间联佣金</el-checkbox>
-                  <el-checkbox label="活动奖励" class="select-box">活动奖励</el-checkbox>
-                </el-checkbox-group>
+                <div class="check-box">
+                  <el-checkbox-group v-model="isCheck" @change="checkChange">
+                    <el-checkbox v-for="(confDate, index) in seetlmap.confDate" :key="index" :label="confDate" class="select-box">
+                      {{ (confDate.name+'['+confDate.dateTxt+']') }}
+                    </el-checkbox>
+                    <div style="margin: 15px 0;"></div>
+                  </el-checkbox-group>
+                </div>
               </div>
               <div class="select" style="margin: 16px 0 24px 0;">
                 <div class="left-label">总佣金：</div>
-                <div class="select-price">{{ totalCommission }}</div>
+                <div class="select-price">{{ settleCommission }}</div>
               </div>
             </div>
-          </div>
-          <div class="content-form">
-            <div class="content-title">结算信息</div>
             <Form
-              :form-base-data="fromConfigData.formData"
-              :show-foot-btn="fromConfigData.showFootBtn"
-              label-width="130px"
-              @cancel="cancel"
-              @confirm="confirm"
+                :form-base-data="fromConfigData.formData"
+                :show-foot-btn="fromConfigData.showFootBtn"
+                label-width="130px"
+                @cancel="cancel"
+                @confirm="confirm"
             ></Form>
           </div>
         </div>
@@ -106,49 +106,48 @@ export default {
       indirectCommission: '',
       activityReward: '',
       totalCommission: '',
-      settleNum: {}
-      // apiSettlequeryByPage: api_statistice.SettlequeryByPage
+      settleNum: {},
+      seetlmap: {
+        confDate: []
+      },
+      info: {},
+      isCheck: [],
+      settleCommission: 0,
+      platformCommission: 0,
+      actualAmount: 0
     }
   },
   created() {
     this.getSettleNum()
   },
-  mounted() {
-    // this.apirulefor()
-    // this.getData()
-  },
+  mounted() {},
   methods: {
     getSettleNum() {
       api.querySettleSum({}).then(res => {
         this.settleNum = res.object
       })
     },
-    // apirulefor() {
-    //   api_statistice
-    //     .querySettleSum({
-    //     })
-    //     .then(res => {
-    //       this.indirectCommission = res.object.indirectCommission
-    //       this.activityReward = res.object.activityReward
-    //       this.totalCommission = res.object.totalCommission
-    //       // console.log(res.object)
-    //     })
-    //     .catch(err => {
-    //       console.error(err);
-    //     });
-    // },
-    onClick_detail($row) {
-      this.$router.push({
-        path: '/comSettlement/comset/comsetDetail',
-        query: {
-          id: $row.id
-        }
+    checkChange($val) {
+      var settleCommission = 0
+      this.isCheck.forEach((item, index) => {
+        settleCommission += item.settleAmount
       })
+      this.settleCommission = settleCommission
     },
     handleClose() {
       this.drawer = false
     },
+    onClick_detail($row) {
+      this.$router.push({
+        path: '/comSettlement/comset/comsetDetail',
+        query: {
+          tradeMonth: $row.totalTradeMonth
+        }
+      })
+    },
     settleDrawer() {
+      this.isCheck = []
+      this.settleCommission = 0
       if (this.settleNum.totalAmount === 0) {
         this.$message({
           message: '暂无可结算金额',
@@ -156,39 +155,94 @@ export default {
         })
       } else {
         this.drawer = true
+        api.initSettle({}).then(res => {
+          if (res.object) {
+            this.info = res.object.settleMap
+            var keyArr = []
+            for (const keyItem in res.object.settleMap) {
+              keyArr.push({key: keyItem})
+            }
+            keyArr.forEach((item, index) => {
+              const name = res.object.settleMap[item.key][0].settleTypeName
+              console.log(name)
+              item.name = name
+              const dateArr = []
+              var totalSettleAmount = 0
+              res.object.settleMap[item.key].forEach((dateItem, dateIndex) => {
+                dateArr.push(dateItem.tradeMonth)
+                totalSettleAmount += dateItem.settleAmount
+              })
+              item.dateTxt = dateArr.join(',')
+              item.settleAmount = totalSettleAmount
+            })
+            this.seetlmap.confDate = keyArr || []
+          }
+        })
       }
     },
     handel_record() {
-      console.log(111)
       this.$router.push({
         path: '/comSettlement/comset/comsetRecord'
       })
     },
-    cancel() {},
+    cancel() {
+      this.drawer = false
+    },
     confirm($sunmit) {
-      console.log($sunmit)
-      // api_statistice
-      //   .submitSettle({
-      //     expressNumber: $sunmit.date.linkmanName,
-      //     expressImg: $sunmit.date.photo.dialogImagePath + $sunmit.date.photo.dialogImageUrl,
-      //     settleCommission: this.totalCommission,
-      //     // actualAmount: 可结算金额,$sunmit.date.linkmanName,
-      //     settleAccount: $sunmit.date.linkmanPhone,
-      //     // settleName: 结算人,$sunmit.date.linkmanName,
-      //     settleMobile: $sunmit.date.deviceNumLimit,
-      //     alternatePhone: $sunmit.date.asyncNotifyUrl,
-      //     // operationId: 所属运营人员,$sunmit.date.linkmanName,
-      //     settleRemark: $sunmit.date.remark
-      //     // typeMonthList: 结算类型-结算月份对照$sunmit.date.linkmanName,
-      //   })
-      //   .then(res => {
-      //     // this.activityReward = res.object.activityReward
-      //     // this.totalCommission = res.object.totalCommission
-      //     // console.log(res.object)
-      //   })
-      //   .catch(err => {
-      //     console.error(err);
-      //   });
+      if (this.isCheck.length === 0 || !$sunmit.expressNumber || !$sunmit.settleAccount || !$sunmit.settleMobile || !$sunmit.expressImg) {
+        this.$message({
+          message: '请填写必填信息',
+          type: 'warning'
+        })
+        return false
+      } else {
+        var keyArr = []
+        var arr = []
+        var arr1 = []
+        var typeMonthList = []
+        for (const keyItem in this.info) {
+          keyArr.push({key: keyItem})
+        }
+        this.isCheck.forEach(m => {
+          keyArr.forEach(v => {
+            if (m.key === v.key) {
+              arr.push(this.info[m.key])
+            }
+          })
+        })
+        for (let i = 0; i < arr.length; i++) {
+          for (let j = 0; j < arr[i].length; j++) {
+            arr1.push(arr[i][j])
+          }
+        }
+        arr1.forEach(item => {
+          var obj = {}
+          obj.id = item.id
+          obj.settleType = item.settleType
+          obj.tradeMonth = item.tradeMonth
+          typeMonthList.push(obj)
+        })
+        api.submitSettle({
+          expressNumber: $sunmit.expressNumber,
+          expressImg: $sunmit.expressImg.dialogImageUrl,
+          settleCommission: this.settleCommission,
+          settleAccount: $sunmit.settleAccount,
+          actualAmount: this.settleCommission,
+          settleMobile: $sunmit.settleMobile,
+          alternatePhone: $sunmit.alternatePhone,
+          settleRemark: $sunmit.settleRemark,
+          typeMonthList: typeMonthList
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '操作成功',
+              type: 'success'
+            })
+            this.drawer = false
+            this.getSettleNum()
+          }
+        })
+      }
     }
   }
 }
