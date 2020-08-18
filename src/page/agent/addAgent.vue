@@ -47,17 +47,21 @@ export default {
         }).then(res => {
           if (res.status === 0) {
             this.$router.replace({
-              path: '/agent/list'
+              path: '/agent/checkList'
+            })
+            this.$message({
+              message: '添加成功',
+              type: 'success'
             })
           } else {
             this.$message({
-              message: res.errMessage,
+              message: res.errorMessage,
               type: 'warning'
             })
           }
         }).catch(err => {
           this.$message({
-            message: err.errMessage,
+            message: err.errorMessage,
             type: 'warning'
           })
         })
