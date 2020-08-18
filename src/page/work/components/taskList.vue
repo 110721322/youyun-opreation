@@ -8,7 +8,7 @@
     >
       <div class="status">
         {{ item.status+":" }}
-        <transformTime :time="item.time"></transformTime>
+<!--        <transformTime :time="item.time"></transformTime>-->
       </div>
       <div class="title">{{ item.title }}</div>
       <div class="detail" :style="{width:cssConfig.detailWidth}">
@@ -47,12 +47,12 @@
 </template>
 
 <script>
-import transformTime from "./transformTime";
+// import transformTime from "./transformTime";
 import { TASK_DEALT } from "../../../libs/data/permissionBtns";
 
 export default {
   name: "TaskList",
-  components: { transformTime },
+  // components: { transformTime },
   props: ["listData", "type", "cssConfig", "isCheck", "isCheckAll"],
 
   data() {
