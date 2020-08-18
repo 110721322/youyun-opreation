@@ -1,5 +1,6 @@
 import { setRules } from '@/libs/kit/formFns.js';
 import areaData from "@/assets/data/areaData";
+import api from "@/api/api_agent"
 
 export const FORM_CONFIG = {
   formData: [
@@ -63,9 +64,16 @@ export const FORM_CONFIG = {
       rules: setRules('请输入').isRequired.get
     },
     {
-      type: 0,
+      type: 1,
       label: '所属运营人员',
-      key: 'operationId'
+      key: 'operationId',
+      labelWidth: '185px',
+      urlOptions: {
+        url: api.queryAllOperation,
+        keyName: 'operationId',
+        valueName: 'operationName',
+        method: 'get'
+      }
     },
     {
       type: 5,

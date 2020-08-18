@@ -31,6 +31,16 @@
           </span>
         </el-tree>
         <div class="content-box">
+          <template>
+            <el-select v-model="taskValue" placeholder="请选择">
+              <el-option
+                  v-for="item in options"
+                  :key="item.taskType"
+                  :label="item.taskValue"
+                  :value="item.taskType">
+              </el-option>
+            </el-select>
+          </template>
           <div class="form-box">
             <el-form v-if="showSearch" class="form">
               <el-form-item label="精准筛选：" label-width="100px">
@@ -86,7 +96,7 @@
                 size="medium"
                 :current-page="currentPage"
                 :page-sizes="[10, 20, 30, 40]"
-                :page-size="currentPageSize"
+                :page-size="pageSize"
                 layout="total, sizes, prev, pager, next, jumper"
                 :total="dataTotal"
                 @size-change="handleSizeChange"
@@ -122,6 +132,7 @@
 import api from "@/api/api_workBench";
 import Form from "@/components/form/index.vue";
 import taskList from "./components/taskList.vue";
+import store from "@/store"
 import { TASKLIST_CONFIG } from "./tableConfig/taskListConfig";
 import { FORM_CONFIG } from "./formConfig/workTodoConfig";
 import { GROUP_MEET } from "../../libs/data/permissionBtns";
@@ -133,6 +144,7 @@ export default {
 
   data() {
     return {
+      taskValue: '',
       GROUP_MEET: GROUP_MEET,
       drawer: false,
       currentStatus: "",
@@ -153,9 +165,9 @@ export default {
         }
       ],
       // 当前页码
-      currentPage: 1,
+      pageSize: 10,
       // 每页显示数量
-      currentPageSize: 10,
+      currentPage: 1,
       // 列表数据总数
       dataTotal: 0,
       fromConfigData: FORM_CONFIG.communicationData,
@@ -163,40 +175,7 @@ export default {
       listData: [],
       type: "",
       cssConfig: "",
-      menuConfig: [
-        {
-          id: 0,
-          taskValue: "日常任务",
-          count: 50,
-          children: [
-            { taskValue: "商户结算失败", count: 5, type: "daily" },
-            { taskValue: "商户入件审核", count: 5, type: "daily" },
-            { taskValue: "服务商到期", count: 5, type: "daily" },
-            { taskValue: "佣金结算", count: 5, type: "daily" },
-            { taskValue: "预约沟通", count: 5, type: "daily" },
-            { taskValue: "新服务商沟通", count: 5, type: "daily" },
-            { taskValue: "客单价异常", count: 5, type: "daily" },
-            { taskValue: "交易数据异常", count: 5, type: "daily" },
-            { taskValue: "服务商资料补全", count: 5, type: "daily" },
-            { taskValue: "设备订购出库", count: 5, type: "daily" },
-            { taskValue: "工单", count: 5, type: "daily" },
-            { taskValue: "乐刷申诉审核", count: 5, type: "daily" },
-            { taskValue: "平台商户资料申诉审核", count: 5, type: "daily" }
-          ]
-        },
-        {
-          id: 1,
-          taskValue: "审批任务",
-          count: 50,
-          children: [
-            { taskValue: "运营佣金结算", count: 5, type: "approval" },
-            { taskValue: "财务佣金结算", count: 5, type: "approval" },
-            { taskValue: "开通服务商", count: 5, type: "approval" },
-            { taskValue: "冻结服务商", count: 5, type: "approval" },
-            { taskValue: "群发短信", count: 5, type: "approval" }
-          ]
-        }
-      ],
+      menuConfig: [],
       defaultProps: {
         children: "children",
         taskValue: "taskValue"
@@ -204,7 +183,11 @@ export default {
       activityRow: {},
       formStatus: null,
       // 待办事项类型，1日常任务2审批任务
-      undo_type: 1
+      undo_type: 1,
+      undoType: '',
+      taskType: '',
+      taskOwner: '',
+      options: []
     };
   },
   watch: {
@@ -212,28 +195,28 @@ export default {
       // dailyPending 日常未处理 dailyProcessed 日常已处理 approvalPending 审批未处理 approvalProcessed 审批已处理
       switch ($val) {
         case "dailyPending":
-          this.listData = TASKLIST_CONFIG.dailyListData;
+          // this.listData = TASKLIST_CONFIG.dailyListData;
           this.type = TASKLIST_CONFIG.dailyType;
           this.cssConfig = TASKLIST_CONFIG.dailyCssConfig;
           this.canCheckAll = true;
           this.showSearch = true;
           break;
         case "dailyProcessed":
-          this.listData = TASKLIST_CONFIG.handleListData;
+          // this.listData = TASKLIST_CONFIG.handleListData;
           this.type = TASKLIST_CONFIG.handleType;
           this.cssConfig = TASKLIST_CONFIG.dailyCssConfig;
           this.canCheckAll = false;
           this.showSearch = false;
           break;
         case "approvalPending":
-          this.listData = TASKLIST_CONFIG.approvalListData;
+          // this.listData = TASKLIST_CONFIG.approvalListData;
           this.type = TASKLIST_CONFIG.approvalType;
           this.cssConfig = TASKLIST_CONFIG.approvalCssConfig;
           this.canCheckAll = false;
           this.showSearch = false;
           break;
         case "approvalProcessed":
-          this.listData = TASKLIST_CONFIG.handleListData;
+          // this.listData = TASKLIST_CONFIG.handleListData;
           this.type = TASKLIST_CONFIG.handleType;
           this.cssConfig = TASKLIST_CONFIG.approvalCssConfig;
           this.canCheckAll = false;
@@ -244,11 +227,43 @@ export default {
       }
     }
   },
+  created() {
+    this.receiverId = store.state.admin.userInfo.id
+    this.getTaskMenu()
+    this.queryTaskList()
+  },
   mounted() {
     this.currentStatus = "dailyPending";
     this.getTableData();
   },
   methods: {
+    getTaskMenu() {
+      api.queryAllTaskMenu({
+        status: this.status
+      }).then(res => {
+        this.menuConfig = res.object
+        this.undoType = res.object[0].undoType
+        this.taskType = res.object[0].taskType
+        this.getTask()
+      })
+    },
+    queryTaskList() {
+      api.queryAllList({}).then(res => {
+        this.options = res.object
+      }).catch()
+    },
+    getTask() {
+      api.queryTaskList({
+        undoType: this.undoType,
+        taskType: this.taskType,
+        status: this.status,
+        pageSize: this.pageSize,
+        currentPage: this.currentPage,
+        taskOwner: this.taskOwner
+      }).then(res => {
+        console.log(res)
+      })
+    },
     cancel() {
       this.drawer = false;
     },
@@ -344,27 +359,6 @@ export default {
         .then(fn)
         .catch();
     },
-    queryAllTaskTypeList() {
-      api
-        .queryAllTaskTypeList({})
-        .then(res => {
-          console.log(res);
-        })
-        .catch();
-    },
-    queryAllProblemMerchantOrAgent() {
-      api
-        .queryAllProblemMerchantOrAgent({
-          status: "",
-          undoType: 1,
-          taskType: 1,
-          receiverId: 1
-        })
-        .then(res => {
-          console.log(res);
-        })
-        .catch();
-    },
     onClick_doCheckAll() {
       this.isCheckAll = true;
     },
@@ -387,33 +381,33 @@ export default {
     onClick_cancelCheckAll() {
       this.isCheck = false;
     },
-    getTableData() {
-      this.queryAllTaskMenu(
-        {
-          receiverId: 1,
-          undoType: 2,
-          // taskType: 1,
-          status: ""
-        },
-        res => {
-          this.menuConfig[0].children = res.object.datas;
-          console.log(res);
-        }
-      );
-      this.queryAllTaskMenu(
-        {
-          receiverId: 1,
-          undoType: 1,
-          // taskType: 1,
-          status: ""
-        },
-        res => {
-          this.menuConfig[1].children = res.object.datas;
-          this.dataTotal = res.object.totalCount;
-          console.log(res);
-        }
-      );
-    },
+    // getTableData() {
+    //   this.queryAllTaskMenu(
+    //     {
+    //       receiverId: 1,
+    //       undoType: 2,
+    //       // taskType: 1,
+    //       status: ""
+    //     },
+    //     res => {
+    //       this.menuConfig[0].children = res.object.datas;
+    //       console.log(res);
+    //     }
+    //   );
+    //   this.queryAllTaskMenu(
+    //     {
+    //       receiverId: 1,
+    //       undoType: 1,
+    //       // taskType: 1,
+    //       status: ""
+    //     },
+    //     res => {
+    //       this.menuConfig[1].children = res.object.datas;
+    //       this.dataTotal = res.object.totalCount;
+    //       console.log(res);
+    //     }
+    //   );
+    // },
     onClick_search() {},
     handleSelect($item) {
       this.activeIndex = $item;
@@ -462,15 +456,14 @@ export default {
       }
       api
         .queryTaskList({
-          receiverId: $data.receiverId,
           undoType: $data.undoType,
           taskType: $data.taskType,
-          pageSize: 1,
+          pageSize: 10,
           currentPage: 1,
-          status: ""
+          status: this.status
         })
         .then(res => {
-          this.listData = res.datas;
+          this.listData = res.object.datas;
         })
         .catch(err => {
           console.error(err);
