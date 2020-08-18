@@ -5,28 +5,32 @@
       <ul class="top-content">
         <li>
           <p>总佣金(元)</p>
-          <p>18329.29</p>
+          <p>{{commission.totalCommission}}</p>
         </li>
         <li>
           <p><img src="../../assets/img/wx_pay.png" alt="">微信佣金（元）</p>
-          <p>18329.29</p>
+          <p>{{commission.wechatCommission}}</p>
         </li>
         <li>
           <p><img src="../../assets/img/apply_pay.png" alt="">支付宝佣金(元)</p>
-          <p>18329.29</p>
+          <p>{{commission.alipayCommission}}</p>
         </li>
         <li>
           <p><img src="../../assets/img/yun_pay.png" alt="">云闪付佣金(元)</p>
-          <p>18329.29</p>
+          <p>{{commission.cloudPayCommission}}</p>
         </li>
       </ul>
-      <Search :is-show-all="true" :form-base-data="searchConfig.formData" @search="search" />
+      <Search
+        :is-show-all="true"
+        :form-base-data="searchConfig.formData"
+        :show-foot-btn="searchConfig.showFootBtn"
+        @search="search" />
       <div class="tabform">
         <div class="table-title">商户佣金列表</div>
         <BaseCrud
           ref="table"
           :params="params"
-          :api-service="null"
+          :api-service="api"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
           :grid-data="testData"
@@ -36,7 +40,6 @@
           :is-async="true"
           :is-select="false"
           :is-expand="false"
-          :row-key="'id'"
           :default-expand-all="false"
           :hide-edit-area="true"
         ></BaseCrud>
@@ -46,6 +49,7 @@
 </template>
 
 <script>
+import api from "@/api/api_comSettlement"
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import {SEARCH_CONFIG} from "./formConfig/comsetDetailSearch";
@@ -57,11 +61,34 @@ export default {
       searchConfig: SEARCH_CONFIG,
       configData: SERVICE_CONFIG,
       params: {},
-      testData: []
+      testData: [],
+      tradeMonth: '',
+      commission: {},
+      api: ''
     }
   },
+  created() {
+    this.tradeMonth = this.$route.query.tradeMonth
+    this.params = {
+      tradeMonth: this.tradeMonth
+    }
+    this.api = api.queryCommissionByPage
+    this.getTotal()
+  },
   methods: {
-    search() {}
+    getTotal() {
+      api.queryCommission({
+        tradeMonth: this.tradeMonth
+      }).then(res => {
+        this.commission = res.object
+      })
+    },
+    search($form) {
+      this.params = {
+        tradeMonth: this.tradeMonth
+      }
+      this.params[$form.inputSelect] = $form.inputForm;
+    }
   }
 }
 </script>
