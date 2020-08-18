@@ -21,10 +21,18 @@
           :row-key="'id'"
           :params="params"
           :default-expand-all="false"
-          :hide-edit-area="configData.hideEditArea"
+          :hide-edit-area="true"
           :api-service="api"
       ></BaseCrud>
     </div>
+<!--    <el-drawer-->
+<!--      :visible.sync="drawer"-->
+<!--      direction="rtl"-->
+<!--      :before-close="handleClose">-->
+<!--      <div slot="title" class="drawer-contenttitle">-->
+<!--        <span>结算明细</span>-->
+<!--      </div>-->
+<!--    </el-drawer>-->
   </div>
 </template>
 
@@ -44,12 +52,27 @@ export default {
       configData: RECORD_CONFIG,
       testData: [],
       params: {},
-      api: api.querySettleRecord
+      api: api.querySettleRecord,
+      drawer: false
     }
   },
   created() {},
   methods: {
-    search() {}
+    search($form) {
+      this.params = {
+        beginTime: $form.date[0] || null,
+        endTime: $form.date[1] || null,
+        settleStatus: $form.settleStatus || 0
+      }
+    },
+    handel_detail($row) {
+      this.drawer = true
+      api.queryDetailsById({
+        id: $row.id
+      }).then(res => {
+        console.log(res)
+      })
+    }
   }
 }
 </script>
