@@ -8,6 +8,8 @@ export const SEARCH_CONFIG = {
       label: '筛选时间',
       key: 'date',
       class: 'max-width',
+      format: "yyyy-MM-dd HH:mm:ss",
+      datatype: "datetimerange",
       labelWidth: '100px'
     },
     {

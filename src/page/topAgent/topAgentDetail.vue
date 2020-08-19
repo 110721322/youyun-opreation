@@ -34,8 +34,8 @@
               start-placeholder="开始日期"
               end-placeholder="结束日期"
               align="right"
-              format="yyyy-MM-dd"
-              value-format="yyyy-MM-dd"
+              format="yyyy-MM-dd HH:mm:ss"
+              value-format="yyyy-MM-dd HH:mm:ss"
               @change="dateChange"
             >
             </el-date-picker>
@@ -293,7 +293,7 @@ export default {
       formType: '',
       configData: configData,
       configData2: configData2,
-      timeDate: [this.$g.utils.getToday(-1), this.$g.utils.getToday(0)],
+      timeDate: [],
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -380,6 +380,17 @@ export default {
       areaCodeNum: '',
       bankOptions: []
     };
+  },
+  created() {
+    const now = new Date();
+    const year = now.getFullYear() // 得到年份
+    const month = now.getMonth() + 1// 得到月份
+    const date = now.getDate() // 得到日期
+    const month1 = month < 10 ? "0" + month : month
+    const date1 = date < 10 ? "0" + date : date
+    var start = year + '-' + month1 + '-' + date1 + ' ' + '00' + ':' + '00' + ':' + '00'
+    var end = year + '-' + month1 + '-' + date1 + ' ' + '23' + ':' + '59' + ':' + '59'
+    this.timeDate = [start, end]
   },
   mounted() {
     this.getAgentDetail();
