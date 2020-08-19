@@ -15,7 +15,7 @@ export const SEARCH_CONFIG = {
       options: [
         {
           label: '全部',
-          value: 0
+          value: ''
         },
         {
           label: '未结算',
