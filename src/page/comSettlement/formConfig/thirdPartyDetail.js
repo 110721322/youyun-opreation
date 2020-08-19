@@ -25,14 +25,16 @@ export const FORM_CONFIG = {
         label: '结算账户',
         key: 'settleAccount',
         initVal: '',
-        rules: setRules('结算账户').isRequired.get
+        rules: setRules('结算账户').isRequired.get,
+        isDisabled: true
       },
       {
         type: 0,
         label: '联系电话',
         key: 'settleMobile',
         initVal: '',
-        rules: setRules('联系电话').isRequired.get
+        rules: setRules('联系电话').isRequired.get,
+        isDisabled: true
       },
       {
         type: 0,

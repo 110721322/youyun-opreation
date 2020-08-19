@@ -94,7 +94,7 @@ export default {
   },
   data() {
     return {
-      fromConfigData: FORM_CONFIG.detailData,
+      fromConfigData: {},
       configData: SERVICE_CONFIG,
       testData: [],
       drawer: false,
@@ -114,7 +114,8 @@ export default {
       isCheck: [],
       settleCommission: 0,
       platformCommission: 0,
-      actualAmount: 0
+      actualAmount: 0,
+      settleInfo: {}
     }
   },
   created() {
@@ -158,6 +159,11 @@ export default {
         api.initSettle({}).then(res => {
           if (res.object) {
             this.info = res.object.settleMap
+            this.settleInfo = res.object
+            const newFromConfigData = FORM_CONFIG.detailData.formData
+            newFromConfigData[2].initVal = res.object.settleAccount
+            newFromConfigData[3].initVal = res.object.settleMobile
+            this.fromConfigData.formData = newFromConfigData
             var keyArr = []
             for (const keyItem in res.object.settleMap) {
               keyArr.push({key: keyItem})
@@ -189,6 +195,7 @@ export default {
       this.drawer = false
     },
     confirm($sunmit) {
+      console.log($sunmit)
       if (this.isCheck.length === 0 || !$sunmit.expressNumber || !$sunmit.settleAccount || !$sunmit.settleMobile || !$sunmit.expressImg) {
         this.$message({
           message: '请填写必填信息',
@@ -224,6 +231,7 @@ export default {
         })
         api.submitSettle({
           expressNumber: $sunmit.expressNumber,
+          settleName: this.settleInfo.settleName,
           expressImg: $sunmit.expressImg.dialogImageUrl,
           settleCommission: this.settleCommission,
           settleAccount: $sunmit.settleAccount,

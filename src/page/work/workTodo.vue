@@ -13,9 +13,42 @@
         <el-menu-item index="3">已发起</el-menu-item>
       </el-menu>
     </div>
-
+    <div style="padding: 24px 24px;">
+      <el-form v-if="showSearch" class="form">
+        <div></div>
+        <el-form-item label="事项类型：" label-width="100px">
+          <el-select v-model="taskValue" placeholder="请选择">
+            <el-option
+                v-for="(item, index) in options"
+                :key="index"
+                :label="item.taskValue"
+                :value="item.taskType + '/' + item.undoType">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="所属服务商：" label-width="100px" style="margin-left: 60px; width: 100%">
+          <el-input
+              v-model="taskOwner"
+              placeholder="请输入所属商户ID"
+              class="input-with-select"
+          ></el-input>
+          <div class="btn_list">
+            <el-button type="primary" size="large" @click="onClick_search">搜索</el-button>
+            <el-button plain size="large" @click="onClick_reset">重置</el-button>
+            <el-button
+                v-if="canCheckAll"
+                v-has="GROUP_MEET"
+                plain
+                size="large"
+                class="btn_checkall"
+                @click="onClick_toCheckAll"
+            >批量沟通</el-button>
+          </div>
+        </el-form-item>
+      </el-form>
+    </div>
     <transition name="fade">
-      <div style="display:flex;">
+      <div style="display:flex;padding: 0 24px">
         <el-tree
           :data="menuConfig"
           :props="defaultProps"
@@ -31,53 +64,7 @@
           </span>
         </el-tree>
         <div class="content-box">
-          <template>
-            <el-select v-model="taskValue" placeholder="请选择">
-              <el-option
-                  v-for="item in options"
-                  :key="item.taskType"
-                  :label="item.taskValue"
-                  :value="item.taskType">
-              </el-option>
-            </el-select>
-          </template>
           <div class="form-box">
-            <el-form v-if="showSearch" class="form">
-              <el-form-item label="精准筛选：" label-width="100px">
-                <el-input
-                  v-model="inputForm"
-                  placeholder="请输入内容"
-                  class="input-with-select"
-                  size="large"
-                >
-                  <el-select
-                    slot="prepend"
-                    v-model="inputSelect"
-                    style="width:184px"
-                    placeholder="请选择"
-                  >
-                    <el-option
-                      v-for="(item, key) in inputOptions"
-                      :key="key"
-                      :label="item.label"
-                      :value="item.value"
-                    ></el-option>
-                  </el-select>
-                </el-input>
-                <div class="btn_list">
-                  <el-button type="primary" size="large" @click="onClick_search">搜索</el-button>
-                  <el-button plain size="large" @click="onClick_reset">重置</el-button>
-                  <el-button
-                    v-if="canCheckAll"
-                    v-has="GROUP_MEET"
-                    plain
-                    size="large"
-                    class="btn_checkall"
-                    @click="onClick_toCheckAll"
-                  >批量沟通</el-button>
-                </div>
-              </el-form-item>
-            </el-form>
             <div>
               <taskList
                 :list-data="listData"
@@ -85,6 +72,7 @@
                 :css-config="cssConfig"
                 :is-check="isCheck"
                 :is-check-all="isCheckAll"
+                :open-type="openType"
                 @handleCheckList="handleCheckList"
                 @communication="handleCommunication"
                 @pass="handlePass"
@@ -187,7 +175,8 @@ export default {
       undoType: '',
       taskType: '',
       taskOwner: '',
-      options: []
+      options: [],
+      openType: ''
     };
   },
   watch: {
@@ -234,12 +223,13 @@ export default {
   },
   mounted() {
     this.currentStatus = "dailyPending";
-    this.getTableData();
   },
   methods: {
     getTaskMenu() {
       api.queryAllTaskMenu({
-        status: this.status
+        status: this.status,
+        undoType: this.undoType,
+        taskType: this.taskType
       }).then(res => {
         this.menuConfig = res.object
         this.undoType = res.object[0].undoType
@@ -261,7 +251,9 @@ export default {
         currentPage: this.currentPage,
         taskOwner: this.taskOwner
       }).then(res => {
-        console.log(res)
+        this.openType = this.taskType + '/' + this.undoType
+        console.log(this.openType)
+        this.listData = res.object.datas;
       })
     },
     cancel() {
@@ -325,11 +317,9 @@ export default {
     },
     handleCurrentChange(page) {
       this.currentPage = page;
-      this.getTableData();
     },
     handleSizeChange(size) {
-      this.currentPageSize = size;
-      this.getTableData();
+      this.pageSize = size;
     },
     handleCommunication($data) {
       this.activityRow = $data;
@@ -408,7 +398,13 @@ export default {
     //     }
     //   );
     // },
-    onClick_search() {},
+    onClick_search() {
+      var type = this.taskValue.split('/')
+      console.log(type)
+      this.taskType = type[0]
+      this.undoType = type[1]
+      this.getTaskMenu()
+    },
     handleSelect($item) {
       this.activeIndex = $item;
       switch ($item) {
@@ -463,6 +459,8 @@ export default {
           status: this.status
         })
         .then(res => {
+          this.openType = $data.taskType + '/' + $data.undoType
+          console.log(this.openType)
           this.listData = res.object.datas;
         })
         .catch(err => {
@@ -477,24 +475,29 @@ export default {
 #app .main-container {
   margin-left: 170px;
 }
+
 .crud-pagination {
   background: #fff;
   padding: 16px 24px;
   text-align: right;
   margin-top: 25px;
 }
+
 .btn_list {
   position: absolute;
   top: 0;
   right: 0;
 }
+
 .input-with-select {
   width: 490px;
 }
+
 .tree {
   width: 240px;
   background: rgba(255, 255, 255, 1);
 }
+
 .custom-tree-node {
   flex: 1;
   display: flex;
@@ -504,19 +507,24 @@ export default {
   font-size: 14px;
   padding: 0 16px;
 }
+
 .form {
   height: 88px;
   background: rgba(255, 255, 255, 1);
   padding: 24px;
   margin-bottom: 24px;
+  display: flex;
 }
+
 .content-box {
   position: relative;
   width: 100%;
 }
+
 .form-box {
-  padding: 24px 24px 0;
+  padding: 0 0 0 24px;
 }
+
 .check-bottom {
   position: absolute;
   width: 100%;
@@ -525,9 +533,11 @@ export default {
   bottom: 0;
   padding: 14px 0;
 }
+
 .btn_checkall {
   margin-left: 71px;
 }
+
 .confim_text {
   margin-left: 236px;
   height: 20px;
@@ -538,11 +548,13 @@ export default {
   line-height: 20px;
   opacity: 0.8;
 }
+
 .confim_btn {
   margin-left: 33px;
   width: 85px;
   height: 32px;
 }
+
 .cancel_btn {
   margin-left: 32px;
   height: 22px;
@@ -553,6 +565,7 @@ export default {
   line-height: 22px;
   opacity: 0.8;
 }
+
 .checkall_btn {
   margin-left: 220px;
   height: 22px;
