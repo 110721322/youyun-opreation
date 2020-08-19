@@ -6,7 +6,7 @@ export const RECORD_CONFIG = {
     },
     {
       label: '结算金额',
-      prop: 'actualSettleCommission'
+      prop: 'actualAmount'
     },
     {
       label: '结算类型',
