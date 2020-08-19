@@ -1,47 +1,89 @@
 <template>
-  <div class="list-box">
-    <div
-      v-for="(item,index) in listData"
-      :key="index"
-      class="item"
-      :style="{height:cssConfig.itemHeight}"
-    >
-      <div class="status">
-        {{ item.status+":" }}
-<!--        <transformTime :time="item.time"></transformTime>-->
-      </div>
-      <div class="title">{{ item.title }}</div>
-      <div class="detail" :style="{width:cssConfig.detailWidth}">
-        <div v-for="(item1,index1) in item.detail" :key="index1">
-          <div
-            v-if="item1.label==='失败原因'"
-            class="reason ellipsis"
-          >{{ item1.label ? item1.label+":"+item1.value :item1.value }}</div>
-          <div
-            v-else-if="item1.label==='发起人备注'"
-            class="note ellipsis3"
-          >{{ item1.label ? item1.label+":"+item1.value :item1.value }}</div>
-          <div v-else>{{ item1.label ? item1.label+":"+item1.value :item1.value }}</div>
+  <div>
+    <div class="list-box" v-if="openType === '2/1'">
+      <div
+          v-for="(item,index) in listData"
+          :key="index"
+          class="item"
+          :style="{height:cssConfig.itemHeight}"
+      >
+        <div class="status">
+          {{ item.status+":" }}
+          <!--        <transformTime :time="item.time"></transformTime>-->
         </div>
+        <div class="title">{{ item.title }}</div>
+        <div class="title">服务商ID:  {{ item.agentName }}</div>
+        <div class="title">服务商ID:  {{ item.agentName }}</div>
+<!--        <div class="detail" :style="{width:cssConfig.detailWidth}">-->
+<!--          <div v-for="(item1,index1) in item.detail" :key="index1">-->
+<!--            <div-->
+<!--                v-if="item1.label==='失败原因'"-->
+<!--                class="reason ellipsis"-->
+<!--            >{{ item1.label ? item1.label+":"+item1.value :item1.value }}</div>-->
+<!--            <div-->
+<!--                v-else-if="item1.label==='发起人备注'"-->
+<!--                class="note ellipsis3"-->
+<!--            >{{ item1.label ? item1.label+":"+item1.value :item1.value }}</div>-->
+<!--            <div v-else>{{ item1.label ? item1.label+":"+item1.value :item1.value }}</div>-->
+<!--          </div>-->
+<!--        </div>-->
+        <div v-has="TASK_DEALT" class="oper-box">
+          <el-button type="primary" class="btn" @click="onClick_communication(item)">立即沟通</el-button>
+        </div>
+        <div v-if="type===2" v-has="TASK_DEALT" class="oper-box">
+          <el-button type="primary" class="btn_agree" @click="onClick_pass(item)">同意</el-button>
+          <el-button plain class="btn_refuse" @click="onClick_reject(item)">拒绝</el-button>
+        </div>
+<!--        <template v-if="isCheck===true">-->
+<!--          <div class="mask"></div>-->
+<!--          <el-checkbox v-model="checkList[index]" class="checkbox-item" @change="changeCheckList"></el-checkbox>-->
+<!--        </template>-->
       </div>
-      <div v-if="type===1" v-has="TASK_DEALT" class="oper-box">
-        <el-button type="primary" class="btn" @click="onClick_communication(item)">立即沟通</el-button>
+    </div>
+    <div class="list-box" v-if="openType === '3/1'">
+      <div
+          v-for="(item,index) in listData"
+          :key="index"
+          class="item"
+          :style="{height:cssConfig.itemHeight}"
+      >
+        <div class="status">
+          {{ item.status+":" }}
+          <!--        <transformTime :time="item.time"></transformTime>-->
+        </div>
+        <div class="title">{{ item.title }}</div>
+        <div class="title">服务商ID:{{ item.agentName }}</div>
+        <div class="detail" :style="{width:cssConfig.detailWidth}">
+          <div v-for="(item1,index1) in item.detail" :key="index1">
+            <div
+                v-if="item1.label==='失败原因'"
+                class="reason ellipsis"
+            >{{ item1.label ? item1.label+":"+item1.value :item1.value }}</div>
+            <div
+                v-else-if="item1.label==='发起人备注'"
+                class="note ellipsis3"
+            >{{ item1.label ? item1.label+":"+item1.value :item1.value }}</div>
+            <div v-else>{{ item1.label ? item1.label+":"+item1.value :item1.value }}</div>
+          </div>
+        </div>
+        <div v-if="type===1" v-has="TASK_DEALT" class="oper-box">
+          <el-button type="primary" class="btn" @click="onClick_communication(item)">立即沟通</el-button>
+        </div>
+        <div v-if="type===2" v-has="TASK_DEALT" class="oper-box">
+          <el-button type="primary" class="btn_agree" @click="onClick_pass(item)">同意</el-button>
+          <el-button plain class="btn_refuse" @click="onClick_reject(item)">拒绝</el-button>
+        </div>
+        <div v-if="type===3" v-has="TASK_DEALT" class="oper-box">
+          <img v-if="item.handleStatus===1" src="../../../assets/img/pass.png" />
+          <img v-if="item.handleStatus===2" src="../../../assets/img/refuse.png" />
+          <img v-if="item.handleStatus===3" src="../../../assets/img/approval.png" />
+          <img v-if="item.handleStatus===4" src="../../../assets/img/revoke.png" />
+        </div>
+        <template v-if="isCheck===true">
+          <div class="mask"></div>
+          <el-checkbox v-model="checkList[index]" class="checkbox-item" @change="changeCheckList"></el-checkbox>
+        </template>
       </div>
-      <div v-if="type===2" v-has="TASK_DEALT" class="oper-box">
-        <el-button type="primary" class="btn_agree" @click="onClick_pass(item)">同意</el-button>
-        <el-button plain class="btn_refuse" @click="onClick_reject(item)">拒绝</el-button>
-      </div>
-
-      <div v-if="type===3" v-has="TASK_DEALT" class="oper-box">
-        <img v-if="item.handleStatus===1" src="../../../assets/img/pass.png" />
-        <img v-if="item.handleStatus===2" src="../../../assets/img/refuse.png" />
-        <img v-if="item.handleStatus===3" src="../../../assets/img/approval.png" />
-        <img v-if="item.handleStatus===4" src="../../../assets/img/revoke.png" />
-      </div>
-      <template v-if="isCheck===true">
-        <div class="mask"></div>
-        <el-checkbox v-model="checkList[index]" class="checkbox-item" @change="changeCheckList"></el-checkbox>
-      </template>
     </div>
   </div>
 </template>
@@ -53,7 +95,7 @@ import { TASK_DEALT } from "../../../libs/data/permissionBtns";
 export default {
   name: "TaskList",
   // components: { transformTime },
-  props: ["listData", "type", "cssConfig", "isCheck", "isCheckAll"],
+  props: ["listData", "type", "cssConfig", "isCheck", "isCheckAll", "openType"],
 
   data() {
     return {
