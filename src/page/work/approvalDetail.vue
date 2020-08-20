@@ -1,308 +1,197 @@
 <template>
   <div class="main_page">
     <div class="p_head">审批任务详情</div>
-
-    <detailMode :rule-form="ruleForm" :config-data="configData" :span-width="24">
-      <template v-slot:step>
-        <div class="step-box">
-          <el-steps :active="2" align-center>
-            <el-step v-for="(item,index) in stepData" :key="index">
-              <template slot="icon">
-                <div class="step-border">
-                  <img
-                    :src="item.img"
-                    class="step-img"
-                    :class="[item.isApproval?'step-imgborder':'']"
-                  />
-                  <i v-if="item.isCheck" class="el-icon-check step-check"></i>
-                </div>
-              </template>
-              <template slot="title">
-                <div
-                  v-if="item.title"
-                  class="step-title"
-                  :class="[item.isApproval?'step-title_blue':item.isUndo?'step-title_gray':'step-title_normal']"
-                >{{ item.title }}</div>
-              </template>
-              <template slot="description">
-                <div v-if="item.name" class="step-description">{{ item.name }}</div>
-                <div v-if="item.time" class="step-time">{{ item.time }}</div>
-                <div v-if="item.note" class="step-note">{{ item.note }}</div>
-              </template>
-            </el-step>
-          </el-steps>
+    <div class="contents">
+      <div class="content">
+        <div class="top_title">佣金结算申请</div>
+        <div class="step"></div>
+        <div class="info">
+          <div class="list">
+            <div class="list_title">发起人提交信息</div>
+            <div class="list_content">
+              <li>服务商ID：<span>{{configData.agentSettleRecord.agentNo}}</span></li>
+              <li>服务商名称：<span>{{configData.agentSettleRecord.agentName}}</span></li>
+              <li>建议结算金额：<span>{{configData.agentSettleRecord.adviseCommission}}</span></li>
+              <li>发起备注人：<span>{{configData.approvalPrime.sponsorId}}</span></li>
+            </div>
+          </div>
+          <div class="list">
+            <div class="list_title">服务商提交信息</div>
+            <div class="list_content">
+              <li>发票照片：<img :src="configData.agentSettleRecord.expressImg" alt=""></li>
+              <li>发票快递单号：<span>{{configData.agentSettleRecord.expressNumber}}</span></li>
+              <li>结算账户：<span>{{configData.agentSettleRecord.settleAccount}}</span></li>
+              <li>备用联系方式：<span>{{configData.agentSettleRecord.alternatePhone}}</span></li>
+              <li>服务商备注：<span>{{configData.agentSettleRecord.settleRemark}}</span></li>
+              <li>结算金额：<span>{{configData.agentSettleRecord.actualSettleCommission}}</span></li>
+            </div>
+          </div>
         </div>
-      </template>
-      <template v-slot:operatingTop>
-        <span class="task-time status">
-          {{ status+":" }}
-          <transformTime :time="new Date(new Date().getTime()-3600*24*3*1000)"></transformTime>
-        </span>
-      </template>
-      <template v-slot:operatingBottom>
-        <div class="opearting-bottom">
-          <el-button type="primary" class="btn_oper">同意</el-button>
-          <el-button plain class="btn_oper btn_operno">拒绝</el-button>
+        <div class="bottom_btn">
+          <el-button type="primary" @click="confirm">同意</el-button>
+          <el-button @click="reject">拒绝</el-button>
         </div>
-      </template>
-    </detailMode>
+      </div>
+    </div>
   </div>
 </template>
 <script>
-import detailMode from "@/components/detailMode/detailMode.vue";
-import transformTime from "./components/transformTime.vue";
+// import detailMode from "@/components/detailMode/detailMode.vue";
+// import transformTime from "./components/transformTime.vue";
 
+// import {configData} from "../topAgent/dataConfig/topAgentDetailData";
+import api from "@/api/api_workBench"
 export default {
   name: "ApprovalDetail",
-  components: {
-    detailMode,
-    transformTime
-  },
+  components: {},
   data() {
     return {
-      stepData: [
-        {
-          img:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          isCheck: true,
-          isApproval: false,
-          isUndo: false,
-          title: "发起申请",
-          name: "运营: 曲丽丽",
-          time: "2016-12-12 12:30",
-          note: ""
-        },
-        {
-          img:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          isCheck: true,
-          isApproval: false,
-          isUndo: false,
-          title: "已同意",
-          name: "运营主管: 曲丽丽",
-          time: "2016-12-12 12:30",
-          note: "没啥问题"
-        },
-        {
-          img:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          isCheck: false,
-          isApproval: true,
-          isUndo: false,
-          title: "审批中",
-          name: "财务: 曲丽丽",
-          time: "",
-          note: ""
-        },
-        {
-          img:
-            "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
-          isCheck: false,
-          isApproval: false,
-          isUndo: true,
-          title: "已完成",
-          name: "",
-          time: "",
-          note: ""
-        }
-      ],
-      status: "任务已创建",
-      ruleForm: {
-        name: "1",
-        name1: "2",
-        name2: "3",
-        name3: "4",
-        email: "12312312@163.com",
-        pic:
-          "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg"
-      },
-      configData: {
-        name: "佣金结算通过申请",
-        child: [
-          {
-            name: "发起人提交信息",
-            modelName: "basicData",
-            models: [
-              {
-                items: [
-                  {
-                    name: "服务商ID",
-                    key: "name1"
-                  },
-                  {
-                    name: "发起人备注",
-                    key: "name1"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "服务商名称",
-                    key: "name"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "建议结算金额",
-                    key: "email"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            name: "服务商提交信息",
-            modelName: "finance",
-            models: [
-              {
-                items: [
-                  {
-                    name: "发票照片",
-                    key: "pic",
-                    type: "img"
-                  },
-                  {
-                    name: "备用联系方式",
-                    key: "name1"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "发票快递单号",
-                    key: "name"
-                  },
-                  {
-                    name: "服务商备注",
-                    key: "name3"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "结算账户",
-                    key: "email"
-                  },
-                  {
-                    name: "结算金额",
-                    key: "name3"
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
+      configData: {},
+      taskType: ''
     };
+  },
+  created() {
+    this.configData = this.$route.query.configData
+    this.taskType = this.$route.query.taskType
+    this.undoType = this.$route.query.undoType
+  },
+  methods: {
+    confirm() {
+      this.$confirm("确定通过佣金结算审核？", "通过审核", {
+        distinguishCancelAndClose: true,
+        confirmButtonText: "确认",
+        cancelButtonText: "取消"
+      }).then(res => {
+        api.passExamine({
+          undoType: this.undoType,
+          taskType: this.taskType,
+          taskId: this.configData.taskId,
+          taskOwner: this.configData.taskOwner
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '已通过',
+              type: 'success'
+            })
+            this.$router.replace({
+              path: '/work/todo'
+            })
+          }
+        }).catch(() => {
+          this.$message({
+            message: '取消操作',
+            type: 'info'
+          })
+        })
+      })
+    },
+    reject() {
+      this.$confirm("确定拒绝佣金结算审核？", "拒绝审核", {
+        distinguishCancelAndClose: true,
+        confirmButtonText: "确认",
+        cancelButtonText: "取消"
+      }).then(res => {
+        api.rejectExamine({
+          undoType: this.undoType,
+          taskType: this.taskType,
+          taskId: this.configData.taskId,
+          taskOwner: this.configData.taskOwner
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '已拒绝',
+              type: 'success'
+            })
+            this.$router.replace({
+              path: '/work/todo'
+            })
+          }
+        }).catch(() => {
+          this.$message({
+            message: '取消操作',
+            type: 'info'
+          })
+        })
+      })
+    }
   }
 };
 </script>
-<style lang="scss" scoped>
-.task-time {
-  float: right;
-  margin-right: 32px;
-  margin-top: 13px;
+<style scoped>
+.contents {
+  width: 100%;
+  padding: 24px 24px;
 }
-.status {
+
+.content {
+  width: 100%;
+  background: #fff;
+  padding-bottom: 32px;
+}
+
+.top_title {
+  width: 100%;
+  padding-left: 32px;
+  border-bottom: 1px solid #EBEEF5;
+  line-height: 54px;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.step {
+  width: 100%;
+  height: 220px;
+}
+
+.info {
+  width: 100%;
+  padding: 0 32px;
+}
+
+.list {
+  width: 100%;
+  border: 1px solid #EBEEF5;
+  margin-bottom: 24px;
+}
+
+.list_title {
+  width: 100%;
+  background: #fafafa;
+  border-bottom: 1px solid #EBEEF5;
+  padding-left: 24px;
   font-size: 14px;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
-  color: rgba(144, 147, 153, 1);
-  line-height: 22px;
+  font-weight: 500;
+  line-height: 44px;
 }
-.btn_oper {
+
+.list_content {
+  padding: 24px 24px 8px 24px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.list_content li {
+  width: 33.3%;
+  font-size: 14px;
+  line-height: 22px;
+  margin-bottom: 16px;
+}
+
+.list_content li span {
+  color: #606266;
+}
+
+.bottom_btn {
+  width: 100%;
+  margin-top: 8px;
+  display: flex;
+  justify-content: space-around;
+  padding: 0 30%;
+}
+
+.bottom_btn button{
   width: 113px;
   height: 40px;
-}
-.btn_operno {
-  margin-left: 24px;
-}
-.step-box {
-  padding: 56px 24px 24px;
-  .step-title {
-    height: 22px;
-    font-size: 14px;
-    font-family: PingFangSC-Regular, PingFang SC;
-    font-weight: 400;
-    color: rgba(51, 51, 53, 1);
-    line-height: 22px;
-  }
-  .step-title_normal {
-    color: rgba(51, 51, 53, 1);
-  }
-  .step-title_blue {
-    color: rgba(25, 137, 250, 1);
-  }
-  .step-title_gray {
-    color: rgba(144, 147, 153, 1);
-  }
-  .step-description {
-    height: 20px;
-    font-size: 12px;
-    font-family: PingFangSC-Regular, PingFang SC;
-    font-weight: 400;
-    color: rgba(0, 0, 0, 0.45);
-    line-height: 20px;
-  }
-  .step-time {
-    margin-top: 4px;
-    height: 12px;
-    font-size: 12px;
-    font-family: HelveticaNeue;
-    color: rgba(0, 0, 0, 0.45);
-    line-height: 12px;
-  }
-  .step-note {
-    margin: 10px auto 0;
-    width: 70px;
-    height: 26px;
-    background: rgba(246, 246, 246, 1);
-    border-radius: 4px;
-    font-size: 12px;
-    font-family: PingFangSC-Regular, PingFang SC;
-    font-weight: 400;
-    color: rgba(0, 0, 0, 0.45);
-    line-height: 26px;
-  }
-  .step-border {
-    position: relative;
-    flex-shrink: 0;
-    background-color: #fff;
-    width: 82px;
-    height: 44px;
-    text-align: center;
-  }
-  .step-check {
-    position: absolute;
-    right: 17px;
-    bottom: 0;
-    color: #fff;
-    width: 18px;
-    height: 18px;
-    background: rgba(25, 137, 250, 1);
-    border-radius: 50%;
-    line-height: 18px;
-  }
-  .step-img {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-  }
-  .step-imgborder {
-    padding: 5px;
-    border: 2px solid rgba(25, 137, 250, 1);
-    box-sizing: content-box;
-    margin-top: -14px;
-  }
-}
-.opearting-bottom {
-  padding: 8px 0 32px;
-  text-align: center;
 }
 </style>
 

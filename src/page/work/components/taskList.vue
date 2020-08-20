@@ -27,12 +27,8 @@
 <!--            <div v-else>{{ item1.label ? item1.label+":"+item1.value :item1.value }}</div>-->
 <!--          </div>-->
 <!--        </div>-->
-        <div v-has="TASK_DEALT" class="oper-box">
+        <div v-if="status === 'undo'" v-has="TASK_DEALT" class="oper-box">
           <el-button type="primary" class="btn" @click="onClick_communication(item)">立即沟通</el-button>
-        </div>
-        <div v-if="type===2" v-has="TASK_DEALT" class="oper-box">
-          <el-button type="primary" class="btn_agree" @click="onClick_pass(item)">同意</el-button>
-          <el-button plain class="btn_refuse" @click="onClick_reject(item)">拒绝</el-button>
         </div>
 <!--        <template v-if="isCheck===true">-->
 <!--          <div class="mask"></div>-->
@@ -56,7 +52,7 @@
         <div class="title">渠道商户号:<span>{{ item.expireDate }}</span></div>
         <div class="title">失败原因:<span>{{ item.expireDate }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
-        <div v-has="TASK_DEALT" class="oper-box">
+        <div v-if="status === 'undo'" class="oper-box">
           <el-button type="primary" class="btn" @click="onClick_communication(item)">立即沟通</el-button>
         </div>
       </div>
@@ -73,7 +69,7 @@
         <div class="title">商户名称:<span>{{ item.agentName }}</span></div>
         <div class="title">所属服务商:<span>{{ item.expireDate }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
-        <div v-has="TASK_DEALT" class="oper-box">
+        <div v-if="status === 'undo'" class="oper-box">
           <el-button type="primary" class="btn" @click="onClick_communication(item)">立即沟通</el-button>
         </div>
       </div>
@@ -90,7 +86,7 @@
         <div class="title">服务商名称:<span>{{ item.agentName }}</span></div>
         <div class="title">到期时间:<span>{{ item.expireDate }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
-        <div v-has="TASK_DEALT" class="oper-box">
+        <div v-if="status === 'undo'" class="oper-box">
           <el-button type="primary" class="btn" @click="onClick_communication(item)">立即沟通</el-button>
         </div>
       </div>
@@ -106,8 +102,8 @@
         <div class="title">服务商ID:<span>{{ item.agentNo }}</span></div>
         <div class="title">服务商名称:<span>{{ item.agentName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
-        <div v-has="TASK_DEALT" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_communication(item)">去审核</el-button>
+        <div v-if="status === 'undo'" class="oper-box">
+          <el-button type="primary" class="btn" @click="onClick_settleExamine(item)">去审核</el-button>
         </div>
       </div>
     </div>
@@ -122,7 +118,7 @@
         <div class="title">服务商ID:<span>{{ item.agentNo }}</span></div>
         <div class="title">服务商名称:<span>{{ item.agentName }}</span></div>
         <div class="title">预约沟通时间:<span>{{ item.remindTime }}</span></div>
-        <div v-has="TASK_DEALT" class="oper-box">
+        <div v-if="status === 'undo'" class="oper-box">
           <el-button type="primary" class="btn" @click="onClick_communication(item)">立即沟通</el-button>
         </div>
       </div>
@@ -138,7 +134,7 @@
         <div class="title">服务商ID:<span>{{ item.agentNo }}</span></div>
         <div class="title">服务商名称:<span>{{ item.agentName }}</span></div>
         <div class="title">开通时间:<span>{{ item.createTime }}</span></div>
-        <div v-has="TASK_DEALT" class="oper-box">
+        <div v-if="status === 'undo'" class="oper-box">
           <el-button type="primary" class="btn" @click="onClick_communication(item)">立即沟通</el-button>
         </div>
       </div>
@@ -156,7 +152,7 @@
         <div class="title">所属服务商:<span>{{ item.agentName }}</span></div>
         <div class="title">客单价:<span>{{ item.agentName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
-        <div v-has="TASK_DEALT" class="oper-box">
+        <div v-if="status === 'undo'" class="oper-box">
           <el-button type="primary" class="btn" @click="onClick_communication(item)">立即沟通</el-button>
         </div>
       </div>
@@ -174,7 +170,7 @@
         <div class="title">所属服务商:<span>{{ item.agentName }}</span></div>
         <div class="title">交易环比:<span>{{ item.agentName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
-        <div v-has="TASK_DEALT" class="oper-box">
+        <div v-if="status === 'undo'" class="oper-box">
           <el-button type="primary" class="btn" @click="onClick_communication(item)">立即沟通</el-button>
         </div>
       </div>
@@ -190,8 +186,8 @@
         <div class="title">服务商ID:<span>{{ item.agentNo }}</span></div>
         <div class="title">服务商名称:<span>{{ item.agentName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
-        <div v-has="TASK_DEALT" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_communication(item)">去补充</el-button>
+        <div v-if="status === 'undo'" class="oper-box">
+          <el-button type="primary" class="btn" @click="onClick_agentCompletion(item)">去补充</el-button>
         </div>
       </div>
     </div>
@@ -207,8 +203,8 @@
         <div class="title">订购数量:<span>{{ item.count }}</span></div>
         <div class="title">订购服务商:<span>{{ item.agentName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
-        <div v-has="TASK_DEALT" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_communication(item)">去补充</el-button>
+        <div v-if="status === 'undo'" class="oper-box">
+          <el-button type="primary" class="btn" @click="onClick_stock(item)">去出库</el-button>
         </div>
       </div>
     </div>
@@ -220,15 +216,15 @@
           :style="{height:cssConfig.itemHeight}"
       >
         <div class="list_status">工单</div>
-        <div class="title">问题模块:<span>{{ item.evaluationContent }}</span></div>
-        <div class="title">问题类型:<span>{{ item.hightPriorityReason }}</span></div>
+        <div class="title">问题模块:<span>{{ item.questionModule }}</span></div>
+        <div class="title">问题类型:<span>{{ item.questionType }}</span></div>
         <div class="title">问题内容:<span>{{ item.questionContent }}</span></div>
         <div class="title">服务商ID:<span>{{ item.agentNo }}</span></div>
         <div class="title">服务商名称:<span>{{ item.agentName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
-        <div v-has="TASK_DEALT" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_communication(item)">分配</el-button>
-          <el-button type="primary" class="btn" @click="onClick_communication(item)">回复</el-button>
+        <div v-if="status === 'undo'" class="oper-box">
+          <el-button type="primary" class="btn" @click="onClick_distribution(item)">分配</el-button>
+          <el-button type="primary" class="btn" @click="onClick_relpyWork(item)">回复</el-button>
         </div>
       </div>
     </div>
@@ -243,8 +239,8 @@
         <div class="title">服务商ID:<span>{{ item.agentNo }}</span></div>
         <div class="title">服务商名称:<span>{{ item.agentName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
-        <div v-has="TASK_DEALT" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_communication(item)">去审核</el-button>
+        <div v-if="status === 'undo'" class="oper-box">
+          <el-button type="primary" class="btn" @click="onClick_leSuhaExamine(item)">去审核</el-button>
         </div>
       </div>
     </div>
@@ -259,8 +255,8 @@
         <div class="title">服务商ID:<span>{{ item.agentNo }}</span></div>
         <div class="title">服务商名称:<span>{{ item.agentName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
-        <div v-has="TASK_DEALT" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_communication(item)">去审核</el-button>
+        <div v-if="status === 'undo'" class="oper-box">
+          <el-button type="primary" class="btn" @click="onClick_channelExamine(item)">去审核</el-button>
         </div>
       </div>
     </div>
@@ -275,7 +271,7 @@
         <div class="title">服务商ID:<span>{{ item.agentNo }}</span></div>
         <div class="title">服务商名称:<span>{{ item.agentName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
-        <div v-has="TASK_DEALT" class="oper-box">
+        <div v-if="status === 'undo'" class="oper-box">
           <el-button type="primary" class="btn" @click="onClick_communication(item)">去审核</el-button>
         </div>
       </div>
@@ -288,11 +284,11 @@
           :style="{height:cssConfig.itemHeight}"
       >
         <div class="list_status">财务佣金结算</div>
-        <div class="title">服务商ID:<span>{{ item.agentNo }}</span></div>
-        <div class="title">服务商名称:<span>{{ item.agentName }}</span></div>
+        <div class="title">服务商ID:<span>{{ item.agentSettleRecord.agentNo }}</span></div>
+        <div class="title">服务商名称:<span>{{ item.agentSettleRecord.agentName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
-        <div v-has="TASK_DEALT" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_communication(item)">去审核</el-button>
+        <div v-if="status === 'undo'" class="oper-box">
+          <el-button type="primary" class="btn" @click="onClick_commission(item)">去审核</el-button>
         </div>
       </div>
     </div>
@@ -304,10 +300,10 @@
           :style="{height:cssConfig.itemHeight}"
       >
         <div class="list_status">开通服务商</div>
-        <div class="title">服务商ID:<span>{{ item.agentNo }}</span></div>
-        <div class="title">服务商名称:<span>{{ item.agentName }}</span></div>
+        <div class="title">服务商ID:<span>{{ item.agent.agentNo }}</span></div>
+        <div class="title">服务商名称:<span>{{ item.agent.agentName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
-        <div v-has="TASK_DEALT" class="oper-box">
+        <div v-if="status === 'undo'" class="oper-box">
           <el-button type="primary" class="btn" @click="onClick_communication(item)">去审核</el-button>
         </div>
       </div>
@@ -323,7 +319,7 @@
         <div class="title">服务商ID:<span>{{ item.agentNo }}</span></div>
         <div class="title">服务商名称:<span>{{ item.agentName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
-        <div v-has="TASK_DEALT" class="oper-box">
+        <div v-if="status === 'undo'" class="oper-box">
           <el-button type="primary" class="btn" @click="onClick_communication(item)">去审核</el-button>
         </div>
       </div>
@@ -339,7 +335,7 @@
         <div class="title">服务商ID:<span>{{ item.agentNo }}</span></div>
         <div class="title">服务商名称:<span>{{ item.agentName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
-        <div v-has="TASK_DEALT" class="oper-box">
+        <div v-if="status === 'undo'" class="oper-box">
           <el-button type="primary" class="btn" @click="onClick_communication(item)">去审核</el-button>
         </div>
       </div>
@@ -354,7 +350,7 @@ import { TASK_DEALT } from "../../../libs/data/permissionBtns";
 export default {
   name: "TaskList",
   // components: { transformTime },
-  props: ["listData", "type", "cssConfig", "isCheck", "isCheckAll", "openType"],
+  props: ["listData", "type", "cssConfig", "isCheck", "isCheckAll", "openType", "status"],
 
   data() {
     return {
@@ -389,6 +385,38 @@ export default {
     },
     changeCheckList() {
       this.$emit("handleCheckList", this.checkList);
+    },
+    // 佣金结算
+    onClick_settleExamine($data) {
+      this.$emit('settleExamine', $data)
+    },
+    // 服务商资料补全
+    onClick_agentCompletion($data) {
+      this.$emit('agentCompletion', $data)
+    },
+    // 设备出库
+    onClick_stock($data) {
+      this.$emit('stock', $data)
+    },
+    // 工单 -分配
+    onClick_distribution($data) {
+      this.$emit('distribution', $data)
+    },
+    // 工单 - 回复
+    onClick_relpyWork($data) {
+      this.$emit('relpyWork', $data)
+    },
+    // 乐刷申诉审核
+    onClick_leSuhaExamine($data) {
+      this.$emit('leSuhaExamine', $data)
+    },
+    // 平台资料商户审核
+    onClick_channelExamine($data) {
+      this.$emit('channelExamine', $data)
+    },
+    // 财务佣金结算
+    onClick_commission($data) {
+      this.$emit('commission', $data)
     }
   }
 };
@@ -406,7 +434,7 @@ export default {
     padding: 16px 24px;
     width: 48%;
     height: 236px;
-    background: #F7F8FA;
+    background: #fff;
     border-radius: 2px;
     .list_status {
       font-size: 14px;

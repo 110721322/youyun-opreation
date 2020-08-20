@@ -1,123 +1,125 @@
 <template>
-  <div class="main_page">
-    <div class="tab_head">
-      <span class="title">待办事项</span>
-      <el-menu
-        :default-active="activeIndex"
-        class="el-menu"
-        mode="horizontal"
-        @select="handleSelect"
-      >
-        <el-menu-item index="1">待处理</el-menu-item>
-        <el-menu-item index="2">已处理</el-menu-item>
-        <el-menu-item index="3">已发起</el-menu-item>
-      </el-menu>
-    </div>
-    <div style="padding: 24px 24px;">
-      <el-form v-if="showSearch" class="form">
-        <div></div>
-        <el-form-item label="事项类型：" label-width="100px">
-          <el-select v-model="taskValue" placeholder="请选择">
-            <el-option
-                v-for="(item, index) in options"
-                :key="index"
-                :label="item.taskValue"
-                :value="item.taskType + '/' + item.undoType">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="所属服务商：" label-width="100px" style="margin-left: 60px; width: 100%">
-          <el-input
-              v-model="taskOwner"
-              placeholder="请输入所属商户ID"
-              class="input-with-select"
-          ></el-input>
-          <div class="btn_list">
-            <el-button type="primary" size="large" @click="onClick_search">搜索</el-button>
-            <el-button plain size="large" @click="onClick_reset">重置</el-button>
-            <el-button
-                v-if="canCheckAll"
-                v-has="GROUP_MEET"
-                plain
-                size="large"
-                class="btn_checkall"
-                @click="onClick_toCheckAll"
-            >批量沟通</el-button>
-          </div>
-        </el-form-item>
-      </el-form>
-    </div>
-    <transition name="fade">
-      <div style="display:flex;padding: 0 24px">
-        <el-tree
-          :data="menuConfig"
-          :props="defaultProps"
-          node-key="id"
-          :default-expanded-keys="[0,1]"
-          :indent="0"
-          class="tree"
-          @node-click="handleNodeClick"
+  <div>
+    <router-view v-if="this.$route.path.indexOf('/approvalDetail') !== -1" />
+    <div class="main_page" v-else>
+      <div class="tab_head">
+        <span class="title">待办事项</span>
+        <el-menu
+            :default-active="activeIndex"
+            class="el-menu"
+            mode="horizontal"
+            @select="handleSelect"
         >
+          <el-menu-item index="1">待处理</el-menu-item>
+          <el-menu-item index="2">已处理</el-menu-item>
+        </el-menu>
+      </div>
+      <div style="padding: 24px 24px;">
+        <el-form class="form">
+          <el-form-item label="事项类型：" label-width="100px">
+            <el-select v-model="taskValue" placeholder="请选择">
+              <el-option
+                  v-for="(item, index) in options"
+                  :key="index"
+                  :label="item.taskValue"
+                  :value="item.taskType + '/' + item.undoType">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="所属服务商：" label-width="100px" style="margin-left: 60px; width: 100%">
+            <el-input
+                v-model="taskOwner"
+                placeholder="请输入所属商户ID"
+                class="input-with-select"
+            ></el-input>
+            <div class="btn_list">
+              <el-button type="primary" size="large" @click="onClick_search">搜索</el-button>
+              <el-button plain size="large" @click="onClick_reset">重置</el-button>
+            </div>
+          </el-form-item>
+        </el-form>
+      </div>
+      <transition name="fade">
+        <div style="display:flex;padding: 0 24px;height: 1500px;">
+          <el-tree
+              :data="menuConfig"
+              :props="defaultProps"
+              node-key="id"
+              :default-expanded-keys="[0,1]"
+              :indent="0"
+              class="tree"
+              @node-click="handleNodeClick"
+          >
           <span slot-scope="{ data }" class="custom-tree-node">
             <span>{{ data.taskValue }}</span>
             <span>{{ data.count }}</span>
           </span>
-        </el-tree>
-        <div class="content-box">
-          <div class="form-box">
-            <div>
-              <taskList
-                :list-data="listData"
-                :type="type"
-                :css-config="cssConfig"
-                :is-check="isCheck"
-                :is-check-all="isCheckAll"
-                :open-type="openType"
-                @handleCheckList="handleCheckList"
-                @communication="handleCommunication"
-                @pass="handlePass"
-                @reject="handleReject"
-              ></taskList>
+          </el-tree>
+          <div class="content-box">
+            <div class="form-box">
+              <div>
+                <taskList
+                    :list-data="listData"
+                    :type="type"
+                    :css-config="cssConfig"
+                    :is-check="isCheck"
+                    :is-check-all="isCheckAll"
+                    :open-type="openType"
+                    :status="status"
+                    @handleCheckList="handleCheckList"
+                    @settleExamine="settleExamine"
+                    @communication="handleCommunication"
+                    @agentCompletion="agentCompletion"
+                    @stock="stock"
+                    @distribution="distribution"
+                    @relpyWork="relpyWork"
+                    @leSuhaExamine="leSuhaExamine"
+                    @channelExamine="channelExamine"
+                    @commission="commission"
+                    @pass="handlePass"
+                    @reject="handleReject"
+                ></taskList>
+              </div>
+              <div class="crud-pagination">
+                <el-pagination
+                    size="medium"
+                    :current-page="currentPage"
+                    :page-sizes="[10, 20, 30, 40]"
+                    :page-size="pageSize"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="dataTotal"
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                />
+              </div>
             </div>
-            <div class="crud-pagination">
-              <el-pagination
-                size="medium"
-                :current-page="currentPage"
-                :page-sizes="[10, 20, 30, 40]"
-                :page-size="pageSize"
-                layout="total, sizes, prev, pager, next, jumper"
-                :total="dataTotal"
-                @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"
-              />
+            <div v-if="isCheck" class="check-bottom">
+              <span class="confim_text">请选择要批量沟通的任务（已选 {{ checkedListLength }} 个任务）</span>
+              <el-button plain class="confim_btn" @click="onClick_multiCommunacation">确定</el-button>
+              <span class="cancel_btn" @click="onClick_cancelCheckAll">取消</span>
+              <span class="checkall_btn" @click="onClick_doCheckAll">全选</span>
             </div>
-          </div>
-
-          <div v-if="isCheck" class="check-bottom">
-            <span class="confim_text">请选择要批量沟通的任务（已选 {{ checkedListLength }} 个任务）</span>
-            <el-button plain class="confim_btn" @click="onClick_multiCommunacation">确定</el-button>
-            <span class="cancel_btn" @click="onClick_cancelCheckAll">取消</span>
-            <span class="checkall_btn" @click="onClick_doCheckAll">全选</span>
           </div>
         </div>
-      </div>
-    </transition>
-    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
-      <div class="p_head">{{ fromConfigData.title }}</div>
-      <Form
-        :form-base-data="fromConfigData.formData"
-        :show-foot-btn="fromConfigData.showFootBtn"
-        label-width="110px"
-        :foot-btn-label="fromConfigData.footBtnLabel"
-        @cancel="cancel"
-        @confirm="confirm"
-      ></Form>
-    </el-drawer>
+      </transition>
+      <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
+        <div class="p_head">{{ fromConfigData.title }}</div>
+        <Form
+            :form-base-data="fromConfigData.formData"
+            :show-foot-btn="fromConfigData.showFootBtn"
+            label-width="110px"
+            :foot-btn-label="fromConfigData.footBtnLabel"
+            @cancel="cancel"
+            @confirm="confirm"
+        ></Form>
+      </el-drawer>
+    </div>
   </div>
 </template>
 
 <script>
 import api from "@/api/api_workBench";
+import ticketApi from "@/api/api_ticketCenter"
 import Form from "@/components/form/index.vue";
 import taskList from "./components/taskList.vue";
 import store from "@/store"
@@ -158,7 +160,7 @@ export default {
       currentPage: 1,
       // 列表数据总数
       dataTotal: 0,
-      fromConfigData: FORM_CONFIG.communicationData,
+      fromConfigData: {},
       status: "undo",
       listData: [],
       type: "",
@@ -176,7 +178,9 @@ export default {
       taskType: '',
       taskOwner: '',
       options: [],
-      openType: ''
+      openType: '',
+      taskId: '',
+      taskDes: ''
     };
   },
   watch: {
@@ -259,61 +263,130 @@ export default {
     cancel() {
       this.drawer = false;
     },
-    confirm() {
-      switch (this.formStatus) {
-        case "insertTalkPlan":
-          api
-            .insertTalkPlan({
-              addressBookId: 1,
-              type: "",
-              taskIds: [
-                {
-                  taskId: "",
-                  taskOwner: ""
-                }
-              ],
-              remark: "",
-              nextContactTime: "",
-              remindTime: "",
-              remindType: "",
-              operationId: 1,
-              undoType: 1,
-              taskType: 1
+    confirm($form) {
+      console.log($form)
+      switch (this.taskDes) {
+        case "distribu":
+          if (!$form.operatorId) {
+            this.$message({
+              message: '请选择处理人员',
+              type: 'info'
             })
-            .then(res => {
-              console.log(res);
+          } else {
+            ticketApi.designate({
+              id: this.taskId,
+              operatorId: $form.operatorId
+            }).then(res => {
+              if (res.status === 0) {
+                this.$message({
+                  message: '分配成功',
+                  type: 'success'
+                })
+                this.drawer = false
+                this.getTask()
+              }
             })
-            .catch();
+          }
           break;
-        case "insertMultiTalkPlan":
-          api
-            .insertTalkPlan({
-              addressBookId: 1,
-              type: "",
-              taskIds: [
-                {
-                  taskId: "",
-                  taskOwner: ""
-                }
-              ],
-              remark: "",
-              nextContactTime: "",
-              remindTime: "",
-              remindType: "",
-              operationId: 1,
-              undoType: 1,
-              taskType: 1
+        case "replay":
+          if (!$form.solution) {
+            this.$message({
+              message: '请填写回复内容',
+              type: 'info'
             })
-            .then(res => {
-              console.log(res);
+          } else {
+            ticketApi.reply({
+              solution: $form.solution,
+              id: this.taskId
+            }).then(res => {
+              if (res.status === 0) {
+                this.$message({
+                  message: '回复成功',
+                  type: 'success'
+                })
+                this.drawer = false
+                this.getTask()
+              }
             })
-            .catch();
+          }
           break;
 
         default:
           break;
       }
       this.drawer = false;
+    },
+    // 佣金结算审核，点击进入运营结算审核，列表中筛选出对应的服务商
+    settleExamine($data) {
+      console.log($data)
+      this.$router.push({
+        path: '/financial/operation/operationApprove',
+        query: {
+          agentNo: $data.agentNo
+        }
+      })
+    },
+    // 服务商资料补全，点击进入服务商列表，筛选出对应的服务商
+    agentCompletion($data) {
+      this.$router.push({
+        path: '/agent/list',
+        query: {
+          agentNo: $data.agentNo
+        }
+      })
+    },
+    // 设备出库，
+    stock($data) {
+      this.$router.push({
+        path: '/deviceManage/stock/stockOut',
+        query: {
+          outputNo: $data.taskId
+        }
+      })
+    },
+    // 工单 - 分配
+    distribution($data) {
+      this.drawer = true
+      this.taskId = $data.taskId
+      this.taskDes = 'distribu'
+      this.fromConfigData = FORM_CONFIG.distributionData
+    },
+    // 工单 - 回复
+    relpyWork($data) {
+      this.drawer = true
+      this.taskId = $data.taskId
+      this.taskDes = 'replay'
+      this.fromConfigData = FORM_CONFIG.replyData
+    },
+    // 乐刷申诉审核
+    leSuhaExamine($data) {
+      this.$router.push({
+        path: '/risk/riskAppeal/leRiskList/detail',
+        query: {
+          id: $data.taskId
+        }
+      })
+    },
+    // 平台资料申诉审核
+    channelExamine($data) {
+      this.$router.push({
+        path: '/risk/riskAppeal/merchantRiskList/detail',
+        query: {
+          id: $data.taskId
+        }
+      })
+    },
+    // 财务佣金结算
+    commission($data) {
+      console.log($data)
+      this.$router.push({
+        path: '/work/todo/approvalDetail',
+        query: {
+          configData: $data,
+          taskType: this.taskType,
+          undoType: this.undoType
+        }
+      })
     },
     handleCurrentChange(page) {
       this.currentPage = page;
@@ -364,40 +437,13 @@ export default {
         this.isCheckAll = false;
       }
     },
-    onClick_reset() {},
-    onClick_toCheckAll() {
-      this.isCheck = true;
+    onClick_reset() {
+      this.taskValue = ''
+      this.taskOwner = ''
     },
     onClick_cancelCheckAll() {
       this.isCheck = false;
     },
-    // getTableData() {
-    //   this.queryAllTaskMenu(
-    //     {
-    //       receiverId: 1,
-    //       undoType: 2,
-    //       // taskType: 1,
-    //       status: ""
-    //     },
-    //     res => {
-    //       this.menuConfig[0].children = res.object.datas;
-    //       console.log(res);
-    //     }
-    //   );
-    //   this.queryAllTaskMenu(
-    //     {
-    //       receiverId: 1,
-    //       undoType: 1,
-    //       // taskType: 1,
-    //       status: ""
-    //     },
-    //     res => {
-    //       this.menuConfig[1].children = res.object.datas;
-    //       this.dataTotal = res.object.totalCount;
-    //       console.log(res);
-    //     }
-    //   );
-    // },
     onClick_search() {
       var type = this.taskValue.split('/')
       console.log(type)
@@ -431,9 +477,14 @@ export default {
       setTimeout(() => {
         this.getTableData();
       }, 1000);
+      this.undoType = ''
+      this.taskType = ''
+      this.getTaskMenu()
     },
     handleNodeClick($data) {
       console.log($data);
+      this.taskType = $data.taskType
+      this.undoType = $data.undoType
       if (this.activeIndex === "1") {
         if ($data.undoType === 1) {
           this.currentStatus = "dailyPending";

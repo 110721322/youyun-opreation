@@ -10,5 +10,9 @@ export default {
   // 待办事项-批量插入或单个插入沟通小记
   insertTalkPlan: (params) => API.GET('/operation/v1/workbench/task/insertTalkPlan', params),
   // 待办事项-查询所有问题商户或服务商下拉列表
-  queryAllProblemMerchantOrAgent: (params) => API.GET('/operation/v1/workbench/task/queryAllProblemMerchantOrAgent', params)
+  queryAllProblemMerchantOrAgent: (params) => API.GET('/operation/v1/workbench/task/queryAllProblemMerchantOrAgent', params),
+  // 审批通过
+  passExamine: (params) => API.POST('/operation/v1/approvalPrime/pass', params),
+  // 审批拒绝
+  rejectExamine: (params) => API.POST('/operation/v1/approvalPrime/refuse', params)
 };

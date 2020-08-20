@@ -1,4 +1,5 @@
 import { setRules } from '@/libs/kit/formFns.js'
+import api from "@/api/api_agent"
 
 export const FORM_CONFIG = {
   communicationData: {
@@ -151,6 +152,38 @@ export const FORM_CONFIG = {
           return $item.nextContactTime
         },
         inputType: 'textarea'
+      }
+    ]
+  },
+  distributionData: {
+    title: '分配处理人员',
+    showFootBtn: true,
+    formData: [
+      {
+        type: 1,
+        label: '处理人员',
+        key: 'operatorId',
+        urlOptions: {
+          url: api.queryAllOperation,
+          keyName: 'operationId',
+          valueName: 'operationName',
+          method: 'get'
+        },
+        rules: setRules("处理人员").isSelected.get
+      }
+    ]
+  },
+  replyData: {
+    title: '工单回复',
+    showFootBtn: true,
+    formData: [
+      {
+        type: 0,
+        label: '解决方案',
+        key: 'solution',
+        inputType: 'textarea',
+        maxlength: '200',
+        rules: setRules("回复内容").isRequired.get
       }
     ]
   }
