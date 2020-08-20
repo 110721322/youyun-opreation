@@ -92,11 +92,16 @@ export default {
       testData: [],
       selectData: [],
       params: {},
-      api: api.agentList,
+      api: "",
       dialogVisible: false
     };
   },
-  created() {},
+  created() {
+    if (this.$route.query.agentNo) {
+      this.params.agentNo = this.$route.query.agentNo
+    }
+    this.api = api.agentList
+  },
   mounted() {},
   methods: {
     transfer() {

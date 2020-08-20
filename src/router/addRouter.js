@@ -746,22 +746,20 @@ const asyncRoutes = {
           icon: 'workTodo'
         },
         component: () => import('@/page/work/workTodo.vue'),
-        children: []
+        children: [
+          {
+            path: 'approvalDetail',
+            name: 'approvalDetail',
+            meta: {
+              title: '审批任务详情',
+              icon: 'approvalDetail'
+            },
+            component: () => import('@/page/work/approvalDetail.vue')
+          }
+        ]
       }
     ]
   },
-
-  'workTodo': {
-    path: 'todo',
-    name: 'workTodo',
-    meta: {
-      title: '待办事项',
-      icon: 'workTodo'
-    },
-    component: () => import('@/page/work/workTodo.vue'),
-    children: []
-  },
-
   'workSentMessage': {
     path: 'sentMessage',
     name: 'workSentMessage',
@@ -780,16 +778,6 @@ const asyncRoutes = {
       icon: 'taskDetail'
     },
     component: () => import('@/page/work/taskDetail.vue'),
-    children: []
-  },
-  'approvalDetail': {
-    path: 'approvalDetail',
-    name: 'approvalDetail',
-    meta: {
-      title: '审批任务详情',
-      icon: 'approvalDetail'
-    },
-    component: () => import('@/page/work/approvalDetail.vue'),
     children: []
   },
   'message': {
