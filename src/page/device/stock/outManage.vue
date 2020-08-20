@@ -89,17 +89,17 @@ export default {
       params: {
         beginDate: this.$g.utils.getToday(),
         endDate: this.$g.utils.getToday(),
-        agentNo: "",
-        deviceId: "",
-        distributionUserId: 1,
-        outputNo: "",
-        outputUserId: "",
-        saleUserId: "",
-        status: ""
+        distributionUserId: 1
       },
       device: {},
-      api: api.deviceOutputQueryByPage
+      api: ""
     };
+  },
+  created() {
+    if (this.$route.query.outputNo) {
+      this.params.outputNo = this.$route.query.outputNo
+    }
+    this.api = api.deviceOutputQueryByPage
   },
   mounted() {},
   methods: {

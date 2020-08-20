@@ -57,8 +57,14 @@ export default {
       direction: "rtl",
       searchHeight: "320",
       params: {},
-      api: api.queryLeshuaAuditPageByCondition
+      api: ""
     };
+  },
+  created() {
+    if (this.$route.query.agentNo) {
+      this.params.agentNo = this.$route.query.agentNo
+    }
+    this.api = api.queryLeshuaAuditPageByCondition
   },
   mounted() {
     // this.search();

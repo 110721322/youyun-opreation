@@ -132,11 +132,15 @@ export default {
     };
   },
   created() {
+    if (this.$route.query.agentNo) {
+      this.activeName = '1'
+    }
     this.params = {
       beginTime: this.$g.utils.getToday(),
       endTime: this.$g.utils.getToday(),
       typeFlag: this.activeName,
-      settleStatus: 0
+      settleStatus: 0,
+      agentNo: this.$route.query.agentNo || null
     };
   },
   methods: {
