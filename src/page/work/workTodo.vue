@@ -132,7 +132,7 @@
             @reject="reject"
             @confirm="handel_confirm"
         ></Form>
-        <div style="height: 200px;padding-left: 120px" v-if="openDataConfig.approvalDetail">
+        <div style="height: 200px; padding-left: 120px;" v-if="openDataConfig.approvalDetail">
           <el-steps direction="vertical" :active="openDataConfig.approvalDetail.length">
             <el-step :description="item.nodeName" :title="item.nodeStatus === 0 ? '发起' : item.nodeStatus === 1 ? '处理中' : item.nodeStatus === 2 ? '待审批' : item.nodeStatus === 3 ? '已通过' : '已驳回'" :key="index" v-for="(item, index) in openDataConfig.approvalDetail"></el-step>
           </el-steps>
@@ -147,7 +147,8 @@ import api from "@/api/api_workBench";
 import ticketApi from "@/api/api_ticketCenter"
 import Form from "@/components/form/index.vue";
 import taskList from "./components/taskList.vue";
-import store from "@/store"
+import store from "@/store";
+import * as g from "@/libs/global";
 import { TASKLIST_CONFIG } from "./tableConfig/taskListConfig";
 import { FORM_CONFIG } from "./formConfig/workTodoConfig";
 import { GROUP_MEET } from "../../libs/data/permissionBtns";
@@ -291,10 +292,60 @@ export default {
       this.drawer = false;
     },
     reject() {
-      this.otherDrawer = false
+      this.$confirm("确定拒绝佣金结算审核？", "拒绝审核", {
+        distinguishCancelAndClose: true,
+        confirmButtonText: "确认",
+        cancelButtonText: "取消"
+      }).then(res => {
+        api.rejectExamine({
+          undoType: this.undoType,
+          taskType: this.taskType,
+          taskId: this.openDataConfig.taskId,
+          taskOwner: this.openDataConfig.taskOwner
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '已拒绝',
+              type: 'success'
+            })
+            this.otherDrawer = false
+            this.getTask()
+          }
+        }).catch(() => {
+          this.$message({
+            message: '取消操作',
+            type: 'info'
+          })
+        })
+      })
     },
     handel_confirm($form) {
-      console.log($form)
+      this.$confirm("确定通过新增服务商审核？", "通过审核", {
+        distinguishCancelAndClose: true,
+        confirmButtonText: "确认",
+        cancelButtonText: "取消"
+      }).then(res => {
+        api.passExamine({
+          undoType: this.undoType,
+          taskType: this.taskType,
+          taskId: this.openDataConfig.taskId,
+          taskOwner: this.openDataConfig.taskOwner
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '已通过',
+              type: 'success'
+            })
+            this.otherDrawer = false
+            this.getTask()
+          }
+        }).catch(() => {
+          this.$message({
+            message: '取消操作',
+            type: 'info'
+          })
+        })
+      })
     },
     confirm($form) {
       console.log($form)
@@ -366,7 +417,7 @@ export default {
       const commonData = FORM_CONFIG.communicationData
       commonData.formData[4].initVal = $data.merchantName
       commonData.formData[3].initVal = '日常任务 商户结算失败'
-      this.fromConfigData = commonData
+      this.fromConfigData = g.utils.deepClone(commonData)
     },
     // 服务商到期，点击弹出立即沟通
     overTime($data) {
@@ -376,17 +427,19 @@ export default {
       const commonData = FORM_CONFIG.communicationData
       commonData.formData[4].initVal = $data.agentName
       commonData.formData[3].initVal = '日常任务 服务商到期'
-      this.fromConfigData = commonData
+      this.fromConfigData = g.utils.deepClone(commonData)
     },
     // 预约沟通，点击弹出立即沟通
     subscribe($data) {
+      this.fromConfigData = {}
       this.drawer = true
       this.taskId = $data.taskId
       this.taskDes = 'subscribe'
       const commonData = FORM_CONFIG.communicationData
       commonData.formData[4].initVal = $data.agentName
       commonData.formData[3].initVal = '日常任务 预约沟通'
-      this.fromConfigData = commonData
+      console.log(commonData)
+      this.fromConfigData = g.utils.deepClone(commonData)
     },
     // 新服务商沟通，点击弹出立即沟通
     newAgent($data) {
@@ -396,7 +449,7 @@ export default {
       const commonData = FORM_CONFIG.communicationData
       commonData.formData[4].initVal = $data.agentName
       commonData.formData[3].initVal = '日常任务 新服务商沟通'
-      this.fromConfigData = commonData
+      this.fromConfigData = g.utils.deepClone(commonData)
     },
     // 客单价异常，点击弹出立即沟通
     unitPrice($data) {
@@ -406,7 +459,7 @@ export default {
       const commonData = FORM_CONFIG.communicationData
       commonData.formData[4].initVal = $data.merchantName
       commonData.formData[3].initVal = '日常任务 客单价异常'
-      this.fromConfigData = commonData
+      this.fromConfigData = g.utils.deepClone(commonData)
     },
     // 交易数据异常，点击弹出立即沟通
     transaction($data) {
@@ -489,7 +542,15 @@ export default {
     },
     // 冻结服务商
     frozenAgent($data) {
-      console.log($data)
+      this.openDataConfig = $data
+      this.otherDrawer = true
+      this.taskId = $data.taskId
+      this.taskDes = 'frozenAgent'
+      const commonData = FORM_CONFIG.frozenAgent
+      commonData.formData[0].initVal = $data.agent.agentNo
+      commonData.formData[1].initVal = $data.agent.agentName
+      commonData.formData[2].initVal = $data.agent.reason
+      this.fromConfigData = g.utils.deepClone(commonData)
     },
     // 开通服务商
     openAgent($data) {
@@ -504,7 +565,7 @@ export default {
       commonData.formData[3].initVal = $data.agent.email
       commonData.formData[4].initVal = $data.agent.businessType
       commonData.formData[5].initVal = $data.agent.companyAddress
-      this.fromConfigData = commonData
+      this.fromConfigData = g.utils.deepClone(commonData)
     },
     // 财务佣金结算
     commission($data) {

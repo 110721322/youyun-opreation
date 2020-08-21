@@ -257,10 +257,14 @@ export default {
           if (g.utils.isArr(res.object)) {
             this.copyGridData = res.datas || res.object;
           } else {
-            this.copyGridData =
-              res.datas === null || res.object === null
-                ? []
-                : res.datas || res.object;
+            if (res.object.datas) {
+              this.copyGridData = res.object.datas
+            } else {
+              this.copyGridData =
+                res.datas === null || res.object === null
+                  ? []
+                  : res.datas || res.object;
+            }
           }
           this.dataTotal = res.totalCount;
           this.listLoading = false;

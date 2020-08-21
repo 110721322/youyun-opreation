@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-view v-if="this.$route.path.indexOf('/statisticsDetail') !== -1" />
+    <router-view v-if="this.$route.path.indexOf('/statisticsDetail') !== -1 || this.$route.path.indexOf('/statisticsAll') !== -1" />
     <div class="main_page" v-else>
       <div class="tab_head">
         <span class="title">任务统计详情</span>

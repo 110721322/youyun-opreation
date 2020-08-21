@@ -249,18 +249,14 @@ export default {
     margin-top: 4px;
     height: 12px;
     font-size: 12px;
-    font-family: HelveticaNeue;
     color: rgba(0, 0, 0, 0.45);
     line-height: 12px;
   }
   .step-note {
     margin: 10px auto 0;
-    width: 70px;
     height: 26px;
-    background: rgba(246, 246, 246, 1);
     border-radius: 4px;
     font-size: 12px;
-    font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
     color: rgba(0, 0, 0, 0.45);
     line-height: 26px;
