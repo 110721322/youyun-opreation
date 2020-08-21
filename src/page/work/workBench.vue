@@ -2,7 +2,7 @@
   <div class="main_page">
     <div class="w-welcome">
       <div class="head">您好，小柒</div>
-      <div class="tip">今天是2019年08月08日 星期四，欢迎您回到小马哥运营后台</div>
+      <div class="tip">今天是{{ date }}，欢迎您回到小马哥运营后台</div>
     </div>
     <detailMode :config-data="configData"></detailMode>
     <detailMode :config-data="configData2"></detailMode>
@@ -114,13 +114,47 @@ export default {
             ]
           }
         ]
-      }
+      },
+      date: ''
     };
   },
   mounted() {
     this.getData();
+    this.date = this.getCurrentDate()
   },
   methods: {
+    getCurrentDate() {
+      var myDate = new Date();
+      var year = myDate.getFullYear(); // 年
+      var month = myDate.getMonth() + 1; // 月
+      var day = myDate.getDate(); // 日
+      var days = myDate.getDay();
+      switch (days) {
+        case 1:
+          days = '星期一';
+          break;
+        case 2:
+          days = '星期二';
+          break;
+        case 3:
+          days = '星期三';
+          break;
+        case 4:
+          days = '星期四';
+          break;
+        case 5:
+          days = '星期五';
+          break;
+        case 6:
+          days = '星期六';
+          break;
+        case 0:
+          days = '星期日';
+          break;
+      }
+      var str = year + "年" + month + "月" + day + "日  " + days;
+      return str;
+    },
     getData() {
       api
         .queryAllTaskMenu({

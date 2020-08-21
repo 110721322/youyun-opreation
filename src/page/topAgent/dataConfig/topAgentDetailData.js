@@ -52,7 +52,7 @@ export const configData = {
           items: [
             {
               name: "结算卡类型",
-              key: "bankAccountType"
+              key: "bankAccountTypeCn"
             },
             {
               name: "开户支行地区",

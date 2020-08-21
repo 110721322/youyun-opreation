@@ -360,7 +360,7 @@ export default {
       activeClass: "red",
       activeValue: "情绪客户",
       financeModel: {
-        bankAccountType: '',
+        bankAccountType: 'private',
         bankCardNo: '',
         bankContactLine: '',
         bankAccountHolder: ''
@@ -740,6 +740,7 @@ export default {
         } else {
           this.configData2.child[2].models = [];
         }
+        this.financeModel = ruleForm
         this.configData2.child[0].models = payChannels;
         this.configData2.child[3].models = customChannelComboPriceSets;
         this.configData2.child[4].models = customBrandComboPriceSets;

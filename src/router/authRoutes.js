@@ -1274,13 +1274,13 @@ export const authRoutes = [
     },
     children: [
       {
-        text: '优惠券',
+        text: '优惠码',
         type: 'ios-paper',
         name: 'coupon',
         path: 'coupon',
         isShow: true,
         meta: {
-          title: '优惠券',
+          title: '优惠码',
           icon: 'coupon'
         }
       }
