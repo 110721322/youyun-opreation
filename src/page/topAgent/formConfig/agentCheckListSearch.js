@@ -2,27 +2,33 @@ import store from "@/store"
 
 export const FORM_CONFIG = {
   formData: [
+    // {
+    //   type: 10,
+    //   label: '服务商名称/ID',
+    //   key: 'channelAgent',
+    //   class: 'max-width',
+    //   options: [
+    //     {
+    //       label: '服务商ID',
+    //       value: 'channelAgentCode'
+    //     },
+    //     {
+    //       label: '服务商名称',
+    //       value: 'channelAgentName'
+    //     }
+    //   ],
+    //   labelWidth: '100px'
+    // },
     {
-      type: 10,
-      label: '服务商名称/ID',
-      key: 'channelAgent',
-      class: 'max-width',
-      options: [
-        {
-          label: '服务商ID',
-          value: 'channelAgentCode'
-        },
-        {
-          label: '服务商名称',
-          value: 'channelAgentName'
-        }
-      ],
-      labelWidth: '100px'
+      type: 0,
+      label: '服务商名称',
+      key: 'channelAgentName'
     },
     {
       type: 0,
       label: '法人姓名',
-      key: 'personName'
+      key: 'personName',
+      class: 'clear_both'
     },
     {
       type: 0,
