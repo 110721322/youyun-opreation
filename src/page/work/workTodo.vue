@@ -66,11 +66,20 @@
                     :is-check-all="isCheckAll"
                     :open-type="openType"
                     :status="status"
+                    @settleFail="settleFail"
+                    @overTime="overTime"
                     @handleCheckList="handleCheckList"
+                    @merchantExamine="merchantExamine"
                     @settleExamine="settleExamine"
+                    @newAgent="newAgent"
                     @communication="handleCommunication"
                     @agentCompletion="agentCompletion"
+                    @subscribe="subscribe"
+                    @unitPrice="unitPrice"
+                    @frozenAgent="frozenAgent"
+                    @transaction="transaction"
                     @stock="stock"
+                    @openAgent="openAgent"
                     @distribution="distribution"
                     @relpyWork="relpyWork"
                     @leSuhaExamine="leSuhaExamine"
@@ -93,12 +102,12 @@
                 />
               </div>
             </div>
-            <div v-if="isCheck" class="check-bottom">
-              <span class="confim_text">请选择要批量沟通的任务（已选 {{ checkedListLength }} 个任务）</span>
-              <el-button plain class="confim_btn" @click="onClick_multiCommunacation">确定</el-button>
-              <span class="cancel_btn" @click="onClick_cancelCheckAll">取消</span>
-              <span class="checkall_btn" @click="onClick_doCheckAll">全选</span>
-            </div>
+<!--            <div v-if="isCheck" class="check-bottom">-->
+<!--              <span class="confim_text">请选择要批量沟通的任务（已选 {{ checkedListLength }} 个任务）</span>-->
+<!--              <el-button plain class="confim_btn" @click="onClick_multiCommunacation">确定</el-button>-->
+<!--              <span class="cancel_btn" @click="onClick_cancelCheckAll">取消</span>-->
+<!--              <span class="checkall_btn" @click="onClick_doCheckAll">全选</span>-->
+<!--            </div>-->
           </div>
         </div>
       </transition>
@@ -112,6 +121,22 @@
             @cancel="cancel"
             @confirm="confirm"
         ></Form>
+      </el-drawer>
+      <el-drawer :visible.sync="otherDrawer" :with-header="false" size="40%">
+        <div class="p_head">{{ fromConfigData.title }}</div>
+        <Form
+            :form-base-data="fromConfigData.formData"
+            :show-foot-btn="fromConfigData.showFootBtn"
+            label-width="110px"
+            :foot-btn-label="fromConfigData.footBtnLabel"
+            @reject="reject"
+            @confirm="handel_confirm"
+        ></Form>
+        <div style="height: 200px;padding-left: 120px" v-if="openDataConfig.approvalDetail">
+          <el-steps direction="vertical" :active="openDataConfig.approvalDetail.length">
+            <el-step :description="item.nodeName" :title="item.nodeStatus === 0 ? '发起' : item.nodeStatus === 1 ? '处理中' : item.nodeStatus === 2 ? '待审批' : item.nodeStatus === 3 ? '已通过' : '已驳回'" :key="index" v-for="(item, index) in openDataConfig.approvalDetail"></el-step>
+          </el-steps>
+        </div>
       </el-drawer>
     </div>
   </div>
@@ -137,6 +162,7 @@ export default {
       taskValue: '',
       GROUP_MEET: GROUP_MEET,
       drawer: false,
+      otherDrawer: false,
       currentStatus: "",
       checkList: [],
       checkedListLength: 0,
@@ -161,6 +187,7 @@ export default {
       // 列表数据总数
       dataTotal: 0,
       fromConfigData: {},
+      openDataConfig: {},
       status: "undo",
       listData: [],
       type: "",
@@ -263,6 +290,12 @@ export default {
     cancel() {
       this.drawer = false;
     },
+    reject() {
+      this.otherDrawer = false
+    },
+    handel_confirm($form) {
+      console.log($form)
+    },
     confirm($form) {
       console.log($form)
       switch (this.taskDes) {
@@ -310,11 +343,89 @@ export default {
             })
           }
           break;
-
+        case "settleFail":
+          if (!$form.contactPerson || !$form.mobile || !$form.way || !$form.contactContent) {
+            this.$message({
+              message: '请填写必填信息',
+              type: 'warning'
+            })
+          } else {
+            api.insertTalkPlan({})
+          }
+          break;
         default:
           break;
       }
       this.drawer = false;
+    },
+    // 商户结算失败，点击弹出立即沟通
+    settleFail($data) {
+      this.drawer = true
+      this.taskId = $data.taskId
+      this.taskDes = 'settleFail'
+      const commonData = FORM_CONFIG.communicationData
+      commonData.formData[4].initVal = $data.merchantName
+      commonData.formData[3].initVal = '日常任务 商户结算失败'
+      this.fromConfigData = commonData
+    },
+    // 服务商到期，点击弹出立即沟通
+    overTime($data) {
+      this.drawer = true
+      this.taskId = $data.taskId
+      this.taskDes = 'overTime'
+      const commonData = FORM_CONFIG.communicationData
+      commonData.formData[4].initVal = $data.agentName
+      commonData.formData[3].initVal = '日常任务 服务商到期'
+      this.fromConfigData = commonData
+    },
+    // 预约沟通，点击弹出立即沟通
+    subscribe($data) {
+      this.drawer = true
+      this.taskId = $data.taskId
+      this.taskDes = 'subscribe'
+      const commonData = FORM_CONFIG.communicationData
+      commonData.formData[4].initVal = $data.agentName
+      commonData.formData[3].initVal = '日常任务 预约沟通'
+      this.fromConfigData = commonData
+    },
+    // 新服务商沟通，点击弹出立即沟通
+    newAgent($data) {
+      this.drawer = true
+      this.taskId = $data.taskId
+      this.taskDes = 'newAgent'
+      const commonData = FORM_CONFIG.communicationData
+      commonData.formData[4].initVal = $data.agentName
+      commonData.formData[3].initVal = '日常任务 新服务商沟通'
+      this.fromConfigData = commonData
+    },
+    // 客单价异常，点击弹出立即沟通
+    unitPrice($data) {
+      this.drawer = true
+      this.taskId = $data.taskId
+      this.taskDes = 'unitPrice'
+      const commonData = FORM_CONFIG.communicationData
+      commonData.formData[4].initVal = $data.merchantName
+      commonData.formData[3].initVal = '日常任务 客单价异常'
+      this.fromConfigData = commonData
+    },
+    // 交易数据异常，点击弹出立即沟通
+    transaction($data) {
+      this.drawer = true
+      this.taskId = $data.taskId
+      this.taskDes = 'transaction'
+      const commonData = FORM_CONFIG.communicationData
+      commonData.formData[4].initVal = $data.merchantName
+      commonData.formData[3].initVal = '日常任务 交易数据异常'
+      this.fromConfigData = commonData
+    },
+    // 商户入件审核，点击跳转到商户审核界面
+    merchantExamine($data) {
+      this.$router.push({
+        path: '/approval/checkMerchant/indirectList',
+        query: {
+          merchantNo: $data.merchantNo
+        }
+      })
     },
     // 佣金结算审核，点击进入运营结算审核，列表中筛选出对应的服务商
     settleExamine($data) {
@@ -376,6 +487,25 @@ export default {
         }
       })
     },
+    // 冻结服务商
+    frozenAgent($data) {
+      console.log($data)
+    },
+    // 开通服务商
+    openAgent($data) {
+      this.openDataConfig = $data
+      this.otherDrawer = true
+      this.taskId = $data.taskId
+      this.taskDes = 'openAgent'
+      const commonData = FORM_CONFIG.openAgentData
+      commonData.formData[0].initVal = $data.agent.agentName
+      commonData.formData[1].initVal = $data.agent.personName
+      commonData.formData[2].initVal = $data.agent.personMobile
+      commonData.formData[3].initVal = $data.agent.email
+      commonData.formData[4].initVal = $data.agent.businessType
+      commonData.formData[5].initVal = $data.agent.companyAddress
+      this.fromConfigData = commonData
+    },
     // 财务佣金结算
     commission($data) {
       console.log($data)
@@ -397,14 +527,6 @@ export default {
     handleCommunication($data) {
       this.activityRow = $data;
       this.formStatus = "insertTalkPlan";
-      this.drawer = true;
-    },
-    onClick_multiCommunacation($data) {
-      if (this.checkList.length === 0) {
-        return;
-      }
-      this.activityRow = this.checkList;
-      this.formStatus = "insertMultiTalkPlan";
       this.drawer = true;
     },
     handlePass($data) {

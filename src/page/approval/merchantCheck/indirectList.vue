@@ -61,8 +61,8 @@ export default {
     };
   },
   created() {
-    if (this.$route.query.agentNo) {
-      this.params.agentNo = this.$route.query.agentNo
+    if (this.$route.query.merchantNo) {
+      this.params.merchantNo = this.$route.query.merchantNo
     }
     this.api = api.queryLeshuaAuditPageByCondition
   },
