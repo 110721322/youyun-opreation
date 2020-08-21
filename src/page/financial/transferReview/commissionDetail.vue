@@ -38,10 +38,13 @@ export default {
       testData: [],
       direction: "rtl",
       params: {
-        statisticsNoList: 1
+        idList: this.$route.query.idList.split(',')
       },
-      api: api.queryTypeMonthDetail
+      api: ''
     };
+  },
+  created() {
+    this.api = this.$route.query.activeName === 0 ? api.topQueryTypeMonthDetail : api.queryTypeMonthDetail
   },
   mounted() {},
   methods: {}

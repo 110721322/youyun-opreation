@@ -79,7 +79,7 @@ export default {
       params: {
         activityBeginTime: this.$g.utils.getToday(),
         activityEndTime: this.$g.utils.getToday(),
-        // currentPage: '',
+        currentPage: 0,
         id: '',
         // pageSize: '',
         state: ''
@@ -95,6 +95,7 @@ export default {
   },
   methods: {
     search($ruleForm) {
+      console.log(11111)
       const params = {
         activityBeginTime: $ruleForm.date ? $ruleForm.date[0] : null,
         activityEndTime: $ruleForm.date ? $ruleForm.date[1] : null,
