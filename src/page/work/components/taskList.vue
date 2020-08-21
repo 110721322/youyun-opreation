@@ -44,16 +44,15 @@
           :style="{height:cssConfig.itemHeight}"
       >
         <div class="list_status">商户结算失败</div>
-        <div class="title">商户ID:<span>{{ item.agentNo }}</span></div>
-        <div class="title">商户名称:<span>{{ item.agentName }}</span></div>
-        <div class="title">所属服务商:<span>{{ item.expireDate }}</span></div>
-        <div class="title">交易通道:<span>{{ item.agentNo }}</span></div>
-        <div class="title">金额:<span>{{ item.agentName }}元</span></div>
-        <div class="title">渠道商户号:<span>{{ item.expireDate }}</span></div>
-        <div class="title">失败原因:<span>{{ item.expireDate }}</span></div>
+        <div class="title">商户名称(ID):<span>{{ item.merchantName + '(' + item.merchantNo + ')' }}</span></div>
+        <div class="title">所属服务商:<span>{{ item.agentName }}</span></div>
+        <div class="title">交易通道:<span>{{ item.channelCode }}</span></div>
+        <div class="title">金额:<span>{{ item.totalSettleAmount }}元</span></div>
+        <div class="title">渠道商户号:<span>{{ item.channelMerchantNo }}</span></div>
+        <div class="title">失败原因:<span>{{ item.failReason }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_communication(item)">立即沟通</el-button>
+          <el-button type="primary" class="btn" @click="onClick_settleFail(item)">立即沟通</el-button>
         </div>
       </div>
     </div>
@@ -65,12 +64,11 @@
           :style="{height:cssConfig.itemHeight}"
       >
         <div class="list_status">商户入件审核</div>
-        <div class="title">商户ID:<span>{{ item.agentNo }}</span></div>
-        <div class="title">商户名称:<span>{{ item.agentName }}</span></div>
-        <div class="title">所属服务商:<span>{{ item.expireDate }}</span></div>
+        <div class="title">商户ID:<span>{{ item.merchantNo }}</span></div>
+        <div class="title">商户名称:<span>{{ item.merchantName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_communication(item)">立即沟通</el-button>
+          <el-button type="primary" class="btn" @click="onClick_merchantExamine(item)">去审核</el-button>
         </div>
       </div>
     </div>
@@ -87,7 +85,7 @@
         <div class="title">到期时间:<span>{{ item.expireDate }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_communication(item)">立即沟通</el-button>
+          <el-button type="primary" class="btn" @click="onClick_overTime(item)">立即沟通</el-button>
         </div>
       </div>
     </div>
@@ -119,7 +117,7 @@
         <div class="title">服务商名称:<span>{{ item.agentName }}</span></div>
         <div class="title">预约沟通时间:<span>{{ item.remindTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_communication(item)">立即沟通</el-button>
+          <el-button type="primary" class="btn" @click="onClick_subscribe(item)">立即沟通</el-button>
         </div>
       </div>
     </div>
@@ -135,7 +133,7 @@
         <div class="title">服务商名称:<span>{{ item.agentName }}</span></div>
         <div class="title">开通时间:<span>{{ item.createTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_communication(item)">立即沟通</el-button>
+          <el-button type="primary" class="btn" @click="onClick_newAgent(item)">立即沟通</el-button>
         </div>
       </div>
     </div>
@@ -147,13 +145,13 @@
           :style="{height:cssConfig.itemHeight}"
       >
         <div class="list_status">客单价异常</div>
-        <div class="title">商户ID:<span>{{ item.agentNo }}</span></div>
-        <div class="title">商户名称:<span>{{ item.agentName }}</span></div>
+        <div class="title">商户ID:<span>{{ item.merchantNo }}</span></div>
+        <div class="title">商户名称:<span>{{ item.merchantName }}</span></div>
         <div class="title">所属服务商:<span>{{ item.agentName }}</span></div>
-        <div class="title">客单价:<span>{{ item.agentName }}</span></div>
+        <div class="title">客单价:<span>{{ item.perAmount }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_communication(item)">立即沟通</el-button>
+          <el-button type="primary" class="btn" @click="onClick_unitPrice(item)">立即沟通</el-button>
         </div>
       </div>
     </div>
@@ -171,7 +169,7 @@
         <div class="title">交易环比:<span>{{ item.agentName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_communication(item)">立即沟通</el-button>
+          <el-button type="primary" class="btn" @click="onClick_transaction(item)">立即沟通</el-button>
         </div>
       </div>
     </div>
@@ -268,11 +266,11 @@
           :style="{height:cssConfig.itemHeight}"
       >
         <div class="list_status">运营佣金结算</div>
-        <div class="title">服务商ID:<span>{{ item.agentNo }}</span></div>
-        <div class="title">服务商名称:<span>{{ item.agentName }}</span></div>
+        <div class="title">服务商ID:<span>{{ item.agentSettleRecord.agentNo }}</span></div>
+        <div class="title">服务商名称:<span>{{ item.agentSettleRecord.agentName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_communication(item)">去审核</el-button>
+          <el-button type="primary" class="btn" @click="onClick_commission(item)">去审核</el-button>
         </div>
       </div>
     </div>
@@ -304,7 +302,7 @@
         <div class="title">服务商名称:<span>{{ item.agent.agentName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_communication(item)">去审核</el-button>
+          <el-button type="primary" class="btn" @click="onClick_openAgent(item)">去审核</el-button>
         </div>
       </div>
     </div>
@@ -320,7 +318,7 @@
         <div class="title">服务商名称:<span>{{ item.agentName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_communication(item)">去审核</el-button>
+          <el-button type="primary" class="btn" @click="onClick_frozenAgent(item)">去审核</el-button>
         </div>
       </div>
     </div>
@@ -386,9 +384,37 @@ export default {
     changeCheckList() {
       this.$emit("handleCheckList", this.checkList);
     },
+    // 商户结算失败
+    onClick_settleFail($data) {
+      this.$emit('settleFail', $data)
+    },
+    // 服务商到期
+    onClick_overTime($data) {
+      this.$emit('overTime', $data)
+    },
+    // 商户入件审核
+    onClick_merchantExamine($data) {
+      this.$emit('merchantExamine', $data)
+    },
     // 佣金结算
     onClick_settleExamine($data) {
       this.$emit('settleExamine', $data)
+    },
+    // 预约沟通
+    onClick_subscribe($data) {
+      this.$emit('subscribe', $data)
+    },
+    // 新服务商沟通
+    onClick_newAgent($data) {
+      this.$emit('newAgent', $data)
+    },
+    // 客单价异常
+    onClick_unitPrice($data) {
+      this.$emit('unitPrice', $data)
+    },
+    // 交易数据异常
+    onClick_transaction($data) {
+      this.$emit('transaction', $data)
     },
     // 服务商资料补全
     onClick_agentCompletion($data) {
@@ -417,6 +443,14 @@ export default {
     // 财务佣金结算
     onClick_commission($data) {
       this.$emit('commission', $data)
+    },
+    // 冻结服务商
+    onClick_frozenAgent($data) {
+      this.$emit('frozenAgent', $data)
+    },
+    // 开通服务商
+    onClick_openAgent($data) {
+      this.$emit('openAgent', $data)
     }
   }
 };

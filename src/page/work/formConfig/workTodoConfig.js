@@ -8,37 +8,16 @@ export const FORM_CONFIG = {
     footBtnLabel: "添加",
     formData: [
       {
-        type: 1,
+        type: 0,
         label: "联系人",
         key: "contactPerson",
-        initVal: "male",
-        options: [
-          {
-            label: "男",
-            value: "male"
-          },
-          {
-            label: "女",
-            value: "female"
-          }
-        ],
-        rules: setRules("性别").isRequired.get
-      },
-      {
-        type: 0,
-        label: "职位",
-        key: "position",
-        initVal: "pdd",
-        rules: setRules("姓名").isRequired.get,
-        isDisable: () => {
-          return true;
-        }
+        initVal: "",
+        rules: setRules("联系人").isRequired.get
       },
       {
         type: 0,
         label: "手机号",
-        key: "phone",
-        initVal: "pdd",
+        key: "mobile",
         rules: setRules("姓名").isRequired.get,
         isDisable: () => {
           return true;
@@ -46,112 +25,118 @@ export const FORM_CONFIG = {
       },
       {
         type: 1,
-        label: "沟通方式",
-        key: "contactWay",
-        initVal: "male",
+        label: '沟通方式',
+        key: 'way',
         options: [
           {
-            label: "男",
-            value: "male"
+            label: '电话呼出',
+            value: 'phoneOut'
           },
           {
-            label: "女",
-            value: "female"
+            label: '电话呼入',
+            value: 'phoneIn'
+          },
+          {
+            label: '微信',
+            value: 'wechat'
+          },
+          {
+            label: '面谈',
+            value: 'interview'
+          },
+          {
+            label: '邮件',
+            value: 'mail'
           }
         ],
-        rules: setRules("性别").isRequired.get
+        rules: setRules('请选择').isSelected.get
       },
       {
         type: 0,
         label: "沟通主题",
         key: "contactTheme",
-        initVal: "pddpddpdd",
+        initVal: "",
         rules: setRules("姓名").isRequired.get,
-        isDisable: () => {
-          return true;
-        }
+        isDisabled: true
       },
       {
-        type: 1,
+        type: 0,
         label: "问题商户",
         key: "questionMerchant",
-        initVal: ["male"],
-        options: [
-          {
-            label: "男",
-            value: "male"
-          },
-          {
-            label: "女",
-            value: "female"
-          }
-        ],
-        rules: setRules("性别").isRequired.get
+        initVal: "",
+        rules: setRules("性别").isRequired.get,
+        isDisabled: true
       },
       {
         type: 0,
         label: '沟通内容',
         key: 'contactContent',
-        initVal: 'pdd',
-        inputType: 'textarea'
+        initVal: '',
+        inputType: 'textarea',
+        maxlength: 500,
+        rules: setRules("联系电话").isRequired.get
       },
       {
         type: 11,
         label: "下次沟通时间",
         key: "nextContactTime",
         initVal: null,
-        format: "yyyy-MM-dd",
-        datatype: "date"
+        format: "yyyy-MM-dd HH:mm:ss",
+        datatype: "datetime"
       },
       {
         type: 1,
-        label: "提醒时间",
-        key: "remindType",
-        initVal: "male",
+        label: '提醒时间',
+        key: 'remindType',
         options: [
           {
-            label: "男",
-            value: "male"
+            label: '十分钟前',
+            value: 'before10M'
           },
           {
-            label: "女",
-            value: "female"
+            label: '半个小时前',
+            value: 'before30M'
+          },
+          {
+            label: '一个小时前',
+            value: 'before1H'
+          },
+          {
+            label: '两个小时前',
+            value: 'before2H'
+          },
+          {
+            label: '三个小时前',
+            value: 'before3H'
+          },
+          {
+            label: '一天前',
+            value: 'before1D'
           }
         ],
         isShow: ($item) => {
           return $item.nextContactTime
-        },
-        rules: setRules("性别").isRequired.get
+        }
       },
       {
-        type: 1,
+        type: 0,
         label: "联系人",
         key: "contactPerson2",
-        initVal: "male",
-        options: [
-          {
-            label: "男",
-            value: "male"
-          },
-          {
-            label: "女",
-            value: "female"
-          }
-        ],
+        initVal: "",
         isShow: ($item) => {
           return $item.nextContactTime
-        },
-        rules: setRules("性别").isRequired.get
+        }
       },
       {
         type: 0,
         label: '备注',
         key: 'remark',
-        initVal: 'pdd',
+        initVal: '',
         isShow: ($item) => {
           return $item.nextContactTime
         },
-        inputType: 'textarea'
+        inputType: 'textarea',
+        maxlength: 50
       }
     ]
   },
@@ -184,6 +169,61 @@ export const FORM_CONFIG = {
         inputType: 'textarea',
         maxlength: '200',
         rules: setRules("回复内容").isRequired.get
+      }
+    ]
+  },
+  openAgentData: {
+    title: '服务商开通申请',
+    showFootBtn: true,
+    footBtnLabel: '同意',
+    formData: [
+      {
+        type: 0,
+        label: '公司名称',
+        key: 'agengName',
+        initVal: '',
+        rules: setRules("公司名称").isRequired.get,
+        isDisabled: true
+      },
+      {
+        type: 0,
+        label: '法人姓名',
+        key: 'person',
+        initVal: '',
+        rules: setRules("法人姓名").isRequired.get,
+        isDisabled: true
+      },
+      {
+        type: 0,
+        label: '法人手机号',
+        key: 'personMobile',
+        initVal: '',
+        rules: setRules("法人手机号").isRequired.get,
+        isDisabled: true
+      },
+      {
+        type: 0,
+        label: '邮箱',
+        key: 'email',
+        initVal: '',
+        rules: setRules("法人手机号").isRequired.get,
+        isDisabled: true
+      },
+      {
+        type: 0,
+        label: '服务商类型',
+        key: 'businessType',
+        initVal: '',
+        rules: setRules("法人手机号").isRequired.get,
+        isDisabled: true
+      },
+      {
+        type: 0,
+        label: '地址',
+        key: 'companyAddress',
+        initVal: '',
+        rules: setRules("法人手机号").isRequired.get,
+        isDisabled: true
       }
     ]
   }
