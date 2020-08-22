@@ -9,7 +9,6 @@
           :api-service="api"
           :grid-config="configData"
           :grid-btn-config="configData"
-          :grid-data="taskList.datas"
           :form-config="configData.formConfig"
           :form-data="configData.formModel"
           :grid-edit-width="300"
@@ -26,7 +25,7 @@
           :api-service="null"
           :grid-config="configData"
           :grid-btn-config="configData"
-          :grid-data="taskList.datas"
+          :grid-data="commissionData"
           :form-config="configData.formConfig"
           :form-data="configData.formModel"
           :grid-edit-width="300"
@@ -56,7 +55,7 @@ export default {
       statisticsData: {},
       api: '',
       openType: 1,
-      commissionData: {}
+      commissionData: []
     }
   },
   created() {
@@ -108,24 +107,13 @@ export default {
     if (type === 13 && undo === 1) {
       this.configData = WORK_CONFIG.channelExamine
     }
-    if (type === 1 && undo === 2) {
+    if (undo === 2) {
       this.openType === 2
-      this.configData = WORK_CONFIG.commission
-    }
-    if (type === 2 && undo === 2) {
-      this.openType === 2
-    }
-    if (type === 3 && undo === 2) {
-      this.openType === 2
-    }
-    if (type === 4 && undo === 2) {
-      this.openType === 2
-    }
-    if (this.openType === 1) {
-      this.api = api.queryOperationTaskList
-    }
-    if (this.openType === 2) {
+      this.configData = WORK_CONFIG.commissionSettle
       this.getData()
+    }
+    if (undo === 1) {
+      this.api = api.queryOperationTaskList
     }
   },
   methods: {
@@ -136,13 +124,15 @@ export default {
         taskType: this.statisticsData.taskType,
         status: this.statisticsData.status
       }).then(res => {
-        // const newObject = {}
-        // res.object.datas.forEach(m => {
-        //   var arr = []
-        //   arr.push(m.agentSettleRecord)
-        // })
-        // this.commissionData = res.object.datas
+        if (res.object.datas) {
+          res.object.datas.forEach(m => {
+            var newArr = {}
+            newArr = m.agentSettleRecord
+            this.commissionData.push(newArr)
+          })
+        }
       })
+      console.log(this.commissionData)
     }
   }
 }

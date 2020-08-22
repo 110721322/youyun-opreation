@@ -84,6 +84,16 @@ export const WORK_CONFIG = {
       prop: 'agentName'
     }
   ],
+  commissionSettle: [
+    {
+      label: '商户ID',
+      prop: 'agentNo'
+    },
+    {
+      label: '商户名称',
+      prop: 'agentName'
+    }
+  ],
   // 预约沟通
   subscribe: [
     {
