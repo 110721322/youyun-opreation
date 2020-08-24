@@ -207,13 +207,13 @@ export default {
     handleClose(tag, $item) {
       if ($item.type === "user") {
         api
-          .labelDelete({ labelId: tag.id })
+          .labelDelete({ id: tag.id })
           .then(res => {
             this.labelQueryByConditionUser();
           })
       } else if ($item.type === "agent") {
         api
-          .labelDelete({ labelId: tag.id })
+          .labelDelete({ id: tag.id })
           .then(res => {
             this.labelQueryByConditionAgent();
           })

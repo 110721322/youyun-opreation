@@ -99,9 +99,7 @@ export default {
       drawerAddPhone: false,
       direction: "rtl",
       params: {
-        state: null,
-        startTime: this.$g.utils.getToday(0) + ' 00:00:00',
-        endTime: this.$g.utils.getToday(0) + ' 23:59:59'
+        state: null
       },
       api: api.queryEmployeeList,
       addPhoneList: [""],

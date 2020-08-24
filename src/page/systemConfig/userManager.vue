@@ -246,21 +246,28 @@ export default {
       this.drawerPersonInfo = true;
     },
     onClick_showOrganization($row) {
-      this.drawerOrganization = true;
+      // this.drawerOrganization = true;
       api
         .employeeOrganization({
           id: $row.id
         })
         .then(res => {
-          // FORM_CONFIG.editData.formData.forEach((item, index) => {
-          //   item.initVal = res.object[item.key];
-          // });
-          // this.activityRow = $row;
+          this.dataItem = [res.object]
+          this.resolveData(this.dataItem)
           this.drawerOrganization = true;
         })
         .catch(err => {
           this.$message(err);
         });
+    },
+    resolveData(arr) {
+      arr.forEach((item, index) => {
+        item.label = item.name
+        item.children = item.lowerUserList
+        if (item.lowerUserList) {
+          this.resolveData(item.lowerUserList)
+        }
+      })
     },
     onClick_editBasics($row) {
       api

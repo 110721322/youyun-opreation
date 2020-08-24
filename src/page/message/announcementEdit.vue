@@ -5,6 +5,7 @@
       <div class="title">{{ fromConfigData.title }}</div>
 
       <announcementEdit
+        ref="form"
         :form-base-data="fromConfigData.formData"
         :label-width="'auto'"
         @commit="handleCommit"
@@ -46,6 +47,23 @@ export default {
   },
   methods: {
     handleCommit($ruleForm) {
+      // const ruleForm = this.$refs.form.handleClick();
+      // if (!ruleForm) {
+      //   this.$message('请完善资料');
+      //   return;
+      // }
+      if ($ruleForm.messageType === 1) {
+        if ($ruleForm.readableTime) {
+          const num = parseInt($ruleForm.readableTime)
+          if (num > 1000 || num < 0) {
+            this.$message.error('请输入1-1000内的整数')
+            return;
+          }
+        } else {
+          this.$message.error('请输入阅读时间')
+          return
+        }
+      }
       const dataType = this.noticeId ? 'update' : 'add'
       api[dataType]({
         title: $ruleForm.title,

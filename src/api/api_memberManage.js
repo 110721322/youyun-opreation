@@ -6,7 +6,7 @@ export default {
   addMember: (params) => API.POST('/operation/v1/employee/addMember', params),
   delMember: (params) => API.POST('/operation/v1/employee/delete', params),
   fillUserInfo: (params) => API.POST('/operation/v1/employee/update', params),
-  employeeOrganization: (params) => API.POST('/operation/v1/employee/employeeOrganization', params),
+  employeeOrganization: (params) => API.GET('/operation/v1/employee/organizationStructure', params),
   employeeDetail: (params) => API.POST('/operation/v1/employee/employeeDetail', params),
   perfectUpdate: (params) => API.POST('/operation/v1/employee/perfectUpdate', params),
   superiorsList: (params) => API.POST('/operation/v1/employee/superiorsList', params),

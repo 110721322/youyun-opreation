@@ -24,7 +24,7 @@ export const USERLIST_CONFIG = {
     },
     {
       label: '上级',
-      prop: 'superiorId',
+      prop: 'superiorName',
       width: '150px'
     },
     {
