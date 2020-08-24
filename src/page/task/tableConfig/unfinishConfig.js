@@ -38,8 +38,13 @@ export const UNFINISH_CONFIG = {
     view: false,
     expands: [
       {
-        name: '提醒',
+        name: '详情',
         emitName: 'detail',
+        type: 'text'
+      },
+      {
+        name: '提醒',
+        emitName: 'remind',
         type: 'text',
         style: 'color:#1989FA'
       }

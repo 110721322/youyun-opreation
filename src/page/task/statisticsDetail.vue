@@ -1,69 +1,69 @@
 <template>
-  <div class="main_page">
-    <div class="tab_head">
-      <span class="title">任务统计详情</span>
-      <el-menu
-        :default-active="activeIndex"
-        class="el-menu"
-        mode="horizontal"
-        @select="handleSelect"
-      >
-        <el-menu-item index="1">未完成</el-menu-item>
-        <el-menu-item index="2">已完成</el-menu-item>
-      </el-menu>
-    </div>
-
-    <transition name="fade">
-      <div>
-        <Search
-          :is-show-all="true"
-          :form-base-data="searchConfig.formData"
-          :permission="searchConfig.permission"
-          :open-height="searchMaxHeight"
-          @search="search"
-        />
-        <data-mode :config-data="modeConfigData" />
-        <div class="table_box">
-          <BaseCrud
-            ref="table"
-            :params="params"
-            :api-service="false"
-            :grid-config="configData.gridConfig"
-            :grid-btn-config="configData.gridBtnConfig"
-            :grid-data="taskList.datas"
-            :form-config="configData.formConfig"
-            :form-data="configData.formModel"
-            :grid-edit-width="300"
-            :is-async="true"
-            :is-select="false"
-            :is-expand="true"
-            :row-key="'id'"
-            :default-expand-all="false"
-            :hide-edit-area="configData.hideEditArea"
-          >
-            <template v-slot="{ row }">
-              <el-form label-position="left" inline class="demo-table-expand">
-                <div v-for="(item,index) in row.childrenData" :key="index" class="form-box">
-                  <el-form-item label="商户ID：">
-                    <span>{{ item.id }}</span>
-                  </el-form-item>
-                  <el-form-item label="商户名称：">
-                    <span>{{ item.name }}</span>
-                  </el-form-item>
-                  <el-form-item label="结算金额：">
-                    <span>{{ item.amount }}</span>
-                  </el-form-item>
-                  <el-form-item label="失败原因：">
-                    <span>{{ item.reason }}</span>
-                  </el-form-item>
-                </div>
-              </el-form>
-            </template>
-          </BaseCrud>
-        </div>
+    <div class="main_page">
+      <div class="tab_head">
+        <span class="title">任务统计详情</span>
+        <el-menu
+            :default-active="activeIndex"
+            class="el-menu"
+            mode="horizontal"
+            @select="handleSelect"
+        >
+          <el-menu-item index="1">未完成</el-menu-item>
+          <el-menu-item index="2">已完成</el-menu-item>
+        </el-menu>
       </div>
-    </transition>
-  </div>
+      <transition name="fade">
+        <div>
+          <Search
+              :is-show-all="true"
+              :form-base-data="searchConfig.formData"
+              :permission="searchConfig.permission"
+              :open-height="searchMaxHeight"
+              @search="search"
+          />
+          <data-mode :config-data="modeConfigData" />
+          <div class="table_box">
+            <BaseCrud
+                ref="table"
+                :params="params"
+                :api-service="false"
+                :grid-config="configData.gridConfig"
+                :grid-btn-config="configData.gridBtnConfig"
+                :grid-data="taskList.datas"
+                :form-config="configData.formConfig"
+                :form-data="configData.formModel"
+                :grid-edit-width="300"
+                :is-async="true"
+                :is-select="false"
+                :is-expand="false"
+                :default-expand-all="false"
+                :hide-edit-area="configData.hideEditArea"
+                @remind="handle_remind"
+                @detail="handle_detail"
+            >
+              <template v-slot="{ row }">
+                <el-form label-position="left" inline class="demo-table-expand">
+                  <div v-for="(item,index) in row.childrenData" :key="index" class="form-box">
+                    <el-form-item label="商户ID：">
+                      <span>{{ item.id }}</span>
+                    </el-form-item>
+                    <el-form-item label="商户名称：">
+                      <span>{{ item.name }}</span>
+                    </el-form-item>
+                    <el-form-item label="结算金额：">
+                      <span>{{ item.amount }}</span>
+                    </el-form-item>
+                    <el-form-item label="失败原因：">
+                      <span>{{ item.reason }}</span>
+                    </el-form-item>
+                  </div>
+                </el-form>
+              </template>
+            </BaseCrud>
+          </div>
+        </div>
+      </transition>
+    </div>
 </template>
 <script>
 import api from "@/api/api_task";
@@ -151,7 +151,6 @@ export default {
           this.params.status = "done";
           break;
       }
-
       this.$refs.table.getData();
     },
     search($ruleForm) {
@@ -168,7 +167,17 @@ export default {
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
-      this.$refs.table.getData();
+    },
+    handle_remind(row) {
+      console.log(row)
+    },
+    handle_detail(row) {
+      this.$router.push({
+        path: '/task/statistics/statisticsAll',
+        query: {
+          statisticsData: row
+        }
+      })
     }
   }
 };

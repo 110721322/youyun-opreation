@@ -314,8 +314,9 @@
           :style="{height:cssConfig.itemHeight}"
       >
         <div class="list_status">冻结服务商</div>
-        <div class="title">服务商ID:<span>{{ item.agentNo }}</span></div>
-        <div class="title">服务商名称:<span>{{ item.agentName }}</span></div>
+        <div class="title">服务商ID:<span>{{ item.agent.agentNo }}</span></div>
+        <div class="title">服务商名称:<span>{{ item.agent.agentName }}</span></div>
+        <div class="title">冻结原因:<span>{{ item.agent.reason }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
           <el-button type="primary" class="btn" @click="onClick_frozenAgent(item)">去审核</el-button>

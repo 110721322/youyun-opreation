@@ -491,6 +491,15 @@ const asyncRoutes = {
           icon: 'statisticsDetail'
         },
         component: () => import('@/page/task/statisticsDetail.vue')
+      },
+      {
+        path: 'statisticsAll',
+        name: 'statisticsAll',
+        meta: {
+          title: '工作任务统计详情',
+          icon: 'statisticsAll'
+        },
+        component: () => import('@/page/task/statisticsAll.vue')
       }
     ]
   },

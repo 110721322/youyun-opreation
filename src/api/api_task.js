@@ -9,5 +9,6 @@ export default {
   queryTaskType: () => API.GET('/operation/v1/workbench/taskType/queryAllTaskTypeList'),
   // 成员效率-查询某个状态下的待办事项类型统计列表
   queryTaskList: (params) => API.GET('/operation/v1/workbench/task/queryOperationAllTaskMenu', params),
+  // 成员效率-分页查询具体某个状态下的某个任务类型列表
   queryOperationTaskList: (params) => API.GET('/operation/v1/workbench/task/queryOperationTaskList', params)
 };

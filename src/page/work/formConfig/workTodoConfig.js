@@ -226,5 +226,36 @@ export const FORM_CONFIG = {
         isDisabled: true
       }
     ]
+  },
+  frozenAgent: {
+    title: '服务商冻结申请',
+    showFootBtn: true,
+    footBtnLabel: '同意',
+    formData: [
+      {
+        type: 0,
+        label: '服务商ID',
+        key: 'agengNo',
+        initVal: '',
+        rules: setRules("服务商ID").isRequired.get,
+        isDisabled: true
+      },
+      {
+        type: 0,
+        label: '服务商名称',
+        key: 'agentName',
+        initVal: '',
+        rules: setRules("服务商名称").isRequired.get,
+        isDisabled: true
+      },
+      {
+        type: 0,
+        label: '冻结原因',
+        key: 'reason',
+        initVal: '',
+        rules: setRules("冻结原因").isRequired.get,
+        isDisabled: true
+      }
+    ]
   }
 }
