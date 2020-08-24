@@ -15,7 +15,7 @@
       ></el-tree>
       <div class="foot_btn_box">
         <el-button type="primary" class="foot_btn" @click="confirm">确定</el-button>
-        <el-button class="foot_btn" @cancel="cancel">取消</el-button>
+        <el-button class="foot_btn" @click="cancel">取消</el-button>
       </div>
     </div>
   </div>
@@ -103,7 +103,7 @@ export default {
 .RoleMenuSet {
   .m-tree-container {
     width: 100%;
-    height: 750px;
+    height: 700px;
     overflow-y: scroll;
   }
   .foot_btn_box {

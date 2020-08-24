@@ -9,7 +9,7 @@
       :end-date="endDate"
       @search="search"
     />
-    <div class="device-list">
+    <div v-if="deviceListData.length > 0" class="device-list">
       <deviceList
         :device-list-data="deviceListData"
         :show-expand-btn="showExpandBtn"

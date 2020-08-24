@@ -105,6 +105,8 @@ export default {
   methods: {
     search($ruleForm) {
       const params = {
+        agentNo: $ruleForm.inputSelect === 'agentNo' ? $ruleForm.inputForm : null,
+        outputNo: $ruleForm.inputSelect === 'outputNo' ? $ruleForm.inputForm : null,
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,
         deviceId: $ruleForm.deviceId,
@@ -114,7 +116,6 @@ export default {
         distributionUserId: '1'
         // 1415
       };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     },
     confirm($data) {

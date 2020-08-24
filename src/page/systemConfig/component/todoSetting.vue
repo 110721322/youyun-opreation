@@ -91,7 +91,14 @@ export default {
         items: [
           {
             name: "比较类型",
-            key: "dataComparisonType"
+            key: "dataComparisonType",
+            formatter($params) {
+              if ($params.dataComparisonType) {
+                return '环比'
+              } else {
+                return '同比'
+              }
+            }
           },
 
           {
@@ -119,14 +126,6 @@ export default {
           Object.keys(res.object).forEach((item, index) => {
             if (item === "isTaskCountdown") {
               this.$set(this.ruleForm, "isTaskCountdown", Boolean(res.object[item]));
-              return;
-            }
-            if (item === "dataComparisonType") {
-              this.$set(
-                this.ruleForm,
-                "dataComparisonType",
-                res.object[item] ? "环比" : "同比"
-              );
               return;
             }
             this.$set(this.ruleForm, item, res.object[item]);

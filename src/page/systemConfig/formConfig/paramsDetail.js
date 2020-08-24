@@ -45,11 +45,15 @@ export const FORM_CONFIG = {
     showFootBtn: true,
     formData: [
       {
-        type: 0,
+        type: 1,
         label: '比较类型',
         key: 'dataComparisonType',
-        initVal: 'pdd',
-        rules: setRules('邮箱').isRequired.get
+        initVal: 0,
+        rules: setRules('邮箱').isRequired.get,
+        options: [
+          {label: '同比', value: 0},
+          {label: '环比', value: 1}
+        ]
       },
       {
         type: 0,

@@ -24,7 +24,6 @@
 </template>
 <script type="text/ecmascript-6">
 import api from "@/api/api_common";
-import * as g from '@/libs/global';
 
 export default {
   name: "UploadFile",
@@ -103,9 +102,9 @@ export default {
     },
     download() {
       if (this.formItem.dateurl === "") {
-        window.location.href = g.config.server + "operation/v1/excelTemplate/download?url=excel/device_input.xlsx";
+        window.location.href = "/operation/v1/excelTemplate/download?url=excel/device_input.xlsx";
       } else {
-        window.location.href = g.config.server + "operation/v1/excelTemplate/download?url=" + this.formItem.dateurl;
+        window.location.href = "/operation/v1/excelTemplate/download?url=" + this.formItem.dateurl;
       }
     },
     beforeRemove(file, fileList) {
