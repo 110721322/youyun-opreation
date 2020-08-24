@@ -56,7 +56,7 @@
                 v-for="(item1,index1) in detailData"
                 :key="index1"
                 class="data-item"
-              >{{ item1[item.prop]? item1[item.prop] : '0' }}</div>
+              ><el-tooltip class="item" effect="dark" :content="(item1[item.prop]? (item1[item.prop].toString()): '0')" placement="top"><span>{{ item1[item.prop]? item1[item.prop]: '0' }}</span></el-tooltip></div>
             </div>
           </div>
         </div>
@@ -87,7 +87,7 @@
                 v-for="(item1,index1) in detailData2"
                 :key="index1"
                 class="data-item"
-              >{{ item1[item.prop]? item1[item.prop]: '0' }}</div>
+              ><el-tooltip class="item" effect="dark" :content="(item1[item.prop]? (item1[item.prop].toString()): '0')" placement="top"><span>{{ item1[item.prop]? item1[item.prop]: '0' }}</span></el-tooltip></div>
             </div>
           </div>
         </div>
@@ -664,6 +664,14 @@ export default {
       text-align: center;
       margin-top: 32px;
       padding-right: 30px;
+      overflow: hidden;
+      text-overflow:ellipsis;
+      white-space: nowrap;
+      width: 120px;
+    }
+    .title-item {
+      width: 120px;
+      text-align: center;
     }
   }
 }
@@ -698,6 +706,7 @@ export default {
 .right {
   width: 50%;
   margin-top: 16px;
+  overflow: auto;
 }
 .data_box {
   position: relative;
@@ -749,6 +758,10 @@ export default {
       margin-top: 18px;
       display: flex;
       justify-content: space-between;
+      overflow: hidden;
+      text-overflow:ellipsis;
+      white-space: nowrap;
+      width: 120px;
     }
     .data-left {
       color: rgba(0, 0, 0, 0.65);

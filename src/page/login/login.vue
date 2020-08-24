@@ -346,15 +346,17 @@ export default {
           system: 'operation'
         })
         .then(res => {
-          this.countLoginTime = 60;
-          const interval = setInterval(() => {
-            if (that.countLoginTime > 0) {
-              that.countLoginTime--;
-            } else {
-              clearInterval(interval);
-            }
-          }, 1000);
-          this.$message("已发送");
+          if (res.status === 0) {
+            this.countLoginTime = 60;
+            const interval = setInterval(() => {
+              if (that.countLoginTime > 0) {
+                that.countLoginTime--;
+              } else {
+                clearInterval(interval);
+              }
+            }, 1000);
+            this.$message("已发送");
+          }
         })
         .catch(() => {
           this.countLoginTime = 0;
@@ -366,14 +368,6 @@ export default {
         this.$alert("请输入手机号");
         return;
       }
-      this.countChangeTime = 60;
-      const interval = setInterval(() => {
-        if (this.countChangeTime > 0) {
-          this.countChangeTime--;
-        } else {
-          clearInterval(interval);
-        }
-      }, 1000);
 
       api
         .getSmsCode({
@@ -381,15 +375,18 @@ export default {
           system: 'operation'
         })
         .then(res => {
-          this.countLoginTime = 60;
-          const interval = setInterval(() => {
-            if (that.countLoginTime > 0) {
-              that.countLoginTime--;
-            } else {
-              clearInterval(interval);
-            }
-          }, 1000);
-          this.$message("已发送");
+          if (res.status === 0) {
+            console.log('1111111111')
+            this.countChangeTime = 60;
+            const interval = setInterval(() => {
+              if (that.countChangeTime > 0) {
+                that.countChangeTime--;
+              } else {
+                clearInterval(interval);
+              }
+            }, 1000);
+            this.$message("已发送");
+          }
         })
         .catch(() => {
           this.countLoginTime = 0;
