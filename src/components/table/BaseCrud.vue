@@ -254,7 +254,7 @@ export default {
       this.apiService(this.queryParams)
         .then(res => {
           // debugger;
-          if (g.utils.isArr(res.object)) {
+          if (g.utils.isArr(res.object) || g.utils.isArr(res.datas)) {
             this.copyGridData = res.datas || res.object;
           } else {
             if (res.object.datas) {
