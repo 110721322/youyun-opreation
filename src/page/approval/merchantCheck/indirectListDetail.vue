@@ -190,7 +190,7 @@ export default {
             },
             {
               name: "开户支行",
-              key: "branchName"
+              key: "bankBranchName"
             },
             {
               name: "银行预留手机号",
