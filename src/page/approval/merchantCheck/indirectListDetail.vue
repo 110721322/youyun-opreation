@@ -9,8 +9,7 @@
         @select="handleSelect"
       >
         <el-menu-item v-for="(item, index) in channelStatusList" :key="index" :index="index">
-          <i v-if="item.channelCode === 'leShua'" class="dot"></i>
-          <i v-if="item.channelCode === 'newLand'" class="dot dotRed"></i>
+          <i :class="(ruleForm.status === 'channelAudit' || ruleForm.status === 'platformAudit') ? 'dotAudit': (ruleForm.status === 'platformReject' || ruleForm.status === 'channelReject') ? 'dotReject': 'dot'"></i>
           {{ item.channel }}
         </el-menu-item>
       </el-menu>
@@ -105,7 +104,7 @@ export default {
             },
             {
               name: "法人身份证",
-              key: "lawIdCard"
+              key: "idCardNo"
             }
           ]
         },
@@ -203,15 +202,15 @@ export default {
           items: [
             {
               name: "支付宝/微信费率",
-              key: "alipayRate"
+              key: "alipayRatePecent"
             },
             {
               name: "云闪付费率（单笔≤1000元)",
-              key: "cloudPayGt1000Rate"
+              key: "cloudPayGt1000RatePecent"
             },
             {
               name: "云闪付费率（单笔＞1000元)",
-              key: "cloudPayLe1000Rate"
+              key: "cloudPayLe1000RatePecent"
             },
             {
               name: "邮箱",
@@ -255,6 +254,7 @@ export default {
   created() {
     this.merchantNo = this.$route.query.merchantNo
     this.channelStatusList = this.$route.query.channelStatusList
+    console.log(this.channelStatusList)
     if (this.channelStatusList) {
       this.getDetail()
     }
@@ -282,6 +282,11 @@ export default {
         if (res.object.bankAccountType === 'private') {
           res.object.accountType = '对私'
         }
+        if (res.object.cloudPayLe1000Rate) {
+          res.object.cloudPayLe1000RatePecent = res.object.cloudPayLe1000Rate + '‰'
+          res.object.cloudPayGt1000RatePecent = res.object.cloudPayGt1000Rate + '‰'
+        }
+        res.object.alipayRatePecent = res.object.alipayRate + '‰'
         this.ruleForm = res.object
         this.currentType = res.object.status
       })
@@ -317,7 +322,6 @@ export default {
       })
     },
     confirm($data) {
-      console.log($data);
       if (!$data.reason) {
         this.$message({
           message: '请填写拒绝理由',
@@ -328,31 +332,19 @@ export default {
         api.rejectIndirectAudit({
           merchantNo: this.merchantNo,
           channelCode: this.channelStatusList[this.activeIndex - 1].channelCode,
-          channelAgentCode: this.channelStatusList[this.activeIndex - 1].channelAgentCode
+          channelAgentCode: this.channelStatusList[this.activeIndex - 1].channelAgentCode,
+          reason: $data.reason
         }).then(res => {
-          console.log(res)
           if (res.status === 0) {
             this.$message({
               message: '已驳回',
               type: 'success'
             })
+            this.drawer = false
             this.getDetail()
           }
         })
       }
-      api
-        .merchantUpdateAuditStatusOfReject({
-          merchantNo: "",
-          reason: $data["reason"],
-          channelCode: this.channelCode
-        })
-        .then(res => {
-          this.$message("已驳回");
-          this.drawer = false;
-        })
-        .catch(err => {
-          this.$message(err);
-        });
     },
     cancel() {
       this.drawer = false;
@@ -387,13 +379,15 @@ export default {
   display: flex;
   justify-content: center;
   text-align: center;
+  margin-bottom: 40px;
   .btn_pass {
     width: 205px;
     height: 40px;
     background: rgba(25, 137, 250, 1);
     border-radius: 4px;
     line-height: 40px;
-    color: #ffffff;
+    color: #fff;
+    cursor: pointer;
   }
   .btn-reject {
     width: 113px;
@@ -404,6 +398,7 @@ export default {
     line-height: 40px;
     color: #606266;
     margin-left: 24px;
+    cursor: pointer;
   }
 }
 .table_box {
@@ -435,15 +430,24 @@ export default {
   background-color: #52c41a;
   vertical-align: middle;
   margin: 0 5px;
-  &.dotYellow {
-    background-color: #ffae00;
-  }
-  &.dotGray {
-    background: rgba(0, 0, 0, 0.25);
-  }
-  &.dotRed {
-    background: #f5222d;
-  }
+}
+.dotAudit {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #ffae00;
+  vertical-align: middle;
+  margin: 0 5px;
+}
+.dotReject {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #f5222d;
+  vertical-align: middle;
+  margin: 0 5px;
 }
 .detail-alert {
   margin: 24px;
