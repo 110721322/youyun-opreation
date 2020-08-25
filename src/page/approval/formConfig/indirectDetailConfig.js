@@ -1,4 +1,4 @@
-// import { setRules } from '@/libs/kit/formFns.js'
+import { setRules } from '@/libs/kit/formFns.js'
 
 export const FORM_CONFIG = {
   rejectReason: {
@@ -9,7 +9,8 @@ export const FORM_CONFIG = {
         type: 0,
         label: '驳回原因',
         key: 'reason',
-        inputType: 'textarea'
+        inputType: 'textarea',
+        rules: setRules('请填写驳回原因').isRequired.get
       }
     ]
   }
