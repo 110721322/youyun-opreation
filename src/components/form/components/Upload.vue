@@ -62,7 +62,8 @@ export default {
       ossData: {}, // 存签名信息
       urlData: {
         type: 'common' || 'excel'
-      }
+      },
+      maxNum: null
     };
   },
   computed: {
@@ -91,6 +92,10 @@ export default {
     }
   },
   created() {
+    console.log(this.formItem)
+    if (this.formItem.maxNum) {
+      this.maxNum = this.formItem.maxNum
+    }
     this.initVal();
   },
 
@@ -125,6 +130,9 @@ export default {
     },
 
     beforeUpload(file) {
+      if (this.maxNum <= this.dialogImageList.length) {
+        return;
+      }
       return new Promise(resolve => {
         if (this.type === "entry") {
           api
@@ -147,6 +155,10 @@ export default {
     },
 
     upLoad(file) {
+      if (this.maxNum <= this.dialogImageList.length) {
+        this.$message.error('最多上传' + this.maxNum + '张图片')
+        return;
+      }
       const formData = new FormData();
       formData.append(
         "key",
@@ -253,9 +265,16 @@ export default {
     border: 1px dashed #ccc;
     border-radius: 6px;
   }
-
   .avatar-uploader .el-upload i:hover {
     border-color: #409eff;
+  }
+  .avatar-uploader {
+    /deep/ .el-upload-list--picture-card {
+      display: flex;
+      /deep/ .el-upload-list__item {
+        flex-shrink: 0;
+      }
+    }
   }
 
   .avatar-uploader-icon {

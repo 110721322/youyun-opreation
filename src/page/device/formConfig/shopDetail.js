@@ -12,9 +12,9 @@ export const FORM_CONFIG = {
         key: 'deviceType',
         isDisabled: true,
         urlOptions: {
-          url: apiDevice.queryAllDeviceModel,
-          keyName: 'deviceType',
-          valueName: 'deviceType',
+          url: apiDevice.queryAllDeviceTypeModel,
+          keyName: 'advertType',
+          valueName: 'advertTypeDesc',
           method: 'get',
           params: {
             classification: 1
@@ -71,9 +71,9 @@ export const FORM_CONFIG = {
         label: '设备类型',
         key: 'deviceType',
         urlOptions: {
-          url: apiDevice.queryAllDeviceModel,
-          keyName: 'deviceTypeCode',
-          valueName: 'deviceType',
+          url: apiDevice.queryAllDeviceTypeModel,
+          keyName: 'advertType',
+          valueName: 'advertTypeDesc',
           method: 'get',
           params: {
             classification: 1

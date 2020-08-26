@@ -6,7 +6,8 @@ export default {
   deviceQueryById: (params) => API.GET('/operation/v1/device/queryById', params), // 设备管理-库存管理-设备库存-编辑前的查询
   deviceUpdate: (params) => API.POST('/operation/v1/device/update', params), // 设备管理-库存管理-设备库存-修改设备
   deviceDelete: (params) => API.POST('/operation/v1/device/delete', params), // 设备管理-库存管理-设备库存-删除设备
-  queryAllDeviceModel: (params) => API.GET('/operation/v1/device/queryAllDeviceModel', params), // 设备管理-库存管理-设备库存-查询所有设备型号/类型
+  queryAllDeviceModel: (params) => API.GET('/operation/v1/device/queryAllDeviceModel', params), // 设备管理-库存管理-设备库存-查询所有设备型号
+  queryAllDeviceTypeModel: (params) => API.GET('/operation/v1/device/queryAllDeviceTypeModel', params), // 设备管理-库存管理-设备库存-查询所有设备类型
   finishAllAgent: (params) => API.GET('/operation/v1/deviceOutput/finishAllAgent', params), // 设备库存-订购服务商下拉
   finishAllPrivilegeType: (params) => API.GET('/operation/v1/deviceOutput/finishAllPrivilegeType', params), // 设备库存-订购支付方式下拉
   deviceActivationQueryByPage: (params) => API.GET('/operation/v1/deviceActivation/queryByPage', params), // 设备管理-库存管理-设备授权激活页面-分页列表查询

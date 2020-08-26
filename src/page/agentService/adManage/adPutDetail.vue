@@ -132,12 +132,13 @@ export default {
       api: apiAgent.queryAllDistributeAgent
     };
   },
-  mounted() {
+  created() {
     this.queryAllPrivilegeType();
     if (this.id) {
       this.queryById();
     }
   },
+  mounted() {},
   methods: {
     onClick_clearAll() {
       this.dynamicTags = [];
@@ -151,11 +152,13 @@ export default {
     },
     queryById() {
       apiAgent.queryById({ id: this.id }).then(res => {
+        console.log(1111, res.object)
         // 编辑前重赋值
         FORM_CONFIG.editData.formData.forEach((item, index) => {
           item.initVal = res.object[item.key];
         });
         this.fromConfigData = FORM_CONFIG.editData;
+        console.log(2222, this.fromConfigData)
       }).catch(err => {
         this.$message(err);
       });

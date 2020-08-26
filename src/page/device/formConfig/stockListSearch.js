@@ -25,9 +25,9 @@ export const SEARCH_CONFIG = {
       style: 'width:294px',
       labelWidth: '100px',
       urlOptions: {
-        url: apiDevice.queryAllDeviceModel,
-        keyName: 'deviceType',
-        valueName: 'deviceTypeName',
+        url: apiDevice.queryAllDeviceTypeModel,
+        keyName: 'advertType',
+        valueName: 'advertTypeDesc',
         method: 'get',
         params: {
           classification: 1
