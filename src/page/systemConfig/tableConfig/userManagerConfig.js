@@ -49,7 +49,7 @@ export const USERLIST_CONFIG = {
     {
       label: '创建时间',
       prop: 'createTime',
-      width: '150px'
+      width: '180px'
     },
     {
       label: '邮箱',
