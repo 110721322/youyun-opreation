@@ -121,8 +121,8 @@ export default {
       this.params = {
         sex: $ruleForm.sex,
         state: null,
-        startTime: $ruleForm.date[0],
-        endTime: $ruleForm.date[1]
+        startTime: $ruleForm.date[0] + ' 00:00:00',
+        endTime: $ruleForm.date[1] + ' 23:59:59'
       };
       this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
     },
@@ -181,12 +181,15 @@ export default {
       api.addMember({
         phoneList: this.addPhoneList
       }).then(res => {
-        this.addPhoneList = [""];
-        this.$message({
-          message: '添加成功',
-          type: 'success'
-        });
-        this.drawerAddPhone = false;
+        if (res.status === 0) {
+          this.addPhoneList = [""];
+          this.$message({
+            message: '添加成功',
+            type: 'success'
+          });
+          this.drawerAddPhone = false;
+          this.$refs.child.getData()
+        }
       })
     },
     cancelForm() {
@@ -196,6 +199,38 @@ export default {
       this.drawer = false;
     },
     confirm($ruleForm) {
+      if (!$ruleForm.img) {
+        this.$message('请上传头像');
+        return;
+      }
+      if (!$ruleForm.jobName) {
+        this.$message('请输入花名');
+        return;
+      }
+      if (!$ruleForm.name) {
+        this.$message('请输入姓名');
+        return;
+      }
+      if (!$ruleForm.sex) {
+        this.$message('请选择性别');
+        return;
+      }
+      if (!$ruleForm.phone) {
+        this.$message('请输入手机号');
+        return;
+      }
+      if (!$ruleForm.jobNumber) {
+        this.$message('请输入工号');
+        return;
+      }
+      if (!$ruleForm.birthday) {
+        this.$message('请选择生日');
+        return;
+      }
+      if (!$ruleForm.email) {
+        this.$message('请输入邮箱');
+        return;
+      }
       const img = this.$g.utils.isString($ruleForm.img) ? $ruleForm.img : ($ruleForm.img.dialogImagePath + $ruleForm.img.dialogImageUrl); // 兼容未修改图片情况
       api
         .fillUserInfo({
@@ -214,6 +249,7 @@ export default {
         })
         .then(res => {
           this.drawer = false;
+          this.$refs.child.getData();
           this.$message("已保存");
         })
         .catch(err => {

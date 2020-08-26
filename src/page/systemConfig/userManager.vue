@@ -182,8 +182,8 @@ export default {
         position: $ruleForm.position,
         superiorName: $ruleForm.superiorName,
         state: 0,
-        startTime: $ruleForm.date[0],
-        endTime: $ruleForm.date[1]
+        startTime: $ruleForm.date[0] + ' 00:00:00',
+        endTime: $ruleForm.date[1] + ' 23:59:59'
       };
       this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
     },

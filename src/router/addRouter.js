@@ -571,7 +571,7 @@ const asyncRoutes = {
         name: 'platformAdDetail',
         meta: {
           fatherName: 'platformAdList',
-          title: '详情',
+          title: '新增/编辑',
           icon: 'platformAdDetail'
         },
         component: () => import('@/page/agentService/adManage/platformAdDetail.vue')

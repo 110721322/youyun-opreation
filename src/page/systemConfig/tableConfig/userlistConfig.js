@@ -25,7 +25,19 @@ export const USERLIST_CONFIG = {
     {
       label: '性别',
       prop: 'sex',
-      width: '150px'
+      width: '150px',
+      render: (h, params) => {
+        if (params.row.sex === 1) {
+          return h(
+            'span', '男'
+          )
+        }
+        if (params.row.sex === 0) {
+          return h(
+            'span', '女'
+          )
+        }
+      }
     },
     {
       label: '创建时间',

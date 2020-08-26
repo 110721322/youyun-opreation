@@ -7,7 +7,7 @@ export const TABLE_CONFIG = {
     },
     {
       label: '广告类型',
-      prop: 'advertType',
+      prop: 'advertTypeName',
       width: '150px'
     },
     {
@@ -27,7 +27,7 @@ export const TABLE_CONFIG = {
     },
     {
       label: '投放范围',
-      prop: 'distributeType',
+      prop: 'distributeTypeDesc',
       width: '150px'
     },
     {
@@ -37,17 +37,17 @@ export const TABLE_CONFIG = {
     },
     {
       label: '投放人',
-      prop: 'operationId',
+      prop: 'operationName',
       width: '150px'
     },
     {
       label: '投放时间',
-      prop: 'beginTime',
+      prop: 'createTime',
       width: '150px'
     },
     {
       label: '状态',
-      prop: 'status',
+      prop: 'statusDesc',
       width: '150px'
     }
   ],
