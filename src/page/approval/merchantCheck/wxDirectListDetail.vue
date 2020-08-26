@@ -178,7 +178,7 @@ export default {
             },
             {
               name: "结算卡类型",
-              key: "accountType"
+              key: "bankAccountType"
             },
             {
               name: "银行卡号",
@@ -190,7 +190,7 @@ export default {
             },
             {
               name: "开户支行",
-              key: "branchName"
+              key: "bankBranchName"
             },
             {
               name: "银行预留手机号",
