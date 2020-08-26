@@ -1361,8 +1361,8 @@ const asyncRoutes = {
         name: 'indirectRecordDetail',
         meta: {
           fatherName: 'indirectList',
-          title: '间连审核详情',
-          icon: '间连审核详情',
+          title: '间连审核记录',
+          icon: '间连审核记录',
           subMenuName: 'checkMerchant'
         },
         component: () => import('@/page/approval/merchantCheck/indirectRecordDetail.vue')

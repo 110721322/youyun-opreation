@@ -92,9 +92,12 @@ export default {
         }
       });
     },
-    handleRecord() {
+    handleRecord(row) {
       this.$router.push({
-        path: "/approval/checkMerchant/indirectList/recordDetail"
+        path: "/approval/checkMerchant/indirectList/recordDetail",
+        query: {
+          merchantNo: row.merchantNo
+        }
       });
     }
   }

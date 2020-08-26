@@ -84,7 +84,7 @@ export default {
           items: [
             {
               name: "商户全称",
-              key: "fullName"
+              key: "merchantName"
             },
             {
               name: "公司地址",
