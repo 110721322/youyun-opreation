@@ -28,7 +28,12 @@
         <div v-if="activeIndex" :key="activeIndex">
           <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.baseData"></detailMode>
           <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.merchantData"></detailMode>
-          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.merchantSettle"></detailMode>
+          <!--          (企业，个体工商户)对公法人-->
+          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.settleData1" v-if="ruleForm.merchantType !== 'personal' && ruleForm.bankAccountType === 'public' && ruleForm.settleLawFlag === 'legal'"></detailMode>
+          <!--          (企业，个体工商户，个人)对私法人-->
+          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.settleData2" v-if="ruleForm.bankAccountType === 'private' && ruleForm.settleLawFlag  === 'legal'"></detailMode>
+          <!--          (企业，个体工商户)对私非法人-->
+          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.settleData3" v-if="ruleForm.merchantType !== 'personal' && ruleForm.bankAccountType === 'private' && ruleForm.settleLawFlag === 'unlegal'"></detailMode>
           <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.other"></detailMode>
         </div>
         <div v-if="showComponents.showOperBtns" class="btn-box">
@@ -167,12 +172,12 @@ export default {
             }
           ]
         },
-        merchantSettle: {
-          name: "商户结算卡",
+        settleData1: {
+          name: "结算卡信息",
           items: [
             {
-              name: "营业执照",
-              key: "shopLicenseImg",
+              name: "开户许可证",
+              key: "bankOpenAccountLicenseImg",
               type: "image"
             },
             {
@@ -184,7 +189,90 @@ export default {
               key: "bankCardNo"
             },
             {
-              name: "开户支行地区",
+              name: "开户行地区",
+              key: "bankArea"
+            },
+            {
+              name: "开户支行",
+              key: "bankBranchName"
+            },
+            {
+              name: "银行预留手机号",
+              key: "bankMobile"
+            }
+          ]
+        },
+        settleData2: {
+          name: "结算卡信息",
+          items: [
+            {
+              name: "结算人银行卡",
+              key: "bankCardImg",
+              type: "image"
+            },
+            {
+              name: "结算卡类型",
+              key: "accountType"
+            },
+            {
+              name: "银行卡号",
+              key: "bankCardNo"
+            },
+            {
+              name: "开户行地区",
+              key: "bankArea"
+            },
+            {
+              name: "开户支行",
+              key: "bankBranchName"
+            },
+            {
+              name: "银行预留手机号",
+              key: "bankMobile"
+            }
+          ]
+        },
+        settleData3: {
+          name: "结算卡信息",
+          items: [
+            {
+              name: "结算人银行卡",
+              key: "bankCardImg",
+              type: "image"
+            },
+            {
+              name: "结算人身份证正面照",
+              key: "nonLawIdCardPortraitImg",
+              type: "image"
+            },
+            {
+              name: "结算人身份证国徽照",
+              key: "nonLawIdCardEmblemImg",
+              type: "image"
+            },
+            {
+              name: "非法人结算授权书",
+              key: "nonLawSettleAuthImg",
+              type: "image"
+            },
+            {
+              name: "结算人身份证号",
+              key: "nonLawIdCardNo"
+            },
+            {
+              name: "结算卡类型",
+              key: "accountType"
+            },
+            {
+              name: "银行卡号",
+              key: "bankCardNo"
+            },
+            {
+              name: "开户名",
+              key: "bankAccountName"
+            },
+            {
+              name: "开户行地区",
               key: "bankArea"
             },
             {
@@ -267,26 +355,31 @@ export default {
         channelCode: this.channelStatusList[this.activeIndex - 1].channelCode,
         channelAgentCode: this.channelStatusList[this.activeIndex - 1].channelAgentCode
       }).then(res => {
-        if (res.object.merchantType === 'personal') {
-          res.object.merchantType = '个人'
-        }
-        if (res.object.merchantType === 'enterprise') {
-          res.object.merchantType = '企业'
-        }
-        if (res.object.merchantType === 'individual') {
-          res.object.merchantType = '个体工商户'
-        }
         if (res.object.bankAccountType === 'public') {
-          res.object.accountType = '对公'
+          if (res.object.settleLawFlag === 'legal') {
+            res.object.accountType = '对公-法人'
+          }
+          if (res.object.settleLawFlag === 'unlegal') {
+            res.object.accountType = '对公-非法人'
+          }
         }
         if (res.object.bankAccountType === 'private') {
-          res.object.accountType = '对私'
+          if (res.object.settleLawFlag === 'legal') {
+            res.object.accountType = '对私-法人'
+          }
+          if (res.object.settleLawFlag === 'unlegal') {
+            res.object.accountType = '对私-非法人'
+          }
         }
         if (res.object.cloudPayLe1000Rate) {
-          res.object.cloudPayLe1000RatePecent = res.object.cloudPayLe1000Rate + '‰'
-          res.object.cloudPayGt1000RatePecent = res.object.cloudPayGt1000Rate + '‰'
+          res.object.cloudPayLe1000RatePecent = res.object.cloudPayLe1000Rate * 1000 + '‰'
+          res.object.cloudPayGt1000RatePecent = res.object.cloudPayGt1000Rate * 1000 + '‰'
         }
-        res.object.alipayRatePecent = res.object.alipayRate + '‰'
+        if (!res.object.cloudPayLe1000Rate) {
+          res.object.cloudPayGt1000RatePecent = '0‰'
+          res.object.cloudPayLe1000RatePecent = '0‰'
+        }
+        res.object.alipayRatePecent = res.object.alipayRate * 1000 + '‰'
         this.ruleForm = res.object
         this.currentType = res.object.status
       })
