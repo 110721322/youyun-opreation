@@ -60,16 +60,20 @@ export const FORM_CONFIG = {
         initVal: 0,
         options: [
           {
-            label: '只显示一次',
+            label: '不显示',
             value: 0
           },
           {
-            label: '每天只显示一次',
+            label: '只显示一次',
             value: 1
           },
           {
-            label: '每次开启后台显示',
+            label: '每天只显示一次',
             value: 2
+          },
+          {
+            label: '每次开启后台显示',
+            value: 3
           }
         ],
         placeholder: '请选择',
