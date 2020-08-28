@@ -20,7 +20,7 @@
         <el-alert
           v-if="showComponents.showRejectTitle"
           class="detail-alert"
-          :title="rejectTitle"
+          :title="ruleForm.rejectReason"
           type="info"
           :closable="false"
           show-icon
@@ -73,7 +73,6 @@ export default {
       fromConfigData: {},
       drawer: false,
       activeIndex: "1",
-      rejectTitle: "",
       showComponents: {
         showRejectTitle: false,
         showOperBtns: false
@@ -148,7 +147,7 @@ export default {
             },
             {
               name: "商户类型",
-              key: "merchantType"
+              key: "merchantTypeName"
             },
             {
               name: "商户简称",
@@ -370,6 +369,15 @@ export default {
           if (res.object.settleLawFlag === 'unlegal') {
             res.object.accountType = '对私-非法人'
           }
+        }
+        if (res.object.merchantType === 'enterprise') {
+          res.object.merchantTypeName = '企业'
+        }
+        if (res.object.merchantType === 'personal') {
+          res.object.merchantTypeName = '个人'
+        }
+        if (res.object.merchantType === 'individual') {
+          res.object.merchantTypeName = '个体工商户'
         }
         if (res.object.cloudPayLe1000Rate) {
           res.object.cloudPayLe1000RatePecent = res.object.cloudPayLe1000Rate * 1000 + '‰'

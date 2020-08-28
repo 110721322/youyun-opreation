@@ -18,8 +18,24 @@ export const USER_CONFIG = {
     {
       label: '服务商类型',
       prop: 'businessType',
-      width: '90px'
-
+      width: '90px',
+      render: (h, params) => {
+        if (params.row.businessType === 'individual') {
+          return h(
+            'span', '个体工商户'
+          )
+        }
+        if (params.row.businessType === 'enterprise') {
+          return h(
+            'span', '企业'
+          )
+        }
+        if (params.row.businessType === 'personal') {
+          return h(
+            'span', '个人'
+          )
+        }
+      }
     },
     {
       label: '公司地址',

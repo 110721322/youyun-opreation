@@ -55,7 +55,7 @@ export default {
   },
   mounted() {},
   methods: {
-    search($form, $obj) {
+    search($form) {
       this.params = {
         beginDate: $form.date[0],
         endDate: $form.date[1],
@@ -64,7 +64,6 @@ export default {
         businessType: $form.businessType,
         contractStatus: $form.contractStatus
       }
-      this.params[$form.inputSelect] = $form.inputForm
     },
     reject(row) {
       this.$confirm("是否要驳回该代理商？", "驳回代理商", {

@@ -13,7 +13,7 @@
         <div class="data-box">
           <div class="data-title">
             省份分布排行榜
-            <span class="all-num">共33940个</span>
+            <span class="all-num">共{{totalNum}}个</span>
           </div>
           <div v-for="(item,index) in mapData" :key="index" class="data-item">
             <div class="data-left">
@@ -90,6 +90,7 @@ export default {
   },
   data() {
     return {
+      totalNum: 0,
       drawer: false,
       queryParams: {
         beginDate: null,
@@ -256,6 +257,13 @@ export default {
     },
     queryTopAgentNumber() {
       api.queryTopAgentNumber().then(res => {
+        if (res.object.length > 0) {
+          var total = 0
+          for (let i = 0; i < res.object.length; i++) {
+            total += res.object[i].topAgentNumbers
+          }
+          this.totalNum = total
+        }
         this.mapData = res.object.map($item => {
           areaData.forEach(($province, $index) => {
             if ($item.provinceCode === $province.value) {

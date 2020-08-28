@@ -110,7 +110,7 @@ export const configData = {
           items: [
             {
               name: "地区",
-              key: "expAreaCode"
+              key: "emailDetailAddress"
             }
           ]
         }

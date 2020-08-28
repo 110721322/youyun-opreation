@@ -154,20 +154,13 @@ export default {
     },
     search($form) {
       this.params = {
-        agentGrade: $form.agentGrade,
-        activeDateStart: $form.date[0],
-        activeDateEnd: $form.date[1],
-        agentNo: $form.agentNo,
-        agentName: $form.agentName,
-        status: $form.status,
         labelId: $form.labelId,
-        regionCode: $form.regionCode,
-        operateUserNo: $form.operateUserNo
-      };
-      if ($form.area) {
-        this.params.provinceCode = $form.area[0];
-        this.params.cityCode = $form.area[1];
-        this.params.areaCode = $form.area[2];
+        activeScopeType: $form.activeScopeType,
+        operationId: $form.operationId,
+        personName: $form.personName,
+        personMobile: $form.personMobile,
+        status: $form.status,
+        regionCode: $form.regionCode
       }
       this.params[$form.inputSelect] = $form.inputForm;
     },

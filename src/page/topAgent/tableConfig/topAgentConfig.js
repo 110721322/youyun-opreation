@@ -22,7 +22,7 @@ export const USER_CONFIG = {
     },
     {
       label: '所属运营',
-      prop: 'personMobile',
+      prop: 'operationName',
       width: '150px'
     },
     {

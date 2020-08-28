@@ -162,7 +162,7 @@ export default {
       this.openSlider = localStorage.getItem("openSlider");
     },
     leave() {
-      this.showMenu2 = false;
+      // this.showMenu2 = false;
     },
     enter(item) {
       this.showMenu2 = true;

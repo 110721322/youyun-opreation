@@ -671,6 +671,22 @@ export default {
         channelAgentCode: this.channelAgentCode,
         roleCode: store.state.admin.userInfo.roleId
       }).then(res => {
+        var provinceName = ''
+        var cityName = ''
+        var areaName = ''
+        var result = this.$g.utils.getNestedArr(areaData, 'children')
+        result.forEach(m => {
+          if (m.value === res.object.expProvinceCode) {
+            provinceName = m.label
+          }
+          if (m.value === res.object.expCityCode) {
+            cityName = m.label
+          }
+          if (m.value === res.object.expAreaCode) {
+            areaName = m.label
+          }
+        })
+        res.object.emailDetailAddress = provinceName + cityName + areaName
         const ruleForm = res.object;
         const payChannels = res.object.payChannels.map(($item, $index) => {
           return {
