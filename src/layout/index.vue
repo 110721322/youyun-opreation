@@ -16,10 +16,10 @@
     </div>
 
     <div v-if="menu2Data && rootPath" class="menu2 menu22">
-      <menu3 :menu2-data="menu2Data" :root-path="rootPath"></menu3>
+      <menu2 :menu2-data="menu2Data" :root-path="rootPath"></menu2>
     </div>
 
-    <div class="main-container" :class="[menu2Data && rootPath ? 'addMargin' : '']">
+    <div @mouseenter="containnerEnter(menuHoverData)" class="main-container" :class="[menu2Data && rootPath ? 'addMargin' : '']">
       <navbar />
       <app-main style="width:100%;height:calc(100% - 50px);" />
     </div>
@@ -30,7 +30,6 @@
 import { AppMain, Sidebar, Navbar } from "./components";
 import { EventBus } from "./bus/event-bus.js";
 import menu2 from "./components/Sidebar/menu2";
-import menu3 from "./components/Sidebar/menu3";
 
 export default {
   name: "Layout",
@@ -38,8 +37,7 @@ export default {
     AppMain,
     Navbar,
     Sidebar,
-    menu2,
-    menu3
+    menu2
   },
 
   data() {
@@ -166,6 +164,11 @@ export default {
     },
     enter(item) {
       this.showMenu2 = true;
+    },
+    containnerEnter(menuHoverData) {
+      if (!this.menu2Data) {
+        this.showMenu2 = false;
+      }
     }
   }
 };
