@@ -32,6 +32,8 @@ Vue.prototype.$echarts = echarts;
 
 Vue.prototype.$store = store;
 
+store.dispatch('saveWebsocketOption');
+
 Vue.use(ElementUI, {
   size: 'small'
 });

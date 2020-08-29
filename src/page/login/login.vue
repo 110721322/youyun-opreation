@@ -440,7 +440,8 @@ export default {
         from: 'operation',
         userId: userId,
         accessToken: res.object.accessToken
-      })
+      });
+      this.$store.dispatch('setTodoList');
       api.queryUserVueRouterList({
         userToken: res.object.accessToken,
         system: 'operation',
