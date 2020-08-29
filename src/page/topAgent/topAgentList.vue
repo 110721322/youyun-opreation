@@ -49,7 +49,7 @@ export default {
 
   data() {
     return {
-      searchMaxHeight: "300",
+      searchMaxHeight: "360",
       configData: USER_CONFIG,
       searchConfig: FORM_CONFIG,
       testData: [],
@@ -96,19 +96,6 @@ export default {
         this.setUserList(userList)
       })
     },
-    getData() {
-      this.testData = [
-        {
-          sort: '1',
-          createTime: '2020-06-13',
-          ID: '123456',
-          agentName: '测试服务商',
-          people: '张三',
-          expireDate: '拉阿拉蕾',
-          accountStatus: '通过'
-        }
-      ]
-    },
     transfer() {
       if (this.selectData.length) {
         this.$confirm("是否批量转移运营？", "转移运营", {
@@ -137,13 +124,21 @@ export default {
       this.selectData = $val;
     },
     search($form) {
-      console.log($form);
       this.params = {
-        [$form.channelAgent]: $form.channelAgentVal ? $form.channelAgentVal : null,
-        [$form.person]: $form.personVal ? $form.personVal : null,
         operationId: $form.operationId,
-        status: $form.status
+        status: $form.status ? $form.status : null,
+        personName: $form.personName ? $form.personName : null,
+        personMobile: $form.personMobile ? $form.personMobile : null,
+        regionCode: $form.regionCode ? $form.regionCode : null,
+        activeScopeType: $form.activeScopeType ? $form.activeScopeType : null,
+        labelId: $form.labelId ? $form.labelId : null
       }
+      if ($form.area) {
+        this.params.provinceCode = $form.provinceCode
+        this.params.cityCode = $form.cityCode
+        this.params.areaCode = $form.areaCode
+      }
+      this.params[$form.inputSelect] = $form.inputForm;
     },
     openDetail($row) {
       this.$router.push({

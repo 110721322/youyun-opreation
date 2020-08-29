@@ -154,13 +154,18 @@ export default {
     },
     search($form) {
       this.params = {
-        labelId: $form.labelId,
-        activeScopeType: $form.activeScopeType,
         operationId: $form.operationId,
-        personName: $form.personName,
-        personMobile: $form.personMobile,
-        status: $form.status,
-        regionCode: $form.regionCode
+        status: $form.status ? $form.status : null,
+        personName: $form.personName ? $form.personName : null,
+        personMobile: $form.personMobile ? $form.personMobile : null,
+        regionCode: $form.regionCode ? $form.regionCode : null,
+        activeScopeType: $form.activeScopeType ? $form.activeScopeType : null,
+        labelId: $form.labelId ? $form.labelId : null
+      }
+      if ($form.area) {
+        this.params.provinceCode = $form.provinceCode
+        this.params.cityCode = $form.cityCode
+        this.params.areaCode = $form.areaCode
       }
       this.params[$form.inputSelect] = $form.inputForm;
     },
