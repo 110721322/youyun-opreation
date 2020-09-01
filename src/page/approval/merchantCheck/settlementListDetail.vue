@@ -51,7 +51,7 @@ export default {
       channelCode: '',
       fromConfigData: {},
       drawer: false,
-      rejectTitle: "驳回原因：银行卡号不属于法人",
+      rejectTitle: "",
       showComponents: {
         showRejectTitle: false,
         showOperBtns: false
@@ -244,6 +244,7 @@ export default {
           res.object.new.bankAccountType = '对私'
         }
         this.ruleForm = res.object
+        this.rejectTitle = "驳回原因：" + res.object.rejectReason
         this.currentType = res.object.auditStatus
         this.merchantType = res.onject.merchantType
       })

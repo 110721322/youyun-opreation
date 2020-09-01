@@ -53,21 +53,25 @@ export default {
               {
                 imgUrl: "",
                 text: "商户入件审核",
+                path: '/approval/checkMerchant/indirectList',
                 permission: MERCHANT_ENTRY_AUDIT
               },
               {
                 imgUrl: "",
                 text: "下级服务商入件审核",
+                path: '/approval/checkService',
                 permission: LOWER_AGENT_ENTRY
               },
               {
                 imgUrl: "",
                 text: "合伙人入件审核",
+                path: '/approval/checkPartner',
                 permission: PARTNER_ENTRY_AUDIT
               },
               {
                 imgUrl: "",
                 text: "服务商佣金结算",
+                path: '/financial/operation/operationApprove',
                 permission: AGENT_COMMISSION_SETTLE
               }
             ]
