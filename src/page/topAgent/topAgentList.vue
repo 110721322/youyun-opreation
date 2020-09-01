@@ -39,7 +39,7 @@ import api_dataMarket from "@/api/api_dataMarket";
 import api from "@/api/api_agent";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { USER_CONFIG } from "./tableConfig/topAgentConfig";
-import { FORM_CONFIG } from "./../agent/formConfig/agentListSearch";
+import { FORM_CONFIG } from "./formConfig/topAgentSearch";
 import { mapActions } from 'vuex'
 
 export default {
@@ -49,7 +49,7 @@ export default {
 
   data() {
     return {
-      searchMaxHeight: "360",
+      searchMaxHeight: "280",
       configData: USER_CONFIG,
       searchConfig: FORM_CONFIG,
       testData: [],

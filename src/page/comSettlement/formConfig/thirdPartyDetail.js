@@ -11,6 +11,7 @@ export const FORM_CONFIG = {
         label: '发票照片',
         key: 'expressImg',
         initVal: '',
+        maxNum: 1,
         rules: setRules('发票照片').isSelected.get
       },
       {

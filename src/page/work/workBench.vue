@@ -13,7 +13,7 @@
 import api from "@/api/api_workBench";
 import detailMode from "@/components/detailMode/detailMode3.vue";
 import { TODO_BTN, MERCHANT_ENTRY_AUDIT, LOWER_AGENT_ENTRY,
-  PARTNER_ENTRY_AUDIT, AGENT_COMMISSION_SETTLE, DEVICE_UNBIND,
+  PARTNER_ENTRY_AUDIT, DEVICE_UNBIND,
   AGENT_ANNOUNCE, MERCHANT_DATA, AGENT_DATA,
   DEVICE_DATA } from "../../libs/data/permissionBtns";
 // import search from '@/components/search/search.vue';
@@ -33,7 +33,6 @@ export default {
             list: [
               {
                 imgUrl: "",
-                dotNum: 5,
                 text: "待办事项",
                 permission: TODO_BTN,
                 path: "/work/todo"
@@ -51,7 +50,7 @@ export default {
             title: "审核",
             list: [
               {
-                imgUrl: "",
+                imgUrl: "https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200901110325824_Hrti7nYzlvn7.jpg",
                 text: "商户入件审核",
                 path: '/approval/checkMerchant/indirectList',
                 permission: MERCHANT_ENTRY_AUDIT
@@ -67,12 +66,6 @@ export default {
                 text: "合伙人入件审核",
                 path: '/approval/checkPartner',
                 permission: PARTNER_ENTRY_AUDIT
-              },
-              {
-                imgUrl: "",
-                text: "服务商佣金结算",
-                path: '/financial/operation/operationApprove',
-                permission: AGENT_COMMISSION_SETTLE
               }
             ]
           },
@@ -82,6 +75,7 @@ export default {
               {
                 imgUrl: "",
                 text: "设备解绑",
+                path: '/deviceManage/usageManage/usageList',
                 permission: DEVICE_UNBIND
               },
               {
@@ -89,11 +83,6 @@ export default {
                 text: "公告",
                 path: "/message/serviceAnnouncementList",
                 permission: AGENT_ANNOUNCE
-              },
-              {
-                imgUrl: "",
-                text: "短信群发",
-                path: "/work/sentMessage"
               }
             ]
           },
@@ -103,16 +92,19 @@ export default {
               {
                 imgUrl: "",
                 text: "商户数据",
+                path: '/merchant/list',
                 permission: MERCHANT_DATA
               },
               {
                 imgUrl: "",
                 text: "服务商数据",
+                path: '/agent/list',
                 permission: AGENT_DATA
               },
               {
                 imgUrl: "",
                 text: "设备数据",
+                path: '/deviceManage/usageManage/deviceData',
                 permission: DEVICE_DATA
               }
             ]
@@ -121,6 +113,11 @@ export default {
       },
       date: ''
     };
+  },
+  computed: {
+    todoTask: function() {
+      return this.$store.state.admin.todoList;
+    }
   },
   mounted() {
     this.getData();

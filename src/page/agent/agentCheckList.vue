@@ -74,11 +74,13 @@ export default {
         .then(() => {
           api.reject({
             agentNo: row.agentNo
-          }).then(() => {
-            this.$message({
-              type: "info",
-              message: "已驳回"
-            });
+          }).then((res) => {
+            if (res.status === 0) {
+              this.$message({
+                type: "info",
+                message: "已驳回"
+              });
+            }
             this.$refs.table.getData();
           }).catch(err => {
             console.error(err);
@@ -95,11 +97,13 @@ export default {
         .then(() => {
           api.activate({
             agentNo: row.agentNo
-          }).then((result) => {
-            this.$message({
-              type: "info",
-              message: "已激活"
-            });
+          }).then((res) => {
+            if (res.status === 0) {
+              this.$message({
+                type: "info",
+                message: "已激活"
+              });
+            }
             this.$refs.table.getData();
           }).catch(err => {
             console.error(err);
@@ -118,10 +122,13 @@ export default {
           api.pass({
             agentNo: row.agentNo
           }).then(res => {
-            this.$message({
-              type: "info",
-              message: "已通过"
-            });
+            if (res.status === 0) {
+              this.$message({
+                type: "success",
+                message: "已通过"
+              });
+            }
+            this.$refs.table.getData()
           }).catch(err => {
             console.error(err);
           });

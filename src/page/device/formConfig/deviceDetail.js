@@ -13,9 +13,9 @@ export const FORM_CONFIG = {
         style: 'width:294px',
         labelWidth: '100px',
         urlOptions: {
-          url: apiDevice.queryAllDeviceModel,
-          keyName: 'deviceType',
-          valueName: 'deviceModel',
+          url: apiDevice.queryAllDeviceTypeModel,
+          keyName: 'advertType',
+          valueName: 'advertTypeDesc',
           method: 'get',
           params: {
             classification: 1
@@ -34,6 +34,7 @@ export const FORM_CONFIG = {
         type: 6,
         label: '图片',
         key: 'deviceImg',
+        maxNum: 1,
         rules: setRules('图片').isSelected.get
       },
       {

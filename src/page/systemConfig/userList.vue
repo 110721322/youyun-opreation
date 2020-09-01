@@ -106,9 +106,7 @@ export default {
       activityRow: {}
     };
   },
-  mounted() {
-    // this.getTableData();
-  },
+  mounted() {},
   methods: {
     onClick_addPhoneItem() {
       if (this.addPhoneList.length < 20) {
@@ -125,36 +123,6 @@ export default {
         endTime: $ruleForm.date[1] + ' 23:59:59'
       };
       this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
-    },
-    getTableData() {
-      this.testData = [
-        {
-          id: 1,
-          nickName: "日常任务",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          reason: "银行卡账号错误，服务商无法联系"
-        },
-        {
-          id: 2,
-          nickName: "日常任务",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系"
-        }
-      ];
     },
     onClick_addUser() {
       this.drawerAddPhone = true;
@@ -211,7 +179,7 @@ export default {
         this.$message('请输入姓名');
         return;
       }
-      if (!$ruleForm.sex) {
+      if ($ruleForm.sex !== 0 && $ruleForm.sex !== 1) {
         this.$message('请选择性别');
         return;
       }
@@ -248,9 +216,14 @@ export default {
           nickName: $ruleForm.nickName
         })
         .then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '编辑成功',
+              type: 'success'
+            });
+          }
           this.drawer = false;
           this.$refs.child.getData();
-          this.$message("已保存");
         })
         .catch(err => {
           this.$message(err);

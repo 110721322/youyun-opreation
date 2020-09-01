@@ -11,6 +11,7 @@ export const FORM_CONFIG = {
         label: "头像",
         key: "img",
         initVal: "",
+        maxNum: 1,
         rules: setRules("头像").isRequired.get
       },
       {
