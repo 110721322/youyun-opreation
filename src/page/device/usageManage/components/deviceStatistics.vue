@@ -661,7 +661,7 @@ export default {
     flex-direction: column;
     margin-left: 10px;
     .data-item {
-      text-align: center;
+      text-align: left;
       margin-top: 32px;
       padding-right: 30px;
       overflow: hidden;
@@ -671,7 +671,7 @@ export default {
     }
     .title-item {
       width: 120px;
-      text-align: center;
+      text-align: left;
     }
   }
 }

@@ -199,7 +199,8 @@ export default {
       this.drawer = false;
     },
     confirm($ruleForm) {
-      if (!$ruleForm.img) {
+      const img = this.$g.utils.isString($ruleForm.img) ? $ruleForm.img : ($ruleForm.img.dialogImagePath + $ruleForm.img.dialogImageUrl); // 兼容未修改图片情况
+      if (($ruleForm.img === "undefined" || !$ruleForm.img.dialogImageUrl)) {
         this.$message('请上传头像');
         return;
       }
@@ -231,7 +232,6 @@ export default {
         this.$message('请输入邮箱');
         return;
       }
-      const img = this.$g.utils.isString($ruleForm.img) ? $ruleForm.img : ($ruleForm.img.dialogImagePath + $ruleForm.img.dialogImageUrl); // 兼容未修改图片情况
       api
         .fillUserInfo({
           id: this.activityRow.id,

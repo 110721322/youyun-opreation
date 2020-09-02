@@ -130,8 +130,10 @@ export default {
     },
 
     beforeUpload(file) {
-      if (this.maxNum <= this.dialogImageList.length) {
-        return;
+      if (this.maxNum) {
+        if (this.maxNum <= this.dialogImageList.length) {
+          return;
+        }
       }
       return new Promise(resolve => {
         if (this.type === "entry") {
@@ -155,9 +157,11 @@ export default {
     },
 
     upLoad(file) {
-      if (this.maxNum <= this.dialogImageList.length) {
-        this.$message.error('最多上传' + this.maxNum + '张图片')
-        return;
+      if (this.maxNum) {
+        if (this.maxNum <= this.dialogImageList.length) {
+          this.$message.error('最多上传' + this.maxNum + '张图片')
+          return;
+        }
       }
       const formData = new FormData();
       formData.append(
@@ -267,6 +271,11 @@ export default {
   }
   .avatar-uploader .el-upload i:hover {
     border-color: #409eff;
+  }
+  .avatar-uploader {
+    /deep/ .el-upload--picture-card {
+      overflow: hidden;
+    }
   }
   .avatar-uploader {
     /deep/ .el-upload-list--picture-card {

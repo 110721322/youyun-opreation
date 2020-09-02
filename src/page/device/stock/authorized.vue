@@ -11,7 +11,7 @@
         <div class="btn_download" @click="onClick_download">
           <i class="el-icon-download"></i>设备信息模版下载
         </div>
-        <UploadFile class="btn" type="primary" @click="onClick_addDevice">导入设备信息</UploadFile>
+        <UploadFile class="btn" :form-item="formItem" type="primary" @click="onClick_addDevice">导入设备信息</UploadFile>
       </div>
       <BaseCrud
         ref="table"
@@ -66,6 +66,10 @@ export default {
         deviceIdentifier: "",
         pageSize: 1,
         status: 1
+      },
+      formItem: {
+        key: 'file',
+        dateUrl: ''
       },
       api: api.deviceActivationQueryByPage
     };

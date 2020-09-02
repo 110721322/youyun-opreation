@@ -19,7 +19,7 @@ export const USERLIST_CONFIG = {
     },
     {
       label: '职位',
-      prop: 'position',
+      prop: 'positionName',
       width: '150px'
     },
     {

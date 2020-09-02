@@ -101,7 +101,8 @@ export default {
       });
     },
     download() {
-      if (this.formItem.dateurl === "") {
+      console.log(this.formItem)
+      if (!this.formItem.dateurl) {
         window.location.href = "/operation/v1/excelTemplate/download?url=excel/device_input.xlsx";
       } else {
         window.location.href = "/operation/v1/excelTemplate/download?url=" + this.formItem.dateurl;
