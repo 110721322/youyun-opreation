@@ -171,16 +171,12 @@
     </el-drawer>
     <el-drawer :visible.sync="financeDrawer" :with-header="false" size="30%">
       <div class="financeTitle">财务信息</div>
-      <el-form :model="financeModel">
+      <el-form :model="financeModel" :rules="rules">
         <el-form-item label="结算卡类型" prop="bankAccountType" style="margin: 24px 20% 0 24px;" label-width="120px">
-          <el-select v-model="financeModel.bankAccountType" placeholder="请选择">
-            <el-option
-                v-for="item in accountType"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-            </el-option>
-          </el-select>
+          <el-radio-group v-model="financeModel.bankAccountType">
+            <el-radio label="public">对公</el-radio>
+            <el-radio label="private">对私</el-radio>
+          </el-radio-group>
         </el-form-item>
         <el-form-item label="银行卡号" prop="bankCardNo" style="margin: 24px 20% 0 24px;" label-width="120px">
           <el-input placeholder="请输入银行卡号" v-model="financeModel.bankCardNo"></el-input>
@@ -341,6 +337,20 @@ export default {
       params: {
         relateCode: this.$route.query.channelAgentCode
       },
+      rules: {
+        bankAccountType: [
+          { required: true, message: '请选择结算卡类型', trigger: 'change' }
+        ],
+        bankCardNo: [
+          { required: true, message: '请填写银行卡号', trigger: 'blur' }
+        ],
+        bankContactLine: [
+          { required: true, message: '请填写开户支行', trigger: 'change' }
+        ],
+        bankAccountHolder: [
+          { required: true, message: '请填写开户名', trigger: 'blur' }
+        ]
+      },
       api1: api.queryTalkPlan,
       api2: api.queryPlanList,
       clientList: [
@@ -360,21 +370,11 @@ export default {
       activeClass: "red",
       activeValue: "情绪客户",
       financeModel: {
-        bankAccountType: 'private',
+        bankAccountType: "public",
         bankCardNo: '',
         bankContactLine: '',
         bankAccountHolder: ''
       },
-      accountType: [
-        {
-          label: '对私',
-          value: 'private'
-        },
-        {
-          label: '对公',
-          value: 'public'
-        }
-      ],
       area: '',
       loading: false,
       areaCodeNum: '',

@@ -18,7 +18,7 @@
           <div class="data-box">
             <div class="data-title">
               省份分布排行榜
-              <span class="all-num">共{{ mapData.length }}个</span>
+              <span class="all-num">共{{totalNum}}个</span>
             </div>
             <div v-for="(item,index) in mapData" :key="index" class="data-item">
               <div class="data-left">
@@ -26,8 +26,8 @@
                 {{ item.name }}
               </div>
               <div class="data-right">
-                <span>{{ item.topAgentNumbers }}</span> |
-                <span class="perc">{{ item.ratio }}</span>
+                <span>{{ item.count }}</span> |
+                <span class="perc">{{ item.ratio + '%' }}</span>
               </div>
             </div>
           </div>
@@ -241,7 +241,8 @@ export default {
       echartsMap: null,
       myChartLine: null,
       ruleForm: {},
-      agentType: '1'
+      agentType: '1',
+      totalNum: 0
     };
   },
   computed: {
@@ -422,6 +423,13 @@ export default {
       api
         .queryAllProvinceCount({})
         .then(res => {
+          if (res.object.length > 0) {
+            var total = 0
+            for (let i = 0; i < res.object.length; i++) {
+              total += res.object[i].count
+            }
+            this.totalNum = total
+          }
           this.mapData = res.object.map($item => {
             areaData.forEach(($province, $index) => {
               if ($item.provinceCode === $province.value) {
