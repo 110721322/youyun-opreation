@@ -52,6 +52,7 @@ export const FORM_CONFIG = {
         type: 6,
         label: '宣传图片',
         key: 'img',
+        maxNum: 1,
         rules: setRules('宣传图片').isRequired.get
       },
       {

@@ -62,6 +62,7 @@ export const FORM_CONFIG = {
         type: 6,
         label: '营业执照',
         key: 'businessLicenseImg',
+        maxNum: 1,
         initVal: '',
         rules: setRules('营业执照').isSelected.get
       }
@@ -162,18 +163,7 @@ export const FORM_CONFIG = {
         placeholder: '输入范围3-6',
         isShowSlot: true,
         showSlotName: '‰',
-        rules: setRules('请输入').oneFloat.get
-      },
-      {
-        type: 0,
-        label: '支付宝费率',
-        labelWidth: '300px',
-        key: 'alipayRate',
-        initVal: '',
-        placeholder: '输入范围3-6',
-        isShowSlot: true,
-        showSlotName: '‰',
-        rules: setRules('请输入').oneFloat.get
+        rules: setRules('请输入').isSelected.get
       },
       {
         type: 0,
@@ -183,7 +173,7 @@ export const FORM_CONFIG = {
         isShowSlot: true,
         showSlotName: '‰',
         placeholder: '输入范围2.3-10',
-        rules: setRules('请输入').isRequired.get
+        rules: setRules('请输入').isSelected.get
       },
       {
         type: 0,
@@ -193,7 +183,7 @@ export const FORM_CONFIG = {
         isShowSlot: true,
         showSlotName: '‰',
         placeholder: '输入范围2.3-10',
-        rules: setRules('请输入').isRequired.get
+        rules: setRules('请输入').isSelected.get
       }
     ]
   },
@@ -263,8 +253,9 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '续费方式',
-        key: 'renewType',
-        placeholder: '佣金按比例',
+        key: '',
+        placeholder: '固定续费',
+        initVal: '固定续费',
         isDisabled: true
       },
       {
@@ -386,6 +377,7 @@ export const FORM_CONFIG = {
         type: 6,
         label: '打款凭证',
         key: 'voucher',
+        maxNum: 1,
         rules: setRules('打款凭证').isRequired.get
       },
       {

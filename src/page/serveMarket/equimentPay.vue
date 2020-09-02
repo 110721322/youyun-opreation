@@ -71,6 +71,7 @@ export default {
           {
             type: 6,
             label: '打款凭证',
+            maxNum: 1,
             key: 'deviceImg'
           }
         ],
