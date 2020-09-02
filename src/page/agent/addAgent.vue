@@ -9,9 +9,6 @@
         @confirm="handleCommit"
         @cancel="handel_cancel"
       >
-        <template>
-          <slot>11111</slot>
-        </template>
       </Form>
     </div>
   </div>
