@@ -22,7 +22,7 @@
             </div>
             <div class="data-right">
               <span>{{ item.topAgentNumbers }}</span> |
-              <span class="perc">{{ item.ratio }}</span>
+              <span class="perc">{{ item.percentage }}</span>
             </div>
           </div>
         </div>

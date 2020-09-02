@@ -4,6 +4,8 @@ export const SEARCH_CONFIG = {
       type: 9,
       label: '筛选时间',
       key: 'date',
+      datatype: 'datetimerange',
+      format: 'yyyy-MM-dd HH:mm:ss',
       class: 'max-width',
       labelWidth: '100px'
     },
