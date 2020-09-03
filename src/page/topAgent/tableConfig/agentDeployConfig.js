@@ -20,7 +20,7 @@ export const USER_CONFIG = {
     },
     {
       label: '服务商名称',
-      prop: 'topAgentName',
+      prop: 'channelAgentName',
       width: '160px'
     },
     {
