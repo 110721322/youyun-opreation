@@ -27,6 +27,16 @@
         @adopt="adopt"
       />
     </div>
+    <el-drawer :visible.sync="drawer" :with-header="false" size="30%">
+      <div class="p_head">审核通过</div>
+      <Form
+          :form-base-data="fromConfigData.formData"
+          :show-foot-btn="fromConfigData.showFootBtn"
+          label-width="130px"
+          @cancel="cancel"
+          @confirm="confirm"
+      ></Form>
+    </el-drawer>
   </div>
 </template>
 
@@ -34,17 +44,22 @@
 import search from "@/components/search/search.vue";
 import api from "@/api/api_agent.js"
 import BaseCrud from "@/components/table/BaseCrud.vue";
+import Form from "@/components/form/index.vue";
+import { CHECK_CONFIG } from "./formConfig/agentCheck";
 import { USER_CONFIG } from "./tableConfig/agentCheckConfig";
 import { FORM_CONFIG } from "./formConfig/agentCheckListSearch";
 export default {
   name: "Theme",
-  components: { search, BaseCrud },
+  components: { search, BaseCrud, Form },
 
   data() {
     return {
+      agentNo: '',
+      drawer: false,
       searchMaxHeight: "320",
       configData: USER_CONFIG,
       searchConfig: FORM_CONFIG,
+      fromConfigData: CHECK_CONFIG,
       testData: [],
       params: {},
       api: api.agentExamineList
@@ -59,10 +74,10 @@ export default {
       this.params = {
         beginDate: $form.date[0],
         endDate: $form.date[1],
-        personName: $form.personName,
-        personMobile: $form.personMobile,
-        businessType: $form.businessType,
-        contractStatus: $form.contractStatus
+        personName: $form.personName ? $form.personName : null,
+        personMobile: $form.personMobile ? $form.personMobile : null,
+        businessType: $form.businessType ? $form.businessType : null,
+        contractStatus: $form.contractStatus ? $form.contractStatus : null
       }
     },
     reject(row) {
@@ -111,29 +126,36 @@ export default {
         })
         .catch(() => {});
     },
-    adopt(row) {
-      console.log(row)
-      this.$confirm("是否要通过该代理商？", "通过代理商", {
-        distinguishCancelAndClose: true,
-        confirmButtonText: "确认通过",
-        cancelButtonText: "取消"
-      })
-        .then(() => {
-          api.pass({
-            agentNo: row.agentNo
-          }).then(res => {
-            if (res.status === 0) {
-              this.$message({
-                type: "success",
-                message: "已通过"
-              });
-            }
-            this.$refs.table.getData()
-          }).catch(err => {
-            console.error(err);
-          });
+    cancel() {
+      this.drawer = false
+    },
+    confirm($form) {
+      if (!$form.operationId) {
+        this.$message({
+          message: '请选择所属服务商',
+          type: 'warning'
         })
-        .catch(() => {});
+        return false
+      }
+      api.pass({
+        agentNo: this.agentNo,
+        operationId: $form.operationId
+      }).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            type: "success",
+            message: "已通过"
+          });
+        }
+        this.drawer = false
+        this.$refs.table.getData()
+      }).catch(err => {
+        console.error(err);
+      });
+    },
+    adopt(row) {
+      this.drawer = true
+      this.agentNo = row.agentNo
     }
   }
 };

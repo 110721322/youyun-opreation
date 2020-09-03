@@ -853,8 +853,13 @@ export default {
         case "rateInfo":
           Object.assign($ruleForm, {
             action: 4,
-            channelAgentCode: this.channelAgentCode
+            channelAgentCode: this.channelAgentCode,
+            alipayRate: $ruleForm.wechatPayRate
           })
+          $ruleForm.alipayRate = $ruleForm.alipayRate / 1000
+          $ruleForm.wechatPayRate = $ruleForm.wechatPayRate / 1000
+          $ruleForm.cloudPayLe1000Rate = $ruleForm.cloudPayLe1000Rate / 1000
+          $ruleForm.cloudPayGt1000Rate = $ruleForm.cloudPayGt1000Rate / 1000
           this.updateTopAgentInfo($ruleForm);
           break;
         default:
