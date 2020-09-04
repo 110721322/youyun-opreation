@@ -51,7 +51,7 @@ export const USER_CONFIG = {
       label: '状态',
       prop: 'contractStatus',
       render: (h, params) => {
-        if (params.row.contractStatus === 'waitSign') {
+        if (params.row.contractStatus === 'audit') {
           return h(
             'el-tag',
             {
@@ -117,7 +117,7 @@ export const USER_CONFIG = {
         type: 'text',
         style: 'color:#F5222D',
         isShow: ($row) => {
-          if ($row.contractStatus === 'waitSign') {
+          if ($row.contractStatus === 'audit') {
             return true;
           } else {
             return false;
@@ -141,7 +141,7 @@ export const USER_CONFIG = {
         emitName: 'adopt',
         type: 'text',
         isShow: ($row) => {
-          if ($row.contractStatus === 'waitSign') {
+          if ($row.contractStatus === 'audit') {
             return true;
           } else {
             return false;
