@@ -12,7 +12,7 @@
         :form-data="configData.formModel"
         :api-service="configData.api"
         :grid-edit-width="150"
-        :is-async="true"
+        :is-async="false"
         :is-select="false"
         :is-expand="false"
         :row-key="'id'"

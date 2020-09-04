@@ -51,7 +51,7 @@
       <el-row>
         <el-col :span="8" class="app">
           <img src="https://avatars1.githubusercontent.com/u/23054546?s=64&v=4" alt />
-          <div>订购设备</div>
+          <div @click="orderEquipment">订购设备</div>
         </el-col>
         <el-col :span="8" class="app">
           <img src="https://avatars1.githubusercontent.com/u/23054546?s=64&v=4" alt />
@@ -294,6 +294,16 @@
         </li>
       </ul>
     </el-dialog>
+    <el-drawer :visible.sync="equipment" :with-header="false" size="30%">
+      <div class="p_head">{{ equipmentConfigData.title }}</div>
+      <Form
+          ref="liaisonRef"
+          :form-base-data="equipmentConfigData.formData"
+          :show-foot-btn="equipmentConfigData.showFootBtn"
+          @confirm="handel_addContacts"
+          @cancel="cancel"
+      ></Form>
+    </el-drawer>
   </div>
 </template>
 
@@ -302,6 +312,7 @@ import Form from "@/components/form/index.vue";
 import api from "@/api/api_agent.js";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import detailMode from "@/components/detailMode/detailMode.vue";
+import { ORDER_EQUIPMENT } from "./formConfig/orderEquipmentForm";
 import { USER_CONFIG, USER_CONFIG2 } from "./tableConfig/config_communicate";
 import { DETAILCONFIG } from "./tableConfig/agentDetailConfig";
 import { FORM_CONFIG } from "./formConfig/agentDetail";
@@ -320,6 +331,7 @@ export default {
       talkListDetail: {},
       dialogTableVisible: false,
       liaisonId: '',
+      equipment: false,
       addLiaison: false,
       findLiaison: false,
       addDrewerType: '',
@@ -332,6 +344,7 @@ export default {
       inputValue: "",
       configData: DETAILCONFIG.configData,
       configData2: DETAILCONFIG.configData2,
+      equipmentConfigData: ORDER_EQUIPMENT,
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -670,6 +683,9 @@ export default {
           })
         }
       }
+    },
+    orderEquipment() {
+      this.equipment = true
     },
     // 标签输入框
     tagInput(value) {
