@@ -756,7 +756,6 @@ export default {
         } else {
           this.configData2.child[2].models = [];
         }
-        this.financeModel = ruleForm
         this.configData2.child[0].models = payChannels;
         this.configData2.child[3].models = customChannelComboPriceSets;
         this.configData2.child[4].models = customBrandComboPriceSets;
@@ -789,6 +788,18 @@ export default {
       console.log($model)
       if ($model === 'finance') {
         this.financeDrawer = true
+        if (this.ruleForm.bankBranchName) {
+          this.remoteMethod(this.ruleForm.bankBranchName)
+          this.handleSelect(this.ruleForm.bankContactLine)
+        }
+        this.areaCodeNum = this.ruleForm.bankArea
+        this.bankName = this.ruleForm.bankBranchName
+        this.financeModel = {
+          bankContactLine: this.ruleForm.bankContactLine,
+          bankCardNo: this.ruleForm.bankCardNo,
+          bankAccountType: this.ruleForm.bankAccountType,
+          bankAccountHolder: this.ruleForm.bankAccountHolder
+        }
       } else {
         this.fromConfigData = FORM_CONFIG[$model];
         for (const $item of this.fromConfigData.formData) {
@@ -822,7 +833,7 @@ export default {
           break;
         case "basicData":
           Object.assign($ruleForm, {
-            action: 1,
+            action: '1',
             channelAgentCode: this.channelAgentCode,
             provinceCode: this.ruleForm.provinceCode,
             areaCode: this.ruleForm.areaCode,
@@ -833,7 +844,7 @@ export default {
           break;
         case "finance":
           Object.assign($ruleForm, {
-            action: 2,
+            action: '2',
             channelAgentCode: this.channelAgentCode,
             bankArea: this.$g.utils.isArr($ruleForm.bankArea) ? $ruleForm.bankArea[2] : $ruleForm.bankArea,
             bankContactLine: this.ruleForm.bankContactLine
@@ -842,7 +853,7 @@ export default {
           break;
         case "address":
           Object.assign($ruleForm, {
-            action: 3,
+            action: '3',
             channelAgentCode: this.channelAgentCode,
             expAreaCode: this.$g.utils.isArr($ruleForm.expAreaCode) ? $ruleForm.expAreaCode[2] : $ruleForm.expAreaCode,
             expCityCode: this.$g.utils.isArr($ruleForm.expAreaCode) ? $ruleForm.expAreaCode[1] : $ruleForm.expCityCode,
@@ -852,7 +863,7 @@ export default {
           break;
         case "rateInfo":
           Object.assign($ruleForm, {
-            action: 4,
+            action: '4',
             channelAgentCode: this.channelAgentCode,
             alipayRate: $ruleForm.wechatPayRate
           })
@@ -875,7 +886,7 @@ export default {
         channelAgentCode: this.channelAgentCode,
         bankAccountType: this.financeModel.bankAccountType,
         bankAccountHolder: this.financeModel.bankAccountHolder,
-        action: 2
+        action: '2'
       }
       this.updateTopAgentInfo($ruleForm)
     },

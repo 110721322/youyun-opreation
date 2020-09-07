@@ -8,6 +8,7 @@ export const FORM_CONFIG = {
       type: 5,
       label: '商户类型',
       key: 'businessType',
+      initVal: "individual",
       options: [
         {
           label: '企业',
@@ -61,6 +62,7 @@ export const FORM_CONFIG = {
       type: 0,
       label: '后台账号',
       key: 'account',
+      placeholder: '密码会以短信形式发送到该手机号中',
       rules: setRules('请输入').isRequired.get
     },
     {
@@ -79,6 +81,7 @@ export const FORM_CONFIG = {
       type: 5,
       label: '服务类型',
       key: 'activeMode',
+      initVal: 'xiaomage',
       options: [
         {
           label: '小马哥代理',

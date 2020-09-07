@@ -257,6 +257,7 @@ export default {
     },
     queryTopAgentNumber() {
       api.queryTopAgentNumber().then(res => {
+        console.log(res)
         if (res.object.length > 0) {
           var total = 0
           for (let i = 0; i < res.object.length; i++) {
@@ -273,6 +274,7 @@ export default {
           $item.value = $item.topAgentNumbers;
           return $item;
         }).sort(($ele1, $ele2) => {
+          console.log($ele1)
           return $ele2.topAgentNumbers - $ele1.topAgentNumbers
         })
         this.initMap()

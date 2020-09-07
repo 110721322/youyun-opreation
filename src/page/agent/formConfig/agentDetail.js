@@ -11,7 +11,6 @@ export const FORM_CONFIG = {
         type: 5,
         label: '账户类型',
         key: 'businessType',
-        initVal: '',
         options: [
           {
             label: '企业',
