@@ -63,7 +63,7 @@ export const USER_CONFIG = {
             '待审核'
           );
         }
-        if (params.row.contractStatus === 'wait') {
+        if (params.row.contractStatus === 'waitSign') {
           return h(
             'el-tag',
             {
@@ -72,7 +72,7 @@ export const USER_CONFIG = {
                 type: ''
               }
             },
-            '等待'
+            '待审核'
           );
         }
         if (params.row.contractStatus === 'reject') {
@@ -117,7 +117,7 @@ export const USER_CONFIG = {
         type: 'text',
         style: 'color:#F5222D',
         isShow: ($row) => {
-          if ($row.contractStatus === 'audit') {
+          if ($row.contractStatus === 'audit' || $row.contractStatus === 'waitSign') {
             return true;
           } else {
             return false;
@@ -141,7 +141,7 @@ export const USER_CONFIG = {
         emitName: 'adopt',
         type: 'text',
         isShow: ($row) => {
-          if ($row.contractStatus === 'audit') {
+          if ($row.contractStatus === 'audit' || $row.contractStatus === 'waitSign') {
             return true;
           } else {
             return false;
