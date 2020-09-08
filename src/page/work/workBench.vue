@@ -1,7 +1,7 @@
 <template>
   <div class="main_page">
     <div class="w-welcome">
-      <div class="head">您好，小柒</div>
+      <div class="head">您好，{{name}}</div>
       <div class="tip">今天是{{ date }}，欢迎您回到小马哥运营后台</div>
     </div>
     <detailMode :config-data="configData"></detailMode>
@@ -16,6 +16,7 @@ import { TODO_BTN, MERCHANT_ENTRY_AUDIT, LOWER_AGENT_ENTRY,
   PARTNER_ENTRY_AUDIT, DEVICE_UNBIND,
   AGENT_ANNOUNCE, MERCHANT_DATA, AGENT_DATA,
   DEVICE_DATA } from "../../libs/data/permissionBtns";
+import store from "@/store"
 // import search from '@/components/search/search.vue';
 // import BaseCrud from '@/components/table/BaseCrud.vue';
 // import { USER_CONFIG } from './tableConfig/merchantConfig';
@@ -25,6 +26,7 @@ export default {
   components: { detailMode },
   data() {
     return {
+      name: store.state.admin.userInfo.name,
       configData: {
         name: "日常应用",
         imgColor: "#1989FA",

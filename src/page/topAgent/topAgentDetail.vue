@@ -106,10 +106,9 @@
       ></BaseCrud>
     </div>
 
-    <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size="40%">
+    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
-        v-if="drawer"
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
         @cancel="cancel"
@@ -262,6 +261,7 @@ import Form from "@/components/form/index.vue";
 import api from "@/api/api_agent.js";
 import api_dataMarket from "@/api/api_dataMarket.js";
 import api_device from "@/api/api_device.js";
+// import api_topAgent from "@/api/api_topAgent";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import detailMode from "@/components/detailMode/detailMode.vue";
 import detailMode5 from "@/components/detailMode/detailMode5.vue";
@@ -272,6 +272,7 @@ import {CONTACTS_CONFIG} from "../agent/formConfig/addContacts";
 import {LISASION} from "../agent/formConfig/addLiasion";
 import areaData from "@/assets/data/areaData";
 import store from "@/store"
+import api_topAgent from "../../api/api_topAgent";
 
 export default {
   name: "Theme",
@@ -419,9 +420,6 @@ export default {
       api.getBankLineByNo({
         unionCode: item
       }).then(res => {
-        console.log(res)
-        // this.dataForm.bankArea[0] = res.object.provinceCode
-        // this.dataForm.bankArea = res.object.cityCode
         var provinceName = ''
         var cityName = ''
         var areaName = ''
@@ -686,6 +684,11 @@ export default {
             areaName = m.label
           }
         })
+        if (res.object.provinceCode) {
+          var area = []
+          area.push(res.object.provinceCode, res.object.cityCode, res.object.areaCode)
+          res.object.area = area
+        }
         res.object.emailDetailAddress = provinceName + cityName + areaName
         const ruleForm = res.object;
         const payChannels = res.object.payChannels.map(($item, $index) => {
@@ -827,20 +830,57 @@ export default {
       this.addContactsDraw = false
     },
     confirm($ruleForm) {
+      console.log($ruleForm)
       switch (this.formType) {
         case "buyDevice":
           this.deviceOutputAdd($ruleForm)
           break;
         case "basicData":
+          if (!$ruleForm.businessType || !$ruleForm.channelAgentName || !$ruleForm.personName || !$ruleForm.personMobile || !$ruleForm.area || !$ruleForm.address) {
+            this.$message({
+              message: '请填写必填信息',
+              type: 'warning'
+            })
+            return false
+          }
+          if ($ruleForm.email) {
+            if (!this.$g.utils.checkEmail($ruleForm.email)) {
+              this.$message({
+                message: '请填写正确的邮箱格式',
+                type: 'warning'
+              })
+              return false
+            }
+          }
+          if (!this.$g.utils.checkPhone($ruleForm.personMobile)) {
+            this.$message({
+              message: '请填写正确的手机格式',
+              type: 'warning'
+            })
+            return false
+          }
+          if (!$ruleForm.licenseImg && !$ruleForm.licenseImg.dialogImageUrl) {
+            this.$message({
+              message: '请上传营业执照',
+              type: 'warning'
+            })
+            return false
+          }
+          if ($ruleForm.licenseImg && typeof ($ruleForm.licenseImg) === 'string') {
+            var img = $ruleForm.licenseImg.split('.com')
+            $ruleForm.licenseImg = img[1].slice(1, img[1].length)
+          }
+          if ($ruleForm.licenseImg && typeof ($ruleForm.licenseImg) === 'object') {
+            $ruleForm.licenseImg = $ruleForm.licenseImg.dialogImageUrl
+          }
           Object.assign($ruleForm, {
-            action: '1',
             channelAgentCode: this.channelAgentCode,
-            provinceCode: this.ruleForm.provinceCode,
-            areaCode: this.ruleForm.areaCode,
-            cityCode: this.ruleForm.cityCode,
-            licenseImg: this.$g.utils.isObj($ruleForm.licenseImg) ? $ruleForm.licenseImg.dialogImagePath + $ruleForm.licenseImg.dialogImageUrl : $ruleForm.licenseImg
+            provinceCode: $ruleForm.area[0],
+            cityCode: $ruleForm.area[1],
+            areaCode: $ruleForm.area[2],
+            licenseImg: $ruleForm.licenseImg
           })
-          this.updateTopAgentInfo($ruleForm);
+          this.baseInfo($ruleForm);
           break;
         case "finance":
           Object.assign($ruleForm, {
@@ -852,14 +892,17 @@ export default {
           this.updateTopAgentInfo($ruleForm);
           break;
         case "address":
+          if (!$ruleForm.expReceiver || !$ruleForm.expMobile || !$ruleForm.expAreaCode || !$ruleForm.expAddress) {
+            this.$message({
+              message: '请填写必填信息',
+              type: 'warning'
+            })
+            return false
+          }
           Object.assign($ruleForm, {
-            action: '3',
-            channelAgentCode: this.channelAgentCode,
-            expAreaCode: this.$g.utils.isArr($ruleForm.expAreaCode) ? $ruleForm.expAreaCode[2] : $ruleForm.expAreaCode,
-            expCityCode: this.$g.utils.isArr($ruleForm.expAreaCode) ? $ruleForm.expAreaCode[1] : $ruleForm.expCityCode,
-            expProvinceCode: this.$g.utils.isArr($ruleForm.expAreaCode) ? $ruleForm.expAreaCode[2] : $ruleForm.expProvinceCode
+            channelAgentCode: this.channelAgentCode
           })
-          this.updateTopAgentInfo($ruleForm);
+          this.addressInfo($ruleForm);
           break;
         case "rateInfo":
           Object.assign($ruleForm, {
@@ -877,6 +920,7 @@ export default {
           break;
       }
     },
+    // 编辑保存财务信息
     handel_save() {
       var $ruleForm = {
         bankContactLine: this.financeModel.bankContactLine,
@@ -885,20 +929,75 @@ export default {
         bankCardNo: this.financeModel.bankCardNo,
         channelAgentCode: this.channelAgentCode,
         bankAccountType: this.financeModel.bankAccountType,
-        bankAccountHolder: this.financeModel.bankAccountHolder,
-        action: '2'
+        bankAccountHolder: this.financeModel.bankAccountHolder
       }
-      this.updateTopAgentInfo($ruleForm)
+      api_topAgent.updateFinancial($ruleForm).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            message: '编辑成功',
+            type: 'success'
+          })
+          this.financeDrawer = false
+          this.formType = null;
+          this.getAgentDetail();
+        }
+      })
     },
     handel_cancle() {
       this.financeDrawer = false
     },
     /**
+     * 更新顶级服务商基础信息
+     */
+    baseInfo($ruleForm) {
+      api_topAgent.updateBaseInfo({
+        channelAgentCode: this.channelAgentCode,
+        businessType: $ruleForm.businessType,
+        channelAgentName: $ruleForm.channelAgentName,
+        licenseImg: $ruleForm.licenseImg,
+        personName: $ruleForm.personName,
+        personMobile: $ruleForm.personMobile,
+        address: $ruleForm.address,
+        email: $ruleForm.email ? $ruleForm.email : '',
+        provinceCode: $ruleForm.provinceCode,
+        cityCode: $ruleForm.cityCode,
+        areaCode: $ruleForm.areaCode
+      }).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            type: 'success',
+            message: '编辑成功'
+          })
+          this.financeDrawer = false
+          this.drawer = false;
+          this.formType = null;
+          this.getAgentDetail();
+        }
+      })
+    },
+    /**
+     * 更新服务商信息
+     */
+    addressInfo($ruleForm) {
+      console.log($ruleForm)
+    },
+    /**
      * 更新服务商信息
      */
     updateTopAgentInfo($ruleForm) {
-      console.log($ruleForm);
-      api.updateTopAgentInfo($ruleForm).then(res => {
+      api.updateTopAgentInfo({
+        channelAgentCode: this.channelCode,
+        businessType: $ruleForm.businessType,
+        channelAgentName: $ruleForm.channelAgentName,
+        licenseImg: $ruleForm.licenseImg,
+        personName: $ruleForm.personName,
+        personMobile: $ruleForm.personMobile,
+        address: $ruleForm.address,
+        email: $ruleForm.email ? $ruleForm.email : '',
+        provinceCode: $ruleForm.provinceCode,
+        cityCode: $ruleForm.cityCode,
+        areaCode: $ruleForm.areaCode
+      }).then(res => {
         this.$message({
           type: 'success',
           message: '已修改'

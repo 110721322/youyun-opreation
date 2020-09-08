@@ -30,12 +30,12 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '设备型号',
-      key: 'deviceModel',
-      isDisabled: true,
+      labelWidth: '100px',
+      key: 'deviceId',
       urlOptions: {
         url: apiDevice.queryAllDeviceModel,
         keyName: 'deviceId',
-        valueName: 'deviceType',
+        valueName: 'deviceModel',
         method: 'get',
         params: {
           classification: 1
@@ -49,6 +49,10 @@ export const SEARCH_CONFIG = {
       style: 'width:294px',
       labelWidth: '185px',
       options: [
+        {
+          label: '全部',
+          value: ''
+        },
         {
           label: '未激活',
           value: 1
