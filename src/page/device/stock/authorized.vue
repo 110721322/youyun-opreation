@@ -61,7 +61,7 @@ export default {
       params: {
         beginDate: this.$g.utils.getToday(),
         endDate: this.$g.utils.getToday(),
-        currentPage: 0,
+        currentPage: 1,
         deviceId: 1,
         deviceIdentifier: "",
         pageSize: 1,
@@ -70,21 +70,28 @@ export default {
       formItem: {
         key: 'file',
         dateUrl: ''
-      },
-      api: api.deviceActivationQueryByPage
+      }
     };
+  },
+  created() {
+    const beginDate = this.$g.utils.getNowFormatDate() + ' ' + '00' + ':' + '00' + ':' + '00'
+    const endDate = this.$g.utils.getNowFormatDate() + ' ' + '23' + ':' + '59' + ':' + '59'
+    this.params = {
+      beginDate: beginDate,
+      endDate: endDate
+    }
+    this.api = api.deviceActivationQueryByPage
   },
   mounted() {},
   methods: {
     search($ruleForm) {
-      console.log($ruleForm);
       const params = {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,
-        deviceId: $ruleForm.deviceId,
-        status: $ruleForm.status
+        deviceIdentifier: $ruleForm.deviceIdentifier ? $ruleForm.deviceIdentifier : '',
+        deviceId: $ruleForm.deviceId ? $ruleForm.deviceId : '',
+        status: $ruleForm.status ? $ruleForm.status : ''
       };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     },
     selectionChange($val) {
