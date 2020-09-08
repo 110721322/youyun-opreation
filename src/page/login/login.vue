@@ -139,8 +139,8 @@
             <div class="regist-title">服务商账户注册</div>
             <div class="input-box">
               <template>
-                <el-radio v-model="registerForm.businessType" label="1">企业商户</el-radio>
-                <el-radio v-model="registerForm.businessType" label="2">个人商户</el-radio>
+                <el-radio v-model="registerForm.businessType" label="enterprise">企业商户</el-radio>
+                <el-radio v-model="registerForm.businessType" label="individual">个人商户</el-radio>
               </template>
               <el-input
                 v-model="registerForm.company"
@@ -370,13 +370,12 @@ export default {
       }
 
       api
-        .getSmsCode({
+        .sendForgetCode({
           phone: this.ruleForm3.phone,
           system: 'operation'
         })
         .then(res => {
           if (res.status === 0) {
-            console.log('1111111111')
             this.countChangeTime = 60;
             const interval = setInterval(() => {
               if (that.countChangeTime > 0) {
@@ -385,7 +384,10 @@ export default {
                 clearInterval(interval);
               }
             }, 1000);
-            this.$message("已发送");
+            this.$message({
+              message: '已发送',
+              type: 'success'
+            });
           }
         })
         .catch(() => {
@@ -449,12 +451,7 @@ export default {
         roleId: roleId
       }).then(res => {
         computedRoleRouter(res.object)
-        this.addRoutes();
-        if (this.$route.query.redirect) {
-          this.$router.push({ path: `${this.$route.query.redirect}` });
-        } else {
-          this.$router.push(`/index`);
-        }
+        this.$router.push(`/index`);
       })
     },
     connactWebSocket ($params) {

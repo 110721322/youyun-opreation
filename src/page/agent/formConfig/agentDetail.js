@@ -96,7 +96,7 @@ export const FORM_CONFIG = {
       {
         type: 8,
         label: '选择地区',
-        key: 'expAreaCode',
+        key: 'expAreaData',
         style: 'width:294px',
         labelWidth: '185px',
         options: areaData,

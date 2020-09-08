@@ -664,106 +664,6 @@ export default {
         }
       }
     },
-    getAgentDetail() {
-      api_dataMarket.getTopAgentDetail({
-        channelAgentCode: this.channelAgentCode,
-        roleCode: store.state.admin.userInfo.roleId
-      }).then(res => {
-        var provinceName = ''
-        var cityName = ''
-        var areaName = ''
-        var result = this.$g.utils.getNestedArr(areaData, 'children')
-        result.forEach(m => {
-          if (m.value === res.object.expProvinceCode) {
-            provinceName = m.label
-          }
-          if (m.value === res.object.expCityCode) {
-            cityName = m.label
-          }
-          if (m.value === res.object.expAreaCode) {
-            areaName = m.label
-          }
-        })
-        if (res.object.provinceCode) {
-          var area = []
-          area.push(res.object.provinceCode, res.object.cityCode, res.object.areaCode)
-          res.object.area = area
-        }
-        res.object.emailDetailAddress = provinceName + cityName + areaName
-        const ruleForm = res.object;
-        const payChannels = res.object.payChannels.map(($item, $index) => {
-          return {
-            items: [
-              {
-                name: '通道名称',
-                initVal: $item.channel
-              },
-              {
-                name: '通道状态',
-                initVal: $item.expired ? '已开通' : '已到期'
-              }
-            ]
-          }
-        })
-        const businessModes = res.object.businessModes.map(($item, $index) => {
-          return {
-            name: $item.modeName + '到期时间',
-            initVal: $item.expiredDate
-          }
-        })
-        const customChannelComboPriceSets = res.object.customChannelComboPriceSets.map(($item, $index) => {
-          ruleForm['customChannel_' + $item.comboId] = $item.comboAmount
-          return {
-            items: [
-              {
-                name: '通道名称',
-                initVal: $item.productName
-              },
-              {
-                name: '服务时长',
-                initVal: $item.comboCount === -1 ? '长期' : ''
-              },
-              {
-                name: '服务价格',
-                key: 'customChannel_' + $item.comboId
-              }
-            ]
-          }
-        })
-        const customBrandComboPriceSets = res.object.customBrandComboPriceSets.map(($item, $index) => {
-          ruleForm['customBrand_' + $item.comboId] = $item.comboAmount
-          return {
-            items: [
-              {
-                name: '定制名称',
-                initVal: $item.productName
-              },
-              {
-                name: '服务时长',
-                initVal: $item.comboCount === -1 ? '长期' : ''
-              },
-              {
-                name: '服务价格',
-                key: 'customBrand_' + $item.comboId
-              }
-            ]
-          }
-        })
-        ruleForm['wechatPayRate'] = this.$g.utils.AccMul(ruleForm['wechatPayRate'], 1000);
-        ruleForm['alipayRate'] = this.$g.utils.AccMul(ruleForm['alipayRate'], 1000);
-        ruleForm['cloudPayLe1000Rate'] = this.$g.utils.AccMul(ruleForm['cloudPayLe1000Rate'], 1000);
-        ruleForm['cloudPayGt1000Rate'] = this.$g.utils.AccMul(ruleForm['cloudPayGt1000Rate'], 1000);
-        this.ruleForm = ruleForm;
-        if (businessModes.length > 0) {
-          this.configData2.child[2].models = [{items: businessModes}];
-        } else {
-          this.configData2.child[2].models = [];
-        }
-        this.configData2.child[0].models = payChannels;
-        this.configData2.child[3].models = customChannelComboPriceSets;
-        this.configData2.child[4].models = customBrandComboPriceSets;
-      });
-    },
     handleClose(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
     },
@@ -882,17 +782,8 @@ export default {
           })
           this.baseInfo($ruleForm);
           break;
-        case "finance":
-          Object.assign($ruleForm, {
-            action: '2',
-            channelAgentCode: this.channelAgentCode,
-            bankArea: this.$g.utils.isArr($ruleForm.bankArea) ? $ruleForm.bankArea[2] : $ruleForm.bankArea,
-            bankContactLine: this.ruleForm.bankContactLine
-          })
-          this.updateTopAgentInfo($ruleForm);
-          break;
         case "address":
-          if (!$ruleForm.expReceiver || !$ruleForm.expMobile || !$ruleForm.expAreaCode || !$ruleForm.expAddress) {
+          if (!$ruleForm.expReceiver || !$ruleForm.expMobile || !$ruleForm.expAreaData || !$ruleForm.expAddress) {
             this.$message({
               message: '请填写必填信息',
               type: 'warning'
@@ -905,16 +796,18 @@ export default {
           this.addressInfo($ruleForm);
           break;
         case "rateInfo":
-          Object.assign($ruleForm, {
-            action: '4',
-            channelAgentCode: this.channelAgentCode,
-            alipayRate: $ruleForm.wechatPayRate
-          })
-          $ruleForm.alipayRate = $ruleForm.alipayRate / 1000
+          if (!$ruleForm.wechatPayRate || !$ruleForm.cloudPayLe1000Rate || !$ruleForm.cloudPayGt1000Rate) {
+            this.$message({
+              message: '请填写必填信息',
+              type: 'warning'
+            })
+            return false
+          }
+          $ruleForm.alipayRate = $ruleForm.wechatPayRate / 1000
           $ruleForm.wechatPayRate = $ruleForm.wechatPayRate / 1000
           $ruleForm.cloudPayLe1000Rate = $ruleForm.cloudPayLe1000Rate / 1000
           $ruleForm.cloudPayGt1000Rate = $ruleForm.cloudPayGt1000Rate / 1000
-          this.updateTopAgentInfo($ruleForm);
+          this.rateInfo($ruleForm);
           break;
         default:
           break;
@@ -968,7 +861,38 @@ export default {
             type: 'success',
             message: '编辑成功'
           })
-          this.financeDrawer = false
+          this.drawer = false;
+          this.formType = null;
+          this.getAgentDetail();
+        }
+      })
+    },
+    /**
+     * 更新顶级服务商邮寄地址
+     */
+    addressInfo($ruleForm) {
+      console.log($ruleForm)
+      if (!this.$g.utils.checkPhone($ruleForm.expMobile)) {
+        this.$message({
+          message: '请输入正确的手机号',
+          type: 'warning'
+        })
+        return false
+      }
+      api_topAgent.updateAddress({
+        expReceiver: $ruleForm.expReceiver,
+        expMobile: $ruleForm.expMobile,
+        expProvinceCode: $ruleForm.expAreaData[0],
+        expCityCode: $ruleForm.expAreaData[1],
+        expAreaCode: $ruleForm.expAreaData[2],
+        expAddress: $ruleForm.expAddress,
+        channelAgentCode: this.channelAgentCode
+      }).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            message: '编辑成功',
+            type: 'success'
+          })
           this.drawer = false;
           this.formType = null;
           this.getAgentDetail();
@@ -978,8 +902,24 @@ export default {
     /**
      * 更新服务商信息
      */
-    addressInfo($ruleForm) {
-      console.log($ruleForm)
+    rateInfo($ruleForm) {
+      api_topAgent.updateFee({
+        channelAgentCode: this.channelAgentCode,
+        wechatPayRate: $ruleForm.wechatPayRate,
+        alipayRate: $ruleForm.alipayRate,
+        cloudPayLe1000Rate: $ruleForm.cloudPayLe1000Rate,
+        cloudPayGt1000Rate: $ruleForm.cloudPayGt1000Rate
+      }).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            message: '编辑成功',
+            type: 'success'
+          })
+          this.drawer = false;
+          this.formType = null;
+          this.getAgentDetail();
+        }
+      })
     },
     /**
      * 更新服务商信息
@@ -1036,6 +976,111 @@ export default {
         this.drawer = false;
         this.$message("订购成功");
       })
+    },
+    getAgentDetail() {
+      api_dataMarket.getTopAgentDetail({
+        channelAgentCode: this.channelAgentCode,
+        roleCode: store.state.admin.userInfo.roleId
+      }).then(res => {
+        var provinceName = ''
+        var cityName = ''
+        var areaName = ''
+        var result = this.$g.utils.getNestedArr(areaData, 'children')
+        result.forEach(m => {
+          if (m.value === res.object.expProvinceCode) {
+            provinceName = m.label
+          }
+          if (m.value === res.object.expCityCode) {
+            cityName = m.label
+          }
+          if (m.value === res.object.expAreaCode) {
+            areaName = m.label
+          }
+        })
+        if (res.object.provinceCode) {
+          var area = []
+          area.push(res.object.provinceCode, res.object.cityCode, res.object.areaCode)
+          res.object.area = area
+        }
+        if (res.object.expAreaCode) {
+          var expAreaData = []
+          expAreaData.push(res.object.expProvinceCode, res.object.expCityCode, res.object.expAreaCode)
+          res.object.expAreaData = expAreaData
+        }
+        res.object.emailDetailAddress = provinceName + cityName + areaName
+        const ruleForm = res.object;
+        const payChannels = res.object.payChannels.map(($item, $index) => {
+          return {
+            items: [
+              {
+                name: '通道名称',
+                initVal: $item.channel
+              },
+              {
+                name: '通道状态',
+                initVal: $item.expired ? '已开通' : '已到期'
+              }
+            ]
+          }
+        })
+        const businessModes = res.object.businessModes.map(($item, $index) => {
+          return {
+            name: $item.modeName + '到期时间',
+            initVal: $item.expiredDate
+          }
+        })
+        const customChannelComboPriceSets = res.object.customChannelComboPriceSets.map(($item, $index) => {
+          ruleForm['customChannel_' + $item.comboId] = $item.comboAmount
+          return {
+            items: [
+              {
+                name: '通道名称',
+                initVal: $item.productName
+              },
+              {
+                name: '服务时长',
+                initVal: $item.comboCount === -1 ? '长期' : ''
+              },
+              {
+                name: '服务价格',
+                key: 'customChannel_' + $item.comboId
+              }
+            ]
+          }
+        })
+        const customBrandComboPriceSets = res.object.customBrandComboPriceSets.map(($item, $index) => {
+          ruleForm['customBrand_' + $item.comboId] = $item.comboAmount
+          return {
+            items: [
+              {
+                name: '定制名称',
+                initVal: $item.productName
+              },
+              {
+                name: '服务时长',
+                initVal: $item.comboCount === -1 ? '长期' : ''
+              },
+              {
+                name: '服务价格',
+                key: 'customBrand_' + $item.comboId
+              }
+            ]
+          }
+        })
+        ruleForm['wechatPayRate'] = this.$g.utils.AccMul(ruleForm['wechatPayRate'], 1000);
+        ruleForm['alipayRate'] = this.$g.utils.AccMul(ruleForm['alipayRate'], 1000);
+        ruleForm['cloudPayLe1000Rate'] = this.$g.utils.AccMul(ruleForm['cloudPayLe1000Rate'], 1000);
+        ruleForm['cloudPayGt1000Rate'] = this.$g.utils.AccMul(ruleForm['cloudPayGt1000Rate'], 1000);
+        this.ruleForm = ruleForm;
+        if (businessModes.length > 0) {
+          this.configData2.child[2].models = [{items: businessModes}];
+        } else {
+          this.configData2.child[2].models = [];
+        }
+        this.configData2.child[0].models = payChannels;
+        this.configData2.child[3].models = customChannelComboPriceSets;
+        this.configData2.child[4].models = customBrandComboPriceSets;
+      });
     }
   }
 };
