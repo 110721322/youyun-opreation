@@ -10,8 +10,8 @@ export const FORM_CONFIG = {
         label: "头像",
         key: "img",
         maxNum: 1,
-        // key: "headerImageSrc",
-        initVal: ""
+        initVal: "",
+        rules: setRules("头像").isSelected.get
       },
       {
         type: 0,
@@ -63,6 +63,7 @@ export const FORM_CONFIG = {
         label: "生日",
         key: "birthday",
         initVal: null,
+        format: 'yyyy-MM-dd',
         dateType: "date",
         rules: setRules("生日").isSelected.get
       },

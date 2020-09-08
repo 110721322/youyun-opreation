@@ -134,18 +134,13 @@ export const configData2 = {
         {
           items: [
             {
-              name: "微信费率(直连)",
+              name: "微信/支付宝费率(直连)",
               key: "wechatPayRate",
               type: 'pecent'
             },
             {
               name: "云闪付费率单笔＞1000(间连)",
               key: "cloudPayGt1000Rate",
-              type: 'pecent'
-            },
-            {
-              name: "支付宝费率(直连)",
-              key: "alipayRate",
               type: 'pecent'
             },
             {

@@ -10,7 +10,7 @@ export const FORM_CONFIG = {
         label: "直属上级",
         key: "superiorId",
         initVal: "",
-        rules: setRules("直属上级", 1).isRequired.get
+        rules: setRules("直属上级", 1).isSelected.get
       },
       {
         type: 1,
