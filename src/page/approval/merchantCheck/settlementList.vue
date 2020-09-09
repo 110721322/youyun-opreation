@@ -62,9 +62,7 @@ export default {
       this.$router.push({
         path: "/approval/checkMerchant/settlementList/detail",
         query: {
-          channelMerchantNo: row.channelMerchantNo,
-          channelAgentCode: row.channelAgentCode,
-          channelCode: row.channelCode,
+          id: row.id,
           auditStatus: row.auditStatus
         }
       });
@@ -73,9 +71,7 @@ export default {
       this.$router.push({
         path: "/approval/checkMerchant/settlementList/detail",
         query: {
-          channelMerchantNo: row.channelMerchantNo,
-          channelAgentCode: row.channelAgentCode,
-          channelCode: row.channelCode
+          id: row.id
         }
       });
     },

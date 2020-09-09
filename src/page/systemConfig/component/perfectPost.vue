@@ -71,8 +71,8 @@ export default {
   },
   computed: {
     ...mapState({
-      positionList: state => state.system.positionList,
-      employeeList: state => state.system.employeeList
+      positionList: state => state.system.employeeList,
+      employeeList: state => state.system.positionList
     }),
     formConfigData() {
       FORM_CONFIG.editData.formData.forEach((item, index) => {
@@ -126,6 +126,14 @@ export default {
       })
     },
     confirm($ruleForm) {
+      console.log($ruleForm)
+      if (!$ruleForm.position || !$ruleForm.superiorId) {
+        this.$message({
+          message: '请填写必填信息',
+          type: 'warning'
+        })
+        return false;
+      }
       const formData = {
         employeeId: this.employeeId,
         positionId: $ruleForm['position'],

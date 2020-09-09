@@ -11,7 +11,6 @@ export const FORM_CONFIG = {
         type: 5,
         label: '账户类型',
         key: 'businessType',
-        initVal: '',
         options: [
           {
             label: '企业',
@@ -27,7 +26,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '公司名称',
-        key: 'agentName',
+        key: 'channelAgentName',
         initVal: '',
         rules: setRules('请填写').isRequired.get
       },
@@ -49,69 +48,28 @@ export const FORM_CONFIG = {
         type: 0,
         label: '邮箱',
         key: 'email',
-        initVal: '',
-        rules: setRules('请填写').isRequired.get
+        initVal: ''
+      },
+      {
+        type: 8,
+        label: '公司地址',
+        key: 'area',
+        options: areaData,
+        rules: setRules('公司地址').isSelected.get
       },
       {
         type: 0,
-        label: '公司地址',
-        key: 'companyAddress',
+        label: '详细地址',
+        key: 'address',
         rules: setRules('请填写').isRequired.get
       },
       {
         type: 6,
         label: '营业执照',
-        key: 'businessLicenseImg',
+        key: 'licenseImg',
         maxNum: 1,
         initVal: '',
         rules: setRules('营业执照').isSelected.get
-      }
-    ]
-  },
-  finance: {
-    title: '财务信息',
-    showFootBtn: true,
-    formData: [
-      {
-        type: 5,
-        label: '结算卡类型',
-        key: 'bankAccountType',
-        options: [
-          {
-            label: '对私',
-            value: 'private'
-          },
-          {
-            label: '对公',
-            value: 'public'
-          }
-        ]
-      },
-      {
-        type: 0,
-        label: '开户名',
-        key: 'bankAccountHolder',
-        initVal: ''
-      },
-      {
-        type: 0,
-        label: '银行卡号',
-        key: 'bankCardNo',
-        initVal: ''
-      },
-      {
-        type: 8,
-        label: '开户支行地区',
-        key: 'bankArea',
-        initVal: '',
-        options: areaData
-      },
-      {
-        type: 0,
-        label: '开户支行',
-        key: 'bankBranchName',
-        initVal: '',
-        isSearch: true
       }
     ]
   },
@@ -124,29 +82,33 @@ export const FORM_CONFIG = {
         label: '收件人',
         key: 'expReceiver',
         initVal: '',
-        placeholder: '请填写'
+        placeholder: '请填写收件人姓名',
+        rules: setRules('请填写').isRequired.get
       },
       {
         type: 0,
         label: '联系方式',
         key: 'expMobile',
         initVal: '',
-        placeholder: '请填写'
+        placeholder: '请填写联系方式',
+        rules: setRules('请填写').isRequired.get
       },
       {
         type: 8,
         label: '选择地区',
-        key: 'expAreaCode',
+        key: 'expAreaData',
         style: 'width:294px',
         labelWidth: '185px',
-        options: areaData
+        options: areaData,
+        rules: setRules('请填写').isSelected.get
       },
       {
         type: 0,
         label: '详细地址',
         key: 'expAddress',
         initVal: '',
-        placeholder: '请填写'
+        placeholder: '请填写详细地址',
+        rules: setRules('请填写').isRequired.get
       }
     ]
   },

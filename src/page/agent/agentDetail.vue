@@ -51,15 +51,7 @@
       <el-row>
         <el-col :span="8" class="app">
           <img src="https://avatars1.githubusercontent.com/u/23054546?s=64&v=4" alt />
-          <div>订购设备</div>
-        </el-col>
-        <el-col :span="8" class="app">
-          <img src="https://avatars1.githubusercontent.com/u/23054546?s=64&v=4" alt />
-          <div>佣金结算</div>
-        </el-col>
-        <el-col :span="8" class="app border_none">
-          <img src="https://avatars1.githubusercontent.com/u/23054546?s=64&v=4" alt />
-          <div>第三方对接</div>
+          <div @click="orderEquipment">订购设备</div>
         </el-col>
       </el-row>
     </div>
@@ -294,6 +286,16 @@
         </li>
       </ul>
     </el-dialog>
+    <el-drawer :visible.sync="equipment" :with-header="false" size="30%">
+      <div class="p_head">{{ equipmentConfigData.title }}</div>
+      <Form
+          ref="liaisonRef"
+          :form-base-data="equipmentConfigData.formData"
+          :show-foot-btn="equipmentConfigData.showFootBtn"
+          @confirm="equipment_confirm"
+          @cancel="cancel"
+      ></Form>
+    </el-drawer>
   </div>
 </template>
 
@@ -301,7 +303,9 @@
 import Form from "@/components/form/index.vue";
 import api from "@/api/api_agent.js";
 import BaseCrud from "@/components/table/BaseCrud.vue";
+import api_device from "@/api/api_device.js";
 import detailMode from "@/components/detailMode/detailMode.vue";
+import { ORDER_EQUIPMENT } from "./formConfig/orderEquipmentForm";
 import { USER_CONFIG, USER_CONFIG2 } from "./tableConfig/config_communicate";
 import { DETAILCONFIG } from "./tableConfig/agentDetailConfig";
 import { FORM_CONFIG } from "./formConfig/agentDetail";
@@ -320,6 +324,7 @@ export default {
       talkListDetail: {},
       dialogTableVisible: false,
       liaisonId: '',
+      equipment: false,
       addLiaison: false,
       findLiaison: false,
       addDrewerType: '',
@@ -332,6 +337,7 @@ export default {
       inputValue: "",
       configData: DETAILCONFIG.configData,
       configData2: DETAILCONFIG.configData2,
+      equipmentConfigData: ORDER_EQUIPMENT,
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -536,10 +542,10 @@ export default {
             this.dynamicTags.push(item.name);
           });
           if (res.object.wechatPayRate) {
-            res.object.wechatPayRate = res.object.wechatPayRate * 1000
-            res.object.alipayRate = res.object.alipayRate * 1000
-            res.object.cloudPayGt1000Rate = res.object.cloudPayGt1000Rate * 1000
-            res.object.cloudPayLe1000Rate = res.object.cloudPayLe1000Rate * 1000
+            res.object.alipayRate = this.$g.utils.AccMul(res.object.alipayRate, 1000);
+            res.object.wechatPayRate = this.$g.utils.AccMul(res.object.wechatPayRate, 1000);
+            res.object.cloudPayGt1000Rate = this.$g.utils.AccMul(res.object.cloudPayGt1000Rate, 1000);
+            res.object.cloudPayLe1000Rate = this.$g.utils.AccMul(res.object.cloudPayLe1000Rate, 1000);
           }
           this.ruleForm = res.object
         }
@@ -670,6 +676,9 @@ export default {
           })
         }
       }
+    },
+    orderEquipment() {
+      this.equipment = true
     },
     // 标签输入框
     tagInput(value) {
@@ -974,6 +983,37 @@ export default {
         }
       }
     },
+    equipment_confirm($ruleForm) {
+      const params = {
+        saleUserId: this.$store.state.admin.userInfo.id,
+        saleUserName: this.$store.state.admin.userInfo.name,
+        amount: $ruleForm.amount,
+        buyerAddress: $ruleForm.buyerAddress,
+        buyerName: this.ruleForm.expReceiver,
+        buyerPhone: this.ruleForm.expMobile,
+        outputType: 2, // 运营订购
+        actualAmount: $ruleForm.actualAmount,
+        agentNo: this.$route.query.agentNo,
+        payType: $ruleForm.payType,
+        voucher: $ruleForm.voucher.dialogImageUrl,
+        buyerRemark: $ruleForm.buyerRemark,
+        infoVOList: [{
+          count: $ruleForm.count,
+          deviceModel: $ruleForm.deviceModel,
+          deviceId: $ruleForm.deviceId,
+          salePrice: $ruleForm.actualAmount
+        }]
+      }
+      api_device.deviceOutputAdd(params).then(res => {
+        this.drawer = false;
+        if (res.status === 0) {
+          this.$message({
+            message: '订购成功',
+            type: 'success'
+          });
+        }
+      })
+    },
     // 查询通讯簿
     getAddressBookQuery() {
       api.addressBookQuery({
@@ -1198,7 +1238,7 @@ export default {
   }
 }
 .app {
-  border-right: 1px solid #ebeef5;
+  width: 100%;
   text-align: center;
   font-size: 14px;
   font-weight: 500;

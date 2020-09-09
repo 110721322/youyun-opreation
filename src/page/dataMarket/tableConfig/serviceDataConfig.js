@@ -145,7 +145,7 @@ export const MERCHANTDATACONFIG5 = {
       prop: "actualAmount",
       width: "70px",
       formatter($row) {
-        return '¥' + $row['actualAmount'];
+        return (('¥' + $row['actualAmount']) || 0);
       }
     }
   ]

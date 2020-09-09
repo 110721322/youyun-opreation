@@ -22,7 +22,7 @@
             已选择
             <span class="blue">{{ selectData.length }}</span> 项目
           </span>
-          <el-button class="btn" type="text">清空</el-button>
+          <el-button class="btn" type="text" @click="clear">清空</el-button>
         </div>
         <BaseCrud
           ref="child"
@@ -116,6 +116,10 @@ export default {
           message: "请选择代理商"
         });
       }
+    },
+    clear() {
+      this.selectData = []
+      this.$refs.child.$children[0].clearSelection();
     },
     handle_ok() {
       if (!this.operationId) {

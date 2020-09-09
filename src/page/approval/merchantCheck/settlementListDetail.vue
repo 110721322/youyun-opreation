@@ -46,9 +46,7 @@ export default {
 
   data() {
     return {
-      channelMerchantNo: '',
-      channelAgentCode: '',
-      channelCode: '',
+      id: '',
       fromConfigData: {},
       drawer: false,
       rejectTitle: "",
@@ -199,9 +197,7 @@ export default {
     }
   },
   created() {
-    this.channelMerchantNo = this.$route.query.channelMerchantNo
-    this.channelAgentCode = this.$route.query.channelAgentCode
-    this.channelCode = this.$route.query.channelCode
+    this.id = this.$route.query.id
     this.getDetail()
   },
   mounted() {
@@ -209,9 +205,7 @@ export default {
   methods: {
     getDetail() {
       api.getMerchantSettleDetail({
-        channelMerchantNo: this.channelMerchantNo,
-        channelAgentCode: this.channelAgentCode,
-        channelCode: this.channelCode
+        id: this.id
       }).then(res => {
         if (res.object.old.merchantType === 'enterprise') {
           res.object.old.merchantType = '企业'
@@ -256,8 +250,7 @@ export default {
         cancelButtonText: "取消"
       }).then(() => {
         api.updateAuditStatusOfPass({
-          channelMerchantNo: this.channelMerchantNo,
-          channelCode: this.channelCode
+          id: this.id
         }).then(res => {
           if (res.status === 0) {
             this.$message({
@@ -283,9 +276,8 @@ export default {
         return false
       } else {
         api.updateAuditStatusOfReject({
-          channelMerchantNo: this.channelMerchantNo,
-          reason: $data["reason"],
-          channelCode: this.channelCode
+          id: this.id,
+          reason: $data["reason"]
         }).then(res => {
           if (res.status === 0) {
             this.$message({

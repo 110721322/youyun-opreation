@@ -1,6 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
-import { Loading, Message } from 'element-ui';
+import { Message } from 'element-ui';
 import store from '@/store';
 import router from "@/router"
 import * as g from '../libs/global';
@@ -28,7 +28,7 @@ axios.interceptors.request.use((config) => {
   if (JSON.stringify(config.data) === "{}") {
     config.data = null;
   }
-  Loading.service({text: '载入中', body: true})
+  // Loading.service({text: '载入中', body: true})
   return config;
 }, (error) => {
   // Do something with request error
@@ -37,7 +37,7 @@ axios.interceptors.request.use((config) => {
 
 // 添加一个响应拦截器
 axios.interceptors.response.use((response) => {
-  Loading.service().close();
+  // Loading.service().close();
   if (response.data && response.data.status === 0) {
     return response;
   } else if (response.data && response.data.status === 1 && response.data.code !== null) {
@@ -68,7 +68,7 @@ axios.interceptors.response.use((response) => {
   }
 }, (error) => {
   // Do something with response error
-  Loading.service().close();
+  // Loading.service().close();
   if (error.response) {
     switch (error.response.status) {
       case 400:

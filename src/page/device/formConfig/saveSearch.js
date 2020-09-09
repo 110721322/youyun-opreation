@@ -6,17 +6,20 @@ export const SEARCH_CONFIG = {
       type: 9,
       label: '筛选时间',
       key: 'date',
+      datatype: 'datetimerange',
+      format: 'yyyy-MM-dd HH:mm:ss',
       class: 'max-width',
       labelWidth: '100px'
     },
     {
       type: 1,
       label: '设备型号',
+      labelWidth: '100px',
       key: 'deviceId',
       urlOptions: {
         url: apiDevice.queryAllDeviceModel,
         keyName: 'deviceId',
-        valueName: 'deviceType',
+        valueName: 'deviceModel',
         method: 'get',
         params: {
           classification: 1

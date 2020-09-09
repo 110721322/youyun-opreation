@@ -30,7 +30,7 @@ export const FORM_CONFIG = {
         label: '广告图片',
         key: 'advertImg',
         showFileList: true,
-        maxNum: 2,
+        maxNum: 6,
         rules: setRules('广告图片').isRequired.get
       }
     ]

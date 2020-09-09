@@ -8,7 +8,18 @@ export const TABLE_CONFIG = {
     {
       label: '开启权限',
       prop: 'privilegeDesc',
-      width: '150px'
+      width: '150px',
+      render: (h, params) => {
+        if (params.row.privilegeDesc.length === 0) {
+          return h(
+            'span', '-'
+          )
+        } else {
+          return h(
+            'span', '[' + params.row.privilegeDesc + ']'
+          )
+        }
+      }
     },
     {
       label: '所属运营',
