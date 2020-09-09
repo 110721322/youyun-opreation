@@ -59,8 +59,7 @@ export default {
   created() {
     this.params = {
       to: 'agent',
-      title: "",
-      messageType: 0
+      title: ""
     };
   },
   mounted() {},
