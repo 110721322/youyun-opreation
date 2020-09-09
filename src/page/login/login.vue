@@ -451,7 +451,13 @@ export default {
         roleId: roleId
       }).then(res => {
         computedRoleRouter(res.object)
+        this.addRoutes();
         this.$router.push(`/index`);
+        // if (this.$route.query.redirect) {
+        //   this.$router.push({ path: `${this.$route.query.redirect}` });
+        // } else {
+        //   this.$router.push(`/index`);
+        // }
       })
     },
     connactWebSocket ($params) {
