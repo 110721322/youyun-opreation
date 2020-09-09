@@ -704,10 +704,11 @@ export default {
           bankAccountHolder: this.ruleForm.bankAccountHolder
         }
       } else {
-        this.fromConfigData = FORM_CONFIG[$model];
-        for (const $item of this.fromConfigData.formData) {
+        const commonData = FORM_CONFIG[$model]
+        for (const $item of commonData.formData) {
           $item.initVal = this.ruleForm[$item.key];
         }
+        this.fromConfigData = this.$g.utils.deepClone(commonData)
         this.formType = $model
         this.drawer = true;
       }
@@ -982,6 +983,7 @@ export default {
         channelAgentCode: this.channelAgentCode,
         roleCode: store.state.admin.userInfo.roleId
       }).then(res => {
+        const ruleForm = res.object
         var provinceName = ''
         var cityName = ''
         var areaName = ''
@@ -1008,7 +1010,6 @@ export default {
           res.object.expAreaData = expAreaData
         }
         res.object.emailDetailAddress = provinceName + cityName + areaName
-        const ruleForm = res.object;
         const payChannels = res.object.payChannels.map(($item, $index) => {
           return {
             items: [
@@ -1067,10 +1068,10 @@ export default {
             ]
           }
         })
-        ruleForm['wechatPayRate'] = this.$g.utils.AccMul(ruleForm['wechatPayRate'], 1000);
-        ruleForm['alipayRate'] = this.$g.utils.AccMul(ruleForm['alipayRate'], 1000);
-        ruleForm['cloudPayLe1000Rate'] = this.$g.utils.AccMul(ruleForm['cloudPayLe1000Rate'], 1000);
-        ruleForm['cloudPayGt1000Rate'] = this.$g.utils.AccMul(ruleForm['cloudPayGt1000Rate'], 1000);
+        ruleForm.wechatPayRate = this.$g.utils.AccMul(ruleForm.wechatPayRate, 1000);
+        ruleForm.alipayRate = this.$g.utils.AccMul(ruleForm.alipayRate, 1000);
+        ruleForm.cloudPayLe1000Rate = this.$g.utils.AccMul(ruleForm.cloudPayLe1000Rate, 1000);
+        ruleForm.cloudPayGt1000Rate = this.$g.utils.AccMul(ruleForm.cloudPayGt1000Rate, 1000);
         this.ruleForm = ruleForm;
         if (businessModes.length > 0) {
           this.configData2.child[2].models = [{items: businessModes}];
