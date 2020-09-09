@@ -11,6 +11,9 @@
       @confirm="confirm"
       @selectChange="selectChange"
     >
+      <template v-slot="{ formItem }">
+        <div v-if="formItem.putService===4">{{formItem.putService}}</div>
+      </template>
       <template v-slot="{ formItem } ">
         <div v-if="formItem.putService===4">
           <div class="select_data">
@@ -76,10 +79,11 @@
             已选择
             <span class="blue">{{ selectData.length }}</span> 项目
           </span>
-          <el-button class="btn" type="text">清空</el-button>
+          <el-button class="btn" type="text" @click="clearMrechant">清空</el-button>
         </div>
         <BaseCrud
           v-if="drawer"
+          ref="merchant"
           :grid-config="configData2.gridConfig"
           :grid-btn-config="configData2.gridBtnConfig"
           :grid-data="testData"
@@ -143,6 +147,9 @@ export default {
   methods: {
     onClick_clearAll() {
       this.dynamicTags = [];
+    },
+    clearMrechant() {
+      this.$refs.merchant.$children[0].clearSelection()
     },
     queryAllPrivilegeType() {
       apiAgent.queryAllPrivilegeType({}).then(res => {

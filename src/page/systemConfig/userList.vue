@@ -167,10 +167,18 @@ export default {
       this.drawer = false;
     },
     confirm($ruleForm) {
-      const img = this.$g.utils.isString($ruleForm.img) ? $ruleForm.img : (($ruleForm.img.dialogImagePath ? $ruleForm.img.dialogImagePath : '') + $ruleForm.img.dialogImageUrl); // 兼容未修改图片情况
-      if (!img) {
+      var img = ''
+      if (!$ruleForm.img) {
         this.$message('请上传头像');
         return;
+      }
+      if ($ruleForm.img) {
+        if (this.$g.utils.isString($ruleForm.img)) {
+          var img1 = $ruleForm.img.split('.com')
+          img = img1[1].slice(1, img1[1].length)
+        } else {
+          img = $ruleForm.img.dialogImageUrl
+        }
       }
       if (!$ruleForm.jobName) {
         this.$message('请输入花名');

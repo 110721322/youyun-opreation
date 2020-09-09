@@ -90,9 +90,12 @@ export default {
       })
         .then(res => {
           if (res.status === 0) {
-            this.$alert(this.noticeId ? '修改成功' : "添加成功");
-            this.$router.push({ path: "/message/serviceAnnouncementList" });
+            this.$message({
+              message: this.noticeId ? '编辑成功' : '添加成功',
+              type: 'success'
+            })
           }
+          this.$router.replace({ path: "/message/serviceAnnouncementList" });
         })
         .catch();
     }
