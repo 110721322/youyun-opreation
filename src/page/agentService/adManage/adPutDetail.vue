@@ -9,6 +9,7 @@
       label-width="130px"
       @cancel="cancel"
       @confirm="confirm"
+      @selectChange="selectChange"
     >
       <template v-slot="{ formItem } ">
         <div v-if="formItem.putService===4">
@@ -244,6 +245,9 @@ export default {
           this.$message(err);
         })
       }
+    },
+    selectChange(ruleForm) {
+      console.log(ruleForm)
     }
   }
 };

@@ -167,8 +167,8 @@ export default {
       this.drawer = false;
     },
     confirm($ruleForm) {
-      const img = this.$g.utils.isString($ruleForm.img) ? $ruleForm.img : ($ruleForm.img.dialogImagePath + $ruleForm.img.dialogImageUrl); // 兼容未修改图片情况
-      if (($ruleForm.img === "undefined" || !$ruleForm.img.dialogImageUrl)) {
+      const img = this.$g.utils.isString($ruleForm.img) ? $ruleForm.img : (($ruleForm.img.dialogImagePath ? $ruleForm.img.dialogImagePath : '') + $ruleForm.img.dialogImageUrl); // 兼容未修改图片情况
+      if (!img) {
         this.$message('请上传头像');
         return;
       }

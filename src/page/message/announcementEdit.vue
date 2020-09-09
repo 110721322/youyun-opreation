@@ -80,8 +80,10 @@ export default {
         id: this.noticeId ? this.noticeId : ''
       })
         .then(res => {
-          this.$alert("修改成功");
-          this.$router.push({ path: "/message/serviceAnnouncementList" });
+          if (res.status === 0) {
+            this.$alert(this.noticeId ? '修改成功' : "添加成功");
+            this.$router.push({ path: "/message/serviceAnnouncementList" });
+          }
         })
         .catch();
     }

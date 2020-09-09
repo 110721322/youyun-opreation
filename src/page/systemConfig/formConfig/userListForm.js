@@ -11,7 +11,8 @@ export const FORM_CONFIG = {
         key: "img",
         maxNum: 1,
         // key: "headerImageSrc",
-        initVal: ""
+        initVal: "",
+        rules: setRules('头像').isSelected.get
       },
       {
         type: 0,
