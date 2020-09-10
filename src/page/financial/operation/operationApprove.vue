@@ -98,6 +98,50 @@
         @confirm="confirm"
       ></Form>
     </el-drawer>
+
+    <el-drawer
+      :visible.sync="detailDrawer"
+      direction="rtl"
+      :before-close="handleClose"
+      size="40%"
+    >
+      <div slot="title" class="drawer-contenttitle">
+        <span>佣金结算详情</span>
+      </div>
+      <div class="content-draw">
+        <div class="content-form">
+          <div class="form-select">
+            <div class="select">
+              <div class="check-box">
+                <div hide-required-asterisk="true" class="left-label">结算类型：</div>
+                <div>
+                  <!-- <div v-for="(confDate, index) in seetlmap.confDate" :key="index" class="select-price">{{ (confDate.name+'['+confDate.dateTxt+']') }}</div> -->
+                </div>
+              </div>
+            </div>
+            <div class="select" style="margin: 16px 0 24px 0;">
+              <div class="left-label">总佣金：</div>
+              <div class="select-price">{{ 0 }}</div>
+            </div>
+            <div class="select" style="margin: 16px 0 24px 0;">
+              <div class="left-label">扣除佣金:</div>
+              <div class="select-price">
+                <div class="select-price">{{ 0 }}</div>
+              </div>
+            </div>
+            <div class="select" style="margin: 16px 0 24px 0;">
+              <div class="left-label">结算金额:</div>
+              <div class="select-price">{{ 0 }}</div>
+            </div>
+          </div>
+          <Form
+            :form-base-data="detailFormConfigData.formData"
+            :show-foot-btn="detailFormConfigData.showFootBtn"
+            label-width="130px"
+          ></Form>
+        </div>
+      </div>
+    </el-drawer>
   </div>
 </template>
 <script>
@@ -105,7 +149,7 @@ import arrowImg from "@/assets/img/arrow.png";
 import Search from "@/components/search/search.vue";
 import Form from "@/components/form/index.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
-import { FORM_CONFIG } from "../formConfig/operationApproveForm";
+import { FORM_CONFIG, DETAIL_FORM_CONFIG } from "../formConfig/operationApproveForm";
 import { SEARCH_CONFIG } from "../formConfig/operationApproveSearch";
 import { OPERATIONAPPROVE_CONFIG } from "../tableConfig/operationApproveConfig";
 import api from "@/api/api_financialAudit.js";
@@ -119,6 +163,7 @@ export default {
       searchConfig: SEARCH_CONFIG,
       configData: OPERATIONAPPROVE_CONFIG,
       fromConfigData: {},
+      detailFormConfigData: DETAIL_FORM_CONFIG.detailData,
       testData: [],
       drawer: false,
       direction: "rtl",
@@ -128,7 +173,8 @@ export default {
       apiAgent: api.listOperationSettle,
       formStatus: null,
       activeRow: {},
-      activeName: '0'
+      activeName: '0',
+      detailDrawer: false
     };
   },
   created() {
@@ -191,10 +237,14 @@ export default {
       this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
     },
     onClick_detail($row) {
-      this.$router.push({
-        path: "/transferReview/financialAudit/financialSettlement/detail",
-        query: { id: $row.id }
-      });
+      // this.$router.push({
+      //   path: "/transferReview/financialAudit/financialSettlement/detail",
+      //   query: { id: $row.id }
+      // });
+      this.detailDrawer = true;
+    },
+    handleClose() {
+      this.detailDrawer = false;
     },
     onClick_reject($row) {
       const queryDetailApi = this.activeName === '0' ? 'topQueryDetail' : 'queryDetail'
@@ -378,6 +428,58 @@ export default {
     .btn {
       float: right;
     }
+  }
+  .drawer-contenttitle {
+    font-size: 20px;
+    font-weight: 500;
+  }
+  .content-draw {
+    width: 100%;
+    padding: 24px 32px 100px 32px;
+  }
+  .content-form {
+    width: 100%;
+    border: 1px solid #E9E9E9;
+    border-radius: 4px;
+    margin-bottom: 24px;
+  }
+  .content-title {
+    width: 100%;
+    height: 44px;
+    border-bottom: 1px solid #E9E9E9;
+    background: #EBEEF5;
+    line-height: 44px;
+    padding-left: 24px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .form-select {
+    padding: 10px 5px 0px 5px;
+  }
+  .select {
+    display: flex;
+  }
+  .left-label {
+    min-width: 130px;
+    text-align: right;
+    margin-right: 6px;
+  }
+  .check-box {
+    flex-shrink: 1;
+  }
+  .el-checkbox, .el-checkbox__input {
+    white-space: normal;
+    word-break: break-all;
+  }
+  .select-price {
+    font-size: 14px;
+    color: #606266;
+  }
+  .select-box {
+    // width: 50%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
   }
 </style>
 

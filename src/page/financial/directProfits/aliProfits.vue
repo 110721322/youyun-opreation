@@ -45,30 +45,6 @@
         @confirm="confirm"
         @cancel="cancel"
       ></Form>
-      <!-- <div class="content">
-        <el-form ref="form" :model="form" label-width="160px">
-          <el-form-item label="奖励核算时间:">
-            <el-date-picker
-              v-model="value1"
-              type="date"
-              placeholder="选择月"
-            >
-            </el-date-picker>
-          </el-form-item>
-          <el-form-item label="上传文件:">
-            <div class="flex-align-center">
-              <el-upload style="margin-right: 20px;">
-                <el-button size="small" type="primary" plain>选择文件</el-button>
-              </el-upload>
-              <p class="g-underline">模版下载</p>
-            </div>
-          </el-form-item>
-        </el-form>
-        <div class="bottom-btn">
-          <el-button type="primary">确定</el-button>
-          <el-button plain>取消</el-button>
-        </div>
-      </div> -->
     </el-drawer>
   </div>
 </template>
@@ -77,9 +53,9 @@
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import Form from "@/components/form/index.vue";
-import {SEARCH_CONFIG} from "../formConfig/aliProfitsSearch";
-import {SERVICE_CONFIG} from "../tableConfig/aliProfitsConfig";
-import {APISRARD_CONFIG} from "../formConfig/apiAward";
+import { SEARCH_CONFIG } from "../formConfig/aliProfitsSearch";
+import { SERVICE_CONFIG } from "../tableConfig/aliProfitsConfig";
+import { APISRARD_CONFIG } from "../formConfig/apiAward";
 import api_statistice from "@/api/api_statistice";
 
 export default {
@@ -103,21 +79,7 @@ export default {
       apiserver: api_statistice.aliMerchants
     }
   },
-  mounted() {
-    // this.getData()
-    // var myDate = new Date()
-    // if (myDate.getMonth() < 10) {
-    //   this.tradeMonth = myDate.getFullYear() + "-" + "0" + myDate.getMonth() + "-" + "01"
-    //   this.params = {
-    //     tradeMonth: this.tradeMonth + " 00:00:00"
-    //   }
-    // } else {
-    //   this.tradeMonth = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + "01"
-    //   this.params = {
-    //     tradeMonth: this.tradeMonth + " 00:00:00"
-    //   }
-    // }
-  },
+  mounted() {},
   methods: {
     search($ruleform) {
       console.log($ruleform)
