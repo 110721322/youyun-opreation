@@ -21,34 +21,34 @@ export const WXDIRECTLIST_CONFIG = {
       width: '150px',
       render: (h, params) => {
         if (params.row.status === 'nonOpen') {
-          return h(
-            'span', '待审核'
-          )
+          return [h('span', {
+            'class': "dot " + "nonOpen"
+          }), '待审核']
         }
         if (params.row.status === 'platformAudit') {
-          return h(
-            'span', '平台审核中'
-          )
+          return [h('span', {
+            'class': "dot " + "platformAudit"
+          }), '平台审核中']
         }
         if (params.row.status === 'channelAudit') {
-          return h(
-            'span', '通道审核中'
-          )
+          return [h('span', {
+            'class': "dot " + "channelAudit"
+          }), '通道审核中']
         }
         if (params.row.status === 'platformReject') {
-          return h(
-            'span', '平台驳回'
-          )
+          return [h('span', {
+            'class': "dot " + "platformReject"
+          }), '平台驳回']
         }
         if (params.row.status === 'channelReject') {
-          return h(
-            'span', '通道驳回'
-          )
+          return [h('span', {
+            'class': "dot " + "channelReject"
+          }), '通道驳回']
         }
         if (params.row.status === 'channelPass') {
-          return h(
-            'span', '审核通过'
-          )
+          return [h('span', {
+            'class': "dot " + "success"
+          }), '已通过']
         }
       }
     }
