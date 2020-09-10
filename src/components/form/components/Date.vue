@@ -96,7 +96,11 @@ export default {
     if (this.type === "datetimerange") {
       this.defaultTime = ["00:00:00", "23:59:59"];
     }
-    this.onClick_item(this.dateList[0]);
+    if (this.formItem.initVal) {
+      this.timeInterval = this.formItem.initVal
+    } else {
+      this.onClick_item(this.dateList[0]);
+    }
   },
   methods: {
     onChage($data) {

@@ -16,7 +16,7 @@
     </el-upload>-->
     <el-upload
       v-loading="loading"
-      action="OSSS上传图片"
+      action="OSS上传图片"
       list-type="picture-card"
       class="avatar-uploader"
       :data="urlData"
@@ -26,6 +26,7 @@
       :before-remove="beforeRemove"
       :on-remove="onRemove"
       :http-request="upLoad"
+      :limit="maxNum"
       :on-preview="handlePictureCardPreview"
     >
       <img v-if="dialogImageUrl && !showFileList" :src="dialogImagePath + dialogImageUrl" class="avatar" />
@@ -92,7 +93,6 @@ export default {
     }
   },
   created() {
-    console.log(this.formItem)
     if (this.formItem.maxNum) {
       this.maxNum = this.formItem.maxNum
     }
@@ -130,11 +130,6 @@ export default {
     },
 
     beforeUpload(file) {
-      if (this.maxNum) {
-        if (this.maxNum <= this.dialogImageList.length) {
-          return;
-        }
-      }
       return new Promise(resolve => {
         if (this.type === "entry") {
           api
@@ -157,12 +152,6 @@ export default {
     },
 
     upLoad(file) {
-      if (this.maxNum) {
-        if (this.maxNum <= this.dialogImageList.length) {
-          this.$message.error('最多上传' + this.maxNum + '张图片')
-          return;
-        }
-      }
       const formData = new FormData();
       formData.append(
         "key",

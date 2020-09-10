@@ -15,6 +15,8 @@ export const FORM_CONFIG = {
           keyName: 'advertType',
           valueName: 'advertTypeDesc',
           method: 'get'
+        },
+        callback($ruleForm, $option) {
         }
       },
       {
@@ -25,7 +27,9 @@ export const FORM_CONFIG = {
           url: apiAgent.queryAllDistributeName,
           keyName: 'id',
           valueName: 'advertName',
-          method: 'get'
+          method: 'get',
+          params: {
+          }
         }
       },
       {

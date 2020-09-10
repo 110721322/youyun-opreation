@@ -167,7 +167,6 @@ export default {
       this.drawer = false;
     },
     confirm($ruleForm) {
-      console.log($ruleForm)
       var img = ''
       if (!$ruleForm.img) {
         this.$message('请上传头像');

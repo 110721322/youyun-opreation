@@ -8,6 +8,7 @@
         :form-base-data="searchConfig.formData"
         :show-foot-btn="searchConfig.showFootBtn"
         @search="search"
+        @reset="reset"
       />
       <div class="table_box">
         <BaseCrud
@@ -138,6 +139,21 @@ export default {
         this.params.cityCode = $form.cityCode
         this.params.areaCode = $form.areaCode
       }
+      this.params[$form.inputSelect] = $form.inputForm;
+    },
+    reset($form) {
+      this.params = {
+        operationId: $form.operationId,
+        status: $form.status ? $form.status : null,
+        personName: $form.personName ? $form.personName : null,
+        personMobile: $form.personMobile ? $form.personMobile : null,
+        regionCode: $form.regionCode ? $form.regionCode : null,
+        activeScopeType: $form.activeScopeType ? $form.activeScopeType : null,
+        labelId: $form.labelId ? $form.labelId : null
+      }
+      this.params.provinceCode = ''
+      this.params.cityCode = ''
+      this.params.areaCode = ''
       this.params[$form.inputSelect] = $form.inputForm;
     },
     openDetail($row) {

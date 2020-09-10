@@ -176,6 +176,7 @@ export default {
         this.isRest = false;
       }, 500);
       this.$refs.formTep.resetFields();
+      this.$emit("reset", this.ruleForm);
     },
     transType(value) {
       // 获取表单项类型

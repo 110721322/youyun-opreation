@@ -90,15 +90,15 @@ export const FORM_CONFIG = {
         type: 5,
         label: '强制阅读',
         key: 'isReadable',
-        initVal: 0,
+        initVal: false,
         options: [
           {
             label: '否',
-            value: 0
+            value: false
           },
           {
             label: '是',
-            value: 1
+            value: true
           }
         ],
         isShow: ($item) => {

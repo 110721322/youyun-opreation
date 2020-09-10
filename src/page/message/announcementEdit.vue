@@ -5,6 +5,7 @@
       <div class="title">{{ fromConfigData.title }}</div>
 
       <announcementEdit
+        v-if="detailGet"
         ref="form"
         :form-base-data="fromConfigData.formData"
         :label-width="'auto'"
@@ -25,25 +26,33 @@ export default {
   data() {
     return {
       fromConfigData: FORM_CONFIG.sendMessageData,
-      noticeId: this.$route.query.id
+      noticeId: this.$route.query.id,
+      detailGet: true
     };
   },
   created() {
     // 如果是查询编辑
-    api
-      .queryNoticeByPrimaryId({ id: this.noticeId })
-      .then(res => {
-        this.fromConfigData.formData.forEach((item, index) => {
-          item.key === "time"
-            ? (item.initVal[0] = res.object["displayStartDate"]) &&
-              (item.initVal[1] = res.object["displayEndDate"])
-            : (item.initVal = res.object[item.key]);
-          // this.$set(item, item.initVal, res.object[item.key]);
+    if (this.noticeId) {
+      this.detailGet = false
+      api
+        .queryNoticeByPrimaryId({ id: this.noticeId })
+        .then(res => {
+          this.detailGet = true
+          this.fromConfigData.formData.forEach((item, index) => {
+            if (item.key === "time") {
+              item.initVal = [res.object.displayStartDate, res.object.displayEndDate]
+            } else if (item.key === 'isReadable') {
+              item.initVal = res.object[item.key]
+            } else {
+              item.initVal = res.object[item.key]
+            }
+            // this.$set(item, item.initVal, res.object[item.key]);
+          });
+        })
+        .catch(err => {
+          console.error(err);
         });
-      })
-      .catch(err => {
-        console.error(err);
-      });
+    }
   },
   methods: {
     handleCommit($ruleForm) {
