@@ -804,6 +804,18 @@ export default {
       }
       if ($model === 'finance') {
         this.editType = 'editFincance'
+        if (this.ruleForm.bankBranchName) {
+          this.remoteMethod(this.ruleForm.bankBranchName)
+          this.handleSelect(this.ruleForm.bankContactLine)
+        }
+        this.areaCodeNum = this.ruleForm.bankArea
+        this.bankName = this.ruleForm.bankBranchName
+        this.financeModel = {
+          bankContactLine: this.ruleForm.bankContactLine,
+          bankCardNo: this.ruleForm.bankCardNo,
+          bankAccountType: this.ruleForm.bankAccountType,
+          bankAccountHolder: this.ruleForm.bankAccountHolder
+        }
         this.financeDrawer = true
       }
     },
