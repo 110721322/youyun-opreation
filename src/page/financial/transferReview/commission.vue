@@ -185,7 +185,7 @@ export default {
     onClick_detail($row) {
       this.$router.push({
         path: "/financial/transferReview/commissionDetail",
-        query: { id: $row.id }
+        query: { idList: $row.agentTradeIdList.join(','), activeName: this.activeName }
       });
     },
     onClick_reject($row) {

@@ -2,8 +2,11 @@ export const USER_CONFIG = {
   gridConfig: [
     {
       label: '序号',
-      prop: 'id',
-      width: '82px'
+      prop: 'index',
+      width: '50px',
+      render: (h, params) => {
+        return h('span', params.index + 1);
+      }
     },
     {
       label: '标题',
@@ -12,7 +15,7 @@ export const USER_CONFIG = {
     },
     {
       label: '消息类型',
-      prop: 'messageType',
+      prop: 'messageTypeCN',
       width: '150px'
     },
     {

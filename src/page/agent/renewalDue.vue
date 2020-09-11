@@ -24,6 +24,7 @@
           :is-select="false"
           :params="params"
           :api-service="api"
+          @detail="go_detail"
         />
       </div>
     </div>
@@ -58,11 +59,19 @@ export default {
       this.params = {
         beginDate: $form.date[0],
         endDate: $form.date[1],
-        payType: $form.payType,
-        status: $form.status,
+        payType: $form.payType ? $form.payType : '',
+        status: $form.status ? $form.status : '',
         auditStatus: $form.status === 1 ? 'audit' : $form.status === 2 ? 'success' : $form.status === 3 ? 'reject' : ''
       }
       this.params[$form.inputSelect] = $form.inputForm
+    },
+    go_detail(row) {
+      this.$router.push({
+        path: '/agent/list/detail',
+        query: {
+          agentNo: row.agentNo
+        }
+      })
     }
   }
 }

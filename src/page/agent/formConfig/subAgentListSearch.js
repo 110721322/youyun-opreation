@@ -82,15 +82,19 @@ export const FORM_CONFIG = {
       labelWidth: '185px',
       options: [
         {
-          label: '使用中',
-          value: 'complete '
+          label: '待补全',
+          value: 'incomplete'
         },
         {
-          label: '冻结',
-          value: 'blocked '
+          label: '已补全',
+          value: 'complete'
         },
         {
-          label: '到期',
+          label: '已冻结',
+          value: 'blocked'
+        },
+        {
+          label: '已到期',
           value: 'expired'
         }
       ]

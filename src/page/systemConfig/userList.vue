@@ -99,18 +99,14 @@ export default {
       drawerAddPhone: false,
       direction: "rtl",
       params: {
-        state: null,
-        startTime: this.$g.utils.getToday(0) + ' 00:00:00',
-        endTime: this.$g.utils.getToday(0) + ' 23:59:59'
+        state: null
       },
       api: api.queryEmployeeList,
       addPhoneList: [""],
       activityRow: {}
     };
   },
-  mounted() {
-    // this.getTableData();
-  },
+  mounted() {},
   methods: {
     onClick_addPhoneItem() {
       if (this.addPhoneList.length < 20) {
@@ -123,40 +119,10 @@ export default {
       this.params = {
         sex: $ruleForm.sex,
         state: null,
-        startTime: $ruleForm.date[0],
-        endTime: $ruleForm.date[1]
+        startTime: $ruleForm.date[0] + ' 00:00:00',
+        endTime: $ruleForm.date[1] + ' 23:59:59'
       };
       this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
-    },
-    getTableData() {
-      this.testData = [
-        {
-          id: 1,
-          nickName: "日常任务",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          amount: "222.22",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          reason: "银行卡账号错误，服务商无法联系"
-        },
-        {
-          id: 2,
-          nickName: "日常任务",
-          taskName: "商户结算失败",
-          num: "4",
-          oper: "提醒",
-          name: "XXXX店铺",
-          time: "20:00:23",
-          image:
-            "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-          amount: "222.22",
-          reason: "银行卡账号错误，服务商无法联系"
-        }
-      ];
     },
     onClick_addUser() {
       this.drawerAddPhone = true;
@@ -183,12 +149,15 @@ export default {
       api.addMember({
         phoneList: this.addPhoneList
       }).then(res => {
-        this.addPhoneList = [""];
-        this.$message({
-          message: '添加成功',
-          type: 'success'
-        });
-        this.drawerAddPhone = false;
+        if (res.status === 0) {
+          this.addPhoneList = [""];
+          this.$message({
+            message: '添加成功',
+            type: 'success'
+          });
+          this.drawerAddPhone = false;
+          this.$refs.child.getData()
+        }
       })
     },
     cancelForm() {
@@ -198,7 +167,47 @@ export default {
       this.drawer = false;
     },
     confirm($ruleForm) {
-      const img = this.$g.utils.isString($ruleForm.img) ? $ruleForm.img : ($ruleForm.img.dialogImagePath + $ruleForm.img.dialogImageUrl); // 兼容未修改图片情况
+      var img = ''
+      if (!$ruleForm.img) {
+        this.$message('请上传头像');
+        return;
+      }
+      if ($ruleForm.img) {
+        if (this.$g.utils.isString($ruleForm.img)) {
+          var img1 = $ruleForm.img.split('.com')
+          img = img1[1].slice(1, img1[1].length)
+        } else {
+          img = $ruleForm.img.dialogImageUrl
+        }
+      }
+      if (!$ruleForm.jobName) {
+        this.$message('请输入花名');
+        return;
+      }
+      if (!$ruleForm.name) {
+        this.$message('请输入姓名');
+        return;
+      }
+      if ($ruleForm.sex !== 0 && $ruleForm.sex !== 1) {
+        this.$message('请选择性别');
+        return;
+      }
+      if (!$ruleForm.phone) {
+        this.$message('请输入手机号');
+        return;
+      }
+      if (!$ruleForm.jobNumber) {
+        this.$message('请输入工号');
+        return;
+      }
+      if (!$ruleForm.birthday) {
+        this.$message('请选择生日');
+        return;
+      }
+      if (!$ruleForm.email) {
+        this.$message('请输入邮箱');
+        return;
+      }
       api
         .fillUserInfo({
           id: this.activityRow.id,
@@ -215,8 +224,14 @@ export default {
           nickName: $ruleForm.nickName
         })
         .then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '编辑成功',
+              type: 'success'
+            });
+          }
           this.drawer = false;
-          this.$message("已保存");
+          this.$refs.child.getData();
         })
         .catch(err => {
           this.$message(err);

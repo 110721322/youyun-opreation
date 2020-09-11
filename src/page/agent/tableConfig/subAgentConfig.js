@@ -13,56 +13,44 @@ export const USER_CONFIG = {
     {
       label: '开通时间',
       prop: 'activeDate',
-      width: '150px'
+      width: '150px',
+      sortable: true
     },
     {
       label: '到期时间',
       prop: 'expireDate',
-      width: '150px'
+      width: '150px',
+      sortable: true
     },
     {
       label: '商户数量',
       prop: 'merchantCount',
-      width: '150px'
+      width: '150px',
+      sortable: true
     },
     {
       label: '状态',
       prop: 'contractStatus',
-
       render: (h, params) => {
+        if (params.row.contractStatus === 'audit') {
+          return [h('span', {
+            'class': "dot " + "platformAudit"
+          }), '审核中']
+        }
+        if (params.row.contractStatus === 'wait') {
+          return [h('span', {
+            'class': "dot " + "nonOpen"
+          }), '待审核']
+        }
         if (params.row.contractStatus === 'reject') {
-          return h(
-            'el-tag',
-            {
-              props: {
-                size: 'medium ',
-                type: 'fail'
-              }
-            },
-            '已驳回'
-          );
-        } else if (params.row.contractStatus === 'success') {
-          return h(
-            'el-tag',
-            {
-              props: {
-                size: 'medium ',
-                type: 'success'
-              }
-            },
-            '通过'
-          );
-        } else if (params.row.contractStatus === 'audit') {
-          return h(
-            'el-tag',
-            {
-              props: {
-                size: 'medium ',
-                type: 'success'
-              }
-            },
-            '待审核'
-          );
+          return [h('span', {
+            'class': "dot " + "reject"
+          }), '已拒绝']
+        }
+        if (params.row.contractStatus === 'success') {
+          return [h('span', {
+            'class': "dot " + "success"
+          }), '已通过']
         }
       }
     },
@@ -73,7 +61,7 @@ export const USER_CONFIG = {
     },
     {
       label: '服务地区',
-      prop: 'activeScopeType',
+      prop: 'activeScopeProvinceName',
       width: '150px'
     },
     {
@@ -93,6 +81,11 @@ export const USER_CONFIG = {
     view: false,
     expands: [
       {
+        name: '详情',
+        emitName: 'detail',
+        type: 'text'
+      },
+      {
         name: '冻结',
         emitName: 'frozen',
         type: 'text',
@@ -103,11 +96,6 @@ export const USER_CONFIG = {
             return false;
           }
         }
-      },
-      {
-        name: '详情',
-        emitName: 'detail',
-        type: 'text'
       },
       {
         name: '解冻',

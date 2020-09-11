@@ -120,7 +120,7 @@ export default {
   advertQueryById: (params) => API.GET('/operation/v1/advert/queryById', params),
   putList: (params) => API.GET('/operation/v1/advertDistribute/queryByPage', params),
   advertDistributeAdd: (params) => API.POST('/operation/v1/advertDistribute/add', params),
-  advertDistributeUpdate: (params) => API.GET('/operation/v1/advertDistribute/update', params),
+  advertDistributeUpdate: (params) => API.POST('/operation/v1/advertDistribute/update', params),
   // 运营结算审核
   listOperationSettle: (params) => API.GET('/operation/v1/agentSettle/listOperationSettle', params),
   // 第三方对接列表

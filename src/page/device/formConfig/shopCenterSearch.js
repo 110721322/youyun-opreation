@@ -10,7 +10,7 @@ export const SEARCH_CONFIG = {
       urlOptions: {
         url: apiDevice.queryAllDeviceModel,
         keyName: 'deviceId',
-        valueName: 'deviceType',
+        valueName: 'deviceModel',
         method: 'get',
         params: {
           classification: 1
@@ -23,9 +23,9 @@ export const SEARCH_CONFIG = {
       key: 'deviceType',
       labelWidth: '100px',
       urlOptions: {
-        url: apiDevice.queryAllDeviceModel,
-        keyName: 'deviceId',
-        valueName: 'deviceType',
+        url: apiDevice.queryAllDeviceTypeModel,
+        keyName: 'advertType',
+        valueName: 'advertTypeDesc',
         method: 'get',
         params: {
           classification: 1

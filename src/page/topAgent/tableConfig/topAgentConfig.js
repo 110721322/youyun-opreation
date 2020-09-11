@@ -22,7 +22,7 @@ export const USER_CONFIG = {
     },
     {
       label: '所属运营',
-      prop: 'personMobile',
+      prop: 'operationName',
       width: '150px'
     },
     {
@@ -30,26 +30,17 @@ export const USER_CONFIG = {
       prop: 'accountStatus',
       render: (h, params) => {
         if (params.row.status === 3) {
-          return h('el-tag', {
-            props: {
-              size: 'medium ',
-              type: 'warning'
-            }
-          }, params.row.statusName);
+          return [h('span', {
+            'class': "dot " + "review"
+          }), params.row.statusName]
         } else if (params.row.status === 4) {
-          return h('el-tag', {
-            props: {
-              size: 'medium ',
-              type: 'success'
-            }
-          }, params.row.statusName);
+          return [h('span', {
+            'class': "dot " + "opened"
+          }), params.row.statusName]
         } else {
-          return h('el-tag', {
-            props: {
-              size: 'medium ',
-              type: 'fail'
-            }
-          }, params.row.statusName);
+          return [h('span', {
+            'class': "dot " + "unused"
+          }), params.row.statusName]
         }
       }
     }
@@ -67,6 +58,7 @@ export const USER_CONFIG = {
         name: '补充资料',
         emitName: 'addInfo',
         type: 'text',
+        style: 'color: #ffc620',
         isShow($row) {
           if ($row.status === 3) { return true } else { return false }
         }

@@ -65,11 +65,19 @@ export default {
   mounted() {
   },
   methods: {
-    search($form, $obj) {
+    search($form) {
       this.params = {
-        regionCode: $form.regionCode,
-        provinceCode: $form.area[0],
-        cityCode: $form.area[1]
+        labelId: $form.labelId || null,
+        activeScopeType: $form.activeScopeType || null,
+        operationId: $form.operationId || null,
+        personName: $form.personName || null,
+        personMobile: $form.personMobile || null,
+        status: $form.status || null,
+        regionCode: $form.regionCode || null
+      }
+      if ($form.area) {
+        this.params.activeScopeProvinceCode = $form.area[0]
+        this.activeScopeCityCode = $form.area[1]
       }
       this.params[$form.inputSelect] = $form.inputForm
     },

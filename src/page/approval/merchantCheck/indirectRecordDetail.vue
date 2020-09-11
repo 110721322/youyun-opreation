@@ -40,36 +40,21 @@ export default {
     return {
       configData: RECORD_CONFIG,
       testData: [],
-      direction: "rtl",
-      params: {
-        channel: "ol7",
-        pageSize: 0,
-        currentPage: 0,
-        merchantNo: "anw"
-      },
+      params: {},
       api: api.preAuditRecordQueryByPage
     };
+  },
+  created() {
+    this.merchantNo = this.$route.query.merchantNo
+    this.params = {
+      merchantNo: this.merchantNo,
+      channel: 'leShua'
+    }
   },
   mounted() {
     this.getTableData();
   },
   methods: {
-    getTableData() {
-      this.testData = [
-        {
-          time: "紫菜网络科技有限公司,ID: 13293127119831938",
-          people: "紫菜网络科技有限公司,ID: 13293127119831938",
-          channel: ["乐刷", "新大陆", "网商"],
-          content: "2014-02-15 16:00:23"
-        },
-        {
-          time: "紫菜网络科技有限公司,ID: 13293127119831938",
-          people: "紫菜网络科技有限公司,ID: 13293127119831938",
-          channel: ["乐刷", "新大陆", "网商"],
-          content: "2014-02-15 16:00:23"
-        }
-      ];
-    }
   }
 };
 </script>

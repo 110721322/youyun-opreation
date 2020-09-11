@@ -137,15 +137,15 @@ export default {
             },
             {
               name: "微信/支付宝费率",
-              key: "alipayRate"
+              key: "alipayRatePecent"
             },
             {
               name: "云闪付费率（单笔≤1000元）",
-              key: "cloudPayLe1000Rate"
+              key: "cloudPayLe1000RatePecent"
             },
             {
               name: "云闪付费率（单笔＞1000元）",
-              key: "cloudPayGt1000Rate"
+              key: "cloudPayLe1000RatePecent"
             }
           ]
         }
@@ -183,9 +183,6 @@ export default {
       api.getSubAgentDetail({
         agentNo: this.agentNo
       }).then(res => {
-        res.object.cloudPayLe1000Rate = res.object.cloudPayLe1000Rate + '‰'
-        res.object.cloudPayGt1000Rate = res.object.cloudPayGt1000Rate + '‰'
-        res.object.alipayRate = res.object.alipayRate + '‰'
         if (res.object.bankAccountType === 'public') {
           res.object.bankAccountType = '对公'
         }
@@ -210,6 +207,15 @@ export default {
             res.object.activeScopeProvinceName = m.label
           }
         })
+        if (res.object.cloudPayGt1000Rate) {
+          res.object.cloudPayGt1000RatePecent = this.$g.utils.AccMul(res.object.cloudPayGt1000Rate, 1000) + '‰'
+          res.object.cloudPayLe1000RatePecent = this.$g.utils.AccMul(res.object.cloudPayLe1000Rate, 1000) + '‰'
+        }
+        if (res.object.alipayRate || res.object.wechatPayRate) {
+          res.object.alipayRatePecent = this.$g.utils.AccMul(res.object.alipayRate, 1000) + '‰'
+          res.object.wechatPayRatePecent = this.$g.utils.AccMul(res.object.wechatPayRatePecent, 1000) + '‰'
+        }
+        console.log(res.object)
         res.object.activeScope = res.object.activeScopeProvinceName + res.object.activeScopeCityName
         this.ruleForm = res.object
         this.currentType = res.object.contractStatus

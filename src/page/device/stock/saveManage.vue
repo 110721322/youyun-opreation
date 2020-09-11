@@ -68,43 +68,35 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl",
       count: 0,
-      params: {
-        currentPage: 0,
-        deviceId: "",
-        pageSize: 10,
-        beginTime: this.$g.utils.getToday(),
-        endTime: this.$g.utils.getToday()
-      },
-      api: api.deviceInputQueryByPage
+      params: {},
+      api: ""
     };
   },
   mounted() {},
   created() {
-    this.getMember()
+    const beginDate = this.$g.utils.getNowFormatDate() + ' ' + '00' + ':' + '00' + ':' + '00'
+    const endDate = this.$g.utils.getNowFormatDate() + ' ' + '23' + ':' + '59' + ':' + '59'
+    this.params = {
+      beginDate: beginDate,
+      endDate: endDate
+    }
+    this.api = api.deviceInputQueryByPage
   },
   methods: {
     search($ruleForm) {
-      console.log($ruleForm);
       const params = {
         beginTime: $ruleForm.date ? $ruleForm.date[0] : null,
         endTime: $ruleForm.date ? $ruleForm.date[1] : null,
-        deviceId: $ruleForm.deviceId
+        deviceId: $ruleForm.deviceId ? $ruleForm.deviceId : ''
       };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
-    },
-    selectionChange($val) {
-      // eslint-disable-next-line no-console
-      console.log($val);
     },
     onClick_addDevice() {
       this.fromConfigData = FORM_CONFIG.deviceData;
       this.drawer = true;
     },
     confirm($data) {
-      console.log("data值", $data);
       // exelc解析
       apiComm
         .excelUploadPic({
@@ -149,14 +141,6 @@ export default {
           id: $item.id
         }
       });
-    },
-    getMember() {
-      api
-        .queryAllOperation({}).then(res => {
-          console.log(res)
-        }).catch(err => {
-          console.log(err)
-        })
     }
   }
 };

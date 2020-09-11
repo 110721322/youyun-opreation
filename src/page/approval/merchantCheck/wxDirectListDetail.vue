@@ -84,7 +84,7 @@ export default {
           items: [
             {
               name: "商户全称",
-              key: "fullName"
+              key: "merchantName"
             },
             {
               name: "公司地址",
@@ -123,16 +123,6 @@ export default {
               type: "image"
             },
             {
-              name: "内景照",
-              key: "shopInnerImg",
-              type: "image"
-            },
-            {
-              name: "收银台照",
-              key: "shopCashdeskImg",
-              type: "image"
-            },
-            {
               name: "法人身份证正面",
               key: "idCardPortraitImg",
               type: "image"
@@ -143,6 +133,10 @@ export default {
               type: "image"
             },
             {
+              name: "法人身份证到期日",
+              key: "idCardExpireDate"
+            },
+            {
               name: "商户类型",
               key: "merchantType"
             },
@@ -151,20 +145,16 @@ export default {
               key: "shortName"
             },
             {
-              name: "营业执照开始日期",
-              key: "shopLicenseBegDate"
-            },
-            {
               name: "营业执照编号",
               key: "shopLicenseNo"
             },
             {
-              name: "客服手机号",
-              key: "serviceTel"
+              name: "营业执照开始日期",
+              key: "shopLicenseBegDate"
             },
             {
-              name: "法人身份证到期日",
-              key: "idCardExpireDate"
+              name: "客服手机号",
+              key: "serviceTel"
             }
           ]
         },
@@ -178,7 +168,7 @@ export default {
             },
             {
               name: "结算卡类型",
-              key: "accountType"
+              key: "bankAccountType"
             },
             {
               name: "银行卡号",
@@ -190,7 +180,7 @@ export default {
             },
             {
               name: "开户支行",
-              key: "branchName"
+              key: "bankBranchName"
             },
             {
               name: "银行预留手机号",
@@ -203,7 +193,7 @@ export default {
           items: [
             {
               name: "费率",
-              key: "rate"
+              key: "wechatPayRate"
             },
             {
               name: "邮箱",

@@ -7,7 +7,9 @@
         :show-foot-btn="true"
         :label-width="'auto'"
         @confirm="handleCommit"
-      ></Form>
+        @cancel="handel_cancel"
+      >
+      </Form>
     </div>
   </div>
 </template>
@@ -66,6 +68,11 @@ export default {
           })
         })
       }
+    },
+    handel_cancel() {
+      this.$router.replace({
+        path: '/agent/list'
+      })
     }
   }
 }

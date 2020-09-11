@@ -11,5 +11,8 @@ export default {
   out: (params) => API.POST('/common/v1/user/logout', params),
   perfectUpdate: (params) => API.POST('/operation/v1/employee/perfectUpdate', params),
   queryUserVueRouterList: (params) => API.GET('/operation/v1/systemMenu/queryUserVueRouterList', params), // 获取用户前端路由模板
-  registerTopAgent: (params, config) => API.POST('/operation/v1/topAgent/register', params) // 顶级服务商注册
+  // 顶级服务商注册
+  registerTopAgent: (params, config) => API.POST('/operation/v1/topAgent/register', params),
+  // 发送忘记密码的验证码
+  sendForgetCode: (params) => API.GET('/common/v1/user/sendForgetPasswordCode', params)
 };

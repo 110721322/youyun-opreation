@@ -19,12 +19,12 @@ export const USERLIST_CONFIG = {
     },
     {
       label: '职位',
-      prop: 'position',
+      prop: 'positionName',
       width: '150px'
     },
     {
       label: '上级',
-      prop: 'superiorId',
+      prop: 'superiorName',
       width: '150px'
     },
     {
@@ -95,6 +95,8 @@ export const USERLIST_CONFIG = {
               return true;
             case 2:
               return false;
+            case 3:
+              return false;
             default:
               return true;
           }
@@ -103,7 +105,22 @@ export const USERLIST_CONFIG = {
       {
         name: '编辑基础信息',
         emitName: 'editBasics',
-        type: 'text'
+        type: 'text',
+        isShow($row) {
+          const infoStatus = $row.infoStatus;
+          switch (infoStatus) {
+            case 0:
+              return false;
+            case 1:
+              return false;
+            case 2:
+              return true;
+            case 3:
+              return true;
+            default:
+              return false;
+          }
+        }
       },
       {
         name: '编辑岗位信息',
@@ -118,6 +135,8 @@ export const USERLIST_CONFIG = {
             case 1:
               return false;
             case 2:
+              return true;
+            case 3:
               return true;
             default:
               return false;

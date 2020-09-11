@@ -1,47 +1,106 @@
-import store from "@/store"
+import apiAgent from "@/api/api_agent.js";
+import areaData from "@/assets/data/areaData";
 
 export const FORM_CONFIG = {
   formData: [
     {
       type: 10,
       label: '服务商名称/ID',
-      key: 'channelAgent',
+      key: '',
       class: 'max-width',
       options: [
         {
           label: '服务商ID',
-          value: 'channelAgentCode'
+          value: 'agentNo'
         },
         {
           label: '服务商名称',
-          value: 'channelAgentName'
+          value: 'agentName'
         }
       ],
-      labelWidth: '100px'
+      labelWidth: '185px'
     },
     {
-      type: 10,
-      label: '法人姓名/电话',
-      key: 'person',
-      class: 'max-width',
+      type: 0,
+      label: '法人姓名',
+      key: 'personName',
+      style: 'width:294px',
+      labelWidth: '185px'
+    },
+    {
+      type: 0,
+      label: '法人电话',
+      key: 'personMobile',
+      style: 'width:294px',
+      labelWidth: '185px'
+    },
+    {
+      type: 1,
+      label: '所属大区',
+      key: 'regionCode',
+      class: "clear_both",
+      labelWidth: '185px',
+      urlOptions: {
+        url: apiAgent.queryAllRegion,
+        keyName: 'regionCode',
+        valueName: 'regionName',
+        method: 'get'
+      }
+    },
+    {
+      type: 1,
+      label: '服务商等级',
+      key: 'activeScopeType',
+      class: "clear_both",
+      labelWidth: '185px',
       options: [
         {
-          label: '法人姓名',
-          value: 'personName'
+          label: '国代',
+          value: 'all'
         },
         {
-          label: '法人电话',
-          value: 'personMobile'
+          label: '省代',
+          value: 'province'
+        },
+        {
+          label: '市代',
+          value: 'city'
         }
-      ],
-      labelWidth: '100px'
+      ]
+    },
+    {
+      type: 1,
+      label: '标签',
+      key: 'labelId',
+      style: 'width:294px',
+      labelWidth: '185px',
+      urlOptions: {
+        url: apiAgent.selectByChannelAgentCode,
+        keyName: 'id',
+        valueName: 'name',
+        method: 'get'
+      }
+    },
+    {
+      type: 8,
+      label: '服务地区',
+      key: 'area',
+      labelWidth: '185px',
+      style: 'width:294px',
+      options: areaData
     },
     {
       type: 1,
       label: '所属运营',
       key: 'operationId',
       class: "clear_both",
-      options: store.state.dataMarket.userList
+      labelWidth: '185px',
+      urlOptions: {
+        url: apiAgent.queryAllOperation,
+        keyName: 'operationId',
+        valueName: 'operationName',
+        method: 'get'
+      }
     },
     {
       type: 1,
@@ -52,15 +111,19 @@ export const FORM_CONFIG = {
       options: [
         {
           label: '待补全',
-          value: 3
+          value: 'incomplete'
         },
         {
           label: '已补全',
-          value: 4
+          value: 'complete'
         },
         {
           label: '已冻结',
-          value: 5
+          value: 'blocked'
+        },
+        {
+          label: '已到期',
+          value: 'expired'
         }
       ]
     }

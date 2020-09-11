@@ -59,8 +59,7 @@ export default {
   created() {
     this.params = {
       to: 'agent',
-      title: "",
-      messageType: 0
+      title: ""
     };
   },
   mounted() {},
@@ -82,27 +81,30 @@ export default {
     go_detail() {
       this.$router.push("/merchant/list/detail");
     },
-    handelDelete() {
+    handelDelete(row) {
       this.$confirm("确定删除该消息吗", "提示", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认删除",
         cancelButtonText: "取消"
-      })
-        .then(() => {
-          api
-            .delete({
-              id: "",
-              deleted: true
-            })
-            .then(res => {
-              this.$message({
-                type: "info",
-                message: "已删除"
-              });
-            })
-            .catch();
+      }).then(() => {
+        api.delete({
+          id: row.id,
+          deleted: true
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              type: "success",
+              message: "已删除"
+            });
+            this.$refs.table.getData()
+          }
+        }).catch();
+      }).catch(() => {
+        this.$message({
+          message: '取消操作',
+          type: 'info'
         })
-        .catch(() => {});
+      });
     },
     search($ruleForm) {
       console.log($ruleForm);

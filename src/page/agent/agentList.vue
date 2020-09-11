@@ -22,7 +22,7 @@
             已选择
             <span class="blue">{{ selectData.length }}</span> 项目
           </span>
-          <el-button class="btn" type="text">清空</el-button>
+          <el-button class="btn" type="text" @click="clear">清空</el-button>
         </div>
         <BaseCrud
           ref="child"
@@ -117,6 +117,10 @@ export default {
         });
       }
     },
+    clear() {
+      this.selectData = []
+      this.$refs.child.$children[0].clearSelection();
+    },
     handle_ok() {
       if (!this.operationId) {
         this.$message({
@@ -154,20 +158,18 @@ export default {
     },
     search($form) {
       this.params = {
-        agentGrade: $form.agentGrade,
-        activeDateStart: $form.date[0],
-        activeDateEnd: $form.date[1],
-        agentNo: $form.agentNo,
-        agentName: $form.agentName,
-        status: $form.status,
-        labelId: $form.labelId,
-        regionCode: $form.regionCode,
-        operateUserNo: $form.operateUserNo
-      };
+        operationId: $form.operationId,
+        status: $form.status ? $form.status : null,
+        personName: $form.personName ? $form.personName : null,
+        personMobile: $form.personMobile ? $form.personMobile : null,
+        regionCode: $form.regionCode ? $form.regionCode : null,
+        activeScopeType: $form.activeScopeType ? $form.activeScopeType : null,
+        labelId: $form.labelId ? $form.labelId : null
+      }
       if ($form.area) {
-        this.params.provinceCode = $form.area[0];
-        this.params.cityCode = $form.area[1];
-        this.params.areaCode = $form.area[2];
+        this.params.provinceCode = $form.provinceCode
+        this.params.cityCode = $form.cityCode
+        this.params.areaCode = $form.areaCode
       }
       this.params[$form.inputSelect] = $form.inputForm;
     },

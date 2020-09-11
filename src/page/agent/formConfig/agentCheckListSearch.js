@@ -11,23 +11,6 @@ export const FORM_CONFIG = {
       labelWidth: '100px'
     },
     {
-      type: 10,
-      label: '精准筛选',
-      key: '',
-      class: 'max-width',
-      options: [
-        {
-          label: '服务商编号',
-          value: 'agentNo'
-        },
-        {
-          label: '服务商名字',
-          value: 'agentName'
-        }
-      ],
-      labelWidth: '100px'
-    },
-    {
       type: 0,
       label: '法人姓名',
       key: 'personName',

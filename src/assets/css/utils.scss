@@ -31,3 +31,12 @@
   -webkit-box-orient: vertical;
   word-break: break-all;
 }
+
+.popperNav {
+  background: rgba(27, 27, 39, 0.9);
+  /deep/ .popper__arrow {
+    &::after {
+      border-bottom-color: rgba(27, 27, 39, 0.9) !important;
+    }
+  }
+}

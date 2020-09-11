@@ -7,7 +7,12 @@ export const TABLE_CONFIG = {
     },
     {
       label: '广告类型',
-      prop: 'advertType',
+      prop: 'advertTypeDesc',
+      width: '150px'
+    },
+    {
+      label: '尺寸',
+      prop: 'advertSize',
       width: '150px'
     },
     {
@@ -26,28 +31,8 @@ export const TABLE_CONFIG = {
       }
     },
     {
-      label: '投放范围',
-      prop: 'distributeType',
-      width: '150px'
-    },
-    {
-      label: '优先级',
-      prop: 'sort',
-      width: '150px'
-    },
-    {
-      label: '投放人',
-      prop: 'operationId',
-      width: '150px'
-    },
-    {
-      label: '投放时间',
-      prop: 'beginTime',
-      width: '150px'
-    },
-    {
-      label: '状态',
-      prop: 'status',
+      label: '修改时间',
+      prop: 'modifyTime',
       width: '150px'
     }
   ],

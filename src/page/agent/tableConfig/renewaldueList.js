@@ -13,24 +13,25 @@ export const TABLE_CONFIG = {
     {
       label: '开通时间',
       prop: 'activeDate',
-      width: '120px'
+      width: '120px',
+      sortable: true
     },
     {
       label: '到期时间',
       prop: 'expiredDate',
-      width: '120px'
+      width: '120px',
+      sortable: true
     },
     {
       label: '续费时长(月)',
-      prop: 'renewMonth'
+      prop: 'renewMonth',
+      sortable: true,
+      width: '120px'
     },
     {
       label: '支付方式',
-      prop: 'payType'
-    },
-    {
-      label: '续费时长(年)',
-      prop: 'renewMonth'
+      prop: 'renewType',
+      width: '120px'
     },
     {
       label: '实付金额',
@@ -41,40 +42,19 @@ export const TABLE_CONFIG = {
       prop: 'status',
       render: (h, params) => {
         if (params.row.status === 1) {
-          return h(
-            'el-tag',
-            {
-              props: {
-                size: 'medium ',
-                type: 'info'
-              }
-            },
-            '审核中'
-          );
-        }
-        if (params.row.status === 2) {
-          return h(
-            'el-tag',
-            {
-              props: {
-                size: 'medium ',
-                type: 'success'
-              }
-            },
-            '已完成'
-          );
+          return [h('span', {
+            'class': "dot " + "platformAudit"
+          }), '财务审核中']
         }
         if (params.row.status === 3) {
-          return h(
-            'el-tag',
-            {
-              props: {
-                size: 'medium ',
-                type: 'fail'
-              }
-            },
-            '财务驳回'
-          );
+          return [h('span', {
+            'class': "dot " + "reject"
+          }), '财务驳回']
+        }
+        if (params.row.status === 2) {
+          return [h('span', {
+            'class': "dot " + "success"
+          }), '已完成']
         }
       }
     }
@@ -87,7 +67,13 @@ export const TABLE_CONFIG = {
     create: false,
     update: false,
     delete: false,
-    view: false
-  },
-  hideEditArea: true
+    view: false,
+    expands: [
+      {
+        name: '服务商信息',
+        emitName: 'detail',
+        type: 'text'
+      }
+    ]
+  }
 };

@@ -60,16 +60,20 @@ export const FORM_CONFIG = {
         initVal: 0,
         options: [
           {
-            label: '只显示一次',
+            label: '不显示',
             value: 0
           },
           {
-            label: '每天只显示一次',
+            label: '只显示一次',
             value: 1
           },
           {
-            label: '每次开启后台显示',
+            label: '每天只显示一次',
             value: 2
+          },
+          {
+            label: '每次开启后台显示',
+            value: 3
           }
         ],
         placeholder: '请选择',
@@ -86,15 +90,15 @@ export const FORM_CONFIG = {
         type: 5,
         label: '强制阅读',
         key: 'isReadable',
-        initVal: 0,
+        initVal: false,
         options: [
           {
             label: '否',
-            value: 0
+            value: false
           },
           {
             label: '是',
-            value: 1
+            value: true
           }
         ],
         isShow: ($item) => {

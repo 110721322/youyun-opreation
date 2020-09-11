@@ -1,6 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
-import { Loading, Message } from 'element-ui';
+import { Message } from 'element-ui';
 import store from '@/store';
 import router from "@/router"
 import * as g from '../libs/global';
@@ -13,7 +13,7 @@ axios.interceptors.request.use((config) => {
   // 设置全局参数
   config.timeout = 10000;
   config.headers.common.client = 'WEB';
-  config.headers.common['accessToken'] = store.state.admin.accessToken || ''
+  config.headers.common.accessToken = store.state.admin.accessToken || ''
   // 参数格式为form data(默认request payload)
 
   for (const field in config.data) {
@@ -28,7 +28,7 @@ axios.interceptors.request.use((config) => {
   if (JSON.stringify(config.data) === "{}") {
     config.data = null;
   }
-  Loading.service({text: '载入中', body: true})
+  // Loading.service({text: '载入中', body: true})
   return config;
 }, (error) => {
   // Do something with request error
@@ -37,7 +37,7 @@ axios.interceptors.request.use((config) => {
 
 // 添加一个响应拦截器
 axios.interceptors.response.use((response) => {
-  Loading.service().close();
+  // Loading.service().close();
   if (response.data && response.data.status === 0) {
     return response;
   } else if (response.data && response.data.status === 1 && response.data.code !== null) {
@@ -68,7 +68,7 @@ axios.interceptors.response.use((response) => {
   }
 }, (error) => {
   // Do something with response error
-  Loading.service().close();
+  // Loading.service().close();
   if (error.response) {
     switch (error.response.status) {
       case 400:
@@ -94,7 +94,7 @@ axios.interceptors.response.use((response) => {
         break;
 
       case 500:
-        error.message = error.response.errorMessage || '服务器内部错误';
+        error.message = error.response.data.errorMessage || '服务器内部错误';
         break;
 
       case 501:

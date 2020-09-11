@@ -105,17 +105,15 @@ export default {
   methods: {
     search($ruleForm) {
       const params = {
-        agentNo: $ruleForm.inputSelect === 'agentNo' ? $ruleForm.inputForm : null,
-        outputNo: $ruleForm.inputSelect === 'outputNo' ? $ruleForm.inputForm : null,
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,
-        deviceId: $ruleForm.deviceId,
-        status: $ruleForm.status,
-        saleUserId: $ruleForm.saleUserId,
-        outputUserId: $ruleForm.outputUserId,
+        deviceId: $ruleForm.deviceId ? $ruleForm.deviceId : '',
+        status: $ruleForm.status ? $ruleForm.status : '',
+        saleUserId: $ruleForm.saleUserId ? $ruleForm.saleUserId : '',
+        outputUserId: $ruleForm.outputUserId ? $ruleForm.outputUserId : '',
         distributionUserId: '1'
-        // 1415
       };
+      this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     },
     confirm($data) {

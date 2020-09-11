@@ -68,8 +68,8 @@ export default {
         outputNo: null,
         outputType: null,
         status: null,
-        beginTime: this.$g.utils.getToday(),
-        endTime: this.$g.utils.getToday()
+        beginTime: this.$g.utils.getNowFormatDate() + ' ' + '00' + ':' + '00' + ':' + '00',
+        endTime: this.$g.utils.getNowFormatDate() + ' ' + '23' + ':' + '59' + ':' + '59'
       },
       api: api.hardwarePageOrder
     };

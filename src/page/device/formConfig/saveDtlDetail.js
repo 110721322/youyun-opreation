@@ -34,7 +34,7 @@ export const FORM_CONFIG = {
         type: 0,
         label: '设备标识',
         key: 'deviceIdentifier',
-        initVal: 'pdd'
+        initVal: ''
       }
     ]
   }

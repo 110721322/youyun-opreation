@@ -139,8 +139,8 @@
             <div class="regist-title">服务商账户注册</div>
             <div class="input-box">
               <template>
-                <el-radio v-model="registerForm.businessType" label="1">企业商户</el-radio>
-                <el-radio v-model="registerForm.businessType" label="2">个人商户</el-radio>
+                <el-radio v-model="registerForm.businessType" label="enterprise">企业商户</el-radio>
+                <el-radio v-model="registerForm.businessType" label="individual">个人商户</el-radio>
               </template>
               <el-input
                 v-model="registerForm.company"
@@ -346,15 +346,17 @@ export default {
           system: 'operation'
         })
         .then(res => {
-          this.countLoginTime = 60;
-          const interval = setInterval(() => {
-            if (that.countLoginTime > 0) {
-              that.countLoginTime--;
-            } else {
-              clearInterval(interval);
-            }
-          }, 1000);
-          this.$message("已发送");
+          if (res.status === 0) {
+            this.countLoginTime = 60;
+            const interval = setInterval(() => {
+              if (that.countLoginTime > 0) {
+                that.countLoginTime--;
+              } else {
+                clearInterval(interval);
+              }
+            }, 1000);
+            this.$message("已发送");
+          }
         })
         .catch(() => {
           this.countLoginTime = 0;
@@ -366,30 +368,27 @@ export default {
         this.$alert("请输入手机号");
         return;
       }
-      this.countChangeTime = 60;
-      const interval = setInterval(() => {
-        if (this.countChangeTime > 0) {
-          this.countChangeTime--;
-        } else {
-          clearInterval(interval);
-        }
-      }, 1000);
 
       api
-        .getSmsCode({
+        .sendForgetCode({
           phone: this.ruleForm3.phone,
           system: 'operation'
         })
         .then(res => {
-          this.countLoginTime = 60;
-          const interval = setInterval(() => {
-            if (that.countLoginTime > 0) {
-              that.countLoginTime--;
-            } else {
-              clearInterval(interval);
-            }
-          }, 1000);
-          this.$message("已发送");
+          if (res.status === 0) {
+            this.countChangeTime = 60;
+            const interval = setInterval(() => {
+              if (that.countChangeTime > 0) {
+                that.countChangeTime--;
+              } else {
+                clearInterval(interval);
+              }
+            }, 1000);
+            this.$message({
+              message: '已发送',
+              type: 'success'
+            });
+          }
         })
         .catch(() => {
           this.countLoginTime = 0;
@@ -443,7 +442,8 @@ export default {
         from: 'operation',
         userId: userId,
         accessToken: res.object.accessToken
-      })
+      });
+      this.$store.dispatch('setTodoList');
       api.queryUserVueRouterList({
         userToken: res.object.accessToken,
         system: 'operation',
@@ -452,11 +452,12 @@ export default {
       }).then(res => {
         computedRoleRouter(res.object)
         this.addRoutes();
-        if (this.$route.query.redirect) {
-          this.$router.push({ path: `${this.$route.query.redirect}` });
-        } else {
-          this.$router.push(`/index`);
-        }
+        this.$router.push(`/index`);
+        // if (this.$route.query.redirect) {
+        //   this.$router.push({ path: `${this.$route.query.redirect}` });
+        // } else {
+        //   this.$router.push(`/index`);
+        // }
       })
     },
     connactWebSocket ($params) {

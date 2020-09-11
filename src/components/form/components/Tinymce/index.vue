@@ -102,6 +102,7 @@ export default {
     }
   },
   mounted() {
+    this.value = this.formItem.initVal
     this.init();
   },
   activated() {

@@ -51,15 +51,7 @@
       <el-row>
         <el-col :span="8" class="app">
           <img src="https://avatars1.githubusercontent.com/u/23054546?s=64&v=4" alt />
-          <div>订购设备</div>
-        </el-col>
-        <el-col :span="8" class="app">
-          <img src="https://avatars1.githubusercontent.com/u/23054546?s=64&v=4" alt />
-          <div>佣金结算</div>
-        </el-col>
-        <el-col :span="8" class="app border_none">
-          <img src="https://avatars1.githubusercontent.com/u/23054546?s=64&v=4" alt />
-          <div>第三方对接</div>
+          <div @click="orderEquipment">订购设备</div>
         </el-col>
       </el-row>
     </div>
@@ -158,7 +150,7 @@
         @cancel="cancel"
       ></Form>
     </el-drawer>
-    <el-drawer title="添加沟通计划" :visible.sync="addContactsDraw" :with-header="false" size="40%">
+    <el-drawer :title="contactConfigData.title" :visible.sync="addContactsDraw" :with-header="false" size="40%">
       <div class="p_head">{{ contactConfigData.title }}</div>
       <Form
         ref="liaisonRef"
@@ -211,16 +203,12 @@
     </el-drawer>
     <el-drawer :visible.sync="financeDrawer" :with-header="false" size="30%">
       <div class="financeTitle">财务信息</div>
-      <el-form :model="financeModel">
+      <el-form :model="financeModel" :rules="rules">
         <el-form-item label="结算卡类型" prop="bankAccountType" style="margin: 24px 20% 0 24px;" label-width="120px">
-          <el-select v-model="financeModel.bankAccountType" placeholder="请选择">
-            <el-option
-                v-for="item in accountType"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-            </el-option>
-          </el-select>
+          <el-radio-group v-model="financeModel.bankAccountType">
+            <el-radio label="public">对公</el-radio>
+            <el-radio label="private">对私</el-radio>
+          </el-radio-group>
         </el-form-item>
         <el-form-item label="银行卡号" prop="bankCardNo" style="margin: 24px 20% 0 24px;" label-width="120px">
           <el-input placeholder="请输入银行卡号" v-model="financeModel.bankCardNo"></el-input>
@@ -298,6 +286,16 @@
         </li>
       </ul>
     </el-dialog>
+    <el-drawer :visible.sync="equipment" :with-header="false" size="30%">
+      <div class="p_head">{{ equipmentConfigData.title }}</div>
+      <Form
+          ref="liaisonRef"
+          :form-base-data="equipmentConfigData.formData"
+          :show-foot-btn="equipmentConfigData.showFootBtn"
+          @confirm="equipment_confirm"
+          @cancel="cancel"
+      ></Form>
+    </el-drawer>
   </div>
 </template>
 
@@ -305,8 +303,11 @@
 import Form from "@/components/form/index.vue";
 import api from "@/api/api_agent.js";
 import BaseCrud from "@/components/table/BaseCrud.vue";
+import api_device from "@/api/api_device.js";
 import detailMode from "@/components/detailMode/detailMode.vue";
+import { ORDER_EQUIPMENT } from "./formConfig/orderEquipmentForm";
 import { USER_CONFIG, USER_CONFIG2 } from "./tableConfig/config_communicate";
+import { DETAILCONFIG } from "./tableConfig/agentDetailConfig";
 import { FORM_CONFIG } from "./formConfig/agentDetail";
 import { CONTACTS_CONFIG } from "./formConfig/addContacts"
 import { LISASION } from "./formConfig/addLiasion"
@@ -323,6 +324,7 @@ export default {
       talkListDetail: {},
       dialogTableVisible: false,
       liaisonId: '',
+      equipment: false,
       addLiaison: false,
       findLiaison: false,
       addDrewerType: '',
@@ -333,231 +335,9 @@ export default {
       dynamicTags: [],
       inputVisible: false,
       inputValue: "",
-      configData: {
-        name: "基本信息",
-        child: [
-          {
-            name: "基本资料",
-            modelName: "basicData",
-            models: [
-              {
-                items: [
-                  {
-                    name: "公司名称",
-                    key: "agentName"
-                  },
-                  {
-                    name: "法人手机号",
-                    key: "personMobile"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "邮箱",
-                    key: "email"
-                  },
-                  {
-                    name: "营业执照图",
-                    key: "businessLicenseImg",
-                    type: "img"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "法人姓名",
-                    key: "personName"
-                  },
-                  {
-                    name: "公司地址",
-                    key: "companyAddress"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            name: "财务",
-            modelName: "finance",
-            models: [
-              {
-                items: [
-                  {
-                    name: "结算卡类型",
-                    key: "bankAccountType",
-                    type: "bankType"
-                  },
-                  {
-                    name: "开户支行地区",
-                    key: "bankArea"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "开户名",
-                    key: "bankAccountHolder"
-                  },
-                  {
-                    name: "开户支行",
-                    key: "bankBranchName"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "银行卡号",
-                    key: "bankCardNo"
-                  }
-                ]
-              }
-            ]
-          }
-          // {
-          //   name: "邮寄地址",
-          //   modelName: "address",
-          //   models: [
-          //     {
-          //       items: [
-          //         {
-          //           name: "收件人",
-          //           key: "personName"
-          //         },
-          //         {
-          //           name: "详细地址",
-          //           key: "detailAddress"
-          //         }
-          //       ]
-          //     },
-          //     {
-          //       items: [
-          //         {
-          //           name: "手机号",
-          //           key: "personMobile"
-          //         }
-          //       ]
-          //     },
-          //     {
-          //       items: [
-          //         {
-          //           name: "地区",
-          //           key: "name3"
-          //         }
-          //       ]
-          //     }
-          //   ]
-          // }
-        ]
-      },
-      configData2: {
-        name: "行业信息",
-        child: [
-          {
-            name: "费率",
-            modelName: "rateInfo",
-            models: [
-              {
-                items: [
-                  {
-                    name: "微信/支付宝费率",
-                    key: "wechatPayRate",
-                    type: "pecent"
-                  },
-                  {
-                    name: "云闪付费率单笔＞1000",
-                    key: "cloudPayGt1000Rate",
-                    type: "pecent"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "云闪付费率单笔≤1000",
-                    key: "cloudPayLe1000Rate",
-                    type: "pecent"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            name: "续费",
-            modelName: "renew",
-            models: [
-              {
-                items: [
-                  {
-                    name: "开户时间",
-                    key: "activeDate"
-                  },
-                  {
-                    name: "缴费金额",
-                    key: "renewValue"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "到期时间",
-                    key: "expireDate"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "续费方式",
-                    key: "renewType"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            name: "权限",
-            modelName: "mailAddress",
-            models: [
-              {
-                items: [
-                  {
-                    name: "服务地区",
-                    key: "activeScopeType",
-                    type: "descript"
-                  },
-                  {
-                    name: "平台分润抽成",
-                    key: "chargeFeePercent",
-                    type: "pecent"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "可否开通下级",
-                    key: "expandSub"
-                  }
-                ]
-              },
-              {
-                items: [
-                  {
-                    name: "服务类型",
-                    key: "activeMode"
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
+      configData: DETAILCONFIG.configData,
+      configData2: DETAILCONFIG.configData2,
+      equipmentConfigData: ORDER_EQUIPMENT,
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -617,21 +397,25 @@ export default {
       liaisonType: '',
       summaryInfo: {},
       financeModel: {
-        bankAccountType: '',
+        bankAccountType: 'public',
         bankCardNo: '',
         bankContactLine: '',
         bankAccountHolder: ''
       },
-      accountType: [
-        {
-          label: '对私',
-          value: 'private'
-        },
-        {
-          label: '对公',
-          value: 'public'
-        }
-      ],
+      rules: {
+        bankAccountType: [
+          { required: true, message: '请选择结算卡类型', trigger: 'change' }
+        ],
+        bankCardNo: [
+          { required: true, message: '请填写银行卡号', trigger: 'blur' }
+        ],
+        bankContactLine: [
+          { required: true, message: '请填写开户支行', trigger: 'change' }
+        ],
+        bankAccountHolder: [
+          { required: true, message: '请填写开户名', trigger: 'blur' }
+        ]
+      },
       area: '',
       loading: false,
       areaCodeNum: '',
@@ -746,10 +530,23 @@ export default {
         agentNo: agentNo
       }).then(res => {
         if (res.object) {
+          if (res.object.expandSub === 1) {
+            res.object.expandSubCn = '是'
+          }
+          if (res.object.expandSub === 0 || res.object.expandSub === null) {
+            res.object.expandSubCn = '否'
+          }
+          res.object.renewTypeCn = '固定续费'
           this.agentDetail = res.object
           res.object.labelList.forEach(item => {
             this.dynamicTags.push(item.name);
           });
+          if (res.object.wechatPayRate) {
+            res.object.alipayRate = this.$g.utils.AccMul(res.object.alipayRate, 1000);
+            res.object.wechatPayRate = this.$g.utils.AccMul(res.object.wechatPayRate, 1000);
+            res.object.cloudPayGt1000Rate = this.$g.utils.AccMul(res.object.cloudPayGt1000Rate, 1000);
+            res.object.cloudPayLe1000Rate = this.$g.utils.AccMul(res.object.cloudPayLe1000Rate, 1000);
+          }
           this.ruleForm = res.object
         }
       });
@@ -769,12 +566,14 @@ export default {
       this.addDrewerType = 'contactsType'
       this.addContactsDraw = true
       this.contactConfigData = CONTACTS_CONFIG.formData
+      this.contactConfigData.title = '添加沟通计划'
     },
     // 添加沟通小计侧弹窗
     addSubtotal() {
       this.addDrewerType = 'subtotalType'
       this.addContactsDraw = true
       this.contactConfigData = CONTACTS_CONFIG.formData1
+      this.contactConfigData.title = '添加沟通小计'
     },
     // 编辑沟通计划
     editDetail($row) {
@@ -789,6 +588,7 @@ export default {
           item.initVal = res.object[item.key];
         });
         this.contactConfigData = newFromConfigData;
+        this.contactConfigData.title = '编辑沟通计划'
       }).catch(() => {})
     },
     // 添加沟通计划确定按钮
@@ -876,6 +676,9 @@ export default {
           })
         }
       }
+    },
+    orderEquipment() {
+      this.equipment = true
     },
     // 标签输入框
     tagInput(value) {
@@ -1001,6 +804,18 @@ export default {
       }
       if ($model === 'finance') {
         this.editType = 'editFincance'
+        if (this.ruleForm.bankBranchName) {
+          this.remoteMethod(this.ruleForm.bankBranchName)
+          this.handleSelect(this.ruleForm.bankContactLine)
+        }
+        this.areaCodeNum = this.ruleForm.bankArea
+        this.bankName = this.ruleForm.bankBranchName
+        this.financeModel = {
+          bankContactLine: this.ruleForm.bankContactLine,
+          bankCardNo: this.ruleForm.bankCardNo,
+          bankAccountType: this.ruleForm.bankAccountType,
+          bankAccountHolder: this.ruleForm.bankAccountHolder
+        }
         this.financeDrawer = true
       }
     },
@@ -1104,10 +919,10 @@ export default {
           } else {
             api.updateAgentRate({
               agentNo: this.$route.query.agentNo,
-              wechatPayRate: Number(row.wechatPayRate),
-              alipayRate: Number(row.wechatPayRate),
-              cloudPayLe1000Rate: Number(row.cloudPayLe1000Rate),
-              cloudPayGt1000Rate: Number(row.cloudPayGt1000Rate)
+              wechatPayRate: row.wechatPayRate / 1000,
+              alipayRate: row.wechatPayRate / 1000,
+              cloudPayLe1000Rate: row.cloudPayLe1000Rate / 1000,
+              cloudPayGt1000Rate: row.cloudPayGt1000Rate / 1000
             }).then(res => {
               if (res.status === 0) {
                 this.$message({
@@ -1179,6 +994,37 @@ export default {
           })
         }
       }
+    },
+    equipment_confirm($ruleForm) {
+      const params = {
+        saleUserId: this.$store.state.admin.userInfo.id,
+        saleUserName: this.$store.state.admin.userInfo.name,
+        amount: $ruleForm.amount,
+        buyerAddress: $ruleForm.buyerAddress,
+        buyerName: this.ruleForm.expReceiver,
+        buyerPhone: this.ruleForm.expMobile,
+        outputType: 2, // 运营订购
+        actualAmount: $ruleForm.actualAmount,
+        agentNo: this.$route.query.agentNo,
+        payType: $ruleForm.payType,
+        voucher: $ruleForm.voucher.dialogImageUrl,
+        buyerRemark: $ruleForm.buyerRemark,
+        infoVOList: [{
+          count: $ruleForm.count,
+          deviceModel: $ruleForm.deviceModel,
+          deviceId: $ruleForm.deviceId,
+          salePrice: $ruleForm.actualAmount
+        }]
+      }
+      api_device.deviceOutputAdd(params).then(res => {
+        this.drawer = false;
+        if (res.status === 0) {
+          this.$message({
+            message: '订购成功',
+            type: 'success'
+          });
+        }
+      })
     },
     // 查询通讯簿
     getAddressBookQuery() {
@@ -1404,7 +1250,7 @@ export default {
   }
 }
 .app {
-  border-right: 1px solid #ebeef5;
+  width: 100%;
   text-align: center;
   font-size: 14px;
   font-weight: 500;

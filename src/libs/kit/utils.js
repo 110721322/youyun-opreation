@@ -233,6 +233,22 @@ export default {
     };
     return _time.getFullYear() + '-' + pad((_time.getMonth() + 1), 2) + '-' + pad(_time.getDate(), 2);
   },
+  // 获取当前日期 yyyy-MM-dd
+  getNowFormatDate() {
+    var date = new Date();
+    var seperator1 = "-";
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+      month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+      strDate = "0" + strDate;
+    }
+    var currentdate = year + seperator1 + month + seperator1 + strDate;
+    return currentdate;
+  },
   // 获取ago当前日期   年月日
   getToday2: (ago = 0) => {
     var _time = new Date(Date.now() + ago * 24 * 60 * 60 * 1000);
@@ -279,7 +295,21 @@ export default {
     };
     return _time.getFullYear() + '-' + pad((_time.getMonth() + 1), 2) + '-' + pad(_time.getDate(), 2);
   },
-  trace() {
+  // 校验邮箱
+  checkEmail(mail) {
+    if (!(/^[A-Za-z0-9-._]+@[A-Za-z0-9-]+(.[A-Za-z0-9]+)*(.[A-Za-z]{2,6})$/.test(mail))) {
+      return false
+    } else {
+      return true
+    }
+  },
+  // 校验手机号
+  checkPhone(phone){
+    if(!(/^1[3456789]\d{9}$/.test(phone))){
+      return false;
+    } else {
+      return true
+    }
   },
 
   jugeType(obj) {

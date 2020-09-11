@@ -1,6 +1,6 @@
 <template>
   <div class="RoleMenuSet">
-    <div class="p_head">小程序角色权限</div>
+    <div class="p_head">编辑权限</div>
     <div class="m-tree-container">
       <el-tree
         :data="templateList"

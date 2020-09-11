@@ -17,7 +17,6 @@
         <div>
           <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.baseData"></detailMode>
           <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.merchantData"></detailMode>
-          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.merchantSettle"></detailMode>
           <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.other"></detailMode>
         </div>
         <div v-if="showComponents.showOperBtns" class="btn-box">
@@ -120,78 +119,20 @@ export default {
               type: "image"
             },
             {
-              name: "内景照",
-              key: "shopInnerImg",
-              type: "image"
-            },
-            {
-              name: "收银台照",
-              key: "shopCashdeskImg",
-              type: "image"
-            },
-            {
-              name: "法人身份证正面",
-              key: "idCardPortraitImg",
-              type: "image"
-            },
-            {
-              name: "结算人身份证反面",
-              key: "idCardEmblemImg",
-              type: "image"
-            },
-            {
-              name: "商户类型",
-              key: "merchantType"
-            },
-            {
-              name: "商户简称",
-              key: "shortName"
-            },
-            {
-              name: "营业执照开始日期",
-              key: "shopLicenseBegDate"
+              name: "支付宝账号",
+              key: "alipayAccount"
             },
             {
               name: "营业执照编号",
               key: "shopLicenseNo"
             },
             {
-              name: "客服手机号",
-              key: "serviceTel"
+              name: "联系人姓名",
+              key: "zfbLinkman"
             },
             {
-              name: "法人身份证到期日",
-              key: "idCardExpireDate"
-            }
-          ]
-        },
-        merchantSettle: {
-          name: "商户结算卡",
-          items: [
-            {
-              name: "营业执照",
-              key: "shopLicenseImg",
-              type: "image"
-            },
-            {
-              name: "结算卡类型",
-              key: "accountType"
-            },
-            {
-              name: "银行卡号",
-              key: "bankCardNo"
-            },
-            {
-              name: "开户支行地区",
-              key: "bankArea"
-            },
-            {
-              name: "开户支行",
-              key: "branchName"
-            },
-            {
-              name: "银行预留手机号",
-              key: "bankMobile"
+              name: "联系人手机号",
+              key: "zfbLinkmanPhone"
             }
           ]
         },
@@ -200,7 +141,7 @@ export default {
           items: [
             {
               name: "费率",
-              key: "rate"
+              key: "alipayRatePecent"
             },
             {
               name: "邮箱",
@@ -282,6 +223,7 @@ export default {
         if (res.object.status === 'platformReject' || res.object.status === 'channelReject') {
           res.object.rejectReason = '驳回原因：' + res.object.rejectReason
         }
+        res.object.alipayRatePecent = res.object.alipayRate * 1000 + '‰'
         this.ruleForm = res.object;
         this.currentType = res.object.status
       }).catch();

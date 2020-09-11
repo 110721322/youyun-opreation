@@ -209,7 +209,7 @@ const asyncRoutes = {
     name: 'marketing',
     component: Layout,
     meta: {
-      title: '服务商管理',
+      title: '营销管理',
       icon: 'agent'
     },
     children: []
@@ -412,7 +412,7 @@ const asyncRoutes = {
     path: 'coupon',
     name: 'coupon',
     meta: {
-      title: '优惠券',
+      title: '优惠码',
       subMenuName: '',
       icon: 'coupon'
     },
@@ -423,7 +423,7 @@ const asyncRoutes = {
         name: 'addCoupon',
         meta: {
           fatherName: 'coupon',
-          title: '添加优惠券',
+          title: '添加优惠码',
           icon: 'addCoupon'
         },
         component: () => import('@/page/marketing/addCoupon.vue')
@@ -433,7 +433,7 @@ const asyncRoutes = {
         name: 'couponDetail',
         meta: {
           fatherName: 'coupon',
-          title: '优惠券详情',
+          title: '优惠码详情',
           icon: 'couponDetail'
         },
         component: () => import('@/page/marketing/couponDetail.vue')
@@ -580,7 +580,7 @@ const asyncRoutes = {
         name: 'platformAdDetail',
         meta: {
           fatherName: 'platformAdList',
-          title: '详情',
+          title: '新增/编辑',
           icon: 'platformAdDetail'
         },
         component: () => import('@/page/agentService/adManage/platformAdDetail.vue')
@@ -1361,8 +1361,8 @@ const asyncRoutes = {
         name: 'indirectRecordDetail',
         meta: {
           fatherName: 'indirectList',
-          title: '间连审核详情',
-          icon: '间连审核详情',
+          title: '间连审核记录',
+          icon: '间连审核记录',
           subMenuName: 'checkMerchant'
         },
         component: () => import('@/page/approval/merchantCheck/indirectRecordDetail.vue')

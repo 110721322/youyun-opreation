@@ -1,22 +1,8 @@
 <template>
   <div>
-    <!--<el-upload
-      v-loading="loading"
-      action="OSSS上传图片"
-      :data="urlData"
-      class="avatar-uploader"
-      :show-file-list="false"
-      :before-upload="beforeUpload"
-      :http-request="upLoad"
-      :on-preview="handlePictureCardPreview"
-    >
-      &lt;!&ndash;<img v-if="dialogImageUrl" :src="dialogImagePath + dialogImageUrl" class="avatar" />
-      <i v-else class="el-icon-plus avatar-uploader-icon"></i>&ndash;&gt;
-      <i class="el-icon-plus avatar-uploader-icon"></i>
-    </el-upload>-->
     <el-upload
       v-loading="loading"
-      action="OSSS上传图片"
+      action="OSS上传图片"
       list-type="picture-card"
       class="avatar-uploader"
       :data="urlData"
@@ -26,6 +12,7 @@
       :before-remove="beforeRemove"
       :on-remove="onRemove"
       :http-request="upLoad"
+      :limit="maxNum"
       :on-preview="handlePictureCardPreview"
     >
       <img v-if="dialogImageUrl && !showFileList" :src="dialogImagePath + dialogImageUrl" class="avatar" />
@@ -62,7 +49,8 @@ export default {
       ossData: {}, // 存签名信息
       urlData: {
         type: 'common' || 'excel'
-      }
+      },
+      maxNum: null
     };
   },
   computed: {
@@ -94,6 +82,9 @@ export default {
     }
   },
   created() {
+    if (this.formItem.maxNum) {
+      this.maxNum = this.formItem.maxNum
+    }
     this.initVal();
   },
 
@@ -255,9 +246,21 @@ export default {
     border: 1px dashed #ccc;
     border-radius: 6px;
   }
-
   .avatar-uploader .el-upload i:hover {
     border-color: #409eff;
+  }
+  .avatar-uploader {
+    /deep/ .el-upload--picture-card {
+      overflow: hidden;
+    }
+  }
+  .avatar-uploader {
+    /deep/ .el-upload-list--picture-card {
+      display: flex;
+      /deep/ .el-upload-list__item {
+        flex-shrink: 0;
+      }
+    }
   }
 
   .avatar-uploader-icon {

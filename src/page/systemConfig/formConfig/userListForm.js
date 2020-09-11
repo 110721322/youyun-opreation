@@ -9,22 +9,22 @@ export const FORM_CONFIG = {
         type: 6,
         label: "头像",
         key: "img",
-        // key: "headerImageSrc",
-        initVal: "pdd",
-        rules: setRules("头像").isRequired.get
+        maxNum: 1,
+        initVal: "",
+        rules: setRules("头像").isSelected.get
       },
       {
         type: 0,
         label: "花名",
         key: "jobName",
-        initVal: "pdd",
+        initVal: "",
         rules: setRules("花名").isRequired.get
       },
       {
         type: 0,
         label: "姓名",
         key: "name",
-        initVal: "pdd",
+        initVal: "",
         rules: setRules("姓名").isRequired.get
       },
       {
@@ -42,35 +42,37 @@ export const FORM_CONFIG = {
             value: 0
           }
         ],
-        rules: setRules("性别", 1).isRequired.get
+        rules: setRules("性别", 1).isSelected.get
       },
       {
         type: 0,
         label: "手机号",
         key: "phone",
-        initVal: "pdd",
-        rules: setRules("姓名").isRequired.get
+        initVal: "",
+        rules: setRules("手机号").isRequired.get
       },
       {
         type: 0,
         label: "工号",
         key: "jobNumber",
-        initVal: "pdd",
-        rules: setRules("姓名").isRequired.get
+        initVal: "",
+        rules: setRules("工号").isRequired.get
       },
       {
         type: 11,
         label: "生日",
         key: "birthday",
         initVal: null,
-        dateType: "date"
+        format: 'yyyy-MM-dd',
+        dateType: "date",
+        rules: setRules("生日").isSelected.get
       },
       {
         type: 0,
         label: "邮箱",
         key: "email",
-        initVal: "pdd",
-        rules: setRules("姓名").isRequired.get
+        initVal: "",
+        rules: setRules("邮箱").isRequired.get
       }
     ]
   }

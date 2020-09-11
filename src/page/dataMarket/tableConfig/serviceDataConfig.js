@@ -142,11 +142,22 @@ export const MERCHANTDATACONFIG5 = {
     },
     {
       label: "交易额",
-      prop: "actualAmount",
+      prop: "tradeAmount",
       width: "70px",
-      formatter($row) {
-        return '¥' + $row['actualAmount'];
+      render: (h, params) => {
+        if (params.row.tradeAmount) {
+          return h(
+            'span', '¥' + params.row.tradeAmount
+          )
+        } else {
+          return h(
+            'span', '¥' + '0'
+          )
+        }
       }
+      // formatter($row) {
+      //   return (('¥' + $row['actualAmount']) || 0);
+      // }
     }
   ]
 }

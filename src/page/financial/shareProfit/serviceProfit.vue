@@ -117,23 +117,21 @@ export default {
   },
   mounted() {},
   created() {
-    this.api = api_statistice.selectTopAgentDataByPage
     var myDate = new Date()
+    const m = myDate.getMonth() + 1
     if (myDate.getMonth() < 10) {
-      this.tradeMonth = myDate.getFullYear() + "-" + "0" + myDate.getMonth() + "-" + "01"
-      // this.params = {
-      //   tradeMonth: this.tradeMonth
-      // }
+      this.tradeMonth = myDate.getFullYear() + "-" + "0" + m + "-" + "01"
     } else {
-      this.tradeMonth = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + "01"
-      // this.params = {
-      //   tradeMonth: this.tradeMonth
-      // }
+      this.tradeMonth = myDate.getFullYear() + "-" + m + "-" + "01"
     }
     if (this.mainIndex === 0) {
       this.configData = TOPERVICE_CONFIG
       this.configData1 = TOPVICE_CONFIG1
     }
+    this.params = {
+      tradeMonth: this.tradeMonth
+    }
+    this.api = api_statistice.selectTopAgentDataByPage
     // this.search()
   },
   methods: {

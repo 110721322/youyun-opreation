@@ -114,7 +114,6 @@ export default {
       };
       // SelectInput联合输入框赋值
       this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
-      console.log('ruleForm', $ruleForm.inputForm);
     }
   }
 };

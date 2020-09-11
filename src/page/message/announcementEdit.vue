@@ -5,6 +5,8 @@
       <div class="title">{{ fromConfigData.title }}</div>
 
       <announcementEdit
+        v-if="detailGet"
+        ref="form"
         :form-base-data="fromConfigData.formData"
         :label-width="'auto'"
         @commit="handleCommit"
@@ -24,28 +26,53 @@ export default {
   data() {
     return {
       fromConfigData: FORM_CONFIG.sendMessageData,
-      noticeId: this.$route.query.id
+      noticeId: this.$route.query.id,
+      detailGet: true
     };
   },
   created() {
     // 如果是查询编辑
-    api
-      .queryNoticeByPrimaryId({ id: this.noticeId })
-      .then(res => {
-        this.fromConfigData.formData.forEach((item, index) => {
-          item.key === "time"
-            ? (item.initVal[0] = res.object["displayStartDate"]) &&
-              (item.initVal[1] = res.object["displayEndDate"])
-            : (item.initVal = res.object[item.key]);
-          // this.$set(item, item.initVal, res.object[item.key]);
+    if (this.noticeId) {
+      this.detailGet = false
+      api
+        .queryNoticeByPrimaryId({ id: this.noticeId })
+        .then(res => {
+          this.detailGet = true
+          this.fromConfigData.formData.forEach((item, index) => {
+            if (item.key === "time") {
+              item.initVal = [res.object.displayStartDate, res.object.displayEndDate]
+            } else if (item.key === 'isReadable') {
+              item.initVal = res.object[item.key]
+            } else {
+              item.initVal = res.object[item.key]
+            }
+            // this.$set(item, item.initVal, res.object[item.key]);
+          });
+        })
+        .catch(err => {
+          console.error(err);
         });
-      })
-      .catch(err => {
-        console.error(err);
-      });
+    }
   },
   methods: {
     handleCommit($ruleForm) {
+      // const ruleForm = this.$refs.form.handleClick();
+      // if (!ruleForm) {
+      //   this.$message('请完善资料');
+      //   return;
+      // }
+      if ($ruleForm.messageType === 1) {
+        if ($ruleForm.readableTime) {
+          const num = parseInt($ruleForm.readableTime)
+          if (num > 1000 || num < 0) {
+            this.$message.error('请输入1-1000内的整数')
+            return;
+          }
+        } else {
+          this.$message.error('请输入阅读时间')
+          return
+        }
+      }
       const dataType = this.noticeId ? 'update' : 'add'
       api[dataType]({
         title: $ruleForm.title,
@@ -62,8 +89,13 @@ export default {
         id: this.noticeId ? this.noticeId : ''
       })
         .then(res => {
-          this.$alert("修改成功");
-          this.$router.push({ path: "/message/serviceAnnouncementList" });
+          if (res.status === 0) {
+            this.$message({
+              message: this.noticeId ? '编辑成功' : '添加成功',
+              type: 'success'
+            })
+          }
+          this.$router.replace({ path: "/message/serviceAnnouncementList" });
         })
         .catch();
     }

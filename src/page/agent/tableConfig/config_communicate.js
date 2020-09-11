@@ -64,12 +64,91 @@ export const USER_CONFIG2 = {
     {
       label: '沟通主题',
       prop: 'theme',
-      width: '150px'
+      width: '150px',
+      render: (h, params) => {
+        if (params.row.theme === 'dailyTalk') {
+          return h(
+            'span', '日常沟通'
+          )
+        }
+        if (params.row.theme === 'dailyTask') {
+          return h(
+            'span', '日常沟通'
+          )
+        }
+        if (params.row.theme === 'newTalk') {
+          return h(
+            'span', '新单沟通'
+          )
+        }
+      }
     },
     {
       label: '沟通副主题',
       prop: 'subTheme',
-      width: '150px'
+      width: '150px',
+      render: (h, params) => {
+        if (params.row.subTheme === 'question') {
+          return h(
+            'span', '问题处理'
+          )
+        }
+        if (params.row.subTheme === 'guest') {
+          return h(
+            'span', '客情维护'
+          )
+        }
+        if (params.row.subTheme === 'train') {
+          return h(
+            'span', '通知'
+          )
+        }
+        if (params.row.subTheme === 'notify') {
+          return h(
+            'span', '培训'
+          )
+        }
+        if (params.row.subTheme === 'guest') {
+          return h(
+            'span', '客情维护'
+          )
+        }
+        if (params.row.subTheme === 'settleFail') {
+          return h(
+            'span', '结算失败'
+          )
+        }
+        if (params.row.subTheme === 'msgRecharge') {
+          return h(
+            'span', '短信充值'
+          )
+        }
+        if (params.row.subTheme === 'priceException') {
+          return h(
+            'span', '客单价异常'
+          )
+        }
+        if (params.row.subTheme === 'tradeException') {
+          return h(
+            'span', '交易数据异常'
+          )
+        }
+        if (params.row.subTheme === 'open') {
+          return h(
+            'span', '开户'
+          )
+        }
+        if (params.row.subTheme === 'customerInfo') {
+          return h(
+            'span', '了解客户信息'
+          )
+        }
+        if (params.row.subTheme === 'teaching') {
+          return h(
+            'span', '新单教学'
+          )
+        }
+      }
     },
     {
       label: '沟通内容',

@@ -67,8 +67,7 @@
         @node-drop="handleDrop"
       ></el-tree>
       <div class="foot_btn_box">
-        <el-button class="foot_btn" type="primary" @click="handleClick">确定</el-button>
-        <el-button class="foot_btn" @click="cancelForm">取消</el-button>
+        <el-button class="foot_btn" @click="cancelForm">关闭</el-button>
       </div>
     </el-drawer>
   </div>
@@ -159,20 +158,6 @@ export default {
   },
   mounted() {},
   methods: {
-    handleClick() {
-      api
-        .addMember({
-          phoneList: this.addPhoneList
-        })
-        .then(res => {
-          this.addPhoneList = [""];
-          this.$message("已添加");
-          this.drawerAddPhone = false;
-        })
-        .catch(err => {
-          this.$message(err);
-        });
-    },
     cancelForm() {
       this.drawerOrganization = false;
     },
@@ -182,8 +167,8 @@ export default {
         position: $ruleForm.position,
         superiorName: $ruleForm.superiorName,
         state: 0,
-        startTime: $ruleForm.date[0] + " 00:00:00",
-        endTime: $ruleForm.date[1] + " 23:59:59"
+        startTime: $ruleForm.date[0] + ' 00:00:00',
+        endTime: $ruleForm.date[1] + ' 23:59:59'
       };
       this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
     },
@@ -201,7 +186,7 @@ export default {
           email: $ruleForm.email,
           sex: $ruleForm.sex,
           jobName: $ruleForm.jobName,
-          headerImageSrc: $ruleForm.img.dialogImageUrl,
+          img: $ruleForm.img.dialogImageUrl,
           jobNumber: $ruleForm.jobNumber,
           birthday: $ruleForm.birthday,
           position: $ruleForm.position,
@@ -246,21 +231,28 @@ export default {
       this.drawerPersonInfo = true;
     },
     onClick_showOrganization($row) {
-      this.drawerOrganization = true;
+      // this.drawerOrganization = true;
       api
         .employeeOrganization({
           id: $row.id
         })
         .then(res => {
-          // FORM_CONFIG.editData.formData.forEach((item, index) => {
-          //   item.initVal = res.object[item.key];
-          // });
-          // this.activityRow = $row;
+          this.dataItem = [res.object]
+          this.resolveData(this.dataItem)
           this.drawerOrganization = true;
         })
         .catch(err => {
           this.$message(err);
         });
+    },
+    resolveData(arr) {
+      arr.forEach((item, index) => {
+        item.label = item.name
+        item.children = item.lowerUserList
+        if (item.lowerUserList) {
+          this.resolveData(item.lowerUserList)
+        }
+      })
     },
     onClick_editBasics($row) {
       api

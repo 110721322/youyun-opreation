@@ -6,8 +6,13 @@ export const USER_CONFIG = {
       width: '90px'
     },
     {
-      label: '法人',
+      label: '法人姓名',
       prop: 'personName',
+      width: '90px'
+    },
+    {
+      label: '法人手机号',
+      prop: 'personMobile',
       width: '90px'
     },
     {
@@ -18,13 +23,24 @@ export const USER_CONFIG = {
     {
       label: '服务商类型',
       prop: 'businessType',
-      width: '90px'
-
-    },
-    {
-      label: '公司地址',
-      prop: 'companyAddress',
-      width: '90px'
+      width: '90px',
+      render: (h, params) => {
+        if (params.row.businessType === 'individual') {
+          return h(
+            'span', '个体工商户'
+          )
+        }
+        if (params.row.businessType === 'enterprise') {
+          return h(
+            'span', '企业'
+          )
+        }
+        if (params.row.businessType === 'personal') {
+          return h(
+            'span', '个人'
+          )
+        }
+      }
     },
     {
       label: '创建时间',
@@ -36,49 +52,24 @@ export const USER_CONFIG = {
       prop: 'contractStatus',
       render: (h, params) => {
         if (params.row.contractStatus === 'audit') {
-          return h(
-            'el-tag',
-            {
-              props: {
-                size: 'medium',
-                type: 'primary'
-              }
-            },
-            '待审核'
-          );
-        } else if (params.row.contractStatus === 'wait') {
-          return h(
-            'el-tag',
-            {
-              props: {
-                size: 'medium ',
-                type: ''
-              }
-            },
-            '等待'
-          );
-        } else if (params.row.contractStatus === 'reject') {
-          return h(
-            'el-tag',
-            {
-              props: {
-                size: 'medium ',
-                type: 'danger'
-              }
-            },
-            '已拒绝'
-          );
-        } else {
-          return h(
-            'el-tag',
-            {
-              props: {
-                size: 'medium ',
-                type: 'success'
-              }
-            },
-            '审核通过'
-          );
+          return [h('span', {
+            'class': "dot " + "platformAudit"
+          }), '待审核']
+        }
+        if (params.row.contractStatus === 'waitSign') {
+          return [h('span', {
+            'class': "dot " + "platformAudit"
+          }), '待审核']
+        }
+        if (params.row.contractStatus === 'reject') {
+          return [h('span', {
+            'class': "dot " + "reject"
+          }), '已拒绝']
+        }
+        if (params.row.contractStatus === 'success') {
+          return [h('span', {
+            'class': "dot " + "success"
+          }), '已通过']
         }
       }
     }
@@ -98,7 +89,7 @@ export const USER_CONFIG = {
         type: 'text',
         style: 'color:#F5222D',
         isShow: ($row) => {
-          if ($row.contractStatus === 'audit') {
+          if ($row.contractStatus === 'audit' || $row.contractStatus === 'waitSign') {
             return true;
           } else {
             return false;
@@ -122,7 +113,7 @@ export const USER_CONFIG = {
         emitName: 'adopt',
         type: 'text',
         isShow: ($row) => {
-          if ($row.contractStatus === 'audit') {
+          if ($row.contractStatus === 'audit' || $row.contractStatus === 'waitSign') {
             return true;
           } else {
             return false;

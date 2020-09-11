@@ -8,76 +8,50 @@ export const USER_CONFIG = {
     {
       label: '开通时间',
       prop: 'createTime',
-      width: '200px'
+      width: '200px',
+      sortable: true
     },
     {
       label: '到期时间',
       prop: 'expireDate',
-      width: '200px'
+      width: '200px',
+      sortable: true
     },
     {
       label: '商户数量（个）',
       prop: 'merchantCount',
-      width: '150px'
+      width: '150px',
+      sortable: true
     },
-    {
-      label: '开通会员商户数量（个）',
-      prop: 'memberMerchantCount',
-      width: '185px'
-    },
-
+    // {
+    //   label: '开通会员商户数量（个）',
+    //   prop: 'memberMerchantCount',
+    //   width: '185px'
+    // },
     {
       label: '状态',
       prop: 'contractStatus',
       width: '185px',
       render: (h, params) => {
-        if (params.row.contractStatus === 'success') {
-          return h(
-            'el-tag',
-            {
-              props: {
-                size: 'medium ',
-                type: 'success'
-              }
-            },
-            '审核通过'
-          );
-        }
-        if (params.row.contractStatus === 'reject') {
-          return h(
-            'el-tag',
-            {
-              props: {
-                size: 'medium ',
-                type: 'danger'
-              }
-            },
-            '审核拒绝'
-          );
+        if (params.row.contractStatus === 'audit') {
+          return [h('span', {
+            'class': "dot " + "platformAudit"
+          }), '审核中']
         }
         if (params.row.contractStatus === 'wait') {
-          return h(
-            'el-tag',
-            {
-              props: {
-                size: 'medium ',
-                type: 'info'
-              }
-            },
-            '待审核'
-          );
+          return [h('span', {
+            'class': "dot " + "nonOpen"
+          }), '待审核']
         }
-        if (params.row.contractStatus === 'audit') {
-          return h(
-            'el-tag',
-            {
-              props: {
-                size: 'medium ',
-                type: ''
-              }
-            },
-            '审核中'
-          );
+        if (params.row.contractStatus === 'reject') {
+          return [h('span', {
+            'class': "dot " + "reject"
+          }), '已拒绝']
+        }
+        if (params.row.contractStatus === 'success') {
+          return [h('span', {
+            'class': "dot " + "success"
+          }), '已通过']
         }
       }
     },
@@ -96,7 +70,6 @@ export const USER_CONFIG = {
       prop: 'operationName',
       width: '150px'
     }
-
   ],
   // crud的模态框表单配置，可配置表单类型，验证规则，是否必填,col-span布局可通过span参数配置
 
@@ -155,17 +128,17 @@ export const USER_CONFIG = {
             return false;
           }
         }
+      },
+      {
+        name: '服务商后台',
+        emitName: 'openAgentManager',
+        type: 'text'
+      },
+      {
+        name: '商户列表',
+        emitName: 'goMerchantList',
+        type: 'text'
       }
-      // {
-      //   name: '服务商后台',
-      //   emitName: 'openAgentManager',
-      //   type: 'text'
-      // },
-      // {
-      //   name: '商户列表',
-      //   emitName: 'goMerchantList',
-      //   type: 'text'
-      // }
     ]
   },
   // 表单基础数据类型，需要预先赋值

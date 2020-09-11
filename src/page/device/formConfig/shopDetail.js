@@ -12,9 +12,9 @@ export const FORM_CONFIG = {
         key: 'deviceType',
         isDisabled: true,
         urlOptions: {
-          url: apiDevice.queryAllDeviceModel,
-          keyName: 'deviceType',
-          valueName: 'deviceType',
+          url: apiDevice.queryAllDeviceTypeModel,
+          keyName: 'advertType',
+          valueName: 'advertTypeDesc',
           method: 'get',
           params: {
             classification: 1
@@ -52,6 +52,7 @@ export const FORM_CONFIG = {
         type: 6,
         label: '宣传图片',
         key: 'img',
+        maxNum: 1,
         rules: setRules('宣传图片').isRequired.get
       },
       {
@@ -71,9 +72,9 @@ export const FORM_CONFIG = {
         label: '设备类型',
         key: 'deviceType',
         urlOptions: {
-          url: apiDevice.queryAllDeviceModel,
-          keyName: 'deviceTypeCode',
-          valueName: 'deviceType',
+          url: apiDevice.queryAllDeviceTypeModel,
+          keyName: 'advertType',
+          valueName: 'advertTypeDesc',
           method: 'get',
           params: {
             classification: 1

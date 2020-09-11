@@ -22,6 +22,7 @@
           :rules="formItem.rules"
         >
           <components :is="transType(formItem.type)" ref="formItem" :rule-form="ruleForm" :form-item="formItem"></components>
+          <span v-if="formItem.tip" style="font-size: 12px;color: #909399;">{{ formItem.tip }}</span>
         </el-form-item>
       </template>
     </el-form>
@@ -211,8 +212,8 @@ export default {
   width: 100%;
   height: 96px;
   border-top: 1px solid #ebeef5;
-  position: absolute;
-  bottom: 0;
+  // position: absolute;
+  // bottom: 0;
   display: flex;
   flex-direction: row;
   justify-content: center;

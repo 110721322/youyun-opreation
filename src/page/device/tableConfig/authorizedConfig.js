@@ -2,12 +2,12 @@ export const AUTHORIZED_CONFIG = {
   gridConfig: [
     {
       label: '设备型号',
-      prop: 'deviceModel',
+      prop: 'deviceIdentifier',
       width: '150px'
     },
     {
       label: '设备标识',
-      prop: 'deviceIdentifier',
+      prop: 'deviceModel',
       width: '150px'
     },
     {
@@ -38,14 +38,10 @@ export const AUTHORIZED_CONFIG = {
         type: 'text',
         style: 'color:#3ABD2D',
         isShow: ($item) => {
-          if ($item.children) {
-            return false
+          if ($item.edit) {
+            return true
           } else {
-            if ($item.edit) {
-              return true
-            } else {
-              return false
-            }
+            return false
           }
         }
       },
@@ -55,14 +51,10 @@ export const AUTHORIZED_CONFIG = {
         type: 'text',
         style: 'color:#1989FA',
         isShow: ($item) => {
-          if ($item.children) {
-            return false
+          if (!$item.edit) {
+            return true
           } else {
-            if (!$item.edit) {
-              return true
-            } else {
-              return false
-            }
+            return false
           }
         }
       }

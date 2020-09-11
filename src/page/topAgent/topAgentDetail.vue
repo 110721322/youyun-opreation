@@ -106,10 +106,9 @@
       ></BaseCrud>
     </div>
 
-    <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size="40%">
+    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
-        v-if="drawer"
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
         @cancel="cancel"
@@ -171,14 +170,12 @@
     </el-drawer>
     <el-drawer :visible.sync="financeDrawer" :with-header="false" size="30%">
       <div class="financeTitle">财务信息</div>
-      <el-form :model="financeModel">
+      <el-form :model="financeModel" :rules="rules">
         <el-form-item label="结算卡类型" prop="bankAccountType" style="margin: 24px 20% 0 24px;" label-width="120px">
-          <el-radio
-            v-for="item in accountType"
-            :key="item.value"
-            v-model="financeModel.bankAccountType"
-            :label="item.value"
-          >{{ item.label }}</el-radio>
+          <el-radio-group v-model="financeModel.bankAccountType">
+            <el-radio label="public">对公</el-radio>
+            <el-radio label="private">对私</el-radio>
+          </el-radio-group>
         </el-form-item>
         <el-form-item label="银行卡号" prop="bankCardNo" style="margin: 24px 20% 0 24px;" label-width="120px">
           <el-input v-model="financeModel.bankCardNo" placeholder="请输入银行卡号"></el-input>
@@ -266,6 +263,7 @@ import Form from "@/components/form/index.vue";
 import api from "@/api/api_agent.js";
 import api_dataMarket from "@/api/api_dataMarket.js";
 import api_device from "@/api/api_device.js";
+// import api_topAgent from "@/api/api_topAgent";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import detailMode from "@/components/detailMode/detailMode.vue";
 import detailMode5 from "@/components/detailMode/detailMode5.vue";
@@ -276,6 +274,7 @@ import {CONTACTS_CONFIG} from "../agent/formConfig/addContacts";
 import {LISASION} from "../agent/formConfig/addLiasion";
 import areaData from "@/assets/data/areaData";
 import store from "@/store"
+import api_topAgent from "../../api/api_topAgent";
 
 export default {
   name: "Theme",
@@ -341,6 +340,20 @@ export default {
       params: {
         relateCode: this.$route.query.channelAgentCode
       },
+      rules: {
+        bankAccountType: [
+          { required: true, message: '请选择结算卡类型', trigger: 'change' }
+        ],
+        bankCardNo: [
+          { required: true, message: '请填写银行卡号', trigger: 'blur' }
+        ],
+        bankContactLine: [
+          { required: true, message: '请填写开户支行', trigger: 'change' }
+        ],
+        bankAccountHolder: [
+          { required: true, message: '请填写开户名', trigger: 'blur' }
+        ]
+      },
       api1: api.queryTalkPlan,
       api2: api.queryPlanList,
       clientList: [
@@ -360,21 +373,11 @@ export default {
       activeClass: "red",
       activeValue: "情绪客户",
       financeModel: {
-        bankAccountType: '',
+        bankAccountType: "public",
         bankCardNo: '',
         bankContactLine: '',
         bankAccountHolder: ''
       },
-      accountType: [
-        {
-          label: '对私',
-          value: 'private'
-        },
-        {
-          label: '对公',
-          value: 'public'
-        }
-      ],
       area: '',
       loading: false,
       areaCodeNum: '',
@@ -419,9 +422,6 @@ export default {
       api.getBankLineByNo({
         unionCode: item
       }).then(res => {
-        console.log(res)
-        // this.dataForm.bankArea[0] = res.object.provinceCode
-        // this.dataForm.bankArea = res.object.cityCode
         var provinceName = ''
         var cityName = ''
         var areaName = ''
@@ -666,12 +666,354 @@ export default {
         }
       }
     },
+    handleClose(tag) {
+      this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
+    },
+
+    showInput() {
+      this.inputVisible = true;
+      this.$nextTick(() => {
+        this.$refs.saveTagInput.$refs.input.focus();
+      });
+    },
+
+    handleInputConfirm() {
+      const inputValue = this.inputValue;
+      if (inputValue) {
+        this.dynamicTags.push(inputValue);
+      }
+      this.inputVisible = false;
+      this.inputValue = "";
+    },
+    go_detail() {
+      // eslint-disable-next-line no-console
+      this.$router.push("/agent/list/detail");
+    },
+    itemEdit($model) {
+      console.log($model)
+      if ($model === 'finance') {
+        this.financeDrawer = true
+        if (this.ruleForm.bankBranchName) {
+          this.remoteMethod(this.ruleForm.bankBranchName)
+          this.handleSelect(this.ruleForm.bankContactLine)
+        }
+        this.areaCodeNum = this.ruleForm.bankArea
+        this.bankName = this.ruleForm.bankBranchName
+        this.financeModel = {
+          bankContactLine: this.ruleForm.bankContactLine,
+          bankCardNo: this.ruleForm.bankCardNo,
+          bankAccountType: this.ruleForm.bankAccountType,
+          bankAccountHolder: this.ruleForm.bankAccountHolder
+        }
+      } else {
+        const commonData = FORM_CONFIG[$model]
+        for (const $item of commonData.formData) {
+          $item.initVal = this.ruleForm[$item.key];
+        }
+        this.fromConfigData = this.$g.utils.deepClone(commonData)
+        this.formType = $model
+        this.drawer = true;
+      }
+      this.formType = $model
+      this.drawer = true;
+    },
+    rateEdit($model) {
+      this.drawer = true;
+      this.fromConfigData = FORM_CONFIG[$model];
+    },
+    buyDevice($model) {
+      this.drawer = true;
+      FORM_CONFIG[$model].formData[5].initVal = this.ruleForm.channelAgentName;
+      FORM_CONFIG[$model].formData[8].initVal = this.ruleForm.expAddress;
+      FORM_CONFIG[$model].formData[11].initVal = this.ruleForm.channelAgentCode;
+      this.formType = $model;
+      this.fromConfigData = FORM_CONFIG[$model];
+    },
+    cancel() {
+      this.editType = ''
+      this.drawer = false;
+      this.addContactsDraw = false
+    },
+    confirm($ruleForm) {
+      console.log($ruleForm)
+      switch (this.formType) {
+        case "buyDevice":
+          this.deviceOutputAdd($ruleForm)
+          break;
+        case "basicData":
+          if (!$ruleForm.businessType || !$ruleForm.channelAgentName || !$ruleForm.personName || !$ruleForm.personMobile || !$ruleForm.area || !$ruleForm.address) {
+            this.$message({
+              message: '请填写必填信息',
+              type: 'warning'
+            })
+            return false
+          }
+          if ($ruleForm.email) {
+            if (!this.$g.utils.checkEmail($ruleForm.email)) {
+              this.$message({
+                message: '请填写正确的邮箱格式',
+                type: 'warning'
+              })
+              return false
+            }
+          }
+          if (!this.$g.utils.checkPhone($ruleForm.personMobile)) {
+            this.$message({
+              message: '请填写正确的手机格式',
+              type: 'warning'
+            })
+            return false
+          }
+          if (!$ruleForm.licenseImg && !$ruleForm.licenseImg.dialogImageUrl) {
+            this.$message({
+              message: '请上传营业执照',
+              type: 'warning'
+            })
+            return false
+          }
+          if ($ruleForm.licenseImg && typeof ($ruleForm.licenseImg) === 'string') {
+            var img = $ruleForm.licenseImg.split('.com')
+            $ruleForm.licenseImg = img[1].slice(1, img[1].length)
+          }
+          if ($ruleForm.licenseImg && typeof ($ruleForm.licenseImg) === 'object') {
+            $ruleForm.licenseImg = $ruleForm.licenseImg.dialogImageUrl
+          }
+          Object.assign($ruleForm, {
+            channelAgentCode: this.channelAgentCode,
+            provinceCode: $ruleForm.area[0],
+            cityCode: $ruleForm.area[1],
+            areaCode: $ruleForm.area[2],
+            licenseImg: $ruleForm.licenseImg
+          })
+          this.baseInfo($ruleForm);
+          break;
+        case "address":
+          if (!$ruleForm.expReceiver || !$ruleForm.expMobile || !$ruleForm.expAreaData || !$ruleForm.expAddress) {
+            this.$message({
+              message: '请填写必填信息',
+              type: 'warning'
+            })
+            return false
+          }
+          Object.assign($ruleForm, {
+            channelAgentCode: this.channelAgentCode
+          })
+          this.addressInfo($ruleForm);
+          break;
+        case "rateInfo":
+          if (!$ruleForm.wechatPayRate || !$ruleForm.cloudPayLe1000Rate || !$ruleForm.cloudPayGt1000Rate) {
+            this.$message({
+              message: '请填写必填信息',
+              type: 'warning'
+            })
+            return false
+          }
+          $ruleForm.alipayRate = $ruleForm.wechatPayRate / 1000
+          $ruleForm.wechatPayRate = $ruleForm.wechatPayRate / 1000
+          $ruleForm.cloudPayLe1000Rate = $ruleForm.cloudPayLe1000Rate / 1000
+          $ruleForm.cloudPayGt1000Rate = $ruleForm.cloudPayGt1000Rate / 1000
+          this.rateInfo($ruleForm);
+          break;
+        default:
+          break;
+      }
+    },
+    // 编辑保存财务信息
+    handel_save() {
+      var $ruleForm = {
+        bankContactLine: this.financeModel.bankContactLine,
+        bankBranchName: this.bankName,
+        bankArea: this.areaCodeNum,
+        bankCardNo: this.financeModel.bankCardNo,
+        channelAgentCode: this.channelAgentCode,
+        bankAccountType: this.financeModel.bankAccountType,
+        bankAccountHolder: this.financeModel.bankAccountHolder
+      }
+      api_topAgent.updateFinancial($ruleForm).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            message: '编辑成功',
+            type: 'success'
+          })
+          this.financeDrawer = false
+          this.formType = null;
+          this.getAgentDetail();
+        }
+      })
+    },
+    handel_cancle() {
+      this.financeDrawer = false
+    },
+    /**
+     * 更新顶级服务商基础信息
+     */
+    baseInfo($ruleForm) {
+      api_topAgent.updateBaseInfo({
+        channelAgentCode: this.channelAgentCode,
+        businessType: $ruleForm.businessType,
+        channelAgentName: $ruleForm.channelAgentName,
+        licenseImg: $ruleForm.licenseImg,
+        personName: $ruleForm.personName,
+        personMobile: $ruleForm.personMobile,
+        address: $ruleForm.address,
+        email: $ruleForm.email ? $ruleForm.email : '',
+        provinceCode: $ruleForm.provinceCode,
+        cityCode: $ruleForm.cityCode,
+        areaCode: $ruleForm.areaCode
+      }).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            type: 'success',
+            message: '编辑成功'
+          })
+          this.drawer = false;
+          this.formType = null;
+          this.getAgentDetail();
+        }
+      })
+    },
+    /**
+     * 更新顶级服务商邮寄地址
+     */
+    addressInfo($ruleForm) {
+      console.log($ruleForm)
+      if (!this.$g.utils.checkPhone($ruleForm.expMobile)) {
+        this.$message({
+          message: '请输入正确的手机号',
+          type: 'warning'
+        })
+        return false
+      }
+      api_topAgent.updateAddress({
+        expReceiver: $ruleForm.expReceiver,
+        expMobile: $ruleForm.expMobile,
+        expProvinceCode: $ruleForm.expAreaData[0],
+        expCityCode: $ruleForm.expAreaData[1],
+        expAreaCode: $ruleForm.expAreaData[2],
+        expAddress: $ruleForm.expAddress,
+        channelAgentCode: this.channelAgentCode
+      }).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            message: '编辑成功',
+            type: 'success'
+          })
+          this.drawer = false;
+          this.formType = null;
+          this.getAgentDetail();
+        }
+      })
+    },
+    /**
+     * 更新服务商信息
+     */
+    rateInfo($ruleForm) {
+      api_topAgent.updateFee({
+        channelAgentCode: this.channelAgentCode,
+        wechatPayRate: $ruleForm.wechatPayRate,
+        alipayRate: $ruleForm.alipayRate,
+        cloudPayLe1000Rate: $ruleForm.cloudPayLe1000Rate,
+        cloudPayGt1000Rate: $ruleForm.cloudPayGt1000Rate
+      }).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            message: '编辑成功',
+            type: 'success'
+          })
+          this.drawer = false;
+          this.formType = null;
+          this.getAgentDetail();
+        }
+      })
+    },
+    /**
+     * 更新服务商信息
+     */
+    updateTopAgentInfo($ruleForm) {
+      api.updateTopAgentInfo({
+        channelAgentCode: this.channelCode,
+        businessType: $ruleForm.businessType,
+        channelAgentName: $ruleForm.channelAgentName,
+        licenseImg: $ruleForm.licenseImg,
+        personName: $ruleForm.personName,
+        personMobile: $ruleForm.personMobile,
+        address: $ruleForm.address,
+        email: $ruleForm.email ? $ruleForm.email : '',
+        provinceCode: $ruleForm.provinceCode,
+        cityCode: $ruleForm.cityCode,
+        areaCode: $ruleForm.areaCode
+      }).then(res => {
+        this.$message({
+          type: 'success',
+          message: '已修改'
+        })
+        this.financeDrawer = false
+        this.drawer = false;
+        this.formType = null;
+        this.getAgentDetail();
+      })
+    },
+    /**
+     * 提交设备订单
+     */
+    deviceOutputAdd($ruleForm) {
+      const params = {
+        saleUserId: this.$store.state.admin.userInfo.id,
+        saleUserName: this.$store.state.admin.userInfo.name,
+        amount: $ruleForm.amount,
+        buyerAddress: $ruleForm.buyerAddress,
+        buyerName: this.ruleForm.expReceiver,
+        buyerPhone: this.ruleForm.expMobile,
+        outputType: 2, // 运营订购
+        actualAmount: $ruleForm.actualAmount,
+        agentNo: $ruleForm.agentNo,
+        payType: $ruleForm.payType,
+        voucher: $ruleForm.voucher.dialogImageUrl,
+        buyerRemark: $ruleForm.buyerRemark,
+        infoVOList: [{
+          count: $ruleForm.count,
+          deviceModel: $ruleForm.deviceModel,
+          deviceId: $ruleForm.deviceId,
+          salePrice: $ruleForm.actualAmount
+        }]
+      }
+      api_device.deviceOutputAdd(params).then(res => {
+        this.drawer = false;
+        this.$message("订购成功");
+      })
+    },
     getAgentDetail() {
       api_dataMarket.getTopAgentDetail({
         channelAgentCode: this.channelAgentCode,
         roleCode: store.state.admin.userInfo.roleId
       }).then(res => {
-        const ruleForm = res.object;
+        const ruleForm = res.object
+        var provinceName = ''
+        var cityName = ''
+        var areaName = ''
+        var result = this.$g.utils.getNestedArr(areaData, 'children')
+        result.forEach(m => {
+          if (m.value === res.object.expProvinceCode) {
+            provinceName = m.label
+          }
+          if (m.value === res.object.expCityCode) {
+            cityName = m.label
+          }
+          if (m.value === res.object.expAreaCode) {
+            areaName = m.label
+          }
+        })
+        if (res.object.provinceCode) {
+          var area = []
+          area.push(res.object.provinceCode, res.object.cityCode, res.object.areaCode)
+          res.object.area = area
+        }
+        if (res.object.expAreaCode) {
+          var expAreaData = []
+          expAreaData.push(res.object.expProvinceCode, res.object.expCityCode, res.object.expAreaCode)
+          res.object.expAreaData = expAreaData
+        }
+        res.object.emailDetailAddress = provinceName + cityName + areaName
         const payChannels = res.object.payChannels.map(($item, $index) => {
           return {
             items: [
@@ -730,10 +1072,10 @@ export default {
             ]
           }
         })
-        ruleForm['wechatPayRate'] = this.$g.utils.AccMul(ruleForm['wechatPayRate'], 1000);
-        ruleForm['alipayRate'] = this.$g.utils.AccMul(ruleForm['alipayRate'], 1000);
-        ruleForm['cloudPayLe1000Rate'] = this.$g.utils.AccMul(ruleForm['cloudPayLe1000Rate'], 1000);
-        ruleForm['cloudPayGt1000Rate'] = this.$g.utils.AccMul(ruleForm['cloudPayGt1000Rate'], 1000);
+        ruleForm.wechatPayRate = this.$g.utils.AccMul(ruleForm.wechatPayRate, 1000);
+        ruleForm.alipayRate = this.$g.utils.AccMul(ruleForm.alipayRate, 1000);
+        ruleForm.cloudPayLe1000Rate = this.$g.utils.AccMul(ruleForm.cloudPayLe1000Rate, 1000);
+        ruleForm.cloudPayGt1000Rate = this.$g.utils.AccMul(ruleForm.cloudPayGt1000Rate, 1000);
         this.ruleForm = ruleForm;
         if (businessModes.length > 0) {
           this.configData2.child[2].models = [{items: businessModes}];
@@ -744,169 +1086,6 @@ export default {
         this.configData2.child[3].models = customChannelComboPriceSets;
         this.configData2.child[4].models = customBrandComboPriceSets;
       });
-    },
-    handleClose(tag) {
-      this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
-    },
-
-    showInput() {
-      this.inputVisible = true;
-      this.$nextTick(() => {
-        this.$refs.saveTagInput.$refs.input.focus();
-      });
-    },
-
-    handleInputConfirm() {
-      const inputValue = this.inputValue;
-      if (inputValue) {
-        this.dynamicTags.push(inputValue);
-      }
-      this.inputVisible = false;
-      this.inputValue = "";
-    },
-    go_detail() {
-      // eslint-disable-next-line no-console
-      this.$router.push("/agent/list/detail");
-    },
-    itemEdit($model) {
-      // if ($model === 'finance') {
-      //   this.area = this.ruleForm["bankArea"]
-      //   this.financeModel.bankAccountType = this.ruleForm["bankAccountType"]
-      //   this.financeModel.bankCardNo = this.ruleForm["bankCardNo"]
-      //   this.financeModel.bankAccountHolder = this.ruleForm["bankAccountHolder"]
-      //   this.financeDrawer = true
-      // } else {
-      // }
-      this.fromConfigData = FORM_CONFIG[$model];
-      for (const $item of this.fromConfigData.formData) {
-        $item.initVal = this.ruleForm[$item.key];
-      }
-      this.formType = $model
-      this.drawer = true;
-    },
-    rateEdit($model) {
-      this.drawer = true;
-      this.fromConfigData = FORM_CONFIG[$model];
-    },
-    buyDevice($model) {
-      this.drawer = true;
-      FORM_CONFIG[$model].formData[5].initVal = this.ruleForm.channelAgentName;
-      FORM_CONFIG[$model].formData[8].initVal = this.ruleForm.expAddress;
-      FORM_CONFIG[$model].formData[11].initVal = this.ruleForm.channelAgentCode;
-      this.formType = $model;
-      this.fromConfigData = FORM_CONFIG[$model];
-    },
-    cancel() {
-      this.editType = ''
-      this.drawer = false;
-      this.addContactsDraw = false
-    },
-    confirm($ruleForm) {
-      switch (this.formType) {
-        case "buyDevice":
-          this.deviceOutputAdd($ruleForm)
-          break;
-        case "basicData":
-          Object.assign($ruleForm, {
-            action: 1,
-            channelAgentCode: this.channelAgentCode,
-            provinceCode: this.ruleForm.provinceCode,
-            areaCode: this.ruleForm.areaCode,
-            cityCode: this.ruleForm.cityCode,
-            licenseImg: this.$g.utils.isObj($ruleForm.licenseImg) ? $ruleForm.licenseImg.dialogImagePath + $ruleForm.licenseImg.dialogImageUrl : $ruleForm.licenseImg
-          })
-          this.updateTopAgentInfo($ruleForm);
-          break;
-        case "finance":
-          Object.assign($ruleForm, {
-            action: 2,
-            channelAgentCode: this.channelAgentCode,
-            bankArea: this.$g.utils.isArr($ruleForm.bankArea) ? $ruleForm.bankArea[2] : $ruleForm.bankArea,
-            bankContactLine: this.ruleForm.bankContactLine
-          })
-          this.updateTopAgentInfo($ruleForm);
-          break;
-        case "address":
-          Object.assign($ruleForm, {
-            action: 3,
-            channelAgentCode: this.channelAgentCode,
-            expAreaCode: this.$g.utils.isArr($ruleForm.expAreaCode) ? $ruleForm.expAreaCode[2] : $ruleForm.expAreaCode,
-            expCityCode: this.$g.utils.isArr($ruleForm.expAreaCode) ? $ruleForm.expAreaCode[1] : $ruleForm.expCityCode,
-            expProvinceCode: this.$g.utils.isArr($ruleForm.expAreaCode) ? $ruleForm.expAreaCode[2] : $ruleForm.expProvinceCode
-          })
-          this.updateTopAgentInfo($ruleForm);
-          break;
-        case "rateInfo":
-          Object.assign($ruleForm, {
-            action: 4,
-            channelAgentCode: this.channelAgentCode
-          })
-          this.updateTopAgentInfo($ruleForm);
-          break;
-        default:
-          break;
-      }
-    },
-    handel_save() {
-      var $ruleForm = {
-        bankContactLine: this.financeModel.bankContactLine,
-        bankBranchName: this.bankName,
-        bankArea: this.areaCodeNum,
-        bankCardNo: this.financeModel.bankCardNo,
-        channelAgentCode: this.channelAgentCode,
-        bankAccountType: this.financeModel.bankAccountType,
-        bankAccountHolder: this.financeModel.bankAccountHolder,
-        action: 2
-      }
-      this.updateTopAgentInfo($ruleForm)
-    },
-    handel_cancle() {
-      this.financeDrawer = false
-    },
-    /**
-     * 更新服务商信息
-     */
-    updateTopAgentInfo($ruleForm) {
-      console.log($ruleForm);
-      api.updateTopAgentInfo($ruleForm).then(res => {
-        this.$message({
-          type: 'success',
-          message: '已修改'
-        })
-        this.financeDrawer = false
-        this.drawer = false;
-        this.formType = null;
-        this.getAgentDetail();
-      })
-    },
-    /**
-     * 提交设备订单
-     */
-    deviceOutputAdd($ruleForm) {
-      const params = {
-        saleUserId: this.$store.state.admin.userInfo.id,
-        saleUserName: this.$store.state.admin.userInfo.name,
-        amount: $ruleForm.amount,
-        buyerAddress: $ruleForm.buyerAddress,
-        buyerName: this.ruleForm.expReceiver,
-        buyerPhone: this.ruleForm.expMobile,
-        outputType: 2, // 运营订购
-        actualAmount: $ruleForm.actualAmount,
-        agentNo: $ruleForm.agentNo,
-        payType: $ruleForm.payType,
-        voucher: $ruleForm.voucher.dialogImageUrl,
-        buyerRemark: $ruleForm.buyerRemark,
-        infoVOList: [{
-          count: $ruleForm.count,
-          deviceModel: $ruleForm.deviceModel,
-          deviceId: $ruleForm.deviceId,
-          salePrice: $ruleForm.actualAmount
-        }]
-      }
-      api_device.deviceOutputAdd(params).then(res => {
-        this.drawer = false;
-        this.$message("订购成功");
-      })
     }
   }
 };
