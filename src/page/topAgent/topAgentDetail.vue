@@ -178,31 +178,33 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="银行卡号" prop="bankCardNo" style="margin: 24px 20% 0 24px;" label-width="120px">
-          <el-input placeholder="请输入银行卡号" v-model="financeModel.bankCardNo"></el-input>
+          <el-input v-model="financeModel.bankCardNo" placeholder="请输入银行卡号"></el-input>
         </el-form-item>
         <el-form-item label="开户支行" prop="bankContactLine" style="margin: 24px 20% 0 24px;" label-width="120px">
           <el-select
-              v-model="financeModel.bankContactLine"
-              filterable
-              remote
-              reserve-keyword
-              placeholder="请输入关键词"
-              :remote-method="remoteMethod"
-              @change="handleSelect"
-              :loading="loading">
+            v-model="financeModel.bankContactLine"
+            filterable
+            remote
+            reserve-keyword
+            placeholder="请输入关键词"
+            :remote-method="remoteMethod"
+            :loading="loading"
+            @change="handleSelect"
+          >
             <el-option
-                v-for="item in bankOptions"
-                :key="item.unionCode"
-                :label="item.bankName"
-                :value="item.unionCode">
+              v-for="item in bankOptions"
+              :key="item.unionCode"
+              :label="item.bankName"
+              :value="item.unionCode"
+            >
             </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="开户支行地区" prop="bankArea" style="margin: 24px 20% 0 24px;" label-width="120px">
-          <el-input disabled v-model="area"></el-input>
+          <el-input v-model="area" disabled></el-input>
         </el-form-item>
         <el-form-item label="开户名" prop="bankAccountHolder" style="margin: 24px 20% 0 24px;" label-width="120px">
-          <el-input placeholder="请输入开户名" v-model="financeModel.bankAccountHolder"></el-input>
+          <el-input v-model="financeModel.bankAccountHolder" placeholder="请输入开户名"></el-input>
         </el-form-item>
       </el-form>
       <div class="bottom-btn">
@@ -267,7 +269,7 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import detailMode from "@/components/detailMode/detailMode.vue";
 import detailMode5 from "@/components/detailMode/detailMode5.vue";
 import { USER_CONFIG, USER_CONFIG2 } from "./../agent/tableConfig/config_communicate";
-import { FORM_CONFIG } from "./../agent/formConfig/agentDetail";
+import { FORM_CONFIG } from "./formConfig/topAgentDetail";
 import { configData, configData2 } from "./dataConfig/topAgentDetailData";
 import {CONTACTS_CONFIG} from "../agent/formConfig/addContacts";
 import {LISASION} from "../agent/formConfig/addLiasion";
@@ -714,6 +716,8 @@ export default {
         this.formType = $model
         this.drawer = true;
       }
+      this.formType = $model
+      this.drawer = true;
     },
     buyDevice($model) {
       this.drawer = true;

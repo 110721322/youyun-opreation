@@ -1,6 +1,6 @@
 <template>
   <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1 || this.$route.path.indexOf('/publicTransfer') !== -1" />
+    <router-view v-if="this.$route.path.indexOf('/commissionDetail') !== -1 || this.$route.path.indexOf('/publicTransfer') !== -1" />
     <div v-else>
       <div class="tab_head">
         <span class="title">佣金结算审核</span>
@@ -184,7 +184,7 @@ export default {
     },
     onClick_detail($row) {
       this.$router.push({
-        path: "/financial/transferReview/commissionDetail",
+        name: "commissionDetail",
         query: { idList: $row.agentTradeIdList.join(','), activeName: this.activeName }
       });
     },

@@ -67,8 +67,7 @@
         @node-drop="handleDrop"
       ></el-tree>
       <div class="foot_btn_box">
-        <el-button class="foot_btn" type="primary" @click="handleClick">确定</el-button>
-        <el-button class="foot_btn" @click="cancelForm">取消</el-button>
+        <el-button class="foot_btn" @click="cancelForm">关闭</el-button>
       </div>
     </el-drawer>
   </div>
@@ -159,20 +158,6 @@ export default {
   },
   mounted() {},
   methods: {
-    handleClick() {
-      api
-        .addMember({
-          phoneList: this.addPhoneList
-        })
-        .then(res => {
-          this.addPhoneList = [""];
-          this.$message("已添加");
-          this.drawerAddPhone = false;
-        })
-        .catch(err => {
-          this.$message(err);
-        });
-    },
     cancelForm() {
       this.drawerOrganization = false;
     },
@@ -201,10 +186,10 @@ export default {
           email: $ruleForm.email,
           sex: $ruleForm.sex,
           jobName: $ruleForm.jobName,
-          img: $ruleForm.img,
+          img: $ruleForm.img.dialogImageUrl,
           jobNumber: $ruleForm.jobNumber,
           birthday: $ruleForm.birthday,
-          position: $ruleForm.posiiton,
+          position: $ruleForm.position,
           superiorId: $ruleForm.superiorId
         })
         .then(res => {

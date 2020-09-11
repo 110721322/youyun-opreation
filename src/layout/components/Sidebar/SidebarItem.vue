@@ -68,7 +68,7 @@ export default {
         this.$router.push({
           path: this.resolvePath(
             "." +
-						path.resolve($item.children[0].path, $item.children[0].children[0].path)
+              path.resolve($item.children[0].path, $item.children[0].children[0].path)
           )
         });
       } else {
@@ -106,6 +106,16 @@ export default {
 };
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+  .el-menu-item {
+    /deep/ &.is-active {
+      background: #1989FA;
+    }
+    &:hover {
+      color: #FFFFFF !important;
+      /deep/ i {
+        color: #FFFFFF !important;
+      }
+    }
+  }
 </style>

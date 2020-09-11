@@ -1,6 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
-import { Message } from 'element-ui';
+import { Loading, Message } from 'element-ui';
 import store from '@/store';
 import router from "@/router"
 import * as g from '../libs/global';
@@ -28,7 +28,12 @@ axios.interceptors.request.use((config) => {
   if (JSON.stringify(config.data) === "{}") {
     config.data = null;
   }
-  // Loading.service({text: '载入中', body: true})
+  if (!config.noLoading) {
+    config.loading = Loading.service({text: '载入中', target: document.querySelector(".main-container"), body: true})
+  }
+  setTimeout(() => {
+    config.loading.close();
+  }, config.timeout)
   return config;
 }, (error) => {
   // Do something with request error
@@ -37,10 +42,10 @@ axios.interceptors.request.use((config) => {
 
 // 添加一个响应拦截器
 axios.interceptors.response.use((response) => {
-  // Loading.service().close();
-  if (response.config.responseType === 'blob') {
-    return response;
+  if (!response.config.noLoading) {
+    response.config.loading.close();
   }
+  if (response.config.responseType === 'blob') return response;
   if (response.data && response.data.status === 0) {
     return response;
   } else if (response.data && response.data.status === 1 && response.data.code !== null) {
@@ -71,7 +76,11 @@ axios.interceptors.response.use((response) => {
   }
 }, (error) => {
   // Do something with response error
-  // Loading.service().close();
+  try {
+    error.response.config.loading.close();
+  } catch (e) {
+    console.error(e)
+  }
   if (error.response) {
     switch (error.response.status) {
       case 400:

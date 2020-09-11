@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-date-picker
-      v-model="timeInterval"
+      v-model="ruleForm[formItem.key]"
       style="float: left;"
       size="large"
       :type="datatype"
@@ -37,7 +37,6 @@ export default {
   },
   data() {
     return {
-      timeInterval: null,
       placeholder: this.formItem.placeholder,
       datatype: this.formItem.datatype,
       format: this.formItem.format

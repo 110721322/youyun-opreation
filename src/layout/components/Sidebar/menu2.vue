@@ -1,8 +1,8 @@
 <template>
   <div>
-    <el-menu class="el-menu-vertical-demo" :default-openeds="[subMenuName]">
+    <el-menu class="el-menu-vertical-demo" style="border-right: 0;" :default-openeds="[subMenuName]">
       <div v-for="(item, key) of menu2Data" :key="key">
-        <el-submenu v-if="item.children && item.children.length>0" :index="item.name">
+        <el-submenu v-if="item.children && item.children.length>0" :index="item.name" class="el-submenu">
           <template slot="title">
             <span>{{ item.text }}</span>
           </template>
@@ -10,9 +10,10 @@
             <app-link :to="'/' + rootPath + '/' + item.path+'/'+childItem.path">
               <el-menu-item
                 v-if="childItem.isShow"
-                :style="currRouter==childItem.name?'color:#409EFF':''"
+                class="el-menu-item"
+                :class="($route.name==childItem.name || $route.meta.fatherName === childItem.name) ? 'active' : ''"
                 :index="childItem.name"
-                @click="onClick_item"
+                @click="onClick_item()"
               >{{ childItem.text }}</el-menu-item>
             </app-link>
           </div>
@@ -20,8 +21,9 @@
 
         <app-link v-else :to="'/' + rootPath + '/' + item.path">
           <el-menu-item
+            class="el-menu-item"
             :index="item.name"
-            :style="currRouter==item.name?'color:#409EFF':''"
+            :class="($route.name==item.name || $route.meta.fatherName === item.name) ? 'active' : ''"
             @click="onClick_item"
           >
             <span slot="title">{{ item.text }}</span>
@@ -45,28 +47,20 @@ export default {
   },
   data() {
     return {
-      currRouter: "",
       subMenuName: ""
     };
   },
-  $route(to, from) {
-    this.currRouter = this.$route.name;
-    this.subMenuName = this.$route.meta.subMenuName;
-  },
   watch: {
     $route: function() {
-      this.currRouter = this.$route.name;
       this.subMenuName = this.$route.meta.subMenuName;
       this.$nextTick();
     },
     menu2Data: function() {
-      this.currRouter = this.$route.name;
       this.subMenuName = this.$route.meta.subMenuName;
       this.$nextTick();
     }
   },
   created() {
-    this.currRouter = this.$route.name;
     this.subMenuName = this.$route.meta.subMenuName;
   },
   methods: {
@@ -74,3 +68,35 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+  .el-menu {
+    padding-top: 12px;
+  }
+  .el-menu-item {
+    height: 38px;
+    line-height: 38px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #333335;
+    padding-right: 0;
+    &:hover {
+      background: #ECEDF1 !important;
+    }
+  }
+  .active {
+    background: #ECEDF1 !important;
+    color: #333335;
+  }
+  .el-submenu {
+    /deep/ .el-submenu__title {
+      height: 38px;
+      line-height: 38px;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #333335;
+      &:hover {
+        background: #ECEDF1 !important;
+      }
+    }
+  }
+</style>
