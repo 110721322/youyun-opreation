@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section style="overflow: auto; background-color: #f0f2f5;">
     <transition name="fade-transform" mode="out-in">
       <router-view />
     </transition>
