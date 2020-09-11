@@ -79,6 +79,7 @@ export default {
         url: this.ossData.ossHost,
         type: "POST",
         data: formData,
+        accessToken: localStorage.getItem('accessToken'),
         // async: false,
         cache: false,
         processData: false,
