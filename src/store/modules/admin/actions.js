@@ -20,7 +20,6 @@ export default {
   },
   saveWebsocketOption: ({ commit, state }, $option) => {
     commit('SAVE_WEBSOCKET_OPTION', $option);
-    console.log(process.env.VUE_APP_WSURL);
     const url = process.env.VUE_APP_WSURL;
     const socket = io(url, {transports: ['websocket'], query: state.socketOptions});
     return new Promise((resolve, reject) => {

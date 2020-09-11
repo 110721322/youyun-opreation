@@ -13,7 +13,7 @@ axios.interceptors.request.use((config) => {
   // 设置全局参数
   config.timeout = 10000;
   config.headers.common.client = 'WEB';
-  config.headers.common.Access_token = store.state.admin.accessToken || ''
+  config.headers.common['accessToken'] = store.state.admin.accessToken || ''
   // 参数格式为form data(默认request payload)
 
   for (const field in config.data) {

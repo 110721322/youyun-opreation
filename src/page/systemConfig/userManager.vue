@@ -182,8 +182,8 @@ export default {
         position: $ruleForm.position,
         superiorName: $ruleForm.superiorName,
         state: 0,
-        startTime: $ruleForm.date[0],
-        endTime: $ruleForm.date[1]
+        startTime: $ruleForm.date[0] + " 00:00:00",
+        endTime: $ruleForm.date[1] + " 23:59:59"
       };
       this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
     },
@@ -201,10 +201,10 @@ export default {
           email: $ruleForm.email,
           sex: $ruleForm.sex,
           jobName: $ruleForm.jobName,
-          img: $ruleForm.img,
+          headerImageSrc: $ruleForm.img.dialogImageUrl,
           jobNumber: $ruleForm.jobNumber,
           birthday: $ruleForm.birthday,
-          position: $ruleForm.posiiton,
+          position: $ruleForm.position,
           superiorId: $ruleForm.superiorId
         })
         .then(res => {

@@ -38,7 +38,7 @@
       @click="onClick_preview"
     ></i>
 
-    <el-image-viewer v-if="showViewer" :on-close="closeViewer" :url-list="[dialogImageUrl]" />
+    <el-image-viewer v-if="showViewer" :on-close="closeViewer" :url-list="[dialogImage]" />
   </div>
 </template>
 <script>
@@ -79,6 +79,9 @@ export default {
         return obj
       })
       return fileList
+    },
+    dialogImage() {
+      return this.dialogImagePath + this.dialogImageUrl;
     }
   },
   watch: {
@@ -211,7 +214,6 @@ export default {
       this.imageList.splice(index, 1);
     },
     onClick_preview() {
-      this.dialogImageUrl = this.dialogImagePath + this.dialogImageUrl
       this.showViewer = true;
     },
     closeViewer() {
