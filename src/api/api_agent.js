@@ -153,9 +153,13 @@ export default {
   // 查询顶级服务商源码部署详情
   getSourceCodeDeployDetail: (params) => API.GET('/operation/v1/topAgent/getSourceCodeDeployDetail', params),
   // 根据关键字查询支行信息
-  listBankLineByName: (params) => API.GET('agent/v1/merchant/listBankLineByName', params),
+  listBankLineByName: (params) => API.GET('/agent/v1/merchant/listBankLineByName', params),
   // 根据联行号查询联行支行
-  getBankLineByNo: (params) => API.GET('agent/v1/merchant/getBankLineByNo', params),
+  getBankLineByNo: (params) => API.GET('/agent/v1/merchant/getBankLineByNo', params),
   // 更新服务商续费金额
-  updateRenewAmount: (params) => API.POST('operation/v1/agent/updateAgentRenewAmount', params)
+  updateRenewAmount: (params) => API.POST('/operation/v1/agent/updateAgentRenewAmount', params),
+  // 跨平台票据生成
+  generateLoginTicket: (params) => API.POST('/common/v1/user/generateLoginTicket', params),
+  // 跨平台登录
+  loginWithTicket: (params) => API.GET('/common/v1/user/loginWithTicket', params)
 };

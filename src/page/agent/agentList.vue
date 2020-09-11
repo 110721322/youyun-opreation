@@ -222,7 +222,22 @@ export default {
         })
         .catch(() => {});
     },
-    openAgentManager() {},
+    openAgentManager(row) {
+      console.log(row)
+      api.generateLoginTicket({
+        system: 'agent',
+        phone: row.personMobile,
+        password: row.password
+      }).then(res => {
+        if (res.status === 0) {
+          api.loginWithTicket({
+            ticket: res.object
+          }).then(result => {
+            console.log(result)
+          })
+        }
+      })
+    },
     goMerchantList() {
       this.$router.push({
         path: "/merchant/list"
