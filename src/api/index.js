@@ -38,6 +38,9 @@ axios.interceptors.request.use((config) => {
 // 添加一个响应拦截器
 axios.interceptors.response.use((response) => {
   // Loading.service().close();
+  if (response.config.responseType === 'blob') {
+    return response;
+  }
   if (response.data && response.data.status === 0) {
     return response;
   } else if (response.data && response.data.status === 1 && response.data.code !== null) {

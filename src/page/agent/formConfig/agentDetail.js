@@ -386,5 +386,19 @@ export const FORM_CONFIG = {
         }
       }
     ]
+  },
+  businessModes: {
+    title: '权限分配',
+    showFootBtn: true,
+    formData: [
+      {
+        type: 0,
+        label: '销售人员',
+        key: 'saleUserName',
+        initVal: '12',
+        isDisabled: true,
+        rules: setRules('销售人员').isRequired.get
+      }
+    ]
   }
 }

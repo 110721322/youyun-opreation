@@ -261,6 +261,7 @@ import Form from "@/components/form/index.vue";
 import api from "@/api/api_agent.js";
 import api_dataMarket from "@/api/api_dataMarket.js";
 import api_device from "@/api/api_device.js";
+// import api_serve from "@/api/api_serve"
 // import api_topAgent from "@/api/api_topAgent";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import detailMode from "@/components/detailMode/detailMode.vue";
@@ -287,7 +288,7 @@ export default {
       dynamicTags: [],
       inputVisible: false,
       inputValue: "",
-      formType: '',
+      formType: "",
       configData: configData,
       configData2: configData2,
       timeDate: [],
@@ -372,13 +373,13 @@ export default {
       activeValue: "情绪客户",
       financeModel: {
         bankAccountType: "public",
-        bankCardNo: '',
-        bankContactLine: '',
-        bankAccountHolder: ''
+        bankCardNo: "",
+        bankContactLine: "",
+        bankAccountHolder: ""
       },
-      area: '',
+      area: "",
       loading: false,
-      areaCodeNum: '',
+      areaCodeNum: "",
       bankOptions: []
     };
   },
@@ -688,6 +689,7 @@ export default {
       this.$router.push("/agent/list/detail");
     },
     itemEdit($model) {
+      this.financeModel.bankAccountType = ''
       console.log($model)
       if ($model === 'finance') {
         this.financeDrawer = true
@@ -712,10 +714,6 @@ export default {
         this.formType = $model
         this.drawer = true;
       }
-    },
-    rateEdit($model) {
-      this.drawer = true;
-      this.fromConfigData = FORM_CONFIG[$model];
     },
     buyDevice($model) {
       this.drawer = true;
@@ -804,6 +802,7 @@ export default {
             })
             return false
           }
+          this.drawer = false;
           $ruleForm.alipayRate = $ruleForm.wechatPayRate / 1000
           $ruleForm.wechatPayRate = $ruleForm.wechatPayRate / 1000
           $ruleForm.cloudPayLe1000Rate = $ruleForm.cloudPayLe1000Rate / 1000
@@ -916,7 +915,6 @@ export default {
             message: '编辑成功',
             type: 'success'
           })
-          this.drawer = false;
           this.formType = null;
           this.getAgentDetail();
         }
@@ -1010,77 +1008,16 @@ export default {
           res.object.expAreaData = expAreaData
         }
         res.object.emailDetailAddress = provinceName + cityName + areaName
-        const payChannels = res.object.payChannels.map(($item, $index) => {
-          return {
-            items: [
-              {
-                name: '通道名称',
-                initVal: $item.channel
-              },
-              {
-                name: '通道状态',
-                initVal: $item.expired ? '已开通' : '已到期'
-              }
-            ]
-          }
-        })
-        const businessModes = res.object.businessModes.map(($item, $index) => {
-          return {
-            name: $item.modeName + '到期时间',
-            initVal: $item.expiredDate
-          }
-        })
-        const customChannelComboPriceSets = res.object.customChannelComboPriceSets.map(($item, $index) => {
-          ruleForm['customChannel_' + $item.comboId] = $item.comboAmount
-          return {
-            items: [
-              {
-                name: '通道名称',
-                initVal: $item.productName
-              },
-              {
-                name: '服务时长',
-                initVal: $item.comboCount === -1 ? '长期' : ''
-              },
-              {
-                name: '服务价格',
-                key: 'customChannel_' + $item.comboId
-              }
-            ]
-          }
-        })
-        const customBrandComboPriceSets = res.object.customBrandComboPriceSets.map(($item, $index) => {
-          ruleForm['customBrand_' + $item.comboId] = $item.comboAmount
-          return {
-            items: [
-              {
-                name: '定制名称',
-                initVal: $item.productName
-              },
-              {
-                name: '服务时长',
-                initVal: $item.comboCount === -1 ? '长期' : ''
-              },
-              {
-                name: '服务价格',
-                key: 'customBrand_' + $item.comboId
-              }
-            ]
-          }
-        })
         ruleForm.wechatPayRate = this.$g.utils.AccMul(ruleForm.wechatPayRate, 1000);
         ruleForm.alipayRate = this.$g.utils.AccMul(ruleForm.alipayRate, 1000);
         ruleForm.cloudPayLe1000Rate = this.$g.utils.AccMul(ruleForm.cloudPayLe1000Rate, 1000);
         ruleForm.cloudPayGt1000Rate = this.$g.utils.AccMul(ruleForm.cloudPayGt1000Rate, 1000);
         this.ruleForm = ruleForm;
-        if (businessModes.length > 0) {
-          this.configData2.child[2].models = [{items: businessModes}];
-        } else {
-          this.configData2.child[2].models = [];
-        }
-        this.configData2.child[0].models = payChannels;
-        this.configData2.child[3].models = customChannelComboPriceSets;
-        this.configData2.child[4].models = customBrandComboPriceSets;
+        // api_serve.selectModuleProduct({
+        //   moduleCode: "businessMode"
+        // }).then(res => {
+        //   console.log(res)
+        // })
       });
     }
   }
