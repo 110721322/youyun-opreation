@@ -55,14 +55,9 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl",
       params: {
-        agentName: "",
         beginDate: this.$g.utils.getToday(),
-        deviceId: "",
-        deviceIdentifier: "",
-        endDate: this.$g.utils.getToday(),
-        merchantName: ""
+        endDate: this.$g.utils.getToday()
       },
       api: api.queryDetail
     };
@@ -70,23 +65,15 @@ export default {
   mounted() {},
   methods: {
     search($ruleForm) {
-      console.log($ruleForm);
       const params = {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,
-        operateUserNo: $ruleForm.operateUserNo,
-        status: $ruleForm.status
+        deviceId: $ruleForm.deviceId ? $ruleForm.deviceId : '',
+        deviceIdentifier: $ruleForm.deviceIdentifier ? $ruleForm.deviceIdentifier : '',
+        agentNo: $ruleForm.agentNo ? $ruleForm.agentNo : '',
+        merchantNo: $ruleForm.merchantNo ? $ruleForm.merchantNo : ''
       };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
-    },
-    selectionChange($val) {
-      // eslint-disable-next-line no-console
-      console.log($val);
-    },
-
-    cancel(done) {
-      done();
     },
     onClick_showLife($item, $table) {
       api

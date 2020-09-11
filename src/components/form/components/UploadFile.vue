@@ -24,7 +24,7 @@
 </template>
 <script type="text/ecmascript-6">
 import api from "@/api/api_common";
-
+import axios from 'axios';
 export default {
   name: "UploadFile",
   props: {
@@ -104,7 +104,25 @@ export default {
     download() {
       console.log(this.formItem)
       if (!this.formItem.dateurl) {
-        window.location.href = "/operation/v1/excelTemplate/download?url=excel/device_input.xlsx";
+        // window.location.href = "/operation/v1/excelTemplate/download?url=excel/device_input.xlsx";
+        axios({
+          method: "GET", // 如果是get方法，则写“GET”
+          url: "/operation/v1/excelTemplate/download?url=excel/device_input.xlsx",
+          responseType: "blob",
+          Access_token: localStorage.getItem('userToken')
+        }).then(res => {
+          var blob = new Blob([res.data], {
+            type: "application/vnd.ms-excel" // 这里需要根据不同的文件格式写不同的参数
+          });
+          var eLink = document.createElement("a");
+          eLink.download = "excel模板下载"; // 这里需要自己给下载的文件命名
+          eLink.style.display = "none";
+          eLink.href = URL.createObjectURL(blob);
+          document.body.appendChild(eLink);
+          eLink.click();
+          URL.revokeObjectURL(eLink.href);
+          document.body.removeChild(eLink);
+        }).catch(() => {});
       } else {
         window.location.href = "/operation/v1/excelTemplate/download?url=" + this.formItem.dateurl;
       }
