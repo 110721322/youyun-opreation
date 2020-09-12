@@ -72,7 +72,8 @@ export const FORM_CONFIG2 = {
       label: '筛选时间',
       key: 'date',
       class: 'max-width',
-      labelWidth: '100px'
+      abelWidth: '80px',
+      span: 20
     }
   ]
 }

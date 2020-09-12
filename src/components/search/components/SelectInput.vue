@@ -19,7 +19,6 @@
         v-if="!formItem.hiddenSelect"
         slot="prepend"
         v-model="inputSelect"
-        style="width:294px"
         placeholder="请选择"
         @change="onSelect"
       >
@@ -42,7 +41,7 @@
       <el-select
         slot="prepend"
         v-model="inputSelect"
-        style="width:294px"
+        style="min-width: 120px;"
         placeholder="请选择"
         @change="onSelect"
       >
