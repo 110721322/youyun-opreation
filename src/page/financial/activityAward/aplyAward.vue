@@ -117,7 +117,7 @@ export default {
     },
     handleDetail($row) {
       this.$router.push({
-        path: '/financial/activityAward/activityAwardDetail',
+        name: 'activityAwardDetail',
         query: {
           agentNo: $row.agentNo,
           tradeMonth: this.params.tradeMonth

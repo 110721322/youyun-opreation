@@ -1,19 +1,5 @@
 <template>
   <div>
-    <!--<el-upload
-      v-loading="loading"
-      action="OSSS上传图片"
-      :data="urlData"
-      class="avatar-uploader"
-      :show-file-list="false"
-      :before-upload="beforeUpload"
-      :http-request="upLoad"
-      :on-preview="handlePictureCardPreview"
-    >
-      &lt;!&ndash;<img v-if="dialogImageUrl" :src="dialogImagePath + dialogImageUrl" class="avatar" />
-      <i v-else class="el-icon-plus avatar-uploader-icon"></i>&ndash;&gt;
-      <i class="el-icon-plus avatar-uploader-icon"></i>
-    </el-upload>-->
     <el-upload
       v-loading="loading"
       action="OSS上传图片"
@@ -82,6 +68,9 @@ export default {
         return obj
       })
       return fileList
+    },
+    dialogImage() {
+      return this.dialogImagePath + this.dialogImageUrl;
     }
   },
   watch: {
@@ -223,7 +212,6 @@ export default {
       this.imageList.splice(index, 1);
     },
     onClick_preview() {
-      this.dialogImageUrl = this.dialogImagePath + this.dialogImageUrl
       this.showViewer = true;
     },
     closeViewer() {

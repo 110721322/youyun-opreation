@@ -25,25 +25,25 @@ export const SETTELMENTLIST_CONFIG = {
       prop: 'auditStatus',
       width: '150px',
       render: (h, params) => {
-        if (params.row.auditStatus === 'waitSign') {
-          return h(
-            'span', '待审核'
-          )
-        }
         if (params.row.auditStatus === 'audit') {
-          return h(
-            'span', '审核中'
-          )
+          return [h('span', {
+            'class': "dot " + "platformAudit"
+          }), '审核中']
         }
-        if (params.row.auditStatus === 'success') {
-          return h(
-            'span', '审核通过'
-          )
+        if (params.row.auditStatus === 'waitSign') {
+          return [h('span', {
+            'class': "dot " + "nonOpen"
+          }), '待审核']
         }
         if (params.row.auditStatus === 'reject') {
-          return h(
-            'span', '驳回'
-          )
+          return [h('span', {
+            'class': "dot " + "reject"
+          }), '已驳回']
+        }
+        if (params.row.auditStatus === 'success') {
+          return [h('span', {
+            'class': "dot " + "success"
+          }), '已通过']
         }
       }
     }

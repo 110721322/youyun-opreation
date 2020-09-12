@@ -3,34 +3,36 @@
     <div class="tab_head">
       <span class="title">投放广告</span>
     </div>
-    <Form
-      :form-base-data="fromConfigData.formData"
-      :show-foot-btn="fromConfigData.showFootBtn"
-      label-width="130px"
-      @cancel="cancel"
-      @confirm="confirm"
-      @selectChange="selectChange"
-    >
-      <template v-slot="{ formItem }">
-        <div v-if="formItem.putService===4">{{formItem.putService}}</div>
-      </template>
-      <template v-slot="{ formItem } ">
-        <div v-if="formItem.putService===4">
-          <div class="select_data">
-            <span class="el-icon-info icon" />
-            <span>
-              已添加
-              <span class="blue">{{ dynamicTags.length }}</span> 项目
-            </span>
-            <el-button class="btn" type="text" @click="onClick_clearAll">清空</el-button>
-          </div>
-          <div class="tag-box">
-            <el-tag
-              v-for="tag in dynamicTags"
-              :key="tag"
-              closable
-              class="tag-item"
-              :disable-transitions="false"
+    <div v-loading="loading">
+      <Form
+        v-if="showForm"
+        :form-base-data="fromConfigData.formData"
+        :show-foot-btn="fromConfigData.showFootBtn"
+        label-width="130px"
+        @cancel="cancel"
+        @confirm="confirm"
+        @selectChange="selectChange"
+      >
+        <template v-slot="{ formItem }">
+          <div v-if="formItem.putService===4">{{formItem.putService}}</div>
+        </template>
+        <template v-slot="{ formItem } ">
+          <div v-if="formItem.putService===4">
+            <div class="select_data">
+              <span class="el-icon-info icon" />
+              <span>
+                已添加
+                <span class="blue">{{ dynamicTags.length }}</span> 项目
+              </span>
+              <el-button class="btn" type="text" @click="onClick_clearAll">清空</el-button>
+            </div>
+            <div class="tag-box">
+              <el-tag
+                v-for="tag in dynamicTags"
+                :key="tag"
+                closable
+                class="tag-item"
+                :disable-transitions="false"
               size="small"
               @close="handleClose(tag)"
             >{{ tag }}</el-tag>
@@ -39,6 +41,7 @@
         </div>
       </template>
     </Form>
+    </div>
     <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
       <div class="p_head">{{ drawerTitle }}</div>
       <div class="search-box">
@@ -120,6 +123,8 @@ export default {
     return {
       fromConfigData: FORM_CONFIG.addData,
       drawer: false,
+      loading: true,
+      showForm: false,
       input: "",
       configData2: FORM_CONFIG2,
       areaData: areaData,
@@ -141,9 +146,32 @@ export default {
     this.queryAllPrivilegeType();
     if (this.id) {
       this.queryById();
+      return;
+    }
+    this.showForm = true;
+    this.loading = false;
+  },
+  computed: {
+    advertType: function() {
+      return this.$store.state.dataMarket.advertType;
     }
   },
-  mounted() {},
+  watch: {
+    advertType(newVal, oldVal) {
+      const tempData = this.$g.utils.deepClone(FORM_CONFIG.addData.formData);
+      tempData[0].initVal = newVal;
+      tempData[1].urlOptions = {
+        url: apiAgent.queryAllDistributeName,
+        keyName: 'id',
+        valueName: 'advertName',
+        method: 'get',
+        params: {
+          advertType: newVal
+        }
+      };
+      this.$set(this.fromConfigData, 'formData', tempData);
+    }
+  },
   methods: {
     onClick_clearAll() {
       this.dynamicTags = [];
@@ -165,7 +193,8 @@ export default {
           item.initVal = res.object[item.key];
         });
         this.fromConfigData = FORM_CONFIG.editData;
-        console.log(this.fromConfigData)
+        this.loading = false;
+        this.showForm = true;
       }).catch(err => {
         this.$message(err);
       });
@@ -225,7 +254,7 @@ export default {
       this.drawer = false;
     },
     confirm($form) {
-      console.log($form);
+      // console.log($form);
       if (this.id) {
         apiAgent.advertDistributeUpdate({
           agentNoList: this.selectData,
@@ -253,7 +282,7 @@ export default {
       }
     },
     selectChange(ruleForm) {
-      console.log(ruleForm)
+      // console.log(ruleForm)
     }
   }
 };

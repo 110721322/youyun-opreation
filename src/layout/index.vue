@@ -1,27 +1,28 @@
 <template>
   <div class="app-wrapper" :class="openSlider == 1 ? 'openSidebar' : 'hideSidebar'">
     <div class="sidebar-container">
-      <div @mouseleave="leave()" @mouseenter="enter()">
-        <sidebar style="float:left;background:#001529" :active-name="activeName" />
+      <div style="height: 100%">
+        <sidebar style="background:#001529" :active-name="activeName" />
       </div>
     </div>
 
     <div
-      v-if="showMenu2&&menuHoverData.children && menuHoverData.children.length > 0"
+      v-if="showMenu2 && menuHoverData && menuHoverData.children && menuHoverData.children.length > 0"
       class="menu2"
-      @mouseleave="leave()"
-      @mouseenter="enter()"
+      @mouseleave="leave"
     >
       <menu2 :menu2-data="menuHoverData.children" :root-path="menuHoverData.path"></menu2>
     </div>
-
-    <div v-if="menu2Data && rootPath" class="menu2 menu22">
-      <menu2 :menu2-data="menu2Data" :root-path="rootPath"></menu2>
+    <div
+      v-else-if="showMenu2 && routeMenuData && routeMenuData.children && routeMenuData.children.length > 0"
+      class="menu2"
+    >
+      <menu2 :menu2-data="routeMenuData.children" :root-path="routeMenuData.path"></menu2>
     </div>
 
-    <div @mouseenter="containnerEnter(menuHoverData)" class="main-container" :class="[menu2Data && rootPath ? 'addMargin' : '']">
+    <div class="main-container" :class="[showMenu2 ? 'addMargin' : '']">
       <navbar />
-      <app-main style="width:100%;height:calc(100% - 50px);" />
+      <app-main style="width: 100%; height: calc(100% - 50px);" />
     </div>
   </div>
 </template>
@@ -46,9 +47,8 @@ export default {
       openSlider: 1,
       menu2Data: "",
       rootPath: "",
-      showMenu2: false,
       currRouter: "",
-      menuHoverData: {},
+      menuHoverData: null,
       isShowMenu: true
     };
   },
@@ -59,6 +59,49 @@ export default {
         hideSidebar: true,
         openSidebar: false
       };
+    },
+    routeMenuData() {
+      const routeName = this.$route.name;
+      const routeParentName = this.$route.meta.parentName;
+      const menus = this.$store.state.role.routes;
+      let routeMenuData = null;
+      menus.forEach(menu => {
+        if (menu.name === routeName || routeParentName === menu.name) {
+          routeMenuData = menu;
+          return;
+        } else {
+          if (this.$g.utils.isArr(menu.children)) {
+            menu.children.forEach(menu2 => {
+              if (menu2.name === routeName) {
+                routeMenuData = menu;
+                return;
+              } else {
+                menu2.children.forEach(menu3 => {
+                  if (menu3.name === routeName) {
+                    routeMenuData = menu;
+                    return;
+                  }
+                })
+              }
+            })
+            if (routeMenuData) return;
+          }
+        }
+      })
+      return routeMenuData;
+    },
+    showMenu2() {
+      if (this.menuHoverData && this.menuHoverData.children && this.menuHoverData.children.length > 0) {
+        return true
+      } else if (this.$g.utils.isObj(this.routeMenuData)) {
+        if (this.routeMenuData.children && this.routeMenuData.children.length > 0) {
+          return true
+        } else {
+          return false
+        }
+      } else {
+        return false
+      }
     }
   },
   watch: {
@@ -89,6 +132,10 @@ export default {
 
     EventBus.$on("enterItem", $item => {
       this.menuHoverData = $item;
+    });
+
+    EventBus.$on("leaveSlideBar", () => {
+      this.leaveSlideBar()
     });
   },
   methods: {
@@ -160,55 +207,41 @@ export default {
       this.openSlider = localStorage.getItem("openSlider");
     },
     leave() {
-      // this.showMenu2 = false;
+      this.menuHoverData = null;
     },
-    enter(item) {
-      this.showMenu2 = true;
-    },
-    containnerEnter(menuHoverData) {
-      if (!this.menu2Data) {
-        this.showMenu2 = false;
+    leaveSlideBar() {
+      if (!(this.menuHoverData && this.menuHoverData.children && this.menuHoverData.children.length > 0)) {
+        this.menuHoverData = null;
       }
     }
   }
 };
 </script>
 <style lang="scss">
-@import "~@/assets/css/index.scss";
-.addMargin {
-  margin-left: 300px !important;
-}
-.el-submenu .el-menu-item {
-  min-width: 144px !important;
-}
-.app-wrapper {
-  height: 100%;
-}
+  @import "~@/assets/css/index.scss";
+  .addMargin {
+    margin-left: 326px !important;
+  }
+  .el-submenu .el-menu-item {
+    min-width: 144px !important;
+  }
+  .app-wrapper {
+    height: 100%;
+  }
 
-.menu2 {
-  width: 166px;
-  height: 100%;
-  background: rgba(255, 255, 255, 1);
-  box-shadow: 5px 0px 9px 0px rgba(0, 0, 0, 0.05);
-  position: fixed;
-  top: 0;
-  z-index: 1003;
-  left: 133px;
-}
-.menu22 {
-  width: 166px;
-  height: 100%;
-  background-color: #fff;
-  float: left;
-  position: absolute;
-  font-size: 0px;
-  top: 0;
-  bottom: 0;
-  left: 133px;
-  z-index: 1001;
-}
-.sidebar-container {
-  height: 100%;
-  overflow: hidden;
-}
+  .menu2 {
+    width: 166px;
+    height: 100%;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 5px 0px 9px 0px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    z-index: 1003;
+    left: 160px;
+  }
+  .sidebar-container {
+    height: 100%;
+    overflow: hidden;
+  }
 </style>

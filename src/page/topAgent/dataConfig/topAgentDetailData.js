@@ -123,9 +123,22 @@ export const configData2 = {
   child: [
     {
       name: '支付通道',
-      moduleName: 'payChannels',
+      modelName: 'payChannels',
       hiddenEdit: true,
-      models: []
+      models: [
+        {
+          items: [
+            {
+              name: '通道名称',
+              key: 'productName'
+            },
+            {
+              name: '通道状态',
+              key: 'wechatPayRate'
+            }
+          ]
+        }
+      ]
     },
     {
       name: "费率",
@@ -154,19 +167,67 @@ export const configData2 = {
     },
     {
       name: '权限',
-      moduleName: 'businessModes',
+      modelName: 'businessModes',
       hiddenEdit: true,
-      models: []
+      models: [
+        {
+          items: [
+            {
+              name: "小马哥代理到期时间",
+              key: "loginAccount"
+            },
+            {
+              name: "后台权限",
+              key: "",
+              type: "seem"
+            }
+          ]
+        }
+      ]
     },
     {
       name: "交易通道定制",
       modelName: "customChannelComboPriceSets",
-      models: []
+      models: [
+        {
+          items: [
+            {
+              name: "通道名称",
+              key: "loginAccount"
+            },
+            {
+              name: "服务时长",
+              key: "loginAccount"
+            },
+            {
+              name: "服务价格",
+              key: "loginAccount"
+            }
+          ]
+        }
+      ]
     },
     {
       name: "品牌定制",
       modelName: "customChannelComboPriceSets",
-      models: []
+      models: [
+        {
+          items: [
+            {
+              name: "定制名称",
+              key: "loginAccount"
+            },
+            {
+              name: "服务时长",
+              key: "loginAccount"
+            },
+            {
+              name: "服务价格",
+              key: "loginAccount"
+            }
+          ]
+        }
+      ]
     },
     {
       name: "账户信息",

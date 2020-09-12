@@ -106,7 +106,11 @@ router.beforeEach((to, from, next) => {
   } else {
     const accessToken = store.state.admin.accessToken;
     if (accessToken === null || accessToken === '') {
-      next('/login');
+      if (to.path === '/registSuccess') {
+        next();
+      } else {
+        next('/login');
+      }
     } else {
       next();
     }

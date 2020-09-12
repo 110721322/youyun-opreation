@@ -52,5 +52,8 @@ export default {
       }
     })
     state.categoryList = info
+  },
+  SET_ADVERT_TYPE(state, info) {
+    state.advertType = info;
   }
 };

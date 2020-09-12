@@ -66,7 +66,6 @@ export default {
   },
   methods: {
     search($form) {
-      console.log($form)
       this.params = {
         labelId: $form.labelId || null,
         activeScopeType: $form.activeScopeType || null,

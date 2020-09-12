@@ -35,9 +35,8 @@
                   :src="ruleForm[item2.key]"
                   :preview-src-list="[ruleForm[item2.key]]"
                 ></el-image>
-                <span v-if="item2.type === 'descript'" class="item-value">{{ ruleForm[item2.key] === 'all' ? '全国' : ruleForm[item2.key] === 'province' ? '省' : ruleForm[item2.key] === 'city' ? '市' : '' }}</span>
-                <span v-if="item2.type === 'bankType'" class="item-value">{{ ruleForm[item2.key] === 'private' ? '对私' : ruleForm[item2.key] === 'public' ? '对公' : '' }}</span>
-                <span v-if="item2.type !== 'img' && item2.type !== 'bankType' && item2.type !== 'descript' " class="item-value">{{ item2.key ? ruleForm[item2.key] : item2.initVal }}{{ item2.type === 'pecent' ? '‰' : '' }}</span>
+                <span v-if="item2.type !== 'img'" class="item-value">{{ item2.key ? ruleForm[item2.key] : item2.initVal }}{{ item2.type === 'pecent' ? '‰' : '' }}</span>
+                <span v-if="item2.type === 'seem'" class="item_see" @click="edit(child.modelName)">查看</span>
               </el-form-item>
             </el-col>
           </el-row>
@@ -109,5 +108,11 @@ export default {
       }
     }
   }
+}
+
+.item_see {
+  font-size: 14px;
+  color: #1989fa;
+  cursor: pointer;
 }
 </style>

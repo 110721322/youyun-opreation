@@ -75,7 +75,7 @@
               <el-button type="primary" class="login-btn" @click="onClick_codeLogin">登录</el-button>
             </div>
           </template>
-          <template v-if="activeType==='changePasswd'">
+          <template v-if="activeType==='changePasswdOneStep'">
             <div class="type-box">
               <span class="active-type">修改密码</span>
             </div>
@@ -108,6 +108,17 @@
                   >{{ countChangeTime + " s" }}</span>
                 </template>
               </el-input>
+            </div>
+            <div class="btn-box">
+              <el-button type="primary" class="login-btn" @click="onClick_changePasswordOneStep">下一步</el-button>
+            </div>
+            <div class="bottom-box">已有账号？<span @click="toAccountLogin">立即登录</span></div>
+          </template>
+          <template v-if="activeType==='changePasswdTwoStep'">
+            <div class="type-box">
+              <span class="active-type">修改密码</span>
+            </div>
+            <div class="input-box">
               <el-input
                 v-model="ruleForm3.password"
                 type="password"
@@ -128,7 +139,7 @@
               </el-input>
             </div>
             <div class="btn-box">
-              <el-button type="primary" class="login-btn" @click="onClick_changePassword">确定</el-button>
+              <el-button type="primary" class="login-btn" @click="onClick_changePasswordTwoStep">确定</el-button>
             </div>
             <div class="bottom-box">已有账号？<span @click="toAccountLogin">立即登录</span></div>
           </template>
@@ -260,14 +271,14 @@ export default {
       },
       registerForm: {
         businessType: null,
-        company: null,
-        personName: null,
-        personMobile: null,
-        email: null,
-        address: null,
-        provinceCode: null,
-        cityCode: null,
-        areaCode: null,
+        company: '',
+        personName: '',
+        personMobile: '',
+        email: '',
+        address: '',
+        provinceCode: '',
+        cityCode: '',
+        areaCode: '',
         phone: '',
         password: ''
       },
@@ -303,11 +314,14 @@ export default {
       this.registerForm['cityCode'] = $codes[1];
       this.registerForm['areaCode'] = $codes[2];
     },
-    onClick_changePassword() {
+    onClick_changePasswordOneStep() {
       if (!this.ruleForm3.code) {
         this.$alert("请输入验证码");
         return;
       }
+      this.activeType = "changePasswdTwoStep";
+    },
+    onClick_changePasswordTwoStep() {
       if (!this.ruleForm3.password) {
         this.$alert("请输入新密码");
         return;
@@ -395,7 +409,7 @@ export default {
         });
     },
     toChangePasswd() {
-      this.activeType = "changePasswd";
+      this.activeType = "changePasswdOneStep";
     },
     toAccountLogin() {
       this.activeType = "accountLogin";
@@ -506,6 +520,38 @@ export default {
       this.isLogin = true
     },
     onClick_register() {
+      if (!this.registerForm.company) {
+        this.$alert("公司名称不能为空");
+        return;
+      }
+      if (!this.registerForm.personName) {
+        this.$alert("法人姓名不能为空");
+        return;
+      }
+      if (!this.registerForm.personMobile) {
+        this.$alert("法人手机号不能为空");
+        return;
+      }
+      if (!this.$g.utils.checkPhone(this.registerForm.personMobile)) {
+        this.$alert("请输入正确格式的手机号");
+        return;
+      }
+      if (!this.registerForm.email) {
+        this.$alert("邮箱不能为空");
+        return;
+      }
+      if (!this.$g.utils.checkEmailOther(this.registerForm.email)) {
+        this.$alert("请输入正确格式的邮箱");
+        return;
+      }
+      if (!this.registerForm.provinceCode) {
+        this.$alert("请选择所在省份");
+        return;
+      }
+      if (!this.registerForm.address) {
+        this.$alert("详细地址不能为空");
+        return;
+      }
       api.registerTopAgent(this.registerForm).then(res => {
         this.$message({
           type: 'succcess',
@@ -573,6 +619,7 @@ export default {
         font-weight: 500;
         color: rgba(51, 51, 51, 1);
         line-height: 18px;
+        cursor: pointer;
       }
       .unactive-type {
         font-size: 18px;
@@ -580,6 +627,7 @@ export default {
         font-weight: 400;
         color: rgba(191, 191, 191, 1);
         line-height: 18px;
+        cursor: pointer;
       }
       .ml {
         margin-left: 26px;
@@ -674,6 +722,7 @@ export default {
       border: 0px solid rgba(25, 137, 250, 1);
       font-size: 16px;
       color: #333333;
+      cursor: pointer;
     }
   }
 }
@@ -694,5 +743,9 @@ export default {
   height: 40px;
   text-align: center;
   line-height: 40px;
+  cursor: pointer;
+}
+.bottom-box {
+  margin-top: 16px;
 }
 </style>

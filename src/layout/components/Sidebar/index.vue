@@ -1,10 +1,12 @@
 <template>
-  <div class="aaa" :style="{'height': (height*2-100)+'px', 'overflow': 'auto'}">
+  <div style="height: 100%">
     <logo :collapse="isCollapse" />
     <!-- <el-scrollbar> -->
-    <el-menu :default-active="activeName" :collapse="openSlider == 1 ? false : true" :unique-opened="false" :collapse-transition="false" mode="vertical" background-color="#001529" text-color="#FFFFFF">
-      <sidebar-item v-for="route in menuList" :key="route.path" :item="route" :base-path="route.path" />
-    </el-menu>
+    <div class="slidebar-container">
+      <el-menu :default-active="activeName" :collapse="openSlider == 1 ? false : true" :unique-opened="false" :collapse-transition="false" mode="vertical" background-color="#001529" text-color="#A6ADB4">
+        <sidebar-item v-for="route in menuList" :key="route.path" :item="route" :base-path="route.path" />
+      </el-menu>
+    </div>
     <!-- </el-scrollbar> -->
   </div>
 </template>
@@ -63,6 +65,20 @@ export default {
     EventBus.$on("decreased", () => {
       this.openSlider = localStorage.getItem("openSlider");
     });
+  },
+  methods: {
+    leaveSlideBar() {
+      EventBus.$emit("leaveSlideBar")
+    }
   }
 };
 </script>
+<style scoped lang="scss">
+  .slidebar-container {
+    height: calc(100% - 50px);
+    width: 160px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+</style>
+
