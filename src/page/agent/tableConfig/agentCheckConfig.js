@@ -43,9 +43,14 @@ export const USER_CONFIG = {
       }
     },
     {
+      label: '公司地址',
+      prop: 'companyAddress',
+      width: '120px'
+    },
+    {
       label: '创建时间',
       prop: 'createTime',
-      width: '90px'
+      width: '120px'
     },
     {
       label: '状态',
