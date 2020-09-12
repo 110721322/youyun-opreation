@@ -2,7 +2,7 @@
   <div>
     <el-date-picker
       v-model="timeInterval"
-      style="float: left;"
+      :style="inputStyle"
       size="large"
       :type="datatype"
       :placeholder="placeholder"
@@ -42,6 +42,12 @@ export default {
       datatype: this.formItem.datatype,
       format: this.formItem.format
     };
+  },
+  computed: {
+    inputStyle() {
+      const item = this.formItem;
+      return item.style ? item.style : "width:294px;float: left;";
+    }
   },
   watch: {
 

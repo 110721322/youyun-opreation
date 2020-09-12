@@ -27,18 +27,19 @@
       :on-remove="onRemove"
       :http-request="upLoad"
       :limit="maxNum"
+      :on-exceed="fileOver"
       :on-preview="handlePictureCardPreview"
     >
       <img v-if="dialogImageUrl && !showFileList" :src="dialogImagePath + dialogImageUrl" class="avatar" />
       <i v-else class="el-icon-plus"></i>
     </el-upload>
+    <!-- <div v-if="maxNum">最多上传{{ maxNum }}张图片</div> -->
     <i
       v-if="dialogImageUrl && !showFileList"
       class="el-icon-plus el-icon-zoom-in"
       style="float: left; position: relative; left: -20px; top: 5px; cursor: pointer;"
       @click="onClick_preview"
     ></i>
-
     <el-image-viewer v-if="showViewer" :on-close="closeViewer" :url-list="[dialogImageUrl]" />
   </div>
 </template>
@@ -101,6 +102,12 @@ export default {
 
   mounted() {},
   methods: {
+    fileOver(files, fileList) {
+      console.log(1111, files, fileList)
+      if (fileList.length >= this.maxNum) {
+        this.$message(`最多上传${this.maxNum}张图片`)
+      }
+    },
     /**
      * 初始化表单项目
      */
