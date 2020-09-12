@@ -3,11 +3,12 @@ export const USER_CONFIG = {
     {
       label: '创建时间',
       prop: 'createTime',
-      width: '160px'
+      width: '120px'
     },
     {
       label: '服务商名称',
-      prop: 'channelAgentName'
+      prop: 'channelAgentName',
+      width: '120px'
     },
     {
       label: '法人',
@@ -27,7 +28,7 @@ export const USER_CONFIG = {
     {
       label: '公司地址',
       prop: 'address',
-      width: '90px'
+      width: '130px'
     },
     {
       label: '状态',
