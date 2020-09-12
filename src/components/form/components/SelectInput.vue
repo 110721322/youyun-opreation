@@ -117,7 +117,7 @@ export default {
 
 <style lang="scss" scoped>
 .input-with-select {
-  width: 774px;
+  // width: 774px;
 }
 
 .el-select .el-input {

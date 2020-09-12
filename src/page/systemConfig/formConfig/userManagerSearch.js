@@ -13,8 +13,8 @@ export const SEARCH_CONFIG = {
       isSelectToday: true,
       label: '筛选时间',
       key: 'date',
-      class: 'max-width',
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 22
     },
     {
       type: 10,
@@ -39,14 +39,15 @@ export const SEARCH_CONFIG = {
           value: 'phone'
         }
       ],
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 11
     },
     {
       type: 1,
       label: '性别',
       key: 'sex',
-      style: 'width:294px',
-      labelWidth: '100px',
+      labelWidth: '80px',
+      span: 11,
       options: [
         {
           label: '女',
@@ -62,17 +63,16 @@ export const SEARCH_CONFIG = {
       type: 1,
       label: '职位',
       key: 'position',
-      style: 'width:294px',
-      labelWidth: '185px',
+      labelWidth: '80px',
+      span: 11,
       options: store.state.system.positionList
     },
     {
       type: 1,
       label: '上级',
       key: 'superiorName',
-      style: 'width:294px',
-      labelWidth: '100px',
-      class: "clear_both",
+      labelWidth: '80px',
+      span: 11,
       urlOptions: {
         url: api_memberManage.superiorsList,
         keyName: 'id',

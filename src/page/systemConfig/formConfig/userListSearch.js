@@ -6,14 +6,15 @@ export const SEARCH_CONFIG = {
       isSelectToday: true,
       label: '筛选时间',
       key: 'date',
-      class: 'max-width',
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 22
     },
     {
       type: 10,
       label: '精准筛选',
       key: '',
-      class: 'max-width',
+      labelWidth: '80px',
+      span: 11,
       options: [
         {
           label: '工号',
@@ -31,15 +32,14 @@ export const SEARCH_CONFIG = {
           label: '手机号',
           value: 'phone'
         }
-      ],
-      labelWidth: '100px'
+      ]
     },
     {
       type: 1,
       label: '性别',
       key: 'sex',
-      style: 'width:294px',
-      labelWidth: '100px',
+      labelWidth: '80px',
+      span: 11,
       options: [
         {
           label: '保密',

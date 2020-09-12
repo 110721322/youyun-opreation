@@ -46,7 +46,7 @@ export default {
   computed: {
     inputStyle() {
       const item = this.formItem;
-      return item.style ? item.style : "width:294px;float: left;";
+      return item.style ? item.style : "float: left;";
     }
   },
   watch: {

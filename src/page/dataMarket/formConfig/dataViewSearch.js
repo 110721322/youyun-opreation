@@ -12,46 +12,47 @@ export const FORM_CONFIG = {
       label: '筛选时间',
       key: 'date',
       class: 'max-width',
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 20
     },
     {
       type: 1,
       label: '大区',
       key: 'regionCode',
-      style: 'width:294px',
-      labelWidth: '185px',
+      labelWidth: '50px',
+      span: 11,
       options: store.state.dataMarket.regionList
     },
     {
       type: 8,
       label: '地区',
       key: 'area',
-      style: 'width:294px',
-      class: "clear_both",
+      labelWidth: '50px',
+      span: 11,
       options: areaData
     },
     {
       type: 1,
       label: '运营人员',
       key: 'operationId',
-      style: 'width:294px',
-      labelWidth: '185px',
+      labelWidth: '80px',
+      span: 11,
       options: store.state.dataMarket.userList
     },
     {
       type: 1,
       label: '标签',
       key: 'positionLabelId',
-      style: 'width:294px',
-      class: "clear_both",
+      labelWidth: '50px',
+      span: 11,
       options: store.state.dataMarket.labelList
     },
     {
       type: 1,
       label: '服务商类型',
       key: 'agentGrade',
-      style: 'width:294px',
-      class: "clear_both",
+      labelWidth: '95px',
+      span: 11,
       options: [
         {
           label: '顶级服务商',
