@@ -230,11 +230,12 @@ export default {
         password: row.password
       }).then(res => {
         if (res.status === 0) {
-          api.loginWithTicket({
-            ticket: res.object
-          }).then(result => {
-            console.log(result)
-          })
+          window.location.href = `http://service.intranet.aduer.com/ticket=${res.object}`
+          // api.loginWithTicket({
+          //   ticket: res.object
+          // }).then(result => {
+          //   console.log(result)
+          // })
         }
       })
     },
