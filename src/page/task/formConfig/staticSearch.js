@@ -7,14 +7,15 @@ export const FORM_CONFIG = {
       key: 'date',
       datatype: 'datetimerange',
       class: 'max-width',
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 20
     },
     {
       type: 1,
       label: '成员',
       key: 'recevierId',
-      style: 'width:294px',
-      labelWidth: '100px',
+      labelWidth: '50px',
+      span: 15,
       urlOptions: {
         url: api.queryAllEmployeeList,
         method: 'post',

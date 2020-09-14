@@ -592,13 +592,13 @@ export const authRoutes = [
     children: [
       {
         type: 'ios-grid',
-        name: 'statisticsDetail',
+        name: 'statistics',
         text: '工作任务统计',
-        path: 'statisticsDetail',
+        path: 'statistics',
         isShow: true,
         meta: {
           title: '工作任务统计',
-          icon: 'statisticsDetail'
+          icon: 'statistics'
         }
       }
     ]

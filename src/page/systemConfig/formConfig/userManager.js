@@ -77,6 +77,7 @@ export const FORM_CONFIG = {
         type: 11,
         label: "生日",
         key: "birthday",
+        format: "yyyy-MM-dd",
         initVal: null,
         dateType: "date"
       },

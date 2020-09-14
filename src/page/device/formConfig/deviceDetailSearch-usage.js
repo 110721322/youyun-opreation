@@ -1,5 +1,4 @@
 import apiDevice from "@/api/api_device";
-import areaData from "@/assets/data/areaData";
 export const SEARCH_CONFIG = {
   formData: [
     {
@@ -7,23 +6,6 @@ export const SEARCH_CONFIG = {
       label: '筛选时间',
       key: 'date',
       class: 'max-width',
-      labelWidth: '100px'
-    },
-    {
-      type: 10,
-      label: '精准筛选',
-      key: '',
-      class: 'max-width',
-      options: [
-        {
-          label: '设备标识',
-          value: 'deviceIdentifier'
-        },
-        {
-          label: '所属服务商',
-          value: 'agentName'
-        }
-      ],
       labelWidth: '100px'
     },
     {
@@ -42,33 +24,22 @@ export const SEARCH_CONFIG = {
       }
     },
     {
-      type: 1,
-      label: '大区',
-      key: 'region',
-      style: 'width:294px',
-      labelWidth: '185px',
-      options: [
-        {
-          label: '川菜',
-          value: 0
-        },
-        {
-          label: '粤菜',
-          value: 1
-        },
-        {
-          label: '杭帮菜',
-          value: 2
-        }
-      ]
+      type: 0,
+      label: '设备标识',
+      key: 'deviceIdentifier',
+      style: 'width:294px'
     },
     {
-      type: 8,
-      label: '服务地区',
-      key: 'area',
-      style: 'width:294px',
-      labelWidth: '185px',
-      options: areaData
+      type: 0,
+      label: '所属服务商',
+      key: 'agentNo',
+      style: 'width:294px'
+    },
+    {
+      type: 0,
+      label: '所属商户',
+      key: 'merchantNo',
+      style: 'width:294px'
     }
   ]
 }

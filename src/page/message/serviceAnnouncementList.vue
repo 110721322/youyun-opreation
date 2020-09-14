@@ -8,6 +8,7 @@
         :form-base-data="searchConfig.formData"
         :show-foot-btn="searchConfig.showFootBtn"
         @search="search"
+        @reset="reset"
       />
       <!-- <data-mode></data-mode> -->
       <div class="table_box">
@@ -107,7 +108,16 @@ export default {
       });
     },
     search($ruleForm) {
-      console.log($ruleForm);
+      const params = {
+        title: $ruleForm.title,
+        messageType: $ruleForm.messageType,
+        to: 'agent'
+      };
+      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      this.params = params;
+      this.$refs.table.getData();
+    },
+    reset($ruleForm) {
       const params = {
         title: $ruleForm.title,
         messageType: $ruleForm.messageType,

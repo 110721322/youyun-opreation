@@ -22,5 +22,8 @@ export default {
   },
   setCategoryList: ({ commit }, info) => {
     commit('SET_CATEGORY_LIST', info)
+  },
+  setAdvertType: ({ commit }, info) => {
+    commit('SET_ADVERT_TYPE', info)
   }
 };

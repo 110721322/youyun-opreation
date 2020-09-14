@@ -1,49 +1,59 @@
 <template>
   <div
     :class="['s_box', isShowAll ? 'is_show_all' : '']"
-    :style="isOpen ? 'height:' + openHeight + 'px' : ''"
+    :style="isOpen ? ('height: auto' + ';overflow:auto') : 'overflow:hidden'"
   >
-    <el-form
-      ref="formTep"
-      size="large"
-      :inline="false"
-      :label-position="labelPosition"
-      :model="ruleForm"
-      :rules="rules"
-      :label-width="labelWidth"
-      :class="['form-inline', isShowAll ? 'is_show_all' : '']"
-      :style="isOpen ? 'height:' + (Number(openHeight) - 40) + 'px' : ''"
-    >
-      <el-form-item
-        v-for="formItem in formBaseData"
-        :key="formItem.key"
-        :prop="formItem.key"
-        :label="formItem.label + ':'"
-        :rules="formItem.rules"
-        :class="['formTemplate-item', formItem.class]"
-        :label-width="formItem.labelWidth"
-      >
-        <components
-          :is="transType(formItem.type)"
-          :rule-form="ruleForm"
-          :form-item="formItem"
-          :type="formItem.timeType"
-          :is-rest="isRest"
-          @dataSelect="handleDataSelect"
-        />
-      </el-form-item>
-
-      <div class="btn_list" style="margin-bottom:0">
-        <el-button v-has="permission.search" type="primary" size="large" @click="handleClick">搜索</el-button>
-        <el-button plain size="large" @click="resetForm">重置</el-button>
-        <div v-show="!isShowAll" v-has="permission.condition" class="open_btn" @click="onClick_openOrClose">
-          <span v-show="!isOpen">展开</span>
-          <span v-show="isOpen">收起</span>
-
-          <i :class="['el-icon-arrow-down', 'more', isOpen ? 'down' : '']" />
+    <el-row style="width: 100%">
+      <el-col :span="isShowAll ? 20 : 17">
+        <el-form
+          ref="formTep"
+          size="large"
+          :inline="false"
+          :label-position="labelPosition"
+          :model="ruleForm"
+          :rules="rules"
+          :label-width="labelWidth"
+          :class="['form-inline', isShowAll ? 'is_show_all' : '']"
+          :style="isOpen ? ('height: auto' + ';overflow:auto') : 'overflow:hidden'"
+        >
+          <el-row>
+            <el-col
+              v-for="formItem in formBaseData"
+              :key="formItem.key"
+              :span="formItem.span ? formItem.span : 8"
+            >
+              <el-form-item
+                :prop="formItem.key"
+                :label="formItem.label + ':'"
+                :rules="formItem.rules"
+                :class="[formItem.class]"
+                :label-width="formItem.labelWidth"
+              >
+                <components
+                  :is="transType(formItem.type)"
+                  :rule-form="ruleForm"
+                  :form-item="formItem"
+                  :type="formItem.timeType"
+                  :is-rest="isRest"
+                  @dataSelect="handleDataSelect"
+                />
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+      </el-col>
+      <el-col :span="isShowAll ? 4 : 7">
+        <div class="btn_list" style="margin-bottom:0" :style="btnListStyle">
+          <el-button v-has="permission.search" type="primary" size="large" @click="handleClick">搜索</el-button>
+          <el-button plain size="large" @click="resetForm">重置</el-button>
+          <div v-show="!isShowAll" v-has="permission.condition" class="open_btn" @click="onClick_openOrClose">
+            <span v-show="!isOpen">展开</span>
+            <span v-show="isOpen">收起</span>
+            <i :class="['el-icon-arrow-down', 'more', isOpen ? 'down' : '']" />
+          </div>
         </div>
-      </div>
-    </el-form>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -62,6 +72,7 @@ import DatePicker from "./components/DatePicker.vue";
 import SelectInput from "./components/SelectInput.vue";
 import Cascader from "./components/Cascader.vue";
 import TicketAddForm from "./../form/ticketAddForm.vue";
+import Date from "../form/components/Date";
 
 export default {
   name: "Search",
@@ -81,6 +92,12 @@ export default {
       type: Boolean,
       default() {
         return false;
+      }
+    },
+    btnListStyle: {
+      type: String,
+      default() {
+        return ""
       }
     },
     formBaseData: Array,
@@ -193,41 +210,44 @@ export default {
 <style scoped>
 .s_box {
   height: 88px;
+  padding: 24px;
   background: rgba(255, 255, 255, 1);
   margin: 24px 24px 0;
-  position: relative;
-  overflow: hidden;
-  transition: 0.5s;
-  min-width: 1000px;
+  transition: all 0.5s;
+}
+.s_box::-webkit-scrollbar {
+  display:none
 }
 .is_show_all {
   height: auto !important;
 }
 .btn_list {
-  /* background: rebeccapurple; */
-  position: absolute;
-  right: 0;
-  bottom: 21px;
-  right: 24px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-left: 16px;
 }
 .is_show_all .btn_list {
   bottom: 25px;
 }
 .open_btn {
-  float: right;
-  margin-left: 16px;
+  /* float: right; */
+  margin-left: 12px;
   line-height: 40px;
   color: #1890ff;
   cursor: pointer;
   user-select: none;
 }
 .form-inline {
-  margin: 27px 24px 10px;
   height: 40px;
-  overflow: hidden;
-  transition: 0.5s;
+  overflow: auto;
+  transition: all 0.5s;
+  flex-grow: 1;
+  flex-shrink: 1;
 }
-
+.form-inline::-webkit-scrollbar {
+  display:none
+}
 .el-select .el-input {
   width: 130px;
 }

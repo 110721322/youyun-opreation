@@ -6,8 +6,8 @@ export const CHECKSERVICELIST_CONFIG = {
       width: '150px'
     },
     {
-      label: '法人',
-      prop: [{ key: 'personName' }, { key: 'personMobile' }],
+      label: '法人信息',
+      prop: [{ key: 'personName', label: '姓名:' }, { key: 'personMobile', label: '电话:' }],
       width: '150px'
     },
     {
@@ -17,7 +17,7 @@ export const CHECKSERVICELIST_CONFIG = {
     },
     {
       label: '所属运营',
-      prop: 'operationName',
+      prop: 'operationJobName',
       width: '150px'
     },
     {
@@ -25,25 +25,25 @@ export const CHECKSERVICELIST_CONFIG = {
       prop: 'contractStatus',
       width: '150px',
       render: (h, params) => {
-        if (params.row.contractStatus === 'waitSign') {
-          return h(
-            'span', '待审核'
-          )
-        }
         if (params.row.contractStatus === 'audit') {
-          return h(
-            'span', '待审核'
-          )
+          return [h('span', {
+            'class': "dot " + "platformAudit"
+          }), '审核中']
         }
-        if (params.row.contractStatus === 'success') {
-          return h(
-            'span', '审核通过'
-          )
+        if (params.row.contractStatus === 'waitSign') {
+          return [h('span', {
+            'class': "dot " + "nonOpen"
+          }), '待审核']
         }
         if (params.row.contractStatus === 'reject') {
-          return h(
-            'span', '审核拒绝'
-          )
+          return [h('span', {
+            'class': "dot " + "reject"
+          }), '已驳回']
+        }
+        if (params.row.contractStatus === 'success') {
+          return [h('span', {
+            'class': "dot " + "success"
+          }), '已通过']
         }
       }
     }

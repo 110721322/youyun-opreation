@@ -33,6 +33,7 @@ Vue.prototype.$echarts = echarts;
 Vue.prototype.$store = store;
 
 store.dispatch('saveWebsocketOption');
+store.dispatch('setAdvertType', 0);
 
 Vue.use(ElementUI, {
   size: 'small'

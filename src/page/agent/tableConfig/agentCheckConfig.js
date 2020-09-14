@@ -6,8 +6,13 @@ export const USER_CONFIG = {
       width: '90px'
     },
     {
-      label: '法人',
+      label: '法人姓名',
       prop: 'personName',
+      width: '90px'
+    },
+    {
+      label: '法人手机号',
+      prop: 'personMobile',
       width: '90px'
     },
     {
@@ -40,64 +45,36 @@ export const USER_CONFIG = {
     {
       label: '公司地址',
       prop: 'companyAddress',
-      width: '90px'
+      width: '120px'
     },
     {
       label: '创建时间',
       prop: 'createTime',
-      width: '90px'
+      width: '120px'
     },
     {
       label: '状态',
       prop: 'contractStatus',
       render: (h, params) => {
         if (params.row.contractStatus === 'audit') {
-          return h(
-            'el-tag',
-            {
-              props: {
-                size: 'medium',
-                type: 'primary'
-              }
-            },
-            '待审核'
-          );
+          return [h('span', {
+            'class': "dot " + "platformAudit"
+          }), '待审核']
         }
         if (params.row.contractStatus === 'waitSign') {
-          return h(
-            'el-tag',
-            {
-              props: {
-                size: 'medium ',
-                type: ''
-              }
-            },
-            '待审核'
-          );
+          return [h('span', {
+            'class': "dot " + "platformAudit"
+          }), '待审核']
         }
         if (params.row.contractStatus === 'reject') {
-          return h(
-            'el-tag',
-            {
-              props: {
-                size: 'medium ',
-                type: 'danger'
-              }
-            },
-            '已拒绝'
-          );
+          return [h('span', {
+            'class': "dot " + "reject"
+          }), '已拒绝']
         }
         if (params.row.contractStatus === 'success') {
-          return h(
-            'el-tag',
-            {
-              props: {
-                size: 'medium ',
-                type: 'success'
-              }
-            },
-            '审核通过'
-          );
+          return [h('span', {
+            'class': "dot " + "success"
+          }), '已通过']
         }
       }
     }

@@ -303,6 +303,12 @@ export default {
       return true
     }
   },
+  checkEmailOther(mail) {
+    if (!(/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(mail))) {
+      return false;
+    }
+    return true;
+  },
   // 校验手机号
   checkPhone(phone){
     if(!(/^1[3456789]\d{9}$/.test(phone))){

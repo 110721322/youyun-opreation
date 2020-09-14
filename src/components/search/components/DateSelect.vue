@@ -4,6 +4,7 @@
       v-show="isOpen"
       v-model="timeInterval"
       style="float: left;"
+      :style="inputStyle"
       size="large"
       :type="datatype"
       range-separator="至"
@@ -83,6 +84,12 @@ export default {
         value: 7
       }
     };
+  },
+  computed: {
+    inputStyle() {
+      const item = this.formItem;
+      return item.style ? item.style : "width:294px;float: left;";
+    }
   },
   watch: {
     isRest: function($new) {
@@ -228,6 +235,7 @@ export default {
 
 .select {
   color: #409eff;
+  background: #E6F1FC;
   border: 1px solid #409eff;
 }
 </style>

@@ -6,6 +6,7 @@ const state = {
   tradeRegionList: [], // 大区列表
   tradeUserList: [], // 成员
   agentTypes: [], // 服务商等级
-  categoryList: [] // 行业类别
+  categoryList: [], // 行业类别
+  advertType: 0
 }
 export default state;

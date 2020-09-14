@@ -1,9 +1,10 @@
-import { setRules } from '@/libs/kit/formFns.js'
+import { setRules } from '@/libs/kit/formFns.js';
 import apiAgent from "@/api/api_agent.js";
+import store from '@/store'
 
 export const FORM_CONFIG = {
   addData: {
-    title: '设备',
+    title: '投放广告',
     showFootBtn: true,
     formData: [
       {
@@ -17,6 +18,7 @@ export const FORM_CONFIG = {
           method: 'get'
         },
         callback($ruleForm, $option) {
+          store.dispatch('setAdvertType', $option.advertType);
         }
       },
       {
@@ -27,9 +29,7 @@ export const FORM_CONFIG = {
           url: apiAgent.queryAllDistributeName,
           keyName: 'id',
           valueName: 'advertName',
-          method: 'get',
-          params: {
-          }
+          method: 'get'
         }
       },
       {

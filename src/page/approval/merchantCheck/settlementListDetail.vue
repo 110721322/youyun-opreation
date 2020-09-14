@@ -14,8 +14,12 @@
           :closable="false"
           show-icon
         ></el-alert>
-        <detailMode :img-width="4" :rule-form="ruleForm.old" :config-data="configData.beforeData"></detailMode>
-        <detailMode :img-width="4" :rule-form="ruleForm.new" :config-data="configData.afterData"></detailMode>
+        <detailMode :img-width="4" :rule-form="ruleForm.old" v-if="ruleForm.old.bankAccountType === 'public'" :config-data="configData.beforeData"></detailMode>
+        <detailMode :img-width="4" :rule-form="ruleForm.old" v-if="ruleForm.old.bankAccountType === 'private' && ruleForm.old.snewnewettleLawFlag === 'legal'" :config-data="configData.beforeData1"></detailMode>
+        <detailMode :img-width="4" :rule-form="ruleForm.old" v-if="ruleForm.old.bankAccountType === 'private' && ruleForm.old.settleLawFlag === 'unlegal'" :config-data="configData.beforeData2"></detailMode>
+        <detailMode :img-width="4" :rule-form="ruleForm.new" v-if="ruleForm.new.bankAccountType === 'public'" :config-data="configData.afterData"></detailMode>
+        <detailMode :img-width="4" :rule-form="ruleForm.new" v-if="ruleForm.new.bankAccountType === 'private' && ruleForm.new.settleLawFlag === 'legal'" :config-data="configData.afterData1"></detailMode>
+        <detailMode :img-width="4" :rule-form="ruleForm.new" v-if="ruleForm.new.bankAccountType === 'private' && ruleForm.new.settleLawFlag === 'unlegal'" :config-data="configData.afterData2"></detailMode>
         <div v-if="showComponents.showOperBtns" class="btn-box">
           <div class="btn_pass" @click="onClick_pass">资料已全部检查,通过</div>
           <div class="btn-reject" @click="onClick_reject">驳回</div>
@@ -38,6 +42,7 @@
 import api from "@/api/api_merchantAudit";
 import detailMode from "@/components/detailMode/detailMode2.vue";
 import Form from "@/components/form/index.vue";
+import { SETTLE_CONFIG } from "./../tableConfig/settleConfig"
 import { FORM_CONFIG } from "./../formConfig/indirectDetailConfig";
 
 export default {
@@ -60,116 +65,7 @@ export default {
         old: {},
         new: {}
       },
-      configData: {
-        beforeData: {
-          name: "修改前信息",
-          items: [
-            {
-              name: "结算人银行卡",
-              key: "bankCardImg",
-              type: "image"
-            },
-            {
-              name: "结算人身份证正面",
-              key: "idCardPortraitImg",
-              type: "image"
-            },
-            {
-              name: "结算人身份证反面",
-              key: "idCardEmblemImg",
-              type: "image"
-            },
-            {
-              name: "非法人授权书",
-              key: "nonLawSettleAuthImg",
-              type: "image"
-            },
-            {
-              name: "结算卡类型",
-              key: "bankAccountType"
-            },
-            {
-              name: "开户名",
-              key: "openAccountName"
-            },
-            {
-              name: "结算人身份证号",
-              key: "settlePersonIdCard"
-            },
-            {
-              name: "银行卡号",
-              key: "bankCardNo"
-            },
-
-            {
-              name: "开户支行地区",
-              key: "bankArea"
-            },
-            {
-              name: "开户支行",
-              key: "bankBranchName"
-            },
-            {
-              name: "银行预留手机号",
-              key: "bankMobile"
-            }
-          ]
-        },
-        afterData: {
-          name: "修改后信息",
-          items: [
-            {
-              name: "结算人银行卡",
-              key: "bankCardImg",
-              type: "image"
-            },
-            {
-              name: "结算人身份证正面",
-              key: "idCardPortraitImg",
-              type: "image"
-            },
-            {
-              name: "结算人身份证反面",
-              key: "idCardEmblemImg",
-              type: "image"
-            },
-            {
-              name: "非法人授权书",
-              key: "nonLawSettleAuthImg",
-              type: "image"
-            },
-            {
-              name: "结算卡类型",
-              key: "bankAccountType"
-            },
-            {
-              name: "开户名",
-              key: "openAccountName"
-            },
-            {
-              name: "结算人身份证号",
-              key: "settlePersonIdCard"
-            },
-            {
-              name: "银行卡号",
-              key: "bankCardNo"
-            },
-
-            {
-              name: "开户支行地区",
-              key: "bankArea"
-            },
-            {
-              name: "开户支行",
-              key: "bankBranchName"
-            },
-            {
-              name: "银行预留手机号",
-              key: "bankMobile"
-            }
-          ]
-        }
-      }
+      configData: SETTLE_CONFIG.configData
     };
   },
   watch: {
@@ -217,10 +113,15 @@ export default {
           res.object.old.merchantType = '个人'
         }
         if (res.object.old.bankAccountType === 'public') {
-          res.object.old.bankAccountType = '对公'
+          res.object.old.bankAccountTypeCn = '对公-法人'
         }
         if (res.object.old.bankAccountType === 'private') {
-          res.object.old.bankAccountType = '对私'
+          if (res.object.old.settleLawFlag === 'legal') {
+            res.object.old.bankAccountTypeCn = '对私-法人'
+          }
+          if (res.object.old.settleLawFlag === 'unlegal') {
+            res.object.old.bankAccountTypeCn = '对私-非法人'
+          }
         }
         if (res.object.new.merchantType === 'enterprise') {
           res.object.new.merchantType = '企业'
@@ -232,10 +133,15 @@ export default {
           res.object.new.merchantType = '个人'
         }
         if (res.object.new.bankAccountType === 'public') {
-          res.object.new.bankAccountType = '对公'
+          res.object.new.bankAccountTypeCn = '对公-法人'
         }
         if (res.object.new.bankAccountType === 'private') {
-          res.object.new.bankAccountType = '对私'
+          if (res.object.new.settleLawFlag === 'legal') {
+            res.object.new.bankAccountTypeCn = '对私-法人'
+          }
+          if (res.object.new.settleLawFlag === 'unlegal') {
+            res.object.new.bankAccountTypeCn = '对私-非法人'
+          }
         }
         this.ruleForm = res.object
         this.rejectTitle = "驳回原因：" + res.object.rejectReason
