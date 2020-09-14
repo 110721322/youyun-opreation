@@ -252,7 +252,7 @@ export default {
   width: 130px;
 }
 .input-with-select {
-  width: 774px;
+  /* width: 774px; */
 }
 
 .more {

@@ -23,7 +23,7 @@
       ></BaseCrud>
     </div>
 
-    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
+    <el-drawer :visible.sync="drawer" :with-header="false" size="600px">
       <role-menu-set
         v-if="drawer"
         :template-list="templateList"

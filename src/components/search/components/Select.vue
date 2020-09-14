@@ -40,7 +40,7 @@ export default {
   computed: {
     selectStyle() {
       const item = this.formItem;
-      return item.style ? item.style : "width:294px";
+      return item.style ? item.style : "width:100%";
     },
 
     placeholder() {

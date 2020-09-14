@@ -35,18 +35,17 @@
       ></BaseCrud>
     </div>
 
-    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
+    <el-drawer :visible.sync="drawer" :with-header="false" size="600px">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
         ref="memberEdit"
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
-        label-width="130px"
         @cancel="cancel"
         @confirm="confirm"
       ></Form>
     </el-drawer>
-    <el-drawer :visible.sync="drawerAddPhone" :with-header="false" size="40%">
+    <el-drawer :visible.sync="drawerAddPhone" :with-header="false" size="600px">
       <div class="p_head">添加成员</div>
       <div class="scroll-box">
         <div class="add-phone-box">

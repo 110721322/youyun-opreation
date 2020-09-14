@@ -110,8 +110,8 @@ export default {
     width: 100%;
     height: 96px;
     border-top: 1px solid #ebeef5;
-    position: absolute;
-    bottom: 0;
+    // position: absolute;
+    // bottom: 0;
     display: flex;
     flex-direction: row;
     justify-content: center;
