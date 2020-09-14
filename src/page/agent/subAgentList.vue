@@ -127,7 +127,17 @@ export default {
         })
         .catch(() => {});
     },
-    openAgentManager() {},
+    openAgentManager(row) {
+      api.generateLoginTicket({
+        system: 'agent',
+        phone: row.personMobile,
+        password: row.password
+      }).then(res => {
+        if (res.status === 0) {
+          window.location.href = `http://service.intranet.aduer.com/ticket=${res.object}`
+        }
+      })
+    },
     goMerchantList() {
       this.$router.push({
         path: "/merchant/list"

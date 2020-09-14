@@ -223,7 +223,6 @@ export default {
         .catch(() => {});
     },
     openAgentManager(row) {
-      console.log(row)
       api.generateLoginTicket({
         system: 'agent',
         phone: row.personMobile,
@@ -231,11 +230,6 @@ export default {
       }).then(res => {
         if (res.status === 0) {
           window.location.href = `http://service.intranet.aduer.com/ticket=${res.object}`
-          // api.loginWithTicket({
-          //   ticket: res.object
-          // }).then(result => {
-          //   console.log(result)
-          // })
         }
       })
     },
