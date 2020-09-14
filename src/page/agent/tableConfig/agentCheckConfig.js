@@ -45,7 +45,12 @@ export const USER_CONFIG = {
     {
       label: '公司地址',
       prop: 'companyAddress',
-      width: '120px'
+      width: '120px',
+      render: (h, params) => {
+        return h(
+          'span', `${params.row.provinceName}${params.row.cityName}${params.row.areaName}${params.row.companyAddress}`
+        )
+      }
     },
     {
       label: '创建时间',

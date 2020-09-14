@@ -4,10 +4,10 @@ export const SEARCH_CONFIG = {
       type: 11,
       label: '奖励核算时间',
       key: 'date',
-      class: 'max-width',
       labelWidth: '110px',
       datatype: 'date',
-      format: 'yyyy-MM-dd'
+      format: 'yyyy-MM-dd',
+      span: 20
     },
     {
       type: 10,
@@ -24,7 +24,8 @@ export const SEARCH_CONFIG = {
           value: 'merchantName'
         }
       ],
-      labelWidth: '110px'
+      labelWidth: '80px',
+      span: 20
     }
   ]
 }

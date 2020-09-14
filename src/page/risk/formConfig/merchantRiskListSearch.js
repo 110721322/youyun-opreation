@@ -7,13 +7,13 @@ export const SEARCH_CONFIG = {
       label: '筛选时间',
       key: 'date',
       class: 'max-width',
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 20
     },
     {
       type: 10,
       label: '精准筛选',
       key: '',
-      class: 'max-width',
       options: [
         {
           label: '商户ID',
@@ -24,13 +24,13 @@ export const SEARCH_CONFIG = {
           value: 'merchantName'
         }
       ],
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 11
     },
     {
       type: 1,
       label: '状态',
       key: 'status',
-      style: 'width:294px',
       options: [
         {
           label: '已通过',
@@ -44,13 +44,16 @@ export const SEARCH_CONFIG = {
           label: '预审核',
           value: 'waitPreAudit'
         }
-      ]
+      ],
+      labelWidth: '80px',
+      span: 11
     },
     {
       type: 1,
       label: '所属运营',
       key: 'operateUserNo',
-      labelWidth: '185px',
+      labelWidth: '80px',
+      span: 11,
       urlOptions: {
         url: apiAgent.queryAllOperation,
         keyName: 'operationId',

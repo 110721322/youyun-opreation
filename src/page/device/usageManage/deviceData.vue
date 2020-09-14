@@ -45,6 +45,9 @@ export default {
 </script>
 
 <style scoped>
+/* /deep/ .el-form-item {
+  margin-bottom: 0px!important;
+} */
 .table_box {
   position: relative;
   margin: 24px;
