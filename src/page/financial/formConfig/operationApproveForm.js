@@ -134,3 +134,42 @@ export const FORM_CONFIG = {
     ]
   }
 }
+
+export const DETAIL_FORM_CONFIG = {
+  detailData: {
+    title: '',
+    showFootBtn: false,
+    formData: [
+      {
+        type: 'show',
+        label: '发票快递单号',
+        key: 'expressNumber',
+        initVal: ''
+      },
+      {
+        type: 'show',
+        label: '结算账户',
+        key: 'settleAccount',
+        initVal: ''
+      },
+      {
+        type: 'show',
+        label: '联系电话',
+        key: 'settleMobile',
+        initVal: ''
+      },
+      {
+        type: 'show',
+        label: '备用联系方式',
+        key: 'alternatePhone',
+        initVal: ''
+      },
+      {
+        type: 'show',
+        label: '备注',
+        key: 'settleRemark',
+        initVal: ''
+      }
+    ]
+  }
+}

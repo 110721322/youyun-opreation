@@ -80,9 +80,9 @@
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import Form from "@/components/form/index.vue";
-import {SEARCH_CONFIG} from "../formConfig/aliProfitsSearch";
-import {SERVICE_CONFIG} from "../tableConfig/aliProfitsConfig";
-import {APISRARD_CONFIG} from "../formConfig/apiAward";
+import { SEARCH_CONFIG } from "../formConfig/aliProfitsSearch";
+import { SERVICE_CONFIG } from "../tableConfig/aliProfitsConfig";
+import { APISRARD_CONFIG } from "../formConfig/apiAward";
 import api_statistice from "@/api/api_statistice";
 
 export default {
@@ -106,21 +106,7 @@ export default {
       apiserver: api_statistice.aliMerchants
     }
   },
-  mounted() {
-    // this.getData()
-    // var myDate = new Date()
-    // if (myDate.getMonth() < 10) {
-    //   this.tradeMonth = myDate.getFullYear() + "-" + "0" + myDate.getMonth() + "-" + "01"
-    //   this.params = {
-    //     tradeMonth: this.tradeMonth + " 00:00:00"
-    //   }
-    // } else {
-    //   this.tradeMonth = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + "01"
-    //   this.params = {
-    //     tradeMonth: this.tradeMonth + " 00:00:00"
-    //   }
-    // }
-  },
+  mounted() {},
   methods: {
     search($ruleform) {
       console.log($ruleform)
