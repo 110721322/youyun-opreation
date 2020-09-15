@@ -176,7 +176,7 @@ export const FORM_CONFIG = {
         placeholder: '输入范围3-6',
         isShowSlot: true,
         showSlotName: '‰',
-        rules: setRules('请输入').oneFloat.get
+        rules: setRules('请输入').isSelected.get
       },
       {
         type: 0,
@@ -187,7 +187,7 @@ export const FORM_CONFIG = {
         placeholder: '输入范围3-6',
         isShowSlot: true,
         showSlotName: '‰',
-        rules: setRules('请输入').oneFloat.get
+        rules: setRules('请输入').isSelected.get
       },
       {
         type: 0,
@@ -197,7 +197,7 @@ export const FORM_CONFIG = {
         isShowSlot: true,
         showSlotName: '‰',
         placeholder: '输入范围2.3-10',
-        rules: setRules('请输入').isRequired.get
+        rules: setRules('请输入').isSelected.get
       },
       {
         type: 0,
@@ -207,7 +207,7 @@ export const FORM_CONFIG = {
         isShowSlot: true,
         showSlotName: '‰',
         placeholder: '输入范围2.3-10',
-        rules: setRules('请输入').isRequired.get
+        rules: setRules('请输入').isSelected.get
       }
     ]
   },

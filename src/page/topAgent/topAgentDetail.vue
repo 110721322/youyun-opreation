@@ -692,7 +692,6 @@ export default {
     },
     itemEdit($model) {
       this.financeModel.bankAccountType = ''
-      console.log($model)
       if ($model === 'finance') {
         this.financeDrawer = true
         if (this.ruleForm.bankBranchName) {
