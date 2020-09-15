@@ -161,5 +161,7 @@ export default {
   // 跨平台票据生成
   generateLoginTicket: (params) => API.POST('/common/v1/user/generateLoginTicket', params),
   // 跨平台登录
-  loginWithTicket: (params) => API.GET('/common/v1/user/loginWithTicket', params)
+  loginWithTicket: (params) => API.GET('/common/v1/user/loginWithTicket', params),
+  // 服务商管理-通过时查询运营人员
+  queryEmployeeList: () => API.POST('/operation/v1/employee/queryEmployeeList')
 };

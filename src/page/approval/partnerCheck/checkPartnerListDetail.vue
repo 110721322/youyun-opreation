@@ -19,8 +19,10 @@
           <detailMode v-if="ruleForm.jobType === '入件操作员'" :img-width="4" :rule-form="ruleForm" :config-data="configData.baseData2"></detailMode>
         </div>
         <div v-if="showComponents.showOperBtns" class="btn-box">
-          <div class="btn_pass" @click="onClick_sign">通过</div>
-          <div class="btn-reject" @click="onClick_reject">驳回</div>
+          <!-- <div class="btn_pass" @click="onClick_sign">通过</div>
+          <div class="btn-reject" @click="onClick_reject">驳回</div> -->
+          <el-button type="primary" size="normal" @click="onClick_sign">通过</el-button>
+          <el-button size="normal" @click="onClick_reject">驳回</el-button>
         </div>
       </div>
     </transition>

@@ -17,7 +17,7 @@
           :grid-btn-config="configData.gridBtnConfig"
           :grid-data="testData"
           :form-data="configData.formModel"
-          :grid-edit-width="300"
+          :grid-edit-width="220"
           form-title="用户"
           :is-async="true"
           :is-select="false"

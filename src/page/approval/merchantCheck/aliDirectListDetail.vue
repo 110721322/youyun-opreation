@@ -23,8 +23,10 @@
           <div class="btn_download" @click="onClick_download">
             <i class="el-icon-download"></i>下载资料
           </div>
-          <div class="btn_pass" @click="onClick_sign">资料已检查并提交签约</div>
-          <div class="btn-reject" @click="onClick_reject">驳回</div>
+          <el-button type="primary" @click="onClick_sign">资料已检查并提交签约</el-button>
+          <el-button @click="onClick_reject">驳回</el-button>
+          <!-- <div class="btn_pass" @click="onClick_sign">资料已检查并提交签约</div>
+          <div class="btn-reject" @click="onClick_reject">驳回</div> -->
         </div>
       </div>
     </transition>
@@ -360,6 +362,7 @@ export default {
     color: #1989fa;
     line-height: 40px;
     letter-spacing: 1px;
+    margin-right: 16px;
   }
   .btn_pass {
     margin-left: 60px;

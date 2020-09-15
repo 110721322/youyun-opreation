@@ -24,8 +24,7 @@
       <el-col :span="9">
         <div class="bg_box" style="margin-right:0;margin-top:0;height:314px">
           <div class="title">沟通数据</div>
-
-          <div class="selectDate">
+          <div style="text-align:center;">
             <el-date-picker
               v-model="timeDate"
               type="datetimerange"
@@ -37,6 +36,7 @@
               format="yyyy-MM-dd HH:mm:ss"
               value-format="yyyy-MM-dd HH:mm:ss"
               @change="dateChange"
+              class="selectDate"
             >
             </el-date-picker>
           </div>
@@ -1274,9 +1274,9 @@ export default {
     }
   }
   .selectDate {
-    display: block;
-    width: 375px;
-    margin: 20px auto;
+    margin-top: 24px;
+    width: 100%!important;
+    max-width: 360px;
   }
   .border_none {
     border: none;
@@ -1293,19 +1293,16 @@ export default {
 }
 
 .bottom-btn {
-  width: 30%;
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  height: 96px;
+  width: 100%;
+  // position: fixed;
+  // bottom: 0;
+  // right: 0;
+  // height: 96px;
   border-top: 1px solid #ebeef5;
-  justify-content: space-around;
+  justify-content: center;
   display: flex;
   align-items: center;
-}
-
-.bottom-btn button {
-  width: 131px;
-  height: 44px;
+  padding: 24px 0;
+  margin-top: 24px;
 }
 </style>

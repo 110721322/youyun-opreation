@@ -80,8 +80,8 @@
       </div>
 
       <div class="foot_btn_box">
-        <el-button class="foot_btn" type="primary" @click="handleClick">保存</el-button>
-        <el-button class="foot_btn" @click="cancelForm">取消</el-button>
+        <el-button size="normal" type="primary" @click="handleClick">保存</el-button>
+        <el-button size="normal" @click="cancelForm">取消</el-button>
       </div>
       <!-- <Form
         :form-base-data="fromConfigData.formData"
@@ -391,21 +391,15 @@ export default {
 }
 .foot_btn_box {
   width: 100%;
-  height: 96px;
+  // height: 96px;
   border-top: 1px solid #ebeef5;
-  position: absolute;
-  bottom: 0;
+  // position: absolute;
+  // bottom: 0;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-content: center;
-  .foot_btn {
-    width: 113px;
-    height: 40px;
-    margin-top: 28px;
-    margin-left: 12px;
-    margin-right: 12px;
-  }
+  padding: 24px 0;
   .form_box {
     margin: 0 59px;
   }

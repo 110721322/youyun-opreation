@@ -39,8 +39,8 @@
         </el-form-item>
       </div>
       <div class="btn-box">
-        <el-button type="primary" class="btn" @click="handleClick">提交</el-button>
-        <el-button plain class="btn" @click="onClick_cannel">取消</el-button>
+        <el-button type="primary" size="normal" @click="handleClick">提交</el-button>
+        <el-button plain size="normal" @click="onClick_cannel">取消</el-button>
       </div>
     </el-form>
   </div>
@@ -193,11 +193,11 @@ export default {
   margin-top: 24px;
   margin-left: 81px;
   margin-bottom: 24px;
-  .btn {
-    width: 113px;
-    height: 40px;
-    border-radius: 4px;
-  }
+  // .btn {
+  //   width: 113px;
+  //   height: 40px;
+  //   border-radius: 4px;
+  // }
 }
 .demoImg {
   position: absolute;

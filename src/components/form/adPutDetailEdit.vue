@@ -30,8 +30,8 @@
       </div>
       <slot :formItem="ruleForm"></slot>
       <div class="btn-box">
-        <el-button type="primary" class="btn" @click="handleClick">保存</el-button>
-        <el-button plain class="btn" @click="cancelForm">取消</el-button>
+        <el-button type="primary" size="normal" class="btn" @click="handleClick">保存</el-button>
+        <el-button size="normal" plain class="btn" @click="cancelForm">取消</el-button>
       </div>
     </el-form>
   </div>
