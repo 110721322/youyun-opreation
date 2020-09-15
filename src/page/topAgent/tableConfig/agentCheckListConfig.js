@@ -28,7 +28,12 @@ export const USER_CONFIG = {
     {
       label: '公司地址',
       prop: 'address',
-      width: '130px'
+      width: '130px',
+      render: (h, params) => {
+        return h(
+          'span', `${params.row.provinceName}${params.row.cityName}${params.row.areaName}${params.row.address}`
+        )
+      }
     },
     {
       label: '状态',
