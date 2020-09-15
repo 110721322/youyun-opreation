@@ -7,26 +7,29 @@ export const FORM_CONFIG = {
       key: 'date',
       format: "yyyy-MM-dd HH:mm:ss",
       datatype: "datetimerange",
-      class: 'max-width',
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 20
     },
     {
       type: 0,
       label: '法人姓名',
       key: 'personName',
-      style: 'width:294px'
+      labelWidth: '80px',
+      span: 11
     },
     {
       type: 0,
       label: '法人电话',
       key: 'personMobile',
-      style: 'width:294px'
+      labelWidth: '80px',
+      span: 11
     },
     {
       type: 1,
       label: '服务商类型',
       key: 'businessType',
-      style: 'width:294px',
+      labelWidth: '90px',
+      span: 11,
       options: [
         {
           label: '企业',
@@ -42,6 +45,8 @@ export const FORM_CONFIG = {
       type: 1,
       label: '状态',
       key: 'contractStatus',
+      labelWidth: '80px',
+      span: 11,
       options: [
         {
           label: '已拒绝',
@@ -66,6 +71,8 @@ export const FORM_CONFIG = {
       label: '所属运营',
       key: 'operateUserNo',
       class: "clear_both",
+      labelWidth: '80px',
+      span: 11,
       urlOptions: {
         url: apiAgent.queryAllOperation,
         keyName: 'operationId',
