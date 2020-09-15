@@ -240,8 +240,8 @@
         </el-form-item>
       </el-form>
       <div class="bottom-btn">
-        <el-button type="primary" @click="handel_save">保存</el-button>
-        <el-button @click="handel_cancle">取消</el-button>
+        <el-button type="primary" size="normal" @click="handel_save">保存</el-button>
+        <el-button size="normal" @click="handel_cancle">取消</el-button>
       </div>
     </el-drawer>
     <el-dialog title="沟通记录详情" :visible.sync="dialogTableVisible">
@@ -1426,16 +1426,10 @@ export default {
   // position: fixed;
   // bottom: 0;
   // right: 0;
-  height: 96px;
   border-top: 1px solid #ebeef5;
   justify-content: center;
   display: flex;
   align-items: center;
   margin-top: 24px;
-}
-
-.bottom-btn button {
-  width: 131px;
-  height: 44px;
 }
 </style>

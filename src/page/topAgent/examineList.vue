@@ -16,7 +16,7 @@
         :grid-data="testData"
         :form-config="configData.formConfig"
         :form-data="configData.formModel"
-        :grid-edit-width="300"
+        :grid-edit-width="160"
         form-title="用户"
         :is-async="true"
         :is-select="false"
@@ -162,6 +162,6 @@ export default {
     padding: 24px;
     overflow: hidden;
     background: #fff;
-    min-width: 1000px;
+    /* min-width: 1000px; */
   }
 </style>

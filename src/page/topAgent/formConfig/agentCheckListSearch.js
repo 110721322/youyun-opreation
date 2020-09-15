@@ -22,31 +22,38 @@ export const FORM_CONFIG = {
     {
       type: 0,
       label: '服务商名称',
-      key: 'channelAgentName'
+      key: 'channelAgentName',
+      labelWidth: '100px',
+      span: 11
     },
     {
       type: 0,
       label: '法人姓名',
       key: 'personName',
-      class: 'clear_both'
+      labelWidth: '80px',
+      span: 11
     },
     {
       type: 0,
       label: '法人电话',
-      key: 'personMobile'
+      key: 'personMobile',
+      labelWidth: '80px',
+      span: 11
     },
     {
       type: 1,
       label: '所属运营',
       key: 'operationId',
+      labelWidth: '80px',
+      span: 11,
       options: store.state.dataMarket.userList
     },
     {
       type: 1,
       label: '状态',
       key: 'status',
-      style: 'width:294px',
-      labelWidth: '185px',
+      labelWidth: '80px',
+      span: 11,
       options: [
         {
           label: '待审核',

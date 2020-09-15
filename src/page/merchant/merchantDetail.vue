@@ -4,7 +4,7 @@
 
     <detailMode :rule-form="businessData" :config-data="configData" :is-show-edit-btn="true" @edit="itemEdit"></detailMode>
     <detailMode :rule-form="commonData" :config-data="configData2" @modify="editMask"></detailMode>
-    <el-drawer :visible.sync="editData" :with-header="false" size="40%">
+    <el-drawer :visible.sync="editData" :with-header="false" size="500px">
       <div class="p_head">{{editDataTitle}}</div>
       <Form
           ref="liaisonRef"

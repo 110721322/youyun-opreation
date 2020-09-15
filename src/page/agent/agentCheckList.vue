@@ -16,7 +16,7 @@
         :grid-data="testData"
         :form-config="configData.formConfig"
         :form-data="configData.formModel"
-        :grid-edit-width="300"
+        :grid-edit-width="160"
         form-title="用户"
         :is-async="true"
         :is-select="false"
@@ -27,7 +27,7 @@
         @adopt="adopt"
       />
     </div>
-    <el-drawer :visible.sync="drawer" :with-header="false" size="30%">
+    <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
       <div class="p_head">审核通过</div>
       <Form
           :form-base-data="fromConfigData.formData"
@@ -167,6 +167,6 @@ export default {
   padding: 24px;
   overflow: hidden;
   background: #fff;
-  min-width: 1000px;
+  /* min-width: 1000px; */
 }
 </style>
