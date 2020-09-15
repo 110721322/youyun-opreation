@@ -138,45 +138,37 @@ export const FORM_CONFIG = {
 export const DETAIL_FORM_CONFIG = {
   detailData: {
     title: '',
-    showFootBtn: true,
+    showFootBtn: false,
     formData: [
-      {
-        label: '发票照片',
-        type: 'show',
-        width: '100px',
-        prop: 'expressImg',
-        key: 'photo',
-        initVal: ''
-      },
       {
         type: 'show',
         label: '发票快递单号',
         key: 'expressNumber',
-        initVal: '12345678900987654321'
+        initVal: ''
       },
       {
         type: 'show',
         label: '结算账户',
         key: 'settleAccount',
-        initVal: '2342179'
+        initVal: ''
       },
       {
         type: 'show',
         label: '联系电话',
         key: 'settleMobile',
-        initVal: '15735655521'
+        initVal: ''
       },
       {
         type: 'show',
         label: '备用联系方式',
         key: 'alternatePhone',
-        initVal: '15735655521'
+        initVal: ''
       },
       {
         type: 'show',
         label: '备注',
         key: 'settleRemark',
-        initVal: '没有备注'
+        initVal: ''
       }
     ]
   }

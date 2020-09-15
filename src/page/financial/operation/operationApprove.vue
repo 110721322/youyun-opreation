@@ -103,42 +103,57 @@
       :visible.sync="detailDrawer"
       direction="rtl"
       :before-close="handleClose"
-      size="40%"
+      size="400px"
     >
       <div slot="title" class="drawer-contenttitle">
         <span>佣金结算详情</span>
       </div>
-      <div class="content-draw">
+      <div class="content-draw" v-if="JSON.stringify(settleDetailData) !== '{}'">
         <div class="content-form">
           <div class="form-select">
+            <div class="module-title">结算金额</div>
             <div class="select">
               <div class="check-box">
                 <div hide-required-asterisk="true" class="left-label">结算类型：</div>
                 <div>
-                  <!-- <div v-for="(confDate, index) in seetlmap.confDate" :key="index" class="select-price">{{ (confDate.name+'['+confDate.dateTxt+']') }}</div> -->
+                  <div v-for="(type, index) in settleDetailData.settleAmount.settleTypes" :key="index" class="select-price months">{{ (type.name+'&nbsp;['+type.months+']') }}</div>
                 </div>
               </div>
             </div>
             <div class="select" style="margin: 16px 0 24px 0;">
               <div class="left-label">总佣金：</div>
-              <div class="select-price">{{ 0 }}</div>
+              <div class="select-price">{{ `¥${settleDetailData.settleAmount.settleCommission}` }}</div>
             </div>
             <div class="select" style="margin: 16px 0 24px 0;">
               <div class="left-label">扣除佣金:</div>
               <div class="select-price">
-                <div class="select-price">{{ 0 }}</div>
+                <div class="select-price">
+                  <span>到期续费&nbsp;</span>
+                  <span>{{ `¥${settleDetailData.settleAmount.agentRenewAmount}` }}</span>
+                </div>
+                <div class="select-price">
+                  <span>平台抽成&nbsp;</span>
+                  <span>{{ `¥${settleDetailData.settleAmount.platformCommission}` }}</span>
+                </div>
               </div>
             </div>
             <div class="select" style="margin: 16px 0 24px 0;">
               <div class="left-label">结算金额:</div>
-              <div class="select-price">{{ 0 }}</div>
+              <div class="select-price">{{ `¥${settleDetailData.settleAmount.actualSettleCommission}` }}</div>
             </div>
           </div>
-          <Form
-            :form-base-data="detailFormConfigData.formData"
-            :show-foot-btn="detailFormConfigData.showFootBtn"
-            label-width="130px"
-          ></Form>
+          <div class="form-select">
+            <div class="module-title">结算信息</div>
+            <div class="receipt-img">
+              <el-image class="show-image" :src="settleDetailData.settleInfo.expressImg" :preview-src-list="[settleDetailData.settleInfo.expressImg]"></el-image>
+              <p>发票照片</p>
+            </div>
+            <Form
+              :form-base-data="detailFormConfigData.formData"
+              :show-foot-btn="detailFormConfigData.showFootBtn"
+              label-width="130px"
+            ></Form>
+          </div>
         </div>
       </div>
     </el-drawer>
@@ -174,7 +189,8 @@ export default {
       formStatus: null,
       activeRow: {},
       activeName: '0',
-      detailDrawer: false
+      detailDrawer: false,
+      settleDetailData: {}
     };
   },
   created() {
@@ -237,11 +253,53 @@ export default {
       this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
     },
     onClick_detail($row) {
-      // this.$router.push({
-      //   path: "/transferReview/financialAudit/financialSettlement/detail",
-      //   query: { id: $row.id }
-      // });
-      this.detailDrawer = true;
+      const queryDetailApi = this.activeName === '0' ? 'topQueryDetail' : 'queryDetail'
+      api[queryDetailApi]({
+        id: $row.id || null
+      }).then(res => {
+        const {
+          settleType,
+          settleCommission,
+          agentRenewAmount,
+          platformCommission,
+          actualSettleCommission,
+          expressImg,
+          expressNumber,
+          settleAccount,
+          settleMobile,
+          alternatePhone,
+          settleRemark
+        } = res.object;
+        const settleTypes = [];
+        for (const key in settleType) {
+          settleTypes.push({
+            name: key,
+            months: settleType[key]
+          });
+        }
+        this.settleDetailData = {
+          settleAmount: {
+            settleTypes,
+            settleCommission: settleCommission.toFixed(2),
+            agentRenewAmount: agentRenewAmount.toFixed(2),
+            platformCommission: platformCommission.toFixed(2),
+            actualSettleCommission: actualSettleCommission.toFixed(2)
+          },
+          settleInfo: {
+            expressImg,
+            expressNumber,
+            settleAccount,
+            settleMobile,
+            alternatePhone,
+            settleRemark: settleRemark || '-'
+          }
+        };
+        DETAIL_FORM_CONFIG.detailData.formData.forEach((item, index) => {
+          item.initVal = res.object[item.key];
+        });
+        this.detailFormConfigData = DETAIL_FORM_CONFIG.detailData;
+        this.detailDrawer = true;
+      });
     },
     handleClose() {
       this.detailDrawer = false;
@@ -435,44 +493,55 @@ export default {
   }
   .content-draw {
     width: 100%;
-    padding: 24px 32px 100px 32px;
+    padding: 0 32px 100px 32px;
   }
-  .content-form {
+  .module-title {
+    width: 100%;
+    height: 44px;
+    padding-left: 24px;
+    margin-bottom: 26px;
+    border-bottom: 1px solid #E9E9E9;
+
+    line-height: 44px;
+    font-size: 14px;
+    font-weight: 500;
+
+    color: #000;
+    background: #FAFAFA;
+  }
+  .form-select {
     width: 100%;
     border: 1px solid #E9E9E9;
     border-radius: 4px;
     margin-bottom: 24px;
-  }
-  .content-title {
-    width: 100%;
-    height: 44px;
-    border-bottom: 1px solid #E9E9E9;
-    background: #EBEEF5;
-    line-height: 44px;
-    padding-left: 24px;
-    font-size: 14px;
-    font-weight: 500;
-  }
-  .form-select {
-    padding: 10px 5px 0px 5px;
   }
   .select {
     display: flex;
   }
   .left-label {
     min-width: 130px;
-    text-align: right;
     margin-right: 6px;
+
+    text-align: right;
+    line-height: 22px;
   }
   .check-box {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
     flex-shrink: 1;
   }
   .el-checkbox, .el-checkbox__input {
     white-space: normal;
     word-break: break-all;
   }
+  .months {
+    margin-bottom: 10px;
+  }
   .select-price {
     font-size: 14px;
+    line-height: 22px;
+
     color: #606266;
   }
   .select-box {
@@ -480,6 +549,28 @@ export default {
     height: 100%;
     overflow: hidden;
     display: flex;
+  }
+  /deep/.el-drawer__header {
+    padding: 20px 20px 24px 32px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #E9E9E9;
+  }
+  .receipt-img {
+    width: 100px;
+    margin-left: 55px;
+
+    text-align: center;
+    .show-image {
+      width: 100%;
+      height: 100px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+    p {
+      font-size: 14px;
+
+      color: #606266;
+    }
   }
 </style>
 
