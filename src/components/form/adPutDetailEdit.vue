@@ -206,6 +206,7 @@ export default {
 }
 .btn-box {
   margin-top: 24px;
+  margin-bottom: 24px;
   margin-left: 126px;
   .btn {
     width: 113px;

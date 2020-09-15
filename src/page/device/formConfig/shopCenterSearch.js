@@ -6,7 +6,8 @@ export const SEARCH_CONFIG = {
       type: 1,
       label: '设备型号',
       key: 'deviceId',
-      labelWidth: '100px',
+      labelWidth: '80px',
+      span: 11,
       urlOptions: {
         url: apiDevice.queryAllDeviceModel,
         keyName: 'deviceId',
@@ -21,7 +22,8 @@ export const SEARCH_CONFIG = {
       type: 1,
       label: '设备类型',
       key: 'deviceType',
-      labelWidth: '100px',
+      labelWidth: '80px',
+      span: 11,
       urlOptions: {
         url: apiDevice.queryAllDeviceTypeModel,
         keyName: 'advertType',

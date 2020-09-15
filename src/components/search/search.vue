@@ -4,7 +4,7 @@
     :style="isOpen ? ('height: auto' + ';overflow:auto') : 'overflow:hidden'"
   >
     <el-row style="width: 100%">
-      <el-col :span="isShowAll ? 20 : 17">
+      <el-col :span="17">
         <el-form
           ref="formTep"
           size="large"
@@ -42,7 +42,7 @@
           </el-row>
         </el-form>
       </el-col>
-      <el-col :span="isShowAll ? 4 : 7">
+      <el-col :span="7">
         <div class="btn_list" style="margin-bottom:0" :style="btnListStyle">
           <el-button v-has="permission.search" type="primary" size="large" @click="handleClick">搜索</el-button>
           <el-button plain size="large" @click="resetForm">重置</el-button>

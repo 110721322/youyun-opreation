@@ -192,6 +192,7 @@ export default {
 .btn-box {
   margin-top: 24px;
   margin-left: 81px;
+  margin-bottom: 24px;
   .btn {
     width: 113px;
     height: 40px;

@@ -401,6 +401,7 @@ export default {
   display: flex;
   justify-content: center;
   text-align: center;
+  margin-bottom: 24px;
   .btn_download {
     font-size: 14px;
     font-weight: 400;

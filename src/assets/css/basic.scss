@@ -399,7 +399,7 @@ legend {
 .main_page {
   width: 100%;
   height: calc(100% - 50px);
-  min-width: 864px;
+  min-width: 856px;
 }
 /*滚动条样式*/
 .main_page::-webkit-scrollbar {
@@ -424,6 +424,18 @@ legend {
   border-radius: 4px;
 }
 ::-webkit-scrollbar-track {
+  background: white;
+  border-radius: 4px;
+}
+/*滚动条样式*/
+.el-table--scrollable-x ::-webkit-scrollbar {
+  width: 8px;
+}
+.el-table--scrollable-x ::-webkit-scrollbar-thumb {
+  background: #C3C3C3;
+  border-radius: 4px;
+}
+.el-table--scrollable-x ::-webkit-scrollbar-track {
   background: white;
   border-radius: 4px;
 }

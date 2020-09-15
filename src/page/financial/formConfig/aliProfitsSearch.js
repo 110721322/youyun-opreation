@@ -6,14 +6,14 @@ export const SEARCH_CONFIG = {
       key: 'date',
       datatype: 'date',
       class: 'max-width',
-      labelWidth: '100px',
+      labelWidth: '80px',
+      span: 20,
       format: 'yyyy-MM-dd HH:mm:ss'
     },
     {
       type: 10,
       label: '精准筛选',
       key: '',
-      class: 'max-width',
       options: [
         {
           label: '商户ID',
@@ -24,7 +24,8 @@ export const SEARCH_CONFIG = {
           value: 'agentName'
         }
       ],
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 11
     }
   ]
 }

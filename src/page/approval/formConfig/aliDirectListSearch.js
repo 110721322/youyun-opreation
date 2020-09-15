@@ -10,13 +10,13 @@ export const SEARCH_CONFIG = {
       class: 'max-width',
       format: "yyyy-MM-dd HH:mm:ss",
       datatype: "datetimerange",
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 20
     },
     {
       type: 10,
       label: '精准筛选',
       key: '',
-      class: 'max-width',
       options: [
         {
           label: '商户ID',
@@ -27,13 +27,15 @@ export const SEARCH_CONFIG = {
           value: 'merchantName'
         }
       ],
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 11
     },
     {
       type: 1,
       label: '通道状态',
       key: 'status',
-      style: 'width:294px',
+      labelWidth: '80px',
+      span: 11,
       options: [
         {
           label: '待审核',
@@ -65,7 +67,8 @@ export const SEARCH_CONFIG = {
       type: 1,
       label: '所属运营',
       key: 'operationId',
-      labelWidth: '185px',
+      labelWidth: '80px',
+      span: 11,
       urlOptions: {
         url: apiAgent.queryAllOperation,
         keyName: 'operationId',

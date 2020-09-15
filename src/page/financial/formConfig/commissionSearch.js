@@ -5,7 +5,8 @@ export const SEARCH_CONFIG = {
       label: '筛选时间',
       key: 'date',
       class: 'max-width',
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 20
     }
     // {
     //   type: 10,

@@ -6,8 +6,8 @@ export const SEARCH_CONFIG = {
       type: 9,
       label: '筛选时间',
       key: 'date',
-      class: 'max-width',
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 20
     },
     {
       type: 10,
@@ -25,13 +25,15 @@ export const SEARCH_CONFIG = {
           value: 'agentName'
         }
       ],
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 11
     },
     {
       type: 1,
       label: '所属运营',
       key: 'operateUserNo',
-      class: "clear_both",
+      labelWidth: '80px',
+      span: 11,
       urlOptions: {
         url: apiAgent.queryAllOperation,
         keyName: 'operationId',

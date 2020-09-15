@@ -40,6 +40,7 @@ export const FORM_CONFIG = {
         type: 0,
         label: '排序',
         key: 'sort',
+        style: 'max-width: 294px;',
         rules: setRules('排序').isRequired.get
       },
       {
