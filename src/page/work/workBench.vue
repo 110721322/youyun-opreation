@@ -4,7 +4,7 @@
       <div class="head">您好，{{name}}</div>
       <div class="tip">今天是{{ date }}，欢迎您回到小马哥运营后台</div>
     </div>
-    <detailMode :config-data="configData"></detailMode>
+    <!-- <detailMode :config-data="configData"></detailMode> -->
     <detailMode :config-data="configData2"></detailMode>
   </div>
 </template>
@@ -12,10 +12,12 @@
 <script>
 import api from "@/api/api_workBench";
 import detailMode from "@/components/detailMode/detailMode3.vue";
+// import { TODO_BTN, MERCHANT_ENTRY_AUDIT, LOWER_AGENT_ENTRY,
+//   PARTNER_ENTRY_AUDIT, DEVICE_UNBIND,
+//   AGENT_ANNOUNCE, MERCHANT_DATA, AGENT_DATA,
+//   DEVICE_DATA } from "../../libs/data/permissionBtns";
 import { TODO_BTN, MERCHANT_ENTRY_AUDIT, LOWER_AGENT_ENTRY,
-  PARTNER_ENTRY_AUDIT, DEVICE_UNBIND,
-  AGENT_ANNOUNCE, MERCHANT_DATA, AGENT_DATA,
-  DEVICE_DATA } from "../../libs/data/permissionBtns";
+  PARTNER_ENTRY_AUDIT} from "../../libs/data/permissionBtns";
 import store from "@/store"
 // import search from '@/components/search/search.vue';
 // import BaseCrud from '@/components/table/BaseCrud.vue';
@@ -70,47 +72,47 @@ export default {
                 permission: PARTNER_ENTRY_AUDIT
               }
             ]
-          },
-          {
-            title: "服务",
-            list: [
-              {
-                imgUrl: "",
-                text: "设备解绑",
-                path: '/deviceManage/usageManage/usageList',
-                permission: DEVICE_UNBIND
-              },
-              {
-                imgUrl: "",
-                text: "公告",
-                path: "/message/serviceAnnouncementList",
-                permission: AGENT_ANNOUNCE
-              }
-            ]
-          },
-          {
-            title: "数据",
-            list: [
-              {
-                imgUrl: "",
-                text: "商户数据",
-                path: '/merchant/list',
-                permission: MERCHANT_DATA
-              },
-              {
-                imgUrl: "",
-                text: "服务商数据",
-                path: '/agent/list',
-                permission: AGENT_DATA
-              },
-              {
-                imgUrl: "",
-                text: "设备数据",
-                path: '/deviceManage/usageManage/deviceData',
-                permission: DEVICE_DATA
-              }
-            ]
           }
+          // {
+          //   title: "服务",
+          //   list: [
+          //     {
+          //       imgUrl: "",
+          //       text: "设备解绑",
+          //       path: '/deviceManage/usageManage/usageList',
+          //       permission: DEVICE_UNBIND
+          //     },
+          //     {
+          //       imgUrl: "",
+          //       text: "公告",
+          //       path: "/message/serviceAnnouncementList",
+          //       permission: AGENT_ANNOUNCE
+          //     }
+          //   ]
+          // },
+          // {
+          //   title: "数据",
+          //   list: [
+          //     {
+          //       imgUrl: "",
+          //       text: "商户数据",
+          //       path: '/merchant/list',
+          //       permission: MERCHANT_DATA
+          //     },
+          //     {
+          //       imgUrl: "",
+          //       text: "服务商数据",
+          //       path: '/agent/list',
+          //       permission: AGENT_DATA
+          //     },
+          //     {
+          //       imgUrl: "",
+          //       text: "设备数据",
+          //       path: '/deviceManage/usageManage/deviceData',
+          //       permission: DEVICE_DATA
+          //     }
+          //   ]
+          // }
         ]
       },
       date: ''

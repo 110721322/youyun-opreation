@@ -60,21 +60,22 @@
       <el-col :span="9">
         <div class="bg_box" style="margin-right:0;margin-top:0;height:314px">
           <div class="title">沟通数据</div>
-
-          <el-date-picker
-            v-model="timeDate"
-            type="datetimerange"
-            :picker-options="pickerOptions"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            align="right"
-            format="yyyy-MM-dd HH:mm:ss"
-            value-format="yyyy-MM-dd HH:mm:ss"
-            class="selectDate"
-            @change="dateChange"
-          >
-          </el-date-picker>
+          <div style="text-align:center;">
+            <el-date-picker
+              v-model="timeDate"
+              type="datetimerange"
+              :picker-options="pickerOptions"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              align="right"
+              format="yyyy-MM-dd HH:mm:ss"
+              value-format="yyyy-MM-dd HH:mm:ss"
+              class="selectDate"
+              @change="dateChange"
+            >
+            </el-date-picker>
+          </div>
           <div class="talkInfo">
             <el-row>
               <el-col :span="8" class="data_item" style="height:58px">
@@ -204,16 +205,16 @@
     <el-drawer :visible.sync="financeDrawer" :with-header="false" size="30%">
       <div class="financeTitle">财务信息</div>
       <el-form :model="financeModel" :rules="rules">
-        <el-form-item label="结算卡类型" prop="bankAccountType" style="margin: 24px 20% 0 24px;" label-width="120px">
+        <el-form-item label="结算卡类型" prop="bankAccountType" style="margin: 24px 24px 0 24px;" label-width="110px">
           <el-radio-group v-model="financeModel.bankAccountType">
             <el-radio label="public">对公</el-radio>
             <el-radio label="private">对私</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="银行卡号" prop="bankCardNo" style="margin: 24px 20% 0 24px;" label-width="120px">
-          <el-input placeholder="请输入银行卡号" v-model="financeModel.bankCardNo"></el-input>
+        <el-form-item label="银行卡号" prop="bankCardNo" style="margin: 24px 24px 0 24px;" label-width="110px">
+          <el-input placeholder="请输入银行卡号" v-model="financeModel.bankCardNo" style="max-width:294px"></el-input>
         </el-form-item>
-        <el-form-item label="开户支行" prop="bankContactLine" style="margin: 24px 20% 0 24px;" label-width="120px">
+        <el-form-item label="开户支行" prop="bankContactLine" style="margin: 24px 24px 0 24px;" label-width="110px">
           <el-select
               v-model="financeModel.bankContactLine"
               filterable
@@ -231,11 +232,11 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="开户支行地区" prop="bankArea" style="margin: 24px 20% 0 24px;" label-width="120px">
-          <el-input disabled v-model="area"></el-input>
+        <el-form-item label="开户支行地区" prop="bankArea" style="margin: 24px 24px 0 24px;" label-width="110px">
+          <el-input disabled v-model="area" style="max-width:294px"></el-input>
         </el-form-item>
-        <el-form-item label="开户名" prop="bankAccountHolder" style="margin: 24px 20% 0 24px;" label-width="120px">
-          <el-input placeholder="请输入开户名" v-model="financeModel.bankAccountHolder"></el-input>
+        <el-form-item label="开户名" prop="bankAccountHolder" style="margin: 24px 24px 0 24px;" label-width="110px">
+          <el-input placeholder="请输入开户名" v-model="financeModel.bankAccountHolder" style="max-width:294px"></el-input>
         </el-form-item>
       </el-form>
       <div class="bottom-btn">
@@ -1398,9 +1399,12 @@ export default {
 }
 
 .selectDate {
-  top: 30px;
-  left: 50%;
-  margin-left: -200px;
+  // top: 30px;
+  // left: 50%;
+  // margin-left: -200px;
+  margin-top: 24px;
+  width: 100%!important;
+  max-width: 360px;
 }
 
 .talkInfo {
@@ -1418,15 +1422,16 @@ export default {
 }
 
 .bottom-btn {
-  width: 30%;
-  position: fixed;
-  bottom: 0;
-  right: 0;
+  // width: 30%;
+  // position: fixed;
+  // bottom: 0;
+  // right: 0;
   height: 96px;
   border-top: 1px solid #ebeef5;
-  justify-content: space-around;
+  justify-content: center;
   display: flex;
   align-items: center;
+  margin-top: 24px;
 }
 
 .bottom-btn button {

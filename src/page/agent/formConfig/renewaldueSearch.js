@@ -7,7 +7,8 @@ export const SEARCH_CONFIG = {
       format: "yyyy-MM-dd HH:mm:ss",
       datatype: "datetimerange",
       class: 'max-width',
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 20
     },
     {
       type: 10,
@@ -24,14 +25,15 @@ export const SEARCH_CONFIG = {
           value: 'agentName'
         }
       ],
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 11
     },
     {
       type: 1,
       label: '支付方式',
       key: 'payType',
-      style: 'width:294px',
-      labelWidth: '100px',
+      labelWidth: '80px',
+      span: 11,
       options: [
         {
           label: '全部',
@@ -59,8 +61,8 @@ export const SEARCH_CONFIG = {
       type: 1,
       label: '状态',
       key: 'status',
-      style: 'width:294px',
-      labelWidth: '100px',
+      labelWidth: '80px',
+      span: 11,
       options: [
         {
           label: '全部',

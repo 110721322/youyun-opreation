@@ -87,11 +87,11 @@ export const FORM_CONFIG = {
         {
           label: '小马哥代理',
           value: 'xiaomage'
-        },
-        {
-          label: 'OEM代理',
-          value: 'oem'
         }
+        // {
+        //   label: 'OEM代理',
+        //   value: 'oem'
+        // }
       ]
     }
   ]

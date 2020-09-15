@@ -200,6 +200,7 @@ export const FORM_CONFIG = {
         type: 0,
         label: '平台分润抽成',
         key: 'chargeFeePercent',
+        labelWidth: '111px',
         initVal: '',
         placeholder: '请输入',
         rules: setRules('请输入').oneFloat.get,
