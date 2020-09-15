@@ -66,7 +66,7 @@ export const FORM_CONFIG = {
       {
         type: 6,
         label: '营业执照',
-        key: 'licenseImg',
+        key: 'businessLicenseImg',
         maxNum: 1,
         initVal: '',
         rules: setRules('营业执照').isSelected.get
@@ -188,11 +188,11 @@ export const FORM_CONFIG = {
           {
             label: '产品代理',
             value: 'relyus'
-          },
-          {
-            label: 'OEM贴牌代理',
-            value: 'oem'
           }
+          // {
+          //   label: 'OEM贴牌代理',
+          //   value: 'oem'
+          // }
         ],
         rules: setRules('请输入').isRequired.get
       },

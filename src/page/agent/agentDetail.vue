@@ -548,6 +548,11 @@ export default {
             res.object.cloudPayGt1000Rate = this.$g.utils.AccMul(res.object.cloudPayGt1000Rate, 1000);
             res.object.cloudPayLe1000Rate = this.$g.utils.AccMul(res.object.cloudPayLe1000Rate, 1000);
           }
+          if (res.object.provinceCode) {
+            var area = []
+            area.push(res.object.provinceCode, res.object.cityCode, res.object.areaCode)
+            res.object.area = area
+          }
           this.ruleForm = res.object
         }
       });
@@ -800,7 +805,7 @@ export default {
         newFromConfigData.formData.forEach((item, index) => {
           item.initVal = this.agentDetail[item.key];
         });
-        this.fromConfigData = newFromConfigData;
+        this.fromConfigData = this.$g.utils.deepClone(newFromConfigData);
         this.drawer = true;
       }
       if ($model === 'finance') {
@@ -835,7 +840,7 @@ export default {
       newFromConfigData.formData.forEach((item, index) => {
         item.initVal = this.agentDetail[item.key];
       });
-      this.fromConfigData = newFromConfigData;
+      this.fromConfigData = this.$g.utils.deepClone(newFromConfigData);
     },
     cancel() {
       this.editType = ''
@@ -843,23 +848,44 @@ export default {
       this.addContactsDraw = false
     },
     handel_confirm(row) {
+      console.log(row)
       if (this.editType === 'editBasicData') {
-        if (!row.businessType || !row.agentName || !row.personName || !row.personMobile || !row.email || !row.companyAddress || !row.businessLicenseImg) {
+        if (!this.ruleForm.businessLicenseImg || !row.businessLicenseImg) {
           this.$message({
             message: '请填写完整信息',
             type: 'info'
           })
-          return false
+          return
+        }
+        if (!row.businessType || !row.agentName || !row.personName || !row.personMobile || !row.companyAddress || !row.area) {
+          this.$message({
+            message: '请填写完整信息',
+            type: 'info'
+          })
+          return
         } else {
+          var businessLicenseImg = ''
+          if (row.businessLicenseImg) {
+            if (this.$g.utils.isString(row.businessLicenseImg)) {
+              var img = row.businessLicenseImg.split('.com')
+              businessLicenseImg = img[1].slice(1, img[1].length)
+            } else {
+              businessLicenseImg = row.businessLicenseImg.dialogImageUrl
+            }
+          }
+          console.log(businessLicenseImg)
           api.updateAgentBaseInfo({
             agentNo: this.$route.query.agentNo,
             businessType: row.businessType,
             agentName: row.agentName,
             personName: row.personName,
             personMobile: row.personMobile,
-            email: row.email,
+            email: row.email ? row.email : '',
+            provinceCode: row.area[0],
+            cityCode: row.area[1],
+            areaCode: row.area[2],
             companyAddress: row.companyAddress,
-            businessLicenseImg: row.businessLicenseImg.dialogImageUrl
+            businessLicenseImg: businessLicenseImg
           }).then(res => {
             if (res.status === 0) {
               this.$message({
