@@ -5,14 +5,13 @@ export const SEARCH_CONFIG = {
       type: 9,
       label: '筛选时间',
       key: 'date',
-      class: 'max-width',
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 20
     },
     {
       type: 10,
       label: '精准筛选',
       key: 'banField',
-      class: 'max-width',
       placeholder: "",
       options: [
         {
@@ -32,13 +31,15 @@ export const SEARCH_CONFIG = {
           value: 'bankCardNo'
         }
       ],
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 11
     },
     {
       type: 1,
       label: '所属运营',
       key: 'operateUserNo',
-      labelWidth: '100px',
+      labelWidth: '80px',
+      span: 11,
       urlOptions: {
         url: apiAgent.queryAllOperation,
         keyName: 'operationId',
@@ -50,8 +51,8 @@ export const SEARCH_CONFIG = {
       type: 1,
       label: '类型',
       key: 'type',
-      style: 'width:294px',
-      labelWidth: '185px',
+      labelWidth: '80px',
+      span: 11,
       options: [
         {
           label: '全部',

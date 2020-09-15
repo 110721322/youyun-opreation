@@ -4,7 +4,6 @@ export const SEARCH_CONFIG = {
       type: 9,
       label: '精准筛选',
       key: 'date',
-      class: 'max-width',
       options: [
         {
           label: '服务商ID',
@@ -15,7 +14,8 @@ export const SEARCH_CONFIG = {
           value: 'merchantName'
         }
       ],
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 20
     }
   ]
 }

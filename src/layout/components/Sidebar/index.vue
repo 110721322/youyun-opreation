@@ -80,5 +80,18 @@ export default {
     overflow-x: hidden;
     overflow-y: auto;
   }
+  /*滚动条样式*/
+  .slidebar-container::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .slidebar-container::-webkit-scrollbar-thumb {
+    background: #C3C3C3;
+    border-radius: 4px;
+  }
+  .slidebar-container::-webkit-scrollbar-track {
+    background: white;
+    border-radius: 4px;
+  }
 </style>
 

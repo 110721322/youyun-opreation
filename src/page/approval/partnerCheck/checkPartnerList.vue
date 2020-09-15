@@ -1,5 +1,5 @@
 <template>
-  <div class>
+  <div class="main_page">
     <router-view
       v-if="this.$route.path.indexOf('/detail') !== -1||this.$route.path.indexOf('/recordDetail') !== -1"
     />

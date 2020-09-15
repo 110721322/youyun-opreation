@@ -1,51 +1,78 @@
 <template>
   <div class="main_page">
     <router-view v-if="this.$route.path.indexOf('/profitsDetail') !== -1" />
-    <Search open-height="200" :form-base-data="searchConfig.formData" @search="search" />
-    <div class="form-table">
-      <div class="table-content">
-        <div class="form-title">
-          <span>支付宝直连分润列表</span>
-          <ul>
-            <li @click="openDraw">直连分润导入</li>
-          </ul>
+    <div v-else>
+      <Search open-height="200" :form-base-data="searchConfig.formData" @search="search" />
+      <div class="form-table">
+        <div class="table-content">
+          <div class="form-title">
+            <span>支付宝直连分润列表</span>
+            <ul>
+              <li @click="openDraw">直连分润导入</li>
+            </ul>
+          </div>
+          <BaseCrud
+            ref="table"
+            :params="params"
+            :api-service="api"
+            :grid-config="configData.gridConfig"
+            :grid-btn-config="configData.gridBtnConfig"
+            :grid-data="testData"
+            :form-config="configData.formConfig"
+            :form-data="configData.formModel"
+            :grid-edit-width="100"
+            :is-async="true"
+            :is-select="false"
+            :is-expand="false"
+            :row-key="'id'"
+            :default-expand-all="false"
+            @detail="handleDetail"
+          ></BaseCrud>
         </div>
-        <BaseCrud
-          ref="table"
-          :params="params"
-          :api-service="api"
-          :grid-config="configData.gridConfig"
-          :grid-btn-config="configData.gridBtnConfig"
-          :grid-data="testData"
-          :form-config="configData.formConfig"
-          :form-data="configData.formModel"
-          :grid-edit-width="100"
-          :is-async="true"
-          :is-select="false"
-          :is-expand="false"
-          :row-key="'id'"
-          :default-expand-all="false"
-          @detail="handleDetail"
-        ></BaseCrud>
       </div>
+      <el-drawer
+        title="我是标题"
+        :visible.sync="drawer"
+        :with-header="false"
+        size="40%"
+      >
+        <div class="top-area">
+          <span>导入奖励名单</span>
+          <img src="../../../assets/img/cancle.png" alt="" @click="drawer = false">
+        </div>
+        <Form
+          :show-foot-btn="aplyAwardData.showFootBtn"
+          label-width="130px"
+          :form-base-data="aplyAwardData.formData"
+          @confirm="confirm"
+          @cancel="cancel"
+        ></Form>
+        <!-- <div class="content">
+          <el-form ref="form" :model="form" label-width="160px">
+            <el-form-item label="奖励核算时间:">
+              <el-date-picker
+                v-model="value1"
+                type="date"
+                placeholder="选择月"
+              >
+              </el-date-picker>
+            </el-form-item>
+            <el-form-item label="上传文件:">
+              <div class="flex-align-center">
+                <el-upload style="margin-right: 20px;">
+                  <el-button size="small" type="primary" plain>选择文件</el-button>
+                </el-upload>
+                <p class="g-underline">模版下载</p>
+              </div>
+            </el-form-item>
+          </el-form>
+          <div class="bottom-btn">
+            <el-button type="primary">确定</el-button>
+            <el-button plain>取消</el-button>
+          </div>
+        </div> -->
+      </el-drawer>
     </div>
-    <el-drawer
-      title="我是标题"
-      :visible.sync="drawer"
-      :with-header="false"
-    >
-      <div class="top-area">
-        <span>导入奖励名单</span>
-        <img src="../../../assets/img/cancle.png" alt="" @click="drawer = false">
-      </div>
-      <Form
-        :show-foot-btn="aplyAwardData.showFootBtn"
-        label-width="130px"
-        :form-base-data="aplyAwardData.formData"
-        @confirm="confirm"
-        @cancel="cancel"
-      ></Form>
-    </el-drawer>
   </div>
 </template>
 

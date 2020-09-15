@@ -8,13 +8,14 @@ export const SEARCH_CONFIG = {
       key: 'date',
       datatype: 'datetimerange',
       format: 'yyyy-MM-dd HH:mm:ss',
-      class: 'max-width',
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 20
     },
     {
       type: 1,
       label: '设备型号',
-      labelWidth: '100px',
+      labelWidth: '80px',
+      span: 11,
       key: 'deviceId',
       urlOptions: {
         url: apiDevice.queryAllDeviceModel,

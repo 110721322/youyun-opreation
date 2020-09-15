@@ -16,28 +16,29 @@ export const FORM_CONFIG = {
           value: 'channelAgentName'
         }
       ],
-      labelWidth: '185px'
+      labelWidth: '110px',
+      span: 20
     },
     {
       type: 0,
       label: '法人姓名',
       key: 'personName',
-      style: 'width:294px',
-      labelWidth: '185px'
+      labelWidth: '80px',
+      span: 11
     },
     {
       type: 0,
       label: '法人电话',
       key: 'personMobile',
-      style: 'width:294px',
-      labelWidth: '185px'
+      labelWidth: '80px',
+      span: 11
     },
     {
       type: 1,
       label: '所属运营',
       key: 'operationId',
-      class: "clear_both",
-      labelWidth: '185px',
+      labelWidth: '80px',
+      span: 11,
       urlOptions: {
         url: apiAgent.queryAllOperation,
         keyName: 'operationId',
@@ -49,8 +50,8 @@ export const FORM_CONFIG = {
       type: 1,
       label: '状态',
       key: 'status',
-      style: 'width:294px',
-      labelWidth: '185px',
+      labelWidth: '80px',
+      span: 11,
       options: [
         {
           label: '待补全',

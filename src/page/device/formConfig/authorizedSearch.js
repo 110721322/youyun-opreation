@@ -7,20 +7,21 @@ export const SEARCH_CONFIG = {
       key: 'date',
       datatype: 'datetimerange',
       format: 'yyyy-MM-dd HH:mm:ss',
-      class: 'max-width',
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 20
     },
     {
       type: 0,
       label: '设备标识',
       key: 'deviceIdentifier',
-      style: 'width:294px',
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 11
     },
     {
       type: 1,
       label: '设备型号',
-      labelWidth: '100px',
+      labelWidth: '80px',
+      span: 11,
       key: 'deviceId',
       urlOptions: {
         url: api.queryAllDeviceModel,
@@ -36,8 +37,8 @@ export const SEARCH_CONFIG = {
       type: 1,
       label: '状态',
       key: 'status',
-      style: 'width:294px',
-      labelWidth: '185px',
+      labelWidth: '80px',
+      span: 11,
       options: [
         {
           label: '全部',

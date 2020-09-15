@@ -6,28 +6,28 @@ export const SEARCH_CONFIG = {
       key: 'date',
       datatype: 'datetimerange',
       format: 'yyyy-MM-dd HH:mm:ss',
-      class: 'max-width',
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 20
     },
     {
       type: 10,
       label: '精准筛选',
       key: '',
-      class: 'max-width',
       options: [
         {
           label: '服务商ID',
           value: 'agentNo'
         }
       ],
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 11
     },
     {
       type: 1,
       label: '审核状态',
       key: 'auditStatus',
-      style: 'width:294px',
-      labelWidth: '100px',
+      labelWidth: '80px',
+      span: 11,
       options: [
         {
           label: '全部',

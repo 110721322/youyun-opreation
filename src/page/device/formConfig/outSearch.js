@@ -7,8 +7,8 @@ export const SEARCH_CONFIG = {
       type: 9,
       label: '筛选时间',
       key: 'date',
-      class: 'max-width',
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 20
     },
     {
       type: 10,
@@ -25,12 +25,14 @@ export const SEARCH_CONFIG = {
           value: 'outputNo'
         }
       ],
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 11
     },
     {
       type: 1,
       label: '设备型号',
-      labelWidth: '100px',
+      labelWidth: '80px',
+      span: 11,
       key: 'deviceId',
       urlOptions: {
         url: apiDevice.queryAllDeviceModel,
@@ -46,8 +48,8 @@ export const SEARCH_CONFIG = {
       type: 1,
       label: '状态',
       key: 'status',
-      style: 'width:294px',
-      labelWidth: '185px',
+      labelWidth: '80px',
+      span: 11,
       options: [
         {
           label: '全部',
@@ -71,8 +73,8 @@ export const SEARCH_CONFIG = {
       type: 1,
       label: '销售人员',
       key: 'saleUserId',
-      style: 'width:294px',
-      class: "clear_both",
+      labelWidth: '80px',
+      span: 11,
       urlOptions: {
         url: apiAgent.queryAllOperation,
         keyName: 'operationId',
@@ -84,8 +86,8 @@ export const SEARCH_CONFIG = {
       type: 1,
       label: '出库人员',
       key: 'outputUserId',
-      style: 'width:294px',
-      labelWidth: '185px',
+      labelWidth: '80px',
+      span: 11,
       urlOptions: {
         url: apiAgent.queryAllOperation,
         keyName: 'operationId',

@@ -26,7 +26,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '公司名称',
-        key: 'channelAgentName',
+        key: 'agentName',
         initVal: '',
         rules: setRules('请填写').isRequired.get
       },
@@ -60,7 +60,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '详细地址',
-        key: 'address',
+        key: 'companyAddress',
         rules: setRules('请填写').isRequired.get
       },
       {

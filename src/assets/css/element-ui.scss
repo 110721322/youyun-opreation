@@ -1,5 +1,8 @@
 // cover some element-ui styles
-
+.el-drawer {
+  height: 100%;
+  overflow: auto;
+}
 .el-breadcrumb__inner,
 .el-breadcrumb__inner a {
   font-weight: 400 !important;

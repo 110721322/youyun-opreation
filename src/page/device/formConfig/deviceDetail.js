@@ -10,7 +10,7 @@ export const FORM_CONFIG = {
         type: 1,
         label: '设备类型',
         key: 'deviceType',
-        style: 'width:294px',
+        style: 'max-width:294px',
         labelWidth: '100px',
         urlOptions: {
           url: apiDevice.queryAllDeviceTypeModel,
@@ -27,6 +27,7 @@ export const FORM_CONFIG = {
         type: 0,
         label: '设备型号',
         key: 'deviceModel',
+        style: 'max-width:294px',
         urlData: 'common',
         rules: setRules('设备型号').isRequired.get
       },
@@ -42,6 +43,7 @@ export const FORM_CONFIG = {
         label: '单台设备成本价',
         key: 'costPrice',
         isShowSlot: true,
+        style: 'max-width:294px',
         showSlotName: '元',
         rules: setRules('单台设备成本价').isRequired.get
       },
@@ -50,6 +52,7 @@ export const FORM_CONFIG = {
         label: '单台设备售卖价',
         key: 'salePrice',
         isShowSlot: true,
+        style: 'max-width:294px',
         showSlotName: '元',
         rules: setRules('单台设备售卖价').isRequired.get
       },
@@ -57,6 +60,7 @@ export const FORM_CONFIG = {
         type: 0,
         label: '排序',
         key: 'sort',
+        style: 'max-width:294px',
         rules: setRules('排序').isRequired.get
       }
     ]
@@ -69,6 +73,7 @@ export const FORM_CONFIG = {
         type: 0,
         label: '销售人员',
         key: 'saleUserName',
+        style: 'max-width:294px',
         initVal: '12',
         isDisabled: true,
         rules: setRules('销售人员').isRequired.get
@@ -78,6 +83,7 @@ export const FORM_CONFIG = {
         label: '设备型号',
         key: 'deviceModel',
         isDisabled: true,
+        style: 'max-width:294px',
         urlOptions: {
           url: apiDevice.queryAllDeviceModel,
           keyName: 'deviceId',
@@ -94,12 +100,14 @@ export const FORM_CONFIG = {
         key: 'count',
         isShowSlot: true,
         showSlotName: '台',
+        style: 'max-width:294px',
         rules: setRules('订购数量').isRequired.get
       },
       {
         type: 0,
         label: '订单金额',
         key: 'amount',
+        style: 'max-width:294px',
         isDisable: () => {
           return true;
         },
@@ -112,6 +120,7 @@ export const FORM_CONFIG = {
         label: '实付金额',
         key: 'actualAmount',
         isShowSlot: true,
+        style: 'max-width:294px',
         showSlotName: '元',
         rules: setRules('实付金额').isRequired.get
       },
@@ -119,6 +128,7 @@ export const FORM_CONFIG = {
         type: 1,
         label: '购买服务商',
         key: 'agentNo',
+        style: 'max-width:294px',
         urlOptions: {
           url: apiDevice.finishAllAgent,
           keyName: 'agentNo',
@@ -130,6 +140,7 @@ export const FORM_CONFIG = {
         type: 1,
         label: '支付方式',
         key: 'payType',
+        style: 'max-width:294px',
         urlOptions: {
           url: apiDevice.finishAllPrivilegeType,
           keyName: 'status',
@@ -147,6 +158,7 @@ export const FORM_CONFIG = {
         type: 0,
         label: '邮寄地址',
         key: 'buyerAddress',
+        style: 'max-width:294px',
         rules: setRules('邮寄地址').isRequired.get
       },
       {
@@ -154,6 +166,7 @@ export const FORM_CONFIG = {
         label: '备注',
         key: 'buyerRemark',
         inputType: 'textarea',
+        style: 'max-width:294px',
         rules: setRules('备注').isRequired.get
       }
     ]
@@ -166,6 +179,7 @@ export const FORM_CONFIG = {
         type: 1,
         label: '设备类型',
         key: 'deviceType',
+        style: 'max-width:294px',
         urlOptions: {
           url: apiDevice.queryAllDeviceModel,
           keyName: 'deviceType',
@@ -181,6 +195,7 @@ export const FORM_CONFIG = {
         type: 0,
         label: '设备型号',
         key: 'deviceModel',
+        style: 'max-width:294px',
         initVal: 'pdd',
         rules: setRules('设备型号').isRequired.get
       },
@@ -194,6 +209,7 @@ export const FORM_CONFIG = {
         type: 0,
         label: '单台设备成本价',
         key: 'costPrice',
+        style: 'max-width:294px',
         initVal: 'pdd',
         isShowSlot: true,
         showSlotName: '元',
@@ -204,6 +220,7 @@ export const FORM_CONFIG = {
         label: '单台设备售卖价',
         key: 'salePrice',
         initVal: 'pdd',
+        style: 'max-width:294px',
         isShowSlot: true,
         showSlotName: '元',
         rules: setRules('单台设备售卖价').isRequired.get
@@ -212,6 +229,7 @@ export const FORM_CONFIG = {
         type: 0,
         label: '排序',
         key: 'sort',
+        style: 'max-width:294px',
         initVal: 'pdd',
         rules: setRules('排序').isRequired.get
       }
