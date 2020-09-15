@@ -5,7 +5,7 @@ const asyncRoutes = {
     component: Layout,
     meta: {
       title: '工作台',
-      icon: 'work'
+      icon: 'icongongzuotai'
     },
     children: [
       {
@@ -921,7 +921,7 @@ const asyncRoutes = {
     component: Layout,
     meta: {
       title: '数据大盘',
-      icon: 'dataMarket'
+      icon: 'iconshujudapan'
     },
     children: []
   },
@@ -1676,7 +1676,7 @@ const asyncRoutes = {
     component: Layout,
     meta: {
       title: '顶级服务商管理',
-      icon: 'agent'
+      icon: 'iconjinpai'
     },
     children: []
   },
