@@ -36,7 +36,7 @@
       ></BaseCrud>
     </div>
 
-    <el-drawer :visible.sync="drawer" :with-header="false" size="600px">
+    <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
       <template v-if="drawer">
         <div class="p_head">{{ fromConfigData.title }}</div>
         <Form
@@ -49,10 +49,10 @@
         ></Form>
       </template>
     </el-drawer>
-    <el-drawer :visible.sync="drawerPersonInfo" :with-header="false" size="600px">
+    <el-drawer :visible.sync="drawerPersonInfo" :with-header="false" size="500px">
       <PerfectPost v-if="drawerPersonInfo" :perfect-row="perfectRow" @confirm="confirmPerfectPost" @cancel="cancelPerfectPost"></PerfectPost>
     </el-drawer>
-    <el-drawer :visible.sync="drawerOrganization" :with-header="false" size="600px">
+    <el-drawer :visible.sync="drawerOrganization" :with-header="false" size="500px">
       <div class="p_head">组织架构</div>
       <el-tree
         :data="dataItem"

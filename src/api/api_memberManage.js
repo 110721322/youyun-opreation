@@ -2,7 +2,7 @@ import * as API from '.';
 import utils from "../libs/kit/utils";
 import store from '@/store';
 export default {
-  queryEmployeeList: (params) => API.POST('/operation/v1/employee/queryEmployeeList', params),
+  queryEmployeeList: (params) => API.GET('/operation/v1/employee/queryEmployeeList', params),
   addMember: (params) => API.POST('/operation/v1/employee/addMember', params),
   delMember: (params) => API.POST('/operation/v1/employee/delete', params),
   fillUserInfo: (params) => API.POST('/operation/v1/employee/update', params),

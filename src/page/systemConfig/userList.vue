@@ -21,7 +21,7 @@
         :grid-btn-config="configData.gridBtnConfig"
         :form-config="configData.formConfig"
         :form-data="configData.formModel"
-        :grid-edit-width="150"
+        :grid-edit-width="100"
         :is-async="true"
         :is-select="false"
         :is-expand="false"
@@ -35,7 +35,7 @@
       ></BaseCrud>
     </div>
 
-    <el-drawer :visible.sync="drawer" :with-header="false" size="600px">
+    <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
         ref="memberEdit"
@@ -45,7 +45,7 @@
         @confirm="confirm"
       ></Form>
     </el-drawer>
-    <el-drawer :visible.sync="drawerAddPhone" :with-header="false" size="600px">
+    <el-drawer :visible.sync="drawerAddPhone" :with-header="false" size="500px">
       <div class="p_head">添加成员</div>
       <div class="scroll-box">
         <div class="add-phone-box">
