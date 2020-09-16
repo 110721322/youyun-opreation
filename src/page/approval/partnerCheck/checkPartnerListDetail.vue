@@ -99,20 +99,20 @@ export default {
             },
             {
               name: "支付宝/微信费率",
-              key: "alipayRate"
+              key: "alipayRatePecent"
             },
             {
               name: "云闪付费率（单笔≤1000元）",
-              key: "cloudPayLe1000Rate"
+              key: "cloudPayLe1000RatePecent"
             },
 
             {
               name: "云闪付费率（单笔＞1000元）",
-              key: "cloudPayGt1000Rate"
+              key: "cloudPayGt1000RatePecent"
             },
             {
               name: "合伙人佣金提成",
-              key: "kickbackPercent"
+              key: "kickbackPecent"
             }
           ]
         },
@@ -196,10 +196,12 @@ export default {
         if (res.object.jobType === 'inboundMen') {
           res.object.jobType = '入件操作员'
         }
-        res.object.cloudPayGt1000Rate = res.object.cloudPayGt1000Rate + '‰'
-        res.object.cloudPayLe1000Rate = res.object.cloudPayLe1000Rate + '‰'
-        res.object.kickbackPercent = res.object.kickbackPercent + '‰'
-        res.object.alipayRate = res.object.alipayRate + '‰'
+        if (res.object.cloudPayGt1000Rate) {
+          res.object.cloudPayGt1000RatePecent = this.$g.utils.AccMul(res.object.cloudPayGt1000Rate, 1000) + '‰'
+          res.object.cloudPayLe1000RatePecent = this.$g.utils.AccMul(res.object.cloudPayLe1000Rate, 1000) + '‰'
+          res.object.kickbackPecent = this.$g.utils.AccMul(res.object.kickbackPercent, 1000) + '‰'
+          res.object.alipayRatePecent = this.$g.utils.AccMul(res.object.alipayRate, 1000) + '‰'
+        }
         this.ruleForm = res.object
         this.currentType = res.object.contractStatus
       })

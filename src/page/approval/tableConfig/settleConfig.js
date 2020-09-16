@@ -43,14 +43,6 @@ export const SETTLE_CONFIG = {
           key: "bankAccountTypeCn"
         },
         {
-          name: "开户名",
-          key: "openAccountName"
-        },
-        {
-          name: "结算人身份证号",
-          key: "settlePersonIdCard"
-        },
-        {
           name: "银行卡号",
           key: "bankCardNo"
         },
@@ -163,14 +155,6 @@ export const SETTLE_CONFIG = {
         {
           name: "结算卡类型",
           key: "bankAccountTypeCn"
-        },
-        {
-          name: "开户名",
-          key: "openAccountName"
-        },
-        {
-          name: "结算人身份证号",
-          key: "settlePersonIdCard"
         },
         {
           name: "银行卡号",

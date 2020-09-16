@@ -102,7 +102,7 @@ export default {
               key: "lawMobile"
             },
             {
-              name: "法人身份证",
+              name: "法人身份证号",
               key: "lawIdCard"
             }
           ]
@@ -127,6 +127,10 @@ export default {
             {
               name: "营业执照编号",
               key: "shopLicenseNo"
+            },
+            {
+              name: '营业执照日期',
+              key: 'shopLicenseTime'
             },
             {
               name: "联系人姓名",
@@ -225,6 +229,7 @@ export default {
         if (res.object.status === 'platformReject' || res.object.status === 'channelReject') {
           res.object.rejectReason = '驳回原因：' + res.object.rejectReason
         }
+        res.object.shopLicenseTime = res.object.shopLicenseBegDate + '至' + res.object.shopLicenseEndDate
         res.object.alipayRatePecent = res.object.alipayRate * 1000 + '‰'
         this.ruleForm = res.object;
         this.currentType = res.object.status

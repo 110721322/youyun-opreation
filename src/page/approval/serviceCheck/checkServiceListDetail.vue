@@ -15,16 +15,9 @@
           show-icon
         ></el-alert>
         <div>
-          <detailMode
-            :img-width="4"
-            :rule-form="ruleForm"
-            :config-data="configData.baseData"
-          ></detailMode>
-          <detailMode
-            :img-width="4"
-            :rule-form="ruleForm"
-            :config-data="configData.serviceSetupData"
-          ></detailMode>
+          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.baseData" v-if="ruleForm.businessType === 'enterprise'"></detailMode>
+          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.baseData1" v-if="ruleForm.businessType === 'individual' || ruleForm.businessType === ''" ></detailMode>
+          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.serviceSetupData"></detailMode>
         </div>
         <div v-if="showComponents.showOperBtns" class="btn-box">
           <div class="btn_pass" @click="onClick_sign">资料已检查并提交签约</div>
@@ -79,7 +72,7 @@ export default {
             },
             {
               name: "账号类型",
-              key: "bankAccountType"
+              key: "businessTypeCn"
             },
             {
               name: "营业执照",
@@ -111,7 +104,56 @@ export default {
             },
             {
               name: "地区",
-              key: "areaName"
+              key: "areaAddress"
+            },
+
+            {
+              name: "详细地址",
+              key: "companyAddress"
+            },
+            {
+              name: "邮箱",
+              key: "email"
+            }
+          ]
+        },
+        baseData1: {
+          name: "基本信息",
+          items: [
+            {
+              name: "所属上级服务商",
+              key: "parentAgentName"
+            },
+            {
+              name: "账号类型",
+              key: "businessTypeCn"
+            },
+            {
+              name: "法人身份证正面照",
+              key: "idPortraitImg",
+              type: "image"
+            },
+            {
+              name: "法人身份证反面照",
+              key: "idEmblemImg",
+              type: "image"
+            },
+
+            {
+              name: "公司名称",
+              key: "agentName"
+            },
+            {
+              name: "法人姓名",
+              key: "personName"
+            },
+            {
+              name: "法人手机号",
+              key: "personMobile"
+            },
+            {
+              name: "地区",
+              key: "areaAddress"
             },
 
             {
@@ -133,7 +175,7 @@ export default {
             },
             {
               name: "服务方式",
-              key: "way"
+              key: "activeChannelType"
             },
             {
               name: "微信/支付宝费率",
@@ -189,6 +231,12 @@ export default {
         if (res.object.bankAccountType === 'private') {
           res.object.bankAccountType = '对私'
         }
+        if (res.object.businessType === 'enterprise') {
+          res.object.businessTypeCn = '企业'
+        }
+        if (res.object.businessType === 'individual' || res.object.businessType === '') {
+          res.object.businessTypeCn = '个人'
+        }
         var result = this.$g.utils.getNestedArr(areaData, 'children')
         result.forEach(m => {
           if (res.object.cityCode === m.value) {
@@ -207,6 +255,7 @@ export default {
             res.object.activeScopeProvinceName = m.label
           }
         })
+        res.object.areaAddress = res.object.provinceName + res.object.cityName + res.object.areaName
         if (res.object.cloudPayGt1000Rate) {
           res.object.cloudPayGt1000RatePecent = this.$g.utils.AccMul(res.object.cloudPayGt1000Rate, 1000) + '‰'
           res.object.cloudPayLe1000RatePecent = this.$g.utils.AccMul(res.object.cloudPayLe1000Rate, 1000) + '‰'

@@ -36,7 +36,7 @@
                   :preview-src-list="[ruleForm[item2.key]]"
                 ></el-image>
                 <span v-if="item2.type !== 'img'" class="item-value">{{ item2.key ? ruleForm[item2.key] : item2.initVal }}{{ item2.type === 'pecent' ? '‰' : '' }}</span>
-                <span v-if="item2.type === 'seem'" class="item_see" @click="edit(child.modelName)">查看</span>
+                <span v-if="item2.type === 'seem'" class="item_see" @click="handle_seem(child.modelName)">查看</span>
               </el-form-item>
             </el-col>
           </el-row>
@@ -63,6 +63,9 @@ export default {
   methods: {
     edit($modelName) {
       this.$emit("edit", $modelName);
+    },
+    handle_seem($modelName) {
+      this.$emit("handle_seem", $modelName);
     }
   }
 };

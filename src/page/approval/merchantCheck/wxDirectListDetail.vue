@@ -54,6 +54,7 @@
 import api from "@/api/api_merchantAudit";
 import detailMode from "@/components/detailMode/detailMode2.vue";
 import Form from "@/components/form/index.vue";
+import areaData from "@/assets/data/areaData";
 import { FORM_CONFIG } from "./../formConfig/wxDirectListConfig";
 
 export default {
@@ -90,7 +91,7 @@ export default {
             },
             {
               name: "公司地址",
-              key: "address"
+              key: "detailComAddress"
             },
             {
               name: "经营类目",
@@ -135,8 +136,13 @@ export default {
               type: "image"
             },
             {
-              name: "法人身份证到期日",
-              key: "idCardExpireDate"
+              name: "特殊资质",
+              key: "specImg",
+              type: "image"
+            },
+            {
+              name: "法人身份证有效日期",
+              key: "idCardExpireTime"
             },
             {
               name: "商户类型",
@@ -147,27 +153,26 @@ export default {
               key: "shortName"
             },
             {
+              name: "超级管理员姓名",
+              key: "wxLinkman"
+            },
+            {
+              name: "超级管理员联系方式",
+              key: "wxLinkmanPhone"
+            },
+            {
               name: "营业执照编号",
               key: "shopLicenseNo"
             },
             {
-              name: "营业执照开始日期",
-              key: "shopLicenseBegDate"
-            },
-            {
-              name: "客服手机号",
-              key: "serviceTel"
+              name: "营业执照有效日期",
+              key: "shopLicenseTime"
             }
           ]
         },
         merchantSettle: {
           name: "商户结算卡",
           items: [
-            {
-              name: "营业执照",
-              key: "shopLicenseImg",
-              type: "image"
-            },
             {
               name: "结算卡类型",
               key: "bankAccountType"
@@ -195,7 +200,7 @@ export default {
           items: [
             {
               name: "费率",
-              key: "wechatPayRate"
+              key: "wechatPayRatePecent"
             },
             {
               name: "邮箱",
@@ -274,6 +279,26 @@ export default {
         if (res.object.bankAccountType === 'private') {
           res.object.bankAccountType = '对私'
         }
+        var result = this.$g.utils.getNestedArr(areaData, 'children')
+        result.forEach(m => {
+          if (res.object.cityCode === m.value) {
+            res.object.cityName = m.label
+          }
+          if (res.object.areaCode === m.value) {
+            res.object.areaName = m.label
+          }
+          if (res.object.provinceCode === m.value) {
+            res.object.provinceName = m.label
+          }
+        })
+        if (res.object.shopLicenseBegDate) {
+          res.object.shopLicenseTime = res.object.shopLicenseBegDate + '至' + res.object.shopLicenseEndDate
+        }
+        if (res.object.idCardBeginDate) {
+          res.object.idCardExpireTime = res.object.idCardBeginDate + '至' + res.object.idCardExpireDate
+        }
+        res.object.wechatPayRatePecent = this.$g.utils.AccMul(res.object.wechatPayRate, 1000) + '‰'
+        res.object.detailComAddress = res.object.provinceName + res.object.cityName + res.object.areaName + res.object.address
         this.ruleForm = res.object;
         this.currentType = res.object.status
       }).catch();
