@@ -548,10 +548,16 @@ export default {
             res.object.cloudPayGt1000Rate = this.$g.utils.AccMul(res.object.cloudPayGt1000Rate, 1000);
             res.object.cloudPayLe1000Rate = this.$g.utils.AccMul(res.object.cloudPayLe1000Rate, 1000);
           }
+          if (res.object.chargeFeePercent) {
+            res.object.chargeFeePercent = this.$g.utils.AccMul(res.object.chargeFeePercent, 1000)
+          }
           if (res.object.provinceCode) {
             var area = []
             area.push(res.object.provinceCode, res.object.cityCode, res.object.areaCode)
             res.object.area = area
+          }
+          if (res.object.activeMode) {
+            res.object.activeModeCn = '产品代理'
           }
           this.ruleForm = res.object
         }
@@ -981,7 +987,7 @@ export default {
           } else {
             api.updateAgentPrivilege({
               activeMode: row.activeMode,
-              chargeFeePercent: row.chargeFeePercent,
+              chargeFeePercent: row.chargeFeePercent / 1000,
               expandSub: row.expandSub,
               agentNo: this.$route.query.agentNo,
               activeScope: {
@@ -991,6 +997,12 @@ export default {
                 provinceName: row.addressObj[1].label
               }
             }).then(res => {
+              if (res.status === 0) {
+                this.$message({
+                  message: '权限编辑成功',
+                  type: 'success'
+                })
+              }
               this.getDetail(this.$route.query.agentNo)
               this.editType = ''
               this.drawer = false
@@ -1014,6 +1026,10 @@ export default {
             renewValue: row.renewValue
           }).then(res => {
             if (res.status === 0) {
+              this.$message({
+                message: '编辑成功',
+                type: 'success'
+              })
               this.getDetail(this.$route.query.agentNo)
               this.editType = ''
               this.drawer = false

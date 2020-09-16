@@ -183,7 +183,7 @@ export const FORM_CONFIG = {
         type: 5,
         label: '服务类型',
         key: 'activeMode',
-        initVal: '',
+        initVal: 'relyus',
         options: [
           {
             label: '产品代理',
@@ -203,7 +203,7 @@ export const FORM_CONFIG = {
         labelWidth: '111px',
         initVal: '',
         placeholder: '请输入',
-        rules: setRules('请输入').oneFloat.get,
+        rules: setRules('请输入').isSelected.get,
         isShowSlot: true,
         showSlotName: '‰'
       }

@@ -216,7 +216,7 @@ export const DETAILCONFIG = {
             items: [
               {
                 name: "服务类型",
-                key: "activeMode"
+                key: "activeModeCn"
               }
             ]
           }
