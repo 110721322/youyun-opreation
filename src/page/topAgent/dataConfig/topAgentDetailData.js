@@ -121,25 +121,25 @@ export const configData = {
 export const configData2 = {
   name: "行业信息",
   child: [
-    {
-      name: '支付通道',
-      modelName: 'payChannels',
-      hiddenEdit: true,
-      models: [
-        {
-          items: [
-            {
-              name: '通道名称',
-              key: 'productName'
-            },
-            {
-              name: '通道状态',
-              key: 'wechatPayRate'
-            }
-          ]
-        }
-      ]
-    },
+    // {
+    //   name: '支付通道',
+    //   modelName: 'payChannels',
+    //   hiddenEdit: true,
+    //   models: [
+    //     {
+    //       items: [
+    //         {
+    //           name: '通道名称',
+    //           key: 'productName'
+    //         },
+    //         {
+    //           name: '通道状态',
+    //           key: 'wechatPayRate'
+    //         }
+    //       ]
+    //     }
+    //   ]
+    // },
     {
       name: "费率",
       modelName: "rateInfo",
@@ -185,50 +185,50 @@ export const configData2 = {
         }
       ]
     },
-    {
-      name: "交易通道定制",
-      modelName: "customChannelComboPriceSets",
-      models: [
-        {
-          items: [
-            {
-              name: "通道名称",
-              key: "loginAccount"
-            },
-            {
-              name: "服务时长",
-              key: "loginAccount"
-            },
-            {
-              name: "服务价格",
-              key: "loginAccount"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      name: "品牌定制",
-      modelName: "customChannelComboPriceSets",
-      models: [
-        {
-          items: [
-            {
-              name: "定制名称",
-              key: "loginAccount"
-            },
-            {
-              name: "服务时长",
-              key: "loginAccount"
-            },
-            {
-              name: "服务价格",
-              key: "loginAccount"
-            }
-          ]
-        }
-      ]
-    },
+    // {
+    //   name: "交易通道定制",
+    //   modelName: "customChannelComboPriceSets",
+    //   models: [
+    //     {
+    //       items: [
+    //         {
+    //           name: "通道名称",
+    //           key: "loginAccount"
+    //         },
+    //         {
+    //           name: "服务时长",
+    //           key: "loginAccount"
+    //         },
+    //         {
+    //           name: "服务价格",
+    //           key: "loginAccount"
+    //         }
+    //       ]
+    //     }
+    //   ]
+    // },
+    // {
+    //   name: "品牌定制",
+    //   modelName: "customChannelComboPriceSets",
+    //   models: [
+    //     {
+    //       items: [
+    //         {
+    //           name: "定制名称",
+    //           key: "loginAccount"
+    //         },
+    //         {
+    //           name: "服务时长",
+    //           key: "loginAccount"
+    //         },
+    //         {
+    //           name: "服务价格",
+    //           key: "loginAccount"
+    //         }
+    //       ]
+    //     }
+    //   ]
+    // },
     {
       name: "账户信息",
       modelName: "accountInfo",

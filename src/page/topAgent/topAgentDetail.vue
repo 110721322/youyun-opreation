@@ -8,7 +8,7 @@
 
     <detailMode :rule-form="ruleForm" :config-data="configData" @edit="itemEdit"></detailMode>
 
-    <detailMode5 :rule-form="ruleForm" :config-data="configData2" @edit="itemEdit"></detailMode5>
+    <detailMode5 :rule-form="ruleForm" :config-data="configData2" @edit="itemEdit" @handle_seem="itemSeem"></detailMode5>
 
     <div class="bg_box">
       <div class="title">应用</div>
@@ -255,6 +255,13 @@
         </li>
       </ul>
     </el-dialog>
+    <el-drawer :visible.sync="systemDrawer" :with-header="false" size="550px">
+      <role-menu-set
+          v-if="systemDrawer"
+          :template-list="templateList"
+          :default-props="defaultProps"
+      ></role-menu-set>
+    </el-drawer>
   </div>
 </template>
 
@@ -263,8 +270,9 @@ import Form from "@/components/form/index.vue";
 import api from "@/api/api_agent.js";
 import api_dataMarket from "@/api/api_dataMarket.js";
 import api_device from "@/api/api_device.js";
+import api_systemConfig from "@/api/api_systemConfig";
+import RoleMenuSet from "../systemConfig/component/RoleMenuSet";
 // import api_serve from "@/api/api_serve"
-// import api_topAgent from "@/api/api_topAgent";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import detailMode from "@/components/detailMode/detailMode.vue";
 import detailMode5 from "@/components/detailMode/detailMode5.vue";
@@ -275,11 +283,11 @@ import {CONTACTS_CONFIG} from "../agent/formConfig/addContacts";
 import {LISASION} from "../agent/formConfig/addLiasion";
 import areaData from "@/assets/data/areaData";
 import store from "@/store"
-import api_topAgent from "../../api/api_topAgent";
+import api_topAgent from "@/api/api_topAgent";
 
 export default {
   name: "Theme",
-  components: { detailMode, detailMode5, BaseCrud, Form },
+  components: { detailMode, detailMode5, BaseCrud, Form, RoleMenuSet },
   data() {
     return {
       bankName: '',
@@ -287,6 +295,12 @@ export default {
       financeDrawer: false,
       drawer: false,
       buyDeviceDrawer: true,
+      systemDrawer: false,
+      templateList: [],
+      defaultProps: {
+        children: "childrenMenus",
+        label: "menuName"
+      },
       dynamicTags: [],
       inputVisible: false,
       inputValue: "",
@@ -725,6 +739,17 @@ export default {
       FORM_CONFIG[$model].formData[11].initVal = this.ruleForm.channelAgentCode;
       this.formType = $model;
       this.fromConfigData = FORM_CONFIG[$model];
+    },
+    itemSeem() {
+      const params = {
+        roleId: this.ruleForm.roleId,
+        system: 'agent'
+      }
+      // this.selectRoleId = $row.roleId;
+      api_systemConfig.getRolePermission(params).then(res => {
+        this.templateList = res.object;
+        this.systemDrawer = true;
+      })
     },
     cancel() {
       this.editType = ''
