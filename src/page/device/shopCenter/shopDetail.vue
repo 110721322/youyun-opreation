@@ -99,6 +99,7 @@ export default {
   width: calc(100% - 48px);
   background: #fff;
   margin: 0 24px;
+  padding-top: 24px;
   /* height: calc(100% - 24px); */
 }
 </style>

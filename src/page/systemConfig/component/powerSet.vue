@@ -46,8 +46,8 @@
       <!-- 菜单树结束 -->
     </el-form>
     <div class="foot_btn_box">
-      <el-button type="primary" class="foot_btn" @click="confirm">确定</el-button>
-      <el-button class="foot_btn">取消</el-button>
+      <el-button type="primary" size="normal" @click="confirm">确定</el-button>
+      <el-button size="normal">取消</el-button>
     </div>
   </div>
 </template>
@@ -195,10 +195,11 @@ export default {
 <style lang="scss" scoped>
 .foot_btn_box {
   width: 100%;
-  height: 96px;
+  // height: 96px;
   border-top: 1px solid #ebeef5;
-  position: absolute;
-  bottom: 0;
+  // position: absolute;
+  // bottom: 0;
+  padding: 24px 0;
   display: flex;
   flex-direction: row;
   justify-content: center;

@@ -200,7 +200,7 @@ export default {
     color: #333335;
     border-bottom: 1px solid #EBEEF5;
     background: #ffffff;
-    padding-left: 32px;
+    padding-left: 24px;
   }
   .equiment {
     width: 100%;

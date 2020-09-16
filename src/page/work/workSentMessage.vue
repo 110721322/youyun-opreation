@@ -51,12 +51,12 @@ export default {
 .content-box {
   margin: 24px;
   background-color: #fff;
-  padding-bottom: 90px;
+  padding-bottom: 24px;
 }
 .title {
   height: 54px;
   line-height: 54px;
-  padding-left: 32px;
+  padding-left: 24px;
   font-size: 16px;
   font-weight: 500;
   color: rgba(51, 51, 53, 1);

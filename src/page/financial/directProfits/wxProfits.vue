@@ -8,7 +8,7 @@
           <div class="form-title">
             <span>微信直连分润列表</span>
             <ul>
-              <li @click="openDraw">直连分润导入</li>
+              <el-button type="primary" @click="openDraw">直连分润导入</el-button>
             </ul>
           </div>
           <BaseCrud
@@ -34,7 +34,7 @@
         title="我是标题"
         :visible.sync="drawer"
         :with-header="false"
-        size="40%"
+        size="500px"
       >
         <div class="top-area">
           <span>导入奖励名单</span>

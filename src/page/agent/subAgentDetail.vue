@@ -165,7 +165,7 @@ export default {
     background: #ffffff;
     border-bottom: 1px solid #eeeeee;
     line-height: 54px;
-    padding-left: 32px;
+    padding-left: 24px;
     font-weight: 500;
     color: #333335;
   }

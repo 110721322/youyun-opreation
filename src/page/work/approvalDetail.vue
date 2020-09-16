@@ -156,7 +156,7 @@ export default {
 
 .top_title {
   width: 100%;
-  padding-left: 32px;
+  padding-left: 24px;
   border-bottom: 1px solid #EBEEF5;
   line-height: 54px;
   font-weight: 500;

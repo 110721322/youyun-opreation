@@ -23,7 +23,7 @@
         :grid-data="testData"
         :form-config="configData.formConfig"
         :form-data="configData.formModel"
-        :grid-edit-width="150"
+        :grid-edit-width="220"
         :is-async="true"
         :is-select="false"
         :is-expand="false"
@@ -67,7 +67,7 @@
         @node-drop="handleDrop"
       ></el-tree>
       <div class="foot_btn_box">
-        <el-button class="foot_btn" @click="cancelForm">关闭</el-button>
+        <el-button size="normal" @click="cancelForm">关闭</el-button>
       </div>
     </el-drawer>
   </div>
@@ -359,10 +359,11 @@ export default {
 }
 .foot_btn_box {
   width: 100%;
-  height: 96px;
+  // height: 96px;
   border-top: 1px solid #ebeef5;
-  position: absolute;
-  bottom: 0;
+  // position: absolute;
+  // bottom: 0;
+  padding: 24px 0;
   display: flex;
   flex-direction: row;
   justify-content: center;

@@ -140,7 +140,5 @@ export default {
 }
 .add_btn {
   float: right;
-  width: 109px;
-  height: 32px;
 }
 </style>

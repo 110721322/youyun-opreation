@@ -136,7 +136,7 @@ export default {
   .content_title {
     width: 100%;
     height: 86px;
-    padding-left: 32px;
+    padding-left: 24px;
     line-height: 86px;
     border-bottom: 1px solid #EBEEF5;
     color: #000000;

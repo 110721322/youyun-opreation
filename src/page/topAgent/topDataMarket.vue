@@ -433,7 +433,7 @@ export default {
     margin: 24px 24px 0;
     height: 64px;
     line-height: 64px;
-    padding-left: 32px;
+    padding-left: 24px;
     font-size: 16px;
     font-weight: 500;
     color: rgba(51, 51, 53, 1);
@@ -530,7 +530,7 @@ export default {
     width: 100%;
     height: 76px;
     border-bottom: 1px solid #EBEEF5;
-    padding-left: 32px;
+    padding-left: 24px;
     line-height: 76px;
     font-size: 20px;
     font-weight: 500;

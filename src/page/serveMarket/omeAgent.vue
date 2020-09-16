@@ -383,7 +383,7 @@ export default {
     height: 70px;
     font-size: 16px;
     line-height: 70px;
-    padding-left: 32px;
+    padding-left: 24px;
     color: #000000;
     font-weight: 500;
     border-bottom: 1px solid #EBEEF5;
@@ -392,7 +392,7 @@ export default {
   .upimg {
     margin-top: 24px;
     display: flex;
-    padding-left: 32px;
+    padding-left: 24px;
   }
   .upimg span {
     display: block;

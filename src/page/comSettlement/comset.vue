@@ -263,7 +263,7 @@ export default {
     display: flex;
     align-items: center;
     background: #ffffff;
-    padding-left: 32px;
+    padding-left: 24px;
   }
   .top_head span:nth-child(1) {
     display: block;

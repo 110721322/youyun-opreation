@@ -446,7 +446,7 @@ export default {
   padding-bottom: 80px;
   .title {
     line-height: 64px;
-    padding-left: 32px;
+    padding-left: 24px;
     border-bottom: 1px solid #ebeef5;
     font-size: 16px;
     color: #333335;

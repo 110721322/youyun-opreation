@@ -832,7 +832,7 @@ export default {
   width: 100%;
   height: 76px;
   border-bottom: 1px solid #EBEEF5;
-  padding-left: 32px;
+  padding-left: 24px;
   line-height: 76px;
   font-size: 20px;
   font-weight: 500;

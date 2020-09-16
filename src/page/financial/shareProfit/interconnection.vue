@@ -64,8 +64,9 @@ export default {
 
 <style scoped>
   .table_box {
-    margin-top: 24px;
-    padding: 0 24px;
+    margin: 24px;
+    padding: 24px;
+    background: white;
   }
 </style>
 

@@ -718,7 +718,7 @@ export default {
   margin: 0 24px;
   height: 64px;
   line-height: 64px;
-  padding-left: 32px;
+  padding-left: 24px;
   font-size: 16px;
   font-weight: 500;
   color: rgba(51, 51, 53, 1);

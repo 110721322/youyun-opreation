@@ -106,7 +106,7 @@
       ></BaseCrud>
     </div>
 
-    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
+    <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
         :form-base-data="fromConfigData.formData"
@@ -116,7 +116,7 @@
       ></Form>
     </el-drawer>
 
-    <el-drawer title="添加沟通计划" :visible.sync="addContactsDraw" :with-header="false" size="40%">
+    <el-drawer title="添加沟通计划" :visible.sync="addContactsDraw" :with-header="false" size="500px">
       <div class="p_head">{{ contactConfigData.title }}</div>
       <Form
         v-if="addContactsDraw"
@@ -126,7 +126,7 @@
         @cancel="cancel"
       ></Form>
     </el-drawer>
-    <el-drawer :visible.sync="findLiaison" :with-header="false" size="40%">
+    <el-drawer :visible.sync="findLiaison" :with-header="false" size="500px">
       <div class="top_title">
         <span class="the_title">查看联系人</span>
         <el-button type="primary" @click="liaisonAdd">添加联系人</el-button>
@@ -159,7 +159,7 @@
       </ul>
     </el-drawer>
 
-    <el-drawer :visible.sync="addLiaison" :with-header="false" size="30%">
+    <el-drawer :visible.sync="addLiaison" :with-header="false" size="500px">
       <Form
         ref="liaisonRef"
         :form-base-data="liaisonConfigData.formData"
@@ -168,7 +168,7 @@
         @cancel="addLiaison = false"
       ></Form>
     </el-drawer>
-    <el-drawer :visible.sync="financeDrawer" :with-header="false" size="30%">
+    <el-drawer :visible.sync="financeDrawer" :with-header="false" size="500px">
       <div class="financeTitle">财务信息</div>
       <el-form :model="financeModel" :rules="rules">
         <el-form-item label="结算卡类型" prop="bankAccountType" style="margin: 24px 20% 0 24px;" label-width="120px">
@@ -190,6 +190,7 @@
             :remote-method="remoteMethod"
             :loading="loading"
             @change="handleSelect"
+            style="width:100%"
           >
             <el-option
               v-for="item in bankOptions"
@@ -1116,7 +1117,7 @@ export default {
     .title {
       height: 54px;
       line-height: 54px;
-      padding-left: 32px;
+      padding-left: 24px;
       font-size: 16px;
       font-weight: 500;
       color: rgba(51, 51, 53, 1);
@@ -1287,7 +1288,7 @@ export default {
   height: 84px;
   border-bottom: 1px solid #ececec;
   line-height: 84px;
-  padding-left: 32px;
+  padding-left: 24px;
   font-size: 28px;
   margin-bottom: 32px;
 }

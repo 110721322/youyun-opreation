@@ -14,8 +14,8 @@
         @check-change="handleCheckChange"
       ></el-tree>
       <div class="foot_btn_box">
-        <el-button type="primary" class="foot_btn" @click="confirm">确定</el-button>
-        <el-button class="foot_btn" @click="cancel">取消</el-button>
+        <el-button type="primary" size="normal" @click="confirm">确定</el-button>
+        <el-button size="normal" @click="cancel">取消</el-button>
       </div>
     </div>
   </div>
@@ -108,15 +108,15 @@ export default {
   }
   .foot_btn_box {
     width: 100%;
-    height: 96px;
+    // height: 96px;
     border-top: 1px solid #ebeef5;
     // position: absolute;
     // bottom: 0;
+    padding: 24px 0;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-content: center;
-
     .foot_btn {
       width: 113px;
       height: 40px;

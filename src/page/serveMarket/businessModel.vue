@@ -97,7 +97,7 @@ export default {
 }
 .card_content {
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   background: #fff;
   padding: 32px 0 0 32px;
   box-sizing: border-box;

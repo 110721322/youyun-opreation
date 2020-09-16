@@ -4,6 +4,7 @@
       v-model="ruleForm[formItem.key]"
       :options="formItem.options"
       @change="handleChange"
+      style="max-width:294px;width:294px;"
     ></el-cascader>
   </div>
 </template>

@@ -56,7 +56,7 @@ export default {
   background: rgba(255, 255, 255, 1);
   overflow: hidden;
   .head {
-    padding-left: 32px;
+    padding-left: 24px;
     font-size: 16px;
     font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 500;

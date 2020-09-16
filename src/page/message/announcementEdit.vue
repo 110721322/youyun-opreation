@@ -52,6 +52,14 @@ export default {
         .catch(err => {
           console.error(err);
         });
+    } else {
+      this.fromConfigData.formData.forEach((item, index) => {
+        if (item.key === "time") {
+          item.initVal = []
+        } else {
+          item.initVal = ''
+        }
+      });
     }
   },
   methods: {
@@ -107,12 +115,12 @@ export default {
 .content-box {
   margin: 24px;
   background-color: #fff;
-  padding-bottom: 90px;
+  padding-bottom: 24px;
 }
 .title {
   height: 54px;
   line-height: 54px;
-  padding-left: 32px;
+  padding-left: 24px;
   font-size: 16px;
   font-weight: 500;
   color: rgba(51, 51, 53, 1);

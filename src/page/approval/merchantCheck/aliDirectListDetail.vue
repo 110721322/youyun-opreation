@@ -23,14 +23,14 @@
           <div class="btn_download" @click="onClick_download">
             <i class="el-icon-download"></i>下载资料
           </div>
-          <el-button type="primary" @click="onClick_sign">资料已检查并提交签约</el-button>
-          <el-button @click="onClick_reject">驳回</el-button>
+          <el-button type="primary" size="normal" @click="onClick_sign">资料已检查并提交签约</el-button>
+          <el-button size="normal" @click="onClick_reject">驳回</el-button>
           <!-- <div class="btn_pass" @click="onClick_sign">资料已检查并提交签约</div>
           <div class="btn-reject" @click="onClick_reject">驳回</div> -->
         </div>
       </div>
     </transition>
-    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
+    <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
         res="rejectForm"

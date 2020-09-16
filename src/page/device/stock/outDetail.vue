@@ -316,7 +316,7 @@ export default {
     width: 100%;
     height: 64px;
     background: #ffffff;
-    padding-left: 32px;
+    padding-left: 24px;
     line-height: 64px;
     font-size: 16px;
     font-weight: 500;

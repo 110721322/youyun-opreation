@@ -219,7 +219,7 @@ export default {
       .goods-title {
         font-size: 16px;
         font-weight: 500;
-        padding-left: 32px;
+        padding-left: 24px;
         color: #333335;
         border-bottom: 1px solid #EBEEF5;
         line-height: 87px;

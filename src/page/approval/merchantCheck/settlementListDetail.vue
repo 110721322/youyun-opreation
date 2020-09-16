@@ -21,8 +21,8 @@
         <detailMode :img-width="4" :rule-form="ruleForm.new" v-if="ruleForm.new.bankAccountType === 'private' && ruleForm.new.settleLawFlag === 'legal'" :config-data="configData.afterData1"></detailMode>
         <detailMode :img-width="4" :rule-form="ruleForm.new" v-if="ruleForm.new.bankAccountType === 'private' && ruleForm.new.settleLawFlag === 'unlegal'" :config-data="configData.afterData2"></detailMode>
         <div v-if="showComponents.showOperBtns" class="btn-box">
-          <el-button type="primary" @click="onClick_pass">资料已全部检查,通过</el-button>
-          <el-button @click="onClick_reject">驳回</el-button>
+          <el-button type="primary" size="normal" @click="onClick_pass">资料已全部检查,通过</el-button>
+          <el-button size="normal" @click="onClick_reject">驳回</el-button>
           <!-- <div class="btn_pass" @click="onClick_pass">资料已全部检查,通过</div> -->
           <!-- <div class="btn-reject" @click="onClick_reject">驳回</div> -->
         </div>

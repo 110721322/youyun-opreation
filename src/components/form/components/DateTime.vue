@@ -2,7 +2,7 @@
   <div>
     <el-date-picker
       v-model="timeInterval"
-      style="float: left;"
+      style="float: left;width:294px;"
       size="large"
       type="datetime"
       :placeholder="placeholder"

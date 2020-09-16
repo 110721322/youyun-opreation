@@ -142,7 +142,7 @@
       ></BaseCrud>
     </div>
 
-    <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size="40%">
+    <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size="500px">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
         :form-base-data="fromConfigData.formData"
@@ -151,7 +151,7 @@
         @cancel="cancel"
       ></Form>
     </el-drawer>
-    <el-drawer :title="contactConfigData.title" :visible.sync="addContactsDraw" :with-header="false" size="40%">
+    <el-drawer :title="contactConfigData.title" :visible.sync="addContactsDraw" :with-header="false" size="500px">
       <div class="p_head">{{ contactConfigData.title }}</div>
       <Form
         ref="liaisonRef"
@@ -161,7 +161,7 @@
         @cancel="cancel"
       ></Form>
     </el-drawer>
-    <el-drawer :visible.sync="findLiaison" :with-header="false" size="40%">
+    <el-drawer :visible.sync="findLiaison" :with-header="false" size="500px">
       <div class="top_title">
         <span class="the_title">查看联系人</span>
         <el-button type="primary" @click="liaisonAdd">添加联系人</el-button>
@@ -193,7 +193,7 @@
         </li>
       </ul>
     </el-drawer>
-    <el-drawer :visible.sync="addLiaison" :with-header="false" size="30%">
+    <el-drawer :visible.sync="addLiaison" :with-header="false" size="500px">
       <Form
         ref="liaisonRef"
         :form-base-data="liaisonConfigData.formData"
@@ -202,7 +202,7 @@
         @cancel="liaisonCancel"
       ></Form>
     </el-drawer>
-    <el-drawer :visible.sync="financeDrawer" :with-header="false" size="30%">
+    <el-drawer :visible.sync="financeDrawer" :with-header="false" size="500px">
       <div class="financeTitle">财务信息</div>
       <el-form :model="financeModel" :rules="rules">
         <el-form-item label="结算卡类型" prop="bankAccountType" style="margin: 24px 24px 0 24px;" label-width="110px">
@@ -287,7 +287,7 @@
         </li>
       </ul>
     </el-dialog>
-    <el-drawer :visible.sync="equipment" :with-header="false" size="30%">
+    <el-drawer :visible.sync="equipment" :with-header="false" size="500px">
       <div class="p_head">{{ equipmentConfigData.title }}</div>
       <Form
           ref="liaisonRef"
@@ -1279,7 +1279,7 @@ export default {
   .title {
     height: 54px;
     line-height: 54px;
-    padding-left: 32px;
+    padding-left: 24px;
     font-size: 16px;
     font-weight: 500;
     color: rgba(51, 51, 53, 1);
@@ -1458,7 +1458,7 @@ export default {
   height: 84px;
   border-bottom: 1px solid #ececec;
   line-height: 84px;
-  padding-left: 32px;
+  padding-left: 24px;
   font-size: 28px;
   margin-bottom: 32px;
 }
@@ -1468,6 +1468,7 @@ export default {
   // position: fixed;
   // bottom: 0;
   // right: 0;
+  padding: 24px 0;
   border-top: 1px solid #ebeef5;
   justify-content: center;
   display: flex;

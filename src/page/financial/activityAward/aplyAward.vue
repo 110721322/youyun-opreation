@@ -14,7 +14,8 @@
             <span>支付宝小蜻蜓</span>
             <ul>
               <!-- <li>下载导入奖励模板</li> -->
-              <li @click="openDraw">导入蜻蜓奖励名单</li>
+              <el-button type="primary" @click="openDraw">导入蜻蜓奖励名单</el-button>
+              <!-- <li @click="openDraw">导入蜻蜓奖励名单</li> -->
             </ul>
           </div>
           <BaseCrud

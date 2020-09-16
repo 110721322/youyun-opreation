@@ -30,7 +30,7 @@
       ></BaseCrud>
     </div>
 
-    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
+    <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <div class="search-box">
         <span class="label">精准筛选:</span>
@@ -233,16 +233,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.input-with-select{
+  width: auto;
+}
 .oper-box {
   text-align: center;
-  position: absolute;
-  bottom: 28px;
+  // position: absolute;
+  // bottom: 28px;
+  margin-top: 24px;
   width: 100%;
   border-top: 1px solid #ebeef5;
-  padding-top: 30px;
-  .el-button {
-    padding: 10px 35px;
-  }
+  padding: 24px 0;
 }
 .form-box {
   padding: 0 24px;

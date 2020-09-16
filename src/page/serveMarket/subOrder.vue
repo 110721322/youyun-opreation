@@ -24,7 +24,7 @@
         <li>
           <div class="coupon">
             <div class="coupon_title">优惠码</div>
-            <el-select v-model="promoCodeId" placeholder="请选择" @change="promoSelect">
+            <el-select v-model="promoCodeId" placeholder="请选择" @change="promoSelect" :disabled="comboItem.comboAmount<=0">
               <el-option v-for="(item,index) in promoCodeList" :key="index" :label="item.promoCodeNo" :value="item.id"></el-option>
             </el-select>
           </div>
@@ -83,7 +83,8 @@ export default {
             codeAmount = item.promoCodeAmount
           }
         })
-        this.amount = this.comboItem.comboAmount - codeAmount
+        const amount = (this.comboItem.comboAmount ? this.comboItem.comboAmount : 0) - codeAmount
+        this.amount = ((!amount) || amount <= 0) ? 0 : amount
       }
     }
   }

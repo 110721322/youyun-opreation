@@ -27,10 +27,10 @@
       </template>
     </el-form>
     <div v-if="showFootBtn" class="foot_btn_box">
-      <el-button class="foot_btn" type="primary" @click="handleClick">{{ footBtnLabel }}</el-button>
-      <el-button v-if="showFootReset" class="foot_btn" @click="resetForm">重置</el-button>
-      <el-button v-if="showFootClear" class="foot_btn" @click="clearForm">清空</el-button>
-      <el-button v-if="showFootCancel" class="foot_btn" @click="cancelForm">取消</el-button>
+      <el-button size="normal" type="primary" @click="handleClick">{{ footBtnLabel }}</el-button>
+      <el-button v-if="showFootReset" size="normal" @click="resetForm">重置</el-button>
+      <el-button v-if="showFootClear" size="normal" @click="clearForm">清空</el-button>
+      <el-button v-if="showFootCancel" size="normal" @click="cancelForm">取消</el-button>
     </div>
   </div>
 </template>
@@ -111,7 +111,7 @@ export default {
     },
     labelWidth: {
       type: String,
-      default: "100px"
+      default: "120px"
     },
     showFootReset: {
       type: Boolean,
