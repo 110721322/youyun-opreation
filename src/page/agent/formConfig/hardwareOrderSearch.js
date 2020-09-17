@@ -5,7 +5,8 @@ export const SEARCH_CONFIG = {
       label: '筛选时间',
       key: 'date',
       class: 'max-width',
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 24
     },
     {
       type: 10,
@@ -22,13 +23,15 @@ export const SEARCH_CONFIG = {
           value: 'name'
         }
       ],
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 24
     },
     {
       type: 1,
       label: '订单类型',
       key: 'type',
-      style: 'width:294px',
+      labelWidth: '80px',
+      span: 11,
       options: [
         {
           label: '待审核',
@@ -48,8 +51,8 @@ export const SEARCH_CONFIG = {
       type: 1,
       label: '订单状态',
       key: 'status',
-      style: 'width:294px',
-      labelWidth: '185px',
+      labelWidth: '80px',
+      span: 11,
       options: [
         {
           label: '川菜',

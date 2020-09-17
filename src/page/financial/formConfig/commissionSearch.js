@@ -6,7 +6,7 @@ export const SEARCH_CONFIG = {
       key: 'date',
       class: 'max-width',
       labelWidth: '80px',
-      span: 20
+      span: 24
     }
     // {
     //   type: 10,

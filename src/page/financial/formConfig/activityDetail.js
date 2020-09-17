@@ -7,7 +7,7 @@ export const SEARCH_CONFIG = {
       labelWidth: '110px',
       datatype: 'date',
       format: 'yyyy-MM-dd',
-      span: 20
+      span: 24
     },
     {
       type: 10,
@@ -25,7 +25,7 @@ export const SEARCH_CONFIG = {
         }
       ],
       labelWidth: '80px',
-      span: 20
+      span: 24
     }
   ]
 }

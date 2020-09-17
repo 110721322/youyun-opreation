@@ -28,14 +28,16 @@ export const FORM_CONFIG = {
           value: 'newlandMerchantNo'
         }
       ],
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 24
     },
     {
       type: 9,
       label: '创建时间',
       key: 'date',
       class: 'max-width',
-      labelWidth: '100px',
+      labelWidth: '80px',
+      span: 11,
       isSelectToday: true
     },
     {
@@ -43,28 +45,32 @@ export const FORM_CONFIG = {
       label: '联系人',
       key: 'callUser',
       class: 'min-width',
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 11
     },
     {
       type: 0,
       label: '联系电话',
       key: 'callUser',
       class: 'min-width',
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 11
     },
     {
       type: 0,
       label: '联系电话',
       key: 'callMobile',
       class: 'min-width',
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 11
     },
     {
       type: 1,
       label: '订单状态',
       key: 'orderStatus',
       class: 'min-width',
-      labelWidth: '100px',
+      labelWidth: '80px',
+      span: 11,
       options: [
         {
           label: '待支付',

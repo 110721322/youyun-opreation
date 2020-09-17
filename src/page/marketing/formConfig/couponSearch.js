@@ -6,7 +6,8 @@ export const FORM_CONFIG = {
       label: '筛选时间',
       key: 'date',
       class: 'max-width',
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 24
     },
     // {
     //   type: 0,
@@ -19,6 +20,8 @@ export const FORM_CONFIG = {
       inputType: 'autocomplete',
       label: '优惠码名称',
       hiddenSelect: true,
+      labelWidth: '80px',
+      span: 24,
       placeholder: '请输入优惠码名称',
       // valueKey: 'id',
       options: [

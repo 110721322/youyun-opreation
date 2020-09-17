@@ -85,33 +85,37 @@ export const FORM_CONFIG2 = {
           value: 'topAgentName'
         }
       ],
-      labelWidth: '150px'
+      labelWidth: '150px',
+      span: 24
     },
     {
       type: 9,
       label: '筛选时间',
       key: 'date',
       class: "max-width",
-      labelWidth: '150px'
+      labelWidth: '80px',
+      span: 11
     },
     {
       type: 0,
       label: '法人姓名',
       key: 'personName',
-      labelWidth: '150px'
+      labelWidth: '80px',
+      span: 11
     },
     {
       type: 0,
       label: '法人电话',
       key: 'personMobile',
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 11
     },
     {
       type: 1,
       label: '状态',
       key: 'status',
-      style: 'width:294px',
-      labelWidth: '100px',
+      labelWidth: '80px',
+      span: 11,
       options: [
         {
           label: '待部署',

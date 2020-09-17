@@ -12,7 +12,8 @@ export const FORM_CONFIG = {
       label: '筛选时间',
       key: 'date',
       class: 'max-width',
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 24
     },
     {
       type: 10,
@@ -29,21 +30,23 @@ export const FORM_CONFIG = {
           value: 'agentName'
         }
       ],
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 24
     },
     {
       type: 1,
       label: '标签',
       key: 'labelId',
-      style: 'width:294px',
+      labelWidth: '80px',
+      span: 11,
       options: store.state.dataMarket.labelList
     },
     {
       type: 1,
       label: '所属大区',
       key: 'regionCode',
-      style: 'width:294px',
-      labelWidth: '185px',
+      labelWidth: '80px',
+      span: 11,
       options: store.state.dataMarket.regionList
     },
     {

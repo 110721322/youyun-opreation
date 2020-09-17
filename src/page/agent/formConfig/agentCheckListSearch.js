@@ -8,7 +8,7 @@ export const FORM_CONFIG = {
       format: "yyyy-MM-dd HH:mm:ss",
       datatype: "datetimerange",
       labelWidth: '80px',
-      span: 20
+      span: 24
     },
     {
       type: 0,

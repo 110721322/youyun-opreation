@@ -6,7 +6,7 @@ export const FORM_CONFIG = {
       key: 'date',
       class: 'max-width',
       labelWidth: '80px',
-      span: 20
+      span: 24
     },
     {
       type: 10,
@@ -25,7 +25,7 @@ export const FORM_CONFIG = {
         }
       ],
       labelWidth: '80px',
-      span: 11
+      span: 24
     },
     {
       type: 0,

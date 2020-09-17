@@ -22,7 +22,7 @@
       ></BaseCrud>
     </div>
 
-    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
+    <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
       <div class="p_head">编辑按钮</div>
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="审批流程:" style="margin:16px 100px;width:280px">

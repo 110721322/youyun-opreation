@@ -8,7 +8,8 @@ export const FORM_CONFIG = {
       placeholder: '选择月份',
       format: 'yyyy-MM',
       class: 'max-width',
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 24
     },
     {
       type: 10,
@@ -25,7 +26,8 @@ export const FORM_CONFIG = {
           value: 'agentName'
         }
       ],
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 24
     }
   ]
 }

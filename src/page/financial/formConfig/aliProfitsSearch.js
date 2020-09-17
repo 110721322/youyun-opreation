@@ -7,7 +7,7 @@ export const SEARCH_CONFIG = {
       datatype: 'date',
       class: 'max-width',
       labelWidth: '80px',
-      span: 20,
+      span: 24,
       format: 'yyyy-MM-dd HH:mm:ss'
     },
     {
@@ -25,7 +25,7 @@ export const SEARCH_CONFIG = {
         }
       ],
       labelWidth: '80px',
-      span: 11
+      span: 24
     }
   ]
 }

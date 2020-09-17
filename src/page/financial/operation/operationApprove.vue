@@ -58,7 +58,7 @@
       ></BaseCrud>
     </div>
 
-    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
+    <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <div v-if="fromConfigData.processData" class="process-box">
         <template v-for="(item,index) in fromConfigData.processData">
@@ -103,7 +103,7 @@
       :visible.sync="detailDrawer"
       direction="rtl"
       :before-close="handleClose"
-      size="400px"
+      size="500px"
     >
       <div slot="title" class="drawer-contenttitle">
         <span>佣金结算详情</span>

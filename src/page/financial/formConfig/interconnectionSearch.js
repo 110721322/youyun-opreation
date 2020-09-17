@@ -15,7 +15,7 @@ export const SEARCH_CONFIG = {
         }
       ],
       labelWidth: '80px',
-      span: 20
+      span: 24
     }
   ]
 }

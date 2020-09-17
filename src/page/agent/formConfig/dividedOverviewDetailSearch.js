@@ -15,7 +15,8 @@ export const FORM_CONFIG = {
           value: 'agentName'
         }
       ],
-      labelWidth: '85px'
+      labelWidth: '80px',
+      span: 24
     }
   ]
 }

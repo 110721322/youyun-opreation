@@ -18,7 +18,7 @@ export const FORM_CONFIG = {
         }
       ],
       labelWidth: '110px',
-      span: 11
+      span: 24
     },
     {
       type: 0,

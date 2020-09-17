@@ -14,7 +14,7 @@ export const SEARCH_CONFIG = {
       label: '精准筛选',
       key: '',
       labelWidth: '80px',
-      span: 11,
+      span: 24,
       options: [
         {
           label: '工号',

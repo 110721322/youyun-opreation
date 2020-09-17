@@ -462,13 +462,14 @@ export default {
   flex-wrap: wrap;
   height: 500px;
   align-content: flex-start;
+  justify-content: space-between;
   overflow: auto;
   .item {
     position: relative;
     margin-bottom: 24px;
     padding: 16px 24px;
     width: 48%;
-    height: 236px;
+    // height: 236px;
     background: #fff;
     border-radius: 2px;
     .list_status {
@@ -478,9 +479,9 @@ export default {
       margin-bottom: 6px;
       line-height: 22px;
     }
-    &:nth-child(even) {
-      margin-left: 24px;
-    }
+    // &:nth-child(even) {
+    //   margin-left: 24px;
+    // }
     .status {
       position: absolute;
       right: 24px;
@@ -515,9 +516,9 @@ export default {
       }
     }
     .oper-box {
-      position: absolute;
-      bottom: 16px;
-      right: 24px;
+      // position: absolute;
+      // bottom: 16px;
+      // right: 24px;
       img {
         width: 92px;
         height: 92px;

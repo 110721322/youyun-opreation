@@ -44,6 +44,7 @@
           :visible.sync="drawer"
           direction="rtl"
           :before-close="handleClose"
+          size="500px"
       >
         <div slot="title" class="drawer-contenttitle">
           <span>申请结算</span>
