@@ -64,8 +64,8 @@
         </div>
       </div>
       <div class="foot_btn_box">
-        <el-button type="primary" @click="handleClick">确定</el-button>
-        <el-button @click="cancelForm">取消</el-button>
+        <el-button type="primary" size="normal" @click="handleClick">确定</el-button>
+        <el-button size="normal" @click="cancelForm">取消</el-button>
       </div>
     </el-drawer>
   </div>
@@ -287,7 +287,8 @@ export default {
 
 <style lang="scss" scoped>
 .scroll-box {
-  height: 730px;
+  height: auto;
+  padding-bottom: 114px;
   overflow: auto;
 }
 .add-phone-box {
@@ -336,12 +337,14 @@ export default {
   }
 }
 .foot_btn_box {
-  width: 100%;
+  width: 500px;
   padding: 24px;
   // height: 96px;
+  background: white;
   border-top: 1px solid #ebeef5;
-  // position: absolute;
-  // bottom: 0;
+  position: fixed;
+  right: 0;
+  bottom: 0;
   display: flex;
   flex-direction: row;
   justify-content: center;

@@ -10,7 +10,8 @@ export const SEARCH_CONFIG = {
       format: "yyyy-MM-dd HH:mm:ss",
       datatype: "datetimerange",
       class: 'max-width',
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 24
     },
     {
       type: 10,
@@ -27,13 +28,15 @@ export const SEARCH_CONFIG = {
           value: 'agentNo'
         }
       ],
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 24
     },
     {
       type: 1,
       label: '订单类型',
       key: 'outputType',
-      style: 'width:294px',
+      labelWidth: '80px',
+      span: 11,
       options: [
         {
           label: '商城购买',
@@ -49,8 +52,8 @@ export const SEARCH_CONFIG = {
       type: 1,
       label: '订单状态',
       key: 'status',
-      style: 'width:294px',
-      labelWidth: '185px',
+      labelWidth: '80px',
+      span: 11,
       urlOptions: {
         url: apiAgent.orderStatus,
         keyName: 'status',

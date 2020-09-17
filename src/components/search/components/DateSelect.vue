@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="flex-align-center">
     <el-date-picker
       v-show="isOpen"
       v-model="timeInterval"
-      style="float: left;"
+      style="float: left;width: 100%;max-width: 480px;"
       :style="inputStyle"
       size="large"
       :type="datatype"
@@ -15,13 +15,15 @@
       :picker-options="pickerOptions"
       @change="onChage"
     />
-    <div
-      v-for="item of dateList"
-      :key="item.label"
-      class="date-item"
-      :class="item.value == selectItem.value ? 'select' : ''"
-      @click="onClick_item(item)"
-    >{{ item.label }}</div>
+    <div style="flex-shrink:0">
+      <div
+        v-for="item of dateList"
+        :key="item.label"
+        class="date-item"
+        :class="item.value == selectItem.value ? 'select' : ''"
+        @click="onClick_item(item)"
+      >{{ item.label }}</div>
+    </div>
     <!--    <span class="date-item" v-for="item of dateList" :class="item.value == selectItem.value?'select':''"  @click="onClick_item(item)">{{item.label}}</span>-->
   </div>
 </template>
@@ -216,7 +218,7 @@ export default {
 .date-item {
   float: left;
   height: 40px;
-  width: 77px;
+  width: 75px;
   //   padding: 5px;
   margin-left: 15px;
   text-align: center;

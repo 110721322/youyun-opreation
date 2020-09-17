@@ -24,10 +24,10 @@
         <el-button type="text" style="font-size: 14px; padding: 0;" @click="onClick_setAudit">设置</el-button>
       </div>
     </div>
-    <el-drawer :append-to-body="true" :visible.sync="innerDrawer" :with-header="false" size="40%">
-      <power-set v-if="innerDrawer" :template-list="permissionTemplate" :api-service="permissionApi" @confirm="saveUserPermission" :role-id="roleId"></power-set>
+    <el-drawer :append-to-body="true" :visible.sync="innerDrawer" :with-header="false" size="500px">
+      <power-set v-if="innerDrawer" :template-list="permissionTemplate" :api-service="permissionApi" @confirm="saveUserPermission"></power-set>
     </el-drawer>
-    <el-drawer :append-to-body="true" :visible.sync="auditDrawer" :with-header="false" size="40%">
+    <el-drawer :append-to-body="true" :visible.sync="auditDrawer" :with-header="false" size="500px">
       <audit-set v-if="auditDrawer" :template-list="auditTemplate" :api-service="auditApi" @confirm="saveUserAudit"></audit-set>
     </el-drawer>
   </div>

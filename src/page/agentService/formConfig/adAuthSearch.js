@@ -17,19 +17,23 @@ export const SEARCH_CONFIG = {
           value: 'agentName'
         }
       ],
-      labelWidth: '130px'
+      labelWidth: '130px',
+      span: 24
     },
     {
       type: 8,
       label: '服务地区',
       key: 'area',
-      options: areaData
+      options: areaData,
+      labelWidth: '80px',
+      span: 11
     },
     {
       type: 1,
       label: '所属运营',
       key: 'operationId',
-      labelWidth: '185px',
+      labelWidth: '80px',
+      span: 11,
       urlOptions: {
         url: apiAgent.queryAllOperation,
         keyName: 'operationId',
@@ -41,7 +45,8 @@ export const SEARCH_CONFIG = {
       type: 1,
       label: '开启权限',
       key: 'privilege',
-      class: "clear_both",
+      labelWidth: '80px',
+      span: 11,
       urlOptions: {
         url: apiAgent.queryAllPrivilege,
         keyName: 'privilege',

@@ -41,7 +41,7 @@
         title="我是标题"
         :visible.sync="drawer"
         :with-header="false"
-        size="40%"
+        size="500px"
       >
         <div class="top-area">
           <span>导入奖励名单</span>

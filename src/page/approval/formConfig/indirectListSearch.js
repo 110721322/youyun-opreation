@@ -10,7 +10,7 @@ export const SEARCH_CONFIG = {
       class: 'max-width',
       datatype: "datetimerange",
       labelWidth: '80px',
-      span: 20
+      span: 24
     },
     {
       type: 10,
@@ -35,7 +35,7 @@ export const SEARCH_CONFIG = {
         }
       ],
       labelWidth: '80px',
-      span: 20
+      span: 24
     },
     {
       type: 1,

@@ -15,7 +15,8 @@ export const SEARCH_CONFIG = {
           value: 'merchantName'
         }
       ],
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 24
     }
   ]
 }

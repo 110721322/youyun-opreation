@@ -31,7 +31,7 @@
       ></BaseCrud>
     </div>
 
-    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
+    <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <div v-if="fromConfigData.processData" class="process-box">
         <template v-for="(item,index) in fromConfigData.processData">

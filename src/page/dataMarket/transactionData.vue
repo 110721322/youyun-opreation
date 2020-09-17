@@ -102,7 +102,7 @@
         </div>
       </template>
     </div>
-    <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size="40%">
+    <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size="500px">
       <div class="draw-title">权限设置</div>
       <div class="draw-content">
         <div class="draw-wran">

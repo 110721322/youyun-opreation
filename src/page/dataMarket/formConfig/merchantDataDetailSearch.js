@@ -12,7 +12,8 @@ export const FORM_CONFIG = {
       label: '筛选时间',
       key: 'date',
       class: 'max-width',
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 24
     },
     {
       type: 10,
@@ -37,21 +38,23 @@ export const FORM_CONFIG = {
           value: 'agentName'
         }
       ],
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 24
     },
     {
       type: 1,
       label: '行业类目',
       key: 'category',
-      style: 'width:294px',
-      labelWidth: '100px',
+      labelWidth: '80px',
+      span: 11,
       options: store.state.dataMarket.categoryList
     },
     {
       type: 8,
       label: '地区',
       key: 'area',
-      style: 'width:294px',
+      labelWidth: '80px',
+      span: 11,
       options: areaData.map(province => {
         province.children = province.children.map(city => {
           city.children = null;
@@ -59,7 +62,6 @@ export const FORM_CONFIG = {
         })
         return province;
       }),
-      labelWidth: '100px',
       class: "clear_both"
     }
   ]

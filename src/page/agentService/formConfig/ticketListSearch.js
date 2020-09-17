@@ -9,7 +9,8 @@ export const SEARCH_CONFIG = {
       class: 'max-width',
       format: "yyyy-MM-dd HH:mm:ss",
       datatype: "datetimerange",
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 24
     },
     {
       type: 10,
@@ -30,13 +31,16 @@ export const SEARCH_CONFIG = {
           value: 'agentName'
         }
       ],
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 24
     },
     {
       type: 16,
       label: '所属模块',
       label1: '所属模块',
       label2: '所属分类',
+      labelWidth: 'auto',
+      span: 24,
       key1: 'firstId',
       key2: 'secondId',
       urlOptions1: {
@@ -56,16 +60,16 @@ export const SEARCH_CONFIG = {
       type: 1,
       label: '处理人员',
       key: 'operatorId',
-      style: 'width:294px',
-      class: "clear_both",
+      labelWidth: '80px',
+      span: 11,
       options: store.state.system.employeeList
     },
     {
       type: 1,
       label: '状态',
       key: 'status',
-      style: 'width:294px',
-      labelWidth: '185px',
+      labelWidth: '80px',
+      span: 11,
       options: [
         {
           label: '待处理',

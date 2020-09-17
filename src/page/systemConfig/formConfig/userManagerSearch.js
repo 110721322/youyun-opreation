@@ -40,7 +40,7 @@ export const SEARCH_CONFIG = {
         }
       ],
       labelWidth: '80px',
-      span: 11
+      span: 24
     },
     {
       type: 1,

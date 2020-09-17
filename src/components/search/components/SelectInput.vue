@@ -129,4 +129,8 @@ export default {
 .el-select .el-input {
   width: 130px;
 }
+/deep/.el-input__inner{
+  width: 100%;
+  max-width: 294px;
+}
 </style>

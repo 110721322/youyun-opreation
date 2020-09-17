@@ -7,7 +7,7 @@ export const SEARCH_CONFIG = {
       label: '筛选时间',
       key: 'date',
       labelWidth: '80px',
-      span: 20
+      span: 24
     },
     {
       type: 10,
@@ -24,7 +24,7 @@ export const SEARCH_CONFIG = {
         }
       ],
       labelWidth: '80px',
-      span: 11
+      span: 24
     },
     {
       type: 1,

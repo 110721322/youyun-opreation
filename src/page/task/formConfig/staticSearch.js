@@ -8,7 +8,7 @@ export const FORM_CONFIG = {
       datatype: 'datetimerange',
       class: 'max-width',
       labelWidth: '80px',
-      span: 20
+      span: 24
     },
     {
       type: 1,
