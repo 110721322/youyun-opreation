@@ -56,91 +56,91 @@
       </el-row>
     </div>
 
-    <el-row :gutter="20">
-      <el-col :span="9">
-        <div class="bg_box" style="margin-right:0;margin-top:0;height:314px">
-          <div class="title">沟通数据</div>
-          <div style="text-align:center;">
-            <el-date-picker
-              v-model="timeDate"
-              type="datetimerange"
-              :picker-options="pickerOptions"
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-              align="right"
-              format="yyyy-MM-dd HH:mm:ss"
-              value-format="yyyy-MM-dd HH:mm:ss"
-              class="selectDate"
-              @change="dateChange"
-            >
-            </el-date-picker>
-          </div>
-          <div class="talkInfo">
-            <el-row>
-              <el-col :span="8" class="data_item" style="height:58px">
-                <div class="data_item_title">{{ summaryInfo.theme1 }}</div>
-                <div>{{ summaryInfo.theme1Count }}次</div>
-              </el-col>
-              <el-col :span="8" class="data_item" style="height:58px">
-                <div class="data_item_title">{{ summaryInfo.theme2 }}</div>
-                <div>{{ summaryInfo.theme2Count }}次</div>
-              </el-col>
-              <el-col :span="8" class="data_item border_none" style="height:58px">
-                <div class="data_item_title">沟通类型</div>
-                <div>{{ summaryInfo.otherThemeCount }}次</div>
-              </el-col>
-            </el-row>
-          </div>
-        </div>
-      </el-col>
-      <el-col :span="15">
-        <div class="bg_box" style="margin-left:0;margin-top:0;height:314px">
-          <img class="title_img" src="@/assets/img/clock.png" alt />
-          <div class="title">
-            待沟通<span style="color: #1989FA; padding: 0 4px;">{{ willConactNum }}</span>次
-            <el-button type="primary" style="float: right; margin: 10px 24px;" @click="addContacts">添加沟通计划</el-button>
-          </div>
+<!--    <el-row :gutter="20">-->
+<!--      <el-col :span="9">-->
+<!--        <div class="bg_box" style="margin-right:0;margin-top:0;height:314px">-->
+<!--          <div class="title">沟通数据</div>-->
+<!--          <div style="text-align:center;">-->
+<!--            <el-date-picker-->
+<!--              v-model="timeDate"-->
+<!--              type="datetimerange"-->
+<!--              :picker-options="pickerOptions"-->
+<!--              range-separator="至"-->
+<!--              start-placeholder="开始日期"-->
+<!--              end-placeholder="结束日期"-->
+<!--              align="right"-->
+<!--              format="yyyy-MM-dd HH:mm:ss"-->
+<!--              value-format="yyyy-MM-dd HH:mm:ss"-->
+<!--              class="selectDate"-->
+<!--              @change="dateChange"-->
+<!--            >-->
+<!--            </el-date-picker>-->
+<!--          </div>-->
+<!--          <div class="talkInfo">-->
+<!--            <el-row>-->
+<!--              <el-col :span="8" class="data_item" style="height:58px">-->
+<!--                <div class="data_item_title">{{ summaryInfo.theme1 }}</div>-->
+<!--                <div>{{ summaryInfo.theme1Count }}次</div>-->
+<!--              </el-col>-->
+<!--              <el-col :span="8" class="data_item" style="height:58px">-->
+<!--                <div class="data_item_title">{{ summaryInfo.theme2 }}</div>-->
+<!--                <div>{{ summaryInfo.theme2Count }}次</div>-->
+<!--              </el-col>-->
+<!--              <el-col :span="8" class="data_item border_none" style="height:58px">-->
+<!--                <div class="data_item_title">沟通类型</div>-->
+<!--                <div>{{ summaryInfo.otherThemeCount }}次</div>-->
+<!--              </el-col>-->
+<!--            </el-row>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </el-col>-->
+<!--      <el-col :span="15">-->
+<!--        <div class="bg_box" style="margin-left:0;margin-top:0;height:314px">-->
+<!--          <img class="title_img" src="@/assets/img/clock.png" alt />-->
+<!--          <div class="title">-->
+<!--            待沟通<span style="color: #1989FA; padding: 0 4px;">{{ willConactNum }}</span>次-->
+<!--            <el-button type="primary" style="float: right; margin: 10px 24px;" @click="addContacts">添加沟通计划</el-button>-->
+<!--          </div>-->
 
-          <BaseCrud
-            :grid-config="tableConfigData.gridConfig"
-            :grid-btn-config="tableConfigData.gridBtnConfig"
-            :grid-data="talkPlanList"
-            :form-config="tableConfigData.formConfig"
-            :form-data="tableConfigData.formModel"
-            :grid-edit-width="100"
-            :table-height="212"
-            form-title="用户"
-            :is-async="true"
-            :params="params1"
-            style="margin:24px;border:1px solid #EBEEF5;height:212px;overflow:hidden"
-            @detail="editDetail"
-          ></BaseCrud>
-        </div>
-      </el-col>
-    </el-row>
-    <div class="bg_box" style="height:411px;margin-top:0;">
-      <div class="title">
-        历史沟通记录
-        <el-button type="primary" style="float:right;margin:10px 24px" @click="addSubtotal">添加沟通小计</el-button>
-        <el-button style="float:right;margin:10px 0px" @click="viewLiaison">查看联系人</el-button>
-      </div>
+<!--          <BaseCrud-->
+<!--            :grid-config="tableConfigData.gridConfig"-->
+<!--            :grid-btn-config="tableConfigData.gridBtnConfig"-->
+<!--            :grid-data="talkPlanList"-->
+<!--            :form-config="tableConfigData.formConfig"-->
+<!--            :form-data="tableConfigData.formModel"-->
+<!--            :grid-edit-width="100"-->
+<!--            :table-height="212"-->
+<!--            form-title="用户"-->
+<!--            :is-async="true"-->
+<!--            :params="params1"-->
+<!--            style="margin:24px;border:1px solid #EBEEF5;height:212px;overflow:hidden"-->
+<!--            @detail="editDetail"-->
+<!--          ></BaseCrud>-->
+<!--        </div>-->
+<!--      </el-col>-->
+<!--    </el-row>-->
+<!--    <div class="bg_box" style="height:411px;margin-top:0;">-->
+<!--      <div class="title">-->
+<!--        历史沟通记录-->
+<!--        <el-button type="primary" style="float:right;margin:10px 24px" @click="addSubtotal">添加沟通小计</el-button>-->
+<!--        <el-button style="float:right;margin:10px 0px" @click="viewLiaison">查看联系人</el-button>-->
+<!--      </div>-->
 
-      <BaseCrud
-        :grid-config="tableConfigData2.gridConfig"
-        :grid-btn-config="tableConfigData2.gridBtnConfig"
-        :grid-data="channelList"
-        :form-config="tableConfigData2.formConfig"
-        :form-data="tableConfigData2.formModel"
-        :grid-edit-width="100"
-        :table-height="309"
-        form-title="用户"
-        :is-async="true"
-        :params="params2"
-        style="margin:24px;border:1px solid #EBEEF5;height:309px;overflow:hidden"
-        @detail="viewDetail"
-      ></BaseCrud>
-    </div>
+<!--      <BaseCrud-->
+<!--        :grid-config="tableConfigData2.gridConfig"-->
+<!--        :grid-btn-config="tableConfigData2.gridBtnConfig"-->
+<!--        :grid-data="channelList"-->
+<!--        :form-config="tableConfigData2.formConfig"-->
+<!--        :form-data="tableConfigData2.formModel"-->
+<!--        :grid-edit-width="100"-->
+<!--        :table-height="309"-->
+<!--        form-title="用户"-->
+<!--        :is-async="true"-->
+<!--        :params="params2"-->
+<!--        style="margin:24px;border:1px solid #EBEEF5;height:309px;overflow:hidden"-->
+<!--        @detail="viewDetail"-->
+<!--      ></BaseCrud>-->
+<!--    </div>-->
 
     <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size="500px">
       <div class="p_head">{{ fromConfigData.title }}</div>
@@ -303,7 +303,7 @@
 <script>
 import Form from "@/components/form/index.vue";
 import api from "@/api/api_agent.js";
-import BaseCrud from "@/components/table/BaseCrud.vue";
+// import BaseCrud from "@/components/table/BaseCrud.vue";
 import api_device from "@/api/api_device.js";
 import detailMode from "@/components/detailMode/detailMode.vue";
 import { ORDER_EQUIPMENT } from "./formConfig/orderEquipmentForm";
@@ -316,7 +316,7 @@ import areaData from "@/assets/data/areaData";
 
 export default {
   name: "Theme",
-  components: { detailMode, BaseCrud, Form },
+  components: { detailMode, Form },
   data() {
     return {
       channelList: [],

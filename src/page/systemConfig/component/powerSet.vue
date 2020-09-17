@@ -3,7 +3,7 @@
   <div>
     <div class="p_head">权限设置</div>
     <el-form ref="form" label-width="100px" style="margin: 24px;">
-      <el-form-item label="复制成员权限:">
+      <el-form-item label="复制成员权限:" v-if="roleId !== 13">
         <el-select v-model="bindEmployee" placeholder="请选择成员" @change="changeEmployee">
           <el-option
             v-for="(person,index) in employeeList"
@@ -60,7 +60,8 @@ export default {
         return []
       }
     },
-    apiService: Function
+    apiService: Function,
+    roleId: Number
   },
   data() {
     return {
