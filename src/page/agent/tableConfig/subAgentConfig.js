@@ -6,8 +6,8 @@ export const USER_CONFIG = {
       width: '150px'
     },
     {
-      label: '所属顶级服务商',
-      prop: 'parentAgentNo',
+      label: '所属上级服务商',
+      prop: 'parentAgentName',
       width: '150px'
     },
     {
