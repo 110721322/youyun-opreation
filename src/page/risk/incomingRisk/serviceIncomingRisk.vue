@@ -103,7 +103,6 @@ export default {
       testData: [],
       testData2: [],
       drawer: false,
-      direction: "rtl",
       selectData: [],
       params: {},
       params1: {},
@@ -144,7 +143,7 @@ export default {
       const params = {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,
-        contractStatus: $ruleForm.operateUserNo
+        operateUserNo: $ruleForm.operateUserNo
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
@@ -201,29 +200,15 @@ export default {
             })
             this.drawer = false
             this.selectData = []
+            this.params = {}
             this.$refs.table.getData()
           }
         })
       }
-      // this.drawer = false;
-      // api
-      //   .agentBanListAdd({
-      //     agentNos: [
-      //       {
-      //         agentNo: ""
-      //       }
-      //     ]
-      //   })
-      //   .then(res => {
-      //     this.$message("添加成功");
-      //   })
-      //   .catch(err => {
-      //     this.$message(err);
-      //   });
     },
     onClick_cancel() {
       this.drawer = false;
-      this.$refs['agentTable'].clearSelection()
+      this.$refs['agentTable'].$children[0].clearSelection()
     },
     onClick_addBlackList() {
       this.drawer = true;
