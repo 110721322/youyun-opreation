@@ -8,8 +8,8 @@ export const CHECK_CONFIG = {
       class: "clear_both",
       urlOptions: {
         url: apiAgent.queryEmployeeList,
-        keyName: 'operationId',
-        valueName: 'operationName',
+        keyName: 'id',
+        valueName: 'jobName',
         method: 'get'
       }
     }

@@ -1,6 +1,7 @@
 import { setRules } from '@/libs/kit/formFns.js'
 import apiDevice from "@/api/api_device";
 import areaData from "@/assets/data/areaData"
+import serviceData from "@/assets/data/serviceData";
 
 export const FORM_CONFIG = {
   basicData: {
@@ -156,11 +157,11 @@ export const FORM_CONFIG = {
       {
         type: 8,
         label: '服务地区',
-        key: 'area',
+        key: 'activeScopeCode',
         style: 'width:294px',
         labelWidth: '185px',
-        options: areaData,
-        rules: setRules('请输入').isSelected.get
+        options: serviceData,
+        rules: setRules('请选择').isSelected.get
       },
       {
         type: 5,

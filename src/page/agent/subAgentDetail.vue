@@ -27,10 +27,11 @@
           <span v-if="showName === true">{{ ruleForm.parentAgentName }}</span>
           <div v-if="showName === true" class="modify" @click="on_change">修改</div>
           <div v-if="showName === false" class="modify" @click="on_save">保存</div>
+          <div v-if="showName === false" class="modify" @click="on_cancle">取消</div>
         </li>
         <li>
           <span>账号类型：</span>
-          <span>{{ ruleForm.parentAgentName }}</span>
+          <span>{{ ruleForm.bankAccountTypeCn }}</span>
         </li>
         <li>
           <span>公司名称：</span>
@@ -46,7 +47,7 @@
         </li>
         <li>
           <span>地区：</span>
-          <span>{{ ruleForm.areaColor }}</span>
+          <span>{{ ruleForm.provinceName + ruleForm.cityName + ruleForm.areaName }}</span>
         </li>
         <li>
           <span>详细地址：</span>
@@ -88,6 +89,12 @@ export default {
       api.subAgentDetail({
         agentNo: agentNo
       }).then(res => {
+        if (res.object.bankAccountType === 'public') {
+          res.object.bankAccountTypeCn = '对公'
+        }
+        if (res.object.bankAccountType === 'private') {
+          res.object.bankAccountTypeCn = '对私'
+        }
         var request = res.object;
         this.ruleForm = {
           agentName: request.agentName,
@@ -96,12 +103,19 @@ export default {
           parentAgentName: request.parentAgentName,
           businessType: request.businessType,
           email: request.email,
-          companyAddress: request.companyAddress
+          companyAddress: request.companyAddress,
+          provinceName: request.provinceName,
+          cityName: request.cityName,
+          areaName: request.areaName,
+          bankAccountTypeCn: request.bankAccountTypeCn
         }
       })
     },
     on_change() {
       this.showName = false
+    },
+    on_cancle() {
+      this.showName = true
     },
     on_save() {
       console.log(this.agentNo)
