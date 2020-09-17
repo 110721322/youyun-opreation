@@ -172,10 +172,10 @@ export const configData2 = {
       models: [
         {
           items: [
-            {
-              name: "小马哥代理到期时间",
-              key: "loginAccount"
-            },
+            // {
+            //   name: "小马哥代理到期时间",
+            //   key: "loginAccount"
+            // },
             {
               name: "后台权限",
               key: "",

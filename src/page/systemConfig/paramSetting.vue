@@ -49,10 +49,10 @@ export default {
   data() {
     return {
       menuList: [
-        {
-          name: "待办事项",
-          type: "todoList"
-        },
+        // {
+        //   name: "待办事项",
+        //   type: "todoList"
+        // },
         {
           name: "标签",
           type: "target"
