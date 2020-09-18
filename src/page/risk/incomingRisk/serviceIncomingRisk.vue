@@ -1,5 +1,5 @@
 <template>
-  <div class>
+  <div>
     <div class="tab_head">
       <span class="title">服务商入件风控</span>
     </div>
@@ -87,7 +87,7 @@ import { SERVICEINCOMING_CONFIG } from "../tableConfig/serviceIncomingConfig";
 import { FORM_CONFIG } from "../formConfig/serviceIncomingForm";
 
 export default {
-  name: "Theme",
+  name: "ServiceIncomingRisk",
   components: { Search, BaseCrud },
   data() {
     return {

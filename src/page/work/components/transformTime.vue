@@ -10,7 +10,7 @@ const pad = function (num, n) {
   return num;
 }
 export default {
-  name: 'Time',
+  name: 'TransformTime',
   components: { },
   props: ['time'],
 

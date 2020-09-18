@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div class="container">
     <div class="top">
       <span>下单页面</span>
       <el-steps :active="2" align-center>
@@ -42,6 +42,7 @@
 import api from "@/api/api_serveMarket";
 import Upload from "@/components/form/components/Upload.vue";
 export default {
+  name: "PayAmount",
   components: {
     Upload
   },
@@ -93,7 +94,7 @@ export default {
       api.createOrder(params).then(res => {
         if (res.object) {
           this.$router.push({
-            path: "/serveMarket/businessModel/payStatus"
+            name: "payStatus"
           })
         }
         console.log(res.object)
@@ -104,7 +105,7 @@ export default {
 </script>
 
 <style scoped>
-  .main_page {
+  .container {
     width: 100%;
     padding: 24px 24px 80px 24px;
     box-sizing: border-box;

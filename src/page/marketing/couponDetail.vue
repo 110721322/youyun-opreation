@@ -1,5 +1,5 @@
 <template>
-  <div class="mian_page">
+  <div>
     <div class="detail">
       <div class="detail-title">活动信息</div>
       <ul class="detail-info">
@@ -44,6 +44,7 @@ import api from "@/api/api_coupon.js";
 import search from "@/components/search/search.vue";
 import { FORM_CONFIG } from "./formConfig/detailConfig";
 export default {
+  name: "CouponDetail",
   components: { search },
   data() {
     return {

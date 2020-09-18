@@ -1,23 +1,21 @@
 <template>
-  <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/commissionDetail') !== -1 || this.$route.path.indexOf('/publicTransfer') !== -1" />
-    <div v-else>
-      <div class="tab_head">
-        <span class="title">佣金结算审核</span>
-      </div>
-      <Search
+  <div>
+    <div class="tab_head">
+      <span class="title">佣金结算审核</span>
+    </div>
+    <Search
         :is-show-all="true"
         :open-height="searchHeight"
         :form-base-data="searchConfig.formData"
         @search="search"
-      />
+    />
 
-      <div class="table_box">
-        <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane label="顶级服务商" name="0"></el-tab-pane>
-          <el-tab-pane label="服务商" name="1"></el-tab-pane>
-        </el-tabs>
-        <BaseCrud
+    <div class="table_box">
+      <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="顶级服务商" name="0"></el-tab-pane>
+        <el-tab-pane label="服务商" name="1"></el-tab-pane>
+      </el-tabs>
+      <BaseCrud
           v-if="activeName==='0'"
           ref="table"
           :grid-config="configData.gridConfig"
@@ -38,8 +36,8 @@
           @detail="onClick_detail"
           @reject="onClick_reject"
           @adopt="onClick_adopt"
-        ></BaseCrud>
-        <BaseCrud
+      ></BaseCrud>
+      <BaseCrud
           v-else
           ref="table"
           :grid-config="configData.gridConfig"
@@ -60,100 +58,99 @@
           @detail="onClick_detail"
           @reject="onClick_reject"
           @adopt="onClick_adopt"
-        ></BaseCrud>
-      </div>
+      ></BaseCrud>
+    </div>
 
-      <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
-        <div class="p_head">{{ fromConfigData.title }}</div>
-        <div v-if="fromConfigData.processData" class="process-box">
-          <template v-for="(item,index) in fromConfigData.processData">
-            <div :key="index" class="process-item">
-              <div>
-                <img class="process-icon" :src="item.icon" />
-              </div>
-              <div class="label">
-                {{ item.desc }}
-                <span v-if="item.username" class="name">{{ item.username }}</span>
-              </div>
-              <div class="time">{{ item.time }}</div>
+    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
+      <div class="p_head">{{ fromConfigData.title }}</div>
+      <div v-if="fromConfigData.processData" class="process-box">
+        <template v-for="(item,index) in fromConfigData.processData">
+          <div :key="index" class="process-item">
+            <div>
+              <img class="process-icon" :src="item.icon" />
             </div>
-            <img
+            <div class="label">
+              {{ item.desc }}
+              <span v-if="item.username" class="name">{{ item.username }}</span>
+            </div>
+            <div class="time">{{ item.time }}</div>
+          </div>
+          <img
               v-if="!(index===fromConfigData.processData.length-1)"
               :key="'img'+index"
               :src="arrow"
               class="arrow-img"
-            />
-          </template>
-        </div>
-        <Form
+          />
+        </template>
+      </div>
+      <Form
           :form-base-data="fromConfigData.formData"
           :show-foot-btn="fromConfigData.showFootBtn"
           label-width="130px"
           :foot-btn-label="fromConfigData.footBtnLabel"
           @cancel="cancel"
           @confirm="confirm"
-        ></Form>
-      </el-drawer>
+      ></Form>
+    </el-drawer>
 
-      <el-drawer
+    <el-drawer
         :visible.sync="detailDrawer"
         direction="rtl"
         :before-close="handleClose"
         size="400px"
-      >
-        <div slot="title" class="drawer-contenttitle">
-          <span>佣金结算详情</span>
-        </div>
-        <div class="content-draw" v-if="JSON.stringify(settleDetailData) !== '{}'">
-          <div class="content-form">
-            <div class="form-select">
-              <div class="module-title">结算金额</div>
-              <div class="select">
-                <div class="check-box">
-                  <div hide-required-asterisk="true" class="left-label">结算类型：</div>
-                  <div>
-                    <div v-for="(type, index) in settleDetailData.settleAmount.settleTypes" :key="index" class="select-price months">{{ (type.name+'&nbsp;['+type.months+']') }}</div>
-                  </div>
+    >
+      <div slot="title" class="drawer-contenttitle">
+        <span>佣金结算详情</span>
+      </div>
+      <div class="content-draw" v-if="JSON.stringify(settleDetailData) !== '{}'">
+        <div class="content-form">
+          <div class="form-select">
+            <div class="module-title">结算金额</div>
+            <div class="select">
+              <div class="check-box">
+                <div hide-required-asterisk="true" class="left-label">结算类型：</div>
+                <div>
+                  <div v-for="(type, index) in settleDetailData.settleAmount.settleTypes" :key="index" class="select-price months">{{ (type.name+'&nbsp;['+type.months+']') }}</div>
                 </div>
-              </div>
-              <div class="select" style="margin: 16px 0 24px 0;">
-                <div class="left-label">总佣金：</div>
-                <div class="select-price">{{ `¥${settleDetailData.settleAmount.settleCommission}` }}</div>
-              </div>
-              <div class="select" style="margin: 16px 0 24px 0;">
-                <div class="left-label">扣除佣金:</div>
-                <div class="select-price">
-                  <div class="select-price">
-                    <span>到期续费&nbsp;</span>
-                    <span>{{ `¥${settleDetailData.settleAmount.agentRenewAmount}` }}</span>
-                  </div>
-                  <div class="select-price">
-                    <span>平台抽成&nbsp;</span>
-                    <span>{{ `¥${settleDetailData.settleAmount.platformCommission}` }}</span>
-                  </div>
-                </div>
-              </div>
-              <div class="select" style="margin: 16px 0 24px 0;">
-                <div class="left-label">结算金额:</div>
-                <div class="select-price">{{ `¥${settleDetailData.settleAmount.actualSettleCommission}` }}</div>
               </div>
             </div>
-            <div class="form-select">
-              <div class="module-title">结算信息</div>
-              <div class="receipt-img">
-                <el-image class="show-image" :src="settleDetailData.settleInfo.expressImg" :preview-src-list="[settleDetailData.settleInfo.expressImg]"></el-image>
-                <p>发票照片</p>
+            <div class="select" style="margin: 16px 0 24px 0;">
+              <div class="left-label">总佣金：</div>
+              <div class="select-price">{{ `¥${settleDetailData.settleAmount.settleCommission}` }}</div>
+            </div>
+            <div class="select" style="margin: 16px 0 24px 0;">
+              <div class="left-label">扣除佣金:</div>
+              <div class="select-price">
+                <div class="select-price">
+                  <span>到期续费&nbsp;</span>
+                  <span>{{ `¥${settleDetailData.settleAmount.agentRenewAmount}` }}</span>
+                </div>
+                <div class="select-price">
+                  <span>平台抽成&nbsp;</span>
+                  <span>{{ `¥${settleDetailData.settleAmount.platformCommission}` }}</span>
+                </div>
               </div>
-              <Form
+            </div>
+            <div class="select" style="margin: 16px 0 24px 0;">
+              <div class="left-label">结算金额:</div>
+              <div class="select-price">{{ `¥${settleDetailData.settleAmount.actualSettleCommission}` }}</div>
+            </div>
+          </div>
+          <div class="form-select">
+            <div class="module-title">结算信息</div>
+            <div class="receipt-img">
+              <el-image class="show-image" :src="settleDetailData.settleInfo.expressImg" :preview-src-list="[settleDetailData.settleInfo.expressImg]"></el-image>
+              <p>发票照片</p>
+            </div>
+            <Form
                 :form-base-data="detailFormConfigData.formData"
                 :show-foot-btn="detailFormConfigData.showFootBtn"
                 label-width="130px"
-              ></Form>
-            </div>
+            ></Form>
           </div>
         </div>
-      </el-drawer>
-    </div>
+      </div>
+    </el-drawer>
   </div>
 </template>
 <script>
@@ -167,7 +164,7 @@ import { DETAIL_FORM_CONFIG } from "../formConfig/operationApproveForm";
 import api from "@/api/api_financialAudit.js";
 
 export default {
-  name: "Theme",
+  name: "Commission",
   components: { Search, BaseCrud, Form },
   data() {
     return {

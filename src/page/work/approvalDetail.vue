@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div class="container">
     <div class="p_head">审批任务详情</div>
     <div class="contents">
       <div class="content">
@@ -99,7 +99,7 @@ export default {
               type: 'success'
             })
             this.$router.replace({
-              path: '/work/todo'
+              name: 'workTodo'
             })
           }
         }).catch(() => {
@@ -128,7 +128,7 @@ export default {
               type: 'success'
             })
             this.$router.replace({
-              path: '/work/todo'
+              name: 'workTodo'
             })
           }
         }).catch(() => {

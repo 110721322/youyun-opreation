@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="tab_head">
       <span class="title">运营结算审核</span>
     </div>
@@ -82,7 +82,7 @@ import { SEARCH_CONFIG } from "./formConfig/operationApproveSearch";
 import { OPERATIONAPPROVE_CONFIG } from "./tableConfig/operationApproveConfig";
 
 export default {
-  name: "Theme",
+  name: "OperationApprove",
   components: { Search, BaseCrud, Form },
   data() {
     return {
@@ -133,7 +133,7 @@ export default {
       console.log($val);
     },
     onClick_detail() {
-      this.$router.push({ path: "/agent/dividedOverview" });
+      this.$router.push({ name: "dividedOverview" });
     },
     onClick_reject() {
       this.fromConfigData = FORM_CONFIG.rejectData;

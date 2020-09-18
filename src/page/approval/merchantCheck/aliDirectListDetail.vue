@@ -1,5 +1,5 @@
 <template>
-  <div class>
+  <div>
     <div class="tab_head">
       <span class="title">商户预审核信息</span>
     </div>

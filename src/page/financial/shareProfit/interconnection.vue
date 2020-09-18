@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <Search :form-base-data="searchConfig.formData" :is-show-all="true" @search="search" />
     <div class="table_box">
       <BaseCrud
@@ -30,6 +30,7 @@ import { SEARCH_CONFIG } from "../formConfig/interconnectionSearch";
 import { SERVICE_CONFIG } from "../tableConfig/interconnectionConfig";
 import api_statistice from "@/api/api_statistice"
 export default {
+  name: "Interconnection",
   components: { Search, BaseCrud },
   data() {
     return {

@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div>
     <div class="tab_head">
       <span class="title">设备库存</span>
     </div>
@@ -52,7 +52,7 @@ import { SEARCH_CONFIG } from "./../formConfig/stockListSearch";
 import { STOCKLIST_CONFIG } from "./../tableConfig/stocklistConfig";
 
 export default {
-  name: "Theme",
+  name: "StockList",
   components: { Search, BaseCrud, Form },
   data() {
     return {

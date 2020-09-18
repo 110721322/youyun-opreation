@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <Search
       :is-show-all="false"
       :open-height="searchHeight"
@@ -32,6 +32,7 @@ import { SEARCH_CONFIG } from "../formConfig/activityDetail";
 import {SERVICE_CONFIG} from "../tableConfig/activityDetailConfig";
 import api_statistice from "@/api/api_statistice";
 export default {
+  name: "ActivityAwardDetail",
   components: { Search, BaseCrud },
   data() {
     return {

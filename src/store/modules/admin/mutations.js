@@ -20,5 +20,8 @@ export default {
   },
   SET_TODOLIST(state, $option) {
     state.todoList = $option;
+  },
+  SAVE_KEEP_ALIVE(state, $list) {
+    state.includeKeepAlive = $list;
   }
 };

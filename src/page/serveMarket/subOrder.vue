@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div class="container">
     <div class="top">
       <span>下单页面</span>
       <el-steps :active="1" align-center>
@@ -43,6 +43,7 @@
 <script>
 import api from "@/api/api_serveMarket";
 export default {
+  name: "SubOrder",
   data() {
     return {
       promoCodeId: '',
@@ -65,7 +66,7 @@ export default {
       }
       localStorage.setItem('amount', this.amount)
       this.$router.push({
-        path: "/serveMarket/businessModel/payAmount"
+        name: "payAmount"
       })
     },
     getPromoCode() {
@@ -91,7 +92,7 @@ export default {
 </script>
 
 <style scoped>
-  .main_page {
+  .container {
     width: 100%;
     padding: 24px 24px 80px 24px;
     box-sizing: border-box;

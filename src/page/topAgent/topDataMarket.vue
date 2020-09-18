@@ -1,45 +1,43 @@
 <template>
-  <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
-    <div v-else>
-      <div class="p_head">
-        <span class="left-title">服务商数据</span>
+  <div class="container">
+    <div class="p_head">
+      <span class="left-title">服务商数据</span>
+    </div>
+    <div class="title">顶级服务商数量分布</div>
+    <div class="map-box">
+      <div class="chart-box">
+        <div ref="echartsMap" class="chart-panel"></div>
       </div>
-      <div class="title">顶级服务商数量分布</div>
-      <div class="map-box">
-        <div class="chart-box">
-          <div ref="echartsMap" class="chart-panel"></div>
+      <div class="data-box">
+        <div class="data-title">
+          省份分布排行榜
+          <span class="all-num">共{{totalNum}}个</span>
         </div>
-        <div class="data-box">
-          <div class="data-title">
-            省份分布排行榜
-            <span class="all-num">共{{totalNum}}个</span>
+        <div v-for="(item,index) in mapData" :key="index" class="data-item">
+          <div class="data-left">
+            <span :class="['index',index<=2?'hightlight':'normal']">{{ index+1 }}</span>
+            {{ item.name }}
           </div>
-          <div v-for="(item,index) in mapData" :key="index" class="data-item">
-            <div class="data-left">
-              <span :class="['index',index<=2?'hightlight':'normal']">{{ index+1 }}</span>
-              {{ item.name }}
-            </div>
-            <div class="data-right">
-              <span>{{ item.topAgentNumbers }}</span> |
-              <span class="perc">{{ item.percentage }}</span>
-            </div>
+          <div class="data-right">
+            <span>{{ item.topAgentNumbers }}</span> |
+            <span class="perc">{{ item.percentage }}</span>
           </div>
         </div>
       </div>
-      <search
+    </div>
+    <search
         :is-show-all="true"
         :form-base-data="searchConfig.formData"
         :show-foot-btn="searchConfig.showFootBtn"
         @search="search"
-      />
-      <div class="title">顶级服务商平均交易额走势</div>
-      <div class="trend-box">
-        <div class="chart-box">
-          <div ref="echartsLine" class="chart-panel"></div>
-        </div>
-        <div class="data-box">
-          <dataItem
+    />
+    <div class="title">顶级服务商平均交易额走势</div>
+    <div class="trend-box">
+      <div class="chart-box">
+        <div ref="echartsLine" class="chart-panel"></div>
+      </div>
+      <div class="data-box">
+        <dataItem
             :is-show-table="true"
             :title="'总交易额排行榜'"
             :is-show-more="true"
@@ -48,11 +46,11 @@
             :is-show-line="false"
             :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
             @showMore="handleShowMore"
-          ></dataItem>
-        </div>
+        ></dataItem>
       </div>
-      <div class="pie-box">
-        <dataItem
+    </div>
+    <div class="pie-box">
+      <dataItem
           class="pie-item"
           :title="'新增商户数量排行'"
           :config-data="tableConfigData2"
@@ -61,8 +59,7 @@
           :item-test-data="addMerchantCount"
           :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
           @showMore="handleShowMore"
-        />
-      </div>
+      />
     </div>
   </div>
 </template>
@@ -83,7 +80,7 @@ import { FORM_CONFIG2 } from "./../dataMarket/formConfig/dataViewSearch";
 import echarts from "echarts";
 import "./../../libs/kit/china";
 export default {
-  name: "ServiceData",
+  name: "TopDataMarket",
   components: {
     search,
     dataItem
@@ -247,7 +244,7 @@ export default {
       });
     },
     handleShowMore() {
-      this.$router.push({ path: "/topAgent/topDataMarket/detail" });
+      this.$router.push({ name: "topAgentData" });
     },
     search($ruleForm = {date: [this.$g.utils.getToday(), this.$g.utils.getToday(0)]}) {
       Object.assign(this.queryParams, {beginDate: $ruleForm.date[0], endDate: $ruleForm.date[1]});

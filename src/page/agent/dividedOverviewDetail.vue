@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="p_head">商户分润明细</div>
     <search
       :is-show-all="true"
@@ -35,7 +35,7 @@ import { FORM_CONFIG } from "./formConfig/dividedOverviewDetailSearch";
 import api from "@/api/api_agent.js"
 
 export default {
-  name: "Theme",
+  name: "DividedOverviewDetail",
   components: { search, BaseCrud },
   // components: {  dataMode, BaseCrud },
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="tab_head">
       <span class="title">小程序角色权限</span>
     </div>
@@ -43,7 +43,7 @@ import api_systemConfig from "@/api/api_systemConfig";
 import { AGENTAPPLET_CONFIG } from "./../tableConfig/agentAppletManagerConfig";
 
 export default {
-  name: "Theme",
+  name: "AgentAppletManager",
   components: { BaseCrud, RoleMenuSet },
   data() {
     return {

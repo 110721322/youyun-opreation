@@ -53,6 +53,7 @@
 </template>
 <script>
 export default {
+  name: "AuditSet",
   props: {
     templateList: {
       type: Array,

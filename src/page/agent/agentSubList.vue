@@ -1,17 +1,15 @@
 <template>
-  <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
-    <div v-else>
-      <div class="p_head">下级服务商列表</div>
-      <search
+  <div>
+    <div class="p_head">下级服务商列表</div>
+    <search
         :open-height="searchMaxHeight"
         :form-base-data="searchConfig.formData"
         :show-foot-btn="searchConfig.showFootBtn"
         @search="search"
-      />
-      <!-- <data-mode></data-mode> -->
-      <div class="table_box">
-        <BaseCrud
+    />
+    <!-- <data-mode></data-mode> -->
+    <div class="table_box">
+      <BaseCrud
           ref="table"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
@@ -29,8 +27,7 @@
           @frozen="frozen"
           @openAgentManager="openAgentManager"
           @goMerchantList="goMerchantList"
-        />
-      </div>
+      />
     </div>
   </div>
 </template>
@@ -44,7 +41,7 @@ import { USER_CONFIG } from "./tableConfig/subAgentConfig";
 import { FORM_CONFIG } from "./formConfig/subAgentListSearch";
 
 export default {
-  name: "Theme",
+  name: "AgentSubList",
   components: { search, BaseCrud },
   // components: {  dataMode, BaseCrud },
 
@@ -83,7 +80,7 @@ export default {
     },
     openDetail(row) {
       this.$router.push({
-        path: "/agent/subList/detail",
+        name: "agentSubListDetail",
         query: {
           agentNo: row.agentNo
         }
@@ -140,7 +137,7 @@ export default {
     },
     goMerchantList() {
       this.$router.push({
-        path: "/merchant/list"
+        name: "merchantList"
       });
     }
   }

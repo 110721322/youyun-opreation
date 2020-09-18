@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="tab_head">
       <span class="title">编辑按钮</span>
     </div>
@@ -46,7 +46,7 @@ import { FORM_CONFIG } from "./formConfig/powerBtnDetail";
 import { POWERBTNMANAGER_CONFIG } from "./tableConfig/powerBtnManagerConfig";
 
 export default {
-  name: "Theme",
+  name: "PowerBtnManager",
   components: { BaseCrud, Form },
   data() {
     return {

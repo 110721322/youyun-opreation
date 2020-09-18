@@ -1,5 +1,5 @@
 <template>
-  <div class>
+  <div>
     <div class="tab_head">
       <span class="title">工单详情</span>
     </div>
@@ -49,7 +49,7 @@ import Form from "@/components/form/index.vue";
 import { FORM_CONFIG } from "./../formConfig/ticketListDetailForm";
 
 export default {
-  name: "CheckServiceListDetail",
+  name: "TicketListDetail",
   components: { detailMode, Form },
 
   data() {

@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div class="container">
     <div class="p_head">短信群发</div>
     <div class="content-box">
       <div class="title">{{ fromConfigData.title }}</div>
@@ -14,7 +14,7 @@ import sendMessage from "@/components/form/sendMessage.vue";
 import { FORM_CONFIG } from "./formConfig/sendMessage";
 
 export default {
-  name: "Theme",
+  name: "WorkSentMessage",
   components: { sendMessage },
   data() {
     return {

@@ -1,16 +1,12 @@
 <template>
-  <div class>
-    <router-view
-      v-if="this.$route.path.indexOf('/detail') !== -1 || this.$route.path.indexOf('/recordDetail') !== -1"
-    />
-    <div v-else>
-      <div class="tab_head">
-        <span class="title">商户支付宝直连审核</span>
-      </div>
-      <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
+  <div>
+    <div class="tab_head">
+      <span class="title">商户支付宝直连审核</span>
+    </div>
+    <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
 
-      <div class="table_box">
-        <BaseCrud
+    <div class="table_box">
+      <BaseCrud
           ref="table"
           :params="params"
           :api-service="api"
@@ -31,19 +27,18 @@
           @record="handleRecord"
           @pass="handlePass"
           @reject="handleReject"
-        ></BaseCrud>
-      </div>
-      <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
-        <div class="p_head">{{ fromConfigData.title }}</div>
-        <Form
+      ></BaseCrud>
+    </div>
+    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
+      <div class="p_head">{{ fromConfigData.title }}</div>
+      <Form
           :form-base-data="fromConfigData.formData"
           :show-foot-btn="fromConfigData.showFootBtn"
           label-width="130px"
           @cancel="cancel"
           @confirm="confirm"
-        ></Form>
-      </el-drawer>
-    </div>
+      ></Form>
+    </el-drawer>
   </div>
 </template>
 <script>
@@ -137,7 +132,7 @@ export default {
     },
     handleDetail(row) {
       this.$router.push({
-        path: "/approval/checkMerchant/aliDirectList/detail",
+        name: "aliDirectListDetail",
         query: {
           merchantNo: row.merchantNo,
           channelCode: row.channel,
@@ -147,7 +142,7 @@ export default {
     },
     handlePreApprove(row) {
       this.$router.push({
-        path: "/approval/checkMerchant/aliDirectList/detail",
+        name: "aliDirectListDetail",
         query: {
           merchantNo: row.merchantNo,
           channelCode: row.channel,
@@ -157,7 +152,7 @@ export default {
     },
     handleRecord(row) {
       this.$router.push({
-        path: "/approval/checkMerchant/aliDirectList/recordDetail",
+        name: "aliDirectRecordDetail",
         query: {
           merchantNo: row.merchantNo,
           channel: row.channel

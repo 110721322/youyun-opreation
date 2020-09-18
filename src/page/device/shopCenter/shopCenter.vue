@@ -1,17 +1,15 @@
 <template>
-  <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
-    <div v-else>
-      <div class="tab_head">
-        <span class="title">商城管理</span>
-      </div>
-      <Search :is-show-all="true" :form-base-data="searchConfig.formData" @search="search" />
+  <div>
+    <div class="tab_head">
+      <span class="title">商城管理</span>
+    </div>
+    <Search :is-show-all="true" :form-base-data="searchConfig.formData" @search="search" />
 
-      <div class="table_box">
-        <div class="tabale_title_box">
-          <el-button class="btn" type="primary" @click="onClick_addDevice">添加出售设备</el-button>
-        </div>
-        <BaseCrud
+    <div class="table_box">
+      <div class="tabale_title_box">
+        <el-button class="btn" type="primary" @click="onClick_addDevice">添加出售设备</el-button>
+      </div>
+      <BaseCrud
           ref="table"
           :params="params"
           :api-service="api"
@@ -32,8 +30,7 @@
           @delete="onClick_delete"
           @on="onClick_on"
           @off="onClick_off"
-        ></BaseCrud>
-      </div>
+      ></BaseCrud>
     </div>
   </div>
 </template>
@@ -46,7 +43,7 @@ import { SEARCH_CONFIG } from "./../formConfig/shopCenterSearch";
 import { SHOPCENTER_CONFIG } from "./../tableConfig/shopCenterConfig";
 
 export default {
-  name: "Theme",
+  name: "ShopCenter",
   components: { Search, BaseCrud },
   data() {
     return {
@@ -153,13 +150,13 @@ export default {
     },
     onClick_edit($row) {
       this.$router.push({
-        path: "/deviceManage/shopCenter/detail",
+        name: "shopCenterDetail",
         query: { id: $row.id }
       });
     },
     onClick_addDevice() {
       this.$router.push({
-        path: "/deviceManage/shopCenter/detail"
+        name: "shopCenterDetail"
       });
     },
     cancel(done) {

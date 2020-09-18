@@ -1,36 +1,33 @@
 <template>
   <div>
-    <router-view v-if="this.$route.path.indexOf('/statisticsDetail') !== -1 || this.$route.path.indexOf('/statisticsAll') !== -1" />
-    <div class="main_page" v-else>
-      <div class="tab_head">
-        <span class="title">任务统计详情</span>
-      </div>
-      <div>
-        <search
-            :open-height="searchMaxHeight"
-            :form-base-data="searchConfig.formData"
-            :show-foot-btn="searchConfig.showFootBtn"
-            @search="search"
-        />
-        <div class="table_box">
-          <div class="table_title">统计列表</div>
-          <BaseCrud
-              ref="table"
-              :params="params"
-              :api-service="api"
-              :grid-config="configData.gridConfig"
-              :grid-btn-config="configData.gridBtnConfig"
-              :grid-data="testData"
-              :form-config="configData.formConfig"
-              :form-data="configData.formModel"
-              :grid-edit-width="300"
-              :is-async="true"
-              :is-select="false"
-              :is-expand="false"
-              @detail="handle_detail"
-          >
-          </BaseCrud>
-        </div>
+    <div class="tab_head">
+      <span class="title">任务统计详情</span>
+    </div>
+    <div>
+      <search
+          :open-height="searchMaxHeight"
+          :form-base-data="searchConfig.formData"
+          :show-foot-btn="searchConfig.showFootBtn"
+          @search="search"
+      />
+      <div class="table_box">
+        <div class="table_title">统计列表</div>
+        <BaseCrud
+            ref="table"
+            :params="params"
+            :api-service="api"
+            :grid-config="configData.gridConfig"
+            :grid-btn-config="configData.gridBtnConfig"
+            :grid-data="testData"
+            :form-config="configData.formConfig"
+            :form-data="configData.formModel"
+            :grid-edit-width="300"
+            :is-async="true"
+            :is-select="false"
+            :is-expand="false"
+            @detail="handle_detail"
+        >
+        </BaseCrud>
       </div>
     </div>
   </div>
@@ -43,7 +40,7 @@ import { UNFINISH_CONFIG } from "./tableConfig/listConfig";
 import { FORM_CONFIG } from "./formConfig/staticSearch";
 
 export default {
-  name: "Theme",
+  name: "Statistics",
   components: { Search, BaseCrud },
   // components: { dataMode, BaseCrud },
   data() {
@@ -82,7 +79,7 @@ export default {
     },
     handle_detail($row) {
       this.$router.push({
-        path: '/task/statistics/statisticsDetail',
+        name: 'statisticsDetail',
         query: {
           receiverId: $row.receiverId
         }

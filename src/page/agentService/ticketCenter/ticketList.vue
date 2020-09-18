@@ -1,14 +1,12 @@
 <template>
-  <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
-    <div v-else>
-      <div class="tab_head">
-        <span class="title">工单列表</span>
-      </div>
-      <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
+  <div>
+    <div class="tab_head">
+      <span class="title">工单列表</span>
+    </div>
+    <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
 
-      <div class="table_box">
-        <BaseCrud
+    <div class="table_box">
+      <BaseCrud
           ref="table"
           :params="params"
           :api-service="api"
@@ -27,19 +25,18 @@
           @distribution="handleDistribution"
           @reply="handleReply"
           @checkReply="handleCheckReply"
-        ></BaseCrud>
-      </div>
-      <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
-        <div class="p_head">{{ fromConfigData.title }}</div>
-        <Form
+      ></BaseCrud>
+    </div>
+    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
+      <div class="p_head">{{ fromConfigData.title }}</div>
+      <Form
           :form-base-data="fromConfigData.formData"
           :show-foot-btn="fromConfigData.showFootBtn"
           label-width="130px"
           @cancel="cancel"
           @confirm="confirm"
-        ></Form>
-      </el-drawer>
-    </div>
+      ></Form>
+    </el-drawer>
   </div>
 </template>
 <script>
@@ -53,7 +50,7 @@ import { TABLE_CONFIG } from "../tableConfig/ticketListConfig";
 import { FORM_CONFIG } from "../formConfig/ticketListForm";
 
 export default {
-  name: "LeRiskList",
+  name: "TicketList",
   components: { Search, BaseCrud, Form },
   data() {
     return {
@@ -122,7 +119,7 @@ export default {
     },
     handleDetail($row) {
       this.$router.push({
-        path: "/agentService/ticketCenter/ticketList/detail",
+        name: "ticketListDetail",
         query: { id: $row.id }
       });
     },

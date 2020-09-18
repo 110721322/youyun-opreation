@@ -1,19 +1,17 @@
 <template>
-  <div class>
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
-    <div v-else>
-      <div class="tab_head">
-        <span class="title">设备使用列表</span>
-      </div>
-      <search
+  <div>
+    <div class="tab_head">
+      <span class="title">设备使用列表</span>
+    </div>
+    <search
         :open-height="searchMaxHeight"
         :form-base-data="searchConfig.formData"
         :show-foot-btn="searchConfig.showFootBtn"
         @search="search"
-      />
+    />
 
-      <div class="table_box">
-        <BaseCrud
+    <div class="table_box">
+      <BaseCrud
           ref="table"
           :params="params"
           :api-service="api"
@@ -27,8 +25,7 @@
           :hide-edit-area="configData.hideEditArea"
           @unbind="unbind"
           @unfreeze="unfreeze"
-        ></BaseCrud>
-      </div>
+      ></BaseCrud>
     </div>
   </div>
 </template>
@@ -41,7 +38,7 @@ import { SEARCH_CONFIG } from "./../formConfig/usageListSearch";
 import { USAGELIST_CONFIG } from "./../tableConfig/usageListConfig";
 
 export default {
-  name: "Theme",
+  name: "UsageList",
   components: { Search, BaseCrud },
   data() {
     return {

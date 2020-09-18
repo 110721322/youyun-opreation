@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="tab_head">
       <span class="title">运营后台菜单</span>
     </div>
@@ -48,7 +48,7 @@ import { FORM_CONFIG } from "../formConfig/operationMenuDetail";
 import { MENU_CONFIG } from "../tableConfig/operationMenuConfig";
 
 export default {
-  name: "Theme",
+  name: "OperationMenu",
   components: { BaseCrud, Form },
   data() {
     return {

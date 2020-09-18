@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div class="container">
     <div class="top_content">
       <div v-if="showTip" class="warn">
         <div class="left_icon">i</div>
@@ -66,6 +66,7 @@
 <script>
 import api from "@/api/api_serveMarket";
 export default {
+  name: "XmgAgent",
   data () {
     return {
       selectIndex: 0,
@@ -93,7 +94,7 @@ export default {
       localStorage.setItem('comboItem', JSON.stringify(this.comboItem))
       if (this.comboItem) {
         this.$router.push({
-          path: "/serveMarket/businessModel/subOrder"
+          name: "subOrder"
         });
       }
     },
@@ -116,7 +117,7 @@ export default {
 </script>
 
 <style scoped>
-.main_page {
+.container {
   width: 100%;
   padding: 24px 24px;
   box-sizing: border-box;

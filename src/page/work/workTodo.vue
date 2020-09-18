@@ -1,144 +1,141 @@
 <template>
   <div>
-    <router-view v-if="this.$route.path.indexOf('/approvalDetail') !== -1" />
-    <div class="main_page" v-else>
-      <div class="tab_head">
-        <span class="title">待办事项</span>
-        <el-menu
-            :default-active="activeIndex"
-            class="el-menu"
-            mode="horizontal"
-            @select="handleSelect"
+    <div class="tab_head">
+      <span class="title">待办事项</span>
+      <el-menu
+          :default-active="activeIndex"
+          class="el-menu"
+          mode="horizontal"
+          @select="handleSelect"
+      >
+        <el-menu-item index="1">待处理</el-menu-item>
+        <el-menu-item index="2">已处理</el-menu-item>
+      </el-menu>
+    </div>
+    <div style="padding: 24px 24px;">
+      <el-form class="form">
+        <el-form-item label="事项类型：" label-width="100px">
+          <el-select v-model="taskValue" placeholder="请选择">
+            <el-option
+                v-for="(item, index) in options"
+                :key="index"
+                :label="item.taskValue"
+                :value="item.taskType + '/' + item.undoType">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="所属服务商：" label-width="100px" style="margin-left: 60px; width: 100%">
+          <el-input
+              v-model="taskOwner"
+              placeholder="请输入所属商户ID"
+              class="input-with-select"
+          ></el-input>
+          <div class="btn_list">
+            <el-button type="primary" size="large" @click="onClick_search">搜索</el-button>
+            <el-button plain size="large" @click="onClick_reset">重置</el-button>
+          </div>
+        </el-form-item>
+      </el-form>
+    </div>
+    <transition name="fade">
+      <div style="display:flex;padding: 0 24px;height: 1500px;">
+        <el-tree
+            :data="menuConfig"
+            :props="defaultProps"
+            node-key="id"
+            :default-expanded-keys="[0,1]"
+            :indent="0"
+            class="tree"
+            @node-click="handleNodeClick"
         >
-          <el-menu-item index="1">待处理</el-menu-item>
-          <el-menu-item index="2">已处理</el-menu-item>
-        </el-menu>
-      </div>
-      <div style="padding: 24px 24px;">
-        <el-form class="form">
-          <el-form-item label="事项类型：" label-width="100px">
-            <el-select v-model="taskValue" placeholder="请选择">
-              <el-option
-                  v-for="(item, index) in options"
-                  :key="index"
-                  :label="item.taskValue"
-                  :value="item.taskType + '/' + item.undoType">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="所属服务商：" label-width="100px" style="margin-left: 60px; width: 100%">
-            <el-input
-                v-model="taskOwner"
-                placeholder="请输入所属商户ID"
-                class="input-with-select"
-            ></el-input>
-            <div class="btn_list">
-              <el-button type="primary" size="large" @click="onClick_search">搜索</el-button>
-              <el-button plain size="large" @click="onClick_reset">重置</el-button>
-            </div>
-          </el-form-item>
-        </el-form>
-      </div>
-      <transition name="fade">
-        <div style="display:flex;padding: 0 24px;height: 1500px;">
-          <el-tree
-              :data="menuConfig"
-              :props="defaultProps"
-              node-key="id"
-              :default-expanded-keys="[0,1]"
-              :indent="0"
-              class="tree"
-              @node-click="handleNodeClick"
-          >
           <span slot-scope="{ data }" class="custom-tree-node">
             <span>{{ data.taskValue }}</span>
             <span>{{ data.count }}</span>
           </span>
-          </el-tree>
-          <div class="content-box">
-            <div class="form-box">
-              <div>
-                <taskList
-                    :list-data="listData"
-                    :type="type"
-                    :css-config="cssConfig"
-                    :is-check="isCheck"
-                    :is-check-all="isCheckAll"
-                    :open-type="openType"
-                    :status="status"
-                    @settleFail="settleFail"
-                    @overTime="overTime"
-                    @handleCheckList="handleCheckList"
-                    @merchantExamine="merchantExamine"
-                    @settleExamine="settleExamine"
-                    @newAgent="newAgent"
-                    @communication="handleCommunication"
-                    @agentCompletion="agentCompletion"
-                    @subscribe="subscribe"
-                    @unitPrice="unitPrice"
-                    @frozenAgent="frozenAgent"
-                    @transaction="transaction"
-                    @stock="stock"
-                    @openAgent="openAgent"
-                    @distribution="distribution"
-                    @relpyWork="relpyWork"
-                    @leSuhaExamine="leSuhaExamine"
-                    @channelExamine="channelExamine"
-                    @commission="commission"
-                    @pass="handlePass"
-                    @reject="handleReject"
-                ></taskList>
-              </div>
-              <div class="crud-pagination">
-                <el-pagination
-                    size="medium"
-                    :current-page="currentPage"
-                    :page-sizes="[10, 20, 30, 40]"
-                    :page-size="pageSize"
-                    layout="total, sizes, prev, pager, next, jumper"
-                    :total="dataTotal"
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentChange"
-                />
-              </div>
+        </el-tree>
+        <div class="content-box">
+          <div class="form-box">
+            <div>
+              <taskList
+                  :list-data="listData"
+                  :type="type"
+                  :css-config="cssConfig"
+                  :is-check="isCheck"
+                  :is-check-all="isCheckAll"
+                  :open-type="openType"
+                  :status="status"
+                  @settleFail="settleFail"
+                  @overTime="overTime"
+                  @handleCheckList="handleCheckList"
+                  @merchantExamine="merchantExamine"
+                  @settleExamine="settleExamine"
+                  @newAgent="newAgent"
+                  @communication="handleCommunication"
+                  @agentCompletion="agentCompletion"
+                  @subscribe="subscribe"
+                  @unitPrice="unitPrice"
+                  @frozenAgent="frozenAgent"
+                  @transaction="transaction"
+                  @stock="stock"
+                  @openAgent="openAgent"
+                  @distribution="distribution"
+                  @relpyWork="relpyWork"
+                  @leSuhaExamine="leSuhaExamine"
+                  @channelExamine="channelExamine"
+                  @commission="commission"
+                  @pass="handlePass"
+                  @reject="handleReject"
+              ></taskList>
             </div>
-<!--            <div v-if="isCheck" class="check-bottom">-->
-<!--              <span class="confim_text">请选择要批量沟通的任务（已选 {{ checkedListLength }} 个任务）</span>-->
-<!--              <el-button plain class="confim_btn" @click="onClick_multiCommunacation">确定</el-button>-->
-<!--              <span class="cancel_btn" @click="onClick_cancelCheckAll">取消</span>-->
-<!--              <span class="checkall_btn" @click="onClick_doCheckAll">全选</span>-->
-<!--            </div>-->
+            <div class="crud-pagination">
+              <el-pagination
+                  size="medium"
+                  :current-page="currentPage"
+                  :page-sizes="[10, 20, 30, 40]"
+                  :page-size="pageSize"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  :total="dataTotal"
+                  @size-change="handleSizeChange"
+                  @current-change="handleCurrentChange"
+              />
+            </div>
           </div>
+          <!--            <div v-if="isCheck" class="check-bottom">-->
+          <!--              <span class="confim_text">请选择要批量沟通的任务（已选 {{ checkedListLength }} 个任务）</span>-->
+          <!--              <el-button plain class="confim_btn" @click="onClick_multiCommunacation">确定</el-button>-->
+          <!--              <span class="cancel_btn" @click="onClick_cancelCheckAll">取消</span>-->
+          <!--              <span class="checkall_btn" @click="onClick_doCheckAll">全选</span>-->
+          <!--            </div>-->
         </div>
-      </transition>
-      <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
-        <div class="p_head">{{ fromConfigData.title }}</div>
-        <Form
-            :form-base-data="fromConfigData.formData"
-            :show-foot-btn="fromConfigData.showFootBtn"
-            label-width="110px"
-            :foot-btn-label="fromConfigData.footBtnLabel"
-            @cancel="cancel"
-            @confirm="confirm"
-        ></Form>
-      </el-drawer>
-      <el-drawer :visible.sync="otherDrawer" :with-header="false" size="40%">
-        <div class="p_head">{{ fromConfigData.title }}</div>
-        <Form
-            :form-base-data="fromConfigData.formData"
-            :show-foot-btn="fromConfigData.showFootBtn"
-            label-width="110px"
-            :foot-btn-label="fromConfigData.footBtnLabel"
-            @reject="reject"
-            @confirm="handel_confirm"
-        ></Form>
-        <div style="height: 200px; padding-left: 120px;" v-if="openDataConfig.approvalDetail">
-          <el-steps direction="vertical" :active="openDataConfig.approvalDetail.length">
-            <el-step :description="item.nodeName" :title="item.nodeStatus === 0 ? '发起' : item.nodeStatus === 1 ? '处理中' : item.nodeStatus === 2 ? '待审批' : item.nodeStatus === 3 ? '已通过' : '已驳回'" :key="index" v-for="(item, index) in openDataConfig.approvalDetail"></el-step>
-          </el-steps>
-        </div>
-      </el-drawer>
-    </div>
+      </div>
+    </transition>
+    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
+      <div class="p_head">{{ fromConfigData.title }}</div>
+      <Form
+          :form-base-data="fromConfigData.formData"
+          :show-foot-btn="fromConfigData.showFootBtn"
+          label-width="110px"
+          :foot-btn-label="fromConfigData.footBtnLabel"
+          @cancel="cancel"
+          @confirm="confirm"
+      ></Form>
+    </el-drawer>
+    <el-drawer :visible.sync="otherDrawer" :with-header="false" size="40%">
+      <div class="p_head">{{ fromConfigData.title }}</div>
+      <Form
+          :form-base-data="fromConfigData.formData"
+          :show-foot-btn="fromConfigData.showFootBtn"
+          label-width="110px"
+          :foot-btn-label="fromConfigData.footBtnLabel"
+          @reject="reject"
+          @confirm="handel_confirm"
+      ></Form>
+      <div style="height: 200px; padding-left: 120px;" v-if="openDataConfig.approvalDetail">
+        <el-steps direction="vertical" :active="openDataConfig.approvalDetail.length">
+          <el-step :description="item.nodeName" :title="item.nodeStatus === 0 ? '发起' : item.nodeStatus === 1 ? '处理中' : item.nodeStatus === 2 ? '待审批' : item.nodeStatus === 3 ? '已通过' : '已驳回'" :key="index" v-for="(item, index) in openDataConfig.approvalDetail"></el-step>
+        </el-steps>
+      </div>
+    </el-drawer>
   </div>
 </template>
 
@@ -154,7 +151,7 @@ import { FORM_CONFIG } from "./formConfig/workTodoConfig";
 import { GROUP_MEET } from "../../libs/data/permissionBtns";
 
 export default {
-  name: "WorkToDo",
+  name: "WorkTodo",
   components: { taskList, Form },
   // components: {  dataMode, BaseCrud },
 
@@ -474,7 +471,7 @@ export default {
     // 商户入件审核，点击跳转到商户审核界面
     merchantExamine($data) {
       this.$router.push({
-        path: '/approval/checkMerchant/indirectList',
+        name: 'indirectList',
         query: {
           merchantNo: $data.merchantNo
         }
@@ -482,9 +479,8 @@ export default {
     },
     // 佣金结算审核，点击进入运营结算审核，列表中筛选出对应的服务商
     settleExamine($data) {
-      console.log($data)
       this.$router.push({
-        path: '/financial/operation/operationApprove',
+        name: 'operationApprove',
         query: {
           agentNo: $data.agentNo
         }
@@ -493,7 +489,7 @@ export default {
     // 服务商资料补全，点击进入服务商列表，筛选出对应的服务商
     agentCompletion($data) {
       this.$router.push({
-        path: '/agent/list',
+        name: 'agentList',
         query: {
           agentNo: $data.agentNo
         }
@@ -502,7 +498,7 @@ export default {
     // 设备出库，
     stock($data) {
       this.$router.push({
-        path: '/deviceManage/stock/stockOut',
+        name: 'stockOut',
         query: {
           outputNo: $data.taskId
         }
@@ -525,7 +521,7 @@ export default {
     // 乐刷申诉审核
     leSuhaExamine($data) {
       this.$router.push({
-        path: '/risk/riskAppeal/leRiskList/detail',
+        name: 'leRiskDetail',
         query: {
           id: $data.taskId
         }
@@ -534,7 +530,7 @@ export default {
     // 平台资料申诉审核
     channelExamine($data) {
       this.$router.push({
-        path: '/risk/riskAppeal/merchantRiskList/detail',
+        name: 'merchantRiskDetail',
         query: {
           id: $data.taskId
         }
@@ -569,9 +565,8 @@ export default {
     },
     // 财务佣金结算
     commission($data) {
-      console.log($data)
       this.$router.push({
-        path: '/work/todo/approvalDetail',
+        name: 'approvalDetail',
         query: {
           configData: $data,
           taskType: this.taskType,

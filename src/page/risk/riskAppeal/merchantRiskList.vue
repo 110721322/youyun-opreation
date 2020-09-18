@@ -1,14 +1,12 @@
 <template>
-  <div class>
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
-    <div v-else>
-      <div class="tab_head">
-        <span class="title">平台商户资料风控</span>
-      </div>
-      <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
+  <div>
+    <div class="tab_head">
+      <span class="title">平台商户资料风控</span>
+    </div>
+    <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
 
-      <div class="table_box">
-        <BaseCrud
+    <div class="table_box">
+      <BaseCrud
           ref="table"
           :params="params"
           :api-service="api"
@@ -25,9 +23,8 @@
           :default-expand-all="false"
           :hide-edit-area="configData.hideEditArea"
           @detail="handleDetail"
-          @checking="handleChecking"
-        ></BaseCrud>
-      </div>
+          @checking="handleDetail"
+      ></BaseCrud>
     </div>
   </div>
 </template>
@@ -40,7 +37,7 @@ import { SEARCH_CONFIG } from "../formConfig/merchantRiskListSearch";
 import { LERISKLIST_CONFIG } from "../tableConfig/merchantRiskListConfig";
 
 export default {
-  name: "LeRiskList",
+  name: "MerchantRiskList",
   components: { Search, BaseCrud },
   data() {
     return {
@@ -61,22 +58,13 @@ export default {
     },
     handleDetail(row) {
       this.$router.push({
-        path: "/risk/riskAppeal/merchantRiskList/detail",
-        query: {
-          id: row.id
-        }
-      });
-    },
-    handleChecking(row) {
-      this.$router.push({
-        path: "/risk/riskAppeal/merchantRiskList/detail",
+        name: "merchantRiskDetail",
         query: {
           id: row.id
         }
       });
     },
     search($ruleForm) {
-      console.log($ruleForm);
       const params = {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,

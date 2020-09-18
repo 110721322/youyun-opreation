@@ -1,14 +1,12 @@
 <template>
-  <div class>
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
-    <div v-else>
-      <div class="tab_head">
-        <span class="title">乐刷风控</span>
-      </div>
-      <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
+  <div>
+    <div class="tab_head">
+      <span class="title">乐刷风控</span>
+    </div>
+    <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
 
-      <div class="table_box">
-        <BaseCrud
+    <div class="table_box">
+      <BaseCrud
           ref="table"
           :params="params"
           :api-service="api"
@@ -25,22 +23,21 @@
           :default-expand-all="false"
           :hide-edit-area="configData.hideEditArea"
           @detail="handleDetail"
-          @preApprove="handlePreApprove"
+          @preApprove="handleDetail"
           @pass="handlePass"
           @reject="handleReject"
-        ></BaseCrud>
-      </div>
-      <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
-        <div class="p_head">{{ fromConfigData.title }}</div>
-        <Form
+      ></BaseCrud>
+    </div>
+    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
+      <div class="p_head">{{ fromConfigData.title }}</div>
+      <Form
           :form-base-data="fromConfigData.formData"
           :show-foot-btn="fromConfigData.showFootBtn"
           label-width="130px"
           @cancel="cancel"
           @confirm="confirm"
-        ></Form>
-      </el-drawer>
-    </div>
+      ></Form>
+    </el-drawer>
   </div>
 </template>
 <script>
@@ -77,15 +74,7 @@ export default {
     },
     handleDetail(row) {
       this.$router.push({
-        path: "/risk/riskAppeal/leRiskList/detail",
-        query: {
-          id: row.id
-        }
-      });
-    },
-    handlePreApprove(row) {
-      this.$router.push({
-        path: "/risk/riskAppeal/leRiskList/detail",
+        name: "leRiskDetail",
         query: {
           id: row.id
         }

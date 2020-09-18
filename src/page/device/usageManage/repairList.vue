@@ -1,19 +1,17 @@
 <template>
-  <div class>
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
-    <div v-else>
-      <div class="tab_head">
-        <span class="title">维修管理</span>
-      </div>
-      <search
+  <div>
+    <div class="tab_head">
+      <span class="title">维修管理</span>
+    </div>
+    <search
         :open-height="searchMaxHeight"
         :form-base-data="searchConfig.formData"
         :show-foot-btn="searchConfig.showFootBtn"
         @search="search"
-      />
+    />
 
-      <div class="table_box">
-        <BaseCrud
+    <div class="table_box">
+      <BaseCrud
           ref="table"
           :params="params"
           :api-service="api"
@@ -32,8 +30,7 @@
           @pass="onClick_pass"
           @send="onClick_send"
           @distribution="onClick_distribution"
-        ></BaseCrud>
-      </div>
+      ></BaseCrud>
     </div>
     <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
       <div class="p_head">{{ fromConfigData.title }}</div>
@@ -59,7 +56,7 @@ import { SEARCH_CONFIG } from "./../formConfig/repairListSearch";
 import { REPAIRLIST_CONFIG } from "./../tableConfig/repairListConfig";
 
 export default {
-  name: "Theme",
+  name: "RepairList",
   components: { Search, BaseCrud, Form },
   data() {
     return {
@@ -240,7 +237,7 @@ export default {
     },
     onClick_detail($row) {
       this.$router.push({
-        path: "/deviceManage/usageManage/repairList/detail",
+        name: "repairDetail",
         query: { id: $row.id }
       })
     },

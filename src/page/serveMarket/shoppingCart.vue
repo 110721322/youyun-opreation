@@ -57,6 +57,7 @@ import api from "@/api/api_serveMarket";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { SHOPPING_CONFIG } from "./tableConfig/shoppingCartConfig";
 export default {
+  name: "ShoppingCart",
   components: { BaseCrud },
   data() {
     return {
@@ -159,7 +160,7 @@ export default {
           deviceIds: this.deviceIdList
         }).then(res => {
           this.$router.push({
-            path: '/serveMarket/equipmentMall/equimentOrder',
+            name: 'equimentOrder',
             query: {
               cartList: res.object
             }

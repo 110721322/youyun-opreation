@@ -1,7 +1,9 @@
 import Layout from '@/layout/index.vue'
+import utils from "@/libs/kit/utils"
 const asyncRoutes = {
   'work': {
-    path: '/work',
+    path: '/workBench',
+    name: "workBench",
     component: Layout,
     meta: {
       title: '工作台',
@@ -9,29 +11,31 @@ const asyncRoutes = {
     },
     children: [
       {
+        path: '/work',
         name: 'work',
-        path: 'work',
+        meta: {
+          title: '工作台',
+          icon: 'icongongzuotai'
+        },
         component: () => import('@/page/work/workBench.vue')
       },
       {
-        path: 'todo',
+        path: '/workBench/workTodo',
         name: 'workTodo',
         meta: {
           title: '待办事项',
           icon: 'workTodo'
         },
-        component: () => import('@/page/work/workTodo.vue'),
-        children: [
-          {
-            path: 'approvalDetail',
-            name: 'approvalDetail',
-            meta: {
-              title: '审批任务详情',
-              icon: 'approvalDetail'
-            },
-            component: () => import('@/page/work/approvalDetail.vue')
-          }
-        ]
+        component: () => import('@/page/work/workTodo.vue')
+      },
+      {
+        path: '/workBench/approvalDetail',
+        name: 'approvalDetail',
+        meta: {
+          title: '审批任务详情',
+          icon: 'approvalDetail'
+        },
+        component: () => import('@/page/work/approvalDetail.vue')
       }
     ]
   },
@@ -66,16 +70,17 @@ const asyncRoutes = {
     children: []
   },
   'merchantList': {
-    path: 'list',
+    path: '/merchant/merchantList',
     name: 'merchantList',
     meta: {
       title: '商户列表',
-      icon: 'merchantList'
+      icon: 'merchantList',
+      keepAlive: "MerchantList"
     },
     component: () => import('@/page/merchant/merchantList.vue'),
     children: [
       {
-        path: 'detail',
+        path: '/merchant/merchantList/merchantDetail',
         name: 'merchantDetail',
         meta: {
           title: '商户详情',
@@ -88,7 +93,7 @@ const asyncRoutes = {
     ]
   },
   'merchantSetRecord': {
-    path: 'setRecord',
+    path: '/merchant/merchantSetRecord',
     name: 'merchantSetRecord',
     meta: {
       title: '结算记录',
@@ -107,16 +112,17 @@ const asyncRoutes = {
     children: []
   },
   'agentList': {
-    path: 'list',
+    path: '/agent/agentList',
     name: 'agentList',
     meta: {
       title: '服务商列表',
-      icon: 'agentList'
+      icon: 'agentList',
+      keepAlive: "AgentList"
     },
     component: () => import('@/page/agent/agentList.vue'),
     children: [
       {
-        path: 'detail',
+        path: '/agent/agentList/agentDetail',
         name: 'agentDetail',
         meta: {
           fatherName: 'agentList',
@@ -127,7 +133,7 @@ const asyncRoutes = {
         component: () => import('@/page/agent/agentDetail.vue')
       },
       {
-        path: 'addAgent',
+        path: '/agent/agentList/addAgent',
         name: 'addAgent',
         meta: {
           fatherName: 'agentList',
@@ -140,16 +146,17 @@ const asyncRoutes = {
     ]
   },
   'agentSubList': {
-    path: 'subList',
+    path: 'agentSubList',
     name: 'agentSubList',
     meta: {
       title: '下级服务商列表',
-      icon: 'agentSubList'
+      icon: 'agentSubList',
+      keepAlive: "AgentSubList"
     },
-    component: () => import('@/page/agent/subAgentList.vue'),
+    component: () => import('@/page/agent/agentSubList.vue'),
     children: [
       {
-        path: 'detail',
+        path: '/agent/agentSubList/agentSubListDetail',
         name: 'agentSubListDetail',
         meta: {
           fatherName: 'agentSubList',
@@ -157,12 +164,12 @@ const asyncRoutes = {
           title: '下级服务商详情',
           icon: 'agentSubListDetail'
         },
-        component: () => import('@/page/agent/subAgentDetail.vue')
+        component: () => import('@/page/agent/agentSubDetail.vue')
       }
     ]
   },
   'agentCheckList': {
-    path: 'checkList',
+    path: '/agent/agentCheckList',
     name: 'agentCheckList',
     meta: {
       title: '服务商审核列表',
@@ -171,26 +178,36 @@ const asyncRoutes = {
     component: () => import('@/page/agent/agentCheckList.vue')
   },
   'dividedOverview': {
-    path: 'dividedOverview',
+    path: '/agent/dividedOverview',
     name: 'dividedOverview',
     meta: {
       title: '分润总览',
-      icon: 'dividedOverview'
+      icon: 'dividedOverview',
+      keepAlive: 'DividedOverview'
     },
     component: () => import('@/page/agent/dividedOverview.vue'),
     children: [
       {
-        name: 'dividedOverview',
-        path: 'detail',
+        name: '/agent/dividedOverview/dividedOverviewDetail',
+        path: 'dividedOverviewDetail',
         component: () => import('@/page/agent/dividedOverviewDetail.vue'),
         meta: {
           title: '商户分润明细',
-          icon: 'dividedOverview',
+          icon: 'dividedOverviewDetail',
           fatherName: 'dividedOverview',
           parentName: 'agent'
         }
       }
     ]
+  },
+  'renewalDue': {
+    path: '/agent/renewalDue',
+    name: 'renewalDue',
+    meta: {
+      title: '到期续费记录',
+      icon: 'renewalDue'
+    },
+    component: () => import('@/page/agent/renewalDue.vue')
   },
   financial: {
     path: '/financial',
@@ -203,7 +220,7 @@ const asyncRoutes = {
     children: []
   },
   'shareProfit': {
-    path: 'shareProfit',
+    path: '/financial/shareProfit',
     name: 'shareProfit',
     meta: {
       title: '分润统计表',
@@ -214,17 +231,18 @@ const asyncRoutes = {
     children: []
   },
   'serviceProfit': {
-    path: 'serviceProfit',
+    path: '/financial/shareProfit/serviceProfit',
     name: 'serviceProfit',
     meta: {
       title: '服务商分润统计',
       subMenuName: 'shareProfit',
-      icon: 'serviceProfit'
+      icon: 'serviceProfit',
+      keepAlive: 'ServiceProfit'
     },
     component: () => import('@/page/financial/shareProfit/serviceProfit.vue'),
     children: [
       {
-        path: 'serviceProfitDetail',
+        path: '/financial/shareProfit/serviceProfit/serviceProfitDetail',
         name: 'serviceProfitDetail',
         meta: {
           fatherName: 'serviceProfit',
@@ -237,7 +255,7 @@ const asyncRoutes = {
     ]
   },
   'interconnection': {
-    path: 'interconnection',
+    path: '/financial/shareProfit/interconnection',
     name: 'interconnection',
     meta: {
       title: '间联分润统计',
@@ -248,7 +266,7 @@ const asyncRoutes = {
     children: []
   },
   'activityAward': {
-    path: 'activityAward',
+    path: '/financial/activityAward',
     name: 'activityAward',
     meta: {
       title: '活动奖励',
@@ -258,17 +276,18 @@ const asyncRoutes = {
     children: []
   },
   'aplyAward': {
-    path: 'aplyAward',
+    path: '/financial/activityAward/aplyAward',
     name: 'aplyAward',
     meta: {
       title: '支付宝活动奖励',
       subMenuName: 'activityAward',
-      icon: 'activityAward'
+      icon: 'activityAward',
+      keepAlive: "AplyAward"
     },
     component: () => import('@/page/financial/activityAward/aplyAward.vue'),
     children: [
       {
-        path: 'activityAwardDetail',
+        path: '/financial/activityAward/aplyAward/activityAwardDetail',
         name: 'activityAwardDetail',
         meta: {
           title: '奖励明细',
@@ -282,7 +301,7 @@ const asyncRoutes = {
     ]
   },
   'transferReview': {
-    path: 'transferReview',
+    path: '/financial/transferReview',
     name: 'transferReview',
     meta: {
       title: '财务审核',
@@ -292,7 +311,7 @@ const asyncRoutes = {
     children: []
   },
   'commission': {
-    path: 'commission',
+    path: '/financial/transferReview/commission',
     name: 'commission',
     meta: {
       title: '佣金结算审核',
@@ -300,23 +319,10 @@ const asyncRoutes = {
       icon: 'commission'
     },
     component: () => import('@/page/financial/transferReview/commission.vue'),
-    children: [
-      {
-        path: 'commissionDetail',
-        name: 'commissionDetail',
-        meta: {
-          title: '佣金结算审核详情',
-          icon: 'commissionDetail',
-          parentName: 'financial',
-          fatherName: 'commission',
-          subMenuName: 'transferReview'
-        },
-        component: () => import('@/page/financial/transferReview/commissionDetail.vue')
-      }
-    ]
+    children: []
   },
   'publicTransfer': {
-    path: 'publicTransfer',
+    path: '/financial/transferReview/publicTransfer',
     name: 'publicTransfer',
     meta: {
       title: '对公转账审核',
@@ -326,7 +332,7 @@ const asyncRoutes = {
     component: () => import('@/page/financial/transferReview/publicTransfer.vue')
   },
   'operation': {
-    path: 'operation',
+    path: '/financial/operation',
     name: 'operation',
     meta: {
       title: '运营审核',
@@ -336,7 +342,7 @@ const asyncRoutes = {
     children: []
   },
   'operationApprove': {
-    path: 'operationApprove',
+    path: '/financial/operation/operationApprove',
     name: 'operationApprove',
     meta: {
       title: '佣金结算审核',
@@ -347,27 +353,28 @@ const asyncRoutes = {
     children: []
   },
   'directProfits': {
-    path: 'directProfits',
+    path: '/financial/directProfits',
     name: 'directProfits',
     meta: {
       title: '直连分润导入',
       icon: 'directProfits'
     },
-    component: () => import('@/layout/components/viewer.vue'),
+    component: () => import('@/page/financial/directProfits/aliProfits.vue'),
     children: []
   },
   'aliProfits': {
-    path: 'aliProfits',
+    path: '/financial/directProfits/aliProfits',
     name: 'aliProfits',
     meta: {
       title: '支付宝直连导入',
       subMenuName: 'directProfits',
-      icon: 'aliProfits'
+      icon: 'aliProfits',
+      keepAlive: 'AliProfits'
     },
     component: () => import('@/page/financial/directProfits/aliProfits.vue'),
     children: [
       {
-        path: 'profitsDetail',
+        path: '/financial/directProfits/aliProfits/aliProfitsDetail',
         name: 'aliProfitsDetail',
         meta: {
           title: '商户明细',
@@ -381,17 +388,18 @@ const asyncRoutes = {
     ]
   },
   'wxProfits': {
-    path: 'wxProfits',
+    path: '/financial/directProfits/wxProfits',
     name: 'wxProfits',
     meta: {
       title: '微信直连导入',
       subMenuName: 'directProfits',
-      icon: 'wxProfits'
+      icon: 'wxProfits',
+      keepAlive: 'WxProfits'
     },
     component: () => import('@/page/financial/directProfits/wxProfits.vue'),
     children: [
       {
-        path: 'profitsDetail',
+        path: '/financial/directProfits/aliProfits/wxProfitsDetail',
         name: 'wxProfitsDetail',
         meta: {
           title: '商户明细',
@@ -415,9 +423,9 @@ const asyncRoutes = {
     children: []
   },
   'orderManage': {
-    path: 'orderManage',
+    path: '/agentService/orderManage',
     name: 'orderManage',
-    component: () => import('@/page/agentService/orderManage/orderManage.vue'),
+    component: () => import('@/page/agentService/orderManage/hardwareOrder.vue'),
     meta: {
       title: '订单管理',
       icon: 'orderManage'
@@ -425,29 +433,32 @@ const asyncRoutes = {
     children: []
   },
   'hardwareOrder': {
-    path: 'hardwareOrder',
+    path: '/agentService/orderManage/hardwareOrder',
     name: 'hardwareOrder',
     meta: {
       title: '硬件订购订单',
       subMenuName: 'orderManage',
-      icon: 'hardwareOrder'
+      icon: 'hardwareOrder',
+      keepAlive: "HardwareOrder"
     },
     component: () => import('@/page/agentService/orderManage/hardwareOrder.vue'),
-    children: [{
-      path: 'detail',
-      name: 'hardwareOrderDetail',
-      meta: {
-        title: '详情',
-        subMenuName: 'orderManage',
-        parentName: 'agentService',
-        fatherName: 'hardwareOrder',
-        icon: 'detail'
-      },
-      component: () => import('@/page/agentService/orderManage/hardwareOrderDetail.vue')
-    }]
+    children: [
+      {
+        path: '/agentService/orderManage/hardwareOrder/hardwareOrderDetail',
+        name: 'hardwareOrderDetail',
+        meta: {
+          title: '详情',
+          subMenuName: 'orderManage',
+          parentName: 'agentService',
+          fatherName: 'hardwareOrder',
+          icon: 'detail'
+        },
+        component: () => import('@/page/agentService/orderManage/hardwareOrderDetail.vue')
+      }
+    ]
   },
   'adManage': {
-    path: 'adManage',
+    path: '/agentService/adManage',
     name: 'adManage',
     component: () => import('@/page/agentService/adManage/adManage.vue'),
     meta: {
@@ -457,7 +468,7 @@ const asyncRoutes = {
     children: []
   },
   'adAuth': {
-    path: 'adAuth',
+    path: '/agentService/adManage/adAuth',
     name: 'adAuth',
     meta: {
       title: '广告权限',
@@ -468,17 +479,18 @@ const asyncRoutes = {
     children: []
   },
   'adPutList': {
-    path: 'adPutList',
+    path: '/agentService/adManage/adPutList',
     name: 'adPutList',
     meta: {
       title: '平台广告投放列表',
       subMenuName: 'adManage',
-      icon: 'adPutList'
+      icon: 'adPutList',
+      keepAlive: 'AdPutList'
     },
     component: () => import('@/page/agentService/adManage/adPutList.vue'),
     children: [
       {
-        path: 'detail',
+        path: '/agentService/adManage/adPutList/adPutDetail',
         name: 'adPutDetail',
         meta: {
           fatherName: 'adPutList',
@@ -492,17 +504,18 @@ const asyncRoutes = {
     ]
   },
   'platformAdList': {
-    path: 'platformAdList',
+    path: '/agentService/adManage/platformAdList',
     name: 'platformAdList',
     meta: {
       title: '平台广告列表',
       subMenuName: 'adManage',
-      icon: 'platformAdList'
+      icon: 'platformAdList',
+      keepAlive: 'PlatformAdList'
     },
     component: () => import('@/page/agentService/adManage/platformAdList.vue'),
     children: [
       {
-        path: 'detail',
+        path: '/agentService/adManage/platformAdList/platformAdDetail',
         name: 'platformAdDetail',
         meta: {
           fatherName: 'platformAdList',
@@ -516,16 +529,17 @@ const asyncRoutes = {
     ]
   },
   'thirdParty': {
-    path: 'thirdParty',
+    path: '/agentService/thirdParty',
     name: 'thirdParty',
     meta: {
       title: '第三方对接列表',
-      icon: 'thirdParty'
+      icon: 'thirdParty',
+      keepAlive: 'ThirdParty'
     },
     component: () => import('@/page/agentService/thirdParty.vue'),
     children: [
       {
-        path: 'detail',
+        path: '/agentService/thirdParty/thirdPartyDetail',
         name: 'thirdPartyDetail',
         meta: {
           fatherName: 'thirdParty',
@@ -538,7 +552,7 @@ const asyncRoutes = {
     ]
   },
   'renewalRecord': {
-    path: 'renewalRecord',
+    path: '/agentService/renewalRecord',
     name: 'renewalRecord',
     meta: {
       title: '到期续费记录',
@@ -546,18 +560,18 @@ const asyncRoutes = {
     },
     component: () => import('@/page/agentService/renewalRecord.vue')
   },
-  'ticketList': {
-    path: 'ticketList',
-    name: 'ticketList',
+  'ticketCenter': {
+    path: '/agentService/ticketCenter',
+    name: 'ticketCenter',
     meta: {
-      title: '工单列表',
-      subMenuName: 'ticketCenter',
-      icon: 'ticketList'
+      title: '工单中心',
+      icon: 'ticketCenter',
+      keepAlive: 'TicketCenter'
     },
-    component: () => import('@/page/agentService/ticketCenter/ticketList.vue'),
+    component: () => import('@/page/agentService/ticketCenter/ticketCenter.vue'),
     children: [
       {
-        path: 'detail',
+        path: '/agentService/ticketCenter/ticketList/ticketListDetail',
         name: 'ticketListDetail',
         meta: {
           subMenuName: 'ticketCenter',
@@ -570,18 +584,19 @@ const asyncRoutes = {
       }
     ]
   },
-  'ticketCenter': {
-    path: 'ticketCenter',
-    name: 'ticketCenter',
+  'ticketList': {
+    path: '/agentService/ticketCenter/ticketList',
+    name: 'ticketList',
     meta: {
-      title: '工单中心',
-      icon: 'ticketCenter'
+      title: '工单列表',
+      subMenuName: 'ticketCenter',
+      icon: 'ticketList'
     },
-    component: () => import('@/page/agentService/ticketCenter/ticketCenter.vue'),
+    component: () => import('@/page/agentService/ticketCenter/ticketList.vue'),
     children: []
   },
   'ticketStatistics': {
-    path: 'ticketStatistics',
+    path: '/agentService/ticketCenter/ticketStatistics',
     name: 'ticketStatistics',
     meta: {
       title: '工单统计',
@@ -591,7 +606,7 @@ const asyncRoutes = {
     component: () => import('@/page/agentService/ticketCenter/ticketStatistics.vue')
   },
   'ticketKnowledge': {
-    path: 'ticketKnowledge',
+    path: '/agentService/ticketCenter/ticketKnowledge',
     name: 'ticketKnowledge',
     meta: {
       title: '工单知识库',
@@ -611,16 +626,17 @@ const asyncRoutes = {
     children: []
   },
   'businessModel': {
-    path: 'businessModel',
+    path: '/serveMarket/businessModel',
     name: 'businessModel',
     meta: {
       title: '业务模式',
-      icon: 'businessModel'
+      icon: 'businessModel',
+      keepAlive: 'BusinessModel'
     },
     component: () => import('@/page/serveMarket/businessModel.vue'),
     children: [
       {
-        path: 'detail',
+        path: '/serveMarket/businessModel/xmgAgentDetail',
         name: 'xmgAgentDetail',
         meta: {
           title: '小马哥代理',
@@ -631,7 +647,7 @@ const asyncRoutes = {
         component: () => import('@/page/serveMarket/xmgAgent.vue')
       },
       {
-        path: 'omedetail',
+        path: '/serveMarket/businessModel/omedetail',
         name: 'omedetail',
         meta: {
           title: 'OEM贴牌',
@@ -642,7 +658,7 @@ const asyncRoutes = {
         component: () => import('@/page/serveMarket/omeAgent.vue')
       },
       {
-        path: 'newdetail',
+        path: '/serveMarket/businessModel/newdetail',
         name: 'newdetail',
         meta: {
           title: '新源码',
@@ -653,7 +669,7 @@ const asyncRoutes = {
         component: () => import('@/page/serveMarket/newAgent.vue')
       },
       {
-        path: 'subOrder',
+        path: '/serveMarket/businessModel/subOrder',
         name: 'subOrder',
         meta: {
           title: '下单页面',
@@ -664,7 +680,7 @@ const asyncRoutes = {
         component: () => import('@/page/serveMarket/subOrder.vue')
       },
       {
-        path: 'payAmount',
+        path: '/serveMarket/businessModel/payAmount',
         name: 'payAmount',
         meta: {
           title: '下单页面',
@@ -675,7 +691,7 @@ const asyncRoutes = {
         component: () => import('@/page/serveMarket/payAmount.vue')
       },
       {
-        path: 'payStatus',
+        path: '/serveMarket/businessModel/payStatus',
         name: 'payStatus',
         meta: {
           title: '下单页面',
@@ -688,16 +704,17 @@ const asyncRoutes = {
     ]
   },
   'tradingChannel': {
-    path: 'tradingChannel',
+    path: '/serveMarket/tradingChannel',
     name: 'tradingChannel',
     meta: {
       title: '交易通道',
-      icon: 'tradingChannel'
+      icon: 'tradingChannel',
+      keepAlive: 'TradingChannel'
     },
     component: () => import('@/page/serveMarket/tradingChannel.vue'),
     children: [
       {
-        path: 'lsBuyIndex',
+        path: '/serveMarket/tradingChannel/lsBuyIndex',
         name: 'lsBuyIndex',
         meta: {
           title: '乐刷通道',
@@ -710,16 +727,17 @@ const asyncRoutes = {
     ]
   },
   'brandCustomization': {
-    path: 'brandCustomization',
+    path: '/serveMarket/brandCustomization',
     name: 'brandCustomization',
     meta: {
       title: '品牌定制',
-      icon: 'brandCustomization'
+      icon: 'brandCustomization',
+      keepAlive: 'BrandCustomization'
     },
     component: () => import('@/page/serveMarket/brandCustomization.vue'),
     children: [
       {
-        path: 'domainCustomer',
+        path: '/serveMarket/brandCustomization/domainCustomer',
         name: 'domainCustomer',
         meta: {
           title: '域名定制',
@@ -732,16 +750,17 @@ const asyncRoutes = {
     ]
   },
   'applicationCenter': {
-    path: 'applicationCenter',
+    path: '/serveMarket/applicationCenter',
     name: 'applicationCenter',
     meta: {
       title: '应用中心',
-      icon: 'applicationCenter'
+      icon: 'applicationCenter',
+      keepAlive: 'ApplicationCenter'
     },
     component: () => import('@/page/serveMarket/applicationCenter.vue'),
     children: [
       {
-        path: 'messageCustomer',
+        path: '/serveMarket/applicationCenter/messageCustomer',
         name: 'messageCustomer',
         meta: {
           title: '短信充值',
@@ -754,16 +773,17 @@ const asyncRoutes = {
     ]
   },
   'equipmentMall': {
-    path: 'equipmentMall',
+    path: '/serveMarket/equipmentMall',
     name: 'equipmentMall',
     meta: {
       title: '设备商城',
-      icon: 'equipmentMall'
+      icon: 'equipmentMall',
+      keepAlive: 'EquipmentMall'
     },
     component: () => import('@/page/serveMarket/equipmentMall.vue'),
     children: [
       {
-        path: 'equimentDetail',
+        path: '/serveMarket/equipmentMall/equimentDetail',
         name: 'equimentDetail',
         meta: {
           title: '设备详情',
@@ -774,7 +794,7 @@ const asyncRoutes = {
         component: () => import('@/page/serveMarket/equimentDetail.vue')
       },
       {
-        path: 'shoppingCart',
+        path: '/serveMarket/equipmentMall/shoppingCart',
         name: 'shoppingCart',
         meta: {
           title: '购物车',
@@ -785,7 +805,7 @@ const asyncRoutes = {
         component: () => import('@/page/serveMarket/shoppingCart.vue')
       },
       {
-        path: 'equimentOrder',
+        path: '/serveMarket/equipmentMall/equimentOrder',
         name: 'equimentOrder',
         meta: {
           title: '下单',
@@ -796,7 +816,7 @@ const asyncRoutes = {
         component: () => import('@/page/serveMarket/equimentOrder.vue')
       },
       {
-        path: 'equimentPay',
+        path: '/serveMarket/equipmentMall/equimentPay',
         name: 'equimentPay',
         meta: {
           title: '支付',
@@ -807,7 +827,7 @@ const asyncRoutes = {
         component: () => import('@/page/serveMarket/equimentPay.vue')
       },
       {
-        path: 'orderRecords',
+        path: '/serveMarket/equipmentMall/orderRecords',
         name: 'orderRecords',
         meta: {
           title: '订单记录',
@@ -818,7 +838,7 @@ const asyncRoutes = {
         component: () => import('@/page/serveMarket/orderRecords.vue')
       },
       {
-        path: 'equimentOrderDetail',
+        path: '/serveMarket/equipmentMall/equimentOrderDetail',
         name: 'equimentOrderDetail',
         meta: {
           title: '订单详情',
@@ -829,10 +849,9 @@ const asyncRoutes = {
         component: () => import('@/page/serveMarket/equimentOrderDetail.vue')
       }
     ]
-
   },
   'purchasedItems': {
-    path: 'purchasedItems',
+    path: '/serveMarket/purchasedItems',
     name: 'purchasedItems',
     meta: {
       title: '订购记录',
@@ -851,20 +870,21 @@ const asyncRoutes = {
     children: []
   },
   'serviceAnnouncementList': {
-    path: 'serviceAnnouncementList',
+    path: '/message/serviceAnnouncementList',
     name: 'serviceAnnouncementList',
     meta: {
       title: '服务商公告',
-      icon: 'serviceAnnouncementList'
+      icon: 'serviceAnnouncementList',
+      keepAlive: 'ServiceAnnouncementList'
     },
     component: () => import('@/page/message/serviceAnnouncementList.vue'),
     children: [
       {
-        path: 'detail',
+        path: '/message/serviceAnnouncementList/agentAnnounceDetail',
         name: 'agentAnnounceDetail',
         meta: {
           title: '编辑服务商公告',
-          icon: 'detail',
+          icon: 'agentAnnounceDetail',
           fatherName: 'serviceAnnouncementList',
           parentName: 'message'
         },
@@ -883,16 +903,17 @@ const asyncRoutes = {
     children: []
   },
   'statistics': {
-    path: 'statistics',
+    path: '/task/statistics',
     name: 'statistics',
     meta: {
       title: '工作任务统计',
-      icon: 'statistics'
+      icon: 'statistics',
+      keepAlive: 'Statistics'
     },
     component: () => import('@/page/task/statistics.vue'),
     children: [
       {
-        path: 'statisticsDetail',
+        path: '/task/statistics/statisticsDetail',
         name: 'statisticsDetail',
         meta: {
           title: '工作任务统计详情',
@@ -903,7 +924,7 @@ const asyncRoutes = {
         component: () => import('@/page/task/statisticsDetail.vue')
       },
       {
-        path: 'statisticsAll',
+        path: '/task/statistics/statisticsAll',
         name: 'statisticsAll',
         meta: {
           title: '工作任务统计详情',
@@ -926,7 +947,7 @@ const asyncRoutes = {
     children: []
   },
   'transactionData': {
-    path: 'transactionData',
+    path: '/dataMarket/transactionData',
     name: 'transactionData',
     meta: {
       title: '交易数据',
@@ -936,16 +957,17 @@ const asyncRoutes = {
     children: []
   },
   'merchantData': {
-    path: 'merchantData',
+    path: '/dataMarket/merchantData',
     name: 'merchantData',
     meta: {
       title: '商户数据',
-      icon: 'merchantData'
+      icon: 'merchantData',
+      keepAlive: 'MerchantData'
     },
     component: () => import('@/page/dataMarket/merchantData.vue'),
     children: [
       {
-        path: 'detail',
+        path: '/dataMarket/merchantData/merchantDataDetail',
         name: 'merchantDataDetail',
         meta: {
           fatherName: 'merchantDataDetail',
@@ -959,16 +981,17 @@ const asyncRoutes = {
     ]
   },
   'serviceData': {
-    path: 'serviceData',
+    path: '/dataMarket/serviceData',
     name: 'serviceData',
     meta: {
       title: '服务商数据',
-      icon: 'serviceData'
+      icon: 'serviceData',
+      keepAlive: 'ServiceData'
     },
     component: () => import('@/page/dataMarket/serviceData.vue'),
     children: [
       {
-        path: 'detail',
+        path: '/dataMarket/serviceData/serviceDataDetail',
         name: 'serviceDataDetail',
         meta: {
           fatherName: 'serviceData',
@@ -992,9 +1015,9 @@ const asyncRoutes = {
     children: []
   },
   'stock': {
-    path: 'stock',
+    path: '/deviceManage/stock',
     name: 'stock',
-    component: () => import('@/page/device/stock/stock.vue'),
+    component: () => import('@/page/device/stock/stockList.vue'),
     meta: {
       title: '库存管理',
       icon: 'stock'
@@ -1002,7 +1025,7 @@ const asyncRoutes = {
     children: []
   },
   'stockList': {
-    path: 'stockList',
+    path: '/deviceManage/stock/stockList',
     name: 'stockList',
     component: () => import('@/page/device/stock/stockList.vue'),
     meta: {
@@ -1013,17 +1036,18 @@ const asyncRoutes = {
     children: []
   },
   'stockSave': {
-    path: 'stockSave',
+    path: '/deviceManage/stock/stockSave',
     name: 'stockSave',
-    component: () => import('@/page/device/stock/saveManage.vue'),
+    component: () => import('@/page/device/stock/stockSave.vue'),
     meta: {
       title: '入库管理',
       icon: 'stockSave',
-      subMenuName: 'stock'
+      subMenuName: 'stock',
+      keepAlive: 'StockSave'
     },
     children: [
       {
-        path: 'detail',
+        path: '/deviceManage/stock/stockSave/stockDetail',
         name: 'stockDetail',
         meta: {
           fatherName: 'stockSave',
@@ -1037,17 +1061,18 @@ const asyncRoutes = {
     ]
   },
   'stockOut': {
-    path: 'stockOut',
+    path: '/deviceManage/stock/stockOut',
     name: 'stockOut',
-    component: () => import('@/page/device/stock/outManage.vue'),
+    component: () => import('@/page/device/stock/stockOut.vue'),
     meta: {
       title: '出库管理',
       icon: 'stockOut',
-      subMenuName: 'stock'
+      subMenuName: 'stock',
+      keepAlive: 'StockOut'
     },
     children: [
       {
-        path: 'detail',
+        path: '/deviceManage/stock/stockSave/outDetail',
         name: 'outDetail',
         meta: {
           fatherName: 'stockOut',
@@ -1061,7 +1086,7 @@ const asyncRoutes = {
     ]
   },
   'authorized': {
-    path: 'authorized',
+    path: '/deviceManage/stock/authorized',
     name: 'authorized',
     component: () => import('@/page/device/stock/authorized.vue'),
     meta: {
@@ -1072,9 +1097,9 @@ const asyncRoutes = {
     children: []
   },
   'usageManage': {
-    path: 'usageManage',
+    path: '/deviceManage/usageManage',
     name: 'usageManage',
-    component: () => import('@/page/device/usageManage/usageManage.vue'),
+    component: () => import('@/page/device/usageManage/usageList.vue'),
     meta: {
       title: '设备使用管理',
       icon: 'usageManage'
@@ -1082,7 +1107,7 @@ const asyncRoutes = {
     children: []
   },
   'usageList': {
-    path: 'usageList',
+    path: '/deviceManage/usageManage/usageList',
     name: 'usageList',
     component: () => import('@/page/device/usageManage/usageList.vue'),
     meta: {
@@ -1093,17 +1118,18 @@ const asyncRoutes = {
     children: []
   },
   'repairList': {
-    path: 'repairList',
+    path: '/deviceManage/usageManage/repairList',
     name: 'repairList',
     component: () => import('@/page/device/usageManage/repairList.vue'),
     meta: {
       title: '设备维修',
       icon: 'repairList',
-      subMenuName: 'usageManage'
+      subMenuName: 'usageManage',
+      keepAlive: 'RepairList'
     },
     children: [
       {
-        path: 'detail',
+        path: '/deviceManage/usageManage/repairList/repairDetail',
         name: 'repairDetail',
         meta: {
           fatherName: 'repairList',
@@ -1117,7 +1143,7 @@ const asyncRoutes = {
     ]
   },
   'deviceData': {
-    path: 'deviceData',
+    path: '/deviceManage/usageManage/deviceData',
     name: 'deviceData',
     component: () => import('@/page/device/usageManage/deviceData.vue'),
     meta: {
@@ -1128,16 +1154,17 @@ const asyncRoutes = {
     children: []
   },
   'shopCenter': {
-    path: 'shopCenter',
+    path: '/deviceManage/shopCenter',
     name: 'shopCenter',
     component: () => import('@/page/device/shopCenter/shopCenter.vue'),
     meta: {
       title: '商城管理',
-      icon: 'shopCenter'
+      icon: 'shopCenter',
+      keepAlive: 'ShopCenter'
     },
     children: [
       {
-        path: 'detail',
+        path: '/deviceManage/shopCenter/shopCenterDetail',
         name: 'shopCenterDetail',
         meta: {
           fatherName: 'shopCenter',
@@ -1160,7 +1187,7 @@ const asyncRoutes = {
     children: []
   },
   'checkMerchant': {
-    path: 'checkMerchant',
+    path: '/approval/checkMerchant',
     name: 'checkMerchant',
     component: () => import('@/page/approval/merchantCheck/merchantCheck.vue'),
     meta: {
@@ -1170,17 +1197,18 @@ const asyncRoutes = {
     children: []
   },
   'indirectList': {
-    path: 'indirectList',
+    path: '/approval/checkMerchant/indirectList',
     name: 'indirectList',
     component: () => import('@/page/approval/merchantCheck/indirectList.vue'),
     meta: {
       title: '间连审核',
       icon: 'indirectList',
-      subMenuName: 'checkMerchant'
+      subMenuName: 'checkMerchant',
+      keepAlive: 'IndirectList'
     },
     children: [
       {
-        path: 'detail',
+        path: '/approval/checkMerchant/indirectList/indirectListDetail',
         name: 'indirectListDetail',
         meta: {
           fatherName: 'indirectList',
@@ -1192,7 +1220,7 @@ const asyncRoutes = {
         component: () => import('@/page/approval/merchantCheck/indirectListDetail.vue')
       },
       {
-        path: 'recordDetail',
+        path: '/approval/checkMerchant/indirectList/indirectRecordDetail',
         name: 'indirectRecordDetail',
         meta: {
           fatherName: 'indirectList',
@@ -1206,17 +1234,18 @@ const asyncRoutes = {
     ]
   },
   'settlementList': {
-    path: 'settlementList',
+    path: '/approval/checkMerchant/settlementList',
     name: 'settlementList',
     component: () => import('@/page/approval/merchantCheck/settlementList.vue'),
     meta: {
       title: '结算卡修改审核',
       icon: 'settlementList',
-      subMenuName: 'checkMerchant'
+      subMenuName: 'checkMerchant',
+      keepAlive: 'SettlementList'
     },
     children: [
       {
-        path: 'detail',
+        path: '/approval/checkMerchant/settlementList/settlementListDetail',
         name: 'settlementListDetail',
         meta: {
           fatherName: 'settlementList',
@@ -1228,7 +1257,7 @@ const asyncRoutes = {
         component: () => import('@/page/approval/merchantCheck/settlementListDetail.vue')
       },
       {
-        path: 'recordDetail',
+        path: '/approval/checkMerchant/settlementList/settlementRecordDetail',
         name: 'settlementRecordDetail',
         meta: {
           fatherName: 'settlementList',
@@ -1242,17 +1271,18 @@ const asyncRoutes = {
     ]
   },
   'aliDirectList': {
-    path: 'aliDirectList',
+    path: '/approval/checkMerchant/aliDirectList',
     name: 'aliDirectList',
     component: () => import('@/page/approval/merchantCheck/aliDirectList.vue'),
     meta: {
       title: '支付宝直连审核',
       icon: 'aliDirectList',
-      subMenuName: 'checkMerchant'
+      subMenuName: 'checkMerchant',
+      keepAlive: 'AliDirectList'
     },
     children: [
       {
-        path: 'detail',
+        path: '/approval/checkMerchant/aliDirectList/aliDirectListDetail',
         name: 'aliDirectListDetail',
         meta: {
           fatherName: 'aliDirectList',
@@ -1264,7 +1294,7 @@ const asyncRoutes = {
         component: () => import('@/page/approval/merchantCheck/aliDirectListDetail.vue')
       },
       {
-        path: 'recordDetail',
+        path: '/approval/checkMerchant/aliDirectList/aliDirectRecordDetail',
         name: 'aliDirectRecordDetail',
         meta: {
           fatherName: 'aliDirectList',
@@ -1278,17 +1308,18 @@ const asyncRoutes = {
     ]
   },
   'wxDirectList': {
-    path: 'wxDirectList',
+    path: '/approval/checkMerchant/wxDirectList',
     name: 'wxDirectList',
     component: () => import('@/page/approval/merchantCheck/wxDirectList.vue'),
     meta: {
       title: '微信直连审核',
       icon: 'wxDirectList',
-      subMenuName: 'checkMerchant'
+      subMenuName: 'checkMerchant',
+      keepAlive: 'WxDirectList'
     },
     children: [
       {
-        path: 'detail',
+        path: '/approval/checkMerchant/wxDirectList/wxDirectListDetail',
         name: 'wxDirectListDetail',
         meta: {
           fatherName: 'wxDirectList',
@@ -1300,7 +1331,7 @@ const asyncRoutes = {
         component: () => import('@/page/approval/merchantCheck/wxDirectListDetail.vue')
       },
       {
-        path: 'recordDetail',
+        path: '/approval/checkMerchant/wxDirectList/wxDirectRecordDetail',
         name: 'wxDirectRecordDetail',
         meta: {
           fatherName: 'wxDirectList',
@@ -1314,16 +1345,17 @@ const asyncRoutes = {
     ]
   },
   'checkService': {
-    path: 'checkService',
+    path: '/approval/checkService',
     name: 'checkService',
     component: () => import('@/page/approval/serviceCheck/checkService.vue'),
     meta: {
       title: '下级服务商审核',
-      icon: 'checkService'
+      icon: 'checkService',
+      keepAlive: 'CheckService'
     },
     children: [
       {
-        path: 'detail',
+        path: '/approval/checkService/checkServiceListDetail',
         name: 'checkServiceListDetail',
         meta: {
           fatherName: 'checkService',
@@ -1336,16 +1368,17 @@ const asyncRoutes = {
     ]
   },
   'checkPartner': {
-    path: 'checkPartner',
+    path: '/approval/checkPartner',
     name: 'checkPartner',
-    component: () => import('@/page/approval/partnerCheck/checkPartnerList.vue'),
+    component: () => import('@/page/approval/partnerCheck/checkPartner.vue'),
     meta: {
       title: '合伙人审核列表',
-      icon: 'checkPartner'
+      icon: 'checkPartner',
+      keepAlive: 'CheckPartner'
     },
     children: [
       {
-        path: 'detail',
+        path: '/approval/checkPartner/checkPartnerListDetail',
         name: 'checkPartnerListDetail',
         meta: {
           fatherName: 'checkPartnerList',
@@ -1368,7 +1401,7 @@ const asyncRoutes = {
     children: []
   },
   'userList': {
-    path: 'userList',
+    path: '/systemConfig/userList',
     name: 'userList',
     component: () => import('@/page/systemConfig/userList.vue'),
     meta: {
@@ -1378,7 +1411,7 @@ const asyncRoutes = {
     children: []
   },
   'userManager': {
-    path: 'userManager',
+    path: '/systemConfig/userManager',
     name: 'userManager',
     component: () => import('@/page/systemConfig/userManager.vue'),
     meta: {
@@ -1388,7 +1421,7 @@ const asyncRoutes = {
     children: []
   },
   'menuManage': {
-    path: 'menuManage',
+    path: '/systemConfig/menuManage',
     name: 'menuManage',
     component: () => import('@/page/systemConfig/menuManage/menuManage.vue'),
     meta: {
@@ -1398,7 +1431,7 @@ const asyncRoutes = {
     children: []
   },
   'operationMenu': {
-    path: 'operationMenu',
+    path: '/systemConfig/menuManage/operationMenu',
     name: 'operationMenu',
     component: () => import('@/page/systemConfig/menuManage/operationMenu.vue'),
     meta: {
@@ -1409,7 +1442,7 @@ const asyncRoutes = {
     children: []
   },
   'agentMenu': {
-    path: 'agentMenu',
+    path: '/systemConfig/menuManage/agentMenu',
     name: 'agentMenu',
     component: () => import('@/page/systemConfig/menuManage/agentMenu.vue'),
     meta: {
@@ -1420,7 +1453,7 @@ const asyncRoutes = {
     children: []
   },
   'businessMenu': {
-    path: 'businessMenu',
+    path: '/systemConfig/menuManage/businessMenu',
     name: 'businessMenu',
     component: () => import('@/page/systemConfig/menuManage/businessMenu.vue'),
     meta: {
@@ -1431,7 +1464,7 @@ const asyncRoutes = {
     children: []
   },
   'approvalManager': {
-    path: 'approvalManager',
+    path: '/systemConfig/approvalManager',
     name: 'approvalManager',
     component: () => import('@/page/systemConfig/approvalManager.vue'),
     meta: {
@@ -1441,7 +1474,7 @@ const asyncRoutes = {
     children: []
   },
   'customForm': {
-    path: 'customForm',
+    path: '/systemConfig/customForm',
     name: 'customForm',
     component: () => import('@/page/systemConfig/customForm.vue'),
     meta: {
@@ -1451,7 +1484,7 @@ const asyncRoutes = {
     children: []
   },
   'paramSetting': {
-    path: 'paramSetting',
+    path: '/systemConfig/paramSetting',
     name: 'paramSetting',
     component: () => import('@/page/systemConfig/paramSetting.vue'),
     meta: {
@@ -1461,16 +1494,17 @@ const asyncRoutes = {
     children: []
   },
   'powerManager': {
-    path: 'powerManager',
+    path: '/systemConfig/powerManager',
     name: 'powerManager',
     component: () => import('@/page/systemConfig/powerManager.vue'),
     meta: {
       title: '权限管理',
-      icon: 'powerManager'
+      icon: 'powerManager',
+      keepAlive: 'PowerManager'
     },
     children: [
       {
-        path: 'powerBtnManager',
+        path: '/systemConfig/powerManager/powerBtnManager',
         name: 'powerBtnManager',
         component: () => import('@/page/systemConfig/powerBtnManager.vue'),
         meta: {
@@ -1483,7 +1517,7 @@ const asyncRoutes = {
     ]
   },
   'agentPowerManager': {
-    path: 'agentPowerManager',
+    path: '/systemConfig/agentPowerManager',
     name: 'agentPowerManager',
     component: () => import('@/page/systemConfig/agentPowerManager/agentPowerManager.vue'),
     meta: {
@@ -1493,7 +1527,7 @@ const asyncRoutes = {
     children: []
   },
   'agentPcManager': {
-    path: 'agentPcManager',
+    path: '/systemConfig/agentPowerManager/agentPcManager',
     name: 'agentPcManager',
     component: () => import('@/page/systemConfig/agentPowerManager/agentPcManager.vue'),
     meta: {
@@ -1504,7 +1538,7 @@ const asyncRoutes = {
     children: []
   },
   'agentAppletManager': {
-    path: 'agentAppletManager',
+    path: '/systemConfig/agentPowerManager/agentAppletManager',
     name: 'agentAppletManager',
     component: () => import('@/page/systemConfig/agentPowerManager/agentAppletManager.vue'),
     meta: {
@@ -1525,7 +1559,7 @@ const asyncRoutes = {
     children: []
   },
   'incomingRisk': {
-    path: 'incomingRisk',
+    path: '/risk/incomingRisk',
     name: 'incomingRisk',
     component: () => import('@/page/risk/incomingRisk/incomingRisk.vue'),
     meta: {
@@ -1535,7 +1569,7 @@ const asyncRoutes = {
     children: []
   },
   'serviceIncomingRisk': {
-    path: 'serviceIncomingRisk',
+    path: '/risk/incomingRisk/serviceIncomingRisk',
     name: 'serviceIncomingRisk',
     component: () => import('@/page/risk/incomingRisk/serviceIncomingRisk.vue'),
     meta: {
@@ -1546,17 +1580,18 @@ const asyncRoutes = {
     children: []
   },
   'merchantDataIncomingRisk': {
-    path: 'merchantDataIncomingRisk',
+    path: '/risk/incomingRisk/merchantDataIncomingRisk',
     name: 'merchantDataIncomingRisk',
     component: () => import('@/page/risk/incomingRisk/merchantDataIncomingRisk.vue'),
     meta: {
       title: '商户入件资料风控',
       icon: 'merchantDataIncomingRisk',
-      subMenuName: 'incomingRisk'
+      subMenuName: 'incomingRisk',
+      keepAlive: 'MerchantDataIncomingRisk'
     },
     children: [
       {
-        path: 'detail',
+        path: '/risk/incomingRisk/merchantDataIncomingRisk/blackListDetail',
         name: 'blackListDetail',
         meta: {
           fatherName: 'merchantDataIncomingRisk',
@@ -1570,7 +1605,7 @@ const asyncRoutes = {
     ]
   },
   'riskAppeal': {
-    path: 'riskAppeal',
+    path: '/risk/riskAppeal',
     name: 'riskAppeal',
     component: () => import('@/page/risk/riskAppeal/riskAppeal.vue'),
     meta: {
@@ -1580,17 +1615,18 @@ const asyncRoutes = {
     children: []
   },
   'leRiskList': {
-    path: 'leRiskList',
+    path: '/risk/riskAppeal/leRiskList',
     name: 'leRiskList',
     component: () => import('@/page/risk/riskAppeal/leRiskList.vue'),
     meta: {
       title: '乐刷风控',
       icon: 'leRiskList',
-      subMenuName: 'riskAppeal'
+      subMenuName: 'riskAppeal',
+      keepAlive: 'LeRiskList'
     },
     children: [
       {
-        path: 'detail',
+        path: '/risk/riskAppeal/leRiskList/leRiskDetail',
         name: 'leRiskDetail',
         component: () => import('@/page/risk/riskAppeal/leRiskListDetail.vue'),
         meta: {
@@ -1604,17 +1640,18 @@ const asyncRoutes = {
     ]
   },
   'merchantRiskList': {
-    path: 'merchantRiskList',
+    path: '/risk/riskAppeal/merchantRiskList',
     name: 'merchantRiskList',
     component: () => import('@/page/risk/riskAppeal/merchantRiskList.vue'),
     meta: {
       title: '平台商户资料风控',
       icon: 'merchantRiskList',
-      subMenuName: 'riskAppeal'
+      subMenuName: 'riskAppeal',
+      keepAlive: 'MerchantRiskList'
     },
     children: [
       {
-        path: 'detail',
+        path: '/risk/riskAppeal/merchantRiskList/merchantRiskDetail',
         name: 'merchantRiskDetail',
         component: () => import('@/page/risk/riskAppeal/merchantRiskListDetail.vue'),
         meta: {
@@ -1638,16 +1675,17 @@ const asyncRoutes = {
     children: []
   },
   'comset': {
-    path: 'comset',
+    path: '/comSettlement/comset',
     name: 'comset',
     meta: {
       title: '佣金结算',
-      icon: 'comset'
+      icon: 'comset',
+      keepAlive: 'Comset'
     },
     component: () => import('@/page/comSettlement/comset.vue'),
     children: [
       {
-        path: 'comsetDetail',
+        path: '/comSettlement/comset/comsetDetail',
         name: 'comsetDetail',
         meta: {
           title: '佣金明细',
@@ -1658,7 +1696,7 @@ const asyncRoutes = {
         component: () => import('@/page/comSettlement/comsetDetail.vue')
       },
       {
-        path: 'comsetRecord',
+        path: '/comSettlement/comset/comsetRecord',
         name: 'comsetRecord',
         meta: {
           title: '结算记录',
@@ -1681,16 +1719,17 @@ const asyncRoutes = {
     children: []
   },
   'topDataMarket': {
-    path: 'topDataMarket',
+    path: '/topAgent/topDataMarket',
     name: 'topDataMarket',
     meta: {
       title: '数据大盘',
-      icon: 'topDataMarket'
+      icon: 'topDataMarket',
+      keepAlive: 'TopDataMarket'
     },
     component: () => import('@/page/topAgent/topDataMarket.vue'),
     children: [
       {
-        path: 'detail',
+        path: '/topAgent/topDataMarket/topAgentData',
         name: 'topAgentData',
         meta: {
           fatherName: 'topDataMarket',
@@ -1704,16 +1743,17 @@ const asyncRoutes = {
     ]
   },
   'topAgentList': {
-    path: 'topAgentList',
+    path: '/topAgent/topAgentList',
     name: 'topAgentList',
     meta: {
       title: '服务商列表',
-      icon: 'topAgentList'
+      icon: 'topAgentList',
+      keepAlive: 'TopAgentList'
     },
     component: () => import('@/page/topAgent/topAgentList.vue'),
     children: [
       {
-        path: 'addTopAgent',
+        path: '/topAgent/topAgentList/addTopAgent',
         name: 'addTopAgent',
         meta: {
           title: '添加服务商',
@@ -1724,7 +1764,7 @@ const asyncRoutes = {
         component: () => import('@/page/topAgent/addTopAgent.vue')
       },
       {
-        path: 'topAgentDetail',
+        path: '/topAgent/topAgentList/topAgentDetail',
         name: 'topAgentDetail',
         meta: {
           title: '服务商详情',
@@ -1737,7 +1777,7 @@ const asyncRoutes = {
     ]
   },
   'examineList': {
-    path: 'examineList',
+    path: '/topAgent/examineList',
     name: 'examineList',
     meta: {
       title: '服务商审核列表',
@@ -1746,16 +1786,17 @@ const asyncRoutes = {
     component: () => import('@/page/topAgent/examineList.vue')
   },
   'agentDeploy': {
-    path: 'agentDeploy',
+    path: '/topAgent/agentDeploy',
     name: 'agentDeploy',
     meta: {
       title: '服务器部署',
-      icon: 'agentDeploy'
+      icon: 'agentDeploy',
+      keepAlive: 'AgentDeploy'
     },
     component: () => import('@/page/topAgent/agentDeploy.vue'),
     children: [
       {
-        path: 'deployDetail',
+        path: '/topAgent/agentDeploy/deployDetail',
         name: 'deployDetail',
         meta: {
           title: '部署详情',
@@ -1778,17 +1819,18 @@ const asyncRoutes = {
     children: []
   },
   'coupon': {
-    path: 'coupon',
+    path: '/marketing/coupon',
     name: 'coupon',
     meta: {
       title: '优惠码',
       subMenuName: '',
-      icon: 'coupon'
+      icon: 'coupon',
+      keepAlive: 'Coupon'
     },
     component: () => import('@/page/marketing/coupon.vue'),
     children: [
       {
-        path: 'addCoupon',
+        path: '/marketing/coupon/addCoupon',
         name: 'addCoupon',
         meta: {
           fatherName: 'coupon',
@@ -1799,7 +1841,7 @@ const asyncRoutes = {
         component: () => import('@/page/marketing/addCoupon.vue')
       },
       {
-        path: 'couponDetail',
+        path: '/marketing/coupon/couponDetail',
         name: 'couponDetail',
         meta: {
           fatherName: 'coupon',
@@ -1810,15 +1852,6 @@ const asyncRoutes = {
         component: () => import('@/page/marketing/couponDetail.vue')
       }
     ]
-  },
-  'renewalDue': {
-    path: 'renewalDue',
-    name: 'renewalDue',
-    meta: {
-      title: '到期续费记录',
-      icon: 'renewalDue'
-    },
-    component: () => import('@/page/agent/renewalDue.vue')
   }
 }
 const routers = []
@@ -1827,7 +1860,9 @@ const menusToRoutes = function (data) {
   data.forEach(item => {
     const curr = asyncRoutes[item.name];
     if (curr) {
+      curr.meta.title = item.text;
       if (item.children && item.children.length > 0) {
+        item.children = utils.getNestedArr(item.children, 'children')
         item.children.forEach(item2 => {
           generateRoutes(curr.children, item2)
         })
@@ -1848,18 +1883,20 @@ const getRouters = function () {
 const generateRoutes = function (children, item) {
   if (item.name) {
     const page = asyncRoutes[item.name];
+    page.meta.title = item.text;
+    if (item.children && item.children.length > 0) {
+      page.meta.noRedirect = true
+    }
     if (page) {
+      const childRoutes = utils.getNestedArr(page.children, 'children');
+      page.children = []
       children.push(page)
+      childRoutes.forEach(child => {
+        children.push(child)
+      })
     } else {
       console.error(`not find page ${item.name} , page's title is ${item.meta.title}`);
     }
-  }
-
-  if (item.children) {
-    item.children.forEach(e => {
-      // console.log(children)
-      generateRoutes(asyncRoutes[item.name].children, e)
-    })
   }
 }
 

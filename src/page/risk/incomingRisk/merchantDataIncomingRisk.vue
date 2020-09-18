@@ -1,19 +1,17 @@
 <template>
-  <div class>
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
-    <div v-else>
-      <div class="tab_head">
-        <span class="title">商户入件资料风控</span>
-      </div>
-      <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
+  <div>
+    <div class="tab_head">
+      <span class="title">商户入件资料风控</span>
+    </div>
+    <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
 
-      <div class="table_box">
-        <div class="tabale_title_box">
-          <div class="title">商户入件资料列表</div>
-          <el-button class="btn" @click="onClick_goBlackDetail">黑名单拦截记录</el-button>
-          <el-button class="btn" type="primary" @click="onClick_addRiskMessage">新增风控信息</el-button>
-        </div>
-        <BaseCrud
+    <div class="table_box">
+      <div class="tabale_title_box">
+        <div class="title">商户入件资料列表</div>
+        <el-button class="btn" @click="onClick_goBlackDetail">黑名单拦截记录</el-button>
+        <el-button class="btn" type="primary" @click="onClick_addRiskMessage">新增风控信息</el-button>
+      </div>
+      <BaseCrud
           ref="table"
           :params="params"
           :api-service="api"
@@ -32,21 +30,20 @@
           @remove="onClick_remove"
           @movetoBlack="onClick_moveBlack"
           @movetoGrey="onClick_moveGrey"
-        ></BaseCrud>
-      </div>
+      ></BaseCrud>
+    </div>
 
-      <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
-        <div class="p_head">{{ fromConfigData.title }}</div>
-        <Form
+    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
+      <div class="p_head">{{ fromConfigData.title }}</div>
+      <Form
           :form-base-data="fromConfigData.formData"
           :show-foot-btn="fromConfigData.showFootBtn"
           :foot-btn-label="'确定'"
           label-width="130px"
           @cancel="onClick_cancel"
           @confirm="confirm"
-        ></Form>
-      </el-drawer>
-    </div>
+      ></Form>
+    </el-drawer>
   </div>
 </template>
 <script>
@@ -59,7 +56,7 @@ import { FORM_CONFIG } from "../formConfig/merchantDataIncomingFormConfig";
 import { TABLE_CONFIG } from "../tableConfig/merchantDataIncomingConfig";
 
 export default {
-  name: "Theme",
+  name: "MerchantDataIncomingRisk",
   components: { Search, BaseCrud, Form },
   data() {
     return {
@@ -175,7 +172,7 @@ export default {
     },
     onClick_goBlackDetail() {
       this.$router.push({
-        path: "/risk/incomingRisk/merchantDataIncomingRisk/detail"
+        name: "blackListDetail"
       });
     },
     confirm($data) {

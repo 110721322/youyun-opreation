@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="p_head">商品详情</div>
     <div class="goods">
       <div class="goods-introduce">
@@ -40,6 +40,7 @@
 import api from "@/api/api_serveMarket"
 // import api_address from "@/api/api_baseSetting"
 export default {
+  name: "EquimentDetail",
   data() {
     return {
       num: 1,
@@ -128,7 +129,7 @@ export default {
             })
           } else {
             this.$router.push({
-              path: '/serveMarket/equipmentMall/equimentPay',
+              name: 'equimentPay',
               query: {
                 orderInfo: res.object,
                 deviceInfos: deviceInfos,

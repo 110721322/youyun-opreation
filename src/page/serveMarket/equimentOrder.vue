@@ -27,23 +27,23 @@
     </div>
     <div class="goods-info">
       <div class="goods-title">商品信息</div>
-      <div class="goods-table">
+      <ul class="goods-table">
         <li>商品图片</li>
         <li>商品名称</li>
         <li>商品单价</li>
         <li>购买数量</li>
         <li>小计</li>
         <li>总计</li>
-      </div>
+      </ul>
       <div class="goods-list">
         <div class="list">
-          <div v-for="(item, index) in goodsData" :key="index" class="left-list">
+          <ul v-for="(item, index) in goodsData" :key="index" class="left-list">
             <li><img :src="item.img" alt=""></li>
             <li>{{ item.deviceModel }}</li>
             <li>{{ item.salePrice }}</li>
             <li>{{ enterInfo.count || item.shopCartCount }}</li>
             <li>{{ item.salePrice*enterInfo.count || item.shopSubtotal }}</li>
-          </div>
+          </ul>
         </div>
         <div class="right-amount" :style="{'height':goodsData.length*92+'px', 'line-height': goodsData.length*92+'px'}">{{ enterType === 1?goodsData[0].salePrice*enterInfo.count : totalAmount }}</div>
       </div>
@@ -74,6 +74,7 @@ import api from "@/api/api_serveMarket"
 import { ADVERTISING_MATERIAL_CONFIG } from "./formConfig/modifyAdress";
 import Form from "@/components/form/index.vue";
 export default {
+  name: "EquimentOrder",
   components: { Form },
   data() {
     return {
@@ -138,7 +139,7 @@ export default {
           })
         } else {
           this.$router.push({
-            path: '/serveMarket/equipmentMall/equimentPay',
+            name: 'equimentPay',
             query: {
               orderInfo: res.object,
               deviceInfos: deviceInfos,

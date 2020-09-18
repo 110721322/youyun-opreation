@@ -1,17 +1,15 @@
 <template>
-  <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/addTopAgent') !== -1 || this.$route.path.indexOf('/topAgentDetail') !== -1" />
-    <div v-else>
-      <div class="p_head">服务商列表</div>
-      <search
+  <div class="container">
+    <div class="p_head">服务商列表</div>
+    <search
         :open-height="searchMaxHeight"
         :form-base-data="searchConfig.formData"
         :show-foot-btn="searchConfig.showFootBtn"
         @search="search"
         @reset="reset"
-      />
-      <div class="table_box">
-        <BaseCrud
+    />
+    <div class="table_box">
+      <BaseCrud
           ref="table"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
@@ -29,8 +27,7 @@
           @frozen="frozen"
           @openAgentManager="openAgentManager"
           @addInfo="openDetail"
-        />
-      </div>
+      />
     </div>
   </div>
 </template>
@@ -44,7 +41,7 @@ import { FORM_CONFIG } from "./formConfig/topAgentSearch";
 import { mapActions } from 'vuex'
 
 export default {
-  name: "Theme",
+  name: "TopAgentList",
   components: { search, BaseCrud },
   // components: {  dataMode, BaseCrud },
 
@@ -158,7 +155,7 @@ export default {
     },
     openDetail($row) {
       this.$router.push({
-        path: "/topAgent/topAgentList/topAgentDetail",
+        name: "topAgentDetail",
         query: {
           channelAgentCode: $row.channelAgentCode
         }
@@ -203,7 +200,7 @@ export default {
     openAgentManager() {},
     onClick_addServe() {
       this.$router.push({
-        path: "/topAgent/topAgentList/addTopAgent"
+        name: "addTopAgent"
       })
     }
   }

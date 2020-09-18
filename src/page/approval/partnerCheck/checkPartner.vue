@@ -1,16 +1,12 @@
 <template>
-  <div class="main_page">
-    <router-view
-      v-if="this.$route.path.indexOf('/detail') !== -1||this.$route.path.indexOf('/recordDetail') !== -1"
-    />
-    <div v-else>
-      <div class="tab_head">
-        <span class="title">合伙人审核</span>
-      </div>
-      <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
+  <div>
+    <div class="tab_head">
+      <span class="title">合伙人审核</span>
+    </div>
+    <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
 
-      <div class="table_box">
-        <BaseCrud
+    <div class="table_box">
+      <BaseCrud
           ref="table"
           :params="params"
           :api-service="api"
@@ -28,8 +24,7 @@
           :hide-edit-area="configData.hideEditArea"
           @detail="handleDetail"
           @preApprove="handlePreApprove"
-        ></BaseCrud>
-      </div>
+      ></BaseCrud>
     </div>
   </div>
 </template>
@@ -42,7 +37,7 @@ import { SEARCH_CONFIG } from "./../formConfig/checkPartnerListSearch";
 import { CHECKPARTNERLIST_CONFIG } from "./../tableConfig/checkPartnerListConfig";
 
 export default {
-  name: "CheckServiceList",
+  name: "CheckPartner",
   components: { Search, BaseCrud },
   data() {
     return {
@@ -58,9 +53,8 @@ export default {
   mounted() {},
   methods: {
     handleDetail(row) {
-      console.log(row)
       this.$router.push({
-        path: "/approval/checkPartner/detail",
+        name: "checkPartnerListDetail",
         query: {
           agentPartnerNo: row.partnerNo
         }
@@ -68,7 +62,7 @@ export default {
     },
     handlePreApprove(row) {
       this.$router.push({
-        path: "/approval/checkPartner/detail",
+        name: "checkPartnerListDetail",
         query: {
           agentPartnerNo: row.partnerNo
         }

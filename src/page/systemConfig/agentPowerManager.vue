@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="tab_head">
       <span class="title">成员列表</span>
     </div>
@@ -52,7 +52,7 @@ import { SEARCH_CONFIG } from "./formConfig/userListSearch";
 import { USERLIST_CONFIG } from "./tableConfig/userlistConfig";
 
 export default {
-  name: "Theme",
+  name: "AgentPowerManager",
   components: { Search, BaseCrud, Form },
   data() {
     return {

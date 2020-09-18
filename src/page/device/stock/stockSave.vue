@@ -1,22 +1,20 @@
 <template>
-  <div class="">
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
-    <div v-else>
-      <div class="tab_head">
-        <span class="title">入库管理</span>
-      </div>
-      <search
+  <div>
+    <div class="tab_head">
+      <span class="title">入库管理</span>
+    </div>
+    <search
         :open-height="searchMaxHeight"
         :form-base-data="searchConfig.formData"
         :show-foot-btn="searchConfig.showFootBtn"
         @search="search"
-      />
-      <div class="table_box">
-        <div class="tabale_title_box">
-          <div class="title">入库列表</div>
-          <el-button class="btn" type="primary" @click="onClick_addDevice">新增入库</el-button>
-        </div>
-        <BaseCrud
+    />
+    <div class="table_box">
+      <div class="tabale_title_box">
+        <div class="title">入库列表</div>
+        <el-button class="btn" type="primary" @click="onClick_addDevice">新增入库</el-button>
+      </div>
+      <BaseCrud
           ref="table"
           :params="params"
           :api-service="api"
@@ -31,20 +29,19 @@
           :is-expand="false"
           :hide-edit-area="configData.hideEditArea"
           @detail="onClick_detail"
-        ></BaseCrud>
-      </div>
-      <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
-        <div class="p_head">{{ fromConfigData.title }}</div>
-        <Form
+      ></BaseCrud>
+    </div>
+    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
+      <div class="p_head">{{ fromConfigData.title }}</div>
+      <Form
           v-if="drawer"
           :form-base-data="fromConfigData.formData"
           :show-foot-btn="fromConfigData.showFootBtn"
           label-width="130px"
           @cancel="cancel"
           @confirm="confirm"
-        ></Form>
-      </el-drawer>
-    </div>
+      ></Form>
+    </el-drawer>
   </div>
 </template>
 <script>
@@ -58,7 +55,7 @@ import { SEARCH_CONFIG } from "./../formConfig/saveSearch";
 import { SAVELIST_CONFIG } from "./../tableConfig/savelistConfig";
 
 export default {
-  name: "Theme",
+  name: "StockSave",
   components: { Search, BaseCrud, Form },
   data() {
     return {
@@ -136,7 +133,7 @@ export default {
     },
     onClick_detail($item) {
       this.$router.push({
-        path: "/deviceManage/stock/stockSave/detail",
+        name: "stockDetail",
         query: {
           id: $item.id
         }

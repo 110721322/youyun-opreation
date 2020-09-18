@@ -1,5 +1,5 @@
 <template>
-  <div class>
+  <div>
     <Search :open-height="searchHeight" :permission="searchConfig.permission" :form-base-data="searchConfig.formData" @search="search" />
 
     <div class="table_box">
@@ -32,7 +32,7 @@ import { mapActions } from 'vuex'
 import { FORM_CONFIG } from "./formConfig/serviceDataDetailSearch";
 import { MERCHANTDATADETAILCONFIG } from "./tableConfig/serviceDataDetailConfig";
 export default {
-  name: "MerchantDataDetail",
+  name: "TopAmountDetail",
   components: { Search, BaseCrud },
   data() {
     return {

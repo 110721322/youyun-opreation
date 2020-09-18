@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="tab_head">
       <span class="title">佣金结算审核</span>
     </div>
@@ -169,7 +169,7 @@ import { SEARCH_CONFIG } from "../formConfig/operationApproveSearch";
 import { OPERATIONAPPROVE_CONFIG } from "../tableConfig/operationApproveConfig";
 import api from "@/api/api_financialAudit.js";
 export default {
-  name: "Theme",
+  name: "OperationApprove",
   components: { Search, BaseCrud, Form },
   data() {
     return {

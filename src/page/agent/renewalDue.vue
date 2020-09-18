@@ -1,16 +1,14 @@
 <template>
-  <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/renewalDetail') !== -1" />
-    <div v-else>
-      <div class="p_head">到期续费记录</div>
-      <search
+  <div>
+    <div class="p_head">到期续费记录</div>
+    <search
         :open-height="searchMaxHeight"
         :form-base-data="searchConfig.formData"
         :show-foot-btn="searchConfig.showFootBtn"
         @search="search"
-      />
-      <div class="table_box">
-        <BaseCrud
+    />
+    <div class="table_box">
+      <BaseCrud
           ref="table"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
@@ -25,8 +23,7 @@
           :params="params"
           :api-service="api"
           @detail="go_detail"
-        />
-      </div>
+      />
     </div>
   </div>
 </template>
@@ -39,7 +36,7 @@ import { TABLE_CONFIG } from "./tableConfig/renewaldueList";
 import { SEARCH_CONFIG } from "./formConfig/renewaldueSearch";
 
 export default {
-  name: "RENEWALDUE",
+  name: "RenewalDue",
   components: { search, BaseCrud },
   data() {
     return {
@@ -67,7 +64,7 @@ export default {
     },
     go_detail(row) {
       this.$router.push({
-        path: '/agent/list/detail',
+        name: 'agentDetail',
         query: {
           agentNo: row.agentNo
         }

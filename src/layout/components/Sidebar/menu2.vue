@@ -7,40 +7,37 @@
             <span>{{ item.text }}</span>
           </template>
           <div v-for="(childItem, childKey) of item.children" :key="childKey">
-            <app-link :to="'/' + rootPath + '/' + item.path+'/'+childItem.path">
+            <template>
               <el-menu-item
                 v-if="childItem.isShow"
                 class="el-menu-item"
                 :class="($route.name==childItem.name || $route.meta.fatherName === childItem.name) ? 'active' : ''"
                 :index="childItem.name"
-                @click="onClick_item()"
+                @click="onClick_item(childItem)"
               >{{ childItem.text }}</el-menu-item>
-            </app-link>
+            </template>
           </div>
         </el-submenu>
 
-        <app-link v-else :to="'/' + rootPath + '/' + item.path">
+        <template v-else>
           <el-menu-item
             class="el-menu-item"
             :index="item.name"
             :class="($route.name==item.name || $route.meta.fatherName === item.name) ? 'active' : ''"
-            @click="onClick_item"
+            @click="onClick_item(item)"
           >
             <span slot="title">{{ item.text }}</span>
           </el-menu-item>
-        </app-link>
+        </template>
       </div>
     </el-menu>
   </div>
 </template>
 
 <script>
-import AppLink from "./Link";
-// import { EventBus } from "../../bus/event-bus.js";
 
 export default {
   name: "Sidebar2",
-  components: { AppLink },
   props: {
     menu2Data: Array,
     rootPath: String
@@ -64,7 +61,10 @@ export default {
     this.subMenuName = this.$route.meta.subMenuName;
   },
   methods: {
-    onClick_item() {}
+    onClick_item($item) {
+      console.log($item);
+      this.$router.push({name: $item.name})
+    }
   }
 };
 </script>

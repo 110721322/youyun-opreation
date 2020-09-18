@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="p_head">
       <span class="left-title">交易设置</span>
       <div class="right-area" @click="showRightbar">
@@ -141,7 +141,7 @@ import toggleImg from "@/assets/img/toggle.png";
 import {mapActions} from "vuex";
 var colors = ['#00a1ff', '#37cbcb', '#fad337', '#f2637b', '#975fe4']
 export default {
-  name: "Theme",
+  name: "TransactionData",
   components: { search, dataItem },
   data() {
     return {

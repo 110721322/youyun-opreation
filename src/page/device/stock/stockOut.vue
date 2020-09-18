@@ -1,18 +1,16 @@
 <template>
-  <div class="">
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
-    <div v-else>
-      <div class="tab_head">
-        <span class="title">出库管理</span>
-      </div>
-      <search
+  <div>
+    <div class="tab_head">
+      <span class="title">出库管理</span>
+    </div>
+    <search
         :open-height="searchMaxHeight"
         :form-base-data="searchConfig.formData"
         :show-foot-btn="searchConfig.showFootBtn"
         @search="search"
-      />
-      <div class="table_box">
-        <BaseCrud
+    />
+    <div class="table_box">
+      <BaseCrud
           ref="table"
           :params="params"
           :api-service="api"
@@ -33,21 +31,21 @@
           @detail="onClick_detail"
           @send="onClick_send"
           @distribution="onClick_distribution"
-        >
-          <template v-slot="{ row }">
-            <el-form label-position="left" inline class="demo-table-expand">
-              <div v-for="(item,index) in row.infoVOList" :key="index">
-                <el-form-item :label="item.deviceModel + ':'">
-                  <span>{{ item.count+'台' }}</span>
-                </el-form-item>
-              </div>
-            </el-form>
-          </template>
-        </BaseCrud>
-      </div>
-      <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
-        <div class="p_head">{{ fromConfigData.title }}</div>
-        <Form
+      >
+        <template v-slot="{ row }">
+          <el-form label-position="left" inline class="demo-table-expand">
+            <div v-for="(item,index) in row.infoVOList" :key="index">
+              <el-form-item :label="item.deviceModel + ':'">
+                <span>{{ item.count+'台' }}</span>
+              </el-form-item>
+            </div>
+          </el-form>
+        </template>
+      </BaseCrud>
+    </div>
+    <el-drawer :visible.sync="drawer" :with-header="false" size="40%">
+      <div class="p_head">{{ fromConfigData.title }}</div>
+      <Form
           v-if="drawer"
           :form-base-data="fromConfigData.formData"
           :show-foot-btn="fromConfigData.showFootBtn"
@@ -55,9 +53,8 @@
           label-width="130px"
           @cancel="cancel"
           @confirm="confirm"
-        ></Form>
-      </el-drawer>
-    </div>
+      ></Form>
+    </el-drawer>
   </div>
 </template>
 <script>
@@ -72,7 +69,7 @@ import { SEARCH_CONFIG } from "./../formConfig/outSearch";
 import { OUTLIST_CONFIG } from "./../tableConfig/outListConfig";
 
 export default {
-  name: "Theme",
+  name: "StockOut",
   components: { Search, BaseCrud, Form },
   data() {
     return {
@@ -204,7 +201,7 @@ export default {
     },
     onClick_detail($item) {
       this.$router.push({
-        path: "/deviceManage/stock/stockOut/detail",
+        name: "outDetail",
         query: {
           id: $item.id
         }

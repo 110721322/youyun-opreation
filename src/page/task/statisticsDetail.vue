@@ -1,5 +1,5 @@
 <template>
-    <div class="main_page">
+    <div>
       <div class="tab_head">
         <span class="title">任务统计详情</span>
         <el-menu
@@ -76,7 +76,7 @@ import { FORM_CONFIG } from "./formConfig/staticDetailSearch";
 import {TASK_SEARCH_1, TASK_SEARCH_2 } from "../../libs/data/permissionBtns";
 
 export default {
-  name: "Theme",
+  name: "StatisticsDetail",
   components: { Search, BaseCrud, DataMode },
   // components: { dataMode, BaseCrud },
   data() {
@@ -173,7 +173,7 @@ export default {
     },
     handle_detail(row) {
       this.$router.push({
-        path: '/task/statistics/statisticsAll',
+        name: 'statisticsAll',
         query: {
           statisticsData: row
         }

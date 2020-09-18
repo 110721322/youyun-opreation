@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="tab_head">
       <span class="title">服务商后台菜单</span>
     </div>
@@ -48,7 +48,7 @@ import { FORM_CONFIG } from "../formConfig/agentMenuDetail";
 import { MENU_CONFIG } from "../tableConfig/agentMenuConfig";
 
 export default {
-  name: "Theme",
+  name: "AgentMenu",
   components: { BaseCrud, Form },
   data() {
     return {

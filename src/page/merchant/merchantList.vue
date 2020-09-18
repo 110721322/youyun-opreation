@@ -1,17 +1,15 @@
 <template>
-  <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
-    <div v-else>
-      <div class="p_head">商户列表</div>
-      <search
+  <div>
+    <div class="p_head">商户列表</div>
+    <search
         :open-height="searchMaxHeight"
         :form-base-data="searchConfig.formData"
         :show-foot-btn="searchConfig.showFootBtn"
         @search="search"
-      />
-      <!-- <data-mode></data-mode> -->
-      <div class="table_box">
-        <BaseCrud
+    />
+    <!-- <data-mode></data-mode> -->
+    <div class="table_box">
+      <BaseCrud
           ref="table"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
@@ -28,29 +26,28 @@
           @detail="go_detail"
           @openAgentManager="openAgentManager"
           @openMerchantManager="openMerchantManager"
-        >
-          <div slot="head" slot-scope="item">
-            <span>{{ item.item.label }}</span>
-            <el-tooltip class="item" effect="dark" content="Top Center 提示文字" placement="top">
-              <div slot="content">
-                <div>
-                  <span class="dot opened"></span>已开通
-                </div>
-                <div>
-                  <span class="dot review"></span>审核中
-                </div>
-                <div>
-                  <span class="dot reject"></span>驳回
-                </div>
-                <div>
-                  <span class="dot unused"></span>未审核
-                </div>
+      >
+        <div slot="head" slot-scope="item">
+          <span>{{ item.item.label }}</span>
+          <el-tooltip class="item" effect="dark" content="Top Center 提示文字" placement="top">
+            <div slot="content">
+              <div>
+                <span class="dot opened"></span>已开通
               </div>
-              <i class="el-icon-info" />
-            </el-tooltip>
-          </div>
-        </BaseCrud>
-      </div>
+              <div>
+                <span class="dot review"></span>审核中
+              </div>
+              <div>
+                <span class="dot reject"></span>驳回
+              </div>
+              <div>
+                <span class="dot unused"></span>未审核
+              </div>
+            </div>
+            <i class="el-icon-info" />
+          </el-tooltip>
+        </div>
+      </BaseCrud>
     </div>
   </div>
 </template>
@@ -63,7 +60,7 @@ import { USER_CONFIG } from "./tableConfig/merchantConfig";
 import { FORM_CONFIG } from "./formConfig/merchantListSearch";
 
 export default {
-  name: "Theme",
+  name: "MerchantList",
   components: { search, BaseCrud },
   data() {
     return {
@@ -93,7 +90,7 @@ export default {
     },
     go_detail(row) {
       this.$router.push({
-        path: "/merchant/list/detail",
+        name: "merchantDetail",
         query: {
           merchantNo: row.merchantNo
         }

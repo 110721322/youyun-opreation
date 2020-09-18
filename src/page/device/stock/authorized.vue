@@ -1,5 +1,5 @@
 <template>
-  <div class>
+  <div>
     <div class="tab_head">
       <span class="title">设备授权激活</span>
     </div>
@@ -42,7 +42,7 @@ import { AUTHORIZED_CONFIG } from "../tableConfig/authorizedConfig";
 import UploadFile from "@/components/form/components/UploadFile";
 
 export default {
-  name: "Theme",
+  name: "Authorized",
   components: { Search, BaseCrud, UploadFile },
   data() {
     return {
