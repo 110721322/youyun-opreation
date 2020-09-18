@@ -1,5 +1,5 @@
 <template>
-  <div class>
+  <div>
     <div class="p_head_detail" :class="[activeClass]">
       <div class="top">
         <span>{{ ruleForm.channelAgentName }}</span>
@@ -283,7 +283,7 @@ import store from "@/store"
 import api_topAgent from "@/api/api_topAgent";
 
 export default {
-  name: "Theme",
+  name: "TopAgentDetail",
   components: { detailMode, detailMode5, Form, PowerSet },
   data() {
     return {
@@ -699,10 +699,6 @@ export default {
       }
       this.inputVisible = false;
       this.inputValue = "";
-    },
-    go_detail() {
-      // eslint-disable-next-line no-console
-      this.$router.push("/agent/list/detail");
     },
     itemEdit($model) {
       this.financeModel.bankAccountType = ''

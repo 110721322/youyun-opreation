@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div class="container">
     <div class="top">
       <div class="left_img">
         <img src="../../assets/img/message_photo.png" alt="">
@@ -98,6 +98,7 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import api from "@/api/api_serveMarket";
 import Upload from "@/components/form/components/Upload.vue";
 export default {
+  name: "MessageCustomer",
   components: { BaseCrud, Upload },
   data() {
     return {
@@ -201,7 +202,7 @@ export default {
 </script>
 
 <style scoped>
-  .main_page {
+  .container {
     width: 100%;
     padding: 24px 24px 40px 24px;
     box-sizing: border-box;

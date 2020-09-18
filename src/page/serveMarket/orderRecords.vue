@@ -1,19 +1,16 @@
 <template>
-  <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
-    <router-view v-else-if="this.$route.path.indexOf('/indent') !== -1" />
-    <div v-else>
-      <div class="p_head" style="margin-bottom: 24px;">订购记录</div>
-      <search
+  <div class="container">
+    <div class="p_head" style="margin-bottom: 24px;">订购记录</div>
+    <search
         class="searchForm"
         :is-show-all="true"
         :form-base-data="searchConfig.formData"
         :show-foot-btn="searchConfig.showFootBtn"
         @search="search"
-      />
-      <!-- <data-mode></data-mode> -->
-      <div class="table_box">
-        <BaseCrud
+    />
+    <!-- <data-mode></data-mode> -->
+    <div class="table_box">
+      <BaseCrud
           ref="table"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
@@ -28,18 +25,17 @@
           :params="params"
           :api-service="api"
           @detail="handel_detail"
-        >
-          <template v-slot="{ row }">
-            <el-form label-position="left" inline class="demo-table-expand">
-              <div v-for="(item,index) in row.infoVOList" :key="index">
-                <el-form-item :label="item.deviceModel + ':'">
-                  <span>{{ item.count+'台' }}</span>
-                </el-form-item>
-              </div>
-            </el-form>
-          </template>
-        </BaseCrud>
-      </div>
+      >
+        <template v-slot="{ row }">
+          <el-form label-position="left" inline class="demo-table-expand">
+            <div v-for="(item,index) in row.infoVOList" :key="index">
+              <el-form-item :label="item.deviceModel + ':'">
+                <span>{{ item.count+'台' }}</span>
+              </el-form-item>
+            </div>
+          </el-form>
+        </template>
+      </BaseCrud>
     </div>
   </div>
 </template>
@@ -52,7 +48,7 @@ import { ORDER_RECORD_CONFIG } from "./tableConfig/orderRecordConfig";
 import { ORDER_RECORD_SEARCH } from "./formConfig/orderRecordSearch";
 
 export default {
-  name: "AdvertisingPutin",
+  name: "OrderRecords",
   components: { search, BaseCrud },
   data() {
     return {
@@ -79,7 +75,7 @@ export default {
   methods: {
     handel_detail($row) {
       this.$router.push({
-        path: '/serveMarket/equipmentMall/equimentOrderDetail',
+        name: 'equimentOrderDetail',
         query: {
           id: $row.id
         }
@@ -103,7 +99,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .main_page {
+  .container {
     padding: 0 0;
   }
   .data-item {

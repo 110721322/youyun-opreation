@@ -1,98 +1,95 @@
 <template>
-  <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
-    <div v-else>
-      <div class="p_head">
-        <span class="left-title">商户数据</span>
-        <div class="right-area" @click="showRightbar">
-          <img src="../../assets/img/menu_icon.png" alt="">
-          <span>自定义设置</span>
-        </div>
+  <div>
+    <div class="p_head">
+      <span class="left-title">商户数据</span>
+      <div class="right-area" @click="showRightbar">
+        <img src="../../assets/img/menu_icon.png" alt="">
+        <span>自定义设置</span>
       </div>
-      <search
-        v-if="hasPermission('merchantCount') || hasPermission('merchantRegionRatio') || hasPermission('merchantIndustryRatio')
-          || hasPermission('merchantAverageTrend') || hasPermission('merchantAmountRank') || hasPermission('merchantAverageRatio')"
-        :is-show-all="true"
-        :form-base-data="searchConfig.formData"
-        :show-foot-btn="searchConfig.showFootBtn"
-        @dataSelect="handleDataSelect"
-        @search="search"
-      />
-      <template v-if="hasPermission('merchantCount')">
-        <div class="title2">新增商户数分布</div>
-        <div class="map-box">
-          <div class="chart-box">
-            <div ref="echartsMap" class="chart-panel"></div>
+    </div>
+    <search
+      v-if="hasPermission('merchantCount') || hasPermission('merchantRegionRatio') || hasPermission('merchantIndustryRatio')
+        || hasPermission('merchantAverageTrend') || hasPermission('merchantAmountRank') || hasPermission('merchantAverageRatio')"
+      :is-show-all="true"
+      :form-base-data="searchConfig.formData"
+      :show-foot-btn="searchConfig.showFootBtn"
+      @dataSelect="handleDataSelect"
+      @search="search"
+    />
+    <template v-if="hasPermission('merchantCount')">
+      <div class="title2">新增商户数分布</div>
+      <div class="map-box">
+        <div class="chart-box">
+          <div ref="echartsMap" class="chart-panel"></div>
+        </div>
+        <div class="data-box">
+          <div class="data-title">
+            新增商户数省份排行榜
+            <span class="all-num">共{{ mapData.length }}个</span>
           </div>
-          <div class="data-box">
-            <div class="data-title">
-              新增商户数省份排行榜
-              <span class="all-num">共{{ mapData.length }}个</span>
+          <div v-for="(item,index) in mapData" :key="index" class="data-item">
+            <div class="data-left">
+              <span :class="['index',index<=2?'hightlight':'normal']">{{ index+1 }}</span>
+              {{ item.name }}
             </div>
-            <div v-for="(item,index) in mapData" :key="index" class="data-item">
-              <div class="data-left">
-                <span :class="['index',index<=2?'hightlight':'normal']">{{ index+1 }}</span>
-                {{ item.name }}
-              </div>
-              <div class="data-right">
-                <span>{{ item.count }}</span> |
-                <span class="perc">{{ item.ratio }}%</span>
-              </div>
+            <div class="data-right">
+              <span>{{ item.count }}</span> |
+              <span class="perc">{{ item.ratio }}%</span>
             </div>
           </div>
         </div>
-      </template>
-      <div class="pie-box">
-        <template v-for="(item, index) in pieList">
-          <div v-if="hasPermission(item.permission)" :key="index" class="pie-item">
-            <dataItem
-              :radio="item.radio"
-              :title="item.title"
-              :pie-option="pieOptionList[index]"
-              :piw-ref-name="`echartsPie${index}`"
-              :data-list="item.dataList"
-              :is-show-pie="true"
-              @radioChange="handleRegionRadioChange"
-            />
-          </div>
-        </template>
       </div>
-      <template v-if="hasPermission('merchantAverageTrend')">
-        <div class="title">商户平均交易额走势</div>
-        <div class="trend-box">
-          <div class="chart-box">
-            <div ref="echartsLine" class="chart-panel"></div>
-          </div>
-        </div>
-      </template>
-      <div class="pie-box">
-        <div v-if="hasPermission('merchantAmountRank')" class="pie-item">
+    </template>
+    <div class="pie-box">
+      <template v-for="(item, index) in pieList">
+        <div v-if="hasPermission(item.permission)" :key="index" class="pie-item">
           <dataItem
-            :radio="tradeRankRadio"
-            :is-show-table="true"
-            :title="'总交易额排行榜'"
-            :is-show-more="true"
-            :config-data="tableConfigData3"
-            :permission="tableConfigData3.permission"
-            :item-test-data="tradeRank"
-            :is-show-line="false"
-            :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
-            @showMore="handleShowMore('tradeAmount')"
-            @radioChange="handleRegionRadioChange"
-          ></dataItem>
-        </div>
-        <div v-if="hasPermission('merchantAverageRatio')" class="pie-item">
-          <dataItem
-            :radio="averagePieRadio.radio"
-            :title="averagePieRadio.title"
-            :pie-option="averagePieOption"
-            :piw-ref-name="`echartsPie3`"
-            :data-list="averagePieRadio.dataList"
+            :radio="item.radio"
+            :title="item.title"
+            :pie-option="pieOptionList[index]"
+            :piw-ref-name="`echartsPie${index}`"
+            :data-list="item.dataList"
             :is-show-pie="true"
-            :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
             @radioChange="handleRegionRadioChange"
           />
         </div>
+      </template>
+    </div>
+    <template v-if="hasPermission('merchantAverageTrend')">
+      <div class="title">商户平均交易额走势</div>
+      <div class="trend-box">
+        <div class="chart-box">
+          <div ref="echartsLine" class="chart-panel"></div>
+        </div>
+      </div>
+    </template>
+    <div class="pie-box">
+      <div v-if="hasPermission('merchantAmountRank')" class="pie-item">
+        <dataItem
+          :radio="tradeRankRadio"
+          :is-show-table="true"
+          :title="'总交易额排行榜'"
+          :is-show-more="true"
+          :config-data="tableConfigData3"
+          :permission="tableConfigData3.permission"
+          :item-test-data="tradeRank"
+          :is-show-line="false"
+          :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
+          @showMore="handleShowMore('tradeAmount')"
+          @radioChange="handleRegionRadioChange"
+        ></dataItem>
+      </div>
+      <div v-if="hasPermission('merchantAverageRatio')" class="pie-item">
+        <dataItem
+          :radio="averagePieRadio.radio"
+          :title="averagePieRadio.title"
+          :pie-option="averagePieOption"
+          :piw-ref-name="`echartsPie3`"
+          :data-list="averagePieRadio.dataList"
+          :is-show-pie="true"
+          :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
+          @radioChange="handleRegionRadioChange"
+        />
       </div>
       <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size="500px">
         <div class="draw-title">权限设置</div>
@@ -489,7 +486,7 @@ export default {
       })
     },
     handleShowMore($sortField) {
-      this.$router.push({ path: "/dataMarket/merchantData/detail", query: {
+      this.$router.push({ name: "merchantDataDetail", query: {
         sortField: $sortField || "tradeAmount"
       }});
     },

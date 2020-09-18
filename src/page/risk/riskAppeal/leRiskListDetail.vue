@@ -1,19 +1,11 @@
 <template>
-  <div class>
+  <div>
     <div class="tab_head">
       <span class="title">乐刷风控详情</span>
     </div>
 
     <transition name="fade">
       <div>
-        <!--        <el-alert-->
-        <!--          v-if="showComponents.showRejectTitle"-->
-        <!--          class="detail-alert"-->
-        <!--          :title="ruleForm.reason"-->
-        <!--          type="info"-->
-        <!--          :closable="false"-->
-        <!--          show-icon-->
-        <!--        ></el-alert>-->
         <detailMode
           :img-width="4"
           :rule-form="ruleForm"

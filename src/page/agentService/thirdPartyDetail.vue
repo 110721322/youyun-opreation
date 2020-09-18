@@ -16,7 +16,7 @@ import Form from "@/components/form/index.vue";
 import { FORM_CONFIG } from "./formConfig/thirdPartyDetail";
 
 export default {
-  name: "Theme",
+  name: "ThirdPartyDetail",
   components: { Form },
   data() {
     return {

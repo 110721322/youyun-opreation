@@ -1,22 +1,20 @@
 <template>
-  <div class="">
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
-    <div v-else>
-      <div class="tab_head">
-        <span class="title">平台广告列表</span>
-      </div>
-      <Search
+  <div>
+    <div class="tab_head">
+      <span class="title">平台广告列表</span>
+    </div>
+    <Search
         :is-show-all="true"
         :open-height="searchHeight"
         :form-base-data="searchConfig.formData"
         @search="search"
-      />
-      <div class="table_box">
-        <div class="tabale_title_box">
-          <div class="title">广告列表</div>
-          <el-button class="btn" type="primary" @click="onClick_addAd">新增广告</el-button>
-        </div>
-        <BaseCrud
+    />
+    <div class="table_box">
+      <div class="tabale_title_box">
+        <div class="title">广告列表</div>
+        <el-button class="btn" type="primary" @click="onClick_addAd">新增广告</el-button>
+      </div>
+      <BaseCrud
           ref="table"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
@@ -34,8 +32,7 @@
           :api-service="api"
           @remove="onClick_remove"
           @edit="onClick_edit"
-        ></BaseCrud>
-      </div>
+      ></BaseCrud>
     </div>
   </div>
 </template>
@@ -102,7 +99,7 @@ export default {
     },
     onClick_edit(row) {
       this.$router.push({
-        path: "/agentService/adManage/platformAdList/detail",
+        name: "platformAdDetail",
         query: {
           id: row.id
         }
@@ -110,7 +107,7 @@ export default {
     },
     onClick_addAd() {
       this.$router.push({
-        path: "/agentService/adManage/platformAdList/detail"
+        name: "platformAdDetail"
       });
     }
   }

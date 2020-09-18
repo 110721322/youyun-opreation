@@ -93,7 +93,7 @@ export default {
         })
         .then(res => {
           this.resetState();
-          this.$router.replace(`/login?redirect=${this.$route.fullPath}`);
+          this.$router.replace(`/login`);
         })
     },
     toSyswarn() {

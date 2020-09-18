@@ -1,7 +1,6 @@
 <template>
-  <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/lsBuyIndex') !== -1" />
-    <div v-else class="content">
+  <div class="container">
+    <div class="content">
       <div v-for="(item,index) in tradeList" :key="index" class="card">
         <div class="top">
           <div class="left_img">
@@ -30,6 +29,7 @@
 <script>
 import api from "@/api/api_serveMarket";
 export default {
+  name: "TradingChannel",
   data() {
     return {
       tradeList: []
@@ -41,14 +41,13 @@ export default {
   methods: {
     onclick_buy($data) {
       localStorage.setItem('productItem', JSON.stringify($data))
-      this.$router.push({path: "/serveMarket/tradingChannel/lsBuyIndex"})
+      this.$router.push({name: "lsBuyIndex"})
     },
     getModel() {
       api.selectModuleProduct({
         moduleCode: 'payChannel'
       }).then(res => {
-        const tradeList = res.object
-        this.tradeList = tradeList
+        this.tradeList = res.object
       })
     }
   }
@@ -56,7 +55,7 @@ export default {
 </script>
 
 <style scoped>
-  .main_page {
+  .container {
     width: 100%;
     height: 100%;
     padding: 24px 24px 40px 24px;

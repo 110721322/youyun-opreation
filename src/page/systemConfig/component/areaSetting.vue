@@ -59,7 +59,7 @@ import areaData from "@/assets/data/areaData";
 import { FORM_CONFIG } from "../formConfig/areaSettingForm";
 
 export default {
-  name: "Theme",
+  name: "AreaSetting",
   components: { Form, DetailBox },
   data() {
     return {

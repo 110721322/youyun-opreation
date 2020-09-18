@@ -16,7 +16,7 @@ import Form from "@/components/form/index.vue";
 import { FORM_CONFIG } from "./../formConfig/shopDetail";
 
 export default {
-  name: "Theme",
+  name: "ShopDetail",
   components: { Form },
   data() {
     return {
@@ -66,7 +66,7 @@ export default {
           })
           .then(res => {
             this.$message("保存成功");
-            this.$router.push({ path: "/deviceManage/shopCenter" });
+            this.$router.replace({ name: "shopCenter" });
           })
           .catch(err => {
             this.$message(err);
@@ -83,7 +83,7 @@ export default {
           })
           .then(res => {
             this.$message("添加成功");
-            this.$router.push({ path: "/deviceManage/shopCenter" });
+            this.$router.replace({ name: "shopCenter" });
           })
           .catch(err => {
             this.$message(err);

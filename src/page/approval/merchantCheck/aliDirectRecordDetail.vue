@@ -1,13 +1,11 @@
 <template>
-  <div class>
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
-    <div v-else>
-      <div class="tab_head">
-        <span class="title">商户支付宝直连审核记录</span>
-      </div>
+  <div>
+    <div class="tab_head">
+      <span class="title">商户支付宝直连审核记录</span>
+    </div>
 
-      <div class="table_box">
-        <BaseCrud
+    <div class="table_box">
+      <BaseCrud
           :params="params"
           :api-service="api"
           :grid-config="configData.gridConfig"
@@ -22,8 +20,7 @@
           :row-key="'id'"
           :default-expand-all="false"
           :hide-edit-area="configData.hideEditArea"
-        ></BaseCrud>
-      </div>
+      ></BaseCrud>
     </div>
   </div>
 </template>
@@ -34,7 +31,7 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import { RECORD_CONFIG } from "./../tableConfig/aliDirectRecordDetailConfig";
 
 export default {
-  name: "AliRecordDetail",
+  name: "AliDirectRecordDetail",
   components: { BaseCrud },
   data() {
     return {

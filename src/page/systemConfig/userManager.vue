@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="tab_head">
       <span class="title">成员管理</span>
     </div>
@@ -113,7 +113,7 @@ import { SEARCH_CONFIG } from "./formConfig/userManagerSearch";
 import { USERLIST_CONFIG } from "./tableConfig/userManagerConfig";
 
 export default {
-  name: "Theme",
+  name: "UserManager",
   components: { Search, BaseCrud, PerfectPost, Form },
   data() {
     return {
@@ -145,45 +145,7 @@ export default {
       api: api.queryEmployeeList,
       apiJob: api_systemConfig.selectAllJob,
       activityRow: {},
-      dataItem: [
-        {
-          id: 1,
-          label: "一级 1",
-          icon: "el-icon-delete",
-          type: "page",
-          children: [
-            {
-              id: 4,
-              label: "二级 1-1",
-              type: "page",
-              children: [
-                {
-                  id: 9,
-                  label: "三级 1-1-1",
-                  type: "page"
-                },
-                {
-                  id: 10,
-                  label: "三级 1-1-2",
-                  type: "page",
-                  children: [
-                    {
-                      id: 5,
-                      label: "三级 1-1-1",
-                      type: "page"
-                    },
-                    {
-                      id: 60,
-                      label: "三级 1-1-2",
-                      type: "page"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
+      dataItem: []
     };
   },
   beforeCreate() {

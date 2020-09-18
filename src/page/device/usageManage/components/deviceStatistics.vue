@@ -109,7 +109,7 @@ import provinceData from "@/assets/data/provinceData"
 import areaData from "@/assets/data/areaData"
 
 export default {
-  name: "Theme",
+  name: "DeviceStatistics",
   components: { Search, dataItem, dotTip, deviceList },
   data() {
     return {

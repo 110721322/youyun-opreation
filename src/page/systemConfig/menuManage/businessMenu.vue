@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="tab_head">
       <span class="title">商应小程序菜单</span>
     </div>
@@ -49,7 +49,7 @@ import { FORM_CONFIG } from "../formConfig/businessMenuDetail";
 import { MENU_CONFIG } from "../tableConfig/businessMenuConfig";
 
 export default {
-  name: "Theme",
+  name: "BusinessMenu",
   components: { BaseCrud, Form },
   data() {
     return {

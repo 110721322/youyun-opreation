@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div class="container">
     <div class="content-box">
       <div class="title">{{ fromConfigData.title }}</div>
       <Form
@@ -15,6 +15,7 @@
 import Form from "@/components/form/index";
 import { FORM_CONFIG } from "./../agent/formConfig/addAgentConfig";
 export default {
+  name: "AddTopAgent",
   components: { Form },
   data() {
     return {
@@ -25,7 +26,7 @@ export default {
 </script>
 
 <style scoped>
-  .main_page {
+  .container {
     padding: 32px 24px 0 24px;
   }
   .content-box {

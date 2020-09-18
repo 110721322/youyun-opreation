@@ -1,57 +1,59 @@
 <template>
-  <div v-if="channelStatusList.length > 0" class>
-    <div class="tab_head">
-      <span class="title">商户预审核信息</span>
-      <el-menu
-        :default-active="activeIndex"
-        class="el-menu"
-        mode="horizontal"
-        @select="handleSelect"
-      >
-        <el-menu-item v-for="(item, index) in channelStatusList" :key="index" :index="index">
-          <i :class="(ruleForm.status === 'channelAudit' || ruleForm.status === 'platformAudit') ? 'dotAudit': (ruleForm.status === 'platformReject' || ruleForm.status === 'channelReject') ? 'dotReject': 'dot'"></i>
-          {{ item.channel }}
-        </el-menu-item>
-      </el-menu>
-    </div>
-
-    <transition name="fade">
-      <div>
-        <el-alert
-          v-if="showComponents.showRejectTitle"
-          class="detail-alert"
-          :title="ruleForm.rejectReason"
-          type="info"
-          :closable="false"
-          show-icon
-        ></el-alert>
-        <div v-if="activeIndex" :key="activeIndex">
-          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.baseData"></detailMode>
-          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.merchantData"></detailMode>
-          <!--          (企业，个体工商户)对公法人-->
-          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.settleData1" v-if="ruleForm.merchantType !== 'personal' && ruleForm.bankAccountType === 'public' && ruleForm.settleLawFlag === 'legal'"></detailMode>
-          <!--          (企业，个体工商户，个人)对私法人-->
-          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.settleData2" v-if="ruleForm.bankAccountType === 'private' && ruleForm.settleLawFlag  === 'legal'"></detailMode>
-          <!--          (企业，个体工商户)对私非法人-->
-          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.settleData3" v-if="ruleForm.merchantType !== 'personal' && ruleForm.bankAccountType === 'private' && ruleForm.settleLawFlag === 'unlegal'"></detailMode>
-          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.other"></detailMode>
-        </div>
-        <div v-if="showComponents.showOperBtns" class="btn-box">
-          <div class="btn_pass" @click="onClick_pass">资料已检查并提交签约</div>
-          <div class="btn-reject" @click="onClick_reject">驳回</div>
-        </div>
+  <div>
+    <template v-if="channelStatusList.length > 0">
+      <div class="tab_head">
+        <span class="title">商户预审核信息</span>
+        <el-menu
+            :default-active="activeIndex"
+            class="el-menu"
+            mode="horizontal"
+            @select="handleSelect"
+        >
+          <el-menu-item v-for="(item, index) in channelStatusList" :key="index" :index="index">
+            <i :class="(ruleForm.status === 'channelAudit' || ruleForm.status === 'platformAudit') ? 'dotAudit': (ruleForm.status === 'platformReject' || ruleForm.status === 'channelReject') ? 'dotReject': 'dot'"></i>
+            {{ item.channel }}
+          </el-menu-item>
+        </el-menu>
       </div>
-    </transition>
-    <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
-      <div class="p_head">{{ fromConfigData.title }}</div>
-      <Form
-        :form-base-data="fromConfigData.formData"
-        :show-foot-btn="fromConfigData.showFootBtn"
-        label-width="130px"
-        @cancel="cancel"
-        @confirm="confirm"
-      ></Form>
-    </el-drawer>
+
+      <transition name="fade">
+        <div>
+          <el-alert
+              v-if="showComponents.showRejectTitle"
+              class="detail-alert"
+              :title="ruleForm.rejectReason"
+              type="info"
+              :closable="false"
+              show-icon
+          ></el-alert>
+          <div v-if="activeIndex" :key="activeIndex">
+            <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.baseData"></detailMode>
+            <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.merchantData"></detailMode>
+            <!--          (企业，个体工商户)对公法人-->
+            <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.settleData1" v-if="ruleForm.merchantType !== 'personal' && ruleForm.bankAccountType === 'public' && ruleForm.settleLawFlag === 'legal'"></detailMode>
+            <!--          (企业，个体工商户，个人)对私法人-->
+            <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.settleData2" v-if="ruleForm.bankAccountType === 'private' && ruleForm.settleLawFlag  === 'legal'"></detailMode>
+            <!--          (企业，个体工商户)对私非法人-->
+            <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.settleData3" v-if="ruleForm.merchantType !== 'personal' && ruleForm.bankAccountType === 'private' && ruleForm.settleLawFlag === 'unlegal'"></detailMode>
+            <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.other"></detailMode>
+          </div>
+          <div v-if="showComponents.showOperBtns" class="btn-box">
+            <div class="btn_pass" @click="onClick_pass">资料已检查并提交签约</div>
+            <div class="btn-reject" @click="onClick_reject">驳回</div>
+          </div>
+        </div>
+      </transition>
+      <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
+        <div class="p_head">{{ fromConfigData.title }}</div>
+        <Form
+            :form-base-data="fromConfigData.formData"
+            :show-foot-btn="fromConfigData.showFootBtn"
+            label-width="130px"
+            @cancel="cancel"
+            @confirm="confirm"
+        ></Form>
+      </el-drawer>
+    </template>
   </div>
 </template>
 <script>

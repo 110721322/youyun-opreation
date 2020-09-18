@@ -42,7 +42,7 @@ import Form from "@/components/form/index.vue";
 import DetailMod from "@/components/detailMode/detailMode2.vue";
 import { FORM_CONFIG } from "../formConfig/paramsDetail";
 export default {
-  name: "Theme",
+  name: "TodoSetting",
   components: { Form, DetailMod },
   data() {
     return {

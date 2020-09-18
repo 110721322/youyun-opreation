@@ -4,6 +4,14 @@ import { Loading, Message } from 'element-ui';
 import store from '@/store';
 import router from "@/router"
 import * as g from '../libs/global';
+var _isShowMessage = true;
+
+function setTimeShowMessage () {
+  _isShowMessage = false;
+  setTimeout(() => {
+    _isShowMessage = true;
+  }, 5000)
+}
 
 axios.defaults.timeout = g.config.timeout;
 axios.defaults.withCredentials = true;
@@ -30,10 +38,10 @@ axios.interceptors.request.use((config) => {
   }
   if (!config.noLoading) {
     config.loading = Loading.service({text: '载入中', target: document.querySelector(".main-container"), body: true})
+    setTimeout(() => {
+      config.loading.close();
+    }, config.timeout)
   }
-  setTimeout(() => {
-    config.loading.close();
-  }, config.timeout)
   return config;
 }, (error) => {
   // Do something with request error
@@ -48,30 +56,26 @@ axios.interceptors.response.use((response) => {
   if (response.config.responseType === 'blob') return response;
   if (response.data && response.data.status === 0) {
     return response;
-  } else if (response.data && response.data.status === 1 && response.data.code !== null) {
-    if (response.data.code === -1) { // 口令过期
+  } else if (response.data && response.data.status === 1 && response.data.code !== null && response.data.code === -1) {
+    if (_isShowMessage) {
       Message({
-        message: response.data.errorMessage || "登录失效，请重新登录",
+        message: response.data.message || "登录失效，请重新登录",
         duration: 1500,
         type: 'error'
       })
-      store.dispatch('resetState');
-      router.replace('/login');
-      return Promise.reject(response.data);
-    } else {
+    }
+    setTimeShowMessage();
+    store.dispatch('resetState');
+    router.replace('/login');
+    return Promise.reject(response.data);
+  } else {
+    if (_isShowMessage) {
       Message({
         message: response.data.errorMessage || "出现错误，请稍后再试",
         duration: 1500,
-        type: 'warning'
+        type: 'error'
       })
-      return response;
     }
-  } else {
-    Message({
-      message: response.data.errorMessage || "出现错误，请稍后再试",
-      duration: 1500,
-      type: 'error'
-    })
     return Promise.reject(response.data);
   }
 }, (error) => {
@@ -134,11 +138,16 @@ axios.interceptors.response.use((response) => {
   } else {
     error.message = '网络异常,连接服务器失败!';
   }
-  Message({
-    message: error.message || "出现错误，请稍后再试",
-    duration: 1500,
-    type: 'error'
-  })
+  if (_isShowMessage) {
+    Message({
+      message: error.message || "出现错误，请稍后再试",
+      duration: 1500,
+      type: 'error'
+    })
+  }
+  if (error.response.status === 401) {
+    setTimeShowMessage();
+  }
   return Promise.reject(error);
 });
 

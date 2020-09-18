@@ -1,6 +1,6 @@
 <template>
   <div class="pay_page">
-    <div class="top-area">
+    <ul class="top-area">
       <li>
         <span class="left-title">付款剩余时间:</span>
         <div class="step-time">
@@ -19,7 +19,7 @@
         <span class="left-title">付款金额:</span>
         <span class="price">{{ orderInfo.actualAmount }}</span>
       </li>
-    </div>
+    </ul>
     <div class="pay_way">
       <div class="pay_label">支付方式:</div>
       <div v-for="(item, index) in wayData" :key="index" class="way" :class="wayIndex===index?'isway':''" @click="onclick_way(index)">{{ item.value }}</div>
@@ -52,6 +52,7 @@
 import api from "@/api/api_serveMarket"
 import Form from "@/components/form/index.vue";
 export default {
+  name: "EquimentPay",
   components: { Form },
   data() {
     return {
@@ -162,7 +163,7 @@ export default {
               showClose: false
             }).then(res => {
               this.$router.replace({
-                path: '/serviceCentre/cashRegisterTool/orderRecord'
+                name: 'orderRecords'
               })
             })
           }

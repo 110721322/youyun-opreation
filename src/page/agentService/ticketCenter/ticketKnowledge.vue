@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="tab_head">
       <span class="title">工单知识库</span>
     </div>
@@ -119,7 +119,7 @@ import Form from "@/components/form/index.vue";
 import { FORM_CONFIG } from "../formConfig/ticketKnowledge";
 
 export default {
-  name: "Theme",
+  name: "TicketKnowledge",
   components: { Form },
   data() {
     return {

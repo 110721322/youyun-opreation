@@ -3,6 +3,7 @@ const state = {
   userInfo: null, // 登录角色信息
   routers: [],
   socketOptions: null, // websocket变量
+  includeKeepAlive: [],
   todoList: {}
 }
 export default state;

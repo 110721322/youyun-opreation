@@ -1,10 +1,11 @@
 <template>
-  <div class="main_page">
+  <div>
     <router-view />
   </div>
 </template>
 
 <script>
 export default {
+  name: "ShareProfit"
 }
 </script>

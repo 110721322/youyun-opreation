@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="tab_head">
       <span class="title">审批管理</span>
     </div>
@@ -62,7 +62,7 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import { USERLIST_CONFIG } from "./tableConfig/approvalManagerConfig";
 
 export default {
-  name: "Theme",
+  name: "ApprovalManager",
   components: { BaseCrud },
   data() {
     return {

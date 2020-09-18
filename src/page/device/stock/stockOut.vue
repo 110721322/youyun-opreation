@@ -1,18 +1,16 @@
 <template>
-  <div class="">
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
-    <div v-else>
-      <div class="tab_head">
-        <span class="title">出库管理</span>
-      </div>
-      <search
+  <div>
+    <div class="tab_head">
+      <span class="title">出库管理</span>
+    </div>
+    <search
         :open-height="searchMaxHeight"
         :form-base-data="searchConfig.formData"
         :show-foot-btn="searchConfig.showFootBtn"
         @search="search"
-      />
-      <div class="table_box">
-        <BaseCrud
+    />
+    <div class="table_box">
+      <BaseCrud
           ref="table"
           :params="params"
           :api-service="api"
@@ -55,9 +53,8 @@
           label-width="130px"
           @cancel="cancel"
           @confirm="confirm"
-        ></Form>
-      </el-drawer>
-    </div>
+      ></Form>
+    </el-drawer>
   </div>
 </template>
 <script>
@@ -72,7 +69,7 @@ import { SEARCH_CONFIG } from "./../formConfig/outSearch";
 import { OUTLIST_CONFIG } from "./../tableConfig/outListConfig";
 
 export default {
-  name: "Theme",
+  name: "StockOut",
   components: { Search, BaseCrud, Form },
   data() {
     return {
@@ -204,7 +201,7 @@ export default {
     },
     onClick_detail($item) {
       this.$router.push({
-        path: "/deviceManage/stock/stockOut/detail",
+        name: "outDetail",
         query: {
           id: $item.id
         }

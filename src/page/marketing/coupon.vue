@@ -1,19 +1,17 @@
 <template>
-  <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/addCoupon') !== -1 || this.$route.path.indexOf('/couponDetail') !== -1" />
-    <div v-else>
-      <search
+  <div>
+    <search
         :open-height="searchMaxHeight"
         :form-base-data="searchConfig.formData"
         :show-foot-btn="searchConfig.showFootBtn"
         @search="search"
-      />
-      <!-- <data-mode></data-mode> -->
-      <div class="table_box">
-        <div class="add-btn">
-          <button @click="onClick_add">创建优惠码</button>
-        </div>
-        <BaseCrud
+    />
+    <!-- <data-mode></data-mode> -->
+    <div class="table_box">
+      <div class="add-btn">
+        <button @click="onClick_add">创建优惠码</button>
+      </div>
+      <BaseCrud
           ref="child"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
@@ -29,35 +27,34 @@
           @extension="extension"
           @detail="goDetail"
           @stopAcitive="stopAcitive"
-        />
-      </div>
-      <el-dialog
+      />
+    </div>
+    <el-dialog
         title="领取优惠码"
         :visible.sync="dialogVisible"
         width="420px"
         height="394px"
         :before-close="handleClose"
-      >
-        <div class="dialog_code">
-          <img :src="couponForm.ossUrl" alt="">
+    >
+      <div class="dialog_code">
+        <img :src="couponForm.ossUrl" alt="">
+      </div>
+      <div class="option-btn">
+        <div class="copy-btn" @click="copyActiveCode($event,couponForm.shortUrl )">
+          <img src="../../assets/img/copy_icon.png" alt="">
+          <div>复制链接</div>
         </div>
-        <div class="option-btn">
-          <div class="copy-btn" @click="copyActiveCode($event,couponForm.shortUrl )">
-            <img src="../../assets/img/copy_icon.png" alt="">
-            <div>复制链接</div>
-          </div>
-          <span></span>
-          <div class="down-btn" @click="downloadCodeImg">
-            <img src="../../assets/img/down_icon.png" alt="">
-            <div>点击下载</div>
-          </div>
+        <span></span>
+        <div class="down-btn" @click="downloadCodeImg">
+          <img src="../../assets/img/down_icon.png" alt="">
+          <div>点击下载</div>
         </div>
-        <span slot="footer" class="dialog-footer">
+      </div>
+      <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
           <el-button type="primary" @click="getsPromoCode">确 定</el-button>
         </span>
-      </el-dialog>
-    </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -69,6 +66,7 @@ import { USER_CONFIG } from "./tableConfig/couponConfig";
 import { FORM_CONFIG } from "./formConfig/couponSearch";
 import Clipboard from "clipboard";
 export default {
+  name: "Coupon",
   components: { search, BaseCrud },
   data() {
     return {
@@ -120,7 +118,7 @@ export default {
     },
     goDetail($row) {
       this.$router.push({
-        path: "/marketing/coupon/couponDetail",
+        name: "couponDetail",
         query: {
           activityNo: $row.activityNo,
           id: $row.id
@@ -151,7 +149,7 @@ export default {
     },
     onClick_add() {
       this.$router.push({
-        path: "/marketing/coupon/addCoupon"
+        name: "addCoupon"
       })
     },
     getsPromoCode() {

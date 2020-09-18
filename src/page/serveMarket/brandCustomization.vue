@@ -1,7 +1,6 @@
 <template>
-  <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/domainCustomer') !== -1" />
-    <div v-else class="content">
+  <div class="container">
+    <div class="content">
       <div class="card" v-for="(item,index) in modelList" :key="index">
         <div class="top">
           <div class="left_img">
@@ -25,6 +24,7 @@
 <script>
 import api from "@/api/api_serveMarket";
 export default {
+  name: 'BrandCustomization',
   data() {
     return {
       modelList: []
@@ -37,7 +37,7 @@ export default {
     onclick_btn($data) {
       localStorage.setItem('productItem', JSON.stringify($data))
       this.$router.push({
-        path: "/serveMarket/brandCustomization/domainCustomer"
+        name: "domainCustomer"
       })
     },
     getModel() {
@@ -53,7 +53,7 @@ export default {
 </script>
 
 <style scoped>
-  .main_page {
+  .container {
     width: 100%;
     height: 100%;
     padding: 24px 24px 40px 24px;

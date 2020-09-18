@@ -1,13 +1,13 @@
 <template>
-  <div class="main_page">
+  <div class="container">
     <div class="content-box">
       <div class="title">{{ fromConfigData.title }}</div>
       <Form
-        :form-base-data="fromConfigData.formData"
-        :show-foot-btn="true"
-        :label-width="'auto'"
-        @confirm="handleCommit"
-        @cancel="handel_cancel"
+          :form-base-data="fromConfigData.formData"
+          :show-foot-btn="true"
+          :label-width="'auto'"
+          @confirm="handleCommit"
+          @cancel="handel_cancel"
       >
       </Form>
     </div>
@@ -19,6 +19,7 @@ import api from "@/api/api_agent.js";
 import Form from "@/components/form/index";
 import { FORM_CONFIG } from "./formConfig/addAgentConfig";
 export default {
+  name: "AddAgent",
   components: { Form },
   data() {
     return {
@@ -49,7 +50,7 @@ export default {
         }).then(res => {
           if (res.status === 0) {
             this.$router.replace({
-              path: '/agent/checkList'
+              name: 'agentCheckList'
             })
             this.$message({
               message: '添加成功',
@@ -71,7 +72,7 @@ export default {
     },
     handel_cancel() {
       this.$router.replace({
-        path: '/agent/list'
+        name: 'agentList'
       })
     }
   }
@@ -79,7 +80,7 @@ export default {
 </script>
 
 <style scoped>
-  .main_page {
+  .container {
     padding: 32px 24px 0 24px;
   }
   .content-box {

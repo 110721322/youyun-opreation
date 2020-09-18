@@ -1,20 +1,18 @@
 <template>
-  <div class>
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
-    <div v-else>
-      <div class="tab_head">
-        <span class="title">硬件订购订单</span>
-      </div>
+  <div>
+    <div class="tab_head">
+      <span class="title">硬件订购订单</span>
+    </div>
 
-      <transition name="fade">
-        <div>
-          <Search
+    <transition name="fade">
+      <div>
+        <Search
             :form-base-data="searchConfig.formData"
             :open-height="searchMaxHeight"
             @search="search"
-          />
-          <div class="table_box">
-            <BaseCrud
+        />
+        <div class="table_box">
+          <BaseCrud
               :grid-config="configData.gridConfig"
               :grid-btn-config="configData.gridBtnConfig"
               :grid-data="testData"
@@ -30,21 +28,20 @@
               :params="params"
               :api-service="api"
               @detail="handleDetail"
-            >
-              <template v-slot="{ row }">
-                <el-form label-position="left" inline class="demo-table-expand">
-                  <div v-for="(item,index) in row.infoVOList" :key="index" class="form-box">
-                    <el-form-item :label="item.deviceModel+':'">
-                      <span>{{ item.count }}台</span>
-                    </el-form-item>
-                  </div>
-                </el-form>
-              </template>
-            </BaseCrud>
-          </div>
+          >
+            <template v-slot="{ row }">
+              <el-form label-position="left" inline class="demo-table-expand">
+                <div v-for="(item,index) in row.infoVOList" :key="index" class="form-box">
+                  <el-form-item :label="item.deviceModel+':'">
+                    <span>{{ item.count }}台</span>
+                  </el-form-item>
+                </div>
+              </el-form>
+            </template>
+          </BaseCrud>
         </div>
-      </transition>
-    </div>
+      </div>
+    </transition>
   </div>
 </template>
 <script>
@@ -54,7 +51,7 @@ import { SEARCH_CONFIG } from "../formConfig/hardwareOrderSearch";
 import { TABLE_CONFIG } from "../tableConfig/hardwareOrderConfig";
 import api from "@/api/api_agent.js";
 export default {
-  name: "Theme",
+  name: "HardwareOrder",
   components: { Search, BaseCrud },
   data() {
     return {
@@ -80,7 +77,7 @@ export default {
   methods: {
     handleDetail($row) {
       this.$router.push({
-        path: "/agentService/orderManage/hardwareOrder/detail",
+        name: "hardwareOrderDetail",
         query: {
           id: $row.id
         }

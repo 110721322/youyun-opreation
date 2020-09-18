@@ -1,21 +1,19 @@
 <template>
-  <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
-    <div v-else>
-      <div class="p_head">服务商公告</div>
-      <search
+  <div>
+    <div class="p_head">服务商公告</div>
+    <search
         :is-show-all="true"
         :form-base-data="searchConfig.formData"
         :show-foot-btn="searchConfig.showFootBtn"
         @search="search"
         @reset="reset"
-      />
-      <!-- <data-mode></data-mode> -->
-      <div class="table_box">
-        <div>
-          <el-button type="primary" class="add_btn" @click="onClick_addAnnouncement">添加公告</el-button>
-        </div>
-        <BaseCrud
+    />
+    <!-- <data-mode></data-mode> -->
+    <div class="table_box">
+      <div>
+        <el-button type="primary" class="add_btn" @click="onClick_addAnnouncement">添加公告</el-button>
+      </div>
+      <BaseCrud
           ref="table"
           :params="params"
           :api-service="api"
@@ -31,8 +29,7 @@
           @detail="go_detail"
           @edit="handelEdit"
           @delete="handelDelete"
-        ></BaseCrud>
-      </div>
+      ></BaseCrud>
     </div>
   </div>
 </template>
@@ -66,9 +63,8 @@ export default {
   mounted() {},
   methods: {
     handelEdit($row) {
-      console.log($row);
       this.$router.push({
-        path: "/message/serviceAnnouncementList/detail",
+        name: 'agentAnnounceDetail',
         query: {
           id: $row.id
         }
@@ -76,7 +72,7 @@ export default {
     },
     onClick_addAnnouncement() {
       this.$router.push({
-        path: "/message/serviceAnnouncementList/detail"
+        name: 'agentAnnounceDetail'
       });
     },
     go_detail() {

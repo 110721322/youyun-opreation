@@ -1,50 +1,47 @@
 <template>
-  <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/comsetDetail') !== -1 || this.$route.path.indexOf('/comsetRecord') !== -1" />
-    <div v-else>
-      <div class="top_head">
-        <span>佣金结算</span>
-        <span>结算时间为每月28日至下月10日，需快递发票单</span>
-        <span>查看发票信息></span>
-      </div>
-      <div class="content">
-        <ul class="content-banner">
-          <li><p>间联佣金(元)</p><p style="color: #262626; line-height: 32px; font-weight: 500; font-size: 20px;">{{ settleNum.indirectCommission || 0 }}</p></li>
-          <li><p>活动奖励(元)</p><p style="color: #1989FA; font-size: 20px; font-weight: 500; line-height: 32px;">{{ settleNum.activityReward || 0 }}</p></li>
-          <li>
-            <p>总佣金</p>
-            <p style="font-size: 24px; margin-top: 4px; line-height: 24px; font-weight: 500; color: #333333">{{ settleNum.totalCommission }}</p>
-            <div class="option-btn">
-              <el-button type="primary" @click="settleDrawer">立即结算</el-button>
-              <el-button type="primary" plain @click="handel_record">结算记录</el-button>
-            </div>
-          </li>
-        </ul>
-        <div class="table_box">
-          <BaseCrud
-            :grid-config="configData.gridConfig"
-            :grid-btn-config="configData.gridBtnConfig"
-            :grid-data="testData"
-            :form-config="configData.formConfig"
-            :form-data="configData.formModel"
-            :grid-edit-width="200"
-            :is-async="true"
-            :is-select="false"
-            :is-expand="false"
-            :row-key="'id'"
-            :params="typeflage"
-            :default-expand-all="false"
-            :hide-edit-area="configData.hideEditArea"
-            :api-service="api"
-            @detail="onClick_detail"
-          ></BaseCrud>
-        </div>
+  <div>
+    <div class="top_head">
+      <span>佣金结算</span>
+      <span>结算时间为每月28日至下月10日，需快递发票单</span>
+      <span>查看发票信息></span>
+    </div>
+    <div class="content">
+      <ul class="content-banner">
+        <li><p>间联佣金(元)</p><p style="color: #262626; line-height: 32px; font-weight: 500; font-size: 20px;">{{ settleNum.indirectCommission || 0 }}</p></li>
+        <li><p>活动奖励(元)</p><p style="color: #1989FA; font-size: 20px; font-weight: 500; line-height: 32px;">{{ settleNum.activityReward || 0 }}</p></li>
+        <li>
+          <p>总佣金</p>
+          <p style="font-size: 24px; margin-top: 4px; line-height: 24px; font-weight: 500; color: #333333">{{ settleNum.totalCommission }}</p>
+          <div class="option-btn">
+            <el-button type="primary" @click="settleDrawer">立即结算</el-button>
+            <el-button type="primary" plain @click="handel_record">结算记录</el-button>
+          </div>
+        </li>
+      </ul>
+      <div class="table_box">
+        <BaseCrud
+          :grid-config="configData.gridConfig"
+          :grid-btn-config="configData.gridBtnConfig"
+          :grid-data="testData"
+          :form-config="configData.formConfig"
+          :form-data="configData.formModel"
+          :grid-edit-width="200"
+          :is-async="true"
+          :is-select="false"
+          :is-expand="false"
+          :row-key="'id'"
+          :params="typeflage"
+          :default-expand-all="false"
+          :hide-edit-area="configData.hideEditArea"
+          :api-service="api"
+          @detail="onClick_detail"
+        ></BaseCrud>
       </div>
       <el-drawer
-          :visible.sync="drawer"
-          direction="rtl"
-          :before-close="handleClose"
-          size="500px"
+        :visible.sync="drawer"
+        direction="rtl"
+        :before-close="handleClose"
+        size="500px"
       >
         <div slot="title" class="drawer-contenttitle">
           <span>申请结算</span>
@@ -69,11 +66,11 @@
               </div>
             </div>
             <Form
-                :form-base-data="fromConfigData.formData"
-                :show-foot-btn="fromConfigData.showFootBtn"
-                label-width="130px"
-                @cancel="cancel"
-                @confirm="confirm"
+              :form-base-data="fromConfigData.formData"
+              :show-foot-btn="fromConfigData.showFootBtn"
+              label-width="130px"
+              @cancel="cancel"
+              @confirm="confirm"
             ></Form>
           </div>
         </div>
@@ -89,6 +86,7 @@ import Form from "@/components/form/index.vue";
 import { FORM_CONFIG } from "./formConfig/thirdPartyDetail";
 import api from "@/api/api_comSettlement";
 export default {
+  name: "Comset",
   components: {
     BaseCrud,
     Form
@@ -141,7 +139,7 @@ export default {
     },
     onClick_detail($row) {
       this.$router.push({
-        path: '/comSettlement/comset/comsetDetail',
+        name: 'comsetDetail',
         query: {
           tradeMonth: $row.totalTradeMonth
         }
@@ -189,14 +187,13 @@ export default {
     },
     handel_record() {
       this.$router.push({
-        path: '/comSettlement/comset/comsetRecord'
+        name: 'comsetRecord'
       })
     },
     cancel() {
       this.drawer = false
     },
     confirm($sunmit) {
-      console.log($sunmit)
       if (this.isCheck.length === 0 || !$sunmit.expressNumber || !$sunmit.settleAccount || !$sunmit.settleMobile || !$sunmit.expressImg) {
         this.$message({
           message: '请填写必填信息',

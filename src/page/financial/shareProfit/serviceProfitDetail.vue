@@ -1,12 +1,12 @@
 <template>
-  <div class="main_page">
+  <div>
     <Search :is-show-all="true" :form-base-data="searchConfig.formData" @search="search" />
     <div class="table_box">
-      <div class="table-title">
+      <ul class="table-title">
         <li>间联</li>
         <li>直连</li>
         <li>直连官方分润</li>
-      </div>
+      </ul>
       <BaseCrud
         ref="table"
         :params="params"
@@ -35,6 +35,7 @@ import { SEARCH_CONFIG } from "../formConfig/serviceDetailSearch";
 import { SERVICE_CONFIG } from "../tableConfig/serviceDetailConfig";
 import api_statistice from "@/api/api_statistice"
 export default {
+  name: "ServiceProfitDetail",
   components: { Search, BaseCrud },
   data() {
     return {
@@ -44,22 +45,10 @@ export default {
       configData: SERVICE_CONFIG,
       testData: [],
       params: {},
-      // selectname: ''
       api: ""
-      // currentPage: 1,
-      // this.$route.query.tradeMonth
-      // searchHeight: 88
     }
   },
-  computed: {
-    // api() {
-    //   if (this.selectname === 1) {
-    //     return api_statistice.selectByName
-    //   } else {
-    //     return api_statistice.selectMerchantDataByPage
-    //   }
-    // }
-  },
+  computed: {},
   mounted() {},
   created() {
     if (this.$route.query.mainIndex === 1) {
@@ -78,9 +67,6 @@ export default {
   },
   methods: {
     search($ruleform) {
-      // this.selectname = 1
-      // this.params[$ruleform.inputSelect] = $ruleform.inputForm
-      // console.log($ruleform.inputForm.object)
       api_statistice
         .selectByName({
           merchantName: $ruleform.inputForm

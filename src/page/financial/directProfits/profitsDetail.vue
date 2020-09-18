@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="tab_head">
       <span class="title">商户明细</span>
     </div>
@@ -71,7 +71,7 @@ import {WXRVICE_CONFIG} from "../tableConfig/wxDetailConfig";
 import api_statistice from "@/api/api_statistice";
 
 export default {
-  name: "AliProfits",
+  name: "ProfitsDetail",
   components: {
     Search, BaseCrud
   },
@@ -103,11 +103,10 @@ export default {
       agentNo: this.agentNo,
       rewardDate: this.rewardDate
     }
-    if (this.$route.query.apiserver === api_statistice.aliMerchants) {
+    if (this.$route.query.auditType === 'aliPay') {
       this.api = api_statistice.aliMerchants
       this.configData = SERVICE_CONFIG
-    } else {
-      this.api = api_statistice.wxMerchants
+    } else if (this.$route.query.auditType === 'wx') {
       this.api = api_statistice.wxMerchants
       this.configData = WXRVICE_CONFIG
     }

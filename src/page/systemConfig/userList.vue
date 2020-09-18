@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="tab_head">
       <span class="title">成员列表</span>
     </div>
@@ -83,7 +83,7 @@ import { USERLIST_CONFIG } from "./tableConfig/userlistConfig";
 import { PERSON_LIST_CONDITION, PERSON_LIST_ADD } from "../../libs/data/permissionBtns";
 
 export default {
-  name: "Theme",
+  name: "UserList",
   components: { Search, BaseCrud, Form },
   data() {
     return {
