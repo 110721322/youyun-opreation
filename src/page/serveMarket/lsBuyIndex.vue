@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div class="container">
     <div class="top">
       <div class="left_img">
         <img src="../../assets/img/leshua_icon.png" alt="">
@@ -83,6 +83,7 @@ import lsBuyEdit from "@/components/form/announcementEditForm.vue";
 import { FORM_CONFIG } from "./formConfig/lsBuyConfig";
 import api from "@/api/api_serveMarket";
 export default {
+  name: "IsBuyIndex",
   components: { lsBuyEdit },
   data() {
     return {
@@ -140,7 +141,7 @@ export default {
       localStorage.setItem('comboItem', JSON.stringify(this.comboItem))
       if (this.comboItem.id) {
         this.$router.push({
-          path: "/serveMarket/businessModel/subOrder"
+          name: "subOrder"
         });
       }
     },
@@ -160,7 +161,7 @@ export default {
 </script>
 
 <style scoped>
-  .main_page {
+  .container {
     width: 100%;
     padding: 24px 24px 40px 24px;
     box-sizing: border-box;

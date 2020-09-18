@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="tab_head">
       <span class="title">入库明细</span>
     </div>
@@ -53,7 +53,7 @@ import { SEARCH_CONFIG } from "./../formConfig/saveDetailSearch";
 import { SAVEDETAIL_CONFIG } from "./../tableConfig/saveDetailConfig";
 
 export default {
-  name: "Theme",
+  name: "SaveDetail",
   components: { Search, BaseCrud, Form },
   data() {
     return {

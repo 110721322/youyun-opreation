@@ -1,21 +1,19 @@
 <template>
-  <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
-    <div v-else>
-      <div class="tab_head">
-        <span class="title">第三方对接列表</span>
-      </div>
-      <Search
+  <div>
+    <div class="tab_head">
+      <span class="title">第三方对接列表</span>
+    </div>
+    <Search
         :open-height="searchMaxHeight"
         :form-base-data="searchConfig.formData"
         @search="search"
-      />
+    />
 
-      <div class="table_box">
-        <div class="tabale_title_box">
-          <el-button class="btn" type="primary" @click="onClick_addDocker">新增对接商</el-button>
-        </div>
-        <BaseCrud
+    <div class="table_box">
+      <div class="tabale_title_box">
+        <el-button class="btn" type="primary" @click="onClick_addDocker">新增对接商</el-button>
+      </div>
+      <BaseCrud
           ref="table"
           :params="params"
           :api-service="api"
@@ -33,8 +31,7 @@
           @detail="handleDetail"
           @freeze="handleFreeze"
           @unfreeze="handleUnfreeze"
-        ></BaseCrud>
-      </div>
+      ></BaseCrud>
     </div>
   </div>
 </template>
@@ -47,7 +44,7 @@ import { SEARCH_CONFIG } from "./formConfig/thirdPartySearch";
 import { TABLE_CONFIG } from "./tableConfig/thirdPartyConfig";
 
 export default {
-  name: "Theme",
+  name: "ThirdParty",
   components: { Search, BaseCrud },
   data() {
     return {
@@ -122,13 +119,13 @@ export default {
     },
     handleDetail($row) {
       this.$router.push({
-        path: "/agentService/thirdParty/detail",
+        name: "thirdPartyDetail",
         query: { id: $row.id }
       });
     },
     onClick_addDocker() {
       this.$router.push({
-        path: "/agentService/thirdParty/detail"
+        name: "thirdPartyDetail"
       });
     }
   }

@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="p_head">编辑服务商公告</div>
     <div class="content-box">
       <div class="title">{{ fromConfigData.title }}</div>
@@ -21,7 +21,7 @@ import announcementEdit from "@/components/form/announcementEditForm.vue";
 import { FORM_CONFIG } from "./formConfig/announcementConfig";
 
 export default {
-  name: "Theme",
+  name: "AnnouncementEdit",
   components: { announcementEdit },
   data() {
     return {
@@ -103,7 +103,7 @@ export default {
               type: 'success'
             })
           }
-          this.$router.replace({ path: "/message/serviceAnnouncementList" });
+          this.$router.replace({ name: 'serviceAnnouncementList' });
         })
         .catch();
     }

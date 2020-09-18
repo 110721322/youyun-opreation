@@ -20,6 +20,9 @@ export default {
   saveRoutersArr: ({ commit }, $info) => {
     commit('SAVE_ROUTERS_ARR', $info);
   },
+  saveKeepAlive: ({ commit }, $list) => {
+    commit('SAVE_KEEP_ALIVE', $list);
+  },
   setTodoList: ({ commit }) => {
     axios.get('operation/v1/workbench/task/queryAllTaskMenu', {
       params: { status: 'undo' }

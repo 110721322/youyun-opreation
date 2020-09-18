@@ -1,16 +1,12 @@
 <template>
-  <div class>
-    <router-view
-      v-if="this.$route.path.indexOf('/detail') !== -1||this.$route.path.indexOf('/recordDetail') !== -1"
-    />
-    <div v-else>
-      <div class="tab_head">
-        <span class="title">结算卡修改审核</span>
-      </div>
-      <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
+  <div>
+    <div class="tab_head">
+      <span class="title">结算卡修改审核</span>
+    </div>
+    <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
 
-      <div class="table_box">
-        <BaseCrud
+    <div class="table_box">
+      <BaseCrud
           ref="table"
           :params="params"
           :api-service="api"
@@ -29,8 +25,7 @@
           @detail="handleDetail"
           @preApprove="handlePreApprove"
           @record="handleRecord"
-        ></BaseCrud>
-      </div>
+      ></BaseCrud>
     </div>
   </div>
 </template>
@@ -60,7 +55,7 @@ export default {
   methods: {
     handleDetail(row) {
       this.$router.push({
-        path: "/approval/checkMerchant/settlementList/detail",
+        name: "settlementListDetail",
         query: {
           id: row.id,
           auditStatus: row.auditStatus
@@ -69,7 +64,7 @@ export default {
     },
     handlePreApprove(row) {
       this.$router.push({
-        path: "/approval/checkMerchant/settlementList/detail",
+        name: "settlementListDetail",
         query: {
           id: row.id
         }
@@ -77,7 +72,7 @@ export default {
     },
     handleRecord(row) {
       this.$router.push({
-        path: "/approval/checkMerchant/settlementList/recordDetail",
+        name: "settlementRecordDetail",
         query: {
           merchantNo: row.merchantNo,
           channel: row.channelCode
@@ -85,7 +80,6 @@ export default {
       });
     },
     search($ruleForm) {
-      console.log($ruleForm);
       const params = {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,

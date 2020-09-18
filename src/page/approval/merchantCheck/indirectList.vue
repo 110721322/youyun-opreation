@@ -1,20 +1,16 @@
 <template>
-  <div class>
-    <router-view
-      v-if="this.$route.path.indexOf('/detail') !== -1||this.$route.path.indexOf('/recordDetail') !== -1"
-    />
-    <div v-else>
-      <div class="tab_head">
-        <span class="title">商户间连审核</span>
-      </div>
-      <Search
+  <div>
+    <div class="tab_head">
+      <span class="title">商户间连审核</span>
+    </div>
+    <Search
         :open-height="searchHeight"
         :form-base-data="searchConfig.formData"
         @search="search"
-      />
+    />
 
-      <div class="table_box">
-        <BaseCrud
+    <div class="table_box">
+      <BaseCrud
           ref="table"
           :params="params"
           :api-service="api"
@@ -32,9 +28,8 @@
           :hide-edit-area="configData.hideEditArea"
           @detail="handleDetail"
           @record="handleRecord"
-        >
-        </BaseCrud>
-      </div>
+      >
+      </BaseCrud>
     </div>
   </div>
 </template>
@@ -82,9 +77,8 @@ export default {
       this.params = params;
     },
     handleDetail(row) {
-      console.log(row)
       this.$router.push({
-        path: "/approval/checkMerchant/indirectList/detail",
+        name: 'indirectListDetail',
         query: {
           merchantNo: row.merchantNo,
           channelStatusList: row.channelStatusList,
@@ -94,7 +88,7 @@ export default {
     },
     handleRecord(row) {
       this.$router.push({
-        path: "/approval/checkMerchant/indirectList/recordDetail",
+        name: "indirectRecordDetail",
         query: {
           merchantNo: row.merchantNo
         }

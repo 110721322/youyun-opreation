@@ -1,5 +1,5 @@
 <template>
-  <div class>
+  <div>
     <div class="tab_head">
       <span class="title">合伙人审核信息</span>
     </div>
@@ -46,7 +46,7 @@ import Form from "@/components/form/index.vue";
 import { FORM_CONFIG } from "./../formConfig/checkServiceDetailConfig";
 
 export default {
-  name: "CheckServiceListDetail",
+  name: "CheckPartnerListDetail",
   components: { detailMode, Form },
 
   data() {

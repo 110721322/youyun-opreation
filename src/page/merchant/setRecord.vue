@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="tab_head">
       <span class="title">商户结算记录</span>
       <el-menu
@@ -58,7 +58,7 @@ import { UNEWTTLED_CONFIG } from "./tableConfig/unsettledRecordConfig";
 import { FORM_CONFIG } from "./formConfig/setRecordSearch";
 
 export default {
-  name: "Theme",
+  name: "SetRecord",
   components: { search, BaseCrud, dataMode },
   // components: {  dataMode, BaseCrud },
 

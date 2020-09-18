@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="p_head">服务商审核列表</div>
     <search
       :open-height="searchMaxHeight"
@@ -49,7 +49,7 @@ import { CHECK_CONFIG } from "./formConfig/agentCheck";
 import { USER_CONFIG } from "./tableConfig/agentCheckConfig";
 import { FORM_CONFIG } from "./formConfig/agentCheckListSearch";
 export default {
-  name: "Theme",
+  name: "AgentCheckList",
   components: { search, BaseCrud, Form },
 
   data() {

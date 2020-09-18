@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="p_head">佣金明细</div>
     <div class="content">
       <ul class="top-content">
@@ -55,6 +55,7 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import {SEARCH_CONFIG} from "./formConfig/comsetDetailSearch";
 import {SERVICE_CONFIG} from "./tableConfig/comsetDetailConfig";
 export default {
+  name: "ComsetDetail",
   components: { Search, BaseCrud },
   data() {
     return {

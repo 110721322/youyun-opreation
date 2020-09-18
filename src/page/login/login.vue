@@ -245,6 +245,7 @@ import store from '@/store';
 import areaData from "@/assets/data/areaData";
 
 export default {
+  name: "Login",
   components: {},
   data() {
     return {
@@ -444,7 +445,7 @@ export default {
         if (res.code === 1010) { // 未注册，前往注册
           this.onClick_changeregister();
         } else if (res.code === 1040) { // 审核未通过，前往审核等待页
-          this.$router.push({path: "/registSuccess"})
+          this.$router.push({name: "registSuccess"})
         }
         return;
       }
@@ -466,12 +467,7 @@ export default {
       }).then(res => {
         computedRoleRouter(res.object)
         this.addRoutes();
-        this.$router.push(`/index`);
-        // if (this.$route.query.redirect) {
-        //   this.$router.push({ path: `${this.$route.query.redirect}` });
-        // } else {
-        //   this.$router.push(`/index`);
-        // }
+        this.$router.push(`/`);
       })
     },
     connactWebSocket ($params) {
@@ -488,7 +484,7 @@ export default {
       return this.saveWebsocketOption(query);
     },
     addRoutes() {
-      const menuItems = store.state.role.routes;
+      const menuItems = this.$g.utils.deepClone(store.state.role.routes);
       const routerList = currRouter.menusToRoutes(menuItems);
       this.$router.addRoutes(routerList);
       this.saveRoutersArr(routerList)
@@ -557,7 +553,7 @@ export default {
           type: 'succcess',
           message: '注册成功'
         });
-        this.$router.push({path: '/registSuccess'})
+        this.$router.push({name: 'registSuccess'})
       })
     }
   }

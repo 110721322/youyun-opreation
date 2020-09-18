@@ -47,6 +47,16 @@ setWindowAttribute('g', g);
 window.g = g;
 
 Vue.config.productionTip = false;
+Vue.mixin({
+  created() {
+    const includeKeepAlive = this.$g.utils.deepClone(this.$store.state.admin.includeKeepAlive);
+    const keepAlive = (this.$g.utils.isObj(this.$route) && this.$g.utils.isObj(this.$route.meta)) ? this.$route.meta.keepAlive : "";
+    if (keepAlive && keepAlive === this.$options.name && includeKeepAlive.indexOf(this.$options.name) === -1) {
+      includeKeepAlive.push(this.$options.name)
+      this.$store.dispatch('saveKeepAlive', includeKeepAlive)
+    }
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({

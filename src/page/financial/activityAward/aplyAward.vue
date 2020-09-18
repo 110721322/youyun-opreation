@@ -1,41 +1,37 @@
 <template>
-  <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/activityAwardDetail') !== -1" />
-    <div v-else>
-      <Search
-        :is-show-all="false"
-        :open-height="searchHeight"
-        :form-base-data="searchConfig.formData"
-        @search="search"
-      />
-      <div class="form-table">
-        <div class="table-content">
-          <div class="form-title">
-            <span>支付宝小蜻蜓</span>
-            <ul>
-              <!-- <li>下载导入奖励模板</li> -->
-              <el-button type="primary" @click="openDraw">导入蜻蜓奖励名单</el-button>
-              <!-- <li @click="openDraw">导入蜻蜓奖励名单</li> -->
-            </ul>
-          </div>
-          <BaseCrud
-            ref="table"
-            :params="params"
-            :api-service="api"
-            :grid-config="configData.gridConfig"
-            :grid-btn-config="configData.gridBtnConfig"
-            :grid-data="testData"
-            :form-config="configData.formConfig"
-            :form-data="configData.formModel"
-            :grid-edit-width="100"
-            :is-async="true"
-            :is-select="false"
-            :is-expand="false"
-            :row-key="'id'"
-            :default-expand-all="false"
-            @detail="handleDetail"
-          ></BaseCrud>
+  <div>
+    <Search
+      :is-show-all="false"
+      :open-height="searchHeight"
+      :form-base-data="searchConfig.formData"
+      @search="search"
+    />
+    <div class="form-table">
+      <div class="table-content">
+        <div class="form-title">
+          <span>支付宝小蜻蜓</span>
+          <ul>
+            <!-- <li>下载导入奖励模板</li> -->
+            <li @click="openDraw">导入蜻蜓奖励名单</li>
+          </ul>
         </div>
+        <BaseCrud
+          ref="table"
+          :params="params"
+          :api-service="api"
+          :grid-config="configData.gridConfig"
+          :grid-btn-config="configData.gridBtnConfig"
+          :grid-data="testData"
+          :form-config="configData.formConfig"
+          :form-data="configData.formModel"
+          :grid-edit-width="100"
+          :is-async="true"
+          :is-select="false"
+          :is-expand="false"
+          :row-key="'id'"
+          :default-expand-all="false"
+          @detail="handleDetail"
+        ></BaseCrud>
       </div>
       <el-drawer
         title="我是标题"
@@ -72,6 +68,7 @@ import {SEARARD_CONFIG} from "../formConfig/aplyAward";
 import {SERVICE_CONFIG} from "../tableConfig/aplyConfig";
 
 export default {
+  name: "AplyAward",
   components: {
     Search,
     BaseCrud,

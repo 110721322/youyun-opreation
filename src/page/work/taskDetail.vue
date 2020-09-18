@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div class="container">
     <div class="p_head">日常任务详情</div>
 
     <detailMode :rule-form="ruleForm" :config-data="configData" :span-width="24">
@@ -73,7 +73,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.main_page {
+.container {
   .bg_box /deep/ {
     margin: 24px 24px 0;
   }

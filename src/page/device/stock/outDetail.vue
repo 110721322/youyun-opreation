@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="tab_head">
       <span class="title">发货信息</span>
       <el-menu
@@ -85,7 +85,7 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import { OUTSHOP_CONFIG } from "./../tableConfig/outShopConfig";
 
 export default {
-  name: "Theme",
+  name: "OutDetail",
   components: { detailMode, BaseCrud },
 
   data() {

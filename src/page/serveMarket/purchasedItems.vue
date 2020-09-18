@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <ul class="top-table">
       <li v-for="(item, index) in selectData" :key="index" class="noselect" :class="selectIndex===index? 'isselect': ''" @click="onClick_select(item.value,index)">{{ item.label }}</li>
     </ul>
@@ -61,6 +61,7 @@ import {LS_CONFIG} from "../serveMarket/tableConfig/lsConfig";
 import {BRAND_CONFIG} from "../serveMarket/tableConfig/brandConfig";
 import api from "@/api/api_serveMarket";
 export default {
+  name: "PurchasedItems",
   components: { BaseCrud },
   data() {
     return {

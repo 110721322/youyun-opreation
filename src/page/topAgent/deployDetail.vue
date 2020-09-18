@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div class="container">
     <div class="p_head">服务器部署信息</div>
     <div class="content">
       <ul class="detail">
@@ -29,6 +29,7 @@ import api from "@/api/api_agent"
 import hidePassword from "@/assets/img/hide_password.png"
 import seePassword from "@/assets/img/see_password.png"
 export default {
+  name: "DeployDetail",
   data() {
     return {
       channelAgentCode: this.$route.query.channelAgentCode,

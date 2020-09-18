@@ -1,5 +1,5 @@
 <template>
-  <div class>
+  <div>
     <search
       :open-height="searchMaxHeight"
       :form-base-data="searchConfig.formData"
@@ -45,7 +45,7 @@ import { DEVICEDETAIL_CONFIG } from "./../../tableConfig/deviceDetailConfig-usag
 import deviceDetailProcess from "./deviceDetailProcess.vue";
 
 export default {
-  name: "Theme",
+  name: "DeviceDetail",
   components: { Search, BaseCrud, deviceDetailProcess },
   data() {
     return {

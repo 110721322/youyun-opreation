@@ -1,10 +1,8 @@
 <template>
   <div>
-    <router-view v-if="this.$route.path.indexOf('/approvalDetail') !== -1" />
-    <div class="main_page" v-else>
-      <div class="tab_head">
-        <span class="title">待办事项</span>
-        <el-menu
+    <div class="tab_head">
+      <span class="title">待办事项</span>
+      <el-menu
           :default-active="activeIndex"
           class="el-menu"
           mode="horizontal"
@@ -13,7 +11,6 @@
           <el-menu-item index="1">待处理</el-menu-item>
           <el-menu-item index="2">已处理</el-menu-item>
         </el-menu>
-      </div>
       <div style="padding: 24px 24px;background:white;margin:24px;">
         <el-row style="width: 100%;display:flex;align-items:center;">
           <el-col :span="18">
@@ -121,6 +118,12 @@
             <!--   <span class="checkall_btn" @click="onClick_doCheckAll">全选</span>-->
             <!--</div>-->
           </div>
+          <!--            <div v-if="isCheck" class="check-bottom">-->
+          <!--              <span class="confim_text">请选择要批量沟通的任务（已选 {{ checkedListLength }} 个任务）</span>-->
+          <!--              <el-button plain class="confim_btn" @click="onClick_multiCommunacation">确定</el-button>-->
+          <!--              <span class="cancel_btn" @click="onClick_cancelCheckAll">取消</span>-->
+          <!--              <span class="checkall_btn" @click="onClick_doCheckAll">全选</span>-->
+          <!--            </div>-->
         </div>
       </transition>
       <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
@@ -166,7 +169,7 @@ import { FORM_CONFIG } from "./formConfig/workTodoConfig";
 import { GROUP_MEET } from "../../libs/data/permissionBtns";
 
 export default {
-  name: "WorkToDo",
+  name: "WorkTodo",
   components: { taskList, Form },
   // components: {  dataMode, BaseCrud },
 
@@ -486,7 +489,7 @@ export default {
     // 商户入件审核，点击跳转到商户审核界面
     merchantExamine($data) {
       this.$router.push({
-        path: '/approval/checkMerchant/indirectList',
+        name: 'indirectList',
         query: {
           merchantNo: $data.merchantNo
         }
@@ -494,9 +497,8 @@ export default {
     },
     // 佣金结算审核，点击进入运营结算审核，列表中筛选出对应的服务商
     settleExamine($data) {
-      console.log($data)
       this.$router.push({
-        path: '/financial/operation/operationApprove',
+        name: 'operationApprove',
         query: {
           agentNo: $data.agentNo
         }
@@ -505,7 +507,7 @@ export default {
     // 服务商资料补全，点击进入服务商列表，筛选出对应的服务商
     agentCompletion($data) {
       this.$router.push({
-        path: '/agent/list',
+        name: 'agentList',
         query: {
           agentNo: $data.agentNo
         }
@@ -514,7 +516,7 @@ export default {
     // 设备出库，
     stock($data) {
       this.$router.push({
-        path: '/deviceManage/stock/stockOut',
+        name: 'stockOut',
         query: {
           outputNo: $data.taskId
         }
@@ -537,7 +539,7 @@ export default {
     // 乐刷申诉审核
     leSuhaExamine($data) {
       this.$router.push({
-        path: '/risk/riskAppeal/leRiskList/detail',
+        name: 'leRiskDetail',
         query: {
           id: $data.taskId
         }
@@ -546,7 +548,7 @@ export default {
     // 平台资料申诉审核
     channelExamine($data) {
       this.$router.push({
-        path: '/risk/riskAppeal/merchantRiskList/detail',
+        name: 'merchantRiskDetail',
         query: {
           id: $data.taskId
         }
@@ -581,9 +583,8 @@ export default {
     },
     // 财务佣金结算
     commission($data) {
-      console.log($data)
       this.$router.push({
-        path: '/work/todo/approvalDetail',
+        name: 'approvalDetail',
         query: {
           configData: $data,
           taskType: this.taskType,

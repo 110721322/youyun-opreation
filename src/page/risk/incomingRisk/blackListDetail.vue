@@ -1,5 +1,5 @@
 <template>
-  <div class>
+  <div>
     <div class="tab_head">
       <span class="title">黑名单拦截记录</span>
     </div>
@@ -36,7 +36,7 @@ import { SEARCH_CONFIG } from "../formConfig/blackListDetailSearch";
 import { TABLE_CONFIG } from "../tableConfig/blackListDetailConfig";
 
 export default {
-  name: "LeRiskList",
+  name: "BlackListDetail",
   components: { Search, BaseCrud },
   data() {
     return {

@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div class="container">
     <div class="top">
       <span>下单页面</span>
       <el-steps :active="3" align-center>
@@ -39,6 +39,7 @@
 
 <script>
 export default {
+  name: "PayStatus",
   data() {
     return {
       modelName: '',
@@ -58,7 +59,7 @@ export default {
 </script>
 
 <style scoped>
-  .main_page {
+  .container {
     width: 100%;
     padding: 24px 24px 40px 24px;
     box-sizing: border-box;

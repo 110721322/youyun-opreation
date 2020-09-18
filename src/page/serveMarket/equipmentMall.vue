@@ -1,63 +1,57 @@
 <template>
-  <div class="main_page">
-    <router-view
-      v-if="this.$route.path.indexOf('/equimentDetail') !== -1 || this.$route.path.indexOf('/shoppingCart') !== -1 || this.$route.path.indexOf('/equimentOrder') !== -1 || this.$route.path.indexOf('/equimentPay') !== -1 ||
-        this.$route.path.indexOf('/orderRecords') !== -1 || this.$route.path.indexOf('/equimentOrderDetail') !== -1"
-    />
-    <div v-else>
-      <div class="equiment">
-        <span>刷脸设备</span>
-        <img src="../../assets/img/hot_logo.png" alt="">
-        <span class="title">离扫脸时代只差一台设备</span>
-      </div>
-      <div class="equiment_list">
-        <div v-for="(item, index) in mallList.FACE" :key="index" class="list" @click.stop="onclick_todetail(item.deviceId)">
-          <div class="list_img">
-            <img src="" alt="">
-          </div>
-          <p class="list_name">{{ item.deviceModel }}</p>
-          <p class="list_subtitle">{{ item.viceTitle }}</p>
-          <div class="list_bottom">
-            <span>¥{{ item.salePrice }}</span>
-            <div class="cart_img" @mouseenter="mouse_cart(index)">
-              <img src="../../assets/img/cart_icon.png" alt="">
-            </div>
-            <div class="list_step" style="display: none;"><el-input-number v-model="num[index]" :min="1" :max="10" size="small" @change="handleChange(index)"></el-input-number></div>
-          </div>
+  <div class="container">
+    <div class="equiment">
+      <span>刷脸设备</span>
+      <img src="../../assets/img/hot_logo.png" alt="">
+      <span class="title">离扫脸时代只差一台设备</span>
+    </div>
+    <div class="equiment_list">
+      <div v-for="(item, index) in mallList.FACE" :key="index" class="list" @click.stop="onclick_todetail(item.deviceId)">
+        <div class="list_img">
+          <img src="" alt="">
         </div>
-      </div>
-      <div class="equiment">
-        <span>收银机具</span>
-      </div>
-      <div class="equiment_list">
-        <div v-for="(item, index) in mallList.POSS" :key="index" class="list" @click.stop="onclick_todetail(item.deviceId)">
-          <div class="list_img">
-            <img :src="item.img" alt="">
-          </div>
-          <p class="list_name">{{ item.deviceModel }}</p>
-          <p class="list_subtitle">{{ item.viceTitle }}</p>
-          <div class="list_bottom">
-            <span>¥{{ item.salePrice }}</span>
-            <div class="cart_img" @mouseenter="mouse_cart(index)">
-              <img src="../../assets/img/cart_icon.png" alt="">
-            </div>
-            <div class="list_step" style="display: none;"><el-input-number v-model="num[index]" :min="1" :max="10" size="small" @change="handleChange(index)"></el-input-number></div>
-          </div>
-        </div>
-      </div>
-      <div class="right_btn">
-        <div class="btn1" @click="onclick_tocart">
-          <el-badge :value="totalNum" :max="99" class="item">
+        <p class="list_name">{{ item.deviceModel }}</p>
+        <p class="list_subtitle">{{ item.viceTitle }}</p>
+        <div class="list_bottom">
+          <span>¥{{ item.salePrice }}</span>
+          <div class="cart_img" @mouseenter="mouse_cart(index)">
             <img src="../../assets/img/cart_icon.png" alt="">
-          </el-badge>
+          </div>
+          <div class="list_step" style="display: none;"><el-input-number v-model="num[index]" :min="1" :max="10" size="small" @change="handleChange(index)"></el-input-number></div>
         </div>
-        <div class="btn1" @click="onClick_torecords">
-          <img style="width: 18px; height: 18px;" src="../../assets/img/order_icon.png" alt="">
+      </div>
+    </div>
+    <div class="equiment">
+      <span>收银机具</span>
+    </div>
+    <div class="equiment_list">
+      <div v-for="(item, index) in mallList.POSS" :key="index" class="list" @click.stop="onclick_todetail(item.deviceId)">
+        <div class="list_img">
+          <img :src="item.img" alt="">
         </div>
-        <div class="btn2">
-          <img src="../../assets/img/order_icon.png" alt="">
-          <p>订<br>单</p>
+        <p class="list_name">{{ item.deviceModel }}</p>
+        <p class="list_subtitle">{{ item.viceTitle }}</p>
+        <div class="list_bottom">
+          <span>¥{{ item.salePrice }}</span>
+          <div class="cart_img" @mouseenter="mouse_cart(index)">
+            <img src="../../assets/img/cart_icon.png" alt="">
+          </div>
+          <div class="list_step" style="display: none;"><el-input-number v-model="num[index]" :min="1" :max="10" size="small" @change="handleChange(index)"></el-input-number></div>
         </div>
+      </div>
+    </div>
+    <div class="right_btn">
+      <div class="btn1" @click="onclick_tocart">
+        <el-badge :value="totalNum" :max="99" class="item">
+          <img src="../../assets/img/cart_icon.png" alt="">
+        </el-badge>
+      </div>
+      <div class="btn1" @click="onClick_torecords">
+        <img style="width: 18px; height: 18px;" src="../../assets/img/order_icon.png" alt="">
+      </div>
+      <div class="btn2">
+        <img src="../../assets/img/order_icon.png" alt="">
+        <p>订<br>单</p>
       </div>
     </div>
   </div>
@@ -66,6 +60,7 @@
 <script>
 import api from "@/api/api_serveMarket"
 export default {
+  name: "EquipmentMall",
   data() {
     return {
       num: {},
@@ -144,7 +139,7 @@ export default {
     },
     onclick_todetail(deviceId) {
       this.$router.push({
-        path: '/serveMarket/equipmentMall/equimentDetail',
+        name: 'equimentDetail',
         query: {
           deviceId: deviceId
         }
@@ -152,12 +147,12 @@ export default {
     },
     onclick_tocart() {
       this.$router.push({
-        path: '/serveMarket/equipmentMall/shoppingCart'
+        name: 'shoppingCart'
       })
     },
     onClick_torecords() {
       this.$router.push({
-        path: '/serveMarket/equipmentMall/orderRecords'
+        name: 'orderRecords'
       })
     }
   }
@@ -165,7 +160,7 @@ export default {
 </script>
 
 <style scoped>
-  .main_page {
+  .container {
     width: 100%;
     padding: 24px 24px 40px 24px;
   }

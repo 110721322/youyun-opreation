@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div class="container">
     <div class="w-welcome">
       <div class="head">您好，{{name}}</div>
       <div class="tip">今天是{{ date }}，欢迎您回到小马哥运营后台</div>
@@ -24,7 +24,7 @@ import store from "@/store"
 // import { USER_CONFIG } from './tableConfig/merchantConfig';
 
 export default {
-  name: "Theme",
+  name: "WorkBench",
   components: { detailMode },
   data() {
     return {

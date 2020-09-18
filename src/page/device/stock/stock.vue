@@ -1,11 +1,11 @@
 <template>
-  <div class="main_page">
+  <div>
     <router-view />
   </div>
 </template>
 <script>
 export default {
-  name: "Theme",
+  name: "Stock",
 
   data() {
     return {};

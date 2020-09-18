@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="tab_head">
       <span class="title">参数设置</span>
     </div>
@@ -44,7 +44,7 @@ import AreaSetting from "./component/areaSetting.vue";
 import TagSetting from "./component/tagsSetting.vue";
 
 export default {
-  name: "Theme",
+  name: "ParamSetting",
   components: { TodoSetting, AreaSetting, TagSetting },
   data() {
     return {
