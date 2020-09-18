@@ -74,5 +74,29 @@ export default {
    * @param params
    * @returns {Promise<*>}
    */
-  getAllAuditTemplate: (params) => API.GET('/operation/v1/systemMenu/selectApprovalJurisdictionTemplate', params)
+  getAllAuditTemplate: (params) => API.GET('/operation/v1/systemMenu/selectApprovalJurisdictionTemplate', params),
+  /**
+   * 职位管理-新增
+   * @param params
+   * @returns {Promise<*>}
+   */
+  addInsert: (params) => API.POST('/operation/v1/position/insert', params),
+  /**
+   * 职位管理-编辑
+   * @param params
+   * @returns {Promise<*>}
+   */
+  updateJob: (params) => API.POST('/operation/v1/position/update', params),
+  /**
+   * 职位管理-删除
+   * @param params
+   * @returns {Promise<*>}
+   */
+  deleteJob: (params) => API.POST('/operation/v1/position/delete', params),
+  /**
+   * 职位管理-查询所有职位
+   * @param params
+   * @returns {Promise<*>}
+   */
+  selectAllJob: () => API.GET('/operation/v1/position/selectAll')
 };

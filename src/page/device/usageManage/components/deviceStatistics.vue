@@ -26,11 +26,11 @@
         <div v-for="(item,index) in mapData" :key="index" class="data-item">
           <div class="data-left">
             <span :class="['index',index<=2?'hightlight':'normal']">{{ index+1 }}</span>
-            {{ item.provinceCode }}
+            {{ item.provinceName }}
           </div>
           <div class="data-right">
-            <span>{{ item.usingCount? item.usingCount: '0' }}</span> |
-            <span class="perc">{{ item.deviceProportion*100 }}%</span>
+            <span>{{ item.usingCount? '(' + item.usingCount + ')': '(0)' }}</span> |
+            <span class="perc">{{ item.deviceProportionPecent }}%</span>
           </div>
         </div>
       </div>
@@ -105,7 +105,8 @@ import "./../../../../libs/kit/china";
 import dataItem from "../../../dataMarket/components/dataItem.vue";
 import dotTip from "./dotTip.vue";
 import deviceList from "./deviceList.vue";
-import provinceData from "./../../../../assets/data/provinceData"
+import provinceData from "@/assets/data/provinceData"
+import areaData from "@/assets/data/areaData"
 
 export default {
   name: "Theme",
@@ -487,25 +488,35 @@ export default {
     // 查询所有省份正在使用的数量/查询省份使用排行榜
     queryAllProvince($data) {
       if (!this.beginDate) {
-        this.beginDate = "2020-03-01"
-        this.endDate = "2020-07-30"
+        // var getToday = this.$g.utils.getToday(-1)
+        // this.beginDate = getToday
+        // this.endDate = getToday
+        this.beginDate = '2020-01-01'
+        this.endDate = '2020-12-01'
       }
       api
         .queryAllProvince({
           beginDate: this.beginDate,
           endDate: this.endDate,
-          deviceId: $data && $data.deviceId
+          deviceId: ""
         })
         .then(res => {
-          res.object.forEach(v => {
-            provinceData.forEach(m => {
+          var result = this.$g.utils.getNestedArr(areaData, 'children');
+          res.object.forEach((v) => {
+            result.forEach(m => {
               if (v.provinceCode === m.value) {
-                v.provinceCode = m.label
-                v.provinceName = m.name
+                v.provinceName = m.label
               }
             })
+            provinceData.forEach(h => {
+              if (v.provinceName === h.label) {
+                v.name = h.name
+              }
+            })
+            v.deviceProportionPecent = this.$g.utils.AccMul(v.deviceProportion, 100)
           })
           this.mapData = res.object;
+          console.log(this.mapData)
           this.initMap();
         })
         .catch(err => {
@@ -551,12 +562,12 @@ export default {
     },
     initMap() {
       const myChart = echarts.init(this.$refs.echartsMap);
-      const mapData = [];
-      this.mapData.forEach((item, index) => {
-        mapData[index] = {};
-        mapData[index].name = item.provinceName;
-        mapData[index].value = item.usingCount;
-      });
+      // const mapData = [];
+      // this.mapData.forEach((item, index) => {
+      //   mapData[index] = {};
+      //   mapData[index].name = item.provinceName;
+      //   mapData[index].value = item.usingCount;
+      // });
       window.onresize = myChart.resize;
       myChart.setOption({
         tooltip: {
@@ -638,7 +649,7 @@ export default {
             name: "使用数量",
             type: "map",
             geoIndex: 0,
-            data: mapData
+            data: this.mapData
           }
         ]
       });
@@ -658,14 +669,13 @@ export default {
 
   .detail-item {
     display: flex;
-    flex-direction: column;
     margin-left: 10px;
     .data-item {
       text-align: left;
       margin-top: 32px;
       padding-right: 30px;
       overflow: hidden;
-      text-overflow:ellipsis;
+      text-overflow: ellipsis;
       white-space: nowrap;
       width: 120px;
     }
@@ -761,7 +771,6 @@ export default {
       overflow: hidden;
       text-overflow:ellipsis;
       white-space: nowrap;
-      width: 120px;
     }
     .data-left {
       color: rgba(0, 0, 0, 0.65);

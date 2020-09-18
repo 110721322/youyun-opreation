@@ -7,32 +7,32 @@
     />-->
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
     <div class="right-menu">
-      <template>
-        <el-popover
-          placement="bottom-end"
-          popper-class="popperNav"
-          trigger="hover"
-        >
-          <div class="sysMask">
-            <div class="sysMask-title">
-              <span>待办事项</span>
-              <span>{{ todoTask.todoCount }}个待办事项</span>
-            </div>
-            <ul>
-              <li @click="toSyswarn" v-for="(item, index) in todoTask.todos" :key="index">
-                <div class="sysMask-info">
-                  <div>{{ item.taskValue }}</div>
-                  <div>{{ item.count }}</div>
-                </div>
-              </li>
-            </ul>
-            <el-button type="text" class="sysBtn" @click="toSyswarn">更多待办事项 ></el-button>
-          </div>
-          <el-badge :value="todoTask.todoCount" :max="99" slot="reference" class="badge-item">
-            <img src="@/assets/img/ding.png" class="search_img" @click="toSyswarn" />
-          </el-badge>
-        </el-popover>
-      </template>
+<!--      <template>-->
+<!--        <el-popover-->
+<!--          placement="bottom-end"-->
+<!--          popper-class="popperNav"-->
+<!--          trigger="hover"-->
+<!--        >-->
+<!--          <div class="sysMask">-->
+<!--            <div class="sysMask-title">-->
+<!--              <span>待办事项</span>-->
+<!--              <span>{{ todoTask.todoCount }}个待办事项</span>-->
+<!--            </div>-->
+<!--            <ul>-->
+<!--              <li @click="toSyswarn" v-for="(item, index) in todoTask.todos" :key="index">-->
+<!--                <div class="sysMask-info">-->
+<!--                  <div>{{ item.taskValue }}</div>-->
+<!--                  <div>{{ item.count }}</div>-->
+<!--                </div>-->
+<!--              </li>-->
+<!--            </ul>-->
+<!--            <el-button type="text" class="sysBtn" @click="toSyswarn">更多待办事项 ></el-button>-->
+<!--          </div>-->
+<!--          <el-badge :value="todoTask.todoCount" :max="99" slot="reference" class="badge-item">-->
+<!--            <img src="@/assets/img/ding.png" class="search_img" @click="toSyswarn" />-->
+<!--          </el-badge>-->
+<!--        </el-popover>-->
+<!--      </template>-->
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
