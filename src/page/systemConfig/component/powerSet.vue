@@ -2,52 +2,54 @@
 <template>
   <div>
     <div class="p_head">权限设置</div>
-    <el-form ref="form" label-width="100px" style="margin: 24px;">
-      <el-form-item label="复制成员权限:" v-if="roleId !== 13">
-        <el-select v-model="bindEmployee" placeholder="请选择成员" @change="changeEmployee">
-          <el-option
-            v-for="(person,index) in employeeList"
-            :key="index"
-            :label="person.label"
-            :value="person"
+    <div class="content_drawer">
+      <el-form ref="form" label-width="120px" style="padding: 24px;">
+        <el-form-item label="复制成员权限:" v-if="roleId !== 13">
+          <el-select v-model="bindEmployee" placeholder="请选择成员" @change="changeEmployee">
+            <el-option
+              v-for="(person,index) in employeeList"
+              :key="index"
+              :label="person.label"
+              :value="person"
+            >
+            </el-option>
+          </el-select>
+          <div style="margin-top:16px">
+            <el-button type="primary" @click="copyEmployee">复制</el-button>
+            <el-button @click="resetEmployee">重置</el-button>
+          </div>
+        </el-form-item>
+        <!-- 菜单树开始 -->
+        <div class="m-tree-container">
+          <el-tree
+            :data="templateMapList"
+            label="icon"
+            node-key="checkedId"
+            show-checkbox
+            default-expand-all
+            :default-checked-keys="checkedIds"
+            :check-strictly="true"
+            :expand-on-click-node="false"
+            @check-change="handleCheckChange"
           >
-          </el-option>
-        </el-select>
-        <div style="margin-top:16px">
-          <el-button type="primary" @click="copyEmployee">复制</el-button>
-          <el-button @click="resetEmployee">重置</el-button>
+            <span slot-scope="{node,data}" class="custom-tree-node">
+              <span>
+                <img v-if="data.type=='menu'" class="trre_icon" src="@/assets/img/page_icon.png" alt />
+                <img v-if="data.type=='button'" class="trre_icon" src="@/assets/img/btn_icon.png" alt />
+              </span>
+              <span>
+                <i :class="node.icon"></i>
+                {{ node.label }}
+              </span>
+            </span>
+          </el-tree>
         </div>
-      </el-form-item>
-      <!-- 菜单树开始 -->
-      <div class="m-tree-container">
-        <el-tree
-          :data="templateMapList"
-          label="icon"
-          node-key="checkedId"
-          show-checkbox
-          default-expand-all
-          :default-checked-keys="checkedIds"
-          :check-strictly="true"
-          :expand-on-click-node="false"
-          @check-change="handleCheckChange"
-        >
-          <span slot-scope="{node,data}" class="custom-tree-node">
-            <span>
-              <img v-if="data.type=='menu'" class="trre_icon" src="@/assets/img/page_icon.png" alt />
-              <img v-if="data.type=='button'" class="trre_icon" src="@/assets/img/btn_icon.png" alt />
-            </span>
-            <span>
-              <i :class="node.icon"></i>
-              {{ node.label }}
-            </span>
-          </span>
-        </el-tree>
-      </div>
-      <!-- 菜单树结束 -->
-    </el-form>
+        <!-- 菜单树结束 -->
+      </el-form>
+    </div>
     <div class="foot_btn_box">
       <el-button type="primary" size="normal" @click="confirm">确定</el-button>
-      <el-button size="normal">取消</el-button>
+      <el-button size="normal" @click="cancle">取消</el-button>
     </div>
   </div>
 </template>
@@ -153,6 +155,9 @@ export default {
       };
       this.$emit('confirm', result);
     },
+    cancle() {
+      this.$emit('cancle');
+    },
     changeEmployee($option) {
       this.queryParams = {
         userId: $option.id,
@@ -194,12 +199,17 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.content_drawer {
+  height: calc(100vh - 172px);
+  overflow: auto;
+}
 .foot_btn_box {
-  width: 100%;
+  width: 500px;
   // height: 96px;
   border-top: 1px solid #ebeef5;
-  // position: absolute;
-  // bottom: 0;
+  position: fixed;
+  bottom: 0;
+  right: 0;
   padding: 24px 0;
   display: flex;
   flex-direction: row;
@@ -223,7 +233,7 @@ export default {
 }
 .m-tree-container{
   width: 100%;
-  height: 622px;
+  height: auto;
   overflow-y: scroll;
 }
 .trre_icon {

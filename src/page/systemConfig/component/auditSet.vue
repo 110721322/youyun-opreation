@@ -2,7 +2,7 @@
 <template>
   <div>
     <div class="p_head">审批设置</div>
-    <el-form ref="form" label-width="100px" style="margin: 24px;">
+    <el-form ref="form" label-width="120px" style="margin: 24px;">
       <el-form-item label="复制成员权限:">
         <el-select v-model="bindEmployee" placeholder="请选择成员" @change="changeEmployee">
           <el-option
@@ -47,7 +47,7 @@
     </el-form>
     <div class="foot_btn_box">
       <el-button type="primary" size="normal" @click="confirm">确定</el-button>
-      <el-button size="normal">取消</el-button>
+      <el-button size="normal" @click="cancle">取消</el-button>
     </div>
   </div>
 </template>
@@ -132,6 +132,9 @@ export default {
       })
       this.$emit('confirm', {approvalButtons: checkedButtonIds});
     },
+    cancle() {
+      this.$emit('cancle');
+    },
     /**
      * 切换成员
      */
@@ -169,10 +172,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 .foot_btn_box {
-  width: 100%;
+  width: 500px;
   border-top: 1px solid #ebeef5;
-  // position: absolute;
-  // bottom: 0;
+  position: fixed;
+  bottom: 0;
+  right: 0;
   padding: 24px 0;
   display: flex;
   flex-direction: row;
@@ -196,7 +200,7 @@ export default {
 }
 .m-tree-container{
   width: 100%;
-  height: 622px;
+  // height: 622px;
   overflow-y: scroll;
 }
 .trre_icon {

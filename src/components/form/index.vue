@@ -1,32 +1,34 @@
 <template>
   <div class="">
-    <el-form
-      ref="formTep"
-      class="formTemplate"
-      size=""
-      :inline="false"
-      :label-position="labelPosition"
-      :model="ruleForm"
-      :rules="rules"
-      :label-width="labelWidth"
-    >
-      <slot name="form-item"></slot>
-      <slot name="btn"></slot>
-      <template v-for="formItem in formBaseData">
-        <el-form-item
-          v-if="formItem.isShow?formItem.isShow(ruleForm):true"
-          :key="formItem.key"
-          class="formTemplate-item"
-          :prop="formItem.key"
-          :label="formItem.label+(formItem.hideColon?'':':')"
-          :rules="formItem.rules"
-        >
-          <components :is="transType(formItem.type)" ref="formItem" :rule-form="ruleForm" :form-item="formItem"></components>
-          <span v-if="formItem.tip" style="font-size: 12px;color: #909399;">{{ formItem.tip }}</span>
-        </el-form-item>
-      </template>
-    </el-form>
-    <div v-if="showFootBtn" class="foot_btn_box">
+    <div :class="[isDrawer?'content_drawer':'']">
+      <el-form
+        ref="formTep"
+        :class="[isDrawer?'formTemplate_drawer':'formTemplate']"
+        size=""
+        :inline="false"
+        :label-position="labelPosition"
+        :model="ruleForm"
+        :rules="rules"
+        :label-width="labelWidth"
+      >
+        <slot name="form-item"></slot>
+        <slot name="btn"></slot>
+        <template v-for="formItem in formBaseData">
+          <el-form-item
+            v-if="formItem.isShow?formItem.isShow(ruleForm):true"
+            :key="formItem.key"
+            class="formTemplate-item"
+            :prop="formItem.key"
+            :label="formItem.label+(formItem.hideColon?'':':')"
+            :rules="formItem.rules"
+          >
+            <components :is="transType(formItem.type)" ref="formItem" :rule-form="ruleForm" :form-item="formItem"></components>
+            <span v-if="formItem.tip" style="font-size: 12px;color: #909399;">{{ formItem.tip }}</span>
+          </el-form-item>
+        </template>
+      </el-form>
+    </div>
+    <div v-if="showFootBtn" :class="[isDrawer?'foot_btn_box_drawer':'foot_btn_box']">
       <el-button size="normal" type="primary" @click="handleClick">{{ footBtnLabel }}</el-button>
       <el-button v-if="showFootReset" size="normal" @click="resetForm">重置</el-button>
       <el-button v-if="showFootClear" size="normal" @click="clearForm">清空</el-button>
@@ -93,6 +95,12 @@ export default {
       type: Boolean,
       default() {
         return true;
+      }
+    },
+    isDrawer: {
+      type: Boolean,
+      default() {
+        return false;
       }
     },
     showFootCancel: {
@@ -204,16 +212,53 @@ export default {
 .formTemplate {
   margin: 40px 20px 0;
 }
+.formTemplate_drawer {
+  margin: 0;
+  padding: 40px 20px 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  overflow-y: scroll;
+  flex: 1;
+  box-sizing: border-box;
+}
 .formTemplate-item {
   margin-right: 20px;
 }
-
+.content_drawer {
+    height: calc(100vh - 172px);
+    overflow: hidden;
+}
 .foot_btn_box {
   width: 100%;
   // height: 96px;
   border-top: 1px solid #ebeef5;
   // position: absolute;
   // bottom: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  padding: 24px 0;
+  // .foot_btn {
+  //   // width: 113px;
+  //   // height: 40px;
+  //   // margin-top: 28px;
+  //   // margin-left: 12px;
+  //   // margin-right: 12px;
+  //   padding: 15px;
+  // }
+  .form_box {
+    margin: 0 59px;
+  }
+}
+.foot_btn_box_drawer {
+  width: 500px;
+  // height: 96px;
+  border-top: 1px solid #ebeef5;
+  position: fixed;
+  bottom: 0;
+  right: 0;
   display: flex;
   flex-direction: row;
   justify-content: center;

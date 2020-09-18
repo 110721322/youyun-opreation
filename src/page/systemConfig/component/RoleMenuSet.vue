@@ -13,10 +13,10 @@
         style="margin: 24px;"
         @check-change="handleCheckChange"
       ></el-tree>
-      <div class="foot_btn_box">
-        <el-button type="primary" size="normal" @click="confirm">确定</el-button>
-        <el-button size="normal" @click="cancel">取消</el-button>
-      </div>
+    </div>
+    <div class="foot_btn_box">
+      <el-button type="primary" size="normal" @click="confirm">确定</el-button>
+      <el-button size="normal" @click="cancel">取消</el-button>
     </div>
   </div>
 </template>
@@ -103,15 +103,17 @@ export default {
 .RoleMenuSet {
   .m-tree-container {
     width: 100%;
-    height: 700px;
+    height: calc(100vh - 172px);
+    overflow: auto;
     overflow-y: scroll;
   }
   .foot_btn_box {
-    width: 100%;
+    width: 500px;
     // height: 96px;
     border-top: 1px solid #ebeef5;
-    // position: absolute;
-    // bottom: 0;
+    position: fixed;
+    bottom: 0;
+    right: 0;
     padding: 24px 0;
     display: flex;
     flex-direction: row;

@@ -44,6 +44,7 @@
           :form-base-data="fromConfigData.formData"
           :show-foot-btn="fromConfigData.showFootBtn"
           label-width="130px"
+          :isDrawer= true
           @cancel="cancel"
           @confirm="confirm"
         ></Form>
@@ -358,11 +359,12 @@ export default {
   }
 }
 .foot_btn_box {
-  width: 100%;
+  width: 500px;
   // height: 96px;
   border-top: 1px solid #ebeef5;
-  // position: absolute;
-  // bottom: 0;
+  position: fixed;
+  bottom: 0;
+  right: 0;
   padding: 24px 0;
   display: flex;
   flex-direction: row;
@@ -378,5 +380,19 @@ export default {
   .form_box {
     margin: 0 59px;
   }
+}
+// /deep/.content_drawer {
+//     height: calc(100vh - 172px);
+//     overflow: hidden;
+// }
+/deep/.formTemplate {
+  margin: 0;
+  padding: 40px 20px 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  overflow-y: scroll;
+  flex: 1;
+  box-sizing: border-box;
 }
 </style>

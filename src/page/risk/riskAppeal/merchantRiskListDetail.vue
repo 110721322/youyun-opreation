@@ -36,8 +36,10 @@
         </detailMode>
         <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.appealData"></detailMode>
         <div v-if="showComponents.showOperBtns" class="btn-box">
-          <div class="btn_pass" @click="onClick_sign">资料已检查，通过</div>
-          <div class="btn-reject" @click="onClick_reject">驳回</div>
+          <!-- <div class="btn_pass" @click="onClick_sign">资料已检查，通过</div>
+          <div class="btn-reject" @click="onClick_reject">驳回</div> -->
+          <el-button type="primary" size="normal" @click="onClick_sign">资料已检查，通过</el-button>
+          <el-button size="normal" @click="onClick_reject">驳回</el-button>
         </div>
       </div>
     </transition>
@@ -318,6 +320,7 @@ export default {
   display: flex;
   justify-content: center;
   text-align: center;
+  margin-bottom: 24px;
   .btn_download {
     font-size: 14px;
     font-weight: 400;

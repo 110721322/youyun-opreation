@@ -145,6 +145,7 @@
     <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size="500px">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
+        :isDrawer="true"
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
         @confirm="handel_confirm"
@@ -155,6 +156,7 @@
       <div class="p_head">{{ contactConfigData.title }}</div>
       <Form
         ref="liaisonRef"
+        :isDrawer="true"
         :form-base-data="contactConfigData"
         :show-foot-btn="contactConfigData.showFootBtn"
         @confirm="handel_addContacts"
@@ -196,6 +198,7 @@
     <el-drawer :visible.sync="addLiaison" :with-header="false" size="500px">
       <Form
         ref="liaisonRef"
+        :isDrawer="true"
         :form-base-data="liaisonConfigData.formData"
         :show-foot-btn="liaisonConfigData.showFootBtn"
         @confirm="handel_addLiaison"

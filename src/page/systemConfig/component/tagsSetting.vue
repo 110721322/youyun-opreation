@@ -400,6 +400,7 @@ export default {
   justify-content: center;
   align-content: center;
   padding: 24px 0;
+  margin-top: 24px;
   .form_box {
     margin: 0 59px;
   }

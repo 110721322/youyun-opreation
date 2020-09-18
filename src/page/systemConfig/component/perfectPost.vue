@@ -7,7 +7,6 @@
       :show-foot-btn="formConfigData.showFootBtn"
       label-width="130px"
       @confirm="confirm"
-      @cancel="cancel"
     >
     </Form>
     <div class="u-form-item">
@@ -25,7 +24,7 @@
       </div>
     </div>
     <el-drawer :append-to-body="true" :visible.sync="innerDrawer" :with-header="false" size="500px">
-      <power-set v-if="innerDrawer" :template-list="permissionTemplate" :api-service="permissionApi" @confirm="saveUserPermission"></power-set>
+      <power-set v-if="innerDrawer" :template-list="permissionTemplate" :api-service="permissionApi" @confirm="saveUserPermission" @cancel="cancelSave"></power-set>
     </el-drawer>
     <el-drawer :append-to-body="true" :visible.sync="auditDrawer" :with-header="false" size="500px">
       <audit-set v-if="auditDrawer" :template-list="auditTemplate" :api-service="auditApi" @confirm="saveUserAudit"></audit-set>
@@ -163,6 +162,10 @@ export default {
           })
         }
       })
+    },
+    cancelSave() {
+      console.log(2222)
+      this.innerDrawer = false;
     },
     saveUserAudit($result) {
       console.log($result);

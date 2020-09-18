@@ -36,6 +36,7 @@
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
         label-width="130px"
+        :isDrawer='true'
         @cancel="cancel"
         @confirm="confirm"
       ></Form>

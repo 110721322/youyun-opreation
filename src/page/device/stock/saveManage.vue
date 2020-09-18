@@ -37,6 +37,7 @@
         <div class="p_head">{{ fromConfigData.title }}</div>
         <Form
           v-if="drawer"
+          :isDrawer='true'
           :form-base-data="fromConfigData.formData"
           :show-foot-btn="fromConfigData.showFootBtn"
           label-width="130px"
@@ -86,8 +87,8 @@ export default {
   methods: {
     search($ruleForm) {
       const params = {
-        beginTime: $ruleForm.date ? $ruleForm.date[0] : null,
-        endTime: $ruleForm.date ? $ruleForm.date[1] : null,
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
+        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
         deviceId: $ruleForm.deviceId ? $ruleForm.deviceId : ''
       };
       this.params = params;
