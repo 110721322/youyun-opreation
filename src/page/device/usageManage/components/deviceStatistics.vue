@@ -339,7 +339,7 @@ export default {
     };
   },
   created() {
-    this.getNowFormatDate()
+    this.queryEquipment()
     this.handleProvince()
   },
   mounted() {
@@ -347,21 +347,17 @@ export default {
     this.queryRegionTrade();
   },
   methods: {
-    getNowFormatDate() {
-      const date = new Date();
-      const seperator1 = "-";
-      var year = date.getFullYear();
-      var month = date.getMonth() + 1;
-      var strDate = date.getDate();
-      if (month >= 1 && month <= 9) {
-        month = "0" + month;
+    queryEquipment() {
+      var params = {
+        beginDate: this.$g.utils.getToday(-1),
+        endDate: this.$g.utils.getToday(-1)
       }
-      if (strDate >= 0 && strDate <= 9) {
-        strDate = "0" + strDate;
-      }
-      var currentdate = year + seperator1 + month + seperator1 + strDate;
-      this.currentdate = currentdate
-      return currentdate;
+      api.queryUsing(params).then(res => {
+        this.deviceListData = res.object;
+      })
+        .catch(err => {
+          this.$message(err);
+        });
     },
     handleNumRadioChange($data) {
       $data === "region" ? this.queryRegion() : null;
@@ -487,7 +483,7 @@ export default {
     },
     // 查询所有省份正在使用的数量/查询省份使用排行榜
     queryAllProvince($data) {
-      if (!this.beginDate) {
+      if (!$data) {
         // var getToday = this.$g.utils.getToday(-1)
         // this.beginDate = getToday
         // this.endDate = getToday
@@ -549,8 +545,7 @@ export default {
       api
         .queryUsing({
           beginDate: $ruleForm.date[0],
-          endDate: $ruleForm.date[1],
-          deviceId: ""
+          endDate: $ruleForm.date[1]
         })
         .then(res => {
           this.deviceListData = res.object;
@@ -562,12 +557,12 @@ export default {
     },
     initMap() {
       const myChart = echarts.init(this.$refs.echartsMap);
-      // const mapData = [];
-      // this.mapData.forEach((item, index) => {
-      //   mapData[index] = {};
-      //   mapData[index].name = item.provinceName;
-      //   mapData[index].value = item.usingCount;
-      // });
+      const mapData = [];
+      this.mapData.forEach((item, index) => {
+        mapData[index] = {};
+        mapData[index].name = item.name;
+        mapData[index].value = item.usingCount;
+      });
       window.onresize = myChart.resize;
       myChart.setOption({
         tooltip: {
@@ -649,7 +644,7 @@ export default {
             name: "使用数量",
             type: "map",
             geoIndex: 0,
-            data: this.mapData
+            data: mapData
           }
         ]
       });
@@ -669,13 +664,14 @@ export default {
 
   .detail-item {
     display: flex;
+    flex-direction: column;
     margin-left: 10px;
     .data-item {
       text-align: left;
       margin-top: 32px;
       padding-right: 30px;
       overflow: hidden;
-      text-overflow: ellipsis;
+      text-overflow:ellipsis;
       white-space: nowrap;
       width: 120px;
     }
@@ -741,10 +737,12 @@ export default {
   justify-content: space-between;
   background-color: #ffffff;
   border-bottom: 1px solid #ebeef5;
+
   .chart-box {
     width: 70%;
     height: 429px;
     position: relative;
+
     .chart-panel {
       position: absolute;
       top: 0;
@@ -753,28 +751,34 @@ export default {
       left: 0;
     }
   }
+
   .data-box {
     width: 30%;
     padding: 28px 60px 0 0;
+
     .data-title {
       color: rgba(0, 0, 0, 0.85);
       line-height: 22px;
       padding-bottom: 7px;
     }
+
     .all-num {
       color: #1989fa;
     }
+
     .data-item {
       margin-top: 18px;
       display: flex;
       justify-content: space-between;
       overflow: hidden;
-      text-overflow:ellipsis;
+      text-overflow: ellipsis;
       white-space: nowrap;
     }
+
     .data-left {
       color: rgba(0, 0, 0, 0.65);
       line-height: 22px;
+
       .index {
         display: inline-block;
         margin-right: 24px;
@@ -784,18 +788,22 @@ export default {
         line-height: 20px;
         border-radius: 50%;
       }
+
       .hightlight {
         background: rgba(24, 144, 255, 1);
         color: #ffffff;
       }
+
       .normal {
         background: #f0f2f5;
         color: rgba(0, 0, 0, 0.65);
       }
     }
+
     .data-right {
       color: rgba(0, 0, 0, 0.65);
       line-height: 22px;
+
       .perc {
         color: rgba(0, 0, 0, 0.45);
       }
