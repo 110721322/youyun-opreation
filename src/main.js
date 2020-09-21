@@ -48,6 +48,13 @@ window.g = g;
 
 Vue.config.productionTip = false;
 Vue.mixin({
+  beforeCreate() {
+    if (document.getElementsByClassName("el-tooltip__popper").length > 0) {
+      for (const node of document.getElementsByClassName("el-tooltip__popper")) {
+        document.body.removeChild(node)
+      }
+    }
+  },
   created() {
     const includeKeepAlive = this.$g.utils.deepClone(this.$store.state.admin.includeKeepAlive);
     const keepAlive = (this.$g.utils.isObj(this.$route) && this.$g.utils.isObj(this.$route.meta)) ? this.$route.meta.keepAlive : "";

@@ -11,7 +11,7 @@
               <el-menu-item
                 v-if="childItem.isShow"
                 class="el-menu-item"
-                :class="($route.name==childItem.name || $route.meta.fatherName === childItem.name) ? 'active' : ''"
+                :class="(subMenuName === childItem.name) ? 'active' : ''"
                 :index="childItem.name"
                 @click="onClick_item(childItem)"
               >{{ childItem.text }}</el-menu-item>
@@ -23,7 +23,7 @@
           <el-menu-item
             class="el-menu-item"
             :index="item.name"
-            :class="($route.name==item.name || $route.meta.fatherName === item.name) ? 'active' : ''"
+            :class="(subMenuName === item.name) ? 'active' : ''"
             @click="onClick_item(item)"
           >
             <span slot="title">{{ item.text }}</span>
@@ -49,20 +49,19 @@ export default {
   },
   watch: {
     $route: function() {
-      this.subMenuName = this.$route.meta.subMenuName;
+      this.subMenuName = this.$route.path.split("/").filter(item => item !== '')[1];
       this.$nextTick();
     },
     menu2Data: function() {
-      this.subMenuName = this.$route.meta.subMenuName;
+      this.subMenuName = this.$route.path.split("/").filter(item => item !== '')[1];
       this.$nextTick();
     }
   },
   created() {
-    this.subMenuName = this.$route.meta.subMenuName;
+    this.subMenuName = this.$route.path.split("/").filter(item => item !== '')[1];
   },
   methods: {
     onClick_item($item) {
-      console.log($item);
       this.$router.push({name: $item.name})
     }
   }
