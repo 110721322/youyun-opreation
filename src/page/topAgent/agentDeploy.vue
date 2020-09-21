@@ -1,17 +1,15 @@
 <template>
   <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/deployDetail') !== -1" />
-    <div v-else>
-      <div class="p_head">服务器部署</div>
-      <search
+    <div class="p_head">服务器部署</div>
+    <search
         :open-height="searchMaxHeight"
         :form-base-data="searchConfig.formData"
         :show-foot-btn="searchConfig.showFootBtn"
         @search="search"
-      />
-      <!-- <data-mode></data-mode> -->
-      <div class="table_box">
-        <BaseCrud
+    />
+    <!-- <data-mode></data-mode> -->
+    <div class="table_box">
+      <BaseCrud
           ref="child"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
@@ -26,8 +24,7 @@
           @deployStart="deployStart"
           @deployEnd="deployEnd"
           @detail="detail"
-        />
-      </div>
+      />
     </div>
   </div>
 </template>
@@ -39,7 +36,7 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import { USER_CONFIG } from "./tableConfig/agentDeployConfig";
 import { FORM_CONFIG2 } from "./formConfig/agentCheckListSearch";
 export default {
-  name: "Theme",
+  name: "AgentDeploy",
   components: { search, BaseCrud },
   data() {
     return {
@@ -87,7 +84,7 @@ export default {
     },
     detail($row) {
       this.$router.push({
-        path: "/topAgent/agentDeploy/deployDetail",
+        name: "deployDetail",
         query: {
           channelAgentCode: $row.channelAgentCode
         }
@@ -96,7 +93,7 @@ export default {
     updateTopSourceCodeDeployStatus($params) {
       api.updateTopSourceCodeDeployStatus($params).then(res => {
         this.$router.push({
-          path: "/topAgent/agentDeploy/deployDetail",
+          name: "deployDetail",
           query: {
             channelAgentCode: $params.channelAgentCode
           }

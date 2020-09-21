@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div class="container">
     <div class="top_content">
       <div v-if="productItem.buyStatus === 1" class="warn">
         <div class="left_icon">i</div>
@@ -118,6 +118,7 @@ import { FORM_CONFIG } from "./formConfig/newAgentConfig";
 import api from "@/api/api_serveMarket";
 import apiAgent from "@/api/api_agent";
 export default {
+  name: "NewAgent",
   components: { newAgentEdit },
   data () {
     return {
@@ -149,7 +150,7 @@ export default {
       localStorage.setItem('comboItem', JSON.stringify(this.comboItem))
       if (this.comboItem.id) {
         this.$router.push({
-          path: "/serveMarket/businessModel/subOrder"
+          name: "subOrder"
         });
       }
     },
@@ -185,7 +186,7 @@ export default {
 </script>
 
 <style scoped>
-  .main_page {
+  .container {
     width: 100%;
     padding: 24px 24px;
     box-sizing: border-box;

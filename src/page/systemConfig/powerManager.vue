@@ -1,42 +1,38 @@
 <template>
-  <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/powerBtnManager') !== -1" />
-    <div v-else>
-      <div class="tab_head">
-        <span class="title">权限管理</span>
-      </div>
-
-      <div class="table_box">
-        <BaseCrud
-          :grid-config="configData.gridConfig"
-          :grid-btn-config="configData.gridBtnConfig"
-          :children-key="configData.childrenKey"
-          :form-config="configData.formConfig"
-          :form-data="configData.formModel"
-          :api-service="configData.api"
-          :params="params"
-          :grid-edit-width="200"
-          :is-async="true"
-          :is-select="false"
-          :is-expand="false"
-          :row-key="'id'"
-          :default-expand-all="false"
-          :hide-edit-area="configData.hideEditArea"
-          @add="onClick_add"
-          @btns="onClick_btns"
-        ></BaseCrud>
-      </div>
-
-      <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
-        <div class="p_head">{{ fromConfigData.title }}</div>
-        <Form
-          :form-base-data="fromConfigData.formData"
-          :show-foot-btn="fromConfigData.showFootBtn"
-          label-width="130px"
-          @cancel="cancel"
-        ></Form>
-      </el-drawer>
+  <div>
+    <div class="tab_head">
+      <span class="title">权限管理</span>
     </div>
+
+    <div class="table_box">
+      <BaseCrud
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :children-key="configData.childrenKey"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :api-service="configData.api"
+        :params="params"
+        :grid-edit-width="200"
+        :is-async="true"
+        :is-select="false"
+        :is-expand="false"
+        :row-key="'id'"
+        :default-expand-all="false"
+        :hide-edit-area="configData.hideEditArea"
+        @add="onClick_add"
+        @btns="onClick_btns"
+      ></BaseCrud>
+    </div>
+    <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
+      <div class="p_head">{{ fromConfigData.title }}</div>
+      <Form
+        :form-base-data="fromConfigData.formData"
+        :show-foot-btn="fromConfigData.showFootBtn"
+        label-width="130px"
+        @cancel="cancel"
+      ></Form>
+    </el-drawer>
   </div>
 </template>
 <script>
@@ -47,7 +43,7 @@ import { FORM_CONFIG } from "./formConfig/powerDetail";
 import { POWERMANAGER_CONFIG } from "./tableConfig/powerManagerConfig";
 
 export default {
-  name: "Theme",
+  name: "PowerManager",
   components: { BaseCrud, Form },
   data() {
     return {
@@ -135,7 +131,7 @@ export default {
     },
     onClick_btns() {
       this.$router.push({
-        path: "/systemConfig/powerManager/powerBtnManager"
+        name: "powerBtnManager"
       });
     }
   }

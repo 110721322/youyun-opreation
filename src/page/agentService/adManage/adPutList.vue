@@ -1,18 +1,16 @@
 <template>
-  <div class>
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
-    <div v-else>
-      <div class="tab_head">
-        <span class="title">平台广告投放列表</span>
-      </div>
-      <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
+  <div>
+    <div class="tab_head">
+      <span class="title">平台广告投放列表</span>
+    </div>
+    <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
 
-      <div class="table_box">
-        <div class="tabale_title_box">
-          <div class="title">广告投放列表</div>
-          <el-button class="btn" type="primary" @click="onClick_addAd">新增投放</el-button>
-        </div>
-        <BaseCrud
+    <div class="table_box">
+      <div class="tabale_title_box">
+        <div class="title">广告投放列表</div>
+        <el-button class="btn" type="primary" @click="onClick_addAd">新增投放</el-button>
+      </div>
+      <BaseCrud
           ref="table"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
@@ -30,8 +28,7 @@
           :api-service="api"
           @remove="onClick_remove"
           @edit="onClick_edit"
-        ></BaseCrud>
-      </div>
+      ></BaseCrud>
     </div>
   </div>
 </template>
@@ -82,14 +79,13 @@ export default {
       });
     },
     onClick_edit($row) {
-      console.log($row.id);
       this.$router.push({
-        path: "/agentService/adManage/adPutList/detail",
+        name: "adPutDetail",
         query: { id: $row.id }
       });
     },
     onClick_addAd() {
-      this.$router.push({ path: "/agentService/adManage/adPutList/detail" });
+      this.$router.push({ name: "adPutDetail" });
     }
   }
 };

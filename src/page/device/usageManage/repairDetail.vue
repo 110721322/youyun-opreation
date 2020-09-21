@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="step-box">
       <el-steps :active="2" align-center>
         <el-step v-for="(item,index) in stepData" :key="index">
@@ -35,7 +35,7 @@
 import api from "@/api/api_device";
 import detailMode from "@/components/detailMode/detailMode2.vue";
 export default {
-  name: "Theme",
+  name: "RepairDetail",
   components: { detailMode },
   data() {
     return {

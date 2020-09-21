@@ -1,5 +1,5 @@
 <template>
-  <div class>
+  <div>
     <div class="tab_head">
       <span class="title">平台风控详情</span>
     </div>
@@ -66,9 +66,8 @@ import Form from "@/components/form/index.vue";
 import { FORM_CONFIG } from "../formConfig/leRiskListDetailConfig";
 
 export default {
-  name: "LeRiskListDetail",
+  name: "MerchantLeRiskListDetail",
   components: { detailMode, Form },
-
   data() {
     return {
       id: '',

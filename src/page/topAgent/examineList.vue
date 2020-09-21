@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div class="container">
     <div class="p_head">服务商审核列表</div>
     <search
       :open-height="searchMaxHeight"
@@ -39,7 +39,7 @@ import { USER_CONFIG } from "./tableConfig/agentCheckListConfig";
 import { FORM_CONFIG } from "./formConfig/agentCheckListSearch";
 import {mapActions} from "vuex";
 export default {
-  name: "Theme",
+  name: "ExamineList",
   components: { search, BaseCrud },
   data() {
     return {

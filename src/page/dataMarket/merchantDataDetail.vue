@@ -1,5 +1,5 @@
 <template>
-  <div class>
+  <div>
     <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
 
     <div class="table_box">

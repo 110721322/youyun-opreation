@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="p_head">结算记录</div>
     <search
         :open-height="searchMaxHeight"
@@ -43,7 +43,7 @@ import { SEARCH_CONFIG } from "./formConfig/comsetRecordSearch"
 import { RECORD_CONFIG } from "./tableConfig/comsetRecordConfig"
 import search from "@/components/search/search.vue";
 export default {
-  name: "COMSETRECORD",
+  name: "ComsetRecord",
   components: { search, BaseCrud },
   data() {
     return {

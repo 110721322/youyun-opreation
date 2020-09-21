@@ -43,6 +43,7 @@
 import api from '@/api/api_serveMarket.js'
 import detailMode from "@/components/detailMode/detailMode4.vue";
 export default {
+  name: "EquimentOrderDetail",
   components: { detailMode },
   data() {
     return {
@@ -207,7 +208,7 @@ export default {
         salePrice: v.salePrice
       }))
       this.$router.push({
-        path: '/serveMarket/equipmentMall/equimentPay',
+        name: 'equimentPay',
         query: {
           orderInfo: orderInfo,
           deviceInfos: deviceInfos,

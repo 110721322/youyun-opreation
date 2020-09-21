@@ -1,58 +1,55 @@
 <template>
-  <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/serviceProfitDetail') !== -1 || this.$route.path.indexOf('/interconnection') !== -1" />
-    <div v-else>
-      <div class="main-top">
-        <div v-for="(item, index) in mainData" :key="index" class="main-item" :class="mainIndex===index? 'isSelect': ''" @click="onClick_main(index)">{{ item.value }}</div>
+  <div>
+    <div class="main-top">
+      <div v-for="(item, index) in mainData" :key="index" class="main-item" :class="mainIndex===index? 'isSelect': ''" @click="onClick_main(index)">{{ item.value }}</div>
+    </div>
+    <Search
+      :open-height="searchHeight"
+      :form-base-data="searchConfig.formData"
+      :is-show-all="true"
+      @search="search"
+    />
+    <div class="select">
+      <div class="select-top">
+        <div v-for="(item, index) in selectData" :key="index" class="select-item" :class="selectIndex===index? 'isSelect': ''" @click="onClick_select(index)">{{ item.value }}</div>
       </div>
-      <Search
-        :open-height="searchHeight"
-        :form-base-data="searchConfig.formData"
-        :is-show-all="true"
-        @search="search"
-      />
-      <div class="select">
-        <div class="select-top">
-          <div v-for="(item, index) in selectData" :key="index" class="select-item" :class="selectIndex===index? 'isSelect': ''" @click="onClick_select(index)">{{ item.value }}</div>
-        </div>
-        <div class="table_box">
-          <BaseCrud
-            v-if="selectIndex===0"
-            ref="table"
-            :params="params"
-            :api-service="api"
-            :grid-config="configData.gridConfig"
-            :grid-btn-config="configData.gridBtnConfig"
-            :grid-data="testData"
-            :form-config="configData.formConfig"
-            :form-data="configData.formModel"
-            :grid-edit-width="100"
-            :is-async="true"
-            :is-select="false"
-            :is-expand="false"
-            :row-key="'id'"
-            :default-expand-all="false"
-            @detail="handleDetail"
-          ></BaseCrud>
-          <BaseCrud
-            v-if="selectIndex===1"
-            ref="table"
-            :params="params"
-            :api-service="api"
-            :grid-config="configData1.gridConfig"
-            :grid-btn-config="configData1.gridBtnConfig"
-            :grid-data="testData"
-            :form-config="configData1.formConfig"
-            :form-data="configData1.formModel"
-            :grid-edit-width="100"
-            :is-async="true"
-            :is-select="false"
-            :is-expand="false"
-            :row-key="'id'"
-            :default-expand-all="false"
-            @detail="handleDetail"
-          ></BaseCrud>
-        </div>
+      <div class="table_box">
+        <BaseCrud
+          v-if="selectIndex===0"
+          ref="table"
+          :params="params"
+          :api-service="api"
+          :grid-config="configData.gridConfig"
+          :grid-btn-config="configData.gridBtnConfig"
+          :grid-data="testData"
+          :form-config="configData.formConfig"
+          :form-data="configData.formModel"
+          :grid-edit-width="100"
+          :is-async="true"
+          :is-select="false"
+          :is-expand="false"
+          :row-key="'id'"
+          :default-expand-all="false"
+          @detail="handleDetail"
+        ></BaseCrud>
+        <BaseCrud
+          v-if="selectIndex===1"
+          ref="table"
+          :params="params"
+          :api-service="api"
+          :grid-config="configData1.gridConfig"
+          :grid-btn-config="configData1.gridBtnConfig"
+          :grid-data="testData"
+          :form-config="configData1.formConfig"
+          :form-data="configData1.formModel"
+          :grid-edit-width="100"
+          :is-async="true"
+          :is-select="false"
+          :is-expand="false"
+          :row-key="'id'"
+          :default-expand-all="false"
+          @detail="handleDetail"
+        ></BaseCrud>
       </div>
     </div>
   </div>
@@ -68,6 +65,7 @@ import { TOPVICE_CONFIG1 } from "../tableConfig/TopAgentData";
 import { TOPERVICE_CONFIG } from "../tableConfig/TopConfig";
 import api_statistice from "@/api/api_statistice"
 export default {
+  name: "ServiceProfit",
   components: { Search, BaseCrud },
   data() {
     return {
@@ -160,7 +158,7 @@ export default {
     handleDetail($row) {
       if (this.mainIndex === 0) {
         this.$router.push({
-          path: '/financial/shareProfit/serviceProfit/serviceProfitDetail',
+          name: 'serviceProfitDetail',
           query: {
             enterType: 0,
             agentNo: $row.channelAgentCode,
@@ -171,7 +169,7 @@ export default {
       }
       if (this.mainIndex === 1) {
         this.$router.push({
-          path: '/financial/shareProfit/serviceProfit/serviceProfitDetail',
+          name: 'serviceProfitDetail',
           query: {
             enterType: 1,
             agentNo: $row.agentNo,

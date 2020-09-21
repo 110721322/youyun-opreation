@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="tab_head">
       <span class="title">后台角色权限</span>
     </div>
@@ -43,7 +43,7 @@ import api_systemConfig from "@/api/api_systemConfig";
 import { AGENTPC_CONFIG } from "./../tableConfig/agentPcManagerConfig";
 
 export default {
-  name: "Theme",
+  name: "AgentPcManager",
   components: { BaseCrud, RoleMenuSet },
   data() {
     return {

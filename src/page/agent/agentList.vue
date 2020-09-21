@@ -1,30 +1,28 @@
 <template>
-  <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1 || this.$route.path.indexOf('/addAgent') !== -1" />
-    <div v-else>
-      <div class="p_head">服务商列表</div>
-      <search
+  <div>
+    <div class="p_head">服务商列表</div>
+    <search
         :open-height="searchMaxHeight"
         :form-base-data="searchConfig.formData"
         :show-foot-btn="searchConfig.showFootBtn"
         @search="search"
-      />
+    />
 
-      <!-- <data-mode></data-mode> -->
-      <div class="table_box">
-        <div class="two-btn">
-          <el-button @click="transfer">批量转移运营</el-button>
-          <el-button type="primary" @click="onClick_addServe">添加服务商</el-button>
-        </div>
-        <div class="select_data">
-          <span class="el-icon-info icon" />
-          <span>
+    <!-- <data-mode></data-mode> -->
+    <div class="table_box">
+      <div class="two-btn">
+        <el-button @click="transfer">批量转移运营</el-button>
+        <el-button type="primary" @click="onClick_addServe">添加服务商</el-button>
+      </div>
+      <div class="select_data">
+        <span class="el-icon-info icon" />
+        <span>
             已选择
             <span class="blue">{{ selectData.length }}</span> 项目
           </span>
-          <el-button class="btn" type="text" @click="clear">清空</el-button>
-        </div>
-        <BaseCrud
+        <el-button class="btn" type="text" @click="clear">清空</el-button>
+      </div>
+      <BaseCrud
           ref="child"
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
@@ -44,8 +42,7 @@
           @openAgentManager="openAgentManager"
           @goMerchantList="goMerchantList"
           @completion="onCompletion"
-        />
-      </div>
+      />
     </div>
     <el-dialog
       title="批量转移运营"
@@ -78,7 +75,7 @@ import { USER_CONFIG } from "./tableConfig/agentConfig";
 import { FORM_CONFIG } from "./formConfig/agentListSearch";
 
 export default {
-  name: "Theme",
+  name: "AgentList",
   components: { search, BaseCrud },
   // components: {  dataMode, BaseCrud },
 
@@ -175,7 +172,7 @@ export default {
     },
     openDetail($row) {
       this.$router.push({
-        path: "/agent/list/detail",
+        name: "agentDetail",
         query: {
           agentNo: $row.agentNo
         }
@@ -235,17 +232,17 @@ export default {
     },
     goMerchantList() {
       this.$router.push({
-        path: "/merchant/list"
+        name: "merchantList"
       });
     },
     onClick_addServe() {
       this.$router.push({
-        path: "/agent/list/addAgent"
+        name: "addAgent"
       })
     },
     onCompletion($row) {
       this.$router.push({
-        path: "/agent/list/detail",
+        name: "agentDetail",
         query: {
           agentNo: $row.agentNo
         }

@@ -1,20 +1,18 @@
 <template>
-  <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
-    <div v-else>
-      <div class="p_head">分润总览</div>
-      <search
+  <div>
+    <div class="p_head">分润总览</div>
+    <search
         :open-height="searchMaxHeight"
         :form-base-data="searchConfig.formData"
         :show-foot-btn="searchConfig.showFootBtn"
         @search="search"
-      />
-      <div class="data-list">
-        <data-mode :config-data="overviewData" class="data-item"></data-mode>
-        <data-mode :config-data="overviewData2" class="data-item2"></data-mode>
-      </div>
-      <div class="table_box">
-        <BaseCrud
+    />
+    <div class="data-list">
+      <data-mode :config-data="overviewData" class="data-item"></data-mode>
+      <data-mode :config-data="overviewData2" class="data-item2"></data-mode>
+    </div>
+    <div class="table_box">
+      <BaseCrud
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
           :grid-data="testData"
@@ -27,8 +25,7 @@
           :params="params"
           :api-service="api"
           @detail="handleDetail"
-        />
-      </div>
+      />
     </div>
   </div>
 </template>
@@ -42,7 +39,7 @@ import { FORM_CONFIG } from "./formConfig/dividedOverviewSearch";
 import api from "@/api/api_agent.js"
 
 export default {
-  name: "Theme",
+  name: "DividedOverview",
   components: { search, BaseCrud, dataMode },
   // components: {  dataMode, BaseCrud },
 
@@ -94,7 +91,7 @@ export default {
   },
   methods: {
     handleDetail() {
-      this.$router.push({ path: "/agent/dividedOverview/detail" });
+      this.$router.push({ name: "dividedOverviewDetail" });
     },
     getTotalCommission() {
       api.totalCommission({

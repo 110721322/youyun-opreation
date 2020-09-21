@@ -1,6 +1,6 @@
 <template>
   <!--  服务商统计数据-->
-  <div class>
+  <div>
     <search
       :open-height="searchMaxHeight"
       :form-base-data="searchConfig.formData"
@@ -35,7 +35,7 @@ import { SEARCH_CONFIG } from "./../../formConfig/agentStatisticsSearch";
 import { AGENTSTA_CONFIG } from "./../../tableConfig/agentStatisticsConfig";
 
 export default {
-  name: "Theme",
+  name: "AgentStatistics",
   components: { Search, BaseCrud },
   data() {
     return {

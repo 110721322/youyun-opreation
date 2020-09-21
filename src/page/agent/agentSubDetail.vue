@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="p_head">下级服务商信息</div>
     <div class="content">
       <div class="list_title">基本信息</div>
@@ -69,7 +69,7 @@
 import api from "@/api/api_agent.js"
 
 export default {
-  name: "Theme",
+  name: "AgentSubDetail",
   // components: { detailMode },
   data() {
     return {

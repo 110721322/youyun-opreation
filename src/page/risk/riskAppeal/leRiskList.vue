@@ -1,46 +1,43 @@
 <template>
-  <div class>
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
-    <div v-else>
-      <div class="tab_head">
-        <span class="title">乐刷风控</span>
-      </div>
-      <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
-
-      <div class="table_box">
-        <BaseCrud
-          ref="table"
-          :params="params"
-          :api-service="api"
-          :grid-config="configData.gridConfig"
-          :grid-btn-config="configData.gridBtnConfig"
-          :grid-data="testData"
-          :form-config="configData.formConfig"
-          :form-data="configData.formModel"
-          :grid-edit-width="250"
-          :is-async="true"
-          :is-select="false"
-          :is-expand="false"
-          :row-key="'id'"
-          :default-expand-all="false"
-          :hide-edit-area="configData.hideEditArea"
-          @detail="handleDetail"
-          @preApprove="handlePreApprove"
-          @pass="handlePass"
-          @reject="handleReject"
-        ></BaseCrud>
-      </div>
-      <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
-        <div class="p_head">{{ fromConfigData.title }}</div>
-        <Form
-          :form-base-data="fromConfigData.formData"
-          :show-foot-btn="fromConfigData.showFootBtn"
-          label-width="130px"
-          @cancel="cancel"
-          @confirm="confirm"
-        ></Form>
-      </el-drawer>
+  <div>
+    <div class="tab_head">
+      <span class="title">乐刷风控</span>
     </div>
+    <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
+
+    <div class="table_box">
+      <BaseCrud
+        ref="table"
+        :params="params"
+        :api-service="api"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :grid-data="testData"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="250"
+        :is-async="true"
+        :is-select="false"
+        :is-expand="false"
+        :row-key="'id'"
+        :default-expand-all="false"
+        :hide-edit-area="configData.hideEditArea"
+        @detail="handleDetail"
+        @preApprove="handleDetail"
+        @pass="handlePass"
+        @reject="handleReject"
+      ></BaseCrud>
+    </div>
+    <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
+      <div class="p_head">{{ fromConfigData.title }}</div>
+      <Form
+        :form-base-data="fromConfigData.formData"
+        :show-foot-btn="fromConfigData.showFootBtn"
+        label-width="130px"
+        @cancel="cancel"
+        @confirm="confirm"
+      ></Form>
+    </el-drawer>
   </div>
 </template>
 <script>
@@ -77,15 +74,7 @@ export default {
     },
     handleDetail(row) {
       this.$router.push({
-        path: "/risk/riskAppeal/leRiskList/detail",
-        query: {
-          id: row.id
-        }
-      });
-    },
-    handlePreApprove(row) {
-      this.$router.push({
-        path: "/risk/riskAppeal/leRiskList/detail",
+        name: "leRiskDetail",
         query: {
           id: row.id
         }

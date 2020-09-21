@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="p_head">任务类型: {{statisticsData.taskValue}}</div>
     <div class="table_box">
       <BaseCrud

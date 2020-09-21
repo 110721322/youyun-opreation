@@ -96,7 +96,7 @@
 import api from "@/api/api_systemConfig";
 import DetailBox from "@/components/detailMode/detailBox.vue";
 export default {
-  name: "Theme",
+  name: "TagsSetting",
   components: { DetailBox },
   data() {
     return {

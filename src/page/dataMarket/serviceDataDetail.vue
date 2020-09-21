@@ -1,5 +1,5 @@
 <template>
-  <div class>
+  <div>
     <Search :open-height="searchHeight" :permission="searchConfig.permission" :form-base-data="searchConfig.formData" @search="search" />
 
     <div class="table_box">
@@ -31,7 +31,7 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import { FORM_CONFIG } from "./formConfig/serviceDataDetailSearch";
 import { MERCHANTDATADETAILCONFIG } from "./tableConfig/serviceDataDetailConfig";
 export default {
-  name: "MerchantDataDetail",
+  name: "ServiceDataDetail",
   components: { Search, BaseCrud },
   data() {
     return {

@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="p_head">商户详情</div>
 
     <detailMode :rule-form="businessData" :config-data="configData" :is-show-edit-btn="true" @edit="itemEdit"></detailMode>
@@ -24,7 +24,7 @@ import detailMode from "@/components/detailMode/detailMode2.vue";
 import { CONTACTS_CONFIG } from "./formConfig/merchantDetailEdit"
 
 export default {
-  name: "Theme",
+  name: "MerchantDetail",
   components: { detailMode, Form },
   data() {
     return {

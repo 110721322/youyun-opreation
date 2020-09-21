@@ -1,146 +1,143 @@
 <template>
-  <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
-    <div v-else>
-      <div class="p_head">
-        <span class="left-title">服务商数据</span>
-        <div class="right-area" @click="showRightbar">
-          <img src="../../assets/img/menu_icon.png" alt="">
-          <span>自定义设置</span>
-        </div>
+  <div>
+    <div class="p_head">
+      <span class="left-title">服务商数据</span>
+      <div class="right-area" @click="showRightbar">
+        <img src="../../assets/img/menu_icon.png" alt="">
+        <span>自定义设置</span>
       </div>
-      <template v-if="hasPermission('agentCount')">
-        <div class="title">服务器数量分布</div>
-        <div class="map-box">
-          <div class="chart-box">
-            <div ref="echartsMap" class="chart-panel"></div>
-          </div>
-          <div class="data-box">
-            <div class="data-title">
-              省份分布排行榜
-              <span class="all-num">共{{totalNum}}个</span>
-            </div>
-            <div v-for="(item,index) in mapData" :key="index" class="data-item">
-              <div class="data-left">
-                <span :class="['index',index<=2?'hightlight':'normal']">{{ index+1 }}</span>
-                {{ item.name }}
-              </div>
-              <div class="data-right">
-                <span>{{ item.count }}</span> |
-                <span class="perc">{{ item.ratio + '%' }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="service-box">
-          <pie
-            v-for="(item, index) in pieOptionList"
-            :key="index"
-            :pie-option="item"
-            :data-list="item.dataList"
-            :ref-name="'echartPie' + index"
-            :pie-style="pieStyle"
-          ></pie>
-        </div>
-      </template>
-      <search
-        v-if="hasPermission('agentAverageTrend') || hasPermission('amountRank') || hasPermission('addMerchantRank') || hasPermission('faceOrderRank')"
-        :is-show-all="true"
-        :form-base-data="searchConfig.formData"
-        :show-foot-btn="searchConfig.showFootBtn"
-        @dataSelect="handleDataSelect"
-        @search="search"
-      />
-      <template v-if="hasPermission('agentAverageTrend')">
-        <div class="title">商户平均交易额走势</div>
-        <div class="trend-box">
-          <div class="chart-box">
-            <div ref="echartsLine" class="chart-panel"></div>
-          </div>
-        </div>
-      </template>
-      <div class="pie-box">
-        <dataItem
-          v-if="hasPermission('amountRank')"
-          class="pie-item"
-          :is-show-table="true"
-          :title="'总交易额排行榜'"
-          :is-show-more="true"
-          :config-data="tableConfigData5"
-          :permission="tableConfigData5.permission"
-          :item-test-data="testData5"
-          :is-show-line="false"
-          :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
-          @showMore="handleShowMore('tradeAmount')"
-        ></dataItem>
-        <dataItem
-          v-if="hasPermission('addMerchantRank')"
-          class="pie-item"
-          :title="'新增商户数量排行'"
-          :config-data="tableConfigData2"
-          :permission="tableConfigData2.permission"
-          :is-show-more="true"
-          :is-show-table="true"
-          :item-test-data="testData2"
-          :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
-          @showMore="handleShowMore('newMerchantCount')"
-        />
-      </div>
-      <div class="pie-box">
-        <!--1.1期不做会员
-        <dataItem
-          class="pie-item"
-          :radio="radioListData[1]"
-          :title="'会员商户排行'"
-          :config-data="tableConfigData3"
-          :permission="tableConfigData3.permission"
-          :is-show-more="true"
-          :is-show-table="true"
-          :item-test-data="testData3"
-          :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
-          @showMore="handleShowMore"
-          @radioChange="handleTradeAmountChange"
-        />-->
-        <dataItem
-          v-if="hasPermission('faceOrderRank')"
-          class="pie-item"
-          :radio="radioListData[2]"
-          :title="'刷脸订单排行'"
-          :config-data="tableConfigData4"
-          :permission="tableConfigData4.permission"
-          :is-show-more="true"
-          :is-show-table="true"
-          :item-test-data="testData4"
-          :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
-          @showMore="handleShowMore"
-          @radioChange="handleTradeAmountChange"
-        />
-      </div>
-      <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size="500px">
-        <div class="draw-title">权限设置</div>
-        <div class="draw-content">
-          <div class="draw-wran">
-            <div class="draw-wranleft">
-              <span>i</span>
-              <span>该功能用于配置服务商数据页面的图表</span>
-            </div>
-            <img src="../../assets/img/cancle.png" alt="">
-          </div>
-          <div class="draw-checkbox">
-            <el-checkbox-group v-model="checkedSelect" @change="handleChecked">
-              <el-checkbox v-for="(item, index) in checkIndex" :key="index" :label="item.value">{{ item.label }}</el-checkbox>
-            </el-checkbox-group>
-          </div>
-          <div class="bottom-btn">
-            <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" @change="handleCheckAllChange">全选</el-checkbox>
-            <div class="btn">
-              <button @click="saveUserDiagrams">确定</button>
-              <button @click="cancleClose">取消</button>
-            </div>
-          </div>
-        </div>
-      </el-drawer>
     </div>
+    <template v-if="hasPermission('agentCount')">
+      <div class="title">服务器数量分布</div>
+      <div class="map-box">
+        <div class="chart-box">
+          <div ref="echartsMap" class="chart-panel"></div>
+        </div>
+        <div class="data-box">
+          <div class="data-title">
+            省份分布排行榜
+            <span class="all-num">共{{ totalNum }}个</span>
+          </div>
+          <div v-for="(item,index) in mapData" :key="index" class="data-item">
+            <div class="data-left">
+              <span :class="['index',index<=2?'hightlight':'normal']">{{ index+1 }}</span>
+              {{ item.name }}
+            </div>
+            <div class="data-right">
+              <span>{{ item.count }}</span> |
+              <span class="perc">{{ item.ratio + '%' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="service-box">
+        <pie
+          v-for="(item, index) in pieOptionList"
+          :key="index"
+          :pie-option="item"
+          :data-list="item.dataList"
+          :ref-name="'echartPie' + index"
+          :pie-style="pieStyle"
+        ></pie>
+      </div>
+    </template>
+    <search
+      v-if="hasPermission('agentAverageTrend') || hasPermission('amountRank') || hasPermission('addMerchantRank') || hasPermission('faceOrderRank')"
+      :is-show-all="true"
+      :form-base-data="searchConfig.formData"
+      :show-foot-btn="searchConfig.showFootBtn"
+      @dataSelect="handleDataSelect"
+      @search="search"
+    />
+    <template v-if="hasPermission('agentAverageTrend')">
+      <div class="title">商户平均交易额走势</div>
+      <div class="trend-box">
+        <div class="chart-box">
+          <div ref="echartsLine" class="chart-panel"></div>
+        </div>
+      </div>
+    </template>
+    <div class="pie-box">
+      <dataItem
+        v-if="hasPermission('amountRank')"
+        class="pie-item"
+        :is-show-table="true"
+        :title="'总交易额排行榜'"
+        :is-show-more="true"
+        :config-data="tableConfigData5"
+        :permission="tableConfigData5.permission"
+        :item-test-data="testData5"
+        :is-show-line="false"
+        :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
+        @showMore="handleShowMore('tradeAmount')"
+      ></dataItem>
+      <dataItem
+        v-if="hasPermission('addMerchantRank')"
+        class="pie-item"
+        :title="'新增商户数量排行'"
+        :config-data="tableConfigData2"
+        :permission="tableConfigData2.permission"
+        :is-show-more="true"
+        :is-show-table="true"
+        :item-test-data="testData2"
+        :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
+        @showMore="handleShowMore('newMerchantCount')"
+      />
+    </div>
+    <div class="pie-box">
+      <!--1.1期不做会员
+      <dataItem
+        class="pie-item"
+        :radio="radioListData[1]"
+        :title="'会员商户排行'"
+        :config-data="tableConfigData3"
+        :permission="tableConfigData3.permission"
+        :is-show-more="true"
+        :is-show-table="true"
+        :item-test-data="testData3"
+        :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
+        @showMore="handleShowMore"
+        @radioChange="handleTradeAmountChange"
+      />-->
+      <dataItem
+        v-if="hasPermission('faceOrderRank')"
+        class="pie-item"
+        :radio="radioListData[2]"
+        :title="'刷脸订单排行'"
+        :config-data="tableConfigData4"
+        :permission="tableConfigData4.permission"
+        :is-show-more="true"
+        :is-show-table="true"
+        :item-test-data="testData4"
+        :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
+        @showMore="handleShowMore"
+        @radioChange="handleTradeAmountChange"
+      />
+    </div>
+    <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size="500px">
+      <div class="draw-title">权限设置</div>
+      <div class="draw-content">
+        <div class="draw-wran">
+          <div class="draw-wranleft">
+            <span>i</span>
+            <span>该功能用于配置服务商数据页面的图表</span>
+          </div>
+          <img src="../../assets/img/cancle.png" alt="">
+        </div>
+        <div class="draw-checkbox">
+          <el-checkbox-group v-model="checkedSelect" @change="handleChecked">
+            <el-checkbox v-for="(item, index) in checkIndex" :key="index" :label="item.value">{{ item.label }}</el-checkbox>
+          </el-checkbox-group>
+        </div>
+        <div class="bottom-btn">
+          <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" @change="handleCheckAllChange">全选</el-checkbox>
+          <div class="btn">
+            <button @click="saveUserDiagrams">确定</button>
+            <button @click="cancleClose">取消</button>
+          </div>
+        </div>
+      </div>
+    </el-drawer>
   </div>
 </template>
 <script>
@@ -476,7 +473,7 @@ export default {
       this.queryAgentFaceTradeRank();
     },
     handleShowMore($sortField) {
-      this.$router.push({ path: "/dataMarket/serviceData/detail", query: {
+      this.$router.push({ name: "serviceDataDetail", query: {
         sortField: $sortField || "tradeAmount"
       } });
     },

@@ -1,5 +1,5 @@
 <template>
-  <div class>
+  <div>
     <div class="tab_head">
       <span class="title">结算审核详情</span>
     </div>
@@ -30,7 +30,7 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import { RECORD_CONFIG } from "../tableConfig/commissionDetail";
 
 export default {
-  name: "SettlementDetail",
+  name: "CommissionDetail",
   components: { BaseCrud },
   data() {
     return {

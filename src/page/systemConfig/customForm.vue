@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <div class="tab_head">
       <span class="title">自定义表单</span>
     </div>
@@ -74,7 +74,7 @@ import Form from "@/components/form/index.vue";
 import DetailBox from "@/components/detailMode/detailBox.vue";
 
 export default {
-  name: "Theme",
+  name: "CustomForm",
   components: { Form, DetailBox },
   data() {
     return {

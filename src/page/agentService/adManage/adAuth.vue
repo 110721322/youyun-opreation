@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div>
     <div class="tab_head">
       <span class="title">广告权限</span>
     </div>

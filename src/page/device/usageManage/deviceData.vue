@@ -1,5 +1,5 @@
 <template>
-  <div class>
+  <div>
     <div class="tab_head">
       <span class="title">设备数据</span>
       <el-menu
@@ -16,8 +16,8 @@
 
     <transition name="fade">
       <DeviceStatistics v-if="activeIndex == '1'"></DeviceStatistics>
-      <AgentStatistics v-if="activeIndex == '2'"></AgentStatistics>
-      <DeviceDetail v-if="activeIndex == '3'"></DeviceDetail>
+      <AgentStatistics v-else-if="activeIndex == '2'"></AgentStatistics>
+      <DeviceDetail v-else-if="activeIndex == '3'"></DeviceDetail>
     </transition>
   </div>
 </template>
@@ -27,7 +27,7 @@ import DeviceStatistics from "./components/deviceStatistics.vue";
 import DeviceDetail from "./components/deviceDetail.vue";
 
 export default {
-  name: "Theme",
+  name: "DeviceData",
   components: { AgentStatistics, DeviceStatistics, DeviceDetail },
   data() {
     return {

@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div class="container">
     <div class="left-box">
       <div class="tab-box">
         <img src="@/assets/img/logo.png" class="sidebar-logo">
@@ -32,7 +32,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .main_page {
+  .container {
     width: 100%;
     height: 100%;
     display: flex;

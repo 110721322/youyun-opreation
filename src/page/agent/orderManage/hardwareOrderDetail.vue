@@ -17,7 +17,7 @@
         <el-table
           :data="tableData"
           :span-method="arraySpanMethod"
-          style="width: 100%"
+          style="width: 100%;"
           max-height="279"
           show-summary
           :summary-method="getSummaries"
@@ -29,7 +29,7 @@
           <el-table-column prop="name" label="图片">
             <template slot-scope="scope">
               <el-image
-                style="width: 65px; height: 65px"
+                style="width: 65px; height: 65px;"
                 :src="scope.row.name"
                 :preview-src-list="[scope.row.name]"
               ></el-image>

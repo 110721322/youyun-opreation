@@ -108,7 +108,7 @@ import deviceList from "./deviceList.vue";
 import provinceData from "./../../../../assets/data/provinceData"
 
 export default {
-  name: "Theme",
+  name: "DeviceStatistics",
   components: { Search, dataItem, dotTip, deviceList },
   data() {
     return {

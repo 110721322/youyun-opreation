@@ -1,11 +1,9 @@
 <template>
   <div v-if="!item.hidden" @mouseleave="leave(item)" @mouseenter="enter(item)">
     <template v-if="!(item.children && item.children.length > 0 )">
-      <app-link :to="resolvePath(item.path)">
-        <el-menu-item :index="item.name" popper-append-to-body class="el-menu-item">
-          <item v-if="item.meta" :icon="item.meta.icon" :title="item.meta.title" />
-        </el-menu-item>
-      </app-link>
+      <el-menu-item :index="item.name" popper-append-to-body class="el-menu-item" @click="onClick_item(item)">
+        <item v-if="item.meta" :icon="item.meta.icon" :title="item.meta.title" />
+      </el-menu-item>
     </template>
     <div v-else>
       <el-menu-item
@@ -24,14 +22,12 @@
 import path from "path";
 import { isExternal } from "@/libs/kit/validate";
 import Item from "./Item";
-import AppLink from "./Link.vue";
 import FixiOSBug from "./FixiOSBug";
-import utils from "@/libs/kit/utils"
 // import menu2 from "./menu2.vue";
 import { EventBus } from "../../bus/event-bus.js";
 export default {
   name: "SidebarItem",
-  components: { Item, AppLink },
+  components: { Item },
   mixins: [FixiOSBug],
   props: {
     // route object
@@ -62,19 +58,21 @@ export default {
 
   methods: {
     onClick_item($item) {
-      if (this.$route.name === $item.children[0].name) return;
-
-      if (utils.isArr($item.children[0].children) && $item.children[0].children.length > 0) {
-        this.$router.push({
-          path: this.resolvePath(
-            "." +
-              path.resolve($item.children[0].path, $item.children[0].children[0].path)
-          )
-        });
+      if ($item.children && $item.children.length > 0) {
+        const secondItem = $item.children[0];
+        if (secondItem.children && secondItem.children.length > 0) {
+          this.$router.push({
+            name: secondItem.children[0].name
+          })
+        } else {
+          this.$router.push({
+            name: secondItem.name
+          })
+        }
       } else {
         this.$router.push({
-          path: this.resolvePath($item.children[0].path)
-        });
+          name: $item.name
+        })
       }
     },
     hasOneShowingChild(children = [], parent) {

@@ -1,14 +1,12 @@
 <template>
-  <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
-    <div v-else>
-      <div class="tab_head">
-        <span class="title">服务商续费记录</span>
-      </div>
-      <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
+  <div>
+    <div class="tab_head">
+      <span class="title">服务商续费记录</span>
+    </div>
+    <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
 
-      <div class="table_box">
-        <BaseCrud
+    <div class="table_box">
+      <BaseCrud
           ref="table"
           :params="params"
           :api-service="api"
@@ -25,8 +23,7 @@
           :default-expand-all="false"
           :hide-edit-area="configData.hideEditArea"
           @detail="handleDetail"
-        ></BaseCrud>
-      </div>
+      ></BaseCrud>
     </div>
   </div>
 </template>
@@ -39,7 +36,7 @@ import { SEARCH_CONFIG } from "./formConfig/renewalRecordSearch";
 import { TABLE_CONFIG } from "./tableConfig/renewalRecordConfig";
 
 export default {
-  name: "LeRiskList",
+  name: "RenewalRecord",
   components: { Search, BaseCrud },
   data() {
     return {
@@ -64,7 +61,7 @@ export default {
     },
     handleDetail($row) {
       this.$router.push({
-        path: "/agent/list/detail",
+        name: "agentDetail",
         query: { id: $row.id }
       });
     },

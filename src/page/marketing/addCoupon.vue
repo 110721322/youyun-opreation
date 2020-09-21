@@ -1,5 +1,5 @@
 <template>
-  <div class="main_page">
+  <div>
     <ul class="top-head">
       <li class="step" :class="firstStep===1? 'now-step':''">
         <span v-if="firstStep===1 && secondStep===0" :style="{'background': (firstStep===1 && secondStep===0 && thirdStep===0)? '#1989FA' :'#ffffff'}">1</span>
@@ -94,6 +94,7 @@ import { FORM_CONFIG2 } from "./formConfig/addCoupon";
 import api from "@/api/api_coupon.js"
 import Clipboard from "clipboard";
 export default {
+  name: "AddCoupon",
   components: { Form },
   data() {
     return {

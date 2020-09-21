@@ -55,6 +55,7 @@
 </template>
 <script>
 export default {
+  name: "PowerSet",
   props: {
     templateList: {
       type: Array,

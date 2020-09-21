@@ -1,5 +1,5 @@
 <template>
-  <div class>
+  <div>
     <div class="p_head_detail" :class="[activeClass]">
       <div class="top">
         <span>{{ agentDetail.agentName }}</span>
@@ -318,7 +318,7 @@ import { LISASION } from "./formConfig/addLiasion"
 import areaData from "@/assets/data/areaData";
 
 export default {
-  name: "Theme",
+  name: "AgentDetail",
   components: { detailMode, Form },
   data() {
     return {

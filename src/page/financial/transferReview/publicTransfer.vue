@@ -1,57 +1,55 @@
 <template>
-  <div class="main_page">
-    <router-view v-if="this.$route.path.indexOf('/detail') !== -1" />
-    <div v-else>
-      <div class="tab_head">
-        <span class="title">对公转账审核</span>
-      </div>
-      <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
-
-      <div class="table_box">
-        <BaseCrud
-           ref="table"
-          :grid-config="configData.gridConfig"
-          :grid-btn-config="configData.gridBtnConfig"
-          :grid-data="testData"
-          :form-config="configData.formConfig"
-          :form-data="configData.formModel"
-          :grid-edit-width="120"
-          :is-async="true"
-          :is-select="false"
-          :is-expand="false"
-          :row-key="'id'"
-          :default-expand-all="false"
-          :hide-edit-area="configData.hideEditArea"
-          :header-cell-style="headerCellStyle"
-          :api-service="api"
-          :params="params"
-          @detail="onClick_detail"
-          @reject="onClick_reject"
-          @adopt="onClick_adopt"
-        ></BaseCrud>
-      </div>
-
-      <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
-        <div class="p_head">{{ fromConfigData.title }}</div>
-        <Form
-          :form-base-data="fromConfigData.formData"
-          :show-foot-btn="fromConfigData.showFootBtn"
-          label-width="130px"
-          :foot-btn-label="fromConfigData.footBtnLabel"
-          @cancel="cancel"
-          @confirm="confirm"
-        ></Form>
-      </el-drawer>
-      <el-dialog
-          title="驳回理由"
-          :visible.sync="dialogVisible"
-          width="30%">
-        <span>{{reason}}</span>
-        <span slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-        </span>
-      </el-dialog>
+  <div>
+    <div class="tab_head">
+      <span class="title">对公转账审核</span>
     </div>
+    <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
+
+    <div class="table_box">
+      <BaseCrud
+        ref="table"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :grid-data="testData"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="120"
+        :is-async="true"
+        :is-select="false"
+        :is-expand="false"
+        :row-key="'id'"
+        :default-expand-all="false"
+        :hide-edit-area="configData.hideEditArea"
+        :header-cell-style="headerCellStyle"
+        :api-service="api"
+        :params="params"
+        @detail="onClick_detail"
+        @reject="onClick_reject"
+        @adopt="onClick_adopt"
+      ></BaseCrud>
+    </div>
+
+    <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
+      <div class="p_head">{{ fromConfigData.title }}</div>
+      <Form
+        :form-base-data="fromConfigData.formData"
+        :show-foot-btn="fromConfigData.showFootBtn"
+        label-width="130px"
+        :foot-btn-label="fromConfigData.footBtnLabel"
+        @cancel="cancel"
+        @confirm="confirm"
+      ></Form>
+    </el-drawer>
+    <el-dialog
+      title="驳回理由"
+      :visible.sync="dialogVisible"
+      width="30%"
+    >
+      <span>{{ reason }}</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -64,7 +62,7 @@ import { TABLE_CONFIG } from "../tableConfig/publicConfig";
 import api from "@/api/api_statistice";
 
 export default {
-  name: "Theme",
+  name: "PublicTransfer",
   components: { Search, BaseCrud, Form },
   data() {
     return {

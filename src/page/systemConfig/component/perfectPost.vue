@@ -43,7 +43,7 @@ import { FORM_CONFIG } from "../formConfig/perfectPost";
 import { mapState } from 'vuex';
 
 export default {
-  name: "Theme",
+  name: "PerfectPost",
   components: { PowerSet, Form, auditSet },
   props: {
     perfectRow: {
