@@ -561,6 +561,12 @@ export default {
           if (res.object.activeMode) {
             res.object.activeModeCn = '产品代理'
           }
+          if (res.object.bankAccountType === 'private') {
+            res.object.bankAccountTypeCn = '对私'
+          }
+          if (res.object.bankAccountType === 'public') {
+            res.object.bankAccountTypeCn = '对公'
+          }
           var active = []
           active.push(res.object.activeScope.provinceCode, res.object.activeScope.cityCode)
           res.object.activeScopeCode = active

@@ -63,8 +63,18 @@ export const FORM_CONFIG = {
         ]
       },
       {
-        type: 0,
+        type: 8,
         label: '公司地址',
+        key: 'area',
+        initVal: '',
+        options: areaData,
+        rules: [
+          {required: true, message: "请选择省市区", trigger: "change"}
+        ]
+      },
+      {
+        type: 0,
+        label: '公司详细地址',
         key: 'address',
         rules: [
           {required: true, message: "请输入公司地址", trigger: "blur"}
@@ -137,29 +147,41 @@ export const FORM_CONFIG = {
         label: '收件人',
         key: 'expReceiver',
         initVal: '',
-        placeholder: '请填写'
+        placeholder: '请填写',
+        rules: [
+          {required: true, message: "请填写收件人", trigger: "blur"}
+        ]
       },
       {
         type: 0,
         label: '联系方式',
         key: 'expMobile',
         initVal: '',
-        placeholder: '请填写'
+        placeholder: '请填写',
+        rules: [
+          {required: true, message: "请填写联系方式", trigger: "blur"}
+        ]
       },
       {
         type: 8,
         label: '选择地区',
-        key: 'expAreaCode',
+        key: 'expAreaData',
         style: 'width:294px',
         labelWidth: '185px',
-        options: areaData
+        options: areaData,
+        rules: [
+          {required: true, message: "请选择邮寄地区", trigger: "blur"}
+        ]
       },
       {
         type: 0,
         label: '详细地址',
         key: 'expAddress',
         initVal: '',
-        placeholder: '请填写'
+        placeholder: '请填写',
+        rules: [
+          {required: true, message: "请填写详细地址", trigger: "blur"}
+        ]
       }
     ]
   },

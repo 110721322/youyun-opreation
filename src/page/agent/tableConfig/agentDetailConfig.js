@@ -53,8 +53,7 @@ export const DETAILCONFIG = {
             items: [
               {
                 name: "结算卡类型",
-                key: "bankAccountType",
-                type: "bankType"
+                key: "bankAccountTypeCn"
               },
               {
                 name: "开户支行地区",
