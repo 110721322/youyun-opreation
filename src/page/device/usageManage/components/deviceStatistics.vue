@@ -26,11 +26,11 @@
         <div v-for="(item,index) in mapData" :key="index" class="data-item">
           <div class="data-left">
             <span :class="['index',index<=2?'hightlight':'normal']">{{ index+1 }}</span>
-            {{ item.provinceCode }}
+            {{ item.provinceName }}
           </div>
           <div class="data-right">
-            <span>{{ item.usingCount? item.usingCount: '0' }}</span> |
-            <span class="perc">{{ item.deviceProportion*100 }}%</span>
+            <span>{{ item.usingCount? '(' + item.usingCount + ')': '(0)' }}</span> |
+            <span class="perc">{{ item.deviceProportionPecent }}%</span>
           </div>
         </div>
       </div>
@@ -105,7 +105,8 @@ import "./../../../../libs/kit/china";
 import dataItem from "../../../dataMarket/components/dataItem.vue";
 import dotTip from "./dotTip.vue";
 import deviceList from "./deviceList.vue";
-import provinceData from "./../../../../assets/data/provinceData"
+import provinceData from "@/assets/data/provinceData"
+import areaData from "@/assets/data/areaData"
 
 export default {
   name: "DeviceStatistics",
@@ -338,7 +339,7 @@ export default {
     };
   },
   created() {
-    this.getNowFormatDate()
+    this.queryEquipment()
     this.handleProvince()
   },
   mounted() {
@@ -346,21 +347,17 @@ export default {
     this.queryRegionTrade();
   },
   methods: {
-    getNowFormatDate() {
-      const date = new Date();
-      const seperator1 = "-";
-      var year = date.getFullYear();
-      var month = date.getMonth() + 1;
-      var strDate = date.getDate();
-      if (month >= 1 && month <= 9) {
-        month = "0" + month;
+    queryEquipment() {
+      var params = {
+        beginDate: this.$g.utils.getToday(-1),
+        endDate: this.$g.utils.getToday(-1)
       }
-      if (strDate >= 0 && strDate <= 9) {
-        strDate = "0" + strDate;
-      }
-      var currentdate = year + seperator1 + month + seperator1 + strDate;
-      this.currentdate = currentdate
-      return currentdate;
+      api.queryUsing(params).then(res => {
+        this.deviceListData = res.object;
+      })
+        .catch(err => {
+          this.$message(err);
+        });
     },
     handleNumRadioChange($data) {
       $data === "region" ? this.queryRegion() : null;
@@ -486,26 +483,36 @@ export default {
     },
     // 查询所有省份正在使用的数量/查询省份使用排行榜
     queryAllProvince($data) {
-      if (!this.beginDate) {
-        this.beginDate = "2020-03-01"
-        this.endDate = "2020-07-30"
+      if (!$data) {
+        // var getToday = this.$g.utils.getToday(-1)
+        // this.beginDate = getToday
+        // this.endDate = getToday
+        this.beginDate = '2020-01-01'
+        this.endDate = '2020-12-01'
       }
       api
         .queryAllProvince({
           beginDate: this.beginDate,
           endDate: this.endDate,
-          deviceId: $data && $data.deviceId
+          deviceId: ""
         })
         .then(res => {
-          res.object.forEach(v => {
-            provinceData.forEach(m => {
+          var result = this.$g.utils.getNestedArr(areaData, 'children');
+          res.object.forEach((v) => {
+            result.forEach(m => {
               if (v.provinceCode === m.value) {
-                v.provinceCode = m.label
-                v.provinceName = m.name
+                v.provinceName = m.label
               }
             })
+            provinceData.forEach(h => {
+              if (v.provinceName === h.label) {
+                v.name = h.name
+              }
+            })
+            v.deviceProportionPecent = this.$g.utils.AccMul(v.deviceProportion, 100)
           })
           this.mapData = res.object;
+          console.log(this.mapData)
           this.initMap();
         })
         .catch(err => {
@@ -538,8 +545,7 @@ export default {
       api
         .queryUsing({
           beginDate: $ruleForm.date[0],
-          endDate: $ruleForm.date[1],
-          deviceId: ""
+          endDate: $ruleForm.date[1]
         })
         .then(res => {
           this.deviceListData = res.object;
@@ -554,7 +560,7 @@ export default {
       const mapData = [];
       this.mapData.forEach((item, index) => {
         mapData[index] = {};
-        mapData[index].name = item.provinceName;
+        mapData[index].name = item.name;
         mapData[index].value = item.usingCount;
       });
       window.onresize = myChart.resize;
@@ -731,10 +737,12 @@ export default {
   justify-content: space-between;
   background-color: #ffffff;
   border-bottom: 1px solid #ebeef5;
+
   .chart-box {
     width: 70%;
     height: 429px;
     position: relative;
+
     .chart-panel {
       position: absolute;
       top: 0;
@@ -743,29 +751,34 @@ export default {
       left: 0;
     }
   }
+
   .data-box {
     width: 30%;
     padding: 28px 60px 0 0;
+
     .data-title {
       color: rgba(0, 0, 0, 0.85);
       line-height: 22px;
       padding-bottom: 7px;
     }
+
     .all-num {
       color: #1989fa;
     }
+
     .data-item {
       margin-top: 18px;
       display: flex;
       justify-content: space-between;
       overflow: hidden;
-      text-overflow:ellipsis;
+      text-overflow: ellipsis;
       white-space: nowrap;
-      width: 120px;
     }
+
     .data-left {
       color: rgba(0, 0, 0, 0.65);
       line-height: 22px;
+
       .index {
         display: inline-block;
         margin-right: 24px;
@@ -775,18 +788,22 @@ export default {
         line-height: 20px;
         border-radius: 50%;
       }
+
       .hightlight {
         background: rgba(24, 144, 255, 1);
         color: #ffffff;
       }
+
       .normal {
         background: #f0f2f5;
         color: rgba(0, 0, 0, 0.65);
       }
     }
+
     .data-right {
       color: rgba(0, 0, 0, 0.65);
       line-height: 22px;
+
       .perc {
         color: rgba(0, 0, 0, 0.45);
       }
