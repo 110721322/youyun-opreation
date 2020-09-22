@@ -54,7 +54,7 @@ import api from "@/api/api_login";
 // import Hamburger from './Head/index.vue'
 import Breadcrumb from "./breadcrumb.vue";
 // import Screenfull from "./Screenfull/index.vue";
-import { EventBus } from "../bus/event-bus.js";
+// import { EventBus } from "../bus/event-bus.js";
 import { mapActions } from 'vuex';
 export default {
   components: {
@@ -66,9 +66,6 @@ export default {
       userInfo: this.$store.state.admin.userInfo
     }
   },
-  created() {
-    this.setTodoList();
-  },
   computed: {
     nameLabel() {
       return this.userInfo.name || this.userInfo.jobName || this.userInfo.nickName || '无名氏'
@@ -77,14 +74,11 @@ export default {
       return this.$store.state.admin.todoList;
     }
   },
+  created() {
+    this.setTodoList();
+  },
   methods: {
     ...mapActions(['resetState', 'setTodoList']),
-    toggleSideBar() {
-      const openSlider = localStorage.getItem("openSlider");
-      // eslint-disable-next-line eqeqeq
-      localStorage.setItem("openSlider", openSlider == 1 ? 2 : 1);
-      EventBus.$emit("decreased", {});
-    },
     async logout() {
       // await this.$store.dispatch("user/logout");
       api

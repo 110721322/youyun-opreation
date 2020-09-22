@@ -963,33 +963,6 @@ export default {
       })
     },
     /**
-     * 更新服务商信息
-     */
-    updateTopAgentInfo($ruleForm) {
-      api.updateTopAgentInfo({
-        channelAgentCode: this.channelCode,
-        businessType: $ruleForm.businessType,
-        channelAgentName: $ruleForm.channelAgentName,
-        licenseImg: $ruleForm.licenseImg,
-        personName: $ruleForm.personName,
-        personMobile: $ruleForm.personMobile,
-        address: $ruleForm.address,
-        email: $ruleForm.email ? $ruleForm.email : '',
-        provinceCode: $ruleForm.provinceCode,
-        cityCode: $ruleForm.cityCode,
-        areaCode: $ruleForm.areaCode
-      }).then(res => {
-        this.$message({
-          type: 'success',
-          message: '已修改'
-        })
-        this.financeDrawer = false
-        this.drawer = false;
-        this.formType = null;
-        this.getAgentDetail();
-      })
-    },
-    /**
      * 提交设备订单
      */
     deviceOutputAdd($ruleForm) {
