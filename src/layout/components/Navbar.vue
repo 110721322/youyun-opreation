@@ -54,7 +54,7 @@ import api from "@/api/api_login";
 // import Hamburger from './Head/index.vue'
 import Breadcrumb from "./breadcrumb.vue";
 // import Screenfull from "./Screenfull/index.vue";
-import { EventBus } from "../bus/event-bus.js";
+// import { EventBus } from "../bus/event-bus.js";
 import { mapActions } from 'vuex';
 export default {
   components: {
