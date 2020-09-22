@@ -33,10 +33,10 @@ import * as g from "@/libs/global";
 export default {
   components: {},
   props: {
-    datatype: {
-      type: String,
-      default: "daterange"
-    },
+    // datatype: {
+    //   type: String,
+    //   default: "daterange"
+    // },
     ruleForm: Object,
     formItem: Object,
     pickerOptions: {
@@ -84,7 +84,8 @@ export default {
       selectItem: {
         label: "近7天",
         value: 7
-      }
+      },
+      datatype: "daterange"
     };
   },
   computed: {

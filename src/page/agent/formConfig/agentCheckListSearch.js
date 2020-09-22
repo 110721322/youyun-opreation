@@ -69,7 +69,7 @@ export const FORM_CONFIG = {
     {
       type: 1,
       label: '所属运营',
-      key: 'operateUserNo',
+      key: 'operationId',
       class: "clear_both",
       labelWidth: '80px',
       span: 11,

@@ -71,13 +71,15 @@ export default {
   mounted() {},
   methods: {
     search($form) {
+      console.log($form)
       this.params = {
         beginDate: $form.date[0],
         endDate: $form.date[1],
         personName: $form.personName ? $form.personName : null,
         personMobile: $form.personMobile ? $form.personMobile : null,
         businessType: $form.businessType ? $form.businessType : null,
-        contractStatus: $form.contractStatus ? $form.contractStatus : null
+        contractStatus: $form.contractStatus ? $form.contractStatus : null,
+        operationId: $form.operationId ? $form.operationId : null
       }
     },
     reject(row) {

@@ -29,6 +29,10 @@ export default {
   methods: {
     handleCommit($item) {
       if (!$item.account || !$item.address || !$item.agentName || !$item.businessType || !$item.personMobile || !$item.personName || !$item.companyAddress) {
+        this.$message('请完善信息')
+        return false
+      } else if (!this.$g.utils.checkPhone($item.personMobile)) {
+        this.$message('请输入正确的手机号')
         return false
       } else {
         const provinceCode = $item.companyAddress[0]
@@ -55,11 +59,6 @@ export default {
             this.$message({
               message: '添加成功',
               type: 'success'
-            })
-          } else {
-            this.$message({
-              message: res.errorMessage,
-              type: 'warning'
             })
           }
         }).catch(err => {

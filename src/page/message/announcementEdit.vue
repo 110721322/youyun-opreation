@@ -56,6 +56,8 @@ export default {
       this.fromConfigData.formData.forEach((item, index) => {
         if (item.key === "time") {
           item.initVal = []
+        } else if (item.key === "displayType") {
+          item.initVal = 0
         } else {
           item.initVal = ''
         }

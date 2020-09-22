@@ -258,6 +258,8 @@ export default {
   }
   .avatar-uploader {
     /deep/ .el-upload--picture-card {
+      width: 75px;
+      height: 75px;
       overflow: hidden;
     }
   }
