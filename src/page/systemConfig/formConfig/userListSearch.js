@@ -2,6 +2,7 @@ export const SEARCH_CONFIG = {
   formData: [
     {
       type: 9,
+      querySelectAll: true,
       timeType: 'datetimerange',
       isSelectToday: true,
       label: '筛选时间',
@@ -12,7 +13,7 @@ export const SEARCH_CONFIG = {
     {
       type: 10,
       label: '精准筛选',
-      key: '',
+      key: 'inputForm',
       labelWidth: '80px',
       span: 24,
       options: [

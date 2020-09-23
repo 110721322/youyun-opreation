@@ -2,6 +2,7 @@ import Vue from 'vue';
 import ElementUI from 'element-ui';
 import store from './store'
 import 'element-ui/lib/theme-chalk/index.css';
+import './assets/css/element-variables.scss';
 import 'babel-polyfill';
 
 import VueQrcode from '@chenfengyuan/vue-qrcode';
@@ -15,6 +16,7 @@ import './libs/directive/permission';
 import './assets/css/basic.scss';
 import './assets/css/utils.scss';
 import './assets/css/scrollBar.scss';
+import './assets/img/icon-font/iconfont.css';
 
 Vue.prototype.$EventBus = new Vue();
 

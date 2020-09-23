@@ -2,7 +2,7 @@
   <div v-if="!item.hidden" @mouseleave="leave(item)" @mouseenter="enter(item)">
     <template v-if="!(item.children && item.children.length > 0 )">
       <el-menu-item :index="item.name" popper-append-to-body class="el-menu-item" @click="onClick_item(item)">
-        <item v-if="item.meta" :icon="item.meta.icon" :title="item.meta.title" />
+        <item :icon="item.meta.icon" :title="item.meta.title" />
       </el-menu-item>
     </template>
     <div v-else>
@@ -12,7 +12,7 @@
         class="el-menu-item"
         @click="onClick_item(item)"
       >
-        <item v-if="item.meta" :icon="item.meta.icon" :title="item.meta.title" />
+        <item :icon="item.meta.icon" :title="item.meta.title" />
       </el-menu-item>
     </div>
   </div>

@@ -43,7 +43,7 @@ const routeList = [
 const computedRoleRouter = ((routes) => {
   let buttonList;
 
-  routes = utils.filterNestedArr(routes,'children','isShow');
+  routes = utils.filterNestedArr(routes,'children');
   buttonList = computedRoleBtn(routes);
 
   store.dispatch('setRoleRoutes',routes);
