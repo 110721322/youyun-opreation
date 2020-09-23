@@ -199,7 +199,7 @@ export const DETAILCONFIG = {
               {
                 name: "平台分润抽成",
                 key: "chargeFeePercent",
-                type: "pecent"
+                type: "pecent1"
               }
             ]
           },

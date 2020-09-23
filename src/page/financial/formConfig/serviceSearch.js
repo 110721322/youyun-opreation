@@ -6,7 +6,6 @@ export const SEARCH_CONFIG = {
       key: 'date',
       class: 'max-width',
       labelWidth: '100px',
-      style: 'width:294px',
       datatype: 'month',
       format: 'yyyy-MM'
     }

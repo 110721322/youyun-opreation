@@ -163,5 +163,7 @@ export default {
   // 跨平台登录
   loginWithTicket: (params) => API.GET('/common/v1/user/loginWithTicket', params),
   // 服务商管理-通过时查询运营人员
-  queryEmployeeList: () => API.GET('/operation/v1/employee/queryEmployeeList')
+  queryEmployeeList: () => API.GET('/operation/v1/employee/queryEmployeeList'),
+  // 第三方对接分页查询
+  getOpenOperatorPageList: (params) => API.GET('operation/v1/openOperator/getOpenOperatorPageList', params)
 };

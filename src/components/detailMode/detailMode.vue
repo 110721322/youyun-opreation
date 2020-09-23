@@ -39,7 +39,7 @@
                   :preview-src-list="[ruleForm[item2.key]]"
                 ></el-image>
                 <span v-if="item2.type === 'descript'" class="item-value">{{ ruleForm[item2.key] === 'all' ? '全国' : ruleForm[item2.key] === 'province' ? '省' : ruleForm[item2.key] === 'city' ? '市' : '' }}</span>
-                <span v-if="item2.type !== 'img' && item2.type !== 'descript' " class="item-value">{{ ruleForm[item2.key] }}{{ item2.type === 'pecent' ? '‰' : '' }}</span>
+                <span v-if="item2.type !== 'img' && item2.type !== 'descript' " class="item-value">{{ ruleForm[item2.key] }}{{ item2.type === 'pecent' ? '‰' : item2.type === 'pecent1' ? ' %' : '' }}</span>
               </el-form-item>
             </el-col>
           </el-row>

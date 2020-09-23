@@ -845,10 +845,10 @@ export default {
             return false
           }
           this.drawer = false;
-          $ruleForm.alipayRate = $ruleForm.wechatPayRate / 1000
-          $ruleForm.wechatPayRate = $ruleForm.wechatPayRate / 1000
-          $ruleForm.cloudPayLe1000Rate = $ruleForm.cloudPayLe1000Rate / 1000
-          $ruleForm.cloudPayGt1000Rate = $ruleForm.cloudPayGt1000Rate / 1000
+          $ruleForm.alipayRate = this.$g.utils.AccDiv($ruleForm.wechatPayRate, 1000)
+          $ruleForm.wechatPayRate = this.$g.utils.AccDiv($ruleForm.wechatPayRate, 1000)
+          $ruleForm.cloudPayLe1000Rate = this.$g.utils.AccDiv($ruleForm.cloudPayLe1000Rate, 1000)
+          $ruleForm.cloudPayGt1000Rate = this.$g.utils.AccDiv($ruleForm.cloudPayGt1000Rate, 1000)
           this.rateInfo($ruleForm);
           break;
         default:

@@ -94,10 +94,6 @@ export default {
               key: "mobile"
             },
             {
-              name: '登录密码',
-              key: 'loginPassword'
-            },
-            {
               name: "支付宝/微信费率",
               key: "alipayRatePecent"
             },
@@ -145,10 +141,6 @@ export default {
             {
               name: "手机号码",
               key: "mobile"
-            },
-            {
-              name: '登录密码',
-              key: 'loginPassword'
             }
           ]
         }

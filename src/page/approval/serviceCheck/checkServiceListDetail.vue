@@ -174,10 +174,6 @@ export default {
               key: "activeScope"
             },
             {
-              name: "服务方式",
-              key: "activeChannelType"
-            },
-            {
               name: "微信/支付宝费率",
               key: "alipayRatePecent"
             },
@@ -254,18 +250,21 @@ export default {
           if (res.object.activeScopeProvinceCode === m.value) {
             res.object.activeScopeProvinceName = m.label
           }
+          res.object.activeScope = res.object.activeScopeProvinceName + res.object.activeScopeCityName
         })
         res.object.areaAddress = res.object.provinceName + res.object.cityName + res.object.areaName
         if (res.object.cloudPayGt1000Rate) {
           res.object.cloudPayGt1000RatePecent = this.$g.utils.AccMul(res.object.cloudPayGt1000Rate, 1000) + '‰'
           res.object.cloudPayLe1000RatePecent = this.$g.utils.AccMul(res.object.cloudPayLe1000Rate, 1000) + '‰'
         }
+        if (!res.object.cloudPayGt1000Rate) {
+          res.object.cloudPayGt1000RatePecent = 0 + '‰'
+          res.object.cloudPayLe1000RatePecent = 0 + '‰'
+        }
         if (res.object.alipayRate || res.object.wechatPayRate) {
           res.object.alipayRatePecent = this.$g.utils.AccMul(res.object.alipayRate, 1000) + '‰'
           res.object.wechatPayRatePecent = this.$g.utils.AccMul(res.object.wechatPayRatePecent, 1000) + '‰'
         }
-        console.log(res.object)
-        res.object.activeScope = res.object.activeScopeProvinceName + res.object.activeScopeCityName
         this.ruleForm = res.object
         this.currentType = res.object.contractStatus
       }).catch();

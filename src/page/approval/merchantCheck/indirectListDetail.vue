@@ -382,14 +382,14 @@ export default {
           res.object.merchantTypeName = '个体工商户'
         }
         if (res.object.cloudPayLe1000Rate) {
-          res.object.cloudPayLe1000RatePecent = res.object.cloudPayLe1000Rate * 1000 + '‰'
-          res.object.cloudPayGt1000RatePecent = res.object.cloudPayGt1000Rate * 1000 + '‰'
+          res.object.cloudPayLe1000RatePecent = this.$g.utils.AccMul(res.object.cloudPayLe1000Rate, 1000) + '‰'
+          res.object.cloudPayGt1000RatePecent = this.$g.utils.AccMul(res.object.cloudPayGt1000Rate, 1000) + '‰'
         }
         if (!res.object.cloudPayLe1000Rate) {
           res.object.cloudPayGt1000RatePecent = '0‰'
           res.object.cloudPayLe1000RatePecent = '0‰'
         }
-        res.object.alipayRatePecent = res.object.alipayRate * 1000 + '‰'
+        res.object.alipayRatePecent = this.$g.utils.AccMul(res.object.alipayRate, 1000) + '‰'
         this.ruleForm = res.object
         this.currentType = res.object.status
       })

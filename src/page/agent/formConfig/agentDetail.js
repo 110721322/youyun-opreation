@@ -184,7 +184,7 @@ export const FORM_CONFIG = {
         type: 5,
         label: '服务类型',
         key: 'activeMode',
-        initVal: 'relyus',
+        initVal: '',
         options: [
           {
             label: '产品代理',
@@ -206,7 +206,7 @@ export const FORM_CONFIG = {
         placeholder: '请输入',
         rules: setRules('请输入').isSelected.get,
         isShowSlot: true,
-        showSlotName: '‰'
+        showSlotName: '%'
       }
     ]
   },

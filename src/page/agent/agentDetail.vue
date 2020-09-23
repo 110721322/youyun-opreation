@@ -534,6 +534,7 @@ export default {
         agentNo: agentNo
       }).then(res => {
         if (res.object) {
+          console.log(res.object)
           if (res.object.expandSub === 1) {
             res.object.expandSubCn = '是'
           }
@@ -551,7 +552,7 @@ export default {
             res.object.cloudPayLe1000Rate = this.$g.utils.AccMul(res.object.cloudPayLe1000Rate, 1000);
           }
           if (res.object.chargeFeePercent) {
-            res.object.chargeFeePercent = this.$g.utils.AccMul(res.object.chargeFeePercent, 1000)
+            res.object.chargeFeePercent = this.$g.utils.AccMul(res.object.chargeFeePercent, 100)
           }
           if (res.object.provinceCode) {
             var area = []
@@ -825,7 +826,6 @@ export default {
         });
         this.fromConfigData = this.$g.utils.deepClone(newFromConfigData);
         this.drawer = true;
-        console.log(this.fromConfigData)
       }
       if ($model === 'finance') {
         this.editType = 'editFincance'
@@ -870,7 +870,7 @@ export default {
     handel_confirm(row) {
       console.log(row)
       if (this.editType === 'editBasicData') {
-        if (!this.ruleForm.businessLicenseImg || !row.businessLicenseImg) {
+        if (!row.businessLicenseImg) {
           this.$message({
             message: '请填写完整信息',
             type: 'info'
@@ -883,42 +883,41 @@ export default {
             type: 'info'
           })
           return
-        } else {
-          var businessLicenseImg = ''
-          if (row.businessLicenseImg) {
-            if (this.$g.utils.isString(row.businessLicenseImg)) {
-              var img = row.businessLicenseImg.split('.com')
-              businessLicenseImg = img[1].slice(1, img[1].length)
-            } else {
-              businessLicenseImg = row.businessLicenseImg.dialogImageUrl
-            }
-          }
-          api.updateAgentBaseInfo({
-            agentNo: this.$route.query.agentNo,
-            businessType: row.businessType,
-            agentName: row.agentName,
-            personName: row.personName,
-            personMobile: row.personMobile,
-            email: row.email ? row.email : '',
-            provinceCode: row.area[0],
-            cityCode: row.area[1],
-            areaCode: row.area[2],
-            companyAddress: row.companyAddress,
-            businessLicenseImg: businessLicenseImg
-          }).then(res => {
-            if (res.status === 0) {
-              this.$message({
-                message: '基础资料更新成功',
-                type: 'success'
-              })
-              this.getDetail(this.$route.query.agentNo)
-              this.editType = ''
-              this.drawer = false
-            }
-          }).catch(err => {
-            console.log(err)
-          })
         }
+        var businessLicenseImg = ''
+        if (row.businessLicenseImg) {
+          if (this.$g.utils.isString(row.businessLicenseImg)) {
+            var img = row.businessLicenseImg.split('.com')
+            businessLicenseImg = img[1].slice(1, img[1].length)
+          } else {
+            businessLicenseImg = row.businessLicenseImg.dialogImageUrl
+          }
+        }
+        api.updateAgentBaseInfo({
+          agentNo: this.$route.query.agentNo,
+          businessType: row.businessType,
+          agentName: row.agentName,
+          personName: row.personName,
+          personMobile: row.personMobile,
+          email: row.email ? row.email : '',
+          provinceCode: row.area[0],
+          cityCode: row.area[1],
+          areaCode: row.area[2],
+          companyAddress: row.companyAddress,
+          businessLicenseImg: businessLicenseImg
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '基础资料更新成功',
+              type: 'success'
+            })
+            this.getDetail(this.$route.query.agentNo)
+            this.editType = ''
+            this.drawer = false
+          }
+        }).catch(err => {
+          console.log(err)
+        })
       }
       if (this.editType === 'editRateInfo') {
         if (!row.wechatPayRate || !row.cloudPayLe1000Rate || !row.cloudPayGt1000Rate) {
@@ -943,10 +942,10 @@ export default {
           } else {
             api.updateAgentRate({
               agentNo: this.$route.query.agentNo,
-              wechatPayRate: row.wechatPayRate / 1000,
-              alipayRate: row.wechatPayRate / 1000,
-              cloudPayLe1000Rate: row.cloudPayLe1000Rate / 1000,
-              cloudPayGt1000Rate: row.cloudPayGt1000Rate / 1000
+              wechatPayRate: this.$g.utils.AccDiv(row.wechatPayRate, 1000),
+              alipayRate: this.$g.utils.AccDiv(row.wechatPayRate, 1000),
+              cloudPayLe1000Rate: this.$g.utils.AccDiv(row.cloudPayLe1000Rate, 1000),
+              cloudPayGt1000Rate: this.$g.utils.AccDiv(row.cloudPayGt1000Rate, 1000)
             }).then(res => {
               if (res.status === 0) {
                 this.$message({
@@ -962,69 +961,60 @@ export default {
         }
       }
       if (this.editType === 'editMailAddress') {
-        if (!this.ruleForm.activeScopeCode[0] && !row.addressObj) {
+        if (!row.activeScopeCode[0]) {
           this.$message({
             message: '请选择服务范围',
             type: 'warning'
           })
           return
         }
-        if (!row.activeMode || !row.chargeFeePercent || !row.expandSub || !row.activeScopeCode) {
+        if (!row.activeMode || !row.chargeFeePercent || !row.expandSub) {
           this.$message({
             message: '请填写完整信息',
             type: 'warning'
           })
           return false
-        } else {
-          if (row.chargeFeePercent <= 0 || row.chargeFeePercent >= 100) {
-            this.$message({
-              message: '请填写完整信息',
-              type: 'warning'
-            })
-            return false
-          } else {
-            var activeScope = {}
-            if (row.addressObj && this.ruleForm.activeScopeCode[0]) {
-              activeScope = {
-                cityCode: row.addressObj[1].value,
-                cityName: row.addressObj[1].label,
-                provinceCode: row.addressObj[0].value,
-                provinceName: row.addressObj[0].label
-              }
-            }
-            if (this.ruleForm.activeScopeCode[0] && !row.addressObj) {
-              var result = this.$g.utils.getNestedArr(areaData, 'children')
-              result.forEach(m => {
-                if (m.value === this.ruleForm.activeScopeCode[0]) {
-                  activeScope.provinceCode = this.ruleForm.activeScopeCode[0]
-                  activeScope.provinceName = m.label
-                }
-                if (m.value === this.ruleForm.activeScopeCode[1]) {
-                  activeScope.cityCode = this.ruleForm.activeScopeCode[1]
-                  activeScope.cityName = m.label
-                }
-              })
-            }
-            api.updateAgentPrivilege({
-              activeMode: row.activeMode,
-              chargeFeePercent: row.chargeFeePercent / 1000,
-              expandSub: row.expandSub,
-              agentNo: this.$route.query.agentNo,
-              activeScope: activeScope
-            }).then(res => {
-              if (res.status === 0) {
-                this.$message({
-                  message: '权限编辑成功',
-                  type: 'success'
-                })
-              }
-              this.getDetail(this.$route.query.agentNo)
-              this.editType = ''
-              this.drawer = false
-            }).catch(() => {
-            })
+        }
+        var activeScope = {}
+        if (row.addressObj && row.activeScopeCode[0]) {
+          activeScope = {
+            cityCode: row.addressObj[1].value,
+            cityName: row.addressObj[1].label,
+            provinceCode: row.addressObj[0].value,
+            provinceName: row.addressObj[0].label
           }
         }
+        if (row.activeScopeCode[0] && !row.addressObj) {
+          var result = this.$g.utils.getNestedArr(areaData, 'children')
+          result.forEach(m => {
+            if (m.value === row.activeScopeCode[0]) {
+              activeScope.provinceCode = this.ruleForm.activeScopeCode[0]
+              activeScope.provinceName = m.label
+            }
+            if (m.value === row.activeScopeCode[1]) {
+              activeScope.cityCode = this.ruleForm.activeScopeCode[1]
+              activeScope.cityName = m.label
+            }
+          })
+        }
+        api.updateAgentPrivilege({
+          activeMode: row.activeMode,
+          chargeFeePercent: this.$g.utils.AccDiv(row.chargeFeePercent, 100),
+          expandSub: row.expandSub,
+          agentNo: this.$route.query.agentNo,
+          activeScope: activeScope
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '权限编辑成功',
+              type: 'success'
+            })
+          }
+          this.getDetail(this.$route.query.agentNo)
+          this.editType = ''
+          this.drawer = false
+        }).catch(() => {
+        })
       }
       if (this.editType === 'editRenew') {
         if (!row.monthCount || !row.renewValue) {

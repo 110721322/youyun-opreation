@@ -54,12 +54,8 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl",
-      params: {
-        beginDate: this.$g.utils.getToday(),
-        endDate: this.$g.utils.getToday()
-      },
-      api: api.queryByPage
+      params: {},
+      api: api.getOpenOperatorPageList
     };
   },
   mounted() {},

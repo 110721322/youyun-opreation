@@ -117,11 +117,11 @@ export default {
           }).then((res) => {
             if (res.status === 0) {
               this.$message({
-                type: "info",
+                type: "success",
                 message: "已激活"
               });
+              this.$refs.table.getData();
             }
-            this.$refs.table.getData();
           }).catch(err => {
             console.error(err);
           });

@@ -37,18 +37,16 @@ export default {
       searchConfig: SEARCH_CONFIG,
       configData: SERVICE_CONFIG,
       testData: [],
-      api: api_statistice.selectIndirectDataByPage,
       params: {
-        beginDate: '',
-        endDate: ''
-      }
+        beginDate: this.$g.utils.getToday(),
+        endDate: this.$g.utils.getToday()
+      },
+      api: api_statistice.selectIndirectDataByPage
     }
   },
+  created() {
+  },
   mounted() {
-    this.params = {
-      beginTime: this.$g.utils.getToday(),
-      endTime: this.$g.utils.getToday()
-    };
     // this.getData()
     // this.search()
   },

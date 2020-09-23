@@ -230,7 +230,7 @@ export default {
           res.object.rejectReason = '驳回原因：' + res.object.rejectReason
         }
         res.object.shopLicenseTime = res.object.shopLicenseBegDate + '至' + res.object.shopLicenseEndDate
-        res.object.alipayRatePecent = res.object.alipayRate * 1000 + '‰'
+        res.object.alipayRatePecent = this.$g.utils.AccMul(res.object.alipayRate, 1000) + '‰'
         this.ruleForm = res.object;
         this.currentType = res.object.status
       }).catch();
