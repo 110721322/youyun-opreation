@@ -17,7 +17,7 @@ export const LERISKLIST_CONFIG = {
     },
     {
       label: '所属运营',
-      prop: 'operateUserName',
+      prop: 'operationName',
       width: '150px'
     },
     {

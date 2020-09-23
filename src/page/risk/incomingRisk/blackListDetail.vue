@@ -54,9 +54,9 @@ export default {
     cancel(done) {
       done();
     },
-    search() {
+    search($ruleForm) {
       // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
+      console.log($ruleForm);
     }
   }
 };

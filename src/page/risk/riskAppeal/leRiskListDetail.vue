@@ -189,21 +189,21 @@ export default {
               key: "otherImg",
               type: "image"
             },
-            {
-              name: "商户机打指定小票照片1",
-              key: "machineTicketImg1",
-              type: "image"
-            },
-            {
-              name: "商户机打指定小票照片2",
-              key: "machineTicketImg2",
-              type: "image"
-            },
-            {
-              name: "商户机打指定小票照片3",
-              key: "machineTicketImg3",
-              type: "image"
-            },
+            // {
+            //   name: "商户机打指定小票照片1",
+            //   key: "machineTicketImg1",
+            //   type: "image"
+            // },
+            // {
+            //   name: "商户机打指定小票照片2",
+            //   key: "machineTicketImg2",
+            //   type: "image"
+            // },
+            // {
+            //   name: "商户机打指定小票照片3",
+            //   key: "machineTicketImg3",
+            //   type: "image"
+            // },
             {
               name: "视频",
               key: "video",

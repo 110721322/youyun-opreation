@@ -4,7 +4,7 @@
       <span class="title">第三方对接列表</span>
     </div>
     <Search
-        :open-height="searchMaxHeight"
+        :is-show-all="true"
         :form-base-data="searchConfig.formData"
         @search="search"
     />
