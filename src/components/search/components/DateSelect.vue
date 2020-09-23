@@ -100,7 +100,12 @@ export default {
         if (this.formItem.isSelectToday) {
           this.dateList[0].label = "今天";
         }
-
+        if (this.formItem.querySelectAll) {
+          this.timeInterval = [];
+          this.selectItem = {};
+          this.ruleForm[this.formItem.key] = this.timeInterval;
+          return;
+        }
         if (this.datatype === "datetimerange") {
           this.defaultTime = ["00:00:00", "23:59:59"];
         }
@@ -111,6 +116,12 @@ export default {
   created() {
     if (this.formItem.isSelectToday) {
       this.dateList[0].label = "今天";
+    }
+    if (this.formItem.querySelectAll) {
+      this.timeInterval = [];
+      this.selectItem = {};
+      this.ruleForm[this.formItem.key] = this.timeInterval;
+      return;
     }
     this.datatype = this.formItem.datatype || "daterange"
     if (this.datatype === "datetimerange") {

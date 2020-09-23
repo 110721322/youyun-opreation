@@ -478,10 +478,13 @@ export default {
     {
       $data = $data.filter(item => {
         item[$filterArrKey] = this.filterNestedArr(item[$filterArrKey], $filterArrKey , $isShowKey);
-
-        if(item[$isShowKey])
-        {
-          return item;
+        if ($isShowKey) {
+          if(item[$isShowKey])
+          {
+            return item;
+          }
+        } else {
+          return item
         }
       })
     }

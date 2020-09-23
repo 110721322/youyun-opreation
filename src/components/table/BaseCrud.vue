@@ -114,7 +114,7 @@
         size="medium"
         :current-page="currentPage"
         :page-sizes="[10, 20, 30, 40]"
-        :page-size="currentPageSize"
+        :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="dataTotal"
         @size-change="handleSizeChange"
@@ -181,7 +181,7 @@ export default {
       // 当前页码
       currentPage: 1,
       // 每页显示数量
-      currentPageSize: 10,
+      pageSize: 10,
       // 列表数据总数
       dataTotal: 0,
       // 表单数据
@@ -248,8 +248,9 @@ export default {
     // 获取列表数据
     getData() {
       this.listLoading = true;
+      this.queryParams = {};
       this.queryParams.currentPage = this.currentPage;
-      this.queryParams.pageSize = this.currentPageSize;
+      this.queryParams.pageSize = this.pageSize;
       Object.assign(this.queryParams, this.params);
       this.apiService(this.queryParams)
         .then(res => {
@@ -294,7 +295,7 @@ export default {
       this.getData();
     },
     handleSizeChange(size) {
-      this.currentPageSize = size;
+      this.pageSize = size;
       this.getData();
     },
     // 模态框数据提交

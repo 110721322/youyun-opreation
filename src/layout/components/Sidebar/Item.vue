@@ -17,6 +17,8 @@ export default {
     const vnodes = [];
 
     if (icon) {
+      vnodes.push(vnodes.push(<i class={"iconfont " + icon} style="margin-right: 12px;"></i>));
+    } else {
       vnodes.push(vnodes.push(<i class="el-icon-location"></i>));
     }
 

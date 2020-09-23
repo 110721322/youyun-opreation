@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-menu class="el-menu-vertical-demo" style="border-right: 0;" :default-openeds="[subMenuName]">
+    <el-menu class="el-menu-vertical-demo" style="border-right: 0;" :default-openeds="[secondName]">
       <div v-for="(item, key) of menu2Data" :key="key">
         <el-submenu v-if="item.children && item.children.length>0" :index="item.name" class="el-submenu">
           <template slot="title">
@@ -11,7 +11,7 @@
               <el-menu-item
                 v-if="childItem.isShow"
                 class="el-menu-item"
-                :class="(subMenuName === childItem.name) ? 'active' : ''"
+                :class="(thirdName === childItem.name) ? 'active' : ''"
                 :index="childItem.name"
                 @click="onClick_item(childItem)"
               >{{ childItem.text }}</el-menu-item>
@@ -23,7 +23,7 @@
           <el-menu-item
             class="el-menu-item"
             :index="item.name"
-            :class="(subMenuName === item.name) ? 'active' : ''"
+            :class="(secondName === item.name) ? 'active' : ''"
             @click="onClick_item(item)"
           >
             <span slot="title">{{ item.text }}</span>
@@ -42,23 +42,13 @@ export default {
     menu2Data: Array,
     rootPath: String
   },
-  data() {
-    return {
-      subMenuName: ""
-    };
-  },
-  watch: {
-    $route: function() {
-      this.subMenuName = this.$route.path.split("/").filter(item => item !== '')[1];
-      this.$nextTick();
+  computed: {
+    secondName() {
+      return this.$route.path.split("/").filter(item => item !== '')[1];
     },
-    menu2Data: function() {
-      this.subMenuName = this.$route.path.split("/").filter(item => item !== '')[1];
-      this.$nextTick();
+    thirdName() {
+      return this.$route.path.split("/").filter(item => item !== '')[2];
     }
-  },
-  created() {
-    this.subMenuName = this.$route.path.split("/").filter(item => item !== '')[1];
   },
   methods: {
     onClick_item($item) {
@@ -79,12 +69,17 @@ export default {
     color: #333335;
     padding-right: 0;
     &:hover {
+      color: #606266;
       background: #ECEDF1 !important;
     }
   }
   .active {
     background: #ECEDF1 !important;
-    color: #333335;
+    color: #606266;
+    &:hover {
+      background: #ECEDF1 !important;
+      color: #333335;
+    }
   }
   .el-submenu {
     /deep/ .el-submenu__title {
@@ -94,6 +89,7 @@ export default {
       font-size: 14px;
       color: #333335;
       &:hover {
+        color: #606266;
         background: #ECEDF1 !important;
       }
     }

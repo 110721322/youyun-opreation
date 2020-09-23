@@ -171,15 +171,25 @@ export default {
       }
     },
     handleClick() {
+      let validateStatus;
       this.$refs.formTep.validate(valid => {
         // 校验
         if (valid) {
           const formInfo = g.utils.deepClone(this.ruleForm);
           // 统一过滤表单
           formatFormData(formInfo, this.formKeys);
+          validateStatus = true;
+        } else {
+          validateStatus = false;
+          return false;
         }
       });
-      this.$emit("confirm", this.ruleForm, this.formKeys);
+      if (validateStatus) {
+        this.$emit("confirm", this.ruleForm, this.formKeys);
+        return this.ruleForm
+      } else {
+        return false;
+      }
     },
     resetForm() {
       // 初始化表单
