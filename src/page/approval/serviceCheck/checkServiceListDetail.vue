@@ -271,7 +271,7 @@ export default {
       }).catch();
     },
     confirm($data) {
-      if (!$data.reason) {
+      if ((!$data.reason) && (!$data.baseData)) {
         this.$message({
           message: '请选择/填写驳回理由',
           type: 'warning'

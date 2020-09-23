@@ -4,10 +4,9 @@
       <div class="tab_head">
         <span class="title">商户预审核信息</span>
         <el-menu
-            :default-active="activeIndex"
-            class="el-menu"
-            mode="horizontal"
-            @select="handleSelect"
+          :default-active="activeIndex"
+          class="el-menu"
+          mode="horizontal"
         >
           <el-menu-item v-for="(item, index) in channelStatusList" :key="index" :index="index">
             <i :class="(ruleForm.status === 'channelAudit' || ruleForm.status === 'platformAudit') ? 'dotAudit': (ruleForm.status === 'platformReject' || ruleForm.status === 'channelReject') ? 'dotReject': 'dot'"></i>
@@ -19,12 +18,12 @@
       <transition name="fade">
         <div>
           <el-alert
-              v-if="showComponents.showRejectTitle"
-              class="detail-alert"
-              :title="ruleForm.rejectReason"
-              type="info"
-              :closable="false"
-              show-icon
+            v-if="showComponents.showRejectTitle"
+            class="detail-alert"
+            :title="ruleForm.rejectReason"
+            type="info"
+            :closable="false"
+            show-icon
           ></el-alert>
           <div v-if="activeIndex" :key="activeIndex">
             <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.baseData"></detailMode>
@@ -74,7 +73,7 @@ export default {
       channelAgentCode: '',
       fromConfigData: {},
       drawer: false,
-      activeIndex: "1",
+      activeIndex: '1',
       showComponents: {
         showRejectTitle: false,
         showOperBtns: false

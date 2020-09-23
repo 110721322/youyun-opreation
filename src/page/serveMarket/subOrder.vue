@@ -56,7 +56,11 @@ export default {
   created() {
     this.comboItem = JSON.parse(localStorage.getItem('comboItem'))
     this.modelName = JSON.parse(localStorage.getItem('productItem')).productName
-    this.amount = this.comboItem.comboAmount
+    if (localStorage.getItem('amount')) {
+      this.amount = parseInt(localStorage.getItem('amount'))
+    } else {
+      this.amount = this.comboItem.comboAmount
+    }
     this.getPromoCode()
   },
   methods: {
@@ -73,6 +77,9 @@ export default {
       api.getPromoCodeListByChannelAgentCode({}).then(res => {
         if (res.object) {
           this.promoCodeList = res.object || []
+          if (localStorage.getItem('promoCodeId')) {
+            this.promoCodeId = parseInt(localStorage.getItem('promoCodeId'))
+          }
         }
       })
     },
