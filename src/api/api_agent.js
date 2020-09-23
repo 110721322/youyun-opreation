@@ -165,5 +165,11 @@ export default {
   // 服务商管理-通过时查询运营人员
   queryEmployeeList: () => API.GET('/operation/v1/employee/queryEmployeeList'),
   // 第三方对接分页查询
-  getOpenOperatorPageList: (params) => API.GET('operation/v1/openOperator/getOpenOperatorPageList', params)
+  getOpenOperatorPageList: (params) => API.GET('/operation/v1/openOperator/getOpenOperatorPageList', params),
+  // 第三方对接-冻结
+  blocking: (params) => API.GET('/operation/v1/openOperator/blocking', params),
+  // 第三方对接详情
+  getOpenOperatorDetail: (params) => API.GET('/operation/v1/openOperator/getOpenOperatorDetail', params),
+  // 第三方新增对接商
+  addOpenAgent: (params) => API.POST('/operation/v1/openOperator/addOpenAgent', params)
 };

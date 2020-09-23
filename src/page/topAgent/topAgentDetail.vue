@@ -726,7 +726,6 @@ export default {
         this.drawer = true;
       }
       this.formType = $model
-      this.drawer = true;
     },
     buyDevice($model) {
       this.drawer = true;
@@ -771,7 +770,6 @@ export default {
       this.addContactsDraw = false
     },
     confirm($ruleForm) {
-      console.log($ruleForm)
       switch (this.formType) {
         case "buyDevice":
           this.deviceOutputAdd($ruleForm)

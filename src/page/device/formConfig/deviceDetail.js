@@ -21,7 +21,7 @@ export const FORM_CONFIG = {
             classification: 1
           }
         },
-        rules: setRules('设备型号').isSelected.get
+        rules: setRules('设备类型').isSelected.get
       },
       {
         type: 0,

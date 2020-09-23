@@ -1,13 +1,6 @@
 export const SEARCH_CONFIG = {
   formData: [
     {
-      type: 9,
-      label: '筛选时间',
-      key: 'date',
-      labelWidth: '80px',
-      span: 24
-    },
-    {
       type: 10,
       label: '精准筛选',
       key: '',

@@ -96,7 +96,7 @@ export default {
       configData: SERVICEINCOMING_CONFIG,
       configData2: FORM_CONFIG,
       input: "",
-      select: "",
+      select: "1",
       fromConfigData: {
         title: "新增入件黑名单服务商"
       },
@@ -129,7 +129,7 @@ export default {
       if (!this.select) {
         this.params1 = {}
       }
-      if (this.select === 1) {
+      if (this.select === '1') {
         this.params1 = {
           agentName: this.input
         }
@@ -211,6 +211,15 @@ export default {
       this.$refs['agentTable'].$children[0].clearSelection()
     },
     onClick_addBlackList() {
+      this.select = "1"
+      this.input = ""
+      this.params1 = {
+        agentName: "",
+        agentNo: ""
+      }
+      if (this.$refs['agentTable']) {
+        this.$refs['agentTable'].$children[0].clearSelection()
+      }
       this.drawer = true;
     }
   }
