@@ -3,37 +3,41 @@
     <div class="p_head">{{ formConfigData.title }}</div>
     <Form
       ref="jopsForm"
+      is-drawer
       :form-base-data="formConfigData.formData"
       :show-foot-btn="formConfigData.showFootBtn"
       label-width="130px"
       @confirm="confirm"
     >
+      <template slot="content">
+        <div class="u-form-item">
+          <label class="s-required">权限:</label>
+          <div class="g-form-content">
+            <span style="margin-right: 16px;">{{ perfectRow.haveJurisdiction ? "已设置" : "未设置" }}</span>
+            <el-button type="text" style="font-size: 14px; padding: 0;" @click="onClick_setPower">设置</el-button>
+          </div>
+        </div>
+      <!-- 延期
+        <div class="u-form-item">
+          <label>审批:</label>
+          <div class="g-form-content">
+            <el-button type="text" style="font-size: 14px; padding: 0;" @click="onClick_setAudit">设置</el-button>
+          </div>
+        </div>
+        -->
+      </template>
     </Form>
-    <div class="u-form-item">
-      <label class="s-required">权限:</label>
-      <div class="g-form-content">
-        <span style="margin-right: 16px;">未设置</span>
-        <el-button type="text" style="font-size: 14px; padding: 0;" @click="onClick_setPower">设置</el-button>
-      </div>
-    </div>
-    <div class="u-form-item">
-      <label>审批:</label>
-      <div class="g-form-content">
-        <span style="margin-right: 16px;">未设置</span>
-        <el-button type="text" style="font-size: 14px; padding: 0;" @click="onClick_setAudit">设置</el-button>
-      </div>
-    </div>
     <el-drawer :append-to-body="true" :visible.sync="innerDrawer" :with-header="false" size="500px">
       <power-set v-if="innerDrawer" :template-list="permissionTemplate" :api-service="permissionApi" @confirm="saveUserPermission" @cancel="cancelSave"></power-set>
     </el-drawer>
+    <!--延期
     <el-drawer :append-to-body="true" :visible.sync="auditDrawer" :with-header="false" size="500px">
       <audit-set v-if="auditDrawer" :template-list="auditTemplate" :api-service="auditApi" @confirm="saveUserAudit"></audit-set>
-    </el-drawer>
+    </el-drawer>-->
   </div>
 </template>
 <script>
 import PowerSet from "./powerSet.vue";
-import auditSet from "./auditSet.vue";
 import Form from "@/components/form/index.vue";
 
 import api_memberManage from "@/api/api_memberManage.js";
@@ -44,7 +48,7 @@ import { mapState } from 'vuex';
 
 export default {
   name: "PerfectPost",
-  components: { PowerSet, Form, auditSet },
+  components: { PowerSet, Form },
   props: {
     perfectRow: {
       type: Object,
@@ -70,16 +74,17 @@ export default {
   },
   computed: {
     ...mapState({
-      positionList: state => state.system.employeeList,
-      employeeList: state => state.system.positionList
+      positionList: state => state.system.positionList,
+      employeeList: state => state.system.employeeList
     }),
     formConfigData() {
       FORM_CONFIG.editData.formData.forEach((item, index) => {
-        item.initVal = this.perfectRow[item.key];
         if (item.key === 'superiorId') {
-          item.options = this.positionList
-        } else if (item.key === 'position') {
+          item.initVal = this.perfectRow["superiorId"];
           item.options = this.employeeList
+        } else if (item.key === 'positionId') {
+          item.initVal = this.perfectRow["positionId"]
+          item.options = this.positionList
         }
       });
       if (this.$refs.jopsForm) {
@@ -88,7 +93,7 @@ export default {
       return FORM_CONFIG.editData;
     },
     employeeId() {
-      return this.perfectRow.id;
+      return this.perfectRow.employeeId;
     },
     roleId() {
       return this.perfectRow.roleId;
@@ -125,17 +130,9 @@ export default {
       })
     },
     confirm($ruleForm) {
-      console.log($ruleForm)
-      if (!$ruleForm.position || !$ruleForm.superiorId) {
-        this.$message({
-          message: '请填写必填信息',
-          type: 'warning'
-        })
-        return false;
-      }
       const formData = {
         employeeId: this.employeeId,
-        positionId: $ruleForm['position'],
+        positionId: $ruleForm['positionId'],
         superiorId: $ruleForm['superiorId']
       };
       api_memberManage.saveJobInformation(formData).then(res => {
@@ -156,6 +153,7 @@ export default {
       api_systemConfig.saveUserPermission($result).then(res => {
         if (res.status === 0) {
           this.innerDrawer = false;
+          this.$emit("refreshJobInfo")
           this.$message({
             type: 'success',
             message: '已保存'
@@ -194,7 +192,7 @@ export default {
 }
 .u-form-item {
   display: flex;
-  padding-left: 90px;
+  padding-left: 73px;
   margin-bottom: 24px;
   label {
     display: block;
@@ -208,7 +206,7 @@ export default {
     font-size: 14px;
     color: #F5222D;
   }
-  .g-form-content{
+  .g-form-content {
     width: 360px;
     padding-left: 15px;
     color: #333335;

@@ -17,7 +17,7 @@
       :on-preview="handlePictureCardPreview"
     >
       <img v-if="dialogImageUrl && !showFileList" :src="dialogImage" class="avatar" />
-      <i v-else class="el-icon-plus"></i>
+      <i v-else class="el-icon-plus s-icon"></i>
     </el-upload>
     <!-- <div v-if="maxNum">最多上传{{ maxNum }}张图片</div> -->
     <i
@@ -221,8 +221,8 @@ export default {
 <style lang="scss" scoped>
 
   .avatar-uploader {
-    max-width: 294px;
-    min-height: 148px;
+    width: 100px;
+    height: 100px;
     float: left;
     .avatar {
       width: 100%;
@@ -245,6 +245,7 @@ export default {
   }
   .el-upload i {
     position: relative;
+    top: -15px;
     overflow: hidden;
     cursor: pointer;
     border: 1px dashed #ccc;
@@ -255,8 +256,8 @@ export default {
   }
   .avatar-uploader {
     /deep/ .el-upload--picture-card {
-      width: 75px;
-      height: 75px;
+      width: 100px;
+      height: 100px;
       overflow: hidden;
     }
   }
@@ -276,39 +277,5 @@ export default {
     line-height: 178px;
     color: #8c939d;
     text-align: center;
-  }
-
-  .upload {
-    /* width: 178px; */
-
-    /* height: 89px; */
-    .avatar-uploader-icon {
-      width: 178px;
-      height: 89px;
-      font-size: 28px;
-      line-height: 89px;
-      color: #8c939d;
-      text-align: center;
-    }
-
-    .el-icon-plus::before {
-      position: absolute;
-      bottom: 2px;
-      left: 20px;
-    }
-
-    .textspan {
-      position: absolute;
-      top: 24px;
-      left: 60px;
-      color: #909399;
-    }
-
-    .avatar {
-      display: block;
-      height: 100%;
-      margin: 0 auto;
-      object-fit: cover;
-    }
   }
 </style>
