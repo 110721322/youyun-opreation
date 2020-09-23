@@ -726,7 +726,6 @@ export default {
         this.drawer = true;
       }
       this.formType = $model
-      this.drawer = true;
     },
     buyDevice($model) {
       this.drawer = true;
