@@ -44,12 +44,22 @@ export const TABLE_CONFIG = {
       {
         name: '冻结',
         emitName: 'freeze',
-        type: 'text'
+        type: 'text',
+        isShow: (item) => {
+          if (item.serviceStatus === 0) {
+            return true
+          }
+        }
       },
       {
         name: '解冻',
         emitName: 'unfreeze',
-        type: 'text'
+        type: 'text',
+        isShow: (item) => {
+          if (item.serviceStatus === 1) {
+            return true
+          }
+        }
       }
     ]
   },
