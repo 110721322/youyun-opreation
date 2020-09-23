@@ -1,4 +1,4 @@
-import { setRules } from '@/libs/kit/formFns.js'
+import { validPhone, validEmail } from "@/libs/kit/validate";
 import store from "@/store";
 
 export const FORM_CONFIG = {
@@ -11,22 +11,27 @@ export const FORM_CONFIG = {
         label: "头像",
         key: "img",
         initVal: "",
-        maxNum: 1,
-        rules: setRules("头像").isRequired.get
+        rules: [
+          {required: true, message: '请上传图片', trigger: 'change'}
+        ]
       },
       {
         type: 0,
         label: "花名",
         key: "jobName",
         initVal: "",
-        rules: setRules("花名").isRequired.get
+        rules: [
+          {required: true, message: '请输入花名', trigger: 'blur'}
+        ]
       },
       {
         type: 0,
         label: "姓名",
         key: "name",
         initVal: "",
-        rules: setRules("姓名").isRequired.get
+        rules: [
+          {required: true, message: '请输入姓名', trigger: 'blur'}
+        ]
       },
       {
         type: 5,
@@ -43,7 +48,9 @@ export const FORM_CONFIG = {
             value: 0
           }
         ],
-        rules: setRules("性别", 1).isRequired.get
+        rules: [
+          {required: true, message: '请选择性别', trigger: 'blur'}
+        ]
       },
       {
         type: 1,
@@ -57,36 +64,68 @@ export const FORM_CONFIG = {
         label: "直属上级",
         key: "superiorId",
         initVal: [],
-        options: store.state.system.employeeList
+        options: store.state.system.employeeList,
+        rules: [
+          {required: true, message: '请选择直属上级', trigger: 'blur'}
+        ]
       },
       {
         type: 0,
         label: "手机号",
         key: "phone",
-        initVal: "pdd",
-        rules: setRules("姓名").isRequired.get
+        initVal: "",
+        rules: [
+          {required: true, message: '请输入手机号', trigger: 'blur'},
+          {
+            validator: (rule, value, callback) => {
+              if (!validPhone(value)) {
+                callback(new Error("请输入正确的手机号"))
+              } else {
+                callback();
+              }
+            },
+            trigger: "blur"
+          }
+        ]
       },
       {
         type: 0,
         label: "工号",
         key: "jobNumber",
-        initVal: "pdd",
-        rules: setRules("姓名").isRequired.get
+        initVal: "",
+        rules: [
+          {required: true, message: '请输入工号', trigger: 'blur'}
+        ]
       },
       {
         type: 11,
         label: "生日",
         key: "birthday",
         format: "yyyy-MM-dd",
-        initVal: null,
-        dateType: "date"
+        initVal: "",
+        dateType: "date",
+        rules: [
+          {required: true, message: '请选择生日', trigger: 'blur'}
+        ]
       },
       {
         type: 0,
         label: "邮箱",
         key: "email",
-        initVal: "pdd",
-        rules: setRules("姓名").isRequired.get
+        initVal: "",
+        rules: [
+          {required: true, message: '请输入邮箱', trigger: 'blur'},
+          {
+            validator: (rule, value, callback) => {
+              if (!validEmail(value)) {
+                callback(new Error("请输入正确的邮箱"))
+              } else {
+                callback();
+              }
+            },
+            trigger: "blur"
+          }
+        ]
       }
     ]
   }

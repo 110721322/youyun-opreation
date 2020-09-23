@@ -15,7 +15,7 @@
         <slot name="btn"></slot>
         <template v-for="formItem in formBaseData">
           <el-form-item
-            v-if="formItem.isShow?formItem.isShow(ruleForm):true"
+            v-if="isShow(formItem)"
             :key="formItem.key"
             class="formTemplate-item"
             :prop="formItem.key"
@@ -26,6 +26,7 @@
             <span v-if="formItem.tip" style="font-size: 12px;color: #909399;">{{ formItem.tip }}</span>
           </el-form-item>
         </template>
+        <slot name="content"></slot>
       </el-form>
     </div>
     <div v-if="showFootBtn" :class="[isDrawer?'foot_btn_box_drawer':'foot_btn_box']">
@@ -149,6 +150,15 @@ export default {
     this.init();
   },
   methods: {
+    isShow($formItem) {
+      if (this.$g.utils.isFunction($formItem.isShow)) {
+        return $formItem.isShow(this.ruleForm)
+      } else if (this.$g.utils.isBoolean($formItem.isShow)) {
+        return $formItem.isShow
+      } else {
+        return true
+      }
+    },
     init() {
       // 初始化 绑定初始值
       this.ruleForm = {}

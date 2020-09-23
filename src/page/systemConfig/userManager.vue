@@ -13,10 +13,11 @@
 
     <div class="table_box">
       <div class="tabale_title_box">
-        <el-button class="btn" type="primary" @click="add_job">职位管理</el-button>
         <el-button class="btn" @click="onClick_showOrganization">组织架构</el-button>
+        <el-button class="btn" type="primary" @click="add_job">职位管理</el-button>
       </div>
       <BaseCrud
+        ref="customerTable"
         :params="params"
         :api-service="api"
         :grid-config="configData.gridConfig"
@@ -33,7 +34,7 @@
         :hide-edit-area="configData.hideEditArea"
         @perfect="onClick_perfect"
         @editBasics="onClick_editBasics"
-        @editPost="onClick_editPost"
+        @editPost="onClick_perfect"
       ></BaseCrud>
     </div>
 
@@ -45,7 +46,7 @@
           :form-base-data="fromConfigData.formData"
           :show-foot-btn="fromConfigData.showFootBtn"
           label-width="130px"
-          :isDrawer= true
+          :is-drawer="true"
           @cancel="cancel"
           @confirm="confirm"
         ></Form>
@@ -60,26 +61,26 @@
       </div>
       <div style="padding: 0 24px;">
         <BaseCrud
-            ref="jobTable"
-            :params="jobParams"
-            :api-service="apiJob"
-            :grid-config="jobconfigData.gridConfig"
-            :grid-btn-config="jobconfigData.gridBtnConfig"
-            :form-config="jobconfigData.formConfig"
-            :form-data="jobconfigData.formModel"
-            :grid-edit-width="150"
-            :is-async="true"
-            :is-select="false"
-            :is-expand="false"
-            :default-expand-all="false"
-            @rowEdit="edit_job"
-            @deleteJob="delete_job"
-            @okEdit="ok_edit"
+          ref="jobTable"
+          :params="jobParams"
+          :api-service="apiJob"
+          :grid-config="jobconfigData.gridConfig"
+          :grid-btn-config="jobconfigData.gridBtnConfig"
+          :form-config="jobconfigData.formConfig"
+          :form-data="jobconfigData.formModel"
+          :grid-edit-width="150"
+          :is-async="true"
+          :is-select="false"
+          :is-expand="false"
+          :default-expand-all="false"
+          @rowEdit="edit_job"
+          @deleteJob="delete_job"
+          @okEdit="ok_edit"
         ></BaseCrud>
       </div>
     </el-drawer>
     <el-drawer :visible.sync="drawerPersonInfo" :with-header="false" size="500px">
-      <PerfectPost v-if="drawerPersonInfo" :perfect-row="perfectRow" @confirm="confirmPerfectPost" @cancel="cancelPerfectPost"></PerfectPost>
+      <PerfectPost v-if="drawerPersonInfo" :perfect-row="perfectRow" @confirm="confirmPerfectPost" @cancel="cancelPerfectPost" @refreshJobInfo="onClick_perfect"></PerfectPost>
     </el-drawer>
     <el-drawer :visible.sync="drawerOrganization" :with-header="false" size="500px">
       <div class="p_head">组织架构</div>
@@ -138,9 +139,7 @@ export default {
         label: "label"
       },
       params: {
-        state: 0,
-        startTime: this.$g.utils.getToday(0) + ' 00:00:00',
-        endTime: this.$g.utils.getToday(0) + ' 23:59:59'
+        state: 0
       },
       jobParams: {},
       api: api.queryEmployeeList,
@@ -155,19 +154,30 @@ export default {
   },
   mounted() {},
   methods: {
+    getTableData() {
+      api
+        .queryAllFormFieldsByType({
+          type: "employee_edit"
+        })
+        .then(res => {
+          this.tableData = res.object;
+          this.cloneTableData = this.$g.utils.deepClone(res.object);
+        })
+        .catch();
+    },
     cancelForm() {
       this.drawerOrganization = false;
     },
     search($ruleForm) {
       this.params = {
-        sex: $ruleForm.sex,
-        position: $ruleForm.position,
-        superiorName: $ruleForm.superiorName,
+        sex: $ruleForm.inputFormVal ? "" : $ruleForm.sex,
+        position: $ruleForm.inputFormVal ? "" : $ruleForm.position,
+        superiorName: $ruleForm.inputFormVal ? "" : $ruleForm.superiorName,
         state: 0,
-        startTime: $ruleForm.date[0] + ' 00:00:00',
-        endTime: $ruleForm.date[1] + ' 23:59:59'
+        startTime: ($ruleForm.inputFormVal || $ruleForm.date.length === 0) ? "" : $ruleForm.date[0] + ' 00:00:00',
+        endTime: ($ruleForm.inputFormVal || $ruleForm.date.length === 0) ? "" : $ruleForm.date[1] + ' 23:59:59',
+        [$ruleForm.inputForm]: $ruleForm.inputFormVal
       };
-      this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
     },
     selectionChange($val) {
       // eslint-disable-next-line no-console
@@ -183,7 +193,7 @@ export default {
           email: $ruleForm.email,
           sex: $ruleForm.sex,
           jobName: $ruleForm.jobName,
-          img: $ruleForm.img.dialogImageUrl,
+          img: $ruleForm.img,
           jobNumber: $ruleForm.jobNumber,
           birthday: $ruleForm.birthday,
           position: $ruleForm.position,
@@ -191,6 +201,7 @@ export default {
         })
         .then(res => {
           this.drawer = false;
+          this.$refs.customerTable.getData();
           this.$message("已保存");
         })
         .catch(err => {
@@ -201,12 +212,16 @@ export default {
       this.drawer = false;
     },
     onClick_perfect($row) {
+      if (!$row) {
+        $row = this.activityRow
+      }
       api
-        .employeeDetail({
+        .jobInformation({
           id: $row.id
         })
         .then(res => {
           this.perfectRow = res.object;
+          this.perfectRow.roleId = $row.roleId;
           this.activityRow = $row;
           this.drawerPersonInfo = true;
         })
@@ -344,6 +359,7 @@ export default {
       })
     },
     confirmPerfectPost() {
+      this.$refs.customerTable.getData()
       this.drawerPersonInfo = false;
     },
     cancelPerfectPost() {
@@ -411,14 +427,19 @@ export default {
 }
 
 .tabale_title_box {
-  height: 52px;
+  height: 32px;
   width: 100%;
   display: flex;
   justify-content: flex-end;
   margin-bottom: 24px;
   .btn {
-    margin-right: 24px;
-    padding: 6px 18px;
+    margin-left: 0;
+    height: 32px;
+    margin-right: 12px;
+    padding: 6px 24px;
+  }
+  .btn:last-child {
+    margin-right: 0;
   }
 }
 .foot_btn_box {

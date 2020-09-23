@@ -15,7 +15,7 @@ export const FORM_CONFIG = {
       {
         type: 1,
         label: "职位",
-        key: "position",
+        key: "positionId",
         initVal: ""
       }
     ]
