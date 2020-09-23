@@ -68,10 +68,10 @@ export default {
             name: "登陆账号",
             key: "loginAccount"
           },
-          {
-            name: "登陆密码",
-            key: "password"
-          },
+          // {
+          //   name: "登陆密码",
+          //   key: "password"
+          // },
           {
             name: "地址",
             key: "address"

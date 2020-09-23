@@ -222,7 +222,7 @@ export default {
 
   .avatar-uploader {
     max-width: 294px;
-    min-height: 148px;
+    min-height: 75px;
     float: left;
     .avatar {
       width: 100%;
@@ -247,7 +247,7 @@ export default {
     position: relative;
     overflow: hidden;
     cursor: pointer;
-    border: 1px dashed #ccc;
+    // border: 1px dashed #ccc;
     border-radius: 6px;
   }
   .avatar-uploader .el-upload i:hover {
@@ -257,6 +257,7 @@ export default {
     /deep/ .el-upload--picture-card {
       width: 75px;
       height: 75px;
+      line-height: 94px;
       overflow: hidden;
     }
   }
