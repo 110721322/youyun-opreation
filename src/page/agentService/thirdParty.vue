@@ -4,7 +4,7 @@
       <span class="title">第三方对接列表</span>
     </div>
     <Search
-        :open-height="searchMaxHeight"
+        :is-show-all="true"
         :form-base-data="searchConfig.formData"
         @search="search"
     />
@@ -74,44 +74,38 @@ export default {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认解冻",
         cancelButtonText: "取消"
-      })
-        .then(() => {
-          api
-            .updateOfUnFrozen({
-              id: row.id
-            })
-            .then(res => {
-              this.$message({
-                type: "info",
-                message: "已解冻"
-              });
+      }).then(() => {
+        api.blocking({
+          id: row.id
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              type: "success",
+              message: "已解冻"
             });
-        })
-        .catch(() => {});
+            this.$refs.table.getData()
+          }
+        });
+      }).catch(() => {});
     },
     handleFreeze(row) {
-      this.$confirm("是否要冻结该代理商？", "冻结代理商", {
+      this.$confirm("是否要冻结该代理商？冻结后不能添加新设备", "冻结代理商", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认冻结",
         cancelButtonText: "取消"
-      })
-        .then(() => {
-          api
-            .updateOfFrozen({
-              id: row.id
-            })
-            .then(res => {
-              this.$message({
-                type: "info",
-                message: "已冻结"
-              });
+      }).then(() => {
+        api.blocking({
+          id: row.id
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              type: "success",
+              message: "已冻结"
             });
-        })
-        .catch(() => {});
-    },
-    selectionChange($val) {
-      // eslint-disable-next-line no-console
-      console.log($val);
+            this.$refs.table.getData()
+          }
+        });
+      }).catch(() => {});
     },
     handleDetail($row) {
       this.$router.push({

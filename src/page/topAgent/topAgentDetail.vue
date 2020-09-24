@@ -770,7 +770,6 @@ export default {
       this.addContactsDraw = false
     },
     confirm($ruleForm) {
-      console.log($ruleForm)
       switch (this.formType) {
         case "buyDevice":
           this.deviceOutputAdd($ruleForm)

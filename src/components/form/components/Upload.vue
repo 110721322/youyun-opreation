@@ -12,12 +12,12 @@
       :before-remove="beforeRemove"
       :on-remove="onRemove"
       :http-request="upLoad"
-      :limit="maxNum"
+      :limit="showFileList ? maxNum : ''"
       :on-exceed="fileOver"
       :on-preview="handlePictureCardPreview"
     >
-      <img v-if="dialogImageUrl && !showFileList" :src="dialogImagePath + dialogImageUrl" class="avatar" />
-      <i v-else class="el-icon-plus"></i>
+      <img v-if="dialogImageUrl && !showFileList" :src="dialogImage" class="avatar" />
+      <i v-else class="el-icon-plus s-icon"></i>
     </el-upload>
     <!-- <div v-if="maxNum">最多上传{{ maxNum }}张图片</div> -->
     <i
@@ -51,7 +51,7 @@ export default {
       urlData: {
         type: 'common' || 'excel'
       },
-      maxNum: null
+      maxNum: 1
     };
   },
   computed: {
@@ -77,9 +77,7 @@ export default {
     /** 监听图片列表变化拼接url字符串 **/
     dialogImageList() {
       this.dialogImageUrl = this.dialogImageList.join(',');
-      this.ruleForm[this.formItem.key] = {
-        dialogImageUrl: this.dialogImageUrl
-      };
+      this.ruleForm[this.formItem.key] = this.dialogImageUrl
     }
   },
   created() {
@@ -92,8 +90,7 @@ export default {
   mounted() {},
   methods: {
     fileOver(files, fileList) {
-      console.log(1111, files, fileList)
-      if (fileList.length >= this.maxNum) {
+      if (fileList.length > this.maxNum) {
         this.$message(`最多上传${this.maxNum}张图片`)
       }
     },
@@ -106,11 +103,14 @@ export default {
           this.imageList = this.formItem.initVal.split(',');
           this.dialogImageList = this.formItem.initVal.split(',');
           this.dialogImageList = this.dialogImageList.map(item => {
-            return item.split('aliyuncs.com/')[1] // 修改图片时去掉阿里云根路径
+            return item.split('.com/')[1] // 修改图片时去掉阿里云根路径
           })
+          this.ruleForm[this.formItem.key] = this.dialogImageList.join(",");
         } else {
-          this.dialogImagePath = "";
-          this.dialogImageUrl = this.formItem.initVal;
+          const imageSplit = this.formItem.initVal.split(".com/");
+          this.dialogImagePath = imageSplit[0] + ".com/";
+          this.dialogImageUrl = imageSplit[1];
+          this.ruleForm[this.formItem.key] = this.dialogImageUrl
         }
       } else {
         this.dialogImageUrl = "";
@@ -184,18 +184,15 @@ export default {
     },
     /** 单图上传回调 */
     uploadSingle() {
-      this.dialogImageUrl =
-          this.ossData.objectKeyPrefix + "/" + this.ossData.objectKeys[0];
-      this.ruleForm[this.formItem.key] = {
-        dialogImageUrl: this.dialogImageUrl,
-        dialogImagePath: this.dialogImagePath
-      };
+      this.dialogImageUrl = this.ossData.objectKeyPrefix + "/" + this.ossData.objectKeys[0];
+      this.ruleForm[this.formItem.key] = this.dialogImageUrl;
     },
     /** 多图上传回调 */
     uploadMultiple() {
       const imageUrl = this.ossData.objectKeyPrefix + "/" + this.ossData.objectKeys[0];
       this.dialogImageList.push(imageUrl);
-      this.imageList.push(this.dialogImagePath + imageUrl)
+      this.imageList.push(this.dialogImagePath + imageUrl);
+      this.ruleForm[this.formItem.key] = this.dialogImageList.join(",");
     },
     beforeRemove() {
       return this.$confirm("确认删除该广告图片吗", "提示", {
@@ -224,8 +221,8 @@ export default {
 <style lang="scss" scoped>
 
   .avatar-uploader {
-    max-width: 294px;
-    min-height: 75px;
+    width: 100px;
+    height: 100px;
     float: left;
     .avatar {
       width: 100%;
@@ -248,6 +245,7 @@ export default {
   }
   .el-upload i {
     position: relative;
+    top: -15px;
     overflow: hidden;
     cursor: pointer;
     // border: 1px dashed #ccc;
@@ -258,9 +256,8 @@ export default {
   }
   .avatar-uploader {
     /deep/ .el-upload--picture-card {
-      width: 75px;
-      height: 75px;
-      line-height: 94px;
+      width: 100px;
+      height: 100px;
       overflow: hidden;
     }
   }
@@ -280,39 +277,5 @@ export default {
     line-height: 178px;
     color: #8c939d;
     text-align: center;
-  }
-
-  .upload {
-    /* width: 178px; */
-
-    /* height: 89px; */
-    .avatar-uploader-icon {
-      width: 178px;
-      height: 89px;
-      font-size: 28px;
-      line-height: 89px;
-      color: #8c939d;
-      text-align: center;
-    }
-
-    .el-icon-plus::before {
-      position: absolute;
-      bottom: 2px;
-      left: 20px;
-    }
-
-    .textspan {
-      position: absolute;
-      top: 24px;
-      left: 60px;
-      color: #909399;
-    }
-
-    .avatar {
-      display: block;
-      height: 100%;
-      margin: 0 auto;
-      object-fit: cover;
-    }
   }
 </style>

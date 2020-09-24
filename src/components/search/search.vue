@@ -190,10 +190,13 @@ export default {
       // 初始化表单
       this.isRest = true;
       setTimeout(() => {
-        this.isRest = false;
       }, 500);
-      this.$refs.formTep.resetFields();
-      this.$emit("reset", this.ruleForm);
+      this.$nextTick(() => {
+        this.isRest = false;
+        this.$refs.formTep.resetFields();
+        this.$emit("reset", this.ruleForm);
+        this.$emit("search", this.ruleForm);
+      })
     },
     transType(value) {
       // 获取表单项类型

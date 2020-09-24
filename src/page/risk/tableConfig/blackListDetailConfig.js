@@ -34,11 +34,11 @@ export const TABLE_CONFIG = {
     },
     {
       label: '加入人员',
-      prop: 'operateUserName',
+      prop: 'operationName',
       width: '150px'
     },
     {
-      label: '加入时间',
+      label: '加入黑名单时间',
       prop: 'banCreateTime',
       width: '150px'
     },

@@ -1883,11 +1883,11 @@ const getRouters = function () {
 const generateRoutes = function (children, item) {
   if (item.name) {
     const page = asyncRoutes[item.name];
-    page.meta.title = item.text;
     if (item.children && item.children.length > 0) {
       page.meta.noRedirect = true
     }
     if (page) {
+      page.meta.title = item.text;
       const childRoutes = utils.getNestedArr(page.children, 'children');
       page.children = []
       children.push(page)

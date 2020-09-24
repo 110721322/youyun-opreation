@@ -202,7 +202,7 @@ export default {
 <style lang="scss" scoped>
 .content_drawer {
   height: calc(100vh - 172px);
-  overflow: auto;
+  /*overflow: auto;*/
 }
 .foot_btn_box {
   width: 500px;
@@ -234,8 +234,8 @@ export default {
 }
 .m-tree-container{
   width: 100%;
-  height: auto;
-  overflow-y: scroll;
+  height: calc(100vh - 320px);
+  overflow-y: auto;
 }
 .trre_icon {
   width: 16px;

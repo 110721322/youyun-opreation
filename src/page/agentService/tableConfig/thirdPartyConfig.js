@@ -7,22 +7,22 @@ export const TABLE_CONFIG = {
     },
     {
       label: '对接商名称',
-      prop: 'accessMerchantName',
+      prop: 'name',
       width: '100px'
     },
     {
       label: '对接秘钥',
-      prop: 'openSecret',
+      prop: 'appsecret',
       width: '180px'
     },
     {
       label: '对接设备开头编码',
-      prop: 'deviceSecret',
+      prop: 'dockingDeviceId',
       width: '150px'
     },
     {
       label: '状态',
-      prop: 'status',
+      prop: 'serviceStatusMsg',
       width: '130px'
     }
   ],
@@ -44,12 +44,22 @@ export const TABLE_CONFIG = {
       {
         name: '冻结',
         emitName: 'freeze',
-        type: 'text'
+        type: 'text',
+        isShow: (item) => {
+          if (item.serviceStatus === 0) {
+            return true
+          }
+        }
       },
       {
         name: '解冻',
         emitName: 'unfreeze',
-        type: 'text'
+        type: 'text',
+        isShow: (item) => {
+          if (item.serviceStatus === 1) {
+            return true
+          }
+        }
       }
     ]
   },

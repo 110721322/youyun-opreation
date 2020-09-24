@@ -38,6 +38,7 @@
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
+        v-if="drawer"
         ref="memberEdit"
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
@@ -118,10 +119,10 @@ export default {
       this.params = {
         sex: $ruleForm.sex,
         state: null,
-        startTime: $ruleForm.date[0] + ' 00:00:00',
-        endTime: $ruleForm.date[1] + ' 23:59:59'
+        startTime: ($ruleForm.inputFormVal || $ruleForm.date.length === 0) ? "" : $ruleForm.date[0] + ' 00:00:00',
+        endTime: ($ruleForm.inputFormVal || $ruleForm.date.length === 0) ? "" : $ruleForm.date[1] + ' 23:59:59',
+        [$ruleForm.inputForm]: $ruleForm.inputFormVal
       };
-      this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
     },
     onClick_addUser() {
       this.drawerAddPhone = true;
@@ -146,7 +147,7 @@ export default {
         }
       }
       api.addMember({
-        phoneList: this.addPhoneList
+        phoneList: this.addPhoneList.filter(item => item !== "")
       }).then(res => {
         if (res.status === 0) {
           this.addPhoneList = [""];
@@ -166,61 +167,18 @@ export default {
       this.drawer = false;
     },
     confirm($ruleForm) {
-      var img = ''
-      if (!$ruleForm.img) {
-        this.$message('请上传头像');
-        return;
-      }
-      if ($ruleForm.img) {
-        if (this.$g.utils.isString($ruleForm.img)) {
-          var img1 = $ruleForm.img.split('.com')
-          img = img1[1].slice(1, img1[1].length)
-        } else {
-          img = $ruleForm.img.dialogImageUrl
-        }
-      }
-      if (!$ruleForm.jobName) {
-        this.$message('请输入花名');
-        return;
-      }
-      if (!$ruleForm.name) {
-        this.$message('请输入姓名');
-        return;
-      }
-      if ($ruleForm.sex !== 0 && $ruleForm.sex !== 1) {
-        this.$message('请选择性别');
-        return;
-      }
-      if (!$ruleForm.phone) {
-        this.$message('请输入手机号');
-        return;
-      }
-      if (!$ruleForm.jobNumber) {
-        this.$message('请输入工号');
-        return;
-      }
-      if (!$ruleForm.birthday) {
-        this.$message('请选择生日');
-        return;
-      }
-      if (!$ruleForm.email) {
-        this.$message('请输入邮箱');
-        return;
-      }
       api
         .fillUserInfo({
           id: this.activityRow.id,
           system: "operation",
           name: $ruleForm.name,
           phone: $ruleForm.phone,
-          password: $ruleForm.password,
           email: $ruleForm.email,
           sex: $ruleForm.sex,
           jobName: $ruleForm.jobName,
-          img: img,
+          img: $ruleForm.img,
           jobNumber: $ruleForm.jobNumber,
-          birthday: $ruleForm.birthday,
-          nickName: $ruleForm.nickName
+          birthday: $ruleForm.birthday
         })
         .then(res => {
           if (res.status === 0) {
