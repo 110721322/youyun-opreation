@@ -108,6 +108,10 @@
     </el-table>
     <!--crud的分页组件-->
     <div class="crud-pagination">
+      <div>
+        <el-checkbox v-if="isSelect" v-model="checkAll" :indeterminate="isIndeterminate" @change="toggleSelection">全选</el-checkbox>
+        <slot name="paginationLeft"></slot>
+      </div>
       <!--如果不是异步请求展示数据，需要隐藏分页-->
       <el-pagination
         v-if="isAsync"
@@ -188,7 +192,9 @@ export default {
       formModel: {},
       //  表格加载状态
       listLoading: false,
-      queryParams: {}
+      queryParams: {},
+      checkAll: false,
+      isIndeterminate: false
     };
   },
   computed: {
@@ -214,6 +220,17 @@ export default {
     }
   },
   methods: {
+    toggleSelection() {
+      const refName = this.refName ? this.refName : 'table'
+      if (this.multipleSelection.length === this.showGridData.length) {
+        this.$refs[refName].clearSelection();
+      } else {
+        this.$refs[refName].clearSelection();
+        this.showGridData.forEach(row => {
+          this.$refs[refName].toggleRowSelection(row);
+        });
+      }
+    },
     onClick_handleToggle($row, $item) {
       if (this.$refs[this.refName]) {
         this.$emit($item.emitName, $row, this.$refs[this.refName]);
@@ -348,6 +365,9 @@ export default {
   }
 
   .crud-pagination {
+    display: flex;
+    padding-left: 14px;
+    justify-content: space-between;
     text-align: right;
     margin-top: 25px;
   }

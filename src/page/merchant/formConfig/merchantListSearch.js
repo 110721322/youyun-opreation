@@ -8,7 +8,7 @@ export const FORM_CONFIG = {
       label: '筛选时间',
       key: 'date',
       labelWidth: '80px',
-      span: 24,
+      span: 22,
       isSelectToday: true
     },
     {
@@ -38,14 +38,14 @@ export const FORM_CONFIG = {
           value: 'newlandMerchantNo'
         }
       ],
-      labelWidth: '80px',
-      span: 24
+      labelWidth: '110px',
+      span: 22
     },
     {
       type: 1,
       label: '使用通道',
       key: 'channelCode',
-      labelWidth: '80px',
+      labelWidth: '110px',
       span: 11,
       options: [
         {
@@ -66,7 +66,7 @@ export const FORM_CONFIG = {
       type: 8,
       label: '地区',
       key: 'address',
-      labelWidth: '80px',
+      labelWidth: '110px',
       span: 11,
       options: areaData
     },
@@ -74,7 +74,7 @@ export const FORM_CONFIG = {
       type: 8,
       label: '开通通道详情',
       key: 'channelStatus',
-      labelWidth: '120px',
+      labelWidth: '110px',
       span: 11,
       options: [
         {
@@ -107,7 +107,7 @@ export const FORM_CONFIG = {
       type: 1,
       label: '所属运营',
       key: 'operationId',
-      labelWidth: '80px',
+      labelWidth: '110px',
       span: 11,
       urlOptions: {
         url: apiAgent.queryAllOperation,

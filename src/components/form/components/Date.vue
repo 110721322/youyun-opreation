@@ -3,7 +3,7 @@
     <el-date-picker
       v-model="timeInterval"
       style="float: left;"
-      size="large"
+      size="small"
       :type="type"
       range-separator="至"
       start-placeholder="开始日期"

@@ -82,41 +82,41 @@ export const DETAILCONFIG = {
             ]
           }
         ]
+      },
+      {
+        name: "邮寄地址",
+        modelName: "address",
+        models: [
+          {
+            items: [
+              {
+                name: "收件人",
+                key: "personName"
+              },
+              {
+                name: "详细地址",
+                key: "detailAddress"
+              }
+            ]
+          },
+          {
+            items: [
+              {
+                name: "手机号",
+                key: "personMobile"
+              }
+            ]
+          },
+          {
+            items: [
+              {
+                name: "地区",
+                key: "name3"
+              }
+            ]
+          }
+        ]
       }
-      // {
-      //   name: "邮寄地址",
-      //   modelName: "address",
-      //   models: [
-      //     {
-      //       items: [
-      //         {
-      //           name: "收件人",
-      //           key: "personName"
-      //         },
-      //         {
-      //           name: "详细地址",
-      //           key: "detailAddress"
-      //         }
-      //       ]
-      //     },
-      //     {
-      //       items: [
-      //         {
-      //           name: "手机号",
-      //           key: "personMobile"
-      //         }
-      //       ]
-      //     },
-      //     {
-      //       items: [
-      //         {
-      //           name: "地区",
-      //           key: "name3"
-      //         }
-      //       ]
-      //     }
-      //   ]
-      // }
     ]
   },
   configData2: {

@@ -10,7 +10,7 @@ export const SEARCH_CONFIG = {
       format: "yyyy-MM-dd HH:mm:ss",
       datatype: "datetimerange",
       labelWidth: '80px',
-      span: 24
+      span: 22
     },
     {
       type: 10,
@@ -32,7 +32,7 @@ export const SEARCH_CONFIG = {
         }
       ],
       labelWidth: '80px',
-      span: 24
+      span: 22
     },
     {
       type: 16,
@@ -40,7 +40,7 @@ export const SEARCH_CONFIG = {
       label1: '所属模块',
       label2: '所属分类',
       labelWidth: 'auto',
-      span: 24,
+      span: 22,
       key1: 'firstId',
       key2: 'secondId',
       urlOptions1: {

@@ -7,7 +7,7 @@ export const FORM_CONFIG = {
       key: 'date',
       class: 'max-width',
       labelWidth: '80px',
-      span: 24
+      span: 22
     },
     // {
     //   type: 0,
@@ -21,7 +21,7 @@ export const FORM_CONFIG = {
       label: '优惠码名称',
       hiddenSelect: true,
       labelWidth: '80px',
-      span: 24,
+      span: 22,
       placeholder: '请输入优惠码名称',
       // valueKey: 'id',
       options: [

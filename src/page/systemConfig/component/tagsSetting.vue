@@ -399,7 +399,7 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-content: center;
-  padding: 24px 0;
+  padding: 16px 0;
   margin-top: 24px;
   .form_box {
     margin: 0 59px;

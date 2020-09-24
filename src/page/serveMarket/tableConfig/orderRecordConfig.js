@@ -4,10 +4,10 @@ export const ORDER_RECORD_CONFIG = {
   gridConfig: [
     {
       label: "序号",
-      prop: "rank",
+      prop: "index",
       width: "72px",
-      render: (h, params) => {
-        return h('span', params.index + 1);
+      formatter($row, $index) {
+        return $index + 1;
       }
     },
     {

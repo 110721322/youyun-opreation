@@ -473,12 +473,24 @@ legend {
 
   .el-menu {
     margin-left: 12px;
+    /deep/ .is-active{
+      color: #1989FA!important;
+    }
+  }
+  .el-menu--horizontal{
+    /deep/ .is-active{
+      color: #1989FA!important;
+    }
   }
 
   .el-menu-item {
     height: 40px;
     line-height: 40px;
+    font-size: 16px;
   }
+}
+/deep/.el-tabs__item{
+  font-size: 16px;
 }
 
 .input-with-select .el-input-group__prepend {

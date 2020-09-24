@@ -3,7 +3,7 @@
     <el-date-picker
       v-model="timeInterval"
       style="float: left;width:294px;"
-      size="large"
+      size="small"
       type="datetime"
       :placeholder="placeholder"
       :clearable="clearable"

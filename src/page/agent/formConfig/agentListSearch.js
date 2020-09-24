@@ -18,20 +18,20 @@ export const FORM_CONFIG = {
         }
       ],
       labelWidth: '110px',
-      span: 24
+      span: 22
     },
     {
       type: 0,
       label: '法人姓名',
       key: 'personName',
-      labelWidth: '80px',
+      labelWidth: '90px',
       span: 11
     },
     {
       type: 0,
       label: '法人电话',
       key: 'personMobile',
-      labelWidth: '80px',
+      labelWidth: '90px',
       span: 11
     },
     {
@@ -39,7 +39,7 @@ export const FORM_CONFIG = {
       label: '所属大区',
       key: 'regionCode',
       class: "clear_both",
-      labelWidth: '80px',
+      labelWidth: '90px',
       span: 11,
       urlOptions: {
         url: apiAgent.queryAllRegion,
@@ -73,7 +73,7 @@ export const FORM_CONFIG = {
       type: 1,
       label: '标签',
       key: 'labelId',
-      labelWidth: '80px',
+      labelWidth: '90px',
       span: 11,
       urlOptions: {
         url: apiAgent.selectByChannelAgentCode,
@@ -86,7 +86,7 @@ export const FORM_CONFIG = {
       type: 8,
       label: '服务地区',
       key: 'area',
-      labelWidth: '80px',
+      labelWidth: '90px',
       span: 11,
       options: areaData
     },
@@ -95,7 +95,7 @@ export const FORM_CONFIG = {
       label: '所属运营',
       key: 'operationId',
       class: "clear_both",
-      labelWidth: '80px',
+      labelWidth: '90px',
       span: 11,
       urlOptions: {
         url: apiAgent.queryAllOperation,
@@ -108,7 +108,7 @@ export const FORM_CONFIG = {
       type: 1,
       label: '状态',
       key: 'status',
-      labelWidth: '80px',
+      labelWidth: '90px',
       span: 11,
       options: [
         {

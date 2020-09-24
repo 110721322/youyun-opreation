@@ -72,14 +72,14 @@
         <el-button size="medium" @click="onClick_reset">重置</el-button>
       </div>
       <div class="form-box">
-        <div class="select_data2">
+        <!-- <div class="select_data2">
           <span class="el-icon-info icon" />
           <span>
             已选择
             <span class="blue">{{ selectData.length }}</span> 项目
           </span>
           <el-button class="btn" type="text">清空</el-button>
-        </div>
+        </div> -->
         <BaseCrud
           :grid-config="configData2.gridConfig"
           :grid-btn-config="configData2.gridBtnConfig"
@@ -90,8 +90,8 @@
           :is-async="true"
           :is-select="true"
           :hide-edit-area="true"
-          @selectionChange="selectionChange"
-        />
+          @selectionChange="selectionChange">
+        </BaseCrud>
       </div>
       <div class="oper-box">
         <el-button type="primary" size="medium" @click="onClick_confirm">确定</el-button>

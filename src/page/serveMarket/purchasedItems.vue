@@ -90,10 +90,12 @@ export default {
       api: api.selectTopAgentOrder
     }
   },
-  mounted() {
+  created() {
     this.params = {
       moduleCode: this.selectData[this.selectIndex].value
     }
+  },
+  mounted() {
   },
   methods: {
     onClick_select(data, index) {

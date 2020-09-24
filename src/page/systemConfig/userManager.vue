@@ -13,8 +13,8 @@
 
     <div class="table_box">
       <div class="tabale_title_box">
-        <el-button class="btn" @click="onClick_showOrganization">组织架构</el-button>
-        <el-button class="btn" type="primary" @click="add_job">职位管理</el-button>
+        <el-button @click="onClick_showOrganization">组织架构</el-button>
+        <el-button type="primary" @click="add_job">职位管理</el-button>
       </div>
       <BaseCrud
         ref="customerTable"
@@ -427,7 +427,10 @@ export default {
 }
 
 .tabale_title_box {
+<<<<<<< HEAD
   height: 32px;
+=======
+>>>>>>> dev-yunshi
   width: 100%;
   display: flex;
   justify-content: flex-end;
@@ -449,7 +452,7 @@ export default {
   position: fixed;
   bottom: 0;
   right: 0;
-  padding: 24px 0;
+  padding: 16px 0;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -494,10 +497,7 @@ export default {
   }
   .el-input {
     width: 300px;
-    margin-right: 32px;
-  }
-  .el-button {
-    padding: 6px 18px;
+    margin-right: 16px;
   }
 }
 </style>

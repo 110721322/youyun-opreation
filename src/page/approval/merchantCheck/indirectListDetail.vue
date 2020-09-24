@@ -8,7 +8,7 @@
           class="el-menu"
           mode="horizontal"
         >
-          <el-menu-item v-for="(item, index) in channelStatusList" :key="index" :index="index">
+          <el-menu-item v-for="(item, index) in channelStatusList" :key="index" :index="`${index+1}`">
             <i :class="(ruleForm.status === 'channelAudit' || ruleForm.status === 'platformAudit') ? 'dotAudit': (ruleForm.status === 'platformReject' || ruleForm.status === 'channelReject') ? 'dotReject': 'dot'"></i>
             {{ item.channel }}
           </el-menu-item>
@@ -73,7 +73,7 @@ export default {
       channelAgentCode: '',
       fromConfigData: {},
       drawer: false,
-      activeIndex: '1',
+      activeIndex: '0',
       showComponents: {
         showRejectTitle: false,
         showOperBtns: false
@@ -340,20 +340,25 @@ export default {
     }
   },
   created() {
+    console.log(decodeURIComponent(this.$route.query.channelStatusList))
+  },
+  mounted() {
+    // console.log('3333333')
     this.merchantNo = this.$route.query.merchantNo
+    // console.log(this.merchantNo, 22222)
     this.channelStatusList = this.$route.query.channelStatusList
-    console.log(this.channelStatusList)
     if (this.channelStatusList) {
+      // console.log(44444)
       this.getDetail()
     }
   },
-  mounted() {},
   methods: {
     getDetail() {
+      const activeIndex = ((this.activeIndex - 1) <= 0) ? 0 : (this.activeIndex - 1)
       api.getChannelDetailByNo({
         merchantNo: this.merchantNo,
-        channelCode: this.channelStatusList[this.activeIndex - 1].channelCode,
-        channelAgentCode: this.channelStatusList[this.activeIndex - 1].channelAgentCode
+        channelCode: this.channelStatusList[activeIndex].channelCode,
+        channelAgentCode: this.channelStatusList[activeIndex].channelAgentCode
       }).then(res => {
         if (res.object.bankAccountType === 'public') {
           if (res.object.settleLawFlag === 'legal') {

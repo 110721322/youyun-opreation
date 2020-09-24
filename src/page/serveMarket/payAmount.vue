@@ -100,6 +100,13 @@ export default {
         console.log(res.object)
       })
     }
+  },
+  beforeDestroy() {
+    localStorage.setItem('comboItem', '')
+    localStorage.setItem('productItem', '')
+    localStorage.setItem('amount', '')
+    localStorage.setItem('voucher', '')
+    localStorage.setItem('promoCodeId', '')
   }
 }
 </script>

@@ -2,8 +2,8 @@
   <div>
     <el-date-picker
       v-model="ruleForm[formItem.key]"
-      style="float: left;"
-      size="large"
+      style="float: left;min-width:294px"
+      size="small"
       :type="datatype"
       :placeholder="placeholder"
       :clearable="clearable"

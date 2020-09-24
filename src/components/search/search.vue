@@ -226,7 +226,7 @@ export default {
 }
 .btn_list {
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end;
   align-items: flex-start;
   margin-left: 16px;
 }
