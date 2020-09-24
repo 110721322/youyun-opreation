@@ -427,10 +427,6 @@ export default {
 }
 
 .tabale_title_box {
-<<<<<<< HEAD
-  height: 32px;
-=======
->>>>>>> dev-yunshi
   width: 100%;
   display: flex;
   justify-content: flex-end;
