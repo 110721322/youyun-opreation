@@ -34,6 +34,8 @@ export default {
   },
   data() {
     return {
+      excelPath: "",
+      excelUrl: "",
       dialogImageUrl: "",
       dialogImagePath: "",
       ossData: {},
@@ -63,6 +65,7 @@ export default {
       });
     },
     upLoad(file) {
+      debugger
       const formData = new FormData();
       formData.append(
         "key",
@@ -85,15 +88,17 @@ export default {
         processData: false,
         contentType: false,
         success: () => {
-          this.dialogImagePath = this.ossData.ossHost + "/";
-          this.dialogImageUrl =
-          this.ossData.objectKeyPrefix + "/" + this.ossData.objectKeys[0];
-
-          this.ruleForm[this.formItem.key] = {
-            dialogImagePath: this.dialogImagePath,
-            dialogImageUrl: this.dialogImageUrl,
-            formDatafile: formData.get("file")
-          };
+          if (this.ossData.objectKeyPrefix === "excel") {
+            this.excelPath = this.ossData.ossHost + "/";
+            this.excelUrl = this.ossData.objectKeyPrefix + "/" + this.ossData.objectKeys[0];
+            this.ruleForm[this.formItem.key] = this.excelUrl
+          } else {
+            this.ruleForm[this.formItem.key] = {
+              dialogImagePath: this.dialogImagePath,
+              dialogImageUrl: this.dialogImageUrl,
+              formDatafile: formData.get("file")
+            };
+          }
           this.loading = false;
         },
         error: () => {

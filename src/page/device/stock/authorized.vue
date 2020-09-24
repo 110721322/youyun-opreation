@@ -8,7 +8,7 @@
     <div class="table_box">
       <div class="tabale_title_box">
         <div class="title">设备授权列表</div>
-        <UploadFile class="btn" :form-item="formItem" type="primary" @click="onClick_addDevice">导入设备信息</UploadFile>
+        <UploadFile class="btn" :form-item="formItem" :rule-form="ruleForm" type="primary" @click="onClick_addDevice">导入设备信息</UploadFile>
       </div>
       <BaseCrud
         ref="table"
@@ -63,9 +63,12 @@ export default {
         pageSize: 1,
         status: 1
       },
+      ruleForm: {
+        key: 'file'
+      },
       formItem: {
-        key: 'file',
-        dateUrl: ''
+        key: 'file'
+        // dateUrl: ''
       }
     };
   },
