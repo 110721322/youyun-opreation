@@ -221,9 +221,8 @@ export default {
 <style lang="scss" scoped>
 
   .avatar-uploader {
-    width: 100px;
-    height: 100px;
-    float: left;
+    display: flex;
+    flex-wrap: wrap;
     .avatar {
       width: 100%;
       margin: 0 auto; /* 水平居中 */
@@ -266,6 +265,8 @@ export default {
       display: flex;
       /deep/ .el-upload-list__item {
         flex-shrink: 0;
+        width: 100px;
+        height: 100px;
       }
     }
   }

@@ -40,7 +40,7 @@ export const FORM_CONFIG = {
       {
         type: 'uploadFile',
         label: '设备标识',
-        key: 'count',
+        key: 'deviceIdentifier',
         rules: setRules('设备标识').isSelected.get
       }
     ]

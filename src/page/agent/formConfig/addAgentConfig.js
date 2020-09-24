@@ -76,7 +76,8 @@ export const FORM_CONFIG = {
         keyName: 'operationId',
         valueName: 'operationName',
         method: 'get'
-      }
+      },
+      rules: setRules('请输入').isSelected.get
     },
     {
       type: 5,

@@ -95,39 +95,53 @@ export default {
       this.drawer = true;
     },
     confirm($data) {
+      if (!$data.deviceId || !$data.deadline || !$data.inputTime) {
+        this.$message({
+          message: "请填写必填信息",
+          type: "warning"
+        })
+        return
+      }
       // exelc解析
-      apiComm
-        .excelUploadPic({
-          url: $data.count.dialogImageUrl,
-          type: "deviceInput"
-        })
-        .then(res => {
-          this.count = res.object;
-          this.deviceInputAdd($data, this.count);
-        })
-        .catch(err => {
-          this.$message(err);
-        });
+      apiComm.excelUploadPic({
+        url: $data.deviceIdentifier,
+        type: "deviceInput"
+      }).then(res => {
+        console.log(res)
+        if (res.object.length === 0) {
+          this.$message({
+            message: "请填写设备标识",
+            type: "warning"
+          })
+          return
+        }
+        $data.deviceIdentifierList = res.object
+        this.deviceInputAdd($data);
+      }).catch(err => {
+        this.$message(err);
+      });
     },
     // 新增
-    deviceInputAdd($data, count) {
-      api
-        .deviceInputAdd({
-          employeeId: 234234,
-          count: count.length,
-          deadline: $data.deadline,
-          deviceId: $data.deviceId,
-          inputTime: $data.inputTime,
-          deviceIdentifierList: count
-        })
-        .then(res => {
+    deviceInputAdd($data, arr) {
+      api.deviceInputAdd({
+        employeeId: this.$store.state.admin.userInfo.id,
+        count: $data.deviceIdentifierList.length,
+        deadline: $data.deadline,
+        deviceId: $data.deviceId,
+        inputTime: $data.inputTime,
+        deviceIdentifierList: $data.deviceIdentifierList
+      }).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            message: "添加成功",
+            type: "success"
+          })
           this.$refs.table.getData();
           this.drawer = false;
-          this.$message("入库成功");
-        })
-        .catch(err => {
-          this.$message(err);
-        });
+        }
+      }).catch(err => {
+        this.$message(err);
+      });
     },
     cancel() {
       this.drawer = false;

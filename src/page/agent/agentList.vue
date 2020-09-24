@@ -183,41 +183,36 @@ export default {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认解冻",
         cancelButtonText: "取消"
-      })
-        .then(() => {
-          api
-            .unfrozen({
-              agentNo: row.agentNo
-            })
-            .then(res => {
-              this.$message({
-                type: "info",
-                message: "已解冻"
-              });
+      }).then(() => {
+        api.unfrozen({
+          agentNo: row.agentNo
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              type: "success",
+              message: "已解冻"
             });
-        })
-        .catch(() => {});
+            this.$refs.child.getData()
+          }
+        });
+      }).catch(() => {});
     },
     frozen(row) {
       this.$confirm("是否要冻结该代理商？", "冻结代理商", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认冻结",
         cancelButtonText: "取消"
-      })
-        .then(res => {
-          api
-            .frozen({
-              agentNo: row.agentNo
-            })
-            .then(res => {
-              this.$message({
-                type: "info",
-                message: "已冻结"
-              });
-              this.$refs.child.getData()
-            });
-        })
-        .catch(() => {});
+      }).then(res => {
+        api.frozen({
+          agentNo: row.agentNo
+        }).then(res => {
+          this.$message({
+            type: "success",
+            message: "已冻结"
+          });
+          this.$refs.child.getData()
+        });
+      }).catch(() => {});
     },
     openAgentManager(row) {
       api.generateLoginTicket({

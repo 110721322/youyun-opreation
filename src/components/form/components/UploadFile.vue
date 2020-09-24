@@ -65,7 +65,6 @@ export default {
       });
     },
     upLoad(file) {
-      debugger
       const formData = new FormData();
       formData.append(
         "key",

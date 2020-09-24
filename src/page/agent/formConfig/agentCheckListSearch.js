@@ -33,11 +33,11 @@ export const FORM_CONFIG = {
       options: [
         {
           label: '企业',
-          value: 'individual'
+          value: 'enterprise'
         },
         {
           label: '个人',
-          value: 'enterprise'
+          value: 'individual'
         }
       ]
     },
@@ -49,20 +49,16 @@ export const FORM_CONFIG = {
       span: 11,
       options: [
         {
-          label: '已拒绝',
-          value: 'reject'
-        },
-        {
-          label: '等待',
-          value: 'wait'
-        },
-        {
-          label: '审核中',
+          label: '待审核',
           value: 'audit'
         },
         {
           label: '审核通过',
           value: 'success'
+        },
+        {
+          label: '审核拒绝',
+          value: 'reject'
         }
       ]
     },

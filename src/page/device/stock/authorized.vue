@@ -97,7 +97,9 @@ export default {
       // eslint-disable-next-line no-console
       console.log($val);
     },
-    onClick_addDevice() {},
+    onClick_addDevice($data) {
+      console.log($data)
+    },
     onClick_okEdit($item) {
       api
         .deviceActivationUpdate({

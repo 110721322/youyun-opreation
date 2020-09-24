@@ -53,7 +53,8 @@ export const FORM_CONFIG = {
         type: 6,
         label: '宣传图片',
         key: 'img',
-        maxNum: 1,
+        maxNum: 5,
+        showFileList: true,
         rules: setRules('宣传图片').isRequired.get
       },
       {
@@ -107,13 +108,14 @@ export const FORM_CONFIG = {
       {
         type: 6,
         label: '宣传视频',
-        key: 'video',
-        rules: setRules('宣传视频').isSelected.get
+        key: 'video'
       },
       {
         type: 6,
         label: '宣传图片',
         key: 'img',
+        maxNum: 5,
+        showFileList: true,
         rules: setRules('宣传图片').isSelected.get
       },
       {

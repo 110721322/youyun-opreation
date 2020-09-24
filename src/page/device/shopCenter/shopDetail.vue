@@ -53,6 +53,14 @@ export default {
       this.$router.back();
     },
     confirm($ruleForm) {
+      console.log($ruleForm)
+      if (!$ruleForm.desc || !$ruleForm.deviceId || !$ruleForm.deviceType || !$ruleForm.img || !$ruleForm.sort) {
+        this.$message({
+          message: "请填写必填信息",
+          type: "warning"
+        })
+        return
+      }
       if (this.id) {
         api
           .deviceMallUpdate({
@@ -60,9 +68,9 @@ export default {
             desc: $ruleForm.desc,
             deviceId: $ruleForm.deviceId,
             deviceType: $ruleForm.deviceType,
-            img: $ruleForm.img.dialogImageUrl,
+            img: $ruleForm.img,
             sort: $ruleForm.sort,
-            video: $ruleForm.video.dialogImageUrl
+            video: $ruleForm.video
           })
           .then(res => {
             this.$message("保存成功");
@@ -77,17 +85,20 @@ export default {
             deviceId: $ruleForm.deviceId,
             deviceType: $ruleForm.deviceType,
             desc: $ruleForm.desc,
-            img: $ruleForm.img.dialogImageUrl,
+            img: $ruleForm.img,
             sort: $ruleForm.sort,
-            video: $ruleForm.video.dialogImageUrl
+            video: $ruleForm.video ? $ruleForm.video : ''
           })
           .then(res => {
-            this.$message("添加成功");
-            this.$router.replace({ name: "shopCenter" });
+            if (res.status === 0) {
+              this.$message({
+                message: "添加成功",
+                type: "success"
+              });
+              this.$router.replace({ name: "shopCenter" });
+            }
           })
-          .catch(err => {
-            this.$message(err);
-          });
+          .catch(() => {});
       }
     }
   }

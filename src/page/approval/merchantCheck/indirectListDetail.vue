@@ -27,7 +27,10 @@
           ></el-alert>
           <div v-if="activeIndex" :key="activeIndex">
             <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.baseData"></detailMode>
+            <!--            商户类型：企业，个体工商户-->
             <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.merchantData"></detailMode>
+            <!--            商户类型：个人-->
+            <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.merchantData1"></detailMode>
             <!--          (企业，个体工商户)对公法人-->
             <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.settleData1" v-if="ruleForm.merchantType !== 'personal' && ruleForm.bankAccountType === 'public' && ruleForm.settleLawFlag === 'legal'"></detailMode>
             <!--          (企业，个体工商户，个人)对私法人-->
@@ -161,6 +164,52 @@ export default {
             {
               name: "营业执照编号",
               key: "shopLicenseNo"
+            },
+            {
+              name: "客服手机号",
+              key: "serviceTel"
+            },
+            {
+              name: "法人身份证到期日",
+              key: "idCardExpireDate"
+            }
+          ]
+        },
+        merchantData1: {
+          name: "商户信息",
+          items: [
+            {
+              name: "门头照",
+              key: "shopFaceImg",
+              type: "image"
+            },
+            {
+              name: "内景照",
+              key: "shopInnerImg",
+              type: "image"
+            },
+            {
+              name: "收银台照",
+              key: "shopCashdeskImg",
+              type: "image"
+            },
+            {
+              name: "法人身份证正面",
+              key: "idCardPortraitImg",
+              type: "image"
+            },
+            {
+              name: "结算人身份证反面",
+              key: "idCardEmblemImg",
+              type: "image"
+            },
+            {
+              name: "商户类型",
+              key: "merchantTypeName"
+            },
+            {
+              name: "商户简称",
+              key: "shortName"
             },
             {
               name: "客服手机号",

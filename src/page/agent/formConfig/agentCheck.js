@@ -7,9 +7,9 @@ export const CHECK_CONFIG = {
       key: 'operationId',
       class: "clear_both",
       urlOptions: {
-        url: apiAgent.queryEmployeeList,
-        keyName: 'id',
-        valueName: 'jobName',
+        url: apiAgent.queryAllOperation,
+        keyName: 'operationId',
+        valueName: 'operationName',
         method: 'get'
       }
     }
