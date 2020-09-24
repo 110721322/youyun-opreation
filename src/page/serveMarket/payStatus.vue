@@ -54,7 +54,14 @@ export default {
     this.amount = localStorage.getItem('amount')
     this.voucher = localStorage.getItem('voucher')
   },
-  methods: {}
+  methods: {},
+  beforeDestroy() {
+    localStorage.setItem('comboItem', '')
+    localStorage.setItem('productItem', '')
+    localStorage.setItem('amount', '')
+    localStorage.setItem('voucher', '')
+    localStorage.setItem('promoCodeId', '')
+  }
 }
 </script>
 

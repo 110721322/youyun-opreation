@@ -86,7 +86,7 @@ export const FORM_CONFIG2 = {
         }
       ],
       labelWidth: '150px',
-      span: 24
+      span: 22
     },
     {
       type: 9,

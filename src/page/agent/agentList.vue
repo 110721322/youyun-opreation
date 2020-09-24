@@ -11,38 +11,38 @@
     <!-- <data-mode></data-mode> -->
     <div class="table_box">
       <div class="two-btn">
-        <el-button @click="transfer">批量转移运营</el-button>
         <el-button type="primary" @click="onClick_addServe">添加服务商</el-button>
       </div>
-      <div class="select_data">
+      <!-- <div class="select_data">
         <span class="el-icon-info icon" />
         <span>
             已选择
             <span class="blue">{{ selectData.length }}</span> 项目
           </span>
         <el-button class="btn" type="text" @click="clear">清空</el-button>
-      </div>
+      </div> -->
       <BaseCrud
-          ref="child"
-          :grid-config="configData.gridConfig"
-          :grid-btn-config="configData.gridBtnConfig"
-          :grid-data="testData"
-          :form-config="configData.formConfig"
-          :form-data="configData.formModel"
-          :grid-edit-width="300"
-          form-title="用户"
-          :is-async="true"
-          :is-select="true"
-          :params="params"
-          :api-service="api"
-          @selectionChange="selectionChange"
-          @detail="openDetail"
-          @thaw="thaw"
-          @frozen="frozen"
-          @openAgentManager="openAgentManager"
-          @goMerchantList="goMerchantList"
-          @completion="onCompletion"
-      />
+        ref="child"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :grid-data="testData"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="300"
+        form-title="用户"
+        :is-async="true"
+        :is-select="true"
+        :params="params"
+        :api-service="api"
+        @selectionChange="selectionChange"
+        @detail="openDetail"
+        @thaw="thaw"
+        @frozen="frozen"
+        @openAgentManager="openAgentManager"
+        @goMerchantList="goMerchantList"
+        @completion="onCompletion">
+        <el-button slot="paginationLeft" style="margin-left: 24px;" @click="transfer">批量转移运营</el-button>
+      </BaseCrud>
     </div>
     <el-dialog
       title="批量转移运营"
@@ -261,7 +261,8 @@ export default {
 }
 .two-btn {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  margin-bottom: 8px;
 }
 .select_data {
   width: 100%;

@@ -46,14 +46,14 @@
         <el-button size="medium" @click="onClick_reset">重置</el-button>
       </div>
       <div class="form-box">
-        <div class="select_data">
+        <!-- <div class="select_data">
           <span class="el-icon-info icon" />
           <span>
             已选择
             <span class="blue">{{ selectData.length }}</span> 项目
           </span>
-        <!--          <el-button class="btn" type="text">清空</el-button>-->
-        </div>
+                 <el-button class="btn" type="text">清空</el-button>
+        </div> -->
         <BaseCrud
           ref="agentTable"
           :params="params1"

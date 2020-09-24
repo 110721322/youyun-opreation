@@ -11,7 +11,7 @@ export const FORM_CONFIG = {
       format: "yyyy-MM-dd HH:mm:ss",
       datatype: "datetimerange",
       labelWidth: '80px',
-      span: 24
+      span: 22
     },
     {
       type: 10,
@@ -28,7 +28,7 @@ export const FORM_CONFIG = {
         }
       ],
       labelWidth: '80px',
-      span: 24
+      span: 22
     },
     {
       type: 1,

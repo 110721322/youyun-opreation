@@ -7,7 +7,7 @@ export const SEARCH_CONFIG = {
       datatype: 'datetimerange',
       format: 'yyyy-MM-dd HH:mm:ss',
       labelWidth: '80px',
-      span: 24
+      span: 22
     },
     {
       type: 10,
@@ -20,7 +20,7 @@ export const SEARCH_CONFIG = {
         }
       ],
       labelWidth: '80px',
-      span: 24
+      span: 22
     },
     {
       type: 1,

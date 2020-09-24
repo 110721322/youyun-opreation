@@ -249,7 +249,7 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-content: center;
-  padding: 24px 0;
+  padding: 16px 0;
   // .foot_btn {
   //   // width: 113px;
   //   // height: 40px;
@@ -273,7 +273,7 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-content: center;
-  padding: 24px 0;
+  padding: 16px 0;
   // .foot_btn {
   //   // width: 113px;
   //   // height: 40px;
