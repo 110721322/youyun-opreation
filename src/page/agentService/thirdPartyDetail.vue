@@ -22,30 +22,32 @@ export default {
   data() {
     return {
       fromConfigData: FORM_CONFIG.detailData,
-      id: this.$route.query.id
+      id: ""
     };
   },
+  created() {
+  },
   mounted() {
-    if (this.id) {
-      // this.queryById();
+    if (this.$route.query.id) {
+      this.id = this.$route.query.id
+      this.queryById(this.$route.query.id)
     }
   },
   methods: {
-    queryById() {
-      api
-        .xxx({
-          id: this.id
-        })
-        .then(res => {
-          // 编辑前重赋值
-          FORM_CONFIG.detailData.formData.forEach((item, index) => {
-            item.initVal = res.object[item.key];
-          });
-          this.fromConfigData = FORM_CONFIG.detailData;
-        })
-        .catch(err => {
-          this.$message(err);
+    queryById(id) {
+      api.getOpenOperatorDetail({
+        id: id
+      }).then(res => {
+        // 编辑前重赋值
+        // res.object.netStatus = res.object.netStatus.Number()
+        FORM_CONFIG.editData.formData.forEach((item, index) => {
+          item.initVal = res.object[item.key];
         });
+        this.fromConfigData = FORM_CONFIG.editData;
+        this.fromConfigData.formData[7].initVal = this.fromConfigData.formData[7].initVal.toString()
+      }).catch(err => {
+        this.$message(err);
+      });
     },
     confirm($form) {
       console.log($form);
@@ -56,7 +58,7 @@ export default {
         })
         return
       }
-      api.addOpenAgent({
+      const params = {
         name: $form.name,
         developerId: $form.developerId,
         phone: $form.phone,
@@ -66,65 +68,21 @@ export default {
         syncFailCallback: $form.syncFailCallback ? $form.syncFailCallback : undefined,
         netStatus: $form.netStatus,
         agentNo: $form.agentNo
-      }).then(res => {
-        console.log(res)
+      }
+      if (this.id) {
+        params.id = this.id
+      }
+      api.addOpenAgent(params).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            message: this.id ? "编辑成功" : "添加成功",
+            type: "success"
+          })
+          this.$router.replace({
+            name: '/agentService/thirdParty'
+          })
+        }
       })
-      // if (this.id) {
-      //   api
-      //     .update({
-      //       agentNo: $form.agentNo,
-      //       agentName: $form.agentName,
-      //       channelAgentCode: $form.channelAgentCode,
-      //       accessMerchantName: $form.accessMerchantName,
-      //       linkmanName: $form.linkmanName,
-      //       linkmanPhone: $form.linkmanPhone,
-      //       deviceNumLimit: $form.deviceNumLimit,
-      //       asyncNotifyUrl: $form.asyncNotifyUrl,
-      //       syncNotifyUrl: $form.syncNotifyUrl,
-      //       syncNotifyFailUrl: $form.syncNotifyFailUrl,
-      //       netState: $form.netState,
-      //       remark: $form.remark,
-      //       openSecret: $form.openSecret,
-      //       deviceSecret: $form.deviceSecret,
-      //       status: $form.status,
-      //       id: this.id
-      //     })
-      //     .then(res => {
-      //       this.$alert("修改成功", "提示", {
-      //         confirmButtonText: "确定",
-      //         callback: action => {
-      //           this.$router.back(-1);
-      //         }
-      //       });
-      //     });
-      // } else {
-      //   api
-      //     .add({
-      //       agentNo: $form.agentNo,
-      //       agentName: $form.agentName,
-      //       channelAgentCode: $form.channelAgentCode,
-      //       accessMerchantName: $form.accessMerchantName,
-      //       linkmanName: $form.linkmanName,
-      //       linkmanPhone: $form.linkmanPhone,
-      //       deviceNumLimit: $form.deviceNumLimit,
-      //       asyncNotifyUrl: $form.asyncNotifyUrl,
-      //       syncNotifyUrl: $form.syncNotifyUrl,
-      //       syncNotifyFailUrl: $form.syncNotifyFailUrl,
-      //       netState: $form.netState,
-      //       remark: $form.remark,
-      //       openSecret: $form.openSecret,
-      //       deviceSecret: $form.deviceSecret,
-      //       status: $form.status
-      //     })
-      //     .then(res => {
-      //       this.$alert("添加成功", "提示", {
-      //         confirmButtonText: "确定",
-      //         callback: action => {
-      //           this.$router.back(-1);
-      //         }
-      //       });
-      //     });
-      // }
     },
     cancel(done) {
       this.$router.back(-1);

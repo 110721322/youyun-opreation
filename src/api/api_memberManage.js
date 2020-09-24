@@ -8,6 +8,7 @@ export default {
   fillUserInfo: (params) => API.POST('/operation/v1/employee/update', params),
   employeeOrganization: (params) => API.GET('/operation/v1/employee/organizationStructure', params),
   employeeDetail: (params) => API.POST('/operation/v1/employee/employeeDetail', params),
+  jobInformation: (params) => API.POST('/operation/v1/employee/jobInformation', params),
   perfectUpdate: (params) => API.POST('/operation/v1/employee/perfectUpdate', params),
   superiorsList: (params) => API.POST('/operation/v1/employee/superiorsList', params),
   /**

@@ -45,7 +45,7 @@ export const FORM_CONFIG = {
         isShowSlot: true,
         style: 'max-width:294px',
         showSlotName: '元',
-        rules: setRules('单台设备成本价').isRequired.get
+        rules: setRules('单台设备成本价').isSelected.get
       },
       {
         type: 0,
@@ -54,14 +54,15 @@ export const FORM_CONFIG = {
         isShowSlot: true,
         style: 'max-width:294px',
         showSlotName: '元',
-        rules: setRules('单台设备售卖价').isRequired.get
+        rules: setRules('单台设备售卖价').isSelected.get
       },
       {
         type: 0,
         label: '排序',
         key: 'sort',
         style: 'max-width:294px',
-        rules: setRules('排序').isRequired.get
+        placeholder: '请输入正整数',
+        rules: setRules('排序').isSelected.get
       }
     ]
   },
@@ -74,7 +75,7 @@ export const FORM_CONFIG = {
         label: '销售人员',
         key: 'saleUserName',
         style: 'max-width:294px',
-        initVal: '12',
+        initVal: '',
         isDisabled: true,
         rules: setRules('销售人员').isRequired.get
       },
@@ -180,58 +181,59 @@ export const FORM_CONFIG = {
         label: '设备类型',
         key: 'deviceType',
         style: 'max-width:294px',
+        labelWidth: '100px',
         urlOptions: {
-          url: apiDevice.queryAllDeviceModel,
-          keyName: 'deviceType',
-          valueName: 'deviceType',
+          url: apiDevice.queryAllDeviceTypeModel,
+          keyName: 'advertType',
+          valueName: 'advertTypeDesc',
           method: 'get',
           params: {
             classification: 1
           }
         },
-        rules: setRules('设备型号').isSelected.get
+        rules: setRules('设备类型').isSelected.get
       },
       {
         type: 0,
         label: '设备型号',
         key: 'deviceModel',
         style: 'max-width:294px',
-        initVal: 'pdd',
+        initVal: '',
         rules: setRules('设备型号').isRequired.get
       },
       {
         type: 6,
         label: '图片',
         key: 'deviceImg',
-        rules: setRules('图片').isRequired.get
+        rules: setRules('图片').isSelected.get
       },
       {
         type: 0,
         label: '单台设备成本价',
         key: 'costPrice',
         style: 'max-width:294px',
-        initVal: 'pdd',
+        initVal: '',
         isShowSlot: true,
         showSlotName: '元',
-        rules: setRules('单台设备成本价').isRequired.get
+        rules: setRules('单台设备成本价').isSelected.get
       },
       {
         type: 0,
         label: '单台设备售卖价',
         key: 'salePrice',
-        initVal: 'pdd',
+        initVal: '',
         style: 'max-width:294px',
         isShowSlot: true,
         showSlotName: '元',
-        rules: setRules('单台设备售卖价').isRequired.get
+        rules: setRules('单台设备售卖价').isSelected.get
       },
       {
         type: 0,
         label: '排序',
         key: 'sort',
         style: 'max-width:294px',
-        initVal: 'pdd',
-        rules: setRules('排序').isRequired.get
+        initVal: '',
+        rules: setRules('排序').isSelected.get
       }
     ]
   }

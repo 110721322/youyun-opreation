@@ -33,6 +33,7 @@
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
+        v-if="drawer"
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
         label-width="130px"
@@ -92,81 +93,113 @@ export default {
       this.drawer = true;
     },
     confirm($data) {
+      console.log($data)
+      if (this.formStatus === "add" || this.formStatus === "edit") {
+        if (!$data.deviceType || !$data.deviceModel || !$data.deviceImg || !$data.costPrice || !$data.salePrice || !$data.sort) {
+          this.$message({
+            message: "请填写必填信息",
+            type: "warning"
+          })
+          return
+        }
+      }
       switch (this.formStatus) {
         case "add":
-          api
-            .deviceAdd({
-              costPrice: $data.costPrice,
-              deviceImg: $data.deviceImg.dialogImageUrl,
-              deviceModel: $data.deviceModel,
-              deviceType: $data.deviceType,
-              id: $data.id,
-              salePrice: $data.salePrice,
-              sort: $data.sort,
-              classification: 1
-            })
-            .then(res => {
+          api.deviceAdd({
+            costPrice: $data.costPrice,
+            deviceImg: $data.deviceImg,
+            deviceModel: $data.deviceModel,
+            deviceType: $data.deviceType,
+            salePrice: $data.salePrice,
+            sort: $data.sort,
+            classification: 1
+          }).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                message: "添加成功",
+                type: "success"
+              })
+              this.drawer = false
               this.$refs.table.getData();
-              this.drawer = false;
-              this.$message("添加成功");
-            })
-            .catch(err => {
-              this.$message(err);
-            });
+            }
+          })
           break;
         case "edit":
-          api
-            .deviceUpdate({
-              costPrice: $data.costPrice,
-              deviceImg: $data.deviceImg.dialogImageUrl || $data.deviceImg.split('com/')[1],
-              deviceModel: $data.deviceModel,
-              deviceType: $data.deviceType,
-              id: this.stockId,
-              salePrice: $data.salePrice,
-              sort: $data.sort,
-              classification: 1
-            })
-            .then(res => {
+          api.deviceUpdate({
+            costPrice: $data.costPrice,
+            deviceImg: $data.deviceImg,
+            deviceModel: $data.deviceModel,
+            deviceType: $data.deviceType,
+            id: this.stockId,
+            salePrice: $data.salePrice,
+            sort: $data.sort,
+            classification: 1
+          }).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                message: "编辑成功",
+                type: "success"
+              })
+              this.drawer = false
               this.$refs.table.getData();
-              this.drawer = false;
-              this.$message("编辑成功");
-            })
-            .catch(err => {
-              this.$message(err);
-            });
-          break;
-        case "buy":
-          api
-            .deviceOutputAdd({
-              // saleUserName: $data.saleUserName,fffxxx
-              saleUserId: 1,
-              saleUserName: '123',
-              amount: $data.amount,
-              actualAmount: $data.actualAmount,
-              agentNo: $data.agentNo,
-              payType: $data.payType,
-              voucher: $data.voucher.dialogImageUrl,
-              buyerRemark: $data.buyerRemark,
-              infoVOList: [{
-                count: $data.count,
-                deviceModel: $data.deviceModel,
-                deviceId: this.deviceId,
-                salePrice: $data.actualAmount
-              }]
-            })
-            .then(res => {
-              this.$refs.table.getData();
-              this.drawer = false;
-              this.$message("订购成功");
-            })
-            .catch(err => {
-              this.$message(err);
-            });
-          break;
-
-        default:
+            }
+          })
           break;
       }
+      // switch (this.formStatus) {
+      //   case "add":
+      //     api
+      //       .deviceAdd({
+      //         costPrice: $data.costPrice,
+      //         deviceImg: $data.deviceImg.dialogImageUrl,
+      //         deviceModel: $data.deviceModel,
+      //         deviceType: $data.deviceType,
+      //         id: $data.id,
+      //         salePrice: $data.salePrice,
+      //         sort: $data.sort,
+      //         classification: 1
+      //       })
+      //       .then(res => {
+      //         this.$refs.table.getData();
+      //         this.drawer = false;
+      //         this.$message("添加成功");
+      //       })
+      //       .catch(err => {
+      //         this.$message(err);
+      //       });
+      //     break;
+      //   case "buy":
+      //     api
+      //       .deviceOutputAdd({
+      //         // saleUserName: $data.saleUserName,fffxxx
+      //         saleUserId: 1,
+      //         saleUserName: '123',
+      //         amount: $data.amount,
+      //         actualAmount: $data.actualAmount,
+      //         agentNo: $data.agentNo,
+      //         payType: $data.payType,
+      //         voucher: $data.voucher.dialogImageUrl,
+      //         buyerRemark: $data.buyerRemark,
+      //         infoVOList: [{
+      //           count: $data.count,
+      //           deviceModel: $data.deviceModel,
+      //           deviceId: this.deviceId,
+      //           salePrice: $data.actualAmount
+      //         }]
+      //       })
+      //       .then(res => {
+      //         this.$refs.table.getData();
+      //         this.drawer = false;
+      //         this.$message("订购成功");
+      //       })
+      //       .catch(err => {
+      //         this.$message(err);
+      //       });
+      //     break;
+      //
+      //   default:
+      //     break;
+      // }
     },
     cancel() {
       this.drawer = false;
@@ -182,17 +215,19 @@ export default {
       this.drawer = true;
     },
     onClick_edit($row) {
-      console.log('编辑', $row);
+      this.drawer = true
       this.stockId = $row.id;
-      // 对配置文件进行动态修改
-      const newFromConfigData = FORM_CONFIG.editData;
-      // 编辑前重赋值
-      newFromConfigData.formData.forEach((item, index) => {
-        item.initVal = $row[item.key];
-      });
-      this.fromConfigData = newFromConfigData;
-      this.formStatus = "edit";
-      this.drawer = true;
+      this.fromConfigData = {}
+      setTimeout(() => {
+        // 对配置文件进行动态修改
+        const newFromConfigData = FORM_CONFIG.editData;
+        // 编辑前重赋值
+        newFromConfigData.formData.forEach((item, index) => {
+          item.initVal = $row[item.key];
+        });
+        this.fromConfigData = this.$g.utils.deepClone(newFromConfigData);
+        this.formStatus = "edit";
+      }, 200)
     },
     onClick_remove($row) {
       this.$confirm("删除后，该设备将不能再进行订购，请谨慎操作", "提示", {
