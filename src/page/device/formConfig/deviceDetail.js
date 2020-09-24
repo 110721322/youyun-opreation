@@ -75,7 +75,7 @@ export const FORM_CONFIG = {
         label: '销售人员',
         key: 'saleUserName',
         style: 'max-width:294px',
-        initVal: '12',
+        initVal: '',
         isDisabled: true,
         rules: setRules('销售人员').isRequired.get
       },
