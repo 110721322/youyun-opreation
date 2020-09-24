@@ -5,13 +5,16 @@ export const SEARCH_CONFIG = {
       label: '创建时间',
       key: 'date',
       datatype: 'datetimerange',
-      labelWidth: '100px',
-      class: 'max-width'
+      labelWidth: '80px',
+      class: 'max-width',
+      span: 24
     },
     {
       type: 1,
       key: 'settleStatus',
       label: '结算状态',
+      labelWidth: '80px',
+      span: 11,
       options: [
         {
           label: '全部',

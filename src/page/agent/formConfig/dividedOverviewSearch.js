@@ -9,7 +9,7 @@ export const FORM_CONFIG = {
       format: 'yyyy-MM',
       class: 'max-width',
       labelWidth: '80px',
-      span: 24
+      span: 22
     },
     {
       type: 10,
@@ -27,7 +27,7 @@ export const FORM_CONFIG = {
         }
       ],
       labelWidth: '80px',
-      span: 24
+      span: 22
     }
   ]
 }

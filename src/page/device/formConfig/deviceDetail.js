@@ -1,5 +1,6 @@
 import { setRules } from '@/libs/kit/formFns.js'
 import apiDevice from "@/api/api_device";
+import store from "@/store"
 
 export const FORM_CONFIG = {
   deviceData: {
@@ -71,29 +72,16 @@ export const FORM_CONFIG = {
     showFootBtn: true,
     formData: [
       {
-        type: 0,
-        label: '销售人员',
-        key: 'saleUserName',
-        style: 'max-width:294px',
-        initVal: '',
-        isDisabled: true,
-        rules: setRules('销售人员').isRequired.get
+        type: 'show',
+        label: '营销人员',
+        initVal: store.state.admin.userInfo.name,
+        labelWidth: '100px'
       },
       {
-        type: 1,
+        type: 'show',
         label: '设备型号',
-        key: 'deviceModel',
-        isDisabled: true,
-        style: 'max-width:294px',
-        urlOptions: {
-          url: apiDevice.queryAllDeviceModel,
-          keyName: 'deviceId',
-          valueName: 'deviceType',
-          method: 'get',
-          params: {
-            classification: 1
-          }
-        }
+        initVal: '',
+        labelWidth: '100px'
       },
       {
         type: 0,
@@ -109,9 +97,6 @@ export const FORM_CONFIG = {
         label: '订单金额',
         key: 'amount',
         style: 'max-width:294px',
-        isDisable: () => {
-          return true;
-        },
         isShowSlot: true,
         showSlotName: '元',
         rules: setRules('订单金额').isRequired.get
@@ -152,8 +137,21 @@ export const FORM_CONFIG = {
       {
         type: 6,
         label: '打款凭证',
-        key: 'voucher',
-        rules: setRules('打款凭证').isRequired.get
+        key: 'voucher'
+      },
+      {
+        type: 0,
+        label: '收件人',
+        key: 'buyerName',
+        style: 'max-width:294px',
+        rules: setRules('收件人').isRequired.get
+      },
+      {
+        type: 0,
+        label: '收件人电话',
+        key: 'buyerPhone',
+        style: 'max-width:294px',
+        rules: setRules('收件人电话').isSelected.get
       },
       {
         type: 0,
@@ -167,8 +165,8 @@ export const FORM_CONFIG = {
         label: '备注',
         key: 'buyerRemark',
         inputType: 'textarea',
-        style: 'max-width:294px',
-        rules: setRules('备注').isRequired.get
+        maxlength: '50',
+        style: 'max-width:294px'
       }
     ]
   },

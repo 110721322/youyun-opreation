@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="tab_head">
+      <span class="title">间连分润对账表</span>
+    </div>
     <Search :form-base-data="searchConfig.formData" :is-show-all="true" @search="search" />
     <div class="table_box">
       <BaseCrud
@@ -66,6 +69,9 @@ export default {
     margin: 24px;
     padding: 24px;
     background: white;
+  }
+  .tab_head{
+    border-bottom: 0px;
   }
 </style>
 

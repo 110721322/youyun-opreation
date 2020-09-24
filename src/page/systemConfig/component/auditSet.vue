@@ -178,7 +178,7 @@ export default {
   position: fixed;
   bottom: 0;
   right: 0;
-  padding: 24px 0;
+  padding: 16px 0;
   display: flex;
   flex-direction: row;
   justify-content: center;

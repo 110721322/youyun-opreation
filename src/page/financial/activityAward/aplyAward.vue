@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="tab_head">
+      <span class="title">支付宝小蜻蜓</span>
+    </div>
     <Search
       :is-show-all="false"
       :open-height="searchHeight"
@@ -9,10 +12,9 @@
     <div class="form-table">
       <div class="table-content">
         <div class="form-title">
-          <span>支付宝小蜻蜓</span>
           <ul>
             <!-- <li>下载导入奖励模板</li> -->
-            <li @click="openDraw">导入蜻蜓奖励名单</li>
+            <el-button type="primary" @click="openDraw">导入蜻蜓奖励名单</el-button>
           </ul>
         </div>
         <BaseCrud
@@ -135,6 +137,9 @@ export default {
         url: $filel.excil.dialogImageUrl
       }).then(res => {
         console.log(res)
+        if (res.object) {
+          this.$refs.table.getData()
+        }
       }).catch(err => {
         console.log(err)
       })
@@ -148,6 +153,9 @@ export default {
 </script>
 
 <style scoped>
+  .tab_head{
+    border-bottom: 0px;
+  }
   .form-table {
     width: 100%;
     margin-top: 24px;
@@ -177,6 +185,7 @@ export default {
   .form-title ul {
     display: flex;
     padding-top: 20px;
+    justify-content: flex-end;
   }
   .form-title ul li {
     width: 164px;

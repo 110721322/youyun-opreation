@@ -3,7 +3,10 @@ export const BUSINESS_CONFIG = {
     {
       label: '序号',
       prop: 'index',
-      width: '60px'
+      width: '60px',
+      formatter($row, $index) {
+        return $index + 1;
+      }
     },
     {
       label: '购买时间',

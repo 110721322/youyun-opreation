@@ -7,21 +7,21 @@ export const FORM_CONFIG = {
       key: 'date',
       format: "yyyy-MM-dd HH:mm:ss",
       datatype: "datetimerange",
-      labelWidth: '80px',
-      span: 24
+      labelWidth: '90px',
+      span: 22
     },
     {
       type: 0,
       label: '法人姓名',
       key: 'personName',
-      labelWidth: '80px',
+      labelWidth: '90px',
       span: 11
     },
     {
       type: 0,
       label: '法人电话',
       key: 'personMobile',
-      labelWidth: '80px',
+      labelWidth: '90px',
       span: 11
     },
     {
@@ -45,7 +45,7 @@ export const FORM_CONFIG = {
       type: 1,
       label: '状态',
       key: 'contractStatus',
-      labelWidth: '80px',
+      labelWidth: '90px',
       span: 11,
       options: [
         {
@@ -71,7 +71,7 @@ export const FORM_CONFIG = {
       label: '所属运营',
       key: 'operationId',
       class: "clear_both",
-      labelWidth: '80px',
+      labelWidth: '90px',
       span: 11,
       urlOptions: {
         url: apiAgent.queryAllOperation,

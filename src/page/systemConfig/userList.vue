@@ -296,7 +296,7 @@ export default {
 }
 .foot_btn_box {
   width: 500px;
-  padding: 24px;
+  padding: 16px 24px;
   // height: 96px;
   background: white;
   border-top: 1px solid #ebeef5;

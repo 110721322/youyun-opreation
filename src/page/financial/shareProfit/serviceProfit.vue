@@ -1,7 +1,17 @@
 <template>
   <div>
+    <div class="tab_head">
+      <span class="title">服务商分润统计</span>
+    </div>
     <div class="main-top">
-      <div v-for="(item, index) in mainData" :key="index" class="main-item" :class="mainIndex===index? 'isSelect': ''" @click="onClick_main(index)">{{ item.value }}</div>
+      <el-menu
+        :default-active="mainIndex"
+        class="el-menu"
+        mode="horizontal"
+        @select="onClick_main"
+      >
+        <el-menu-item v-for="(item, index) in mainData" :key="index" :index="index">{{ item.value }}</el-menu-item>
+      </el-menu>
     </div>
     <Search
       :open-height="searchHeight"
@@ -10,10 +20,16 @@
       @search="search"
     />
     <div class="select">
-      <div class="select-top">
-        <div v-for="(item, index) in selectData" :key="index" class="select-item" :class="selectIndex===index? 'isSelect': ''" @click="onClick_select(index)">{{ item.value }}</div>
-      </div>
+      <el-menu
+        :default-active="selectIndex"
+        class="el-menu"
+        mode="horizontal"
+        @select="onClick_select"
+      >
+        <el-menu-item v-for="(item, index) in selectData" :key="index" :index="index">{{ item.value }}</el-menu-item>
+      </el-menu>
       <div class="table_box">
+        <!-- 支付方式 -->
         <BaseCrud
           v-if="selectIndex===0"
           ref="table"
@@ -32,6 +48,7 @@
           :default-expand-all="false"
           @detail="handleDetail"
         ></BaseCrud>
+        <!-- 通道 -->
         <BaseCrud
           v-if="selectIndex===1"
           ref="table"
@@ -101,17 +118,18 @@ export default {
         }
       ],
       selectIndex: 0,
-      mainIndex: 0
+      mainIndex: 0,
+      api: api_statistice.selectTopAgentDataByPage
     }
   },
   computed: {
-    api() {
-      if (this.mainIndex === 0) {
-        return api_statistice.selectTopAgentDataByPage
-      } else {
-        return api_statistice.selectAgentDataByPage
-      }
-    }
+    // api() {
+    //   if (this.mainIndex === 0) {
+    //     return api_statistice.selectTopAgentDataByPage
+    //   } else {
+    //     return api_statistice.selectAgentDataByPage
+    //   }
+    // }
   },
   mounted() {},
   created() {
@@ -129,7 +147,7 @@ export default {
     this.params = {
       tradeMonth: this.tradeMonth
     }
-    this.api = api_statistice.selectTopAgentDataByPage
+    // this.api = api_statistice.selectTopAgentDataByPage
     // this.search()
   },
   methods: {
@@ -144,16 +162,20 @@ export default {
       if (this.mainIndex === 0) {
         this.configData = TOPERVICE_CONFIG
         this.configData1 = TOPVICE_CONFIG1
+        this.api = api_statistice.selectTopAgentDataByPage
       } else if (this.mainIndex === 1) {
         this.configData = SERVICE_CONFIG
         this.configData1 = SERVICE_CONFIG1
+        this.api = api_statistice.selectAgentDataByPage
       }
+      this.$refs.table.getData()
+      console.log(this.$refs.table)
     },
     search($ruleform) {
       this.params = {
-        tradeMonth: $ruleform.date ? $ruleform.date + "-" + "01" : this.tradeMonth
+        tradeMonth: $ruleform.date ? ($ruleform.date + "-" + "01") : this.tradeMonth
       }
-      this.tradeMonth = $ruleform.date ? $ruleform.date + "-" + "01" : this.tradeMonth
+      this.tradeMonth = $ruleform.date ? ($ruleform.date + "-" + "01") : this.tradeMonth
     },
     handleDetail($row) {
       if (this.mainIndex === 0) {
@@ -184,18 +206,38 @@ export default {
 </script>
 
 <style scoped lang="scss">
+  .tab_head{
+    border-bottom: 0px;
+  }
   .main_page {
+    .el-menu {
+      margin-left: 12px;
+      /deep/ .is-active{
+        color: #1989FA!important;
+      }
+    }
+    .el-menu--horizontal{
+      /deep/ .is-active{
+        color: #1989FA!important;
+      }
+    }
+
+    .el-menu-item {
+      height: 40px;
+      line-height: 40px;
+      font-size: 16px;
+    }
     .main-top {
         width: 100%;
-        display: flex;
-        padding: 0 0 26px 32px;
+        padding: 0 24px;
         background: #ffffff;
+        border-bottom: 1px solid #e6e6e6;
         .main-item {
           height: 56px;
           line-height: 56px;
           color: #606266;
           font-size: 16px;
-          margin-right: 44px;
+          // margin-right: 44px;
           padding: 0 20px;
           cursor: pointer;
         }
@@ -207,20 +249,21 @@ export default {
       }
     .select {
       width: 100%;
-      margin-top: 24px;
-      padding: 0 24px;
+      padding: 24px;
+      background: #ffffff;
+      margin:24px;
       .select-top {
         width: 100%;
         display: flex;
-        padding: 0 0 26px 32px;
-        background: #ffffff;
+        margin-bottom: 16px;
+        border-bottom: 1px solid #e6e6e6;
         .select-item {
-          height: 56px;
-          line-height: 56px;
+          // height: 56px;
+          // line-height: 56px;
           color: #606266;
           font-size: 16px;
-          margin-right: 44px;
           padding: 0 20px;
+          padding-bottom: 16px;
           cursor: pointer;
         }
         .select-item.isSelect {

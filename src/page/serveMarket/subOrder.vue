@@ -95,6 +95,13 @@ export default {
         this.amount = ((!amount) || amount <= 0) ? 0 : amount
       }
     }
+  },
+  beforeDestroy() {
+    localStorage.setItem('comboItem', '')
+    localStorage.setItem('productItem', '')
+    localStorage.setItem('amount', '')
+    localStorage.setItem('voucher', '')
+    localStorage.setItem('promoCodeId', '')
   }
 }
 </script>

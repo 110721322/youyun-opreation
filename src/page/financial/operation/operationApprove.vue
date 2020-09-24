@@ -386,6 +386,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  /deep/.el-tabs__item{
+    font-size: 16px;
+  }
   .process-box {
     margin-top: 24px;
     display: flex;
@@ -437,6 +440,7 @@ export default {
     position: relative;
     margin: 24px;
     padding: 24px;
+    padding-top: 12px;
     overflow: hidden;
     background: #fff;
   }

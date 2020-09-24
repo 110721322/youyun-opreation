@@ -1,10 +1,12 @@
 <template>
   <div>
+    <div class="tab_head">
+      <span class="title">支付宝直连分润列表</span>
+    </div>
     <Search open-height="200" :form-base-data="searchConfig.formData" @search="search" />
     <div class="form-table">
       <div class="table-content">
         <div class="form-title">
-          <span>支付宝直连分润列表</span>
           <ul>
             <el-button type="primary" @click="openDraw">直连分润导入</el-button>
           </ul>
@@ -174,6 +176,8 @@ export default {
     }
     ul {
       display: flex;
+      justify-content: flex-end;
+      width: 100%;
       padding-top: 20px;
       li {
         width: 164px;

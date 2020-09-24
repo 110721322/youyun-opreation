@@ -76,14 +76,14 @@
         <el-button size="medium" @click="onClick_reset">重置</el-button>
       </div>
       <div class="form-box">
-        <div class="select_data2">
+        <!-- <div class="select_data2">
           <span class="el-icon-info icon" />
           <span>
             已选择
             <span class="blue">{{ selectData.length }}</span> 项目
           </span>
           <el-button class="btn" type="text" @click="clearMrechant">清空</el-button>
-        </div>
+        </div> -->
         <BaseCrud
           v-if="drawer"
           ref="merchant"

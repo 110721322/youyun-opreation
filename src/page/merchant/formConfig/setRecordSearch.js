@@ -6,7 +6,7 @@ export const FORM_CONFIG = {
       key: 'date',
       class: 'max-width',
       labelWidth: '80px',
-      span: 24
+      span: 22
     },
     {
       type: 10,
@@ -24,14 +24,14 @@ export const FORM_CONFIG = {
           value: 'merchantName'
         }
       ],
-      labelWidth: '80px',
-      span: 24
+      labelWidth: '90px',
+      span: 22
     },
     {
       type: 0,
       label: '渠道商户号',
       key: 'channelMerchantNo',
-      labelWidth: '110px',
+      labelWidth: '90px',
       span: 11,
       placeholder: "请输入渠道商户号"
     },
@@ -39,7 +39,7 @@ export const FORM_CONFIG = {
       type: 1,
       label: '交易通道',
       key: 'channel',
-      labelWidth: '80px',
+      labelWidth: '90px',
       span: 11,
       options: [
         {
