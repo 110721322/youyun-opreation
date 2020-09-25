@@ -76,7 +76,7 @@ export default {
       channelAgentCode: '',
       fromConfigData: {},
       drawer: false,
-      activeIndex: '0',
+      activeIndex: '1',
       showComponents: {
         showRejectTitle: false,
         showOperBtns: false
@@ -464,17 +464,7 @@ export default {
             })
             this.getDetail()
           }
-        }).catch(err => {
-          this.$message({
-            message: err.errorMessage,
-            type: 'warning'
-          });
-        });
-      }).catch(() => {
-        this.$message({
-          message: '取消操作',
-          type: 'info'
-        });
+        })
       })
     },
     confirm($data) {
