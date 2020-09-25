@@ -111,7 +111,6 @@ export default {
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
-      this.$refs.table.getData();
     },
     reset($ruleForm) {
       const params = {
@@ -121,7 +120,6 @@ export default {
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
-      this.$refs.table.getData();
     }
   }
 };

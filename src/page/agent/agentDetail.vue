@@ -294,6 +294,7 @@
       <div class="p_head">{{ equipmentConfigData.title }}</div>
       <Form
           ref="liaisonRef"
+          :isDrawer="true"
           :form-base-data="equipmentConfigData.formData"
           :show-foot-btn="equipmentConfigData.showFootBtn"
           @confirm="equipment_confirm"
@@ -1477,11 +1478,17 @@ export default {
   // position: fixed;
   // bottom: 0;
   // right: 0;
-  padding: 24px 0;
+  width: 500px;
+  padding: 16px 0px;
+  // height: 96px;
+  background: white;
   border-top: 1px solid #ebeef5;
-  justify-content: center;
+  position: fixed;
+  right: 0;
+  bottom: 0;
   display: flex;
-  align-items: center;
-  margin-top: 24px;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
 }
 </style>
