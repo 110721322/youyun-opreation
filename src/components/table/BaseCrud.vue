@@ -1,7 +1,7 @@
 <template>
   <div class="crud">
     <el-table
-      :ref="refName"
+      :ref="refName ? refName : 'table'"
       v-loading="listLoading"
       :data="showGridData"
       style="width: 100%;font-size:14px"
@@ -194,6 +194,7 @@ export default {
       listLoading: false,
       queryParams: {},
       checkAll: false,
+      multipleSelection: [],
       isIndeterminate: false
     };
   },
@@ -330,6 +331,7 @@ export default {
       }
     },
     handleSelectionChange(val) {
+      this.multipleSelection = val;
       this.$emit("selectionChange", val);
     },
     cancelEdit($row) {

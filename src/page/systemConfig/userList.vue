@@ -42,6 +42,7 @@
         ref="memberEdit"
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
+        :isDrawer="true"
         @cancel="cancel"
         @confirm="confirm"
       ></Form>

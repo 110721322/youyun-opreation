@@ -41,7 +41,7 @@
       <el-select
         slot="prepend"
         v-model="inputSelect"
-        style="min-width: 110px;"
+        style="min-width: 150px;"
         placeholder="请选择"
         @change="onSelect"
       >

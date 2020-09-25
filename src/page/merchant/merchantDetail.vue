@@ -10,6 +10,7 @@
           ref="liaisonRef"
           :form-base-data="contactConfigData"
           :show-foot-btn="contactConfigData.showFootBtn"
+          :isDrawer="true"
           @confirm="confirm"
           @cancel="cancel"
       ></Form>

@@ -46,6 +46,7 @@
           :form-base-data="aplyAwardData.formData"
           @confirm="confirm"
           @cancel="cancel"
+          :isDrawer="true"
       ></Form>
       <!-- <div class="content">
         <el-form ref="form" :model="form" label-width="160px">

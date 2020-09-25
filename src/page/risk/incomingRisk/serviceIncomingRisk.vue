@@ -231,13 +231,18 @@ export default {
   width: auto;
 }
 .oper-box {
-  text-align: center;
-  // position: absolute;
-  // bottom: 28px;
-  margin-top: 24px;
-  width: 100%;
+  width: 500px;
+  padding: 16px 0px;
+  // height: 96px;
+  background: white;
   border-top: 1px solid #ebeef5;
-  padding: 24px 0;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
 }
 .form-box {
   padding: 0 24px;

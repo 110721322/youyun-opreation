@@ -111,6 +111,7 @@
       <Form
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
+        :isDrawer="true"
         @cancel="cancel"
         @confirm="confirm"
       ></Form>
@@ -121,6 +122,7 @@
       <Form
         v-if="addContactsDraw"
         :form-base-data="contactConfigData"
+        :isDrawer="true"
         :show-foot-btn="contactConfigData.showFootBtn"
         @confirm="handel_addContacts"
         @cancel="cancel"
@@ -162,6 +164,7 @@
     <el-drawer :visible.sync="addLiaison" :with-header="false" size="500px">
       <Form
         ref="liaisonRef"
+        :isDrawer="true"
         :form-base-data="liaisonConfigData.formData"
         :show-foot-btn="liaisonConfigData.showFootBtn"
         @confirm="handel_addLiaison"
@@ -209,8 +212,8 @@
         </el-form-item>
       </el-form>
       <div class="bottom-btn">
-        <el-button type="primary" @click="handel_save">保存</el-button>
-        <el-button @click="handel_cancle">取消</el-button>
+        <el-button type="primary" size="normal" @click="handel_save">保存</el-button>
+        <el-button size="normal" @click="handel_cancle">取消</el-button>
       </div>
     </el-drawer>
     <el-dialog title="沟通记录详情" :visible.sync="dialogTableVisible">
@@ -1303,16 +1306,21 @@ export default {
 }
 
 .bottom-btn {
-  width: 100%;
   // position: fixed;
   // bottom: 0;
   // right: 0;
   // height: 96px;
+  width: 500px;
+  padding: 16px 0px;
+  // height: 96px;
+  background: white;
   border-top: 1px solid #ebeef5;
-  justify-content: center;
+  position: fixed;
+  right: 0;
+  bottom: 0;
   display: flex;
-  align-items: center;
-  padding: 24px 0;
-  margin-top: 24px;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
 }
 </style>
