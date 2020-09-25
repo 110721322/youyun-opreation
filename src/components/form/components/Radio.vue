@@ -1,8 +1,8 @@
 <template>
   <div>
     <el-radio
-      v-for="item in radioOptions"
-      :key="item.value"
+      v-for="(item, index) in radioOptions"
+      :key="index"
       v-model="ruleForm[formItem.key]"
       :label="item.value"
     >{{ item.label }}</el-radio>

@@ -819,12 +819,15 @@ export default {
     },
     itemEdit($model) {
       if ($model === 'basicData') {
-        this.editType = 'editBasicData'
-        const newFromConfigData = FORM_CONFIG[$model];
-        newFromConfigData.formData.forEach((item, index) => {
-          item.initVal = this.agentDetail[item.key];
-        });
-        this.fromConfigData = this.$g.utils.deepClone(newFromConfigData);
+        this.fromConfigData = {}
+        setTimeout(() => {
+          this.editType = 'editBasicData'
+          const newFromConfigData = FORM_CONFIG[$model];
+          newFromConfigData.formData.forEach((item, index) => {
+            item.initVal = this.agentDetail[item.key];
+          });
+          this.fromConfigData = this.$g.utils.deepClone(newFromConfigData);
+        }, 200)
         this.drawer = true;
       }
       if ($model === 'finance') {
@@ -870,13 +873,6 @@ export default {
     handel_confirm(row) {
       console.log(row)
       if (this.editType === 'editBasicData') {
-        if (!row.businessLicenseImg) {
-          this.$message({
-            message: '请填写完整信息',
-            type: 'info'
-          })
-          return
-        }
         if (!row.businessType || !row.agentName || !row.personName || !row.personMobile || !row.companyAddress || !row.area) {
           this.$message({
             message: '请填写完整信息',
@@ -885,12 +881,20 @@ export default {
           return
         }
         var businessLicenseImg = ''
-        if (row.businessLicenseImg) {
-          if (this.$g.utils.isString(row.businessLicenseImg)) {
-            var img = row.businessLicenseImg.split('.com')
-            businessLicenseImg = img[1].slice(1, img[1].length)
+        if (row.businessType === 'enterprise') {
+          if (!row.businessLicenseImg) {
+            this.$message({
+              message: "请上传营业执照",
+              type: ""
+            })
+            return
           } else {
-            businessLicenseImg = row.businessLicenseImg.dialogImageUrl
+            var img = row.businessLicenseImg.split('.com')
+            if (img[1]) {
+              businessLicenseImg = img[1].slice(1, img[1].length)
+            } else {
+              businessLicenseImg = row.businessLicenseImg
+            }
           }
         }
         api.updateAgentBaseInfo({

@@ -12,6 +12,7 @@ export const FORM_CONFIG = {
         type: 5,
         label: '账户类型',
         key: 'businessType',
+        initVal: 'enterprise',
         options: [
           {
             label: '企业',
@@ -71,6 +72,13 @@ export const FORM_CONFIG = {
         maxNum: 1,
         initVal: '',
         rules: setRules('营业执照').isSelected.get
+        // isShow: (item) => {
+        //   if (item.businessType === 'enterprise') {
+        //     return true
+        //   } else {
+        //     return false
+        //   }
+        // }
       }
     ]
   },

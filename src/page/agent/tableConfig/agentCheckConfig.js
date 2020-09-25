@@ -27,17 +27,12 @@ export const USER_CONFIG = {
       render: (h, params) => {
         if (params.row.businessType === 'individual') {
           return h(
-            'span', '个体工商户'
+            'span', '个人'
           )
         }
         if (params.row.businessType === 'enterprise') {
           return h(
             'span', '企业'
-          )
-        }
-        if (params.row.businessType === 'personal') {
-          return h(
-            'span', '个人'
           )
         }
       }

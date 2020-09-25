@@ -33,7 +33,7 @@
               >
                 <el-image
                   lazy
-                  v-if="item2.type === 'img'"
+                  v-if="item2.type === 'img' && ruleForm[item2.key]"
                   style="width: 100px; height: 100px;"
                   :src="ruleForm[item2.key]"
                   :preview-src-list="[ruleForm[item2.key]]"
