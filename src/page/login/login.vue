@@ -306,7 +306,6 @@ export default {
   },
   watch: {},
   created() {
-    debugger
     if (window.location.href) {
       var ticket = window.location.href.split('ticket=')
       if (!ticket) {
@@ -462,6 +461,7 @@ export default {
         }
         return;
       }
+      console.log(res)
       const userId = res.object.user.id
       const roleId = res.object.user.roleId
       this.saveAccessToken(res.object.accessToken)
