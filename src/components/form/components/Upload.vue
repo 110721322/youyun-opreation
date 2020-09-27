@@ -13,10 +13,12 @@
       :on-remove="onRemove"
       :http-request="upLoad"
       :limit="showFileList ? maxNum : ''"
+      :accept="formItem.fileAccept ? formItem.fileAccept : 'image/*'"
       :on-exceed="fileOver"
       :on-preview="handlePictureCardPreview"
     >
-      <img v-if="dialogImageUrl && !showFileList" :src="dialogImage" class="avatar" />
+      <video v-if="dialogImageUrl && !showFileList&&(formItem.key==='video')" :src="dialogImage" class="avatar" />
+      <img v-else-if="dialogImageUrl && !showFileList" :src="dialogImage" class="avatar" />
       <i v-else class="el-icon-plus s-icon"></i>
     </el-upload>
     <!-- <div v-if="maxNum">最多上传{{ maxNum }}张图片</div> -->

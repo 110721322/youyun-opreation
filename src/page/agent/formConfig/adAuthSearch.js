@@ -6,7 +6,6 @@ export const SEARCH_CONFIG = {
       type: 14,
       label: '精准筛选',
       key: '',
-      class: 'max-width',
       placeholder: "请输入商户号",
       options: [
         {
@@ -18,7 +17,8 @@ export const SEARCH_CONFIG = {
           value: 'name'
         }
       ],
-      labelWidth: '100px'
+      labelWidth: '80px',
+      span: 22
     },
     {
       // cascader
@@ -39,19 +39,22 @@ export const SEARCH_CONFIG = {
           label: '杭帮菜',
           value: 2
         }
-      ]
+      ],
+      labelWidth: '80px',
+      span: 11
     },
     {
       type: 1,
       label: '所属运营',
       key: 'useChannel',
-      labelWidth: '185px',
       urlOptions: {
         url: apiAgent.queryAllOperation,
         keyName: 'operationId',
         valueName: 'operationName',
         method: 'get'
-      }
+      },
+      labelWidth: '80px',
+      span: 11
     },
     {
       type: 1,
@@ -72,7 +75,9 @@ export const SEARCH_CONFIG = {
           label: '杭帮菜',
           value: 2
         }
-      ]
+      ],
+      labelWidth: '80px',
+      span: 11
     }
   ]
 }
