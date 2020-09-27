@@ -219,16 +219,13 @@ export default {
       }).catch(() => {});
     },
     openAgentManager(row) {
-      var linkPath = process.env.VUE_APP_AGENTURL
-      // window.open(`${linkPath}.$`)
-      window.open(linkPath + 'ticket' + '=' + '111')
       api.generateLoginTicket({
         system: 'agent',
         phone: row.personMobile,
         password: row.password
       }).then(res => {
         if (res.status === 0) {
-          window.location.href = `http://service.intranet.aduer.com/ticket=${res.object}`
+          window.location.href = process.env.VUE_APP_AGENTURL + 'ticket' + '=' + res.object
         }
       })
     },
