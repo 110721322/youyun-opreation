@@ -444,7 +444,7 @@ export default {
     var end = year + '-' + month1 + '-' + date1 + ' ' + '23' + ':' + '59' + ':' + '59'
     this.timeDate = [start, end]
     this.gatTag()
-    this.getSelectSummary(this.timeDate)
+    // this.getSelectSummary(this.timeDate)
     this.getQueryWait()
     this.getRelatedLabels()
     this.getAddressBookQuery()

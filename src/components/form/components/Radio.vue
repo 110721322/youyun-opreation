@@ -5,6 +5,7 @@
       :key="index"
       v-model="ruleForm[formItem.key]"
       :label="item.value"
+      :disabled="formItem.isDisabled"
     >{{ item.label }}</el-radio>
   </div>
 </template>

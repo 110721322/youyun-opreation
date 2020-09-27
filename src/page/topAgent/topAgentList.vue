@@ -197,7 +197,17 @@ export default {
         })
       })
     },
-    openAgentManager() {},
+    openAgentManager(row) {
+      api.generateLoginTicket({
+        system: 'operation',
+        phone: row.personMobile,
+        password: row.password
+      }).then(res => {
+        if (res.status === 0) {
+          window.open(`http://operation.intranet.aduer.com/ticket=${res.object}`)
+        }
+      })
+    },
     onClick_addServe() {
       this.$router.push({
         name: "addTopAgent"

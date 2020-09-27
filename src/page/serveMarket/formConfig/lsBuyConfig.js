@@ -73,7 +73,7 @@ export const FORM_CONFIG = {
         inputType: "input",
         row: 1,
         style: 'width:364px',
-        placeholder: '请输入'
+        placeholder: '建议范围2.6-6'
       },
       {
         type: 0,

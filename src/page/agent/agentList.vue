@@ -219,6 +219,9 @@ export default {
       }).catch(() => {});
     },
     openAgentManager(row) {
+      var linkPath = process.env.VUE_APP_AGENTURL
+      // window.open(`${linkPath}.$`)
+      window.open(linkPath + 'ticket' + '=' + '111')
       api.generateLoginTicket({
         system: 'agent',
         phone: row.personMobile,

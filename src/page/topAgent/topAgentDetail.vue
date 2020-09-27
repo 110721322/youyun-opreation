@@ -6,7 +6,8 @@
       </div>
     </div>
 
-    <detailMode :rule-form="ruleForm" :config-data="configData" @edit="itemEdit"></detailMode>
+    <detailMode :rule-form="ruleForm" :config-data="configData" v-if="ruleForm.businessType === 'enterprise'" @edit="itemEdit"></detailMode>
+    <detailMode :rule-form="ruleForm" :config-data="configData1" v-if="ruleForm.businessType === 'individual'" @edit="itemEdit"></detailMode>
 
     <detailMode5 :rule-form="ruleForm" :config-data="configData2" @edit="itemEdit" @handle_seem="itemSeem"></detailMode5>
 
@@ -278,7 +279,7 @@ import detailMode from "@/components/detailMode/detailMode.vue";
 import detailMode5 from "@/components/detailMode/detailMode5.vue";
 import { USER_CONFIG, USER_CONFIG2 } from "./../agent/tableConfig/config_communicate";
 import { FORM_CONFIG } from "./formConfig/topAgentDetail";
-import { configData, configData2 } from "./dataConfig/topAgentDetailData";
+import { configData, configData1, configData2 } from "./dataConfig/topAgentDetailData";
 import {CONTACTS_CONFIG} from "../agent/formConfig/addContacts";
 import {LISASION} from "../agent/formConfig/addLiasion";
 import areaData from "@/assets/data/areaData";
@@ -306,6 +307,7 @@ export default {
       inputValue: "",
       formType: "",
       configData: configData,
+      configData1: configData1,
       configData2: configData2,
       timeDate: [],
       pickerOptions: {
@@ -415,7 +417,7 @@ export default {
   },
   mounted() {
     this.getAgentDetail();
-    this.initCommunication();
+    // this.initCommunication();
   },
   methods: {
     remoteMethod(query) {
@@ -720,12 +722,15 @@ export default {
           bankAccountHolder: this.ruleForm.bankAccountHolder
         }
       } else {
-        const commonData = FORM_CONFIG[$model]
-        for (const $item of commonData.formData) {
-          $item.initVal = this.ruleForm[$item.key];
-        }
-        this.fromConfigData = this.$g.utils.deepClone(commonData)
-        this.formType = $model
+        this.fromConfigData = {}
+        setTimeout(() => {
+          const commonData = FORM_CONFIG[$model]
+          for (const $item of commonData.formData) {
+            $item.initVal = this.ruleForm[$item.key];
+          }
+          this.fromConfigData = this.$g.utils.deepClone(commonData)
+          this.formType = $model
+        }, 200)
         this.drawer = true;
       }
       this.formType = $model
@@ -801,26 +806,19 @@ export default {
             })
             return false
           }
-          if (!$ruleForm.licenseImg && !$ruleForm.licenseImg.dialogImageUrl) {
+          if (!$ruleForm.licenseImg && $ruleForm.businessType === 'enterprise') {
             this.$message({
               message: '请上传营业执照',
               type: 'warning'
             })
             return false
           }
-          if ($ruleForm.licenseImg && typeof ($ruleForm.licenseImg) === 'string') {
-            var img = $ruleForm.licenseImg.split('.com')
-            $ruleForm.licenseImg = img[1].slice(1, img[1].length)
-          }
-          if ($ruleForm.licenseImg && typeof ($ruleForm.licenseImg) === 'object') {
-            $ruleForm.licenseImg = $ruleForm.licenseImg.dialogImageUrl
-          }
           Object.assign($ruleForm, {
             channelAgentCode: this.channelAgentCode,
             provinceCode: $ruleForm.area[0],
             cityCode: $ruleForm.area[1],
             areaCode: $ruleForm.area[2],
-            licenseImg: $ruleForm.licenseImg
+            licenseImg: $ruleForm.businessType === 'enterprise' ? $ruleForm.licenseImg : ''
           })
           this.baseInfo($ruleForm);
           break;

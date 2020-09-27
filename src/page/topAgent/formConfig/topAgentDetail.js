@@ -11,7 +11,8 @@ export const FORM_CONFIG = {
         type: 5,
         label: '账户类型',
         key: 'businessType',
-        initVal: '',
+        initVal: 'individual',
+        isDisabled: true,
         options: [
           {
             label: '企业',
@@ -87,7 +88,14 @@ export const FORM_CONFIG = {
         initVal: '',
         rules: [
           {required: true, message: "请上传营业执照", trigger: "blur"}
-        ]
+        ],
+        isShow: (item) => {
+          if (item.businessType === 'enterprise') {
+            return true
+          } else {
+            return false
+          }
+        }
       }
     ]
   },
@@ -191,20 +199,9 @@ export const FORM_CONFIG = {
     formData: [
       {
         type: 0,
-        label: '微信费率',
+        label: '微信/支付宝费率',
         labelWidth: '300px',
         key: 'wechatPayRate',
-        initVal: '',
-        placeholder: '输入范围3-6',
-        isShowSlot: true,
-        showSlotName: '‰',
-        rules: setRules('请输入').isSelected.get
-      },
-      {
-        type: 0,
-        label: '支付宝费率',
-        labelWidth: '300px',
-        key: 'alipayRate',
         initVal: '',
         placeholder: '输入范围3-6',
         isShowSlot: true,

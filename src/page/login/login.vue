@@ -305,7 +305,20 @@ export default {
     };
   },
   watch: {},
-  created() {},
+  created() {
+    debugger
+    if (window.location.href) {
+      var ticket = window.location.href.split('ticket=')
+      if (!ticket) {
+        return
+      } else {
+        var ticket1 = ticket[1].split('#')[0]
+        api.loginWithTicket({
+          ticket: ticket1
+        }).then(res => this.loginCallBack(res))
+      }
+    }
+  },
   methods: {
     ...mapActions([
       'saveAccessToken', 'saveUserInfo', 'saveRoutersArr', 'saveWebsocketOption'
