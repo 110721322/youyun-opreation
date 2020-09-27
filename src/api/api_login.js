@@ -14,5 +14,7 @@ export default {
   // 顶级服务商注册
   registerTopAgent: (params, config) => API.POST('/operation/v1/topAgent/register', params),
   // 发送忘记密码的验证码
-  sendForgetCode: (params) => API.GET('/common/v1/user/sendForgetPasswordCode', params)
+  sendForgetCode: (params) => API.GET('/common/v1/user/sendForgetPasswordCode', params),
+  // 跨平台登录
+  loginWithTicket: (params) => API.GET('/common/v1/user/loginWithTicket', params)
 };

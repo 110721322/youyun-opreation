@@ -305,7 +305,16 @@ export default {
     };
   },
   watch: {},
-  created() {},
+  created() {
+    if (this.$route.query.ticket) {
+      var ticket = this.$route.query.ticket
+      api.loginWithTicket({
+        ticket: ticket
+      }).then(res => {
+        this.loginCallBack(res)
+      })
+    }
+  },
   methods: {
     ...mapActions([
       'saveAccessToken', 'saveUserInfo', 'saveRoutersArr', 'saveWebsocketOption'
@@ -449,6 +458,7 @@ export default {
         }
         return;
       }
+      console.log(res)
       const userId = res.object.user.id
       const roleId = res.object.user.roleId
       this.saveAccessToken(res.object.accessToken)

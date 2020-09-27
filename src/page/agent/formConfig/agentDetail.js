@@ -12,6 +12,7 @@ export const FORM_CONFIG = {
         type: 5,
         label: '账户类型',
         key: 'businessType',
+        isDisabled: true,
         initVal: 'enterprise',
         options: [
           {
@@ -131,7 +132,7 @@ export const FORM_CONFIG = {
         labelWidth: '300px',
         key: 'wechatPayRate',
         initVal: '',
-        placeholder: '输入范围3-6',
+        placeholder: '建议范围2.6-6',
         isShowSlot: true,
         showSlotName: '‰',
         rules: setRules('请输入').isSelected.get

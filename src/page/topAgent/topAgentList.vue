@@ -197,7 +197,17 @@ export default {
         })
       })
     },
-    openAgentManager() {},
+    openAgentManager(row) {
+      api.generateLoginTicket({
+        system: 'operation',
+        phone: row.personMobile,
+        password: row.password
+      }).then(res => {
+        if (res.status === 0) {
+          window.location.href = process.env.VUE_APP_BASEURL + '#/login?ticket' + '=' + res.object
+        }
+      })
+    },
     onClick_addServe() {
       this.$router.push({
         name: "addTopAgent"
