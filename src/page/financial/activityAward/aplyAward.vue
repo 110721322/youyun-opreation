@@ -12,7 +12,7 @@
     <div class="form-table">
       <div class="table-content">
         <div class="form-title">
-          <ul>
+          <ul style="width:100%">
             <!-- <li>下载导入奖励模板</li> -->
             <el-button type="primary" @click="openDraw">导入蜻蜓奖励名单</el-button>
           </ul>
@@ -171,7 +171,7 @@ export default {
     padding-bottom: 26px;
     border-bottom: 1px solid #EBEEF5;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
   }
   .form-title span {
     display: block;

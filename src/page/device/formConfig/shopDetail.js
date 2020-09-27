@@ -47,6 +47,7 @@ export const FORM_CONFIG = {
         type: 6,
         label: '宣传视频',
         key: 'video',
+        fileAccept: 'video/*',
         rules: setRules('宣传视频').isRequired.get
       },
       {
