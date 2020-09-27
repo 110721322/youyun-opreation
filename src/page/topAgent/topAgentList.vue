@@ -204,7 +204,7 @@ export default {
         password: row.password
       }).then(res => {
         if (res.status === 0) {
-          window.location.href = process.env.VUE_APP_BASEURL + 'ticket' + '=' + res.object
+          window.location.href = process.env.VUE_APP_BASEURL + '#/login?ticket' + '=' + res.object
         }
       })
     },
