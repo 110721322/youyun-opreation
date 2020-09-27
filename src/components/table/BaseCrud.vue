@@ -1,7 +1,7 @@
 <template>
   <div class="crud">
     <el-table
-      :ref="refName ? refName : 'table'"
+      :ref="refName"
       v-loading="listLoading"
       :data="showGridData"
       style="width: 100%;font-size:14px"
@@ -194,8 +194,8 @@ export default {
       listLoading: false,
       queryParams: {},
       checkAll: false,
-      multipleSelection: [],
-      isIndeterminate: false
+      isIndeterminate: false,
+      multipleSelection: []
     };
   },
   computed: {
@@ -223,13 +223,16 @@ export default {
   methods: {
     toggleSelection() {
       const refName = this.refName ? this.refName : 'table'
-      if (this.multipleSelection.length === this.showGridData.length) {
-        this.$refs[refName].clearSelection();
-      } else {
-        this.$refs[refName].clearSelection();
+      if (this.checkAll) {
+        this.$refs[refName].clearSelection()
         this.showGridData.forEach(row => {
           this.$refs[refName].toggleRowSelection(row);
-        });
+        })
+        return
+      }
+      if (!this.checkAll) {
+        this.$refs[refName].clearSelection()
+        return;
       }
     },
     onClick_handleToggle($row, $item) {
@@ -331,8 +334,17 @@ export default {
       }
     },
     handleSelectionChange(val) {
-      this.multipleSelection = val;
-      this.$emit("selectionChange", val);
+      this.multipleSelection = val
+      if (val.length > 0 && val.length === this.showGridData.length) {
+        this.checkAll = true
+        this.$emit("selectionChange", val);
+        return
+      }
+      if (val.length !== this.showGridData.length) {
+        this.checkAll = false
+        this.$emit("selectionChange", val);
+        return
+      }
     },
     cancelEdit($row) {
       $row.edit = false;

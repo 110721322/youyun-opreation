@@ -65,7 +65,7 @@ export default {
       drawer: false,
       direction: "rtl",
       params: {
-        currentPage: 0,
+        currentPage: 1,
         deviceIdentifier: '',
         deviceInputId: this.$route.query.id,
         pageSize: 1

@@ -76,7 +76,7 @@ export default {
       channelAgentCode: '',
       fromConfigData: {},
       drawer: false,
-      activeIndex: '0',
+      activeIndex: 1,
       showComponents: {
         showRejectTitle: false,
         showOperBtns: false
@@ -389,15 +389,11 @@ export default {
     }
   },
   created() {
-    console.log(decodeURIComponent(this.$route.query.channelStatusList))
   },
   mounted() {
-    // console.log('3333333')
     this.merchantNo = this.$route.query.merchantNo
-    // console.log(this.merchantNo, 22222)
-    this.channelStatusList = this.$route.query.channelStatusList
+    this.channelStatusList = JSON.parse(this.$route.query.channelStatusList)
     if (this.channelStatusList) {
-      // console.log(44444)
       this.getDetail()
     }
   },
@@ -464,12 +460,7 @@ export default {
             })
             this.getDetail()
           }
-        }).catch(err => {
-          this.$message({
-            message: err.errorMessage,
-            type: 'warning'
-          });
-        });
+        })
       }).catch(() => {
         this.$message({
           message: '取消操作',
@@ -510,10 +501,10 @@ export default {
       this.fromConfigData = FORM_CONFIG.rejectReason;
     },
     getTableData() {},
-    handleSelect($index) {
-      this.activeIndex = $index;
-      this.channelCode = $index;
-    },
+    // handleSelect($index) {
+    //   this.activeIndex = $index;
+    //   this.channelCode = $index;
+    // },
     onClick_edit($item) {
       $item.edit = true;
     },

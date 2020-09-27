@@ -81,7 +81,7 @@ export default {
         name: 'indirectListDetail',
         query: {
           merchantNo: row.merchantNo,
-          channelStatusList: row.channelStatusList,
+          channelStatusList: JSON.stringify(row.channelStatusList),
           channelAgentCode: row.channelAgentCode
         }
       });

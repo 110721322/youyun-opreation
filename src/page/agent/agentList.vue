@@ -22,6 +22,7 @@
         <el-button class="btn" type="text" @click="clear">清空</el-button>
       </div> -->
       <BaseCrud
+        :refName="child"
         ref="child"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
@@ -90,7 +91,8 @@ export default {
       selectData: [],
       params: {},
       api: "",
-      dialogVisible: false
+      dialogVisible: false,
+      child: 'child'
     };
   },
   created() {
@@ -149,7 +151,9 @@ export default {
         })
       }
     },
-    handleClose() {},
+    handleClose() {
+      this.dialogVisible = false
+    },
     selectionChange($val) {
       this.selectData = $val;
     },

@@ -43,7 +43,8 @@
       </div>
     </div>
 
-    <detailMode :rule-form="ruleForm" :config-data="configData" @edit="itemEdit"></detailMode>
+    <detailMode :rule-form="ruleForm" :config-data="configData" v-if="ruleForm.businessType === 'enterprise'" @edit="itemEdit"></detailMode>
+    <detailMode :rule-form="ruleForm" :config-data="configData1" @edit="itemEdit" v-if="ruleForm.businessType === 'individual'"></detailMode>
     <detailMode :rule-form="ruleForm" :config-data="configData2" @edit="rateEdit"></detailMode>
 
     <div class="bg_box">
@@ -341,6 +342,7 @@ export default {
       inputVisible: false,
       inputValue: "",
       configData: DETAILCONFIG.configData,
+      configData1: DETAILCONFIG.configData1,
       configData2: DETAILCONFIG.configData2,
       equipmentConfigData: ORDER_EQUIPMENT,
       pickerOptions: {

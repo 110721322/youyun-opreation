@@ -71,14 +71,14 @@ export const FORM_CONFIG = {
         key: 'businessLicenseImg',
         maxNum: 1,
         initVal: '',
-        rules: setRules('营业执照').isSelected.get
-        // isShow: (item) => {
-        //   if (item.businessType === 'enterprise') {
-        //     return true
-        //   } else {
-        //     return false
-        //   }
-        // }
+        rules: setRules('营业执照').isSelected.get,
+        isShow: (item) => {
+          if (item.businessType === 'enterprise') {
+            return true
+          } else {
+            return false
+          }
+        }
       }
     ]
   },

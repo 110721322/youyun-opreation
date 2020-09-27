@@ -102,7 +102,7 @@ export const USER_CONFIG = {
         emitName: 'thaw',
         type: 'text',
         isShow: ($row) => {
-          if ($row.isBlocked === 1) {
+          if ($row.isBlocked === 2) {
             return true;
           } else {
             return false;
