@@ -311,10 +311,14 @@ export default {
       if (!ticket) {
         return
       } else {
-        var ticket1 = ticket[1].split('#')[0]
+        var ticket1 = ticket[1]
         api.loginWithTicket({
           ticket: ticket1
-        }).then(res => this.loginCallBack(res))
+        }).then(res => {
+          if (res.status === 0) {
+            this.loginCallBack(res)
+          }
+        })
       }
     }
   },
