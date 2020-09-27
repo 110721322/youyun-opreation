@@ -205,7 +205,7 @@ export default {
       }).then(res => {
         if (res.status === 0) {
           // window.open(process.env.VUE_APP_BASEURL + '#/login?ticket' + '=' + res.object)
-          window.open('http://operation.intranet.aduer.com/' + '#/login?ticket' + '=' + res.object)
+          window.location.href = 'http://operation.intranet.aduer.com/' + '#/login?ticket' + '=' + res.object
         }
       })
     },
