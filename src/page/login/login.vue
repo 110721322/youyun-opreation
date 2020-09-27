@@ -314,19 +314,6 @@ export default {
         this.loginCallBack(res)
       })
     }
-    // if (window.location.href) {
-    //   var ticket = window.location.href.split('ticket=')
-    //   if (!ticket[1]) {
-    //     return
-    //   } else {
-    //     var ticket1 = ticket[1]
-    //     api.loginWithTicket({
-    //       ticket: ticket1
-    //     }).then(res => {
-    //       this.loginCallBack(res)
-    //     })
-    //   }
-    // }
   },
   methods: {
     ...mapActions([
