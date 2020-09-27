@@ -63,7 +63,8 @@ export default {
       comboItem: {},
       amount: 0,
       formItem: {
-        key: 'imgUrl'
+        key: 'imgUrl',
+        maxNum: 1
       },
       ruleForm: {}
     }
@@ -82,7 +83,7 @@ export default {
       this.selectIndex = index
     },
     onClick_tostatus() {
-      const imageUrl = this.ruleForm.imgUrl.dialogImagePath + this.ruleForm.imgUrl.dialogImageUrl
+      const imageUrl = `${this.ruleForm.ossHost}/${this.ruleForm.imgUrl}`
       localStorage.setItem('voucher', imageUrl)
       const params = {
         comboId: this.comboItem.id,
@@ -102,11 +103,11 @@ export default {
     }
   },
   beforeDestroy() {
-    localStorage.setItem('comboItem', '')
-    localStorage.setItem('productItem', '')
-    localStorage.setItem('amount', '')
-    localStorage.setItem('voucher', '')
-    localStorage.setItem('promoCodeId', '')
+    // localStorage.setItem('comboItem', '')
+    // localStorage.setItem('productItem', '')
+    // localStorage.setItem('amount', '')
+    // localStorage.setItem('voucher', '')
+    // localStorage.setItem('promoCodeId', '')
   }
 }
 </script>

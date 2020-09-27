@@ -66,11 +66,14 @@ export default {
   },
   methods: {
     handleCommit($ruleForm) {
-      // const ruleForm = this.$refs.form.handleClick();
-      // if (!ruleForm) {
-      //   this.$message('请完善资料');
-      //   return;
-      // }
+      if (!$ruleForm.title) {
+        this.$message.error('请输入公告标题')
+        return
+      }
+      if (!$ruleForm.content) {
+        this.$message.error('请输入公告内容')
+        return
+      }
       if ($ruleForm.messageType === 1) {
         if ($ruleForm.readableTime) {
           const num = parseInt($ruleForm.readableTime)

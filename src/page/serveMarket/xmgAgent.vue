@@ -78,6 +78,8 @@ export default {
     }
   },
   created() {
+  },
+  mounted() {
     this.productItem = JSON.parse(localStorage.getItem('productItem'))
     this.getModelDetail()
     if (this.productItem.buyStatus) {

@@ -97,11 +97,11 @@ export default {
     }
   },
   beforeDestroy() {
-    localStorage.setItem('comboItem', '')
-    localStorage.setItem('productItem', '')
-    localStorage.setItem('amount', '')
-    localStorage.setItem('voucher', '')
-    localStorage.setItem('promoCodeId', '')
+    // localStorage.setItem('comboItem', '')
+    // localStorage.setItem('productItem', '')
+    // localStorage.setItem('amount', '')
+    // localStorage.setItem('voucher', '')
+    // localStorage.setItem('promoCodeId', '')
   }
 }
 </script>

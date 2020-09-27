@@ -188,6 +188,7 @@ export default {
     uploadSingle() {
       this.dialogImageUrl = this.ossData.objectKeyPrefix + "/" + this.ossData.objectKeys[0];
       this.ruleForm[this.formItem.key] = this.dialogImageUrl;
+      this.ruleForm['ossHost'] = this.ossData.ossHost;
     },
     /** 多图上传回调 */
     uploadMultiple() {

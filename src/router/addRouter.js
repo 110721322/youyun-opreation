@@ -630,8 +630,7 @@ const asyncRoutes = {
     name: 'businessModel',
     meta: {
       title: '业务模式',
-      icon: 'businessModel',
-      keepAlive: 'BusinessModel'
+      icon: 'businessModel'
     },
     component: () => import('@/page/serveMarket/businessModel.vue'),
     children: [

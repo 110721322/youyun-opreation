@@ -154,9 +154,9 @@ export default {
           type: 'warning'
         })
       } else {
-        this.drawer = true
         api.initSettle({}).then(res => {
           if (res.object) {
+            this.drawer = true
             this.info = res.object.settleMap
             this.settleInfo = res.object
             const newFromConfigData = FORM_CONFIG.detailData.formData
@@ -314,10 +314,6 @@ export default {
   }
   .el-drawer__header {
     margin-bottom: 20px;
-  }
-  .option-btn button {
-    width: 110px;
-    height: 32px;
   }
   .drawer-contenttitle {
     font-size: 20px;
