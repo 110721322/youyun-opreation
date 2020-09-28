@@ -6,7 +6,7 @@ export const USER_CONFIG = {
       width: '120px'
     },
     {
-      label: '服务商ID',
+      label: '顶级服务商ID',
       prop: 'channelAgentCode',
       width: '150px'
     },

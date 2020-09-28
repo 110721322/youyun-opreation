@@ -4,7 +4,7 @@
       <span class="title">第三方对接列表</span>
     </div>
     <Search
-        :is-show-all="true"
+        :is-show-all="false"
         :form-base-data="searchConfig.formData"
         @search="search"
     />
