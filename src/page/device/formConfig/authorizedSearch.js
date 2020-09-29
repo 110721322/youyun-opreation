@@ -5,6 +5,10 @@ export const SEARCH_CONFIG = {
       type: 9,
       label: '筛选时间',
       key: 'date',
+<<<<<<< HEAD
+=======
+      format: 'yyyy-MM-dd',
+>>>>>>> dev-changting
       labelWidth: '80px',
       span: 22
     },

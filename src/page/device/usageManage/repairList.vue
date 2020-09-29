@@ -77,15 +77,35 @@ export default {
         operationId: "",
         orderNo: "",
         pageSize: 20,
-        status: "",
-        beginTime: this.$g.utils.getToday(),
-        endTime: this.$g.utils.getToday()
+        status: ""
       },
       api: api.deviceMaintainQueryByPage
     };
   },
   mounted() {},
+  created() {
+    this.params.beginTime = this.getDay(0);
+    this.params.endTime = this.getDay(0);
+  },
   methods: {
+    getDay(day) {
+      var today = new Date();
+      const targetdayMilliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day;
+      today.setTime(targetdayMilliseconds); // 注意，这行是关键代码
+      var tYear = today.getFullYear();
+      var tMonth = today.getMonth();
+      var tDate = today.getDate();
+      tMonth = this.doHandleMonth(tMonth + 1);
+      tDate = this.doHandleMonth(tDate);
+      return tYear + "-" + tMonth + "-" + tDate;
+    },
+    doHandleMonth(month) {
+      var m = month;
+      if (month.toString().length === 1) {
+        m = "0" + month;
+      }
+      return m;
+    },
     onClick_reject($row) {
       this.formStatus = "reject";
       this.activityRow = $row;

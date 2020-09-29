@@ -68,14 +68,34 @@ export default {
   },
   created() {
     this.params = {}
+    this.params.beginDate = this.getDay(0);
+    this.params.endDate = this.getDay(0);
   },
   mounted() {},
   methods: {
+    getDay(day) {
+      var today = new Date();
+      const targetdayMilliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day;
+      today.setTime(targetdayMilliseconds); // 注意，这行是关键代码
+      var tYear = today.getFullYear();
+      var tMonth = today.getMonth();
+      var tDate = today.getDate();
+      tMonth = this.doHandleMonth(tMonth + 1);
+      tDate = this.doHandleMonth(tDate);
+      return tYear + "-" + tMonth + "-" + tDate;
+    },
+    doHandleMonth(month) {
+      var m = month;
+      if (month.toString().length === 1) {
+        m = "0" + month;
+      }
+      return m;
+    },
     search($form) {
       console.log($form)
       this.params = {
-        beginDate: $form.date[0],
-        endDate: $form.date[1],
+        beginDate: $form.date[0] ? $form.date[0] : '',
+        endDate: $form.date[1] ? $form.date[1] : '',
         personName: $form.personName ? $form.personName : null,
         personMobile: $form.personMobile ? $form.personMobile : null,
         businessType: $form.businessType ? $form.businessType : null,

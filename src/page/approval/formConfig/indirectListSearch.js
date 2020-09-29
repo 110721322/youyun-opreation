@@ -9,6 +9,7 @@ export const SEARCH_CONFIG = {
       key: 'date',
       class: 'max-width',
       datatype: "datetimerange",
+      format: "yyyy-MM-dd HH:mm:ss",
       labelWidth: '80px',
       span: 22
     },
