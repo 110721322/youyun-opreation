@@ -107,7 +107,19 @@ router.beforeEach((to, from, next) => {
     next()
     return;
   } else if (to.path === "/" && routes.length > 0) {
-    next({name: routes[0].name})
+    let routerName;
+    const first = routes[0];
+    if (first.children && first.children.length > 0) {
+      const second = first.children[0];
+      if (second.children && second.children.length > 0) {
+        routerName = second.children[0].name
+      } else {
+        routerName = second.name
+      }
+    } else {
+      routerName = first.name
+    }
+    next({name: routerName})
   } else if (routes.length === 0) {
     const accessToken = store.state.admin.accessToken;
     if (accessToken === null || accessToken === '') {

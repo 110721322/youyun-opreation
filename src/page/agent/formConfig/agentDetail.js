@@ -90,7 +90,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '收件人',
-        key: 'expReceiver',
+        key: 'personName',
         initVal: '',
         placeholder: '请填写收件人姓名',
         rules: setRules('请填写').isRequired.get
@@ -98,7 +98,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '联系方式',
-        key: 'expMobile',
+        key: 'personMobile',
         initVal: '',
         placeholder: '请填写联系方式',
         rules: setRules('请填写').isRequired.get
@@ -106,7 +106,7 @@ export const FORM_CONFIG = {
       {
         type: 8,
         label: '选择地区',
-        key: 'expAreaData',
+        key: 'area',
         style: 'width:294px',
         labelWidth: '185px',
         options: areaData,
@@ -115,7 +115,7 @@ export const FORM_CONFIG = {
       {
         type: 0,
         label: '详细地址',
-        key: 'expAddress',
+        key: 'detailAddress',
         initVal: '',
         placeholder: '请填写详细地址',
         rules: setRules('请填写').isRequired.get

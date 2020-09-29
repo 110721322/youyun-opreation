@@ -26,7 +26,7 @@
         <li v-if="selectIndex===1"><span>打款账号：</span><span>3301040160001013187</span></li>
         <li v-if="selectIndex===1"><span>开户银行：</span><span>杭州银行滨江支行</span></li>
         <li v-if="selectIndex===1">
-          <span>上传凭证：</span>
+          <span style="color:red">*</span><span>上传凭证：</span>
           <div class="photo">
             <Upload :formItem="formItem" :ruleForm="ruleForm" />
           </div>
@@ -83,6 +83,10 @@ export default {
       this.selectIndex = index
     },
     onClick_tostatus() {
+      if (!this.ruleForm.imgUrl) {
+        this.$message('请上传凭证')
+        return
+      }
       const imageUrl = `${this.ruleForm.ossHost}/${this.ruleForm.imgUrl}`
       localStorage.setItem('voucher', imageUrl)
       const params = {
@@ -90,7 +94,7 @@ export default {
         payType: this.payWay[this.selectIndex].id,
         productName: this.modelName,
         promoCodeId: localStorage.getItem('promoCodeId') || '',
-        voucher: this.ruleForm.imgUrl.dialogImageUrl
+        voucher: this.ruleForm.imgUrl
       }
       api.createOrder(params).then(res => {
         if (res.object) {

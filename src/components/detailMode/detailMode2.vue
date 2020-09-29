@@ -22,7 +22,7 @@
     >
       <slot v-if="currentType" :currentType="currentType"></slot>
       <el-row>
-        <el-col v-for="(item, key) of imageList" :key="key" :span="imgWidth?imgWidth:8">
+        <el-col v-for="(item, key) of imageList" :key="key" :span="imgWidth?imgWidth:8" style="width: 100px;margin-right: 24px;">
           <el-form-item v-if="ruleForm[item.key]">
             <el-image
               style="width: 100px; height: 100px;display:block;margin: auto;"
@@ -42,7 +42,7 @@
           class="col"
         >
           <i v-if="item.hasIconTime" class="el-icon-time icon-time"></i>
-          <el-form-item :label="item.name +(item.hideColon?'':'：') ">
+          <el-form-item :label="item.name +(item.hideColon?'':'：') " v-if="!item.hideItem">
             <span v-if="item.type != 'switch'" class="item-value">{{ item.formatter ? item.formatter(ruleForm) : ruleForm[item.key] }}</span>
             <span v-if="item.type == 'edit'" class="edit_btn" @click="handel_modify">修改</span>
             <el-switch

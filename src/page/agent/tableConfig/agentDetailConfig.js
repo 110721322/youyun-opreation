@@ -111,7 +111,8 @@ export const DETAILCONFIG = {
             items: [
               {
                 name: "地区",
-                key: "name3"
+                key: "area",
+                type: "area"
               }
             ]
           }
@@ -226,7 +227,8 @@ export const DETAILCONFIG = {
             items: [
               {
                 name: "地区",
-                key: "name3"
+                key: "area",
+                type: 'area'
               }
             ]
           }

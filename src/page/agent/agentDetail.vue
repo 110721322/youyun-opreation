@@ -821,6 +821,7 @@ export default {
       this.inputValue = "";
     },
     itemEdit($model) {
+      console.log($model)
       if ($model === 'basicData') {
         this.fromConfigData = {}
         setTimeout(() => {
@@ -848,6 +849,16 @@ export default {
           bankAccountHolder: this.ruleForm.bankAccountHolder
         }
         this.financeDrawer = true
+      }
+      if ($model === 'address') {
+        this.editType = 'editMailAddress'
+        this.drawer = true;
+        const newFromConfigData = FORM_CONFIG[$model];
+        newFromConfigData.formData.forEach((item, index) => {
+          item.initVal = this.ruleForm[item.key];
+        });
+        console.log(newFromConfigData)
+        this.fromConfigData = this.$g.utils.deepClone(newFromConfigData);
       }
     },
     rateEdit($model) {
