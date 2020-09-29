@@ -33,15 +33,38 @@ export const FORM_CONFIG = {
         type: 11,
         label: '入库时间',
         format: "yyyy-MM-dd",
-        // datatype: "date",
         key: 'inputTime',
         rules: setRules('公司名称').isRequired.get
+      },
+      {
+        type: 5,
+        label: '导入方式',
+        key: 'type',
+        initVal: 1,
+        options: [
+          {
+            label: '批量导入',
+            value: 1
+          },
+          {
+            label: '手动录入',
+            value: 2
+          }
+        ],
+        rules: setRules('导入方式').isSelected.get
       },
       {
         type: 'uploadFile',
         label: '设备标识',
         key: 'deviceIdentifier',
-        rules: setRules('设备标识').isSelected.get
+        rules: setRules('设备标识').isSelected.get,
+        isShow: ($row) => {
+          if ($row.type === 1) {
+            return true
+          } else {
+            return false
+          }
+        }
       }
     ]
   }

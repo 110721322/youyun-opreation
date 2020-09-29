@@ -118,7 +118,14 @@ export default {
     confirm($data) {
       console.log($data)
       if (this.formStatus === "add" || this.formStatus === "edit") {
-        if (!$data.deviceType || !$data.deviceModel || !$data.deviceImg || !$data.costPrice || !$data.salePrice || !$data.sort) {
+        if (!$data.deviceModel || !$data.deviceImg || !$data.costPrice || !$data.salePrice || !$data.sort) {
+          this.$message({
+            message: "请填写必填信息",
+            type: "warning"
+          })
+          return
+        }
+        if ($data.deviceModel === '') {
           this.$message({
             message: "请填写必填信息",
             type: "warning"

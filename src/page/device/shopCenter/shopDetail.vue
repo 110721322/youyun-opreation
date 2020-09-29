@@ -54,7 +54,14 @@ export default {
     },
     confirm($ruleForm) {
       console.log($ruleForm)
-      if (!$ruleForm.desc || !$ruleForm.deviceId || !$ruleForm.deviceType || !$ruleForm.img || !$ruleForm.sort) {
+      if (!$ruleForm.desc || !$ruleForm.deviceId || !$ruleForm.img || !$ruleForm.sort) {
+        this.$message({
+          message: "请填写必填信息",
+          type: "warning"
+        })
+        return
+      }
+      if ($ruleForm.deviceType === '') {
         this.$message({
           message: "请填写必填信息",
           type: "warning"
@@ -76,9 +83,6 @@ export default {
             this.$message("保存成功");
             this.$router.replace({ name: "shopCenter" });
           })
-          .catch(err => {
-            this.$message(err);
-          });
       } else {
         api
           .deviceMallAdd({

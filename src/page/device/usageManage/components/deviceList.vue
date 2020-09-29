@@ -16,16 +16,6 @@
                 <div class="name">{{ item1.deviceModel }}</div>
               </div>
             </div>
-            <!--            <div-->
-            <!--              v-for="(item1,index1) in item.usingList"-->
-            <!--              :key="index1"-->
-            <!--              class="device-item"-->
-            <!--              @click="onClick_selectItem(item1)"-->
-            <!--            >-->
-            <!--              <img class="device-img" :src="item1.deviceImg" />-->
-            <!--              <div class="nums">{{ item1.usingCount }}</div>-->
-            <!--              <div class="name">{{ item1.deviceModel }}</div>-->
-            <!--            </div>-->
           </div>
         </el-form-item>
       </el-form>
@@ -80,10 +70,11 @@ export default {
   margin: 24px;
   .el-form {
     display: flex;
+    flex-wrap: wrap;
     margin-right: 24px;
   }
   .device-form {
-    height: 150px;
+    height: 200px;
     overflow: hidden;
   }
   .device-list {
@@ -153,5 +144,9 @@ export default {
     text-align: center;
     color: #1890ff;
   }
+}
+.el-form-item--small.el-form-item {
+  width: 100%;
+  margin-bottom: 40px;
 }
 </style>

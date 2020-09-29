@@ -125,7 +125,7 @@ export default {
     // 获取购物车的数量
     getCartNum() {
       api.queryShopCartList({
-        userId: localStorage.getItem('agentUserId')
+        userId: this.$store.state.admin.userInfo.id
       }).then(res => {
         this.totalNum = res.object.FACE.length + res.object.POSS.length + res.object.OTHER.length
       })

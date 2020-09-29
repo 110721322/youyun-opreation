@@ -1021,17 +1021,21 @@ export default {
           expAreaData.push(res.object.expProvinceCode, res.object.expCityCode, res.object.expAreaCode)
           res.object.expAreaData = expAreaData
         }
+        if (res.object.businessModes) {
+          res.object.businessModes.forEach(m => {
+            if (m.modeName === '小马哥代理') {
+              res.object.businessExpiredDate = m.expiredDate
+            } else {
+              res.object.businessExpiredDate = ''
+            }
+          })
+        }
         res.object.emailDetailAddress = provinceName + cityName + areaName
         ruleForm.wechatPayRate = this.$g.utils.AccMul(ruleForm.wechatPayRate, 1000);
         ruleForm.alipayRate = this.$g.utils.AccMul(ruleForm.alipayRate, 1000);
         ruleForm.cloudPayLe1000Rate = this.$g.utils.AccMul(ruleForm.cloudPayLe1000Rate, 1000);
         ruleForm.cloudPayGt1000Rate = this.$g.utils.AccMul(ruleForm.cloudPayGt1000Rate, 1000);
         this.ruleForm = ruleForm;
-        // api_serve.selectModuleProduct({
-        //   moduleCode: "businessMode"
-        // }).then(res => {
-        //   console.log(res)
-        // })
       });
     }
   }
