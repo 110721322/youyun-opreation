@@ -21,6 +21,7 @@
     />
     <div class="select">
       <el-menu
+        style="margin-bottom: 8px"
         :default-active="selectIndex"
         class="el-menu"
         mode="horizontal"
@@ -224,7 +225,7 @@ export default {
 
     .el-menu-item {
       height: 40px;
-      line-height: 40px;
+      line-height: 32px;
       font-size: 16px;
     }
     .main-top {

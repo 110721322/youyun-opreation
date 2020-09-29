@@ -21,14 +21,14 @@
           <span>{{ comboItem.comboName }}</span>
           <span>{{ comboItem.comboAmount }}</span>
         </li>
-        <li>
+        <!-- <li>
           <div class="coupon">
             <div class="coupon_title">优惠码</div>
             <el-select v-model="promoCodeId" placeholder="请选择" @change="promoSelect" :disabled="comboItem.comboAmount<=0">
               <el-option v-for="(item,index) in promoCodeList" :key="index" :label="item.promoCodeNo" :value="item.id"></el-option>
             </el-select>
           </div>
-        </li>
+        </li> -->
       </ul>
     </div>
     <div class="bottom">

@@ -76,6 +76,7 @@ export default {
           },
           {
             name: "营业执照编号",
+            hideItem: false,
             key: "shopLicenseNo"
           },
           {
@@ -133,6 +134,11 @@ export default {
       api.getDetailByMerchantNo({
         merchantNo: this.merchantNo
       }).then(res => {
+        if (res.object.businessType === 'individual') {
+          this.configData2.items[5].hideItem = true
+        } else {
+          this.configData2.items[5].hideItem = false
+        }
         this.commonData = res.object;
       }).catch();
     },

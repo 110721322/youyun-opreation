@@ -64,6 +64,11 @@ export const TABLE_CONFIG = {
       label: '创建时间',
       prop: 'createTime',
       width: '130px'
+    },
+    {
+      label: '驳回备注',
+      prop: 'reason',
+      width: '120px'
     }
   ],
   // crud的模态框表单配置，可配置表单类型，验证规则，是否必填,col-span布局可通过span参数配置
