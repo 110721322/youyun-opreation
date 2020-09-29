@@ -149,15 +149,14 @@ export default {
       api.addMember({
         phoneList: this.addPhoneList.filter(item => item !== "")
       }).then(res => {
-        if (res.status === 0) {
-          this.addPhoneList = [""];
-          this.$message({
-            message: '添加成功',
-            type: 'success'
-          });
-          this.drawerAddPhone = false;
-          this.$refs.child.getData()
-        }
+        if (res.code) return res;
+        this.addPhoneList = [""];
+        this.$message({
+          message: '添加成功',
+          type: 'success'
+        });
+        this.drawerAddPhone = false;
+        this.$refs.child.getData()
       })
     },
     cancelForm() {
@@ -172,7 +171,6 @@ export default {
           id: this.activityRow.id,
           system: "operation",
           name: $ruleForm.name,
-          phone: $ruleForm.phone,
           email: $ruleForm.email,
           sex: $ruleForm.sex,
           jobName: $ruleForm.jobName,
@@ -181,18 +179,14 @@ export default {
           birthday: $ruleForm.birthday
         })
         .then(res => {
-          if (res.status === 0) {
-            this.$message({
-              message: '编辑成功',
-              type: 'success'
-            });
-          }
+          if (res.code === 0) return res;
+          this.$message({
+            message: '编辑成功',
+            type: 'success'
+          });
           this.drawer = false;
           this.$refs.child.getData();
         })
-        .catch(err => {
-          this.$message(err);
-        });
     },
     onClick_edit($row) {
       api
@@ -200,6 +194,7 @@ export default {
           id: $row.id
         })
         .then(res => {
+          if (res.code) return res;
           FORM_CONFIG.editData.formData.forEach((item, index) => {
             item.initVal = res.object[item.key];
           });
@@ -210,9 +205,6 @@ export default {
             this.$refs.memberEdit.init();
           }
         })
-        .catch(err => {
-          this.$message(err);
-        });
     },
     /**
      * 删除
@@ -226,6 +218,7 @@ export default {
         api.delMember({
           id: $row.id
         }).then(res => {
+          if (res.code) return res;
           this.$refs.child.getData();
           this.$message({
             type: "success",

@@ -4,7 +4,7 @@
     <div class="p_head">权限设置</div>
     <div class="content_drawer">
       <el-form ref="form" label-width="120px" style="padding: 24px;">
-        <el-form-item label="复制成员权限:" v-if="roleId !== 13">
+        <el-form-item v-if="roleId !== 13" label="复制成员权限:">
           <el-select v-model="bindEmployee" placeholder="请选择成员" @change="changeEmployee">
             <el-option
               v-for="(person,index) in employeeList"
@@ -22,6 +22,7 @@
         <!-- 菜单树开始 -->
         <div class="m-tree-container">
           <el-tree
+            ref="tree"
             :data="templateMapList"
             label="icon"
             node-key="checkedId"
@@ -29,8 +30,7 @@
             default-expand-all
             :default-checked-keys="checkedIds"
             :check-strictly="true"
-            :expand-on-click-node="false"
-            @check-change="handleCheckChange"
+            @check="handleCurrentChange"
           >
             <span slot-scope="{node,data}" class="custom-tree-node">
               <span>
@@ -48,8 +48,11 @@
       </el-form>
     </div>
     <div class="foot_btn_box">
-      <el-button type="primary" size="normal" @click="confirm">确定</el-button>
-      <el-button size="normal" @click="cancle">取消</el-button>
+      <el-checkbox v-model="checkAll" :indeterminate="indeterminate" @change="checkAllChange">全选</el-checkbox>
+      <div class="btn-list">
+        <el-button type="primary" class="foot_btn" @click="confirm">确定</el-button>
+        <el-button class="foot_btn" @click="cancle">取消</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -68,6 +71,8 @@ export default {
   },
   data() {
     return {
+      allCheckOption: [],
+      checkAll: false,
       bindEmployee: null,
       queryParams: null,
       checkedList: [],
@@ -80,19 +85,38 @@ export default {
     checkedIds() {
       return this.checkedList.map($ele => {
         return $ele.checkedId
-      })
+      });
     },
     checkedMenus() {
       return this.checkedList.filter($ele => $ele.type === 'menu');
     },
     checkedButtons() {
       return this.checkedList.filter($ele => $ele.type === 'button');
+    },
+    indeterminate() {
+      if (this.checkedList.length === 0) {
+        return false;
+      } else if (this.checkedList.length === this.allCheckOption.length) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  },
+  watch: {
+    checkedList() {
+      if (this.indeterminate || this.checkedList.length === 0) {
+        this.checkAll = false;
+      } else {
+        this.checkAll = true;
+      }
     }
   },
   created() {
     this.checkedList = [];
     this.templateListClone = this.templateList;
     this.templateMapList = this.templateMap();
+    this.allCheckOption = this.$g.utils.getNestedArr(this.templateMapList, 'children')
   },
   methods: {
     templateMap() {
@@ -118,7 +142,6 @@ export default {
           $element.label = ""
         }
         if ($element.have) { // 选出已有的权限
-          console.log($element.checkedId);
           that.checkedList.push($element);
         }
         return $element
@@ -128,16 +151,39 @@ export default {
     /**
      * 选择节点发生变化触发
      * @param $data 当前选择节点数据
-     * @param $checked  当前选择节点是否选中
-     * @param $hasChild  子节点中是否有选中项,此处节点不做关联无需处理
+     * @param $currentNode  当前已选节点
      */
-    handleCheckChange($data, $checked, $hasChild) {
-      const checkedId = $data.checkedId;
-      const checkIndex = this.checkedIds.findIndex($checkedId => $checkedId === checkedId);
-      if ($checked) {
-        if (checkIndex === -1) this.checkedList.push($data);
+    handleCurrentChange($data, $currentNode) {
+      if ($currentNode.checkedKeys.indexOf($data.checkedId) === -1) { // 不选中
+        const filterList = this.$g.utils.getNestedArr($data.children, 'children').map(item => { return item.checkedId })
+        this.checkedList = $currentNode.checkedNodes.filter(item => filterList.indexOf(item.checkedId) === -1)
+      } else { // 选中
+        const addList = this.$g.utils.getNestedArr($data.children, 'children')
+        let parentNodes = this.$g.utils.filterNestedArr3(this.$g.utils.deepClone(this.templateMapList), 'children', filterParent)
+        parentNodes = this.$g.utils.getNestedArr(parentNodes, 'children')
+        this.checkedList = this.checkedList.concat(addList).concat(parentNodes)
+      }
+      let checkedIds = this.checkedList.map(item => {
+        return item.checkedId
+      });
+      checkedIds = Array.from(new Set(checkedIds));
+      this.checkedList = checkedIds.map(item => {
+        return this.checkedList.filter(ele => ele.checkedId === item)[0]
+      })
+      this.$refs.tree.setCheckedKeys(this.checkedIds)
+
+      function filterParent($item) {
+        if ($item.checkedId === $data.checkedId) {
+          return true;
+        }
+      }
+    },
+    checkAllChange() {
+      if (this.indeterminate || this.checkAll) {
+        this.checkedList = this.allCheckOption;
       } else {
-        if (checkIndex !== -1) this.checkedList.splice(checkIndex, 1)
+        this.$refs.tree.setCheckedKeys([]);
+        this.checkedList = []
       }
     },
     confirm() {
@@ -205,26 +251,34 @@ export default {
   /*overflow: auto;*/
 }
 .foot_btn_box {
-  width: 500px;
-  // height: 96px;
+  width: 100%;
+  padding-left: 32px;
   border-top: 1px solid #ebeef5;
-  position: fixed;
+  position: absolute;
   bottom: 0;
-  right: 0;
-  padding: 24px 0;
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-content: center;
-
-  .foot_btn {
-    width: 113px;
-    height: 40px;
-    margin-top: 28px;
-    margin-left: 12px;
-    margin-right: 12px;
+  align-items: center;
+  .btn-list {
+    display: flex;
+    height: 96px;
+    margin-left: 64px;
+    flex-direction: row;
+    align-content: center;
+    .foot_btn {
+      height: 40px;
+      padding: 0 20px;
+      margin-top: 28px;
+      margin-right: 16px;
+      margin-left: 0;
+    }
+    .foot_btn:last-child {
+      margin-right: 0;
+    }
   }
-
+  .el-checkbox {
+    display: block;
+  }
   .form_box {
     margin: 0 59px;
   }

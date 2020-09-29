@@ -1,6 +1,13 @@
-import api_memberManage from "@/api/api_memberManage";
 import { PERSON_MANAGE_CONDITION } from "../../../libs/data/permissionBtns";
 import store from '@/store'
+
+function getEmployeeList() {
+  return store.state.system.employeeList;
+}
+
+function getPositionList() {
+  return store.state.system.positionList;
+}
 
 export const SEARCH_CONFIG = {
   permission: {
@@ -66,7 +73,7 @@ export const SEARCH_CONFIG = {
       key: 'position',
       labelWidth: '80px',
       span: 11,
-      options: store.state.system.positionList
+      options: getPositionList()
     },
     {
       type: 1,
@@ -74,12 +81,7 @@ export const SEARCH_CONFIG = {
       key: 'superiorName',
       labelWidth: '80px',
       span: 11,
-      urlOptions: {
-        url: api_memberManage.superiorsList,
-        keyName: 'id',
-        valueName: 'nickName',
-        method: 'post'
-      }
+      options: getEmployeeList()
     }
   ]
 }

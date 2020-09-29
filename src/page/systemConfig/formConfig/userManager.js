@@ -1,5 +1,13 @@
-import { validPhone, validEmail } from "@/libs/kit/validate";
+import { validEmail } from "@/libs/kit/validate";
 import store from "@/store";
+
+function getEmployeeList() {
+  return store.state.system.employeeList;
+}
+
+function getPositionList() {
+  return store.state.system.positionList;
+}
 
 export const FORM_CONFIG = {
   editData: {
@@ -8,6 +16,7 @@ export const FORM_CONFIG = {
     formData: [
       {
         type: 6,
+        id: 3,
         label: "头像",
         key: "img",
         initVal: "",
@@ -19,6 +28,7 @@ export const FORM_CONFIG = {
         type: 0,
         label: "花名",
         key: "jobName",
+        id: 4,
         initVal: "",
         rules: [
           {required: true, message: '请输入花名', trigger: 'blur'}
@@ -28,6 +38,7 @@ export const FORM_CONFIG = {
         type: 0,
         label: "姓名",
         key: "name",
+        id: 5,
         initVal: "",
         rules: [
           {required: true, message: '请输入姓名', trigger: 'blur'}
@@ -36,6 +47,7 @@ export const FORM_CONFIG = {
       {
         type: 5,
         label: "性别",
+        id: 8,
         key: "sex",
         initVal: "",
         options: [
@@ -53,43 +65,65 @@ export const FORM_CONFIG = {
         ]
       },
       {
-        type: 1,
-        label: "职位",
-        key: "position",
-        initVal: [],
-        options: store.state.system.positionList
+        type: 4,
+        label: "状态",
+        id: 11,
+        key: "status",
+        initVal: "",
+        activeValue: "normal",
+        inactiveValue: "lock",
+        rules: [
+          {required: true, message: '请选择状态', trigger: 'blur'}
+        ]
       },
       {
         type: 1,
+        id: 7,
+        label: "职位",
+        key: "position",
+        initVal: [],
+        options: getPositionList(),
+        rules: [
+          {required: true, message: '请选择状态', trigger: 'blur'}
+        ]
+      },
+      {
+        type: 1,
+        id: 12,
         label: "直属上级",
         key: "superiorId",
         initVal: [],
-        options: store.state.system.employeeList,
+        options: getEmployeeList(),
         rules: [
           {required: true, message: '请选择直属上级', trigger: 'blur'}
         ]
       },
       {
         type: 0,
-        label: "手机号",
-        key: "phone",
+        label: "密码",
+        inputType: "password",
+        maxlength: 20,
+        id: 1,
+        key: "password",
         initVal: "",
         rules: [
-          {required: true, message: '请输入手机号', trigger: 'blur'},
+          {required: true, message: '请输入密码', trigger: 'blur'},
           {
             validator: (rule, value, callback) => {
-              if (!validPhone(value)) {
-                callback(new Error("请输入正确的手机号"))
+              if (value === "") {
+                callback()
+              } else if (value.length < 6) {
+                callback(new Error("请输入6-20位数字和字母组合"))
               } else {
-                callback();
+                callback()
               }
-            },
-            trigger: "blur"
+            }
           }
         ]
       },
       {
         type: 0,
+        id: 6,
         label: "工号",
         key: "jobNumber",
         initVal: "",
@@ -99,6 +133,7 @@ export const FORM_CONFIG = {
       },
       {
         type: 11,
+        id: 9,
         label: "生日",
         key: "birthday",
         format: "yyyy-MM-dd",
@@ -110,6 +145,7 @@ export const FORM_CONFIG = {
       },
       {
         type: 0,
+        id: 10,
         label: "邮箱",
         key: "email",
         initVal: "",

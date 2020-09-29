@@ -81,10 +81,7 @@ export default {
           value: 30
         }
       ],
-      selectItem: {
-        label: "近7天",
-        value: 7
-      },
+      selectItem: {},
       datatype: "daterange"
     };
   },
@@ -97,8 +94,11 @@ export default {
   watch: {
     isRest: function($new) {
       if ($new) {
+        this.getToday()
+        this.selectItem = {};
         if (this.formItem.isSelectToday) {
           this.dateList[0].label = "今天";
+          this.onClick_item(this.dateList[0]);
         }
         if (this.formItem.querySelectAll) {
           this.timeInterval = [];
@@ -109,13 +109,14 @@ export default {
         if (this.datatype === "datetimerange") {
           this.defaultTime = ["00:00:00", "23:59:59"];
         }
-        this.onClick_item(this.dateList[0]);
       }
     }
   },
   created() {
+    this.getToday()
     if (this.formItem.isSelectToday) {
       this.dateList[0].label = "今天";
+      this.onClick_item(this.dateList[0]);
     }
     if (this.formItem.querySelectAll) {
       this.timeInterval = [];
@@ -127,7 +128,6 @@ export default {
     if (this.datatype === "datetimerange") {
       this.defaultTime = ["00:00:00", "23:59:59"];
     }
-    this.onClick_item(this.dateList[0]);
   },
   methods: {
     onChage($data) {
@@ -174,6 +174,17 @@ export default {
 
       this.$emit("dataSelect", this.timeInterval);
       this.ruleForm[this.formItem.key] = this.timeInterval;
+    },
+    getToday() {
+      let end, start;
+      if (this.datatype === "daterange") {
+        end = this.getDay(0);
+        start = this.getDay(0);
+      } else if (this.datatype === "datetimerange") {
+        end = this.getDay(0) + " 23:59:59";
+        start = this.getDay(0) + " 00:00:00";
+      }
+      this.timeInterval = [start, end];
     },
     getDay(day) {
       var today = new Date();

@@ -4,5 +4,8 @@ export default {
   },
   SET_EMPLOYEE_LIST(state, info) {
     state.employeeList = info
+  },
+  SET_SUPERIOR_LIST(state, info) {
+    state.superiorsList = info
   }
 };

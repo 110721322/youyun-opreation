@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="w-welcome">
-      <div class="head">您好，{{name}}</div>
+      <div class="head">您好，{{ name }}</div>
       <div class="tip">今天是{{ date }}，欢迎您回到小马哥运营后台</div>
     </div>
     <!-- <detailMode :config-data="configData"></detailMode> -->
@@ -12,16 +12,8 @@
 <script>
 import api from "@/api/api_workBench";
 import detailMode from "@/components/detailMode/detailMode3.vue";
-// import { TODO_BTN, MERCHANT_ENTRY_AUDIT, LOWER_AGENT_ENTRY,
-//   PARTNER_ENTRY_AUDIT, DEVICE_UNBIND,
-//   AGENT_ANNOUNCE, MERCHANT_DATA, AGENT_DATA,
-//   DEVICE_DATA } from "../../libs/data/permissionBtns";
-import { TODO_BTN, MERCHANT_ENTRY_AUDIT, LOWER_AGENT_ENTRY,
-  PARTNER_ENTRY_AUDIT} from "../../libs/data/permissionBtns";
+import { CONFIG_DATA_2 } from "./formConfig/workBench";
 import store from "@/store"
-// import search from '@/components/search/search.vue';
-// import BaseCrud from '@/components/table/BaseCrud.vue';
-// import { USER_CONFIG } from './tableConfig/merchantConfig';
 
 export default {
   name: "WorkBench",
@@ -29,7 +21,7 @@ export default {
   data() {
     return {
       name: store.state.admin.userInfo.name,
-      configData: {
+      /* configData: {
         name: "日常应用",
         imgColor: "#1989FA",
         list: [
@@ -44,83 +36,25 @@ export default {
             ]
           }
         ]
-      },
-      configData2: {
-        name: "业务应用",
-        hasTitle: true,
-        imgColor: "#E4611B",
-        list: [
-          {
-            title: "审核",
-            list: [
-              {
-                imgUrl: "https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200901110325824_Hrti7nYzlvn7.jpg",
-                text: "商户入件审核",
-                path: '/approval/checkMerchant/indirectList',
-                permission: MERCHANT_ENTRY_AUDIT
-              },
-              {
-                imgUrl: "",
-                text: "下级服务商入件审核",
-                path: '/approval/checkService',
-                permission: LOWER_AGENT_ENTRY
-              },
-              {
-                imgUrl: "",
-                text: "合伙人入件审核",
-                path: '/approval/checkPartner',
-                permission: PARTNER_ENTRY_AUDIT
-              }
-            ]
-          }
-          // {
-          //   title: "服务",
-          //   list: [
-          //     {
-          //       imgUrl: "",
-          //       text: "设备解绑",
-          //       path: '/deviceManage/usageManage/usageList',
-          //       permission: DEVICE_UNBIND
-          //     },
-          //     {
-          //       imgUrl: "",
-          //       text: "公告",
-          //       path: "/message/serviceAnnouncementList",
-          //       permission: AGENT_ANNOUNCE
-          //     }
-          //   ]
-          // },
-          // {
-          //   title: "数据",
-          //   list: [
-          //     {
-          //       imgUrl: "",
-          //       text: "商户数据",
-          //       path: '/merchant/list',
-          //       permission: MERCHANT_DATA
-          //     },
-          //     {
-          //       imgUrl: "",
-          //       text: "服务商数据",
-          //       path: '/agent/list',
-          //       permission: AGENT_DATA
-          //     },
-          //     {
-          //       imgUrl: "",
-          //       text: "设备数据",
-          //       path: '/deviceManage/usageManage/deviceData',
-          //       permission: DEVICE_DATA
-          //     }
-          //   ]
-          // }
-        ]
-      },
+      },*/
       date: ''
     };
   },
   computed: {
     todoTask: function() {
       return this.$store.state.admin.todoList;
+    },
+    configData2() {
+      const configData2 = this.$g.utils.deepClone(CONFIG_DATA_2);
+      configData2.list = configData2.list.filter(item => {
+        const list = item.list.filter(btn => {
+          return this.$_has(btn.permission);
+        })
+        if (list.length > 0) {
+          return true;
+        }
+      })
+      return configData2;
     }
   },
   mounted() {

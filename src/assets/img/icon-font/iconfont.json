@@ -6,6 +6,13 @@
   "description": "图标分为业务图标（适用于不同业务的特殊化图标），和通用图标（适合所有系统的图标）。",
   "glyphs": [
     {
+      "icon_id": "15622688",
+      "name": "风控",
+      "font_class": "dianfei",
+      "unicode": "e656",
+      "unicode_decimal": 58966
+    },
+    {
       "icon_id": "17259158",
       "name": "成员效率",
       "font_class": "chengyuanxiaoshuai",
