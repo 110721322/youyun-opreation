@@ -5,10 +5,6 @@ export const FORM_CONFIG = {
       type: 9,
       label: '筛选时间',
       key: 'date',
-<<<<<<< HEAD
-=======
-      format: "yyyy-MM-dd",
->>>>>>> dev-changting
       labelWidth: '90px',
       span: 22
     },

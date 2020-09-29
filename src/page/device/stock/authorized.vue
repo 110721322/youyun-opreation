@@ -79,10 +79,6 @@ export default {
     }
   },
   created() {
-<<<<<<< HEAD
-    console.log(this.selectType);
-=======
->>>>>>> dev-changting
     const beginDate = this.$g.utils.getNowFormatDate()
     const endDate = this.$g.utils.getNowFormatDate()
     this.params = {
