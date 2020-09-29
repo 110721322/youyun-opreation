@@ -50,9 +50,9 @@
     <div class="bg_box">
       <div class="title">应用</div>
       <el-row>
-        <el-col :span="8" class="app">
+        <el-col :span="8" class="app" @click.native="orderEquipment">
           <img src="https://avatars1.githubusercontent.com/u/23054546?s=64&v=4" alt />
-          <div @click="orderEquipment">订购设备</div>
+          <div>订购设备</div>
         </el-col>
       </el-row>
     </div>
@@ -1305,7 +1305,7 @@ export default {
   }
 }
 .app {
-  width: 100%;
+  border-right: 1px solid #ebeef5;
   text-align: center;
   font-size: 14px;
   font-weight: 500;
