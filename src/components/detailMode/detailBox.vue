@@ -8,7 +8,7 @@
         class="edit_btn"
         size="mini"
         @click="onClick_edit"
-      >编辑</el-button>
+      >{{ btnName }}</el-button>
     </div>
 
     <slot></slot>
@@ -27,6 +27,12 @@ export default {
     },
     isShowEditBtn: {
       type: Boolean
+    },
+    btnName: {
+      type: String,
+      default() {
+        return "编辑"
+      }
     }
   },
   data() {

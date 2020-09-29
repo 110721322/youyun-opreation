@@ -110,6 +110,7 @@ export default {
       background: #1989FA;
     }
     &:hover {
+      background: rgb(40, 40, 49) !important;
       color: #FFFFFF !important;
       /deep/ i {
         color: #FFFFFF !important;

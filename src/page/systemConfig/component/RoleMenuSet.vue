@@ -3,6 +3,7 @@
     <div class="p_head">编辑权限</div>
     <div class="m-tree-container">
       <el-tree
+        ref="tree"
         :data="templateList"
         show-checkbox
         node-key="id"
@@ -11,12 +12,15 @@
         :props="defaultProps"
         default-expand-all
         style="margin: 24px;"
-        @check-change="handleCheckChange"
+        @check="handleCurrentChange"
       ></el-tree>
     </div>
     <div class="foot_btn_box">
-      <el-button type="primary" size="normal" @click="confirm">确定</el-button>
-      <el-button size="normal" @click="cancel">取消</el-button>
+      <el-checkbox v-model="checkAll" :indeterminate="indeterminate" @change="checkAllChange">全选</el-checkbox>
+      <div class="btn-list">
+        <el-button type="primary" class="foot_btn" @click="confirm">确定</el-button>
+        <el-button class="foot_btn" @click="cancel">取消</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -47,6 +51,8 @@ export default {
   },
   data() {
     return {
+      allCheckOption: [],
+      checkAll: false,
       checkedList: [] // 已选中的权限
     }
   },
@@ -55,10 +61,29 @@ export default {
       return this.checkedList.map($ele => {
         return $ele.id
       })
+    },
+    indeterminate() {
+      if (this.checkedList.length === 0) {
+        return false;
+      } else if (this.checkedList.length === this.allCheckOption.length) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  },
+  watch: {
+    checkedList() {
+      if (this.indeterminate || this.checkedList.length === 0) {
+        this.checkAll = false;
+      } else {
+        this.checkAll = true;
+      }
     }
   },
   mounted() {
     this.filterChckedMenu();
+    this.allCheckOption = this.$g.utils.getNestedArr(this.templateList, 'childrenMenus')
   },
   methods: {
     /**
@@ -77,16 +102,39 @@ export default {
     /**
      * 选择节点发生变化触发
      * @param $data 当前选择节点数据
-     * @param $checked  当前选择节点是否选中
-     * @param $hasChild  子节点中是否有选中项,此处节点不做关联无需处理
+     * @param $currentNode  当前已选节点
      */
-    handleCheckChange($data, $checked, $hasChild) {
-      const id = $data.id;
-      const checkIndex = this.checkedIds.findIndex($checkedId => $checkedId === id);
-      if ($checked) {
-        if (checkIndex === -1) this.checkedList.push($data);
+    handleCurrentChange($data, $currentNode) {
+      if ($currentNode.checkedKeys.indexOf($data.id) === -1) { // 不选中
+        const filterList = this.$g.utils.getNestedArr($data.childrenMenus, 'childrenMenus').map(item => { return item.id })
+        this.checkedList = $currentNode.checkedNodes.filter(item => filterList.indexOf(item.id) === -1)
+      } else { // 选中
+        const addList = this.$g.utils.getNestedArr($data.childrenMenus, 'childrenMenus')
+        let parentNodes = this.$g.utils.filterNestedArr3(this.$g.utils.deepClone(this.templateList), 'childrenMenus', filterParent)
+        parentNodes = this.$g.utils.getNestedArr(parentNodes, 'childrenMenus')
+        this.checkedList = this.checkedList.concat(addList).concat(parentNodes)
+      }
+      let checkedIds = this.checkedList.map(item => {
+        return item.id
+      });
+      checkedIds = Array.from(new Set(checkedIds));
+      this.checkedList = checkedIds.map(item => {
+        return this.checkedList.filter(ele => ele.id === item)[0]
+      })
+      this.$refs.tree.setCheckedKeys(this.checkedIds)
+
+      function filterParent($item) {
+        if ($item.id === $data.id) {
+          return true;
+        }
+      }
+    },
+    checkAllChange() {
+      if (this.indeterminate || this.checkAll) {
+        this.checkedList = this.allCheckOption;
       } else {
-        if (checkIndex !== -1) this.checkedList.splice(checkIndex, 1)
+        this.$refs.tree.setCheckedKeys([]);
+        this.checkedList = []
       }
     },
     confirm() {
@@ -108,25 +156,34 @@ export default {
     overflow-y: scroll;
   }
   .foot_btn_box {
-    width: 500px;
-    // height: 96px;
+    width: 100%;
+    padding-left: 32px;
     border-top: 1px solid #ebeef5;
-    position: fixed;
+    position: absolute;
     bottom: 0;
-    right: 0;
-    padding: 16px 0;
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-content: center;
-    .foot_btn {
-      width: 113px;
-      height: 40px;
-      margin-top: 28px;
-      margin-left: 12px;
-      margin-right: 12px;
+    align-items: center;
+    .btn-list {
+      display: flex;
+      height: 96px;
+      margin-left: 64px;
+      flex-direction: row;
+      align-content: center;
+      .foot_btn {
+        height: 40px;
+        padding: 0 20px;
+        margin-top: 28px;
+        margin-right: 16px;
+        margin-left: 0;
+      }
+      .foot_btn:last-child {
+        margin-right: 0;
+      }
     }
-
+    .el-checkbox {
+      display: block;
+    }
     .form_box {
       margin: 0 59px;
     }

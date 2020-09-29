@@ -12,28 +12,40 @@
               <span class="active-type" @click="toAccountLogin">账号密码登录</span>
               <span class="unactive-type ml" @click="toVerificationLogin">验证码登录</span>
             </div>
-            <div class="input-box">
-              <el-input
-                v-model="ruleForm.phone"
-                class="login-input"
-                placeholder="请输入手机号"
-                size="large"
-              >
-                <i slot="prefix" class="el-input__icon el-icon-user"></i>
-              </el-input>
-              <el-input
-                v-model="ruleForm.password"
-                type="password"
-                class="login-input"
-                placeholder="请输入密码"
-                size="large"
-              >
-                <i slot="prefix" class="el-input__icon el-icon-lock"></i>
-              </el-input>
-            </div>
+            <el-form ref="passwordLoginForm" class="input-box" :rules="loginFormConfig.rules" :model="ruleForm">
+              <el-form-item prop="phone">
+                <el-input
+                  v-model="ruleForm.phone"
+                  class="login-input"
+                  placeholder="请输入手机号"
+                  size="large"
+                  @keyup.native.enter="onClick_passwdLogin"
+                >
+                  <i slot="prefix" class="el-input__icon el-icon-user"></i>
+                </el-input>
+              </el-form-item>
+              <el-form-item prop="password">
+                <el-input
+                  v-model="ruleForm.password"
+                  :minlength="6"
+                  :maxlength="20"
+                  type="password"
+                  class="login-input"
+                  placeholder="请输入密码"
+                  size="large"
+                  @keyup.native.enter="onClick_passwdLogin"
+                >
+                  <i slot="prefix" class="el-input__icon el-icon-lock"></i>
+                </el-input>
+              </el-form-item>
+            </el-form>
             <div class="forget-box" style="cursor: pointer;" @click="toChangePasswd">忘记密码</div>
             <div class="btn-box">
-              <el-button type="primary" class="login-btn" @click="onClick_passwdLogin">登录</el-button>
+              <el-button
+                type="primary"
+                class="login-btn"
+                @click="onClick_passwdLogin"
+              >登录</el-button>
             </div>
           </template>
           <template v-if="activeType==='verificationLogin'">
@@ -41,35 +53,43 @@
               <span class="unactive-type" @click="toAccountLogin">账号密码登录</span>
               <span class="active-type ml" @click="toVerificationLogin">验证码登录</span>
             </div>
-            <div class="input-box">
-              <el-input
-                v-model="ruleForm2.phone"
-                class="login-input"
-                name="codePhone"
-                placeholder="请输入手机号"
-                size="large"
-              >
-                <i slot="prefix" class="el-input__icon el-icon-user"></i>
-              </el-input>
-              <el-input
-                v-model="ruleForm2.verification"
-                type="text"
-                class="login-input"
-                name="code"
-                placeholder="请输入验证码"
-                size="large"
-              >
-                <i slot="prefix" class="el-input__icon el-icon-lock"></i>
-                <template slot="append">
-                  <span
-                    v-if="countLoginTime<=0"
-                    class="verification-btn"
-                    @click="onClick_sendLoginCode"
-                  >获取验证码</span>
-                  <span v-if="countLoginTime>0" class="verification-btn">{{ countLoginTime + " s" }}</span>
-                </template>
-              </el-input>
-            </div>
+            <el-form ref="codeLoginForm" class="input-box" :model="ruleForm2" :rules="loginFormConfig.rules2">
+              <el-form-item prop="phone">
+                <el-input
+                  v-model="ruleForm2.phone"
+                  :maxlength="11"
+                  class="login-input"
+                  name="codePhone"
+                  placeholder="请输入手机号"
+                  size="large"
+                  @keyup.native.enter="onClick_codeLogin"
+                >
+                  <i slot="prefix" class="el-input__icon el-icon-user"></i>
+                </el-input>
+              </el-form-item>
+              <el-form-item prop="verification">
+                <el-input
+                  v-model="ruleForm2.verification"
+                  type="text"
+                  :maxlength="6"
+                  class="login-input"
+                  name="code"
+                  placeholder="请输入验证码"
+                  size="large"
+                  @keyup.native.enter="onClick_codeLogin"
+                >
+                  <i slot="prefix" class="el-input__icon el-icon-lock"></i>
+                  <template slot="append">
+                    <span
+                      v-if="countLoginTime<=0"
+                      class="verification-btn"
+                      @click="onClick_sendLoginCode"
+                    >获取验证码</span>
+                    <span v-if="countLoginTime>0" class="verification-btn">{{ countLoginTime + " s" }}</span>
+                  </template>
+                </el-input>
+              </el-form-item>
+            </el-form>
             <div class="forget-box" @click="toChangePasswd">忘记密码</div>
             <div class="btn-box">
               <el-button type="primary" class="login-btn" @click="onClick_codeLogin">登录</el-button>
@@ -79,36 +99,44 @@
             <div class="type-box">
               <span class="active-type">修改密码</span>
             </div>
-            <div class="input-box">
-              <el-input
-                v-model="ruleForm3.phone"
-                class="login-input"
-                placeholder="请输入手机号"
-                size="large"
-              >
-                <i slot="prefix" class="el-input__icon el-icon-user"></i>
-              </el-input>
-              <el-input
-                v-model="ruleForm3.code"
-                type="text"
-                class="login-input"
-                placeholder="请输入验证码"
-                size="large"
-              >
-                <i slot="prefix" class="el-input__icon el-icon-lock"></i>
-                <template slot="append">
-                  <span
-                    v-if="countChangeTime<=0"
-                    class="verification-btn"
-                    @click="onClick_sendChangeCode"
-                  >获取验证码</span>
-                  <span
-                    v-if="countChangeTime>0"
-                    class="verification-btn"
-                  >{{ countChangeTime + " s" }}</span>
-                </template>
-              </el-input>
-            </div>
+            <el-form ref="changePasswordOneStep" class="input-box" :model="ruleForm3" :rules="changeFormConfig.rules">
+              <el-form-item prop="phone">
+                <el-input
+                  v-model="ruleForm3.phone"
+                  :maxlength="11"
+                  class="login-input"
+                  placeholder="请输入手机号"
+                  size="large"
+                  @keyup.native.enter="onClick_changePasswordOneStep"
+                >
+                  <i slot="prefix" class="el-input__icon el-icon-user"></i>
+                </el-input>
+              </el-form-item>
+              <el-form-item prop="code">
+                <el-input
+                  v-model="ruleForm3.code"
+                  :maxlength="6"
+                  type="text"
+                  class="login-input"
+                  placeholder="请输入验证码"
+                  size="large"
+                  @keyup.native.enter="onClick_changePasswordOneStep"
+                >
+                  <i slot="prefix" class="el-input__icon el-icon-lock"></i>
+                  <template slot="append">
+                    <span
+                      v-if="countChangeTime<=0"
+                      class="verification-btn"
+                      @click="onClick_sendChangeCode"
+                    >获取验证码</span>
+                    <span
+                      v-if="countChangeTime>0"
+                      class="verification-btn"
+                    >{{ countChangeTime + " s" }}</span>
+                  </template>
+                </el-input>
+              </el-form-item>
+            </el-form>
             <div class="btn-box">
               <el-button type="primary" class="login-btn" @click="onClick_changePasswordOneStep">下一步</el-button>
             </div>
@@ -118,26 +146,38 @@
             <div class="type-box">
               <span class="active-type">修改密码</span>
             </div>
-            <div class="input-box">
-              <el-input
-                v-model="ruleForm3.password"
-                type="password"
-                class="login-input"
-                placeholder="请输入新密码"
-                size="large"
-              >
-                <i slot="prefix" class="el-input__icon el-icon-lock"></i>
-              </el-input>
-              <el-input
-                v-model="ruleForm3.passwordSecond"
-                type="password"
-                class="login-input"
-                placeholder="再次输入新密码"
-                size="large"
-              >
-                <i slot="prefix" class="el-input__icon el-icon-lock"></i>
-              </el-input>
-            </div>
+            <el-form ref="changePasswordTwoStep" class="input-box" :model="ruleForm3" :rules="changeFormRules">
+              <el-form-item prop="password">
+                <el-input
+                  v-model="ruleForm3.password"
+                  :minlength="6"
+                  :maxlength="20"
+                  type="password"
+                  class="login-input"
+                  placeholder="请输入新密码"
+                  show-password
+                  size="large"
+                  @keyup.native.enter="onClick_changePasswordTwoStep"
+                >
+                  <i slot="prefix" class="el-input__icon el-icon-lock"></i>
+                </el-input>
+              </el-form-item>
+              <el-form-item prop="passwordSecond">
+                <el-input
+                  v-model="ruleForm3.passwordSecond"
+                  :minlength="6"
+                  :maxlength="20"
+                  type="password"
+                  class="login-input"
+                  placeholder="再次输入新密码"
+                  show-password
+                  size="large"
+                  @keyup.native.enter="onClick_changePasswordTwoStep"
+                >
+                  <i slot="prefix" class="el-input__icon el-icon-lock"></i>
+                </el-input>
+              </el-form-item>
+            </el-form>
             <div class="btn-box">
               <el-button type="primary" class="login-btn" @click="onClick_changePasswordTwoStep">确定</el-button>
             </div>
@@ -148,83 +188,116 @@
         <div v-else class="regist-content">
           <template>
             <div class="regist-title">服务商账户注册</div>
-            <div class="input-box">
-              <template>
-                <el-radio v-model="registerForm.businessType" label="enterprise">企业商户</el-radio>
-                <el-radio v-model="registerForm.businessType" label="individual">个人商户</el-radio>
-              </template>
-              <el-input
-                v-model="registerForm.company"
-                class="login-input"
-                type="text"
-                placeholder="请输入公司名称"
-                size="large"
-              >
-                <i slot="prefix" class="el-input__icon el-icon-office-building"></i>
-              </el-input>
-              <el-input
-                v-model="registerForm.personName"
-                type="text"
-                class="login-input"
-                placeholder="请输入法人姓名"
-                size="large"
-              >
-                <i slot="prefix" class="el-input__icon el-icon-user"></i>
-              </el-input>
-              <el-input
-                v-model="registerForm.personMobile"
-                type="text"
-                class="login-input"
-                placeholder="请输入法人手机号"
-                size="large"
-              >
-                <i slot="prefix" class="el-input__icon el-icon-phone"></i>
-              </el-input>
-              <el-input
-                v-model="registerForm.phone"
-                type="text"
-                class="login-input"
-                placeholder="请输入登录手机号"
-                size="large"
-              >
-                <i slot="prefix" class="el-input__icon el-icon-phone"></i>
-              </el-input>
-              <el-input
-                v-model="registerForm.password"
-                autocomplete="off"
-                type="password"
-                class="login-input"
-                placeholder="请输入密码"
-                size="large"
-              >
-                <i slot="prefix" class="el-input__icon el-icon-lock"></i>
-              </el-input>
-              <el-input
-                v-model="registerForm.email"
-                type="text"
-                class="login-input"
-                placeholder="请输入邮箱"
-                size="large"
-              >
-                <i slot="prefix" class="el-input__icon el-icon-message"></i>
-              </el-input>
-              <el-cascader
-                v-model="county"
-                class="login-input"
-                :options="options"
-                placeholder="省/市/区"
-                @change="changeCounty"
-              ></el-cascader>
-              <el-input
-                v-model="registerForm.address"
-                type="text"
-                class="login-input"
-                placeholder="请输入详细地址"
-                size="large"
-              >
-                <i slot="prefix" class="el-input__icon el-icon-location-information"></i>
-              </el-input>
-            </div>
+            <el-form ref="registerForm" class="input-box" :model="registerForm" :rules="registerFormConfig.rules">
+              <input type="text" name="name" autocomplete="off" style="position: fixed; bottom: -9999px;">
+              <input type="password" name="pass" autocomplete="off" style="position: fixed; bottom: -9999px;">
+              <el-form-item prop="businessType">
+                <el-radio-group v-model="registerForm.businessType">
+                  <el-radio label="enterprise">企业商户</el-radio>
+                  <el-radio label="individual">个人商户</el-radio>
+                </el-radio-group>
+              </el-form-item>
+              <el-form-item prop="company">
+                <el-input
+                  v-model="registerForm.company"
+                  class="login-input"
+                  type="text"
+                  placeholder="请输入公司名称"
+                  size="large"
+                  @keyup.native.enter="onClick_register"
+                >
+                  <i slot="prefix" class="el-input__icon el-icon-office-building"></i>
+                </el-input>
+              </el-form-item>
+              <el-form-item prop="personName">
+                <el-input
+                  v-model="registerForm.personName"
+                  type="text"
+                  class="login-input"
+                  placeholder="请输入法人姓名"
+                  size="large"
+                  @keyup.native.enter="onClick_register"
+                >
+                  <i slot="prefix" class="el-input__icon el-icon-user"></i>
+                </el-input>
+              </el-form-item>
+              <el-form-item prop="personMobile">
+                <el-input
+                  v-model="registerForm.personMobile"
+                  :maxlength="11"
+                  type="text"
+                  class="login-input"
+                  placeholder="请输入法人手机号"
+                  size="large"
+                  @keyup.native.enter="onClick_register"
+                >
+                  <i slot="prefix" class="el-input__icon el-icon-phone"></i>
+                </el-input>
+              </el-form-item>
+              <el-form-item prop="phone">
+                <el-input
+                  v-model="registerForm.phone"
+                  :maxlength="11"
+                  type="text"
+                  class="login-input"
+                  placeholder="请输入登录手机号"
+                  size="large"
+                  @keyup.native.enter="onClick_register"
+                >
+                  <i slot="prefix" class="el-input__icon el-icon-phone"></i>
+                </el-input>
+              </el-form-item>
+              <el-form-item prop="password">
+                <el-input
+                  v-model="registerForm.password"
+                  :minlength="6"
+                  :maxlength="20"
+                  autocomplete="on"
+                  type="password"
+                  class="login-input"
+                  placeholder="请输入密码"
+                  size="large"
+                  show-password
+                  @keyup.native.enter="onClick_register"
+                >
+                  <i slot="prefix" class="el-input__icon el-icon-lock"></i>
+                </el-input>
+              </el-form-item>
+              <el-form-item prop="email">
+                <el-input
+                  v-model="registerForm.email"
+                  type="text"
+                  class="login-input"
+                  placeholder="请输入邮箱"
+                  size="large"
+                  @keyup.native.enter="onClick_register"
+                >
+                  <i slot="prefix" class="el-input__icon el-icon-message"></i>
+                </el-input>
+              </el-form-item>
+              <el-form-item prop="county">
+                <el-cascader
+                  v-model="registerForm.county"
+                  class="login-input"
+                  :options="options"
+                  placeholder="省/市/区"
+                  @change="changeCounty"
+                >
+                </el-cascader>
+              </el-form-item>
+              <el-form-item prop="address">
+                <el-input
+                  v-model="registerForm.address"
+                  type="text"
+                  class="login-input"
+                  placeholder="请输入详细地址"
+                  size="large"
+                  @keyup.native.enter="onClick_register"
+                >
+                  <i slot="prefix" class="el-input__icon el-icon-location-information"></i>
+                </el-input>
+              </el-form-item>
+            </el-form>
             <div class="btn-regist" @click="onClick_register">立即注册</div>
           </template>
           <div class="bottom-box">已有账号？<span @click="onClick_changelogin">立即登录</span></div>
@@ -243,11 +316,21 @@ import currRouter from '@/router/addRouter'
 import { mapActions } from 'vuex';
 import store from '@/store';
 import areaData from "@/assets/data/areaData";
+import { REGISTER_FORM_CONFIG, LOGIN_FORM_CONFIG, CHANGE_FORM_CONFIG } from "./formConfig/loginFormConfig";
 
 export default {
   name: "Login",
   components: {},
   data() {
+    var validCheckPassword = (rule, value, callback) => {
+      if (value.length < 6 || value.length > 20) {
+        callback(new Error("请输入6-20位新密码"))
+      } else if (this.ruleForm3.password !== this.ruleForm3.passwordSecond) {
+        callback(new Error("两次输入密码不一致"))
+      } else {
+        callback()
+      }
+    }
     return {
       radio: '1',
       county: '',
@@ -259,6 +342,7 @@ export default {
         phone: "",
         password: ""
       },
+      loginFormConfig: LOGIN_FORM_CONFIG,
       ruleForm2: {
         phone: "",
         verification: ""
@@ -270,19 +354,32 @@ export default {
         password: "",
         passwordSecond: ""
       },
+      changeFormConfig: CHANGE_FORM_CONFIG,
+      changeFormRules: {
+        password: [
+          { required: true, message: '请输入6-20位新密码', trigger: 'blur' },
+          { validator: validCheckPassword, 'trigger': 'blur' }
+        ],
+        passwordSecond: [
+          { required: true, message: '请输入6-20位新密码', trigger: 'blur' },
+          { validator: validCheckPassword, 'trigger': 'blur' }
+        ]
+      },
       registerForm: {
-        businessType: null,
+        businessType: "enterprise",
         company: '',
         personName: '',
         personMobile: '',
         email: '',
         address: '',
+        county: '',
         provinceCode: '',
         cityCode: '',
         areaCode: '',
         phone: '',
         password: ''
       },
+      registerFormConfig: REGISTER_FORM_CONFIG,
       rules: {
         phone: [
           {
@@ -325,32 +422,15 @@ export default {
       this.registerForm['areaCode'] = $codes[2];
     },
     onClick_changePasswordOneStep() {
-      if (!this.ruleForm3.code) {
-        this.$alert("请输入验证码");
-        return;
-      }
+      if (!this.formValid('changePasswordOneStep')) return;
       this.activeType = "changePasswdTwoStep";
     },
     onClick_changePasswordTwoStep() {
-      if (!this.ruleForm3.password) {
-        this.$alert("请输入新密码");
-        return;
-      }
-      if (!this.ruleForm3.passwordSecond) {
-        this.$alert("请再次输入新密码");
-        return;
-      }
-      if (this.ruleForm3.password.length < 6) {
-        this.$alert("密码长度不能小于6位");
-        return;
-      }
-      if (this.ruleForm3.password !== this.ruleForm3.passwordSecond) {
-        this.$alert("两次密码输入不一致");
-        return;
-      }
+      if (!this.formValid('changePasswordTwoStep')) return;
       api
         .changePassword(this.ruleForm3)
         .then(res => {
+          if (res.code) return res;
           this.$message({
             type: "success",
             message: "修改成功"
@@ -428,14 +508,7 @@ export default {
       this.activeType = "verificationLogin";
     },
     onClick_passwdLogin() {
-      if (!this.ruleForm.phone) {
-        this.$alert("请输入账号");
-        return;
-      }
-      if (!this.ruleForm.password) {
-        this.$alert("请输入密码");
-        return;
-      }
+      if (!this.formValid('passwordLoginForm')) return;
       api
         .login({
           phone: this.ruleForm.phone,
@@ -500,14 +573,7 @@ export default {
       this.saveRoutersArr(routerList)
     },
     onClick_codeLogin() {
-      if (!this.ruleForm2.phone) {
-        this.$alert("请输入手机号");
-        return;
-      }
-      if (!this.ruleForm2.verification) {
-        this.$alert("请输入验证码");
-        return;
-      }
+      if (!this.formValid("codeLoginForm")) return;
       api
         .login({
           type: 'message',
@@ -522,49 +588,32 @@ export default {
       this.isLogin = false
     },
     onClick_changelogin() {
+      this.activeType = 'accountLogin';
       this.isRegister = false
       this.isLogin = true
     },
     onClick_register() {
-      if (!this.registerForm.company) {
-        this.$alert("公司名称不能为空");
-        return;
-      }
-      if (!this.registerForm.personName) {
-        this.$alert("法人姓名不能为空");
-        return;
-      }
-      if (!this.registerForm.personMobile) {
-        this.$alert("法人手机号不能为空");
-        return;
-      }
-      if (!this.$g.utils.checkPhone(this.registerForm.personMobile)) {
-        this.$alert("请输入正确格式的手机号");
-        return;
-      }
-      if (!this.registerForm.email) {
-        this.$alert("邮箱不能为空");
-        return;
-      }
-      if (!this.$g.utils.checkEmailOther(this.registerForm.email)) {
-        this.$alert("请输入正确格式的邮箱");
-        return;
-      }
-      if (!this.registerForm.provinceCode) {
-        this.$alert("请选择所在省份");
-        return;
-      }
-      if (!this.registerForm.address) {
-        this.$alert("详细地址不能为空");
-        return;
-      }
+      if (!this.formValid("registerForm")) return;
       api.registerTopAgent(this.registerForm).then(res => {
+        if (res.code) return res;
         this.$message({
-          type: 'succcess',
+          type: 'success',
           message: '注册成功'
         });
         this.$router.push({name: 'registSuccess'})
       })
+    },
+    formValid(formName) {
+      let validateStatus;
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          validateStatus = true;
+        } else {
+          validateStatus = false;
+          return false;
+        }
+      });
+      return !!validateStatus
     }
   }
 };
@@ -600,16 +649,16 @@ export default {
       }
     }
     .title {
-      margin-top: 101px;
+      margin-top: 33px;
       font-size: 30px;
       font-family: PingFangSC-Medium, PingFang SC;
-      font-weight: 500;
+      font-weight: bold;
       color: rgba(25, 137, 250, 1);
       line-height: 30px;
       letter-spacing: 1px;
     }
     .login-content,.regist-content,.check-box {
-      margin-top: 73px;
+      margin-top: 59px;
     }
     .regist-content {
       width: 100%;
@@ -619,6 +668,7 @@ export default {
       }
     }
     .type-box {
+      margin-bottom: 38px;
       .active-type {
         font-size: 20px;
         font-family: PingFangSC-Medium, PingFang SC;
@@ -713,7 +763,12 @@ export default {
     margin-top: 15px;
     width: 368px;
     .login-input {
-      margin-top: 24px;
+      width: 100%;
+      height: 40px;
+      /deep/ input {
+        width: 100%;
+        height: 40px;
+      }
       /deep/ .el-input-group__append {
         padding: 0;
       }
@@ -725,7 +780,6 @@ export default {
       text-align: center;
       background: rgba(25, 137, 250, 0.1);
       border-radius: 0px 4px 4px 0px;
-      border: 0px solid rgba(25, 137, 250, 1);
       font-size: 16px;
       color: #333333;
       cursor: pointer;

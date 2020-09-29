@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import pathToRegexp from "path-to-regexp";
 import { mapState } from "vuex";
 
 export default {
@@ -56,28 +55,6 @@ export default {
           meta: route.meta
         }
       })
-    },
-    isDashboard(route) {
-      const name = route && route.name;
-      if (!name) {
-        return false;
-      }
-      return (
-        name.trim().toLocaleLowerCase() === "Dashboard".toLocaleLowerCase()
-      );
-    },
-    pathCompile(path) {
-      const { params } = this.$route;
-      var toPath = pathToRegexp.compile(path);
-      return toPath(params);
-    },
-    handleLink(item) {
-      const { redirect, path } = item;
-      if (redirect) {
-        this.$router.push(redirect);
-        return;
-      }
-      this.$router.push(this.pathCompile(path));
     }
   }
 };
@@ -88,7 +65,7 @@ export default {
     display: inline-block;
     font-size: 14px;
     line-height: 50px;
-    margin-left: 8px;
+    margin-left: 32px;
 
     .redirect {
       color: #909399;

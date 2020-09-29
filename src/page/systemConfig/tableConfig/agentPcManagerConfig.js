@@ -25,7 +25,14 @@ export const AGENTPC_CONFIG = {
       {
         name: '编辑',
         emitName: 'edit',
-        type: 'text'
+        type: 'text',
+        isShow($row) {
+          if ($row.roleId === 11) {
+            return false
+          } else {
+            return true
+          }
+        }
       }
     ]
   },

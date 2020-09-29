@@ -31,7 +31,7 @@ export const UNEWTTLED_CONFIG = {
       width: '150px'
     },
     {
-      label: '手续费11（元）',
+      label: '手续费（元）',
       prop: 'totalServiceFee',
       width: '150px'
     }
