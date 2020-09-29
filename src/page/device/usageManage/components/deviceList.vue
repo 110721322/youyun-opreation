@@ -52,6 +52,7 @@ export default {
     onClick_closeItem() {
       this.hasSelectOne = false;
       this.isOpen = false;
+      this.$emit("province");
     },
     onClick_selectItem($itemData) {
       this.selectItem = $itemData;

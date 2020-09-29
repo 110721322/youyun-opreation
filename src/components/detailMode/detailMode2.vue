@@ -23,7 +23,7 @@
       <slot v-if="currentType" :currentType="currentType"></slot>
       <el-row>
         <el-col v-for="(item, key) of imageList" :key="key" :span="imgWidth?imgWidth:8">
-          <el-form-item v-if="ruleForm[item.key]">
+          <el-form-item>
             <el-image
               style="width: 100px; height: 100px;display:block;margin: auto;"
               :src="ruleForm[item.key]"

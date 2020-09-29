@@ -28,9 +28,9 @@
           <div v-if="activeIndex" :key="activeIndex">
             <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.baseData"></detailMode>
             <!--            商户类型：企业，个体工商户-->
-            <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.merchantData"></detailMode>
+            <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.merchantData" v-if="ruleForm.merchantType !== 'personal'"></detailMode>
             <!--            商户类型：个人-->
-            <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.merchantData1"></detailMode>
+            <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.merchantData1"  v-if="ruleForm.merchantType === 'personal'"></detailMode>
             <!--          (企业，个体工商户)对公法人-->
             <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.settleData1" v-if="ruleForm.merchantType !== 'personal' && ruleForm.bankAccountType === 'public' && ruleForm.settleLawFlag === 'legal'"></detailMode>
             <!--          (企业，个体工商户，个人)对私法人-->

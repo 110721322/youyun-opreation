@@ -1,6 +1,7 @@
 import { setRules } from '@/libs/kit/formFns.js'
 import apiDevice from "@/api/api_device";
 import areaData from "@/assets/data/areaData"
+import store from "@/store"
 
 export const FORM_CONFIG = {
   basicData: {
@@ -346,12 +347,10 @@ export const FORM_CONFIG = {
     showFootBtn: true,
     formData: [
       {
-        type: 0,
-        label: '销售人员',
-        key: 'saleUserName',
-        initVal: '12',
-        isDisabled: true,
-        rules: setRules('销售人员').isRequired.get
+        type: 'show',
+        label: '营销人员',
+        initVal: store.state.admin.userInfo.jobName,
+        labelWidth: '100px'
       },
       {
         type: 1,
@@ -368,7 +367,8 @@ export const FORM_CONFIG = {
         },
         callback($ruleForm, $option) {
           $ruleForm['deviceModel'] = $option.deviceModel;
-        }
+        },
+        rules: setRules('设备型号').isSelected.get
       },
       {
         type: 0,

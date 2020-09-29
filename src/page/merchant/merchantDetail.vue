@@ -3,7 +3,8 @@
     <div class="p_head">商户详情</div>
 
     <detailMode :rule-form="businessData" :config-data="configData" :is-show-edit-btn="true" @edit="itemEdit"></detailMode>
-    <detailMode :rule-form="commonData" :config-data="configData2" @modify="editMask"></detailMode>
+    <detailMode :rule-form="commonData" v-if="commonData.merchantType !== 'personal'" :config-data="configData2" @modify="editMask"></detailMode>
+    <detailMode :rule-form="commonData" v-if="commonData.merchantType === 'personal'" :config-data="configData3" @modify="editMask"></detailMode>
     <el-drawer :visible.sync="editData" :with-header="false" size="500px">
       <div class="p_head">{{editDataTitle}}</div>
       <Form
@@ -69,10 +70,6 @@ export default {
             name: "登陆账号",
             key: "loginAccount"
           },
-          // {
-          //   name: "登陆密码",
-          //   key: "password"
-          // },
           {
             name: "地址",
             key: "address"
@@ -85,6 +82,36 @@ export default {
             name: "营业执照图",
             key: "shopLicenseImg",
             type: "image"
+          },
+          {
+            name: "备注",
+            key: "remark",
+            type: "edit"
+          }
+        ]
+      },
+      configData3: {
+        name: "基本信息",
+        items: [
+          {
+            name: "公司名称",
+            key: "merchantName"
+          },
+          {
+            name: "法人姓名",
+            key: "lawPerson"
+          },
+          {
+            name: "法人手机号",
+            key: "lawMobile"
+          },
+          {
+            name: "登陆账号",
+            key: "loginAccount"
+          },
+          {
+            name: "地址",
+            key: "address"
           },
           {
             name: "备注",

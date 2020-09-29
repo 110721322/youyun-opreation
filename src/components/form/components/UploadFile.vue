@@ -91,6 +91,7 @@ export default {
             this.excelPath = this.ossData.ossHost + "/";
             this.excelUrl = this.ossData.objectKeyPrefix + "/" + this.ossData.objectKeys[0];
             this.ruleForm[this.formItem.key] = this.excelUrl
+            this.$emit('handel_execl', this.excelUrl)
           } else {
             this.ruleForm[this.formItem.key] = {
               dialogImagePath: this.dialogImagePath,
