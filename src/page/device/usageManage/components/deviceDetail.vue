@@ -27,9 +27,9 @@
         :hide-expend-column="true"
         @showLife="onClick_showLife"
       >
-        <template v-slot="{ row }">
-          <deviceDetailProcess :row="row"></deviceDetailProcess>
-        </template>
+<!--        <template v-slot="{ row }">-->
+<!--          <deviceDetailProcess :row="row"></deviceDetailProcess>-->
+<!--        </template>-->
       </BaseCrud>
     </div>
   </div>
@@ -42,11 +42,11 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import { SEARCH_CONFIG } from "./../../formConfig/deviceDetailSearch-usage";
 import { DEVICEDETAIL_CONFIG } from "./../../tableConfig/deviceDetailConfig-usage";
 
-import deviceDetailProcess from "./deviceDetailProcess.vue";
+// import deviceDetailProcess from "./deviceDetailProcess.vue";
 
 export default {
   name: "DeviceDetail",
-  components: { Search, BaseCrud, deviceDetailProcess },
+  components: { Search, BaseCrud},
   data() {
     return {
       searchMaxHeight: "320",

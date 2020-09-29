@@ -1,22 +1,15 @@
-import icon from "@/assets/img/life.png";
+// import icon from "@/assets/img/life.png";
 export const DEVICEDETAIL_CONFIG = {
   gridConfig: [
     {
       label: '设备型号',
       prop: 'deviceModel',
-      width: '150px',
-      hasImg: true,
-      imgUrl: icon,
-      emitName: 'showLife',
-      imgStyle: 'width:16px;height:16px;cursor:pointer;vertical-align: middle;margin-left: 5px;'
+      width: '150px'
+      // hasImg: true,
+      // imgUrl: icon,
+      // emitName: 'showLife',
+      // imgStyle: 'width:16px;height:16px;cursor:pointer;vertical-align: middle;margin-left: 5px;'
     },
-    // {
-    //   label: '',
-    //   prop: 'id',
-    //   width: '1px',
-    //   customIsExpand: true
-    // },
-
     {
       label: '设备标识',
       prop: 'deviceIdentifier',

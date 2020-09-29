@@ -4,10 +4,10 @@
       <span class="title">入库管理</span>
     </div>
     <search
-        :open-height="searchMaxHeight"
-        :form-base-data="searchConfig.formData"
-        :show-foot-btn="searchConfig.showFootBtn"
-        @search="search"
+      :open-height="searchMaxHeight"
+      :form-base-data="searchConfig.formData"
+      :show-foot-btn="searchConfig.showFootBtn"
+      @search="search"
     />
     <div class="table_box">
       <div class="tabale_title_box">
@@ -15,33 +15,38 @@
         <el-button class="btn" type="primary" @click="onClick_addDevice">新增入库</el-button>
       </div>
       <BaseCrud
-          ref="table"
-          :params="params"
-          :api-service="api"
-          :grid-config="configData.gridConfig"
-          :grid-btn-config="configData.gridBtnConfig"
-          :grid-data="testData"
-          :form-config="configData.formConfig"
-          :form-data="configData.formModel"
-          :grid-edit-width="150"
-          :is-async="true"
-          :is-select="false"
-          :is-expand="false"
-          :hide-edit-area="configData.hideEditArea"
-          @detail="onClick_detail"
-        ></BaseCrud>
-      </div>
-      <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
-        <div class="p_head">{{ fromConfigData.title }}</div>
-        <Form
-          v-if="drawer"
-          :isDrawer='true'
-          :form-base-data="fromConfigData.formData"
-          :show-foot-btn="fromConfigData.showFootBtn"
-          label-width="130px"
-          @cancel="cancel"
-          @confirm="confirm"
-      ></Form>
+        ref="table"
+        :params="params"
+        :api-service="api"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :grid-data="testData"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="150"
+        :is-async="true"
+        :is-select="false"
+        :is-expand="false"
+        :hide-edit-area="configData.hideEditArea"
+        @detail="onClick_detail"
+      ></BaseCrud>
+    </div>
+    <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
+      <div class="p_head">{{ fromConfigData.title }}</div>
+      <Form
+        v-if="drawer"
+        ref="form"
+        :is-drawer="true"
+        :form-base-data="fromConfigData.formData"
+        :show-foot-btn="fromConfigData.showFootBtn"
+        label-width="130px"
+        @cancel="cancel"
+        @confirm="confirm"
+      >
+<!--        <template slot="content">-->
+<!--          <div>11111</div>-->
+<!--        </template>-->
+      </Form>
     </el-drawer>
   </div>
 </template>
@@ -71,7 +76,13 @@ export default {
       api: ""
     };
   },
-  mounted() {},
+  // computed: {
+  //   selectType() {
+  //     const form = this.$refs.form;
+  //     console.log(form);
+  //     return "1"
+  //   }
+  // },
   created() {
     const beginDate = this.$g.utils.getNowFormatDate() + ' ' + '00' + ':' + '00' + ':' + '00'
     const endDate = this.$g.utils.getNowFormatDate() + ' ' + '23' + ':' + '59' + ':' + '59'
@@ -93,6 +104,9 @@ export default {
     onClick_addDevice() {
       this.fromConfigData = FORM_CONFIG.deviceData;
       this.drawer = true;
+      // this.$nextTick(() => {
+      //   console.log(this.$refs.form);
+      // })
     },
     confirm($data) {
       if (!$data.deviceId || !$data.deadline || !$data.inputTime) {

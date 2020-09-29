@@ -188,7 +188,7 @@ export default {
         payType: 1,
         productName: this.productItem.productName,
         promoCodeId: '',
-        voucher: this.ruleForm.imgUrl.dialogImageUrl
+        voucher: this.ruleForm.imgUrl
       }
       api.createOrder(params).then(res => {
         if (res.object) {

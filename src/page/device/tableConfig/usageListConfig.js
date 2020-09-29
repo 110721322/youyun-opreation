@@ -27,7 +27,7 @@ export const USAGELIST_CONFIG = {
     },
     {
       label: '设备状态',
-      prop: 'freezeStatus',
+      prop: 'freezeStatusDesc',
       width: '150px'
     }
   ],
@@ -49,7 +49,14 @@ export const USAGELIST_CONFIG = {
       {
         name: '恢复可用',
         emitName: 'unfreeze',
-        type: 'text'
+        type: 'text',
+        isShow: (item) => {
+          if (item.freezeStatus === 1) {
+            return false
+          } else {
+            return true
+          }
+        }
       }
     ]
   },

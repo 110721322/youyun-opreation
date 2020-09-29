@@ -72,9 +72,16 @@ export default {
       }
     };
   },
+  computed: {
+    selectType() {
+      console.log(this)
+      return "2"
+    }
+  },
   created() {
-    const beginDate = this.$g.utils.getNowFormatDate() + ' ' + '00' + ':' + '00' + ':' + '00'
-    const endDate = this.$g.utils.getNowFormatDate() + ' ' + '23' + ':' + '59' + ':' + '59'
+    console.log(this.selectType);
+    const beginDate = this.$g.utils.getNowFormatDate()
+    const endDate = this.$g.utils.getNowFormatDate()
     this.params = {
       beginDate: beginDate,
       endDate: endDate
