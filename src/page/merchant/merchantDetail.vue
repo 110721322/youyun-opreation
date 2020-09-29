@@ -133,6 +133,13 @@ export default {
       api.getDetailByMerchantNo({
         merchantNo: this.merchantNo
       }).then(res => {
+        if (res.object.merchantType === "personal") {
+          this.configData2.items = this.configData2.items.filter(item => {
+            if (item.key !== 'shopLicenseNo' && item.key !== 'shopLicenseImg') {
+              return true
+            }
+          })
+        }
         this.commonData = res.object;
       }).catch();
     },

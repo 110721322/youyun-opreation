@@ -12,7 +12,7 @@
       :before-remove="beforeRemove"
       :on-remove="onRemove"
       :http-request="upLoad"
-      :limit="showFileList ? maxNum : ''"
+      :limit="showFileList ? maxNum : 0"
       :accept="formItem.fileAccept ? formItem.fileAccept : 'image/*'"
       :on-exceed="fileOver"
       :on-preview="handlePictureCardPreview"
@@ -28,7 +28,7 @@
       style="float: left; position: relative; left: -20px; top: 5px; cursor: pointer;"
       @click="onClick_preview"
     ></i>
-    <el-image-viewer v-if="showViewer" :on-close="closeViewer" :url-list="[dialogImageUrl]" />
+    <el-image-viewer v-if="showViewer" :on-close="closeViewer" :url-list="[dialogImage]" />
   </div>
 </template>
 <script>

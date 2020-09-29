@@ -1,23 +1,22 @@
 <template>
   <div class="app-wrapper">
     <div class="sidebar-container">
-      <div style="height: 100%">
-        <sidebar style="background:#001529" :active-name="activeName" />
+      <div style="max-height: 100%;" @mouseleave="leaveContainer">
+        <sidebar style="background:#001529;" :active-name="activeName" />
+        <div
+          v-if="menuHoverShow && showMenu2 && menuHoverData && menuHoverData.children && menuHoverData.children.length > 0"
+          class="menu2"
+          @mouseleave="leave"
+        >
+          <menu2 :menu2-data="menuHoverData.children" :root-path="menuHoverData.path"></menu2>
+        </div>
+        <div
+          v-else-if="showMenu2 && routeMenuData && routeMenuData.children && routeMenuData.children.length > 0"
+          class="menu2"
+        >
+          <menu2 :menu2-data="routeMenuData.children" :root-path="routeMenuData.path"></menu2>
+        </div>
       </div>
-    </div>
-
-    <div
-      v-if="showMenu2 && menuHoverData && menuHoverData.children && menuHoverData.children.length > 0"
-      class="menu2"
-      @mouseleave="leave"
-    >
-      <menu2 :menu2-data="menuHoverData.children" :root-path="menuHoverData.path"></menu2>
-    </div>
-    <div
-      v-else-if="showMenu2 && routeMenuData && routeMenuData.children && routeMenuData.children.length > 0"
-      class="menu2"
-    >
-      <menu2 :menu2-data="routeMenuData.children" :root-path="routeMenuData.path"></menu2>
     </div>
 
     <div class="main-container" :class="[showMenu2 ? 'addMargin' : '']">
@@ -45,7 +44,8 @@ export default {
     return {
       activeName: "",
       menu2Data: "",
-      menuHoverData: null
+      menuHoverData: null,
+      menuHoverShow: false
     };
   },
 
@@ -88,6 +88,7 @@ export default {
   },
   mounted() {
     EventBus.$on("enterItem", $item => {
+      this.menuHoverShow = true;
       this.menuHoverData = $item;
     });
 
@@ -105,7 +106,11 @@ export default {
       }
     },
     leave() {
+      this.menuHoverShow = false;
       this.menuHoverData = null;
+    },
+    leaveContainer() {
+      this.menuHoverShow = false;
     },
     leaveSlideBar() {
       if (!(this.menuHoverData && this.menuHoverData.children && this.menuHoverData.children.length > 0)) {

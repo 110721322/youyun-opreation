@@ -1,4 +1,4 @@
-import { validPhone, validEmail } from "@/libs/kit/validate";
+import { validEmail } from "@/libs/kit/validate";
 
 export const FORM_CONFIG = {
   editData: {
@@ -49,25 +49,6 @@ export const FORM_CONFIG = {
         ],
         rules: [
           {required: true, message: '请选择性别', trigger: 'blur'}
-        ]
-      },
-      {
-        type: 0,
-        label: "手机号",
-        key: "phone",
-        initVal: "",
-        rules: [
-          {required: true, message: '请输入手机号', trigger: 'blur'},
-          {
-            validator: (rule, value, callback) => {
-              if (!validPhone(value)) {
-                callback(new Error("请输入正确的手机号"))
-              } else {
-                callback();
-              }
-            },
-            trigger: "blur"
-          }
         ]
       },
       {

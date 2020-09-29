@@ -10,7 +10,18 @@ export default {
   employeeDetail: (params) => API.POST('/operation/v1/employee/employeeDetail', params),
   jobInformation: (params) => API.POST('/operation/v1/employee/jobInformation', params),
   perfectUpdate: (params) => API.POST('/operation/v1/employee/perfectUpdate', params),
-  superiorsList: (params) => API.POST('/operation/v1/employee/superiorsList', params),
+  superiorsList: (params) => API.POST('/operation/v1/employee/superiorsList', params).then(res => {
+    let superiorList = res.object;
+    if (utils.isArr(superiorList) && superiorList.length > 0) {
+      superiorList = superiorList.map($ele => {
+        return {
+          label: $ele.nickName,
+          value: $ele.id
+        };
+      })
+      store.dispatch('setSuperiorList', superiorList)
+    }
+  }),
   /**
    * 获取所有员工列表并存入store
    * @param params
@@ -21,9 +32,10 @@ export default {
       let employeeList = res.object;
       if (utils.isArr(employeeList) && employeeList.length > 0) {
         employeeList = employeeList.map($ele => {
-          $ele.label = $ele.jobName || $ele.name || $ele.nickName || $ele.id;
-          $ele.value = $ele.id;
-          return $ele;
+          return {
+            label: $ele.jobName || $ele.name || $ele.nickName || $ele.superiorId,
+            value: $ele.id
+          };
         })
         store.dispatch('setEmployeeList', employeeList)
       }
@@ -38,9 +50,10 @@ export default {
       let positionList = res.object;
       if (utils.isArr(positionList) && positionList.length > 0) {
         positionList = positionList.map($ele => {
-          $ele.label = $ele.positionName;
-          $ele.value = $ele.positionId;
-          return $ele;
+          return {
+            label: $ele.positionName,
+            value: $ele.positionId
+          };
         })
         store.dispatch('setPositionList', positionList)
       }

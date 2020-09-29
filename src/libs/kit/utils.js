@@ -492,6 +492,54 @@ export default {
     return $data;
   },
 
+  /**
+   * 递归回调过滤高维数组
+   * @param $data  过滤数组
+   * @param $filterArrKey  高维数组key
+   * @param $callback     过滤回调
+   * @returns {[]}
+   * @author liuyun
+   */
+  filterNestedArr2($data,$filterArrKey = 'data',$callback) {
+    let that = this,
+      result = [];
+    if (!that.isArr($data)) return result;
+    result = $data.filter($ele => {
+      if(!that.isUndefined($ele[$filterArrKey]) && that.isFunction($callback)){
+        if ($callback($ele)) {
+          if(that.isArr($ele[$filterArrKey]) && $ele[$filterArrKey].length > 0){
+            if (that.filterNestedArr2($ele[$filterArrKey], $filterArrKey, $callback).length > 0) {
+              $ele[$filterArrKey] = that.filterNestedArr2($ele[$filterArrKey], $filterArrKey, $callback);
+            }
+          }
+          return $ele;
+        }
+      }
+    });
+
+    return result;
+  },
+
+  filterNestedArr3($data, $filterArrKey = 'data', $callback) {
+    let that = this,
+      result = []
+    if (!that.isArr($data)) return result;
+    result = $data.filter(ele => {
+      if ($callback(ele)) {
+        return true;
+      } else {
+        if (that.isArr(ele[$filterArrKey]) && ele[$filterArrKey].length > 0) {
+          ele[$filterArrKey] = that.filterNestedArr3(ele[$filterArrKey], $filterArrKey, $callback);
+          if (ele[$filterArrKey].length > 0) {
+            return true;
+          }
+        }
+      }
+    })
+
+    return result
+  },
+
   throwError(msg) {
     throw new ReferenceError(msg);
   },

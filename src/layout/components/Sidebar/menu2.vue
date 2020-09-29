@@ -10,7 +10,7 @@
             <template>
               <el-menu-item
                 v-if="childItem.isShow"
-                class="el-menu-item"
+                class="el-menu-item third-menu-item"
                 :class="(thirdName === childItem.name) ? 'active' : ''"
                 :index="childItem.name"
                 @click="onClick_item(childItem)"
@@ -68,6 +68,9 @@ export default {
     font-size: 14px;
     color: #333335;
     padding-right: 0;
+    &.third-menu-item {
+      padding-left: 30px !important;
+    }
     &:hover {
       color: #606266;
       background: #ECEDF1 !important;

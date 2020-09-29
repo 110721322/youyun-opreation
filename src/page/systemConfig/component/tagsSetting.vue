@@ -20,7 +20,6 @@
           @blur="handleInputConfirm($event,formData.agentTags)"
         ></el-input>
         <el-button
-          v-else
           class="button-new-tag"
           size="small"
           @click="showInput(formData.agentTags)"
@@ -28,11 +27,21 @@
       </div>
     </DetailBox>
 
-    <DetailBox title="服务商顶部颜色条" :border="true" :is-show-edit-btn="true" @edit="onClick_editColor">
-      <div>
-        <div v-for="(item,index) in formData.moodColor" :key="index" class="color_item">
-          <div class="color_box" :style="{background: item.color}"></div>
-          <div class="item_text">{{ item.mean }}</div>
+    <DetailBox title="服务商顶部颜色条" btn-name="新增颜色条" :border="true" :is-show-edit-btn="true" @edit="onClick_editColor">
+      <div class="s-color-container">
+        <p style="font-size: 14px; color: #333335; margin-bottom: 16px;">颜色：含义</p>
+        <div class="color_item_container">
+          <div v-for="(item,index) in formData.moodColor" :key="index" class="color_item">
+            <div class="color-line">
+              <div class="color_box" :style="{background: item.color}"></div>
+              <div class="color-right">
+                <el-button type="text" @click="editColor(item)">编辑</el-button>
+                <p style="color: #C7C8CD;">|</p>
+                <el-button type="text" style="color: #F5222D;">删除</el-button>
+              </div>
+            </div>
+            <div class="item_text">{{ item.mean }}</div>
+          </div>
         </div>
       </div>
     </DetailBox>
@@ -56,7 +65,6 @@
           @blur="handleInputConfirm($event,formData.positionTags)"
         ></el-input>
         <el-button
-          v-else
           class="button-new-tag"
           size="small"
           @click="showInput(formData.positionTags)"
@@ -67,16 +75,8 @@
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <div class="color-input">
-        <div class="color_box" style="width: 250px;"></div>
-        <el-input v-model="inputRed" placeholder="请输入文案"></el-input>
-      </div>
-      <div class="color-input">
-        <div class="color_box green" style="width: 250px;"></div>
-        <el-input v-model="inputGreen" placeholder="请输入文案"></el-input>
-      </div>
-      <div class="color-input">
-        <div class="color_box yellow" style="width: 250px;"></div>
-        <el-input v-model="inputYellow" placeholder="请输入文案"></el-input>
+        <el-input v-model="ruleForm.mean" placeholder="请输入文案"></el-input>
+        <el-color-picker v-model="ruleForm.color" class="s-color-picker"></el-color-picker>
       </div>
 
       <div class="foot_btn_box">
@@ -118,23 +118,7 @@ export default {
           green: "优质客户",
           yellow: "普通客户"
         },
-        moodColor: [
-          {
-            id: 1,
-            color: "#f5222d",
-            mean: "情绪客户"
-          },
-          {
-            id: 2,
-            color: "#3abd2d",
-            mean: "优质客户"
-          },
-          {
-            id: 3,
-            color: "#ffae00",
-            mean: "普通客户"
-          }
-        ],
+        moodColor: [],
         positionTags: {
           type: "user",
           tags: [],
@@ -144,7 +128,13 @@ export default {
       },
       inputRed: "",
       inputGreen: "",
-      inputYellow: ""
+      inputYellow: "",
+      ruleForm: {
+        type: "add",
+        id: "",
+        color: "",
+        mean: ""
+      }
     };
   },
   mounted() {
@@ -186,22 +176,54 @@ export default {
           this.$message(err);
         });
     },
+    editColor($item) {
+      this.ruleForm = {
+        type: 'edit',
+        color: $item.color,
+        id: $item.id,
+        mean: $item.mean
+      }
+      this.drawer = true;
+    },
     handleClick() {
-      api
-        .moodColorUpdateAgent({
-          color: "",
-          mean: "",
-          id: 1
+      if (this.ruleForm.type === 'add') {
+        api.moodColorAddAgent({
+          color: this.ruleForm.color,
+          mean: this.ruleForm.mean
+        }).then(res => {
+          if (res.code) return res;
+          this.$message({
+            type: "success",
+            message: "已添加"
+          })
+          this.moodColorQueryByConditionAgent();
+          this.cancelForm();
         })
-        .then(res => {
-          this.$message("已保存");
-          this.drawer = false;
-        })
-        .catch(err => {
-          this.$message(err);
-        });
+      } else {
+        api
+          .moodColorUpdateAgent({
+            color: this.ruleForm.color,
+            mean: this.ruleForm.mean,
+            id: this.ruleForm.id
+          })
+          .then(res => {
+            if (res.code) return res;
+            this.$message({
+              type: "success",
+              message: "已保存"
+            })
+            this.moodColorQueryByConditionAgent();
+            this.cancelForm();
+          })
+      }
     },
     cancelForm() {
+      this.ruleForm = {
+        type: "add",
+        id: "",
+        color: "",
+        mean: ""
+      }
       this.drawer = false;
     },
     handleClose(tag, $item) {
@@ -248,12 +270,20 @@ export default {
               this.$message(err);
             });
         }
+      } else {
+        $item.inputVisible = false;
       }
     },
     cancel(done) {
       done();
     },
     onClick_editColor() {
+      this.ruleForm = {
+        type: "add",
+        id: "",
+        color: "",
+        mean: ""
+      }
       this.drawer = true;
     }
   }
@@ -265,24 +295,22 @@ export default {
   display: flex;
   align-items: center;
   margin-top: 24px;
-  padding: 0 24px;
+  padding: 0 32px;
+  .el-input {
+    width: 243px;
+    height: 40px;
+    margin-right: 8px;
+    font-size: 14px;
+    /deep/ input {
+      height: 100%;
+    }
+  }
 }
 .area_box {
   border-bottom: 1px solid #ebeef5;
 }
 .add_area {
   margin: 24px;
-}
-.area_box_title {
-  width: 100%;
-  font-size: 16px;
-  font-weight: 500;
-  color: rgba(51, 51, 53, 1);
-  line-height: 24px;
-  height: 64px;
-  line-height: 64px;
-  padding: 0 32px;
-  border-bottom: 1px solid #ebeef5;
 }
 .table_box {
   position: relative;
@@ -308,33 +336,56 @@ export default {
   .tag-box {
     margin: 24px;
   }
-
-  .color_item {
-    width: 230px;
-    margin: 24px;
-    float: left;
-    .item_text {
-      font-size: 14px;
-      font-weight: 400;
-      color: rgba(51, 51, 53, 1);
-      line-height: 20px;
-    }
+}
+.s-color-picker {
+  width: 40px;
+  height: 40px;
+  /deep/ .el-color-picker__trigger {
+    padding: 6px;
+    width: 40px;
+    height: 40px;
   }
 }
-.color_box {
-  width: 140px;
-  height: 20px;
-  background: #f5222d;
-  float: left;
-  margin-right: 16px;
-  &.red {
-    background: #f5222d;
-  }
-  &.green {
-    background: #3abd2d;
-  }
-  &.yellow {
-    background: #ffae00;
+.s-color-container {
+  margin: 24px 32px;
+  font-size: 14px;
+  .color_item_container {
+    display: flex;
+    flex-wrap: wrap;
+    .color_item {
+      width: 205px;
+      margin-right: 104px;
+      margin-bottom: 14px;
+      .color-line {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        margin-bottom: 14px;
+        .color_box {
+          display: flex;
+          width: 119px;
+          height: 20px;
+          margin-right: 14px;
+          border: 1px solid #EBEEF5;
+        }
+        .color-right {
+          width: 72px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          .el-button {
+            border: 0;
+            padding: 0;
+          }
+        }
+      }
+      .item_text {
+        font-size: 14px;
+        font-weight: 400;
+        color: rgba(51, 51, 53, 1);
+        line-height: 20px;
+      }
+    }
   }
 }
 .device_list {
@@ -391,10 +442,10 @@ export default {
 }
 .foot_btn_box {
   width: 100%;
-  // height: 96px;
+  height: 96px;
   border-top: 1px solid #ebeef5;
-  // position: absolute;
-  // bottom: 0;
+  position: absolute;
+  bottom: 0;
   display: flex;
   flex-direction: row;
   justify-content: center;
