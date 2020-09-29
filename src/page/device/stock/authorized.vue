@@ -72,14 +72,7 @@ export default {
       }
     };
   },
-  computed: {
-    selectType() {
-      console.log(this)
-      return "2"
-    }
-  },
   created() {
-    console.log(this.selectType);
     const beginDate = this.$g.utils.getNowFormatDate()
     const endDate = this.$g.utils.getNowFormatDate()
     this.params = {

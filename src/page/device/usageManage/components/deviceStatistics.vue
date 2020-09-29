@@ -335,7 +335,8 @@ export default {
       detailData2: [],
       beginDate: null,
       endDate: null,
-      currentdate: ''
+      currentdate: '',
+      deviceId: ""
     };
   },
   created() {
@@ -378,7 +379,7 @@ export default {
         .queryRegion({
           beginDate: this.beginDate,
           endDate: this.endDate,
-          deviceId: ""
+          deviceId: this.deviceId
         })
         .then(res => {
           this.detailTitle[0] = {
@@ -414,7 +415,7 @@ export default {
         .queryMcc({
           beginDate: this.beginDate,
           endDate: this.endDate,
-          deviceId: ""
+          deviceId: this.deviceId
         })
         .then(res => {
           this.detailTitle[0] = {
@@ -436,7 +437,7 @@ export default {
         .queryRegionTrade({
           beginDate: this.beginDate,
           endDate: this.endDate,
-          deviceId: ""
+          deviceId: this.deviceId
         })
         .then(res => {
           this.detailTitle2[0] = {
@@ -444,10 +445,6 @@ export default {
             prop: "regionName",
             hasDot: false
           };
-          res.object.forEach(v => {
-            console.log('+++++++++++++++++++')
-            console.log(v)
-          })
           this.detailData2 = res.object;
           this.transferEchartsData(res.object, this.barOption2, "regionName");
           this.showBar2();
@@ -462,7 +459,7 @@ export default {
         .queryMccTrade({
           beginDate: this.beginDate,
           endDate: this.endDate,
-          deviceId: ""
+          deviceId: this.deviceId
         })
         .then(res => {
           this.detailTitle2[0] = {
@@ -479,45 +476,41 @@ export default {
         });
     },
     handleProvince($itemData) {
-      this.queryAllProvince($itemData);
+      if ($itemData) {
+        this.deviceId = $itemData.deviceId
+      } else {
+        this.deviceId = ""
+      }
+      this.queryAllProvince();
     },
     // 查询所有省份正在使用的数量/查询省份使用排行榜
     queryAllProvince($data) {
       if (!$data) {
-        // var getToday = this.$g.utils.getToday(-1)
-        // this.beginDate = getToday
-        // this.endDate = getToday
-        this.beginDate = '2020-01-01'
-        this.endDate = '2020-12-01'
+        this.beginDate = this.$g.utils.getToday(-1)
+        this.endDate = this.$g.utils.getToday(-1)
       }
-      api
-        .queryAllProvince({
-          beginDate: this.beginDate,
-          endDate: this.endDate,
-          deviceId: ""
-        })
-        .then(res => {
-          var result = this.$g.utils.getNestedArr(areaData, 'children');
-          res.object.forEach((v) => {
-            result.forEach(m => {
-              if (v.provinceCode === m.value) {
-                v.provinceName = m.label
-              }
-            })
-            provinceData.forEach(h => {
-              if (v.provinceName === h.label) {
-                v.name = h.name
-              }
-            })
-            v.deviceProportionPecent = this.$g.utils.AccMul(v.deviceProportion, 100)
+      api.queryAllProvince({
+        beginDate: this.beginDate,
+        endDate: this.endDate,
+        deviceId: this.deviceId
+      }).then(res => {
+        var result = this.$g.utils.getNestedArr(areaData, 'children');
+        res.object.forEach((v) => {
+          result.forEach(m => {
+            if (v.provinceCode === m.value) {
+              v.provinceName = m.label
+            }
           })
-          this.mapData = res.object;
-          console.log(this.mapData)
-          this.initMap();
+          provinceData.forEach(h => {
+            if (v.provinceName === h.label) {
+              v.name = h.name
+            }
+          })
+          v.deviceProportionPecent = this.$g.utils.AccMul(v.deviceProportion, 100)
         })
-        .catch(err => {
-          this.$message(err);
-        });
+        this.mapData = res.object;
+        this.initMap();
+      })
     },
     showBar() {
       // 基于准备好的dom，初始化echarts实例
@@ -553,7 +546,11 @@ export default {
         .catch(err => {
           this.$message(err);
         });
-      this.queryAllProvince()
+      const $data = {
+        beginDate: $ruleForm.date[0],
+        endDate: $ruleForm.date[1]
+      }
+      this.queryAllProvince($data)
     },
     initMap() {
       const myChart = echarts.init(this.$refs.echartsMap);

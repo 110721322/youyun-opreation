@@ -32,21 +32,72 @@
       ></BaseCrud>
     </div>
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
-      <div class="p_head">{{ fromConfigData.title }}</div>
-      <Form
-        v-if="drawer"
-        ref="form"
-        :is-drawer="true"
-        :form-base-data="fromConfigData.formData"
-        :show-foot-btn="fromConfigData.showFootBtn"
-        label-width="130px"
-        @cancel="cancel"
-        @confirm="confirm"
-      >
+      <div class="head_title">新增入库</div>
+      <div class="drawer_content">
+        <el-form ref="form" :model="formVal" label-width="100px" :rules="rules">
+          <el-form-item label="设备型号" prop="deviceId" label-width="120px">
+            <el-select v-model="formVal.deviceId" placeholder="请选择设备型号">
+              <el-option v-for="(item, index) in decviceList" :label="item.deviceModel" :value="item.deviceId" :key="index"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="保修截止日期" prop="deadline" label-width="120px">
+            <el-date-picker
+                v-model="formVal.deadline"
+                type="date"
+                placeholder="选择日期">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item label="入库时间" prop="inputTime" label-width="120px">
+            <el-date-picker
+                v-model="formVal.inputTime"
+                type="date"
+                placeholder="选择日期">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item label="入库方式" prop="type" label-width="120px">
+            <el-radio-group v-model="formVal.type" @change="radioChange">
+              <el-radio :label="1">批量导入</el-radio>
+              <el-radio :label="2">手动录入</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-form>
+        <div style="padding-left: 120px;">
+          <UploadFile v-if="formVal.type === 1"  class="btn" @handel_execl="upExecl" :form-item="formItem" :rule-form="ruleForm" type="primary"></UploadFile>
+        </div>
+        <div v-if="formVal.type === 2" class="box_cursor">
+          <div class="cursorCount">
+            <span>入库数量：{{list.length}}台</span>
+            <span @click="handel_clear">清空</span></div>
+          <div class="add_box">
+            <el-input v-model="device"></el-input>
+            <span @click="handel_add">添加</span>
+          </div>
+          <ul class="cursor" v-if="list.length > 0">
+            <li v-for="(item, index) in list" :key="index">
+              <el-input :value="item.id" v-model="item.id"></el-input>
+              <span class="delete" @click="handel_delete(index)">删除</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="bottom_btn">
+        <el-button type="primary" @click="confirm">保存</el-button>
+        <el-button @click="cancel">取消</el-button>
+      </div>
+<!--      <Form-->
+<!--        v-if="drawer"-->
+<!--        ref="form"-->
+<!--        :is-drawer="true"-->
+<!--        :form-base-data="fromConfigData.formData"-->
+<!--        :show-foot-btn="fromConfigData.showFootBtn"-->
+<!--        label-width="130px"-->
+<!--        @cancel="cancel"-->
+<!--        @confirm="confirm"-->
+<!--      >-->
 <!--        <template slot="content">-->
 <!--          <div>11111</div>-->
 <!--        </template>-->
-      </Form>
+<!--      </Form>-->
     </el-drawer>
   </div>
 </template>
@@ -54,35 +105,62 @@
 import api from "@/api/api_device";
 import apiComm from "@/api/api_common";
 import Search from "@/components/search/search.vue";
-import Form from "@/components/form/index.vue";
+// import Form from "@/components/form/index.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { FORM_CONFIG } from "./../formConfig/saveDetail";
 import { SEARCH_CONFIG } from "./../formConfig/saveSearch";
 import { SAVELIST_CONFIG } from "./../tableConfig/savelistConfig";
+import UploadFile from "@/components/form/components/UploadFile";
 
 export default {
   name: "StockSave",
-  components: { Search, BaseCrud, Form },
+  components: { Search, BaseCrud, UploadFile },
   data() {
     return {
+      list: [],
+      device: "",
       searchMaxHeight: "200",
       searchConfig: SEARCH_CONFIG,
       configData: SAVELIST_CONFIG,
       fromConfigData: {},
       testData: [],
+      decviceList: [],
       drawer: false,
       count: 0,
       params: {},
-      api: ""
+      api: "",
+      excelData: "",
+      formVal: {
+        deviceId: "",
+        deadline: "",
+        inputTime: "",
+        type: 1
+      },
+      ruleForm: {
+        key: 'file'
+      },
+      formItem: {
+        key: 'file'
+        // dateUrl: ''
+      },
+      rules: {
+        deviceId: [
+          {required: true, message: '请选择设备型号', trigger: 'blur'}
+        ],
+        deadline: [
+          {required: true, message: '请选择保修截止日期', trigger: 'change'}
+        ],
+        inputTime: [
+          {required: true, message: '请选择设备入库时间', trigger: 'change'}
+        ],
+        type: [
+          {required: true, message: '请选择导入方式', trigger: 'change'}
+        ]
+      }
     };
   },
-  // computed: {
-  //   selectType() {
-  //     const form = this.$refs.form;
-  //     console.log(form);
-  //     return "1"
-  //   }
-  // },
+  computed: {
+  },
   created() {
     const beginDate = this.$g.utils.getNowFormatDate() + ' ' + '00' + ':' + '00' + ':' + '00'
     const endDate = this.$g.utils.getNowFormatDate() + ' ' + '23' + ':' + '59' + ':' + '59'
@@ -93,6 +171,21 @@ export default {
     this.api = api.deviceInputQueryByPage
   },
   methods: {
+    handel_delete(index) {
+      this.list.splice(index, 1)
+    },
+    handel_add() {
+      if (!this.device) {
+        return
+      }
+      var obj = {}
+      obj.id = this.device
+      this.list.push(obj)
+      this.device = ""
+    },
+    handel_clear() {
+      this.list = []
+    },
     search($ruleForm) {
       const params = {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
@@ -102,38 +195,80 @@ export default {
       this.params = params;
     },
     onClick_addDevice() {
+      this.queryAllDevice()
       this.fromConfigData = FORM_CONFIG.deviceData;
+      this.formVal = {
+        deviceId: "",
+        deadline: "",
+        inputTime: "",
+        type: 1
+      }
       this.drawer = true;
-      // this.$nextTick(() => {
-      //   console.log(this.$refs.form);
-      // })
     },
-    confirm($data) {
-      if (!$data.deviceId || !$data.deadline || !$data.inputTime) {
+    queryAllDevice() {
+      api.queryAllDeviceModel().then(res => {
+        this.decviceList = res.object
+      })
+    },
+    upExecl($data) {
+      this.excelData = $data
+    },
+    confirm() {
+      var $data = this.formVal
+      if (!$data.deviceId || !$data.deadline || !$data.inputTime || !$data.type) {
         this.$message({
           message: "请填写必填信息",
           type: "warning"
         })
         return
       }
-      // exelc解析
-      apiComm.excelUploadPic({
-        url: $data.deviceIdentifier,
-        type: "deviceInput"
-      }).then(res => {
-        console.log(res)
-        if (res.object.length === 0) {
+      if ($data.type === 1 && !this.excelData) {
+        this.$message({
+          message: "请导入模板信息",
+          type: "warning"
+        })
+        return
+      }
+      if ($data.type === 1 && this.excelData) {
+        // exelc解析
+        apiComm.excelUploadPic({
+          url: this.excelData,
+          type: "deviceInput"
+        }).then(res => {
+          if (res.object.length === 0) {
+            this.$message({
+              message: "请填写设备标识",
+              type: "warning"
+            })
+            return
+          }
+          $data.deviceIdentifierList = res.object
+          this.deviceInputAdd($data);
+        })
+      }
+      if ($data.type === 2) {
+        if (this.list.length === 0) {
           this.$message({
-            message: "请填写设备标识",
+            message: "添加设备标识",
             type: "warning"
           })
-          return
+          return;
         }
-        $data.deviceIdentifierList = res.object
+        var deviceIdentifierList = []
+        this.list.forEach(m => {
+          if (m.id === "") {
+            this.$message({
+              message: "设备标识不能为空",
+              type: "warning"
+            })
+            return;
+          } else {
+            deviceIdentifierList.push(m.id)
+          }
+        })
+        $data.deviceIdentifierList = deviceIdentifierList
         this.deviceInputAdd($data);
-      }).catch(err => {
-        this.$message(err);
-      });
+      }
     },
     // 新增
     deviceInputAdd($data, arr) {
@@ -150,15 +285,13 @@ export default {
             message: "添加成功",
             type: "success"
           })
+          this.list = []
           this.$refs.table.getData();
           this.drawer = false;
         }
       }).catch(err => {
         this.$message(err);
       });
-    },
-    cancel() {
-      this.drawer = false;
     },
     onClick_detail($item) {
       this.$router.push({
@@ -167,6 +300,18 @@ export default {
           id: $item.id
         }
       });
+    },
+    cancel() {
+      this.list = []
+      this.drawer = false;
+    },
+    radioChange(val) {
+      if (val === 2) {
+        this.excelData = ""
+      }
+      if (val === 1) {
+        this.list = []
+      }
     }
   }
 };
@@ -225,6 +370,98 @@ export default {
   }
   .btn {
     float: right;
+  }
+}
+
+.drawer_content {
+  width: 100%;
+  margin-top: 96px;
+  height: calc(100vh - 192px);
+  overflow-y: auto;
+  padding: 24px 0 0 0;
+}
+
+.bottom_btn {
+  width: 500px;
+  height: 96px;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  border-top: 1px solid #ebeef5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  button {
+    height: 40px;
+    padding: 0 16px;
+    line-height: 40px;
+  }
+}
+
+.box_cursor {
+  margin: 24px 24px 150px 24px;
+  padding: 24px 0;
+  border: 1px solid #ebeef5;
+  border-radius: 4px;
+  .cursorCount {
+    width: 100%;
+    margin-bottom: 16px;
+    font-size: 16px;
+    text-align: center;
+    span:nth-child(2) {
+      padding: 0 16px;
+      color: #1989FA;
+      cursor: pointer;
+    }
+  }
+  .add_box {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #ebeef5;
+    .el-input--small {
+      width: 200px;
+    }
+    span {
+      color: #1989FA;
+      padding-left: 16px;
+      cursor: pointer;
+    }
+  }
+}
+
+.head_title {
+  width: 500px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 96px;
+  border-bottom: 1px solid #ebeef5;
+  padding-left: 32px;
+  font-size: 20px;
+  line-height: 96px;
+  background: #fff;
+  z-index: 9999;
+}
+
+.cursor {
+  padding: 16px 0;
+  li {
+    width: 100%;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .el-input--small {
+      width: 200px;
+    }
+    .delete {
+      color: #f5222d;
+      padding-left: 16px;
+    }
   }
 }
 </style>
