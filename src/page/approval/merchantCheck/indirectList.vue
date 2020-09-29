@@ -60,11 +60,31 @@ export default {
       this.params.merchantNo = this.$route.query.merchantNo
     }
     this.api = api.queryLeshuaAuditPageByCondition
+    this.params.beginDate = this.getDay(0) + " 00:00:00";
+    this.params.endDate = this.getDay(0) + " 23:59:59";
   },
   mounted() {
     // this.search();
   },
   methods: {
+    getDay(day) {
+      var today = new Date();
+      const targetdayMilliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day;
+      today.setTime(targetdayMilliseconds); // 注意，这行是关键代码
+      var tYear = today.getFullYear();
+      var tMonth = today.getMonth();
+      var tDate = today.getDate();
+      tMonth = this.doHandleMonth(tMonth + 1);
+      tDate = this.doHandleMonth(tDate);
+      return tYear + "-" + tMonth + "-" + tDate;
+    },
+    doHandleMonth(month) {
+      var m = month;
+      if (month.toString().length === 1) {
+        m = "0" + month;
+      }
+      return m;
+    },
     search($ruleForm) {
       console.log($ruleForm);
       const params = {

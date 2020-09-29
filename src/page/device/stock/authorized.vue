@@ -73,8 +73,8 @@ export default {
     };
   },
   created() {
-    const beginDate = this.$g.utils.getNowFormatDate() + ' ' + '00' + ':' + '00' + ':' + '00'
-    const endDate = this.$g.utils.getNowFormatDate() + ' ' + '23' + ':' + '59' + ':' + '59'
+    const beginDate = this.$g.utils.getNowFormatDate()
+    const endDate = this.$g.utils.getNowFormatDate()
     this.params = {
       beginDate: beginDate,
       endDate: endDate

@@ -84,8 +84,6 @@ export default {
       tableId: "",
       tableDeviceId: "",
       params: {
-        beginDate: this.$g.utils.getToday(),
-        endDate: this.$g.utils.getToday(),
         distributionUserId: 1
       },
       device: {},
@@ -96,10 +94,30 @@ export default {
     if (this.$route.query.outputNo) {
       this.params.outputNo = this.$route.query.outputNo
     }
+    this.params.beginDate = this.getDay(0);
+    this.params.endDate = this.getDay(0);
     this.api = api.deviceOutputQueryByPage
   },
   mounted() {},
   methods: {
+    getDay(day) {
+      var today = new Date();
+      const targetdayMilliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day;
+      today.setTime(targetdayMilliseconds); // 注意，这行是关键代码
+      var tYear = today.getFullYear();
+      var tMonth = today.getMonth();
+      var tDate = today.getDate();
+      tMonth = this.doHandleMonth(tMonth + 1);
+      tDate = this.doHandleMonth(tDate);
+      return tYear + "-" + tMonth + "-" + tDate;
+    },
+    doHandleMonth(month) {
+      var m = month;
+      if (month.toString().length === 1) {
+        m = "0" + month;
+      }
+      return m;
+    },
     search($ruleForm) {
       const params = {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,

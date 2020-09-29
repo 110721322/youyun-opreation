@@ -5,8 +5,7 @@ export const FORM_CONFIG = {
       type: 9,
       label: '筛选时间',
       key: 'date',
-      format: "yyyy-MM-dd HH:mm:ss",
-      datatype: "datetimerange",
+      format: "yyyy-MM-dd",
       labelWidth: '90px',
       span: 22
     },
