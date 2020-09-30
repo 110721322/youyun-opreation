@@ -72,8 +72,8 @@ export default {
   },
   mounted() {},
   created() {
-    this.params.beginDate = this.getDay(0) + " 00:00:00";
-    this.params.endDate = this.getDay(0) + " 23:59:59";
+    this.params.beginTime = this.getDay(0);
+    this.params.endTime = this.getDay(0);
   },
   methods: {
     getDay(day) {
@@ -198,8 +198,8 @@ export default {
     },
     search($ruleForm) {
       const params = {
-        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
-        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        beginTime: $ruleForm.date ? $ruleForm.date[0] : null,
+        endTime: $ruleForm.date ? $ruleForm.date[1] : null,
         channelStatus: $ruleForm.channelStatus,
         operationUserNo: $ruleForm.operationUserNo
       };
