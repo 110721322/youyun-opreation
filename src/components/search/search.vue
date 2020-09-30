@@ -222,7 +222,7 @@ export default {
   display:none
 }
 .is_show_all {
-  height: auto !important;
+  /* height: auto !important; */
 }
 .btn_list {
   display: flex;

@@ -9,7 +9,9 @@ export const FORM_CONFIG = {
       querySelectAll: true,
       key: 'date',
       labelWidth: '80px',
-      span: 22
+      datatype: 'datetimerange',
+      span: 22,
+      isSelectToday: true
     },
     {
       type: 10,

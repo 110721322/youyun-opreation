@@ -172,8 +172,8 @@ export default {
           padding: 12px 24px 0 19px;
           margin-bottom: 14px;
           img {
-            width: 144px;
-            height: 175px;
+            width: 187px;
+            height: 187px;
           }
         }
         .next-img {
@@ -206,8 +206,6 @@ export default {
         .shop-handle {
           margin-top: 40px;
           .el-button {
-            width: 133px;
-            height: 40px;
             &:last-child {
               margin-left: 24px;
             }

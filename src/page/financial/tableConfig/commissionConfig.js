@@ -66,6 +66,11 @@ export const TABLE_CONFIG = {
       width: '130px'
     },
     {
+      label: '操作时间',
+      prop: 'updateTime',
+      width: '130px'
+    },
+    {
       label: '驳回备注',
       prop: 'reason',
       width: '120px'

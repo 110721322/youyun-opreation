@@ -194,12 +194,28 @@ export default {
         },
         xAxis: [
           {
-            type: "category"
+            type: "category",
+            axisLine: {
+              lineStyle: {
+                color: '#606266'
+              }
+            }
           }
         ],
         yAxis: [
           {
-            type: "value"
+            type: "value",
+            axisLine: {
+              lineStyle: {
+                color: '#606266'
+              }
+            },
+            splitLine: {
+              show: false,
+              lineStyle: {
+                color: '#D9D9D9'
+              }
+            }
           }
         ],
         series: [
@@ -255,12 +271,28 @@ export default {
         },
         xAxis: [
           {
-            type: "category"
+            type: "category",
+            axisLine: {
+              lineStyle: {
+                color: '#606266'
+              }
+            }
           }
         ],
         yAxis: [
           {
-            type: "value"
+            type: "value",
+            axisLine: {
+              lineStyle: {
+                color: '#606266'
+              }
+            },
+            splitLine: {
+              show: false,
+              lineStyle: {
+                color: '#D9D9D9'
+              }
+            }
           }
         ],
         series: [

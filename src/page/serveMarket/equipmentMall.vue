@@ -41,18 +41,25 @@
       </div>
     </div>
     <div class="right_btn">
-      <div class="btn1" @click="onclick_tocart">
+      <div class="btn1" @click="onclick_tocart" @mouseover="showText=true" @mouseout="showText=false">
+        <div class="modle"></div>
         <el-badge :value="totalNum" :max="99" class="item">
           <img src="../../assets/img/cart_icon.png" alt="">
+          <transition name="textDisplay">
+            <p v-if="showText" style="text-align: center;font-size:14px;">购<br>物<br>车</p>
+          </transition>
         </el-badge>
       </div>
-      <div class="btn1" @click="onClick_torecords">
-        <img style="width: 18px; height: 18px;" src="../../assets/img/order_icon.png" alt="">
-      </div>
-      <div class="btn2">
+      <div class="btn2" @click="onClick_torecords" @mouseover="showText2=true" @mouseout="showText2=false">
+        <div class="modle"></div>
         <img src="../../assets/img/order_icon.png" alt="">
-        <p>订<br>单</p>
+        <transition name="textDisplay">
+          <p v-if="showText2" style="text-align: center;font-size:14px;line-height: 18px;margin-top:15px">订<br>单</p>
+        </transition>
       </div>
+      <!-- <div class="btn2">
+        <img src="../../assets/img/order_icon.png" alt="">
+      </div> -->
     </div>
   </div>
 </template>
@@ -66,6 +73,8 @@ export default {
       num: {},
       mallList: [],
       totalNum: 0,
+      showText: false,
+      showText2: false,
       equimentData: [
         {
           name: '蜻蜓plus',
@@ -266,34 +275,84 @@ export default {
   }
   .btn1 {
     width: 50px;
-    height: 50px;
     background: #000000;
-    border-radius: 50%;
+    border-radius: 25px;
     margin-bottom: 16px;
+    font-size: 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     cursor: pointer;
+    color: #ffffff;
+    position: relative;
+  }
+  .modle {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+  }
+  .btn1:hover{
+    background: #1989FA;
+    padding-bottom: 15px;
   }
   .btn1 img {
     width: 20px;
     height: 20px;
-    margin-top: 15px;
+    margin: 15px 0;
+  }
+  .textDisplay-enter-active {
+    animation: bounce-in .3s;
+  }
+  .textDisplay-leave-active {
+    animation: bounce-out .1s reverse;
+  }
+  @keyframes bounce-in {
+    0% {
+      height: 0;
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.3;
+    }
+    100% {
+      height: 50px;
+      opacity: 1;
+    }
+  }
+  @keyframes bounce-out {
+    0% {
+      height: 0;
+      opacity: 0;
+    }
+    80% {
+      opacity: 0;
+    }
+    100% {
+      height: 50px;
+      opacity: 1;
+    }
   }
   .btn2 {
-    background: #1989FA;
+    background: black;
     width: 50px;
-    padding: 16px 0;
+    padding: 15px 0;
     color: #ffffff;
-    line-height: 18px;
-    font-size: 14px;
+    font-size: 0px;
     text-align: center;
     border-radius: 25px;
+    /* margin-bottom: 16px; */
+    cursor: pointer;
+    position: relative;
+  }
+  .btn2:hover{
+    background: #1989FA;
   }
   .btn2 img {
-    width: 17px;
-    height: 17px;
-    margin-bottom: 6px;
+    width: 20px;
+    height: 20px;
+    /* margin: 15px 0; */
   }
   .el-badge__content {
     background-color: #F64D4C;
