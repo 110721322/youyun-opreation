@@ -11,7 +11,7 @@ var validatorPhone = (rule, value, callback) => {
 export const REGISTER_FORM_CONFIG = {
   rules: {
     businessType: [
-      { required: true, message: '请选择账户类型', trigger: 'change' }
+      { required: true, message: '请选择账户类型', trigger: 'blur' }
     ],
     company: [
       { required: true, message: '请输入公司名称', trigger: 'blur' }
@@ -40,7 +40,7 @@ export const REGISTER_FORM_CONFIG = {
       { required: true, message: '请输入详细地址', trigger: 'blur' }
     ],
     county: [
-      { required: true, message: '请选择省市区', trigger: 'change' }
+      { required: true, message: '请选择省市区', trigger: 'blur' }
     ],
     phone: [
       { required: true, message: '请输入登录手机号', trigger: 'blur' },
