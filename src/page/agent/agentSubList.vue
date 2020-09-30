@@ -56,9 +56,6 @@ export default {
     };
   },
   created() {
-    this.params = {}
-    this.params.beginDate = this.getDay(0);
-    this.params.endDate = this.getDay(0);
   },
   mounted() {
   },
@@ -83,6 +80,8 @@ export default {
     },
     search($form) {
       this.params = {
+        beginDate: $form.date ? $form.date[0] : "",
+        endDate: $form.date ? $form.date[1] : "",
         labelId: $form.labelId || null,
         activeScopeType: $form.activeScopeType || null,
         operationId: $form.operationId || null,

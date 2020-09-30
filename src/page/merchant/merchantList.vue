@@ -73,8 +73,8 @@ export default {
     };
   },
   created() {
-    this.params.beginTime = this.getDay(0);
-    this.params.endTime = this.getDay(0);
+    this.params.beginDate = this.getDay(0);
+    this.params.endDate = this.getDay(0);
   },
   mounted() {
     this.queryInit()

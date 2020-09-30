@@ -53,8 +53,8 @@ export default {
   },
   mounted() {},
   created() {
-    this.params.beginDate = this.getDay(0);
-    this.params.endDate = this.getDay(0);
+    this.params.beginDate = this.getDay(0) + " 00:00:00";
+    this.params.endDate = this.getDay(0) + " 23:59:59";
   },
   methods: {
     getDay(day) {
