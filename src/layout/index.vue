@@ -1,10 +1,10 @@
 <template>
   <div class="app-wrapper">
     <div class="sidebar-container">
-      <div style="max-height: 100%;" @mouseleave="leaveContainer">
+      <div style="max-height: 100%;" @mouseleave="leave">
         <sidebar style="background:#001529;" :active-name="activeName" />
         <div
-          v-if="menuHoverShow && showMenu2 && menuHoverData && menuHoverData.children && menuHoverData.children.length > 0"
+          v-if="showMenu2 && menuHoverData && menuHoverData.children && menuHoverData.children.length > 0"
           class="menu2"
           @mouseleave="leave"
         >
