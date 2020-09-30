@@ -3,6 +3,7 @@
     <div class="p_head_detail" :class="[activeClass]">
       <div class="top">
         <span>{{ agentDetail.agentName }}</span>
+<<<<<<< HEAD
         <!--延期
         <el-dropdown trigger="click" @command="onClick_changeClientType">
           <div class="el-dropdown-link">
@@ -43,6 +44,46 @@
         ></el-input>
         <el-button v-else class="button-new-tag" size="small" @click="showInput">+ 添加标签</el-button>
       </div>-->
+=======
+<!--        <el-dropdown trigger="click" @command="onClick_changeClientType">-->
+<!--          <div class="el-dropdown-link">-->
+<!--            <div class="doit" :class="[activeClass]"></div>-->
+<!--            <div>-->
+<!--              {{ activeValue }}-->
+<!--              <i class="el-icon-caret-bottom el-icon&#45;&#45;right"></i>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <el-dropdown-menu slot="dropdown">-->
+<!--            <el-dropdown-item-->
+<!--              v-for="(item,index) in clientList"-->
+<!--              :key="index"-->
+<!--              :command="item"-->
+<!--            >{{ item.value }}</el-dropdown-item>-->
+<!--          </el-dropdown-menu>-->
+<!--        </el-dropdown>-->
+      </div>
+<!--      <div class="tags">-->
+<!--        <el-tag-->
+<!--          v-for="tag in dynamicTags"-->
+<!--          :key="tag"-->
+<!--          closable-->
+<!--          :disable-transitions="false"-->
+<!--          size="small"-->
+<!--          @close="handleClose(tag)"-->
+<!--        >{{ tag }}</el-tag>-->
+<!--        <el-input-->
+<!--          v-if="inputVisible"-->
+<!--          ref="saveTagInput"-->
+<!--          v-model="inputValue"-->
+<!--          class="input-new-tag"-->
+<!--          size="mini"-->
+<!--          @input="tagInput"-->
+<!--          @keyup.enter.native="handleInputConfirm"-->
+<!--          @blur="handleInputConfirm"-->
+<!--        ></el-input>-->
+<!--        <el-button v-else class="button-new-tag" size="small" @click="showInput">+ 添加标签</el-button>-->
+<!--      </div>-->
+>>>>>>> dev-1.1
     </div>
 
     <detailMode :rule-form="ruleForm" :config-data="configData" v-if="ruleForm.businessType === 'enterprise'" @edit="itemEdit"></detailMode>
@@ -53,7 +94,7 @@
       <div class="title">应用</div>
       <el-row>
         <el-col :span="8" class="app" @click.native="orderEquipment">
-          <img src="https://avatars1.githubusercontent.com/u/23054546?s=64&v=4" alt />
+          <img src="../../assets/img/Group.png" alt />
           <div>订购设备</div>
         </el-col>
       </el-row>
@@ -346,7 +387,7 @@ export default {
       configData: DETAILCONFIG.configData,
       configData1: DETAILCONFIG.configData1,
       configData2: DETAILCONFIG.configData2,
-      equipmentConfigData: ORDER_EQUIPMENT,
+      equipmentConfigData: {},
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -399,7 +440,7 @@ export default {
           colorName: "yellow"
         }
       ],
-      activeClass: "red",
+      // activeClass: "red",
       activeValue: "情绪客户",
       editType: '',
       contactsList: [],
@@ -709,6 +750,8 @@ export default {
     },
     orderEquipment() {
       this.equipment = true
+      this.equipmentConfigData = ORDER_EQUIPMENT
+      this.equipmentConfigData.formData[7].initVal = this.agentDetail.expAddress
     },
     // 标签输入框
     tagInput(value) {
@@ -823,6 +866,19 @@ export default {
       this.inputValue = "";
     },
     itemEdit($model) {
+      if ($model === 'address') {
+        this.editType = 'editAddress'
+        this.fromConfigData = {}
+        setTimeout(() => {
+          this.editType = 'editBasicData'
+          const newFromConfigData = FORM_CONFIG[$model];
+          newFromConfigData.formData.forEach((item, index) => {
+            item.initVal = this.agentDetail[item.key];
+          });
+          this.fromConfigData = this.$g.utils.deepClone(newFromConfigData);
+        }, 200)
+        this.drawer = true;
+      }
       if ($model === 'basicData') {
         this.fromConfigData = {}
         setTimeout(() => {
@@ -863,12 +919,13 @@ export default {
         this.editType = 'editRenew'
       }
       this.drawer = true;
-      const newFromConfigData = FORM_CONFIG[$model];
-      newFromConfigData.formData.forEach((item, index) => {
-        item.initVal = this.agentDetail[item.key];
-      });
-      this.fromConfigData = this.$g.utils.deepClone(newFromConfigData);
-      console.log(this.fromConfigData)
+      setTimeout(() => {
+        const newFromConfigData = FORM_CONFIG[$model];
+        newFromConfigData.formData.forEach((item, index) => {
+          item.initVal = this.agentDetail[item.key];
+        });
+        this.fromConfigData = this.$g.utils.deepClone(newFromConfigData);
+      }, 200)
     },
     cancel() {
       this.editType = ''
@@ -1206,6 +1263,7 @@ export default {
 
 <style lang="scss">
 .p_head_detail {
+  height: 76px;
   background: rgba(255, 255, 255, 1);
   overflow: hidden;
   &.red {
@@ -1218,7 +1276,8 @@ export default {
     border-bottom: 2px solid #fec171;
   }
   .top {
-    margin: 24px 32px;
+    padding-left: 24px;
+    line-height: 76px;
     font-size: 20px;
     font-weight: 500;
     color: rgba(0, 0, 0, 0.85);

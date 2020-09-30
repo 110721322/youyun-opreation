@@ -67,9 +67,6 @@ export default {
     };
   },
   created() {
-    this.params = {}
-    this.params.beginDate = this.getDay(0);
-    this.params.endDate = this.getDay(0);
   },
   mounted() {},
   methods: {
@@ -94,8 +91,8 @@ export default {
     search($form) {
       console.log($form)
       this.params = {
-        beginDate: $form.date[0] ? $form.date[0] : '',
-        endDate: $form.date[1] ? $form.date[1] : '',
+        beginDate: $form.date ? $form.date[0] : '',
+        endDate: $form.date ? $form.date[1] : '',
         personName: $form.personName ? $form.personName : null,
         personMobile: $form.personMobile ? $form.personMobile : null,
         businessType: $form.businessType ? $form.businessType : null,
