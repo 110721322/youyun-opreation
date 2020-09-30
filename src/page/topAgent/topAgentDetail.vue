@@ -1044,7 +1044,6 @@ export default {
 
 <style lang="scss">
   .p_head_detail {
-    height: 114px;
     background: rgba(255, 255, 255, 1);
     overflow: hidden;
     &.red {

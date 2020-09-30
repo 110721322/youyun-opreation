@@ -3,12 +3,13 @@
     <div class="p_head_detail" :class="[activeClass]">
       <div class="top">
         <span>{{ agentDetail.agentName }}</span>
+        <!--延期
         <el-dropdown trigger="click" @command="onClick_changeClientType">
           <div class="el-dropdown-link">
             <div class="doit" :class="[activeClass]"></div>
             <div>
               {{ activeValue }}
-              <i class="el-icon-caret-bottom el-icon--right"></i>
+              <i class="el-icon-caret-bottom el-icon&#45;&#45;right"></i>
             </div>
           </div>
           <el-dropdown-menu slot="dropdown">
@@ -18,8 +19,9 @@
               :command="item"
             >{{ item.value }}</el-dropdown-item>
           </el-dropdown-menu>
-        </el-dropdown>
+        </el-dropdown>-->
       </div>
+      <!--延期
       <div class="tags">
         <el-tag
           v-for="tag in dynamicTags"
@@ -40,7 +42,7 @@
           @blur="handleInputConfirm"
         ></el-input>
         <el-button v-else class="button-new-tag" size="small" @click="showInput">+ 添加标签</el-button>
-      </div>
+      </div>-->
     </div>
 
     <detailMode :rule-form="ruleForm" :config-data="configData" v-if="ruleForm.businessType === 'enterprise'" @edit="itemEdit"></detailMode>
@@ -1215,7 +1217,6 @@ export default {
 
 <style lang="scss">
 .p_head_detail {
-  height: 114px;
   background: rgba(255, 255, 255, 1);
   overflow: hidden;
   &.red {

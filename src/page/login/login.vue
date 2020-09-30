@@ -189,8 +189,6 @@
           <template>
             <div class="regist-title">服务商账户注册</div>
             <el-form ref="registerForm" class="input-box" :model="registerForm" :rules="registerFormConfig.rules">
-              <input type="text" name="name" autocomplete="off" style="position: fixed; bottom: -9999px;">
-              <input type="password" name="pass" autocomplete="off" style="position: fixed; bottom: -9999px;">
               <el-form-item prop="businessType">
                 <el-radio-group v-model="registerForm.businessType">
                   <el-radio label="enterprise">企业商户</el-radio>
@@ -500,12 +498,24 @@ export default {
     },
     toChangePasswd() {
       this.activeType = "changePasswdOneStep";
+      this.clearValidate();
     },
     toAccountLogin() {
       this.activeType = "accountLogin";
+      this.clearValidate();
     },
     toVerificationLogin() {
       this.activeType = "verificationLogin";
+      this.clearValidate();
+    },
+    clearValidate() {
+      this.$nextTick(() => {
+        if (this.$refs.passwordLoginForm) this.$refs.passwordLoginForm.clearValidate();
+        if (this.$refs.codeLoginForm) this.$refs.codeLoginForm.clearValidate();
+        if (this.$refs.changePasswordOneStep) this.$refs.changePasswordOneStep.clearValidate();
+        if (this.$refs.changePasswordTwoStep) this.$refs.changePasswordTwoStep.clearValidate();
+        if (this.$refs.registerForm) this.$refs.registerForm.clearValidate();
+      })
     },
     onClick_passwdLogin() {
       if (!this.formValid('passwordLoginForm')) return;
@@ -531,7 +541,6 @@ export default {
         }
         return;
       }
-      console.log(res)
       const userId = res.object.user.id
       const roleId = res.object.user.roleId
       this.saveAccessToken(res.object.accessToken)
@@ -586,11 +595,13 @@ export default {
     onClick_changeregister() {
       this.isRegister = true
       this.isLogin = false
+      this.clearValidate()
     },
     onClick_changelogin() {
       this.activeType = 'accountLogin';
       this.isRegister = false
       this.isLogin = true
+      this.clearValidate();
     },
     onClick_register() {
       if (!this.formValid("registerForm")) return;
