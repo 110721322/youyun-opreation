@@ -36,8 +36,9 @@
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <img src="https://avatars1.githubusercontent.com/u/23054546?s=64&v=4" class="user-avatar" />
+          <el-avatar size="large" style="margin-right: 12px;">user</el-avatar>
           <span class="name">{{ nameLabel }}</span>
+          <i class="el-icon-arrow-down el-icon--right"></i>
         </div>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item divided @click.native="logout">
@@ -168,19 +169,17 @@ export default {
     }
 
     .avatar-container {
-      width: 153px;
       margin-right: 30px;
       .avatar-wrapper {
+        display: flex;
+        align-items: center;
         margin-top: 5px;
         position: relative;
         margin-right: 20px;
         .name {
-          width: 100px;
           height: 40px;
-          display: inline-block;
           line-height: 40px;
           margin-top: 0;
-          position: absolute;
         }
         .user-avatar {
           cursor: pointer;
@@ -192,7 +191,6 @@ export default {
 
         .el-icon-caret-bottom {
           cursor: pointer;
-          position: absolute;
           right: -20px;
           top: 25px;
           font-size: 14px;
