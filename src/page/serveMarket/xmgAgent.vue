@@ -7,12 +7,12 @@
         <img src="../../assets/img/cancle.png" alt="" @click="closeWarn">
       </div>
       <div class="buy_info">
-        <img class="buy_img" src="../../assets/img/new_image.png" alt="">
+        <img class="buy_img" src="../../assets/img/xmgIcon.png" alt="">
         <div class="buy_all">
           <div class="first_body">
             <div class="buy_title">{{ productItem.productName }}</div>
             <div class="buy_subtitle">{{ productItem.productDesc }}</div>
-            <img class="buy_photo" src="" alt="">
+            <img class="buy_photo" src="../../assets/img/xmgDesc.jpg" alt="">
           </div>
           <div class="second_body">
             <div class="select_date">

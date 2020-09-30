@@ -165,7 +165,7 @@ export default {
   .table-content {
     width: 100%;
     background: #ffffff;
-    padding: 0 24px;
+    padding: 0 24px 24px;
   }
   .form-title {
     width: 100%;

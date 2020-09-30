@@ -212,7 +212,6 @@ export default {
   }
   .main_page {
     .el-menu {
-      margin-left: 12px;
       /deep/ .is-active{
         color: #1989FA!important;
       }
@@ -227,6 +226,9 @@ export default {
       height: 40px;
       line-height: 32px;
       font-size: 16px;
+      padding: 0;
+      margin: 0;
+      margin-right: 40px!important;
     }
     .main-top {
         width: 100%;

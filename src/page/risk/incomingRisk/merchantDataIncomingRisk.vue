@@ -8,8 +8,8 @@
     <div class="table_box">
       <div class="tabale_title_box">
         <div class="title">商户入件资料列表</div>
-        <el-button class="btn" @click="onClick_goBlackDetail">黑名单拦截记录</el-button>
         <el-button class="btn" type="primary" @click="onClick_addRiskMessage">新增风控信息</el-button>
+        <el-button class="btn" @click="onClick_goBlackDetail">黑名单拦截记录</el-button>
       </div>
 
       <BaseCrud

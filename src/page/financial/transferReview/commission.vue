@@ -168,7 +168,7 @@ export default {
   components: { Search, BaseCrud, Form },
   data() {
     return {
-      headerCellStyle: { backgroundColor: "#FAFAFA" },
+      headerCellStyle: { },
       searchHeight: "260",
       searchConfig: SEARCH_CONFIG,
       configData: TABLE_CONFIG,

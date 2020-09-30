@@ -226,6 +226,9 @@ export default {
   .avatar-uploader {
     display: flex;
     flex-wrap: wrap;
+    max-width: 294px;
+    min-height: 100px;
+    float: left;
     .avatar {
       width: 100%;
       margin: 0 auto; /* 水平居中 */
