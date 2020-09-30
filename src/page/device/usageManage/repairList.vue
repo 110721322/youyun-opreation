@@ -84,8 +84,6 @@ export default {
   },
   mounted() {},
   created() {
-    this.params.beginTime = this.getDay(0);
-    this.params.endTime = this.getDay(0);
   },
   methods: {
     getDay(day) {

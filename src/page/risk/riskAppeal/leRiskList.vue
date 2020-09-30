@@ -69,8 +69,6 @@ export default {
   },
   mounted() {},
   created() {
-    this.params.beginDate = this.getDay(0);
-    this.params.endDate = this.getDay(0);
   },
   methods: {
     getDay(day) {
@@ -177,8 +175,9 @@ export default {
       const params = {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,
-        operateUserNo: $ruleForm.operateUserNo,
-        status: $ruleForm.status
+        operateUserNo: $ruleForm.operateUserNo ? $ruleForm.operateUserNo : null,
+        status: $ruleForm.status ? $ruleForm.status : "",
+        channelMerchantNo: $ruleForm.operateUserNo ? $ruleForm.operateUserNo : null
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
