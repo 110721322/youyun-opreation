@@ -15,7 +15,7 @@
       <div class="title">应用</div>
       <el-row>
         <el-col :span="8" class="app" @click.native="buyDevice('buyDevice')">
-          <img src="https://avatars1.githubusercontent.com/u/23054546?s=64&v=4" alt />
+          <img src="../../assets/img/Group.png" alt />
           <div>订购设备</div>
         </el-col>
       </el-row>
@@ -387,7 +387,7 @@ export default {
           colorName: "yellow"
         }
       ],
-      activeClass: "red",
+      // activeClass: "red",
       activeValue: "情绪客户",
       financeModel: {
         bankAccountType: "public",
@@ -1044,7 +1044,7 @@ export default {
 
 <style lang="scss">
   .p_head_detail {
-    height: 114px;
+    height: 76px;
     background: rgba(255, 255, 255, 1);
     overflow: hidden;
     &.red {
@@ -1057,7 +1057,8 @@ export default {
       border-bottom: 2px solid #fec171;
     }
     .top {
-      margin: 24px 32px;
+      padding-left: 24px;
+      line-height: 76px;
       font-size: 20px;
       font-weight: 500;
       color: rgba(0, 0, 0, 0.85);

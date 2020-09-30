@@ -21,6 +21,7 @@
           <el-select
             v-if="item.isShowSelect"
             v-model="item.addOption"
+            style="margin-left: 15px;"
             size="small"
             @change="areaSelectConfirm($event, item)"
           >
@@ -31,7 +32,7 @@
               :value="province.value"
             ></el-option>
           </el-select>
-          <el-button v-else class="button-new-tag" size="small" @click="areaSelect(item)">+ 添加城市</el-button>
+          <el-button class="button-new-tag" size="small" @click="areaSelect(item)">+ 添加城市</el-button>
         </div>
       </div>
 

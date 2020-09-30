@@ -6,15 +6,15 @@ export const FORM_CONFIG = {
     {
       type: 9,
       label: '筛选时间',
+      querySelectAll: true,
       key: 'date',
       labelWidth: '80px',
-      span: 22,
-      isSelectToday: true
+      span: 22
     },
     {
       type: 10,
       label: '精准筛选',
-      key: '',
+      key: 'inputForm',
       placeholder: "请输入商户号",
       options: [
         {

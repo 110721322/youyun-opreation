@@ -5,6 +5,8 @@ export const SEARCH_CONFIG = {
       type: 9,
       label: '筛选时间',
       key: 'date',
+      querySelectAll: true,
+      isSelectToday: true,
       class: 'max-width',
       labelWidth: '80px',
       span: 22
@@ -79,6 +81,13 @@ export const SEARCH_CONFIG = {
         valueName: 'operationName',
         method: 'get'
       }
+    },
+    {
+      type: 0,
+      label: '乐刷商户号',
+      key: 'channelMerchantNo',
+      labelWidth: '80px',
+      span: 11
     }
   ]
 }

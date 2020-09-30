@@ -73,22 +73,26 @@ export default {
     return {
       rules: {
         name: [{ required: true }]
-      },
-      imageList: [],
-      textList: []
+      }
     };
   },
-  computed: {},
-  mounted() {
-    console.log(this.configData.models);
-    this.configData.items.forEach($item => {
-      if ($item.type === "image") {
-        this.imageList.push($item);
-      } else {
-        this.textList.push($item);
-      }
-    });
+  computed: {
+    imageList() {
+      return this.configData.items.filter($item => {
+        if ($item.type === "image") {
+          return true
+        }
+      });
+    },
+    textList() {
+      return this.configData.items.filter($item => {
+        if ($item.type !== "image") {
+          return true
+        }
+      });
+    }
   },
+  mounted() {},
 
   methods: {
     onClick_edit() {

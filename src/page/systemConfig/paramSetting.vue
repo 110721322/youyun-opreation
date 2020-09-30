@@ -23,14 +23,6 @@
         </div>
       </div>
       <div class="right_box">
-        <div v-if="selectMenu.type == 'todoList'">
-          <TodoSetting></TodoSetting>
-        </div>
-
-        <div v-if="selectMenu.type == 'target'">
-          <TagSetting></TagSetting>
-        </div>
-
         <div v-if="selectMenu.type == 'area'">
           <AreaSetting></AreaSetting>
         </div>
@@ -39,13 +31,11 @@
   </div>
 </template>
 <script>
-import TodoSetting from "./component/todoSetting.vue";
 import AreaSetting from "./component/areaSetting.vue";
-import TagSetting from "./component/tagsSetting.vue";
 
 export default {
   name: "ParamSetting",
-  components: { TodoSetting, AreaSetting, TagSetting },
+  components: { AreaSetting },
   data() {
     return {
       menuList: [
@@ -53,10 +43,6 @@ export default {
         //   name: "待办事项",
         //   type: "todoList"
         // },
-        {
-          name: "标签",
-          type: "target"
-        },
         {
           name: "大区",
           type: "area"
@@ -113,7 +99,7 @@ export default {
   float: left;
   width: calc(100% - 290px - 48px);
   height: 100%;
-  overflow: scroll;
+  overflow-y: scroll;
   // margin: 24px;
   .tag-box {
     margin: 24px;

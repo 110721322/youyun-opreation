@@ -73,8 +73,8 @@ export default {
     };
   },
   created() {
-    this.params.beginTime = this.getDay(0);
-    this.params.endTime = this.getDay(0);
+    this.params.beginDate = this.getDay(0);
+    this.params.endDate = this.getDay(0);
   },
   mounted() {
     this.queryInit()
@@ -118,18 +118,22 @@ export default {
       });
     },
     search($ruleForm) {
-      const params = {
-        beginTime: $ruleForm.date ? $ruleForm.date[0] + " 00:00:00" : null,
-        endTime: $ruleForm.date ? $ruleForm.date[1] + " 23:59:59" : null,
-        provinceCode: $ruleForm.address ? $ruleForm.address[0] : null,
-        cityCode: $ruleForm.address ? $ruleForm.address[1] : null,
-        useChannelCode: $ruleForm.useChannelCode,
-        channelStatus: $ruleForm.channelStatus,
-        categoryCOde: $ruleForm.categoryCOde,
-        operateNo: $ruleForm.operateNo
-      };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
-      this.params = params;
+      if ($ruleForm.inputFormVal) {
+        this.params = {
+          [$ruleForm.inputForm]: $ruleForm.inputFormVal
+        }
+      } else {
+        this.params = {
+          beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
+          endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+          provinceCode: $ruleForm.address ? $ruleForm.address[0] : null,
+          cityCode: $ruleForm.address ? $ruleForm.address[1] : null,
+          useChannelCode: $ruleForm.useChannelCode,
+          channelStatus: $ruleForm.channelStatus,
+          categoryCOde: $ruleForm.categoryCOde,
+          operateNo: $ruleForm.operateNo
+        };
+      }
     },
     openAgentManager() {},
     openMerchantManager() {}

@@ -2,9 +2,11 @@
   <div>
     <el-switch
       v-model="ruleForm[formItem.key]"
-      active-color="#13ce66"
+      active-color="#1989FA"
       :active-text="activeText"
+      :active-value="activeValue"
       :inactive-text="inactive"
+      :inactive-value="inactiveValue"
     ></el-switch>
   </div>
 </template>
@@ -26,6 +28,12 @@ export default {
     },
     inactive() {
       return this.formItem.inactive ? this.formItem.inactive : "";
+    },
+    activeValue() {
+      return this.formItem.activeValue ? this.formItem.activeValue : "";
+    },
+    inactiveValue() {
+      return this.formItem.inactiveValue ? this.formItem.inactiveValue : "";
     }
   },
 

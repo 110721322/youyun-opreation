@@ -4,5 +4,8 @@ export default {
   },
   setEmployeeList: ({ commit }, info) => {
     commit('SET_EMPLOYEE_LIST', info)
+  },
+  setSuperiorList: ({ commit }, info) => {
+    commit('SET_SUPERIOR_LIST', info)
   }
 };

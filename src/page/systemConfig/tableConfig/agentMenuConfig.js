@@ -5,21 +5,6 @@ export const MENU_CONFIG = {
       label: '菜单名称',
       prop: 'menuName',
       width: '150px'
-    },
-    {
-      label: '图标',
-      prop: 'menuIcon',
-      width: '150px',
-      type: 'img',
-      render: (h, params) => {
-        const imgUrl = params.row.menuIcon;
-        return h('el-image', {
-          props: {
-            src: imgUrl,
-            'preview-src-list': [imgUrl]
-          }
-        }, '正常');
-      }
     }
   ],
   childrenKey: 'childrenMenus',

@@ -6,11 +6,13 @@ export const SEARCH_CONFIG = {
       label: '筛选时间',
       key: 'date',
       labelWidth: '80px',
+      querySelectAll: true,
+      isSelectToday: true,
       span: 22
     },
     {
       type: 10,
-      label: '精准筛选',
+      label: '入件风控',
       key: 'banField',
       placeholder: "",
       options: [
@@ -36,7 +38,7 @@ export const SEARCH_CONFIG = {
     },
     {
       type: 1,
-      label: '所属运营',
+      label: '加入人员',
       key: 'operateUserNo',
       labelWidth: '80px',
       span: 11,

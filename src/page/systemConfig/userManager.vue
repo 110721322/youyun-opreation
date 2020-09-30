@@ -104,6 +104,7 @@
 </template>
 <script>
 import api from "@/api/api_memberManage.js";
+import api_params from "@/api/api_params.js";
 import api_systemConfig from "@/api/api_systemConfig";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
@@ -145,25 +146,34 @@ export default {
       api: api.queryEmployeeList,
       apiJob: api_systemConfig.selectAllJob,
       activityRow: {},
-      dataItem: []
+      dataItem: [],
+      fieldsList: []
     };
   },
   beforeCreate() {
     api.allMemberList();
     api.jobsList();
   },
-  mounted() {},
+  mounted() {
+    this.getTableData()
+  },
   methods: {
     getTableData() {
-      api
+      api_params
         .queryAllFormFieldsByType({
           type: "employee_edit"
         })
         .then(res => {
-          this.tableData = res.object;
-          this.cloneTableData = this.$g.utils.deepClone(res.object);
+          if (!this.$g.utils.isArr(res.object) || res.code) return res;
+          const fieldsList = res.object;
+          for (const field of FORM_CONFIG.editData.formData) {
+            const fieldConfig = fieldsList.filter(item => item.id === field.id)[0]
+            if (fieldConfig) {
+              field.isShow = fieldConfig.isDisplay;
+              field.rules[0].required = fieldConfig.isNeed;
+            }
+          }
         })
-        .catch();
     },
     cancelForm() {
       this.drawerOrganization = false;
@@ -189,7 +199,6 @@ export default {
           id: this.activityRow.id,
           system: "operation",
           name: $ruleForm.name,
-          phone: $ruleForm.phone,
           email: $ruleForm.email,
           sex: $ruleForm.sex,
           jobName: $ruleForm.jobName,
@@ -197,16 +206,19 @@ export default {
           jobNumber: $ruleForm.jobNumber,
           birthday: $ruleForm.birthday,
           position: $ruleForm.position,
-          superiorId: $ruleForm.superiorId
+          superiorId: $ruleForm.superiorId,
+          password: $ruleForm.password,
+          status: $ruleForm.status
         })
         .then(res => {
+          if (res.code) return res;
           this.drawer = false;
           this.$refs.customerTable.getData();
-          this.$message("已保存");
+          this.$message({
+            type: "success",
+            message: "已保存"
+          });
         })
-        .catch(err => {
-          this.$message(err);
-        });
     },
     cancel() {
       this.drawer = false;
@@ -220,21 +232,18 @@ export default {
           id: $row.id
         })
         .then(res => {
+          if (res.code) return res
           this.perfectRow = res.object;
           this.perfectRow.roleId = $row.roleId;
           this.activityRow = $row;
           this.drawerPersonInfo = true;
         })
-        .catch(err => {
-          this.$message(err);
-        });
     },
     handleClose(done) {
       this.$confirm("还有未保存的工作哦确定关闭吗？")
         .then(_ => {
           done();
         })
-        .catch(_ => {});
     },
     onClick_setPower() {
       this.innerDrawer = true;
@@ -249,13 +258,11 @@ export default {
           id: $row.id
         })
         .then(res => {
+          if (res.code) return res;
           this.dataItem = [res.object]
           this.resolveData(this.dataItem)
           this.drawerOrganization = true;
         })
-        .catch(err => {
-          this.$message(err);
-        });
     },
     resolveData(arr) {
       arr.forEach((item, index) => {
@@ -272,8 +279,13 @@ export default {
           id: $row.id
         })
         .then(res => {
+          if (res.code) return res
           FORM_CONFIG.editData.formData.forEach((item, index) => {
-            item.initVal = res.object[item.key];
+            if (item.key === "password") {
+              item.initVal = ""
+            } else {
+              item.initVal = res.object[item.key];
+            }
           });
           this.activityRow = $row;
           this.fromConfigData = FORM_CONFIG.editData;
@@ -282,9 +294,6 @@ export default {
             this.$refs.basicEditor.init();
           }
         })
-        .catch(err => {
-          this.$message(err);
-        });
     },
     add_job() {
       this.nameJob = ""
@@ -301,14 +310,13 @@ export default {
       api_systemConfig.addInsert({
         name: this.nameJob
       }).then(res => {
-        if (res.status === 0) {
-          this.$message({
-            message: "添加成功",
-            type: "success"
-          })
-          this.nameJob = ""
-          this.$refs.jobTable.getData()
-        }
+        if (res.code) return res;
+        this.$message({
+          message: "添加成功",
+          type: "success"
+        })
+        this.nameJob = ""
+        this.$refs.jobTable.getData()
       })
     },
     edit_job($item) {
@@ -327,18 +335,16 @@ export default {
         name: $item.name,
         id: $item.id
       }).then(res => {
-        if (res.status === 0) {
-          this.$message({
-            message: "编辑成功",
-            type: "success"
-          })
-          this.$refs.jobTable.getData()
-          $item.edit = false;
-        }
+        if (res.code) return res;
+        this.$message({
+          message: "编辑成功",
+          type: "success"
+        })
+        this.$refs.jobTable.getData()
+        $item.edit = false;
       })
     },
     delete_job(row) {
-      console.log(row)
       this.$confirm("确认删除该职位吗", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
@@ -346,16 +352,13 @@ export default {
         api_systemConfig.deleteJob({
           id: row.id
         }).then(res => {
-          if (res.status === 0) {
-            this.$message({
-              message: "删除成功",
-              type: "success"
-            })
-            this.$refs.jobTable.getData()
-          }
+          if (res.code) return res
+          this.$message({
+            message: "删除成功",
+            type: "success"
+          })
+          this.$refs.jobTable.getData()
         })
-      }).catch(() => {
-        this.$message('取消操作')
       })
     },
     confirmPerfectPost() {
