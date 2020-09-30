@@ -8,8 +8,7 @@ export const FORM_CONFIG = {
       label: '筛选时间',
       key: 'date',
       labelWidth: '80px',
-      span: 22,
-      isSelectToday: true
+      span: 22
     },
     {
       type: 10,
