@@ -54,6 +54,18 @@ export default {
     selectClearable() {
       const item = this.formItem;
       return item.clearable ? item.clearable : false;
+    },
+    options() {
+      if (this.formItem.options) {
+        return this.formItem.options;
+      } else {
+        return null
+      }
+    }
+  },
+  watch: {
+    options() {
+      this.selectOptions = this.options;
     }
   },
   created() {

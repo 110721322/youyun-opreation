@@ -65,7 +65,7 @@ export default {
     display: inline-block;
     font-size: 14px;
     line-height: 50px;
-    margin-left: 32px;
+    margin-left: 24px;
 
     .redirect {
       color: #909399;

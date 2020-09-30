@@ -73,8 +73,8 @@ export default {
     };
   },
   created() {
-    this.params.beginTime = this.getDay(0);
-    this.params.endTime = this.getDay(0);
+    this.params.beginTime = this.getDay(0) + " 00:00:00";
+    this.params.endTime = this.getDay(0) + " 23:59:59";
   },
   mounted() {
     this.queryInit()
