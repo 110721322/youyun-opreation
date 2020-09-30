@@ -57,8 +57,8 @@ export default {
   },
   created() {
     this.params = {}
-    this.params.beginDate = this.getDay(0);
-    this.params.endDate = this.getDay(0);
+    this.params.beginDate = this.getDay(0) + " 00:00:00";
+    this.params.endDate = this.getDay(0) + " 23:59:59";
   },
   mounted() {
   },
@@ -89,7 +89,9 @@ export default {
         personName: $form.personName || null,
         personMobile: $form.personMobile || null,
         status: $form.status || null,
-        regionCode: $form.regionCode || null
+        regionCode: $form.regionCode || null,
+        beginDate: $form.date ? $form.date[0] : null,
+        endDate: $form.date ? $form.date[1] : null
       }
       if ($form.area) {
         this.params.activeScopeProvinceCode = $form.area[0]
