@@ -53,8 +53,8 @@ export default {
   },
   mounted() {},
   created() {
-    this.params.beginDate = this.getDay(0) + " 00:00:00";
-    this.params.endDate = this.getDay(0) + " 23:59:59";
+    this.params.beginDate = this.getDay(-1);
+    this.params.endDate = this.getDay(-1);
   },
   methods: {
     getDay(day) {
@@ -103,8 +103,8 @@ export default {
     },
     search($ruleForm) {
       const params = {
-        beginDate: $ruleForm.date ? $ruleForm.date[0] + " 00:00:00" : null,
-        endDate: $ruleForm.date ? $ruleForm.date[1] + " 23:59:59" : null,
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
+        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
         auditStatus: $ruleForm.auditStatus,
         operateUserNo: $ruleForm.operateUserNo
       };
