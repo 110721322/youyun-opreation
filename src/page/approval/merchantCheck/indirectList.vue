@@ -59,9 +59,9 @@ export default {
     if (this.$route.query.merchantNo) {
       this.params.merchantNo = this.$route.query.merchantNo
     }
+    this.params.beginDate = this.getDay(0);
+    this.params.endDate = this.getDay(0);
     this.api = api.queryLeshuaAuditPageByCondition
-    // this.params.beginDate = this.getDay(0) + " 00:00:00";
-    // this.params.endDate = this.getDay(0) + " 23:59:59";
   },
   mounted() {
     // this.search();
@@ -87,8 +87,8 @@ export default {
     },
     search($ruleForm) {
       const params = {
-        beginDate: $ruleForm.date ? $ruleForm.date[0] + " 00:00:00" : null,
-        endDate: $ruleForm.date ? $ruleForm.date[1] + " 23:59:59" : null,
+        beginDate: $ruleForm.date[0] ? $ruleForm.date[0] : this.getDay(0),
+        endDate: $ruleForm.date[0] ? $ruleForm.date[1] : this.getDay(0),
         status: $ruleForm.status,
         operationUserNo: $ruleForm.operationUserNo
       };

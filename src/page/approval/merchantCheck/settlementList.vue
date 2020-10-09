@@ -48,13 +48,14 @@ export default {
       direction: "rtl",
       searchHeight: "260",
       params: {},
-      api: api.settleCardAuditQueryByPage
+      api: ""
     };
   },
   mounted() {},
   created() {
-    this.params.beginDate = this.getDay(0) + " 00:00:00";
-    this.params.endDate = this.getDay(0) + " 23:59:59";
+    this.params.beginDate = this.getDay(0);
+    this.params.endDate = this.getDay(0);
+    this.params = api.settleCardAuditQueryByPage
   },
   methods: {
     getDay(day) {
@@ -103,8 +104,8 @@ export default {
     },
     search($ruleForm) {
       const params = {
-        beginDate: $ruleForm.date ? $ruleForm.date[0] + " 00:00:00" : null,
-        endDate: $ruleForm.date ? $ruleForm.date[1] + " 23:59:59" : null,
+        beginDate: $ruleForm.date[0] ? $ruleForm.date[0] : this.getDay(0),
+        endDate: $ruleForm.date[0] ? $ruleForm.date[1] : this.getDay(0),
         auditStatus: $ruleForm.auditStatus,
         operateUserNo: $ruleForm.operateUserNo
       };
