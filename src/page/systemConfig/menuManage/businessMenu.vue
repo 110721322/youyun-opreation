@@ -66,14 +66,8 @@ export default {
   },
   mounted() {},
   methods: {
-    search() {
-      // eslint-disable-next-line no-console
-      // console.log(this.ruleForm);
-    },
-    selectionChange($val) {
-      // eslint-disable-next-line no-console
-      console.log($val);
-    },
+    search() {},
+    selectionChange($val) {},
     onClick_add() {
       this.fromConfigData = FORM_CONFIG.deviceData;
       this.drawer = true;

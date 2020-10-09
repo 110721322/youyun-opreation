@@ -401,7 +401,6 @@ export default {
       $data === "industry" ? this.queryMccTrade() : null;
     },
     transferEchartsData($data, $option, $prop) {
-      console.log($data);
       $option.dataset.source = $data;
       if ($prop) $option.dataset.dimensions[0] = $prop;
     },

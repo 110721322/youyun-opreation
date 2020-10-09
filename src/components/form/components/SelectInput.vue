@@ -75,7 +75,6 @@ export default {
   watch: {
     isRest: function($new) {
       if ($new) {
-        console.log('this.isRest', $new);
         this.inputSelect = this.formItem.options[0].value;
         this.inputForm = "";
         this.onInput();

@@ -49,15 +49,10 @@ export default {
       return item.style ? item.style : "float: left;width: 100%;max-width: 294px;";
     }
   },
-  watch: {
-
-  },
-  created() {
-    console.log(this.placeholder)
-  },
+  watch: {},
+  created() {},
   methods: {
     onChage($data) {
-      console.log($data)
       this.$emit("select", $data);
       this.ruleForm[this.formItem.key] = $data;
     }

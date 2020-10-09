@@ -72,7 +72,6 @@ export default {
           merchantName: $ruleform.inputForm
         })
         .then(result => {
-          console.log(result.object[0].merchantNo)
           this.params = {
             merchantNo: $ruleform.inputForm ? result.object[0].merchantNo : "",
             tradeMonth: this.tradeMonth

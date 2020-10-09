@@ -139,13 +139,8 @@ export default {
         this.totalNum = res.object.FACE.length + res.object.POSS.length + res.object.OTHER.length
       })
     },
-    handleChange(index, value) {
-      console.log(value)
-      console.log(index)
-    },
-    mouse_cart(index) {
-      console.log(index)
-    },
+    handleChange(index, value) {},
+    mouse_cart(index) {},
     onclick_todetail(deviceId) {
       this.$router.push({
         name: 'equimentDetail',

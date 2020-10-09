@@ -67,10 +67,7 @@ export default {
     cancel(done) {
       done();
     },
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
-    },
+    search() {},
     getTableData() {
       this.testData = [
         {

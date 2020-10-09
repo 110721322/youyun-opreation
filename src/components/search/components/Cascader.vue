@@ -49,7 +49,6 @@ export default {
       obj.forEach(item => {
         delete item.children;
       });
-      console.log(obj);
       this.ruleForm.addressObj = obj;
     }
   }

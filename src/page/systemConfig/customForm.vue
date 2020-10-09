@@ -137,7 +137,6 @@ export default {
       return this.tableData.filter(($item, $index) => {
         const isDisplay = this.cloneTableData[$index].isDisplay;
         const isNeed = this.cloneTableData[$index].isNeed;
-        console.log(isDisplay, isNeed);
         const isChange = ($item.isDisplay !== isDisplay) || ($item.isNeed !== isNeed);
         if (isChange) return $item
       })
@@ -153,9 +152,7 @@ export default {
       this.type = $item.type;
       this.getTableData();
     },
-    onInput_checkBox() {
-      console.log(this.tableData);
-    },
+    onInput_checkBox() {},
     getTableData(params) {
       api
         .queryAllFormFieldsByType({

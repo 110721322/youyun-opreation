@@ -70,7 +70,7 @@ export default {
       api.queryDetailsById({
         id: $row.id
       }).then(res => {
-        console.log(res)
+
       })
     }
   }

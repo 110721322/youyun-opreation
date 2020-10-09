@@ -29,7 +29,6 @@ export default {
   watch: {
     pieOption: {
       handler() {
-        console.log('draw');
         this.init();
       },
       deep: true

@@ -327,7 +327,6 @@ export default {
       }
     },
     handleEdit($ruleForm) {
-      console.log($ruleForm);
       this.drawer = true;
       this.fromConfigData = FORM_CONFIG.detailEdit;
     },
@@ -370,8 +369,6 @@ export default {
       }).then(res => {
         window.location.href = g.config.server + `/common/v1/progress/result?key=${key}`;
         // const str = res.object.split('/')
-        // console.log(str[0])
-        // console.log(str[1])
         // if (str[0] === str[1]) {
         // window.location.href = zipApi.zipResult({key: key})
         // }

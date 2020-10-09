@@ -189,10 +189,7 @@ export default {
         [$ruleForm.inputForm]: $ruleForm.inputFormVal
       };
     },
-    selectionChange($val) {
-      // eslint-disable-next-line no-console
-      console.log($val);
-    },
+    selectionChange($val) {},
     confirm($ruleForm) {
       api
         .fillUserInfo({
@@ -323,7 +320,6 @@ export default {
       $item.edit = true;
     },
     ok_edit($item) {
-      console.log($item)
       if (!$item.name) {
         this.$message({
           message: "请填写职位名称",

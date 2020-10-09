@@ -123,25 +123,22 @@ export default {
   },
   methods: {
     search($ruleform) {
-      // console.log('adefe0', $ruleform.date)
       this.params = {
         rewardDate: $ruleform.date ? $ruleform.date : "",
         agentNo: $ruleform.inputSelect === 'merchantNo' ? $ruleform.inputForm : "",
         agentName: $ruleform.inputSelect === 'merchantName' ? $ruleform.inputForm : ""
       }
-      // console.log(this.params)
     },
     openDraw() {
       this.drawer = true
     },
     confirm($filel) {
-      console.log($filel)
       api_statistice.excelTemplate({
         param: $filel.date,
         type: "wxRewardInput",
         url: $filel.excil.dialogImageUrl
       }).then(res => {
-        console.log(res)
+
       }).catch(err => {
         console.log(err)
       })

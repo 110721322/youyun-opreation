@@ -93,13 +93,8 @@ export default {
       };
       this.params = params;
     },
-    selectionChange($val) {
-      // eslint-disable-next-line no-console
-      console.log($val);
-    },
-    onClick_addDevice($data) {
-      console.log($data)
-    },
+    selectionChange($val) {},
+    onClick_addDevice($data) {},
     onClick_okEdit($item) {
       api
         .deviceActivationUpdate({

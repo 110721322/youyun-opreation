@@ -50,7 +50,6 @@ export default {
       });
     },
     confirm($form) {
-      console.log($form);
       if (!$form.name || !$form.developerId || !$form.phone || !$form.allotCount || !$form.agentNo) {
         this.$message({
           message: '请填写必填信息',

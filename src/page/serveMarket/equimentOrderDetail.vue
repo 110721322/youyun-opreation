@@ -135,7 +135,6 @@ export default {
   methods: {
     getOrderDetail(id) {
       api.queryOrderDetail({ id: id}).then(res => {
-        console.log(res)
         this.ruleFormBasic = res.object;
         this.infoDTOList = res.object.infoDTOList;
         if (res.object.status === 1) {

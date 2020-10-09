@@ -475,7 +475,6 @@ export default {
       api.getBankLineByNo({
         unionCode: item
       }).then(res => {
-        console.log(res)
         // this.dataForm.bankArea[0] = res.object.provinceCode
         // this.dataForm.bankArea = res.object.cityCode
         var provinceName = ''
@@ -537,7 +536,6 @@ export default {
         agentNo: agentNo
       }).then(res => {
         if (res.object) {
-          console.log(res.object)
           if (res.object.expandSub === 1) {
             res.object.expandSubCn = '是'
           }
@@ -584,7 +582,7 @@ export default {
       api.queryRelatedLabels({
         agentNo: this.$route.query.agentNo
       }).then(res => {
-        console.log(res)
+
       }).catch(err => {
         console.log(err)
       })
@@ -711,9 +709,7 @@ export default {
       this.equipmentConfigData.formData[7].initVal = this.agentDetail.expAddress
     },
     // 标签输入框
-    tagInput(value) {
-      console.log(value)
-    },
+    tagInput(value) {},
     // 沟通计划切换时间
     dateChange(value) {
       this.timeDate = value
@@ -728,7 +724,7 @@ export default {
       // api.queryLaBleAgent({
       //   agentNo: this.$route.query.agentNo
       // }).then(res => {
-      //   console.log(res)
+
       // }).catch(err => {
       //   console.log(err)
       // })
@@ -871,7 +867,6 @@ export default {
       //   newFromConfigData.formData.forEach((item, index) => {
       //     item.initVal = this.ruleForm[item.key];
       //   });
-      //   console.log(newFromConfigData)
       //   this.fromConfigData = this.$g.utils.deepClone(newFromConfigData);
       // }
     },
@@ -900,7 +895,6 @@ export default {
       this.addContactsDraw = false
     },
     handel_confirm(row) {
-      console.log(row)
       if (this.editType === 'editBasicData') {
         if (!row.businessType || !row.agentName || !row.personName || !row.personMobile || !row.companyAddress || !row.area) {
           this.$message({
@@ -1142,7 +1136,6 @@ export default {
     },
     // 编辑联系人的右边抽屉
     editLiaison(row) {
-      console.log(row)
       this.liaisonId = row.id
       this.addLiaison = true
       const newFromConfigData = LISASION.editData;

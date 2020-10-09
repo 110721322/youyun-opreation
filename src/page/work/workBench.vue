@@ -103,7 +103,7 @@ export default {
           status: ""
         })
         .then(res => {
-          console.log(res);
+
         })
         .catch();
     }

@@ -95,9 +95,7 @@ export default {
     onClick_deleteAvater() {
       this.ruleForm.headerImageSrc = "";
     },
-    handleChange($val, $list) {
-      console.log($val);
-    },
+    handleChange($val, $list) {},
     onClick_submit() {
       this.$refs.ruleForm.validate(valid => {
         if (valid) {

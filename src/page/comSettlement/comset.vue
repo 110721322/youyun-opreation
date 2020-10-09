@@ -169,7 +169,6 @@ export default {
             }
             keyArr.forEach((item, index) => {
               const name = res.object.settleMap[item.key][0].settleTypeName
-              console.log(name)
               item.name = name
               const dateArr = []
               var totalSettleAmount = 0

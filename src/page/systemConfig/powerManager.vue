@@ -62,10 +62,7 @@ export default {
     this.getTableData();
   },
   methods: {
-    search() {
-      // eslint-disable-next-line no-console
-      console.log(this.ruleForm);
-    },
+    search() {},
     getTableData() {
       this.testData = [
         {
@@ -114,10 +111,7 @@ export default {
         }
       ];
     },
-    selectionChange($val) {
-      // eslint-disable-next-line no-console
-      console.log($val);
-    },
+    selectionChange($val) {},
     onClick_addUser() {
       this.fromConfigData = FORM_CONFIG.deviceData;
       this.drawer = true;

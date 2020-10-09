@@ -169,9 +169,7 @@ export default {
           });
       }
     },
-    selectSecond() {
-      console.log(222)
-    }
+    selectSecond() {}
   }
 };
 </script>

@@ -163,7 +163,6 @@ export default {
       this.formStatus = "add";
       this.activeRow = $row;
       this.fromConfigData = FORM_CONFIG.addData;
-      console.log('add');
       this.drawer = true;
     },
     handleClose($regionCode, $provinceCode) {
@@ -188,7 +187,6 @@ export default {
       // $item.isShowSelect = true;
     },
     areaSelectConfirm($value, $item) {
-      console.log($value, $item);
       const params = {
         provinceCode: $value,
         regionCode: $item.regionCode

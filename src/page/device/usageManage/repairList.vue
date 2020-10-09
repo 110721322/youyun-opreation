@@ -238,7 +238,6 @@ export default {
       }
     },
     search($ruleForm) {
-      console.log($ruleForm);
       const params = {
         beginTime: $ruleForm.date ? $ruleForm.date[0] : null,
         endTime: $ruleForm.date ? $ruleForm.date[1] : null,
@@ -249,10 +248,7 @@ export default {
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     },
-    selectionChange($val) {
-      // eslint-disable-next-line no-console
-      console.log($val);
-    },
+    selectionChange($val) {},
     onClick_detail($row) {
       this.$router.push({
         name: "repairDetail",

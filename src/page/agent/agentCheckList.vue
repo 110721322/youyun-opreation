@@ -89,7 +89,6 @@ export default {
       return m;
     },
     search($form) {
-      console.log($form)
       this.params = {
         beginDate: $form.date ? $form.date[0] : '',
         endDate: $form.date ? $form.date[1] : '',
