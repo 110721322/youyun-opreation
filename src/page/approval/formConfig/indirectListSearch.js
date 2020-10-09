@@ -10,6 +10,8 @@ export const SEARCH_CONFIG = {
       class: 'max-width',
       datatype: "datetimerange",
       format: "yyyy-MM-dd HH:mm:ss",
+      querySelectAll: true,
+      // isSelectToday: true,
       labelWidth: '80px',
       span: 22
     },

@@ -103,8 +103,8 @@ export default {
     },
     search($ruleForm) {
       const params = {
-        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
-        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        beginDate: $ruleForm.date ? $ruleForm.date[0] + " 00:00:00" : null,
+        endDate: $ruleForm.date ? $ruleForm.date[1] + " 23:59:59" : null,
         auditStatus: $ruleForm.auditStatus,
         operateUserNo: $ruleForm.operateUserNo
       };
