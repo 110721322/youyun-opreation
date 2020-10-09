@@ -397,7 +397,7 @@ export default {
           colorName: "yellow"
         }
       ],
-      // activeClass: "red",
+      activeClass: "",
       activeValue: "情绪客户",
       editType: '',
       contactsList: [],
@@ -827,7 +827,6 @@ export default {
         this.editType = 'editAddress'
         this.fromConfigData = {}
         setTimeout(() => {
-          this.editType = 'editBasicData'
           const newFromConfigData = FORM_CONFIG[$model];
           newFromConfigData.formData.forEach((item, index) => {
             item.initVal = this.agentDetail[item.key];
@@ -900,6 +899,7 @@ export default {
       this.addContactsDraw = false
     },
     handel_confirm(row) {
+      console.log(this.editType)
       console.log(row)
       if (this.editType === 'editBasicData') {
         if (!row.businessType || !row.agentName || !row.personName || !row.personMobile || !row.companyAddress || !row.area) {
@@ -1073,6 +1073,15 @@ export default {
               this.drawer = false
             }
           })
+        }
+      }
+      if (this.editType === 'editAddress') {
+        if (!row.area[0] || !row.detailAddress || !row.personMobile || !row.personName) {
+          this.$message({
+            message: "请填写必填系信息",
+            type: "warning"
+          })
+          return
         }
       }
     },
