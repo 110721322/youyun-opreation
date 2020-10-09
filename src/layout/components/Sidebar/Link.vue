@@ -19,12 +19,7 @@ export default {
   methods: {
     linkProps() {
       if (isExternal(this.to)) {
-        console.log({
-          is: "a",
-          href: this.to,
-          target: "_blank",
-          rel: "noopener"
-        });
+
       } else {
         this.$router.push({
           path: this.to

@@ -83,6 +83,11 @@ export default {
     };
   },
   mounted() {},
+  created() {
+    var result = this.$g.utils.getToday1()
+    this.params.startDate = result;
+    this.params.endDate = result;
+  },
   methods: {
     confirm($data) {
       if (!$data.reason) {
@@ -114,8 +119,8 @@ export default {
     },
     search($ruleForm) {
       this.params = {
-        startDate: $ruleForm.date ? $ruleForm.date[0] : null,
-        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        startDate: $ruleForm.date ? $ruleForm.date[0].split(' ')[0] : null,
+        endDate: $ruleForm.date ? $ruleForm.date[1].split(' ')[0] : null,
         auditStatus: $ruleForm.auditStatus
       };
       this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;

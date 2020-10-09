@@ -37,13 +37,11 @@ export default {
       api
         .selectById({ id: id })
         .then(res => {
-          console.log('res', res);
           const newFromConfigData = FORM_CONFIG.editData;
           newFromConfigData.formData.forEach((item, index) => {
             item.initVal = res.object[item.key];
           });
           this.fromConfigData = newFromConfigData;
-          console.log('升级', this.fromConfigData);
         })
         .catch(err => {
           this.$message(err);
@@ -53,7 +51,6 @@ export default {
       this.$router.back();
     },
     confirm($ruleForm) {
-      console.log($ruleForm)
       if (!$ruleForm.desc || !$ruleForm.deviceId || !$ruleForm.img || !$ruleForm.sort) {
         this.$message({
           message: "请填写必填信息",

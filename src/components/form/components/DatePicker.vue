@@ -45,12 +45,9 @@ export default {
   watch: {
 
   },
-  created() {
-    console.log(this.placeholder)
-  },
+  created() {},
   methods: {
     onChage($data) {
-      console.log($data)
       this.$emit("select", $data);
       this.ruleForm[this.formItem.key] = $data;
     }

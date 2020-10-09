@@ -55,14 +55,13 @@ export default {
     }
   },
   created() {
-    var result = this.$g.utils.getToday1()
-    console.log(result)
-    var startTime = result + ' ' + '00' + ':' + '00' + ':' + '00'
-    var endTime = result + ' ' + '23' + ':' + '59' + ':' + '59'
+    var result = this.$g.utils.getToday1();
+    var startTime = result + ' ' + '00' + ':' + '00' + ':' + '00';
+    var endTime = result + ' ' + '23' + ':' + '59' + ':' + '59';
     this.params = {
       startTime: startTime,
       endTime: endTime
-    }
+    };
     this.api = api.statisticsList
   },
   mounted() {

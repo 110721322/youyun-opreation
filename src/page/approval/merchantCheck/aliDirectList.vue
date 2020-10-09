@@ -130,7 +130,6 @@ export default {
             channelCode: "alipay",
             channelAgentCode: this.channelAgentCode
           }).then(res => {
-            console.log(res)
             api.updateOthersInfo({
               merchantNo: this.merchantNo,
               channelCode: "alipay",

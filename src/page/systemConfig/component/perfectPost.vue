@@ -99,9 +99,7 @@ export default {
       return this.perfectRow.roleId;
     }
   },
-  mounted() {
-    console.log(FORM_CONFIG);
-  },
+  mounted() {},
   methods: {
     onClick_setPower() {
       const params = {
@@ -162,11 +160,9 @@ export default {
       })
     },
     cancelSave() {
-      console.log(2222)
       this.innerDrawer = false;
     },
     saveUserAudit($result) {
-      console.log($result);
       Object.assign($result, {userId: this.employeeId})
       api_systemConfig.saveUserAudit($result).then(res => {
         if (res.status === 0) {

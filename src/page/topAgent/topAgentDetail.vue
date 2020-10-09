@@ -912,7 +912,6 @@ export default {
      * 更新顶级服务商邮寄地址
      */
     addressInfo($ruleForm) {
-      console.log($ruleForm)
       if (!this.$g.utils.checkPhone($ruleForm.expMobile)) {
         this.$message({
           message: '请输入正确的手机号',

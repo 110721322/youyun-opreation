@@ -78,7 +78,6 @@ export default {
   mounted() {},
   methods: {
     search($ruleForm) {
-      console.log($ruleForm);
       const params = {
         deviceModel: $ruleForm.deviceModel,
         deviceType: $ruleForm.deviceType,
@@ -116,7 +115,6 @@ export default {
       }, 200)
     },
     confirm($data) {
-      console.log($data)
       if (this.formStatus === "add" || this.formStatus === "edit") {
         if (!$data.deviceModel || !$data.deviceImg || !$data.costPrice || !$data.salePrice || !$data.sort) {
           this.$message({

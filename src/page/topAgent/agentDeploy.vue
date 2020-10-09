@@ -59,7 +59,6 @@ export default {
   mounted() {},
   methods: {
     search($ruleForm) {
-      console.log($ruleForm);
       this.params = {
         [$ruleForm.channelAgent]: $ruleForm.channelAgentVal,
         personName: $ruleForm.personNam,
@@ -70,7 +69,6 @@ export default {
       }
     },
     deployStart($row) {
-      console.log($row);
       this.updateTopSourceCodeDeployStatus({
         channelAgentCode: $row.channelAgentCode,
         status: 2

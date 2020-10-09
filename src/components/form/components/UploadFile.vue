@@ -49,9 +49,7 @@ export default {
   },
 
   methods: {
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-    },
+    handleRemove(file, fileList) {},
     beforeUpload(file) {
       return new Promise(resolve => {
         api
@@ -107,7 +105,6 @@ export default {
       });
     },
     download() {
-      console.log(this.formItem)
       if (!this.formItem.dateurl) {
         // window.location.href = "/operation/v1/excelTemplate/download?url=excel/device_input.xlsx";
         axios({

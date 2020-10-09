@@ -48,7 +48,6 @@ export const SHOPCENTER_CONFIG = {
         emitName: 'on',
         type: 'text',
         isShow: ($item) => {
-          console.log($item)
           if ($item.children) {
             return false
           } else {

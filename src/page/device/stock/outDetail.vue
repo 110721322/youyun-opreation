@@ -205,12 +205,10 @@ export default {
     },
     onClick_okEdit($item) {
       $item.edit = false;
-      console.log($item);
       api.finishOutputInfoUpdate({
         detailId: $item.detailId,
         deviceIdentifier: $item.deviceIdentifier
       }).then(res => {
-        console.log(res)
         this.finishOutputInfo()
       }).catch(err => {
         console.log(err.errorMessage)

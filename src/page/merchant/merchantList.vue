@@ -101,14 +101,12 @@ export default {
     queryInit() {
       api.queryInit({
       }).then(res => {
-        console.log(res.object)
+
       }).catch(err => {
         console.log(err)
       })
     },
-    selectionChange($val) {
-      console.log('11111', $val)
-    },
+    selectionChange($val) {},
     go_detail(row) {
       this.$router.push({
         name: "merchantDetail",

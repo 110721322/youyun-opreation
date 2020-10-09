@@ -42,7 +42,6 @@ export default {
                 label: item[urlOptions.valueName]
               });
             }
-            console.log(newArr);
             this.radioOptions = newArr;
           })
           .catch(err => {

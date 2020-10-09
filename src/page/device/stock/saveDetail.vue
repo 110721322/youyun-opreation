@@ -78,7 +78,6 @@ export default {
   },
   methods: {
     search($ruleForm) {
-      console.log($ruleForm);
       const params = {
         deviceIdentifier: $ruleForm.deviceIdentifier,
         deviceInputId: this.$route.query.id
@@ -86,10 +85,7 @@ export default {
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     },
-    selectionChange($val) {
-      // eslint-disable-next-line no-console
-      console.log($val);
-    },
+    selectionChange($val) {},
     onClick_addDevice() {
       this.fromConfigData = FORM_CONFIG.deviceData;
       this.drawer = true;
@@ -115,7 +111,6 @@ export default {
     },
     onClick_edit($row) {
       this.rowId = $row.id;
-      console.log('$row', $row);
       // 对配置文件进行动态修改
       const newFromConfigData = FORM_CONFIG.formData;
       // 编辑前重赋值

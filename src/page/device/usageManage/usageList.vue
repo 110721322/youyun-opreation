@@ -94,7 +94,6 @@ export default {
       }).catch(() => {});
     },
     search($ruleForm) {
-      console.log($ruleForm);
       const params = {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,
@@ -104,11 +103,7 @@ export default {
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     },
-    selectionChange($val) {
-      // eslint-disable-next-line no-console
-      console.log($val);
-    },
-
+    selectionChange($val) {},
     cancel(done) {
       done();
     }

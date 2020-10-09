@@ -254,7 +254,6 @@ export default {
       this.drawer = false;
     },
     confirm($form) {
-      // console.log($form);
       if (this.id) {
         apiAgent.advertDistributeUpdate({
           agentNoList: this.selectData,
@@ -281,9 +280,7 @@ export default {
         })
       }
     },
-    selectChange(ruleForm) {
-      // console.log(ruleForm)
-    }
+    selectChange(ruleForm) {}
   }
 };
 </script>

@@ -7,7 +7,8 @@ export const SEARCH_CONFIG = {
       class: 'max-width',
       labelWidth: '100px',
       datatype: 'month',
-      format: 'yyyy-MM'
+      format: 'yyyy-MM',
+      placeholder: '请选择月份'
     }
   ]
 }

@@ -102,7 +102,6 @@ export default {
             name: "payStatus"
           })
         }
-        console.log(res.object)
       })
     }
   },

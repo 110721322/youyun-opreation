@@ -62,7 +62,6 @@ export default {
   mounted() {},
   methods: {
     search($ruleForm) {
-      console.log($ruleForm);
       const params = {
         deviceType: $ruleForm.deviceType,
         deviceId: $ruleForm.deviceId
@@ -70,10 +69,7 @@ export default {
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     },
-    selectionChange($val) {
-      // eslint-disable-next-line no-console
-      console.log($val);
-    },
+    selectionChange($val) {},
     onClick_delete($row) {
       this.$confirm("是否要删除该设备？", "提示", {
         distinguishCancelAndClose: true,
@@ -99,8 +95,6 @@ export default {
         .catch(() => {});
     },
     onClick_off($row, $item) {
-      console.log($row)
-      console.log($item)
       this.$confirm("是否要下架该设备？", "提示", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认下架",

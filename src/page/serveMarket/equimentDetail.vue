@@ -77,7 +77,6 @@ export default {
         agentNo: localStorage.getItem('agentNo')
       }).then(res => {
         if (res.object) {
-          console.log(res)
           for (const i in res.object) {
             if (res.object[i].defaultType) {
               this.address = res.object[i]

@@ -97,7 +97,6 @@ export default {
       api.totalCommission({
         tradeMonth: this.tradeMonth
       }).then(res => {
-        console.log(res.object)
         this.overviewData = [
           {
             title: "订单分润总额",
@@ -125,7 +124,6 @@ export default {
       })
     },
     search($form) {
-      console.log($form)
       this.params = {
         "agentName": "",
         "agentNo": "",

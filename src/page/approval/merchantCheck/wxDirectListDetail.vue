@@ -396,7 +396,7 @@ export default {
         channelCode: this.channelCode,
         channelAgentCode: this.channelAgentCode
       }).then(res => {
-        console.log(res)
+
       }).catch();
     },
     cancel() {
