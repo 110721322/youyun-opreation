@@ -270,7 +270,6 @@ export default {
           $item.value = $item.topAgentNumbers;
           return $item;
         }).sort(($ele1, $ele2) => {
-          console.log($ele1)
           return $ele2.topAgentNumbers - $ele1.topAgentNumbers
         })
         this.initMap()

@@ -298,8 +298,7 @@ export default {
         currentPage: this.currentPage,
         taskOwner: this.taskOwner
       }).then(res => {
-        this.openType = this.taskType + '/' + this.undoType
-        console.log(this.openType)
+        this.openType = this.taskType + '/' + this.undoType;
         this.listData = res.object.datas;
       })
     },
@@ -363,7 +362,6 @@ export default {
       })
     },
     confirm($form) {
-      console.log($form)
       switch (this.taskDes) {
         case "distribu":
           if (!$form.operatorId) {
@@ -446,25 +444,24 @@ export default {
     },
     // 预约沟通，点击弹出立即沟通
     subscribe($data) {
-      this.fromConfigData = {}
-      this.drawer = true
-      this.taskId = $data.taskId
-      this.taskDes = 'subscribe'
-      const commonData = FORM_CONFIG.communicationData
-      commonData.formData[4].initVal = $data.agentName
-      commonData.formData[3].initVal = '日常任务 预约沟通'
-      console.log(commonData)
-      this.fromConfigData = g.utils.deepClone(commonData)
+      this.fromConfigData = {};
+      this.drawer = true;
+      this.taskId = $data.taskId;
+      this.taskDes = 'subscribe';
+      const commonData = FORM_CONFIG.communicationData;
+      commonData.formData[4].initVal = $data.agentName;
+      commonData.formData[3].initVal = '日常任务 预约沟通';
+      this.fromConfigData = g.utils.deepClone(commonData);
     },
     // 新服务商沟通，点击弹出立即沟通
     newAgent($data) {
-      this.drawer = true
-      this.taskId = $data.taskId
-      this.taskDes = 'newAgent'
-      const commonData = FORM_CONFIG.communicationData
-      commonData.formData[4].initVal = $data.agentName
-      commonData.formData[3].initVal = '日常任务 新服务商沟通'
-      this.fromConfigData = g.utils.deepClone(commonData)
+      this.drawer = true;
+      this.taskId = $data.taskId;
+      this.taskDes = 'newAgent';
+      const commonData = FORM_CONFIG.communicationData;
+      commonData.formData[4].initVal = $data.agentName;
+      commonData.formData[3].initVal = '日常任务 新服务商沟通';
+      this.fromConfigData = g.utils.deepClone(commonData);
     },
     // 客单价异常，点击弹出立即沟通
     unitPrice($data) {
@@ -641,11 +638,10 @@ export default {
       this.isCheck = false;
     },
     onClick_search() {
-      var type = this.taskValue.split('/')
-      console.log(type)
-      this.taskType = type[0]
-      this.undoType = type[1]
-      this.getTaskMenu()
+      var type = this.taskValue.split('/');
+      this.taskType = type[0];
+      this.undoType = type[1];
+      this.getTaskMenu();
     },
     handleSelect($item) {
       this.activeIndex = $item;
@@ -673,14 +669,13 @@ export default {
       setTimeout(() => {
         this.getTableData();
       }, 1000);
-      this.undoType = ''
-      this.taskType = ''
-      this.getTaskMenu()
+      this.undoType = '';
+      this.taskType = '';
+      this.getTaskMenu();
     },
     handleNodeClick($data) {
-      console.log($data);
-      this.taskType = $data.taskType
-      this.undoType = $data.undoType
+      this.taskType = $data.taskType;
+      this.undoType = $data.undoType;
       if (this.activeIndex === "1") {
         if ($data.undoType === 1) {
           this.currentStatus = "dailyPending";
@@ -706,8 +701,7 @@ export default {
           status: this.status
         })
         .then(res => {
-          this.openType = $data.taskType + '/' + $data.undoType
-          console.log(this.openType)
+          this.openType = $data.taskType + '/' + $data.undoType;
           this.listData = res.object.datas;
         })
         .catch(err => {

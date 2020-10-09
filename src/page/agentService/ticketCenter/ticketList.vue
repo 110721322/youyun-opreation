@@ -159,7 +159,6 @@ export default {
         });
     },
     search($ruleForm) {
-      console.log($ruleForm);
       const params = {
         startTime: $ruleForm.date ? $ruleForm.date[0] : null,
         endTime: $ruleForm.date ? $ruleForm.date[1] : null,

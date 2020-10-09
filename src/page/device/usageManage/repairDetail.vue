@@ -160,7 +160,6 @@ export default {
   },
   mounted() {
     this.deviceMaintainQueryById();
-    console.log('提交事实上', this.$route);
   },
   methods: {
     deviceMaintainQueryById() {

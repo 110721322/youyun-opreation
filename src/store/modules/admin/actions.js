@@ -63,7 +63,6 @@ export default {
         }
       })
       socket.on('message', (res) => {
-        console.log(res);
         dispatch('setTodoList');
       })
     })

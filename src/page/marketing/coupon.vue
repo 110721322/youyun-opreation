@@ -93,7 +93,6 @@ export default {
   },
   methods: {
     search($ruleForm) {
-      console.log(11111)
       const params = {
         activityBeginTime: $ruleForm.date ? $ruleForm.date[0] : null,
         activityEndTime: $ruleForm.date ? $ruleForm.date[1] : null,

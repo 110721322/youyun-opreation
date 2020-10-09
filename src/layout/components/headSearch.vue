@@ -75,7 +75,6 @@ export default {
       this.show = false;
     },
     change(val) {
-      console.log(val.item);
       this.$router.push(val.item.path);
       this.search = "";
       this.options = [];

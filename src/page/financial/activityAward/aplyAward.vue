@@ -109,13 +109,11 @@ export default {
   },
   methods: {
     search($ruleform) {
-      // console.log('adefe0', $ruleform.date)
       this.params = {
         tradeMonth: $ruleform.date,
         agentNo: $ruleform.inputSelect === 'merchantNo' ? $ruleform.inputForm : "",
         agentName: $ruleform.inputSelect === 'merchantName' ? $ruleform.inputForm : ""
       }
-      // console.log(this.params)
     },
     handleDetail($row) {
       this.$router.push({
@@ -130,14 +128,12 @@ export default {
       this.drawer = true
     },
     confirm($filel) {
-      // console.log($filel)
       // $filel.excil.dialogImagePath +
       api_statistice.excelTemplate({
         param: $filel.date,
         type: "dragonflyInput",
-        url: $filel.excil.dialogImageUrl
+        url: $filel.excil
       }).then(res => {
-        console.log(res)
         if (res.object) {
           this.$refs.table.getData()
         }

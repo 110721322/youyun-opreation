@@ -131,7 +131,6 @@ export default {
     //       taskOwner: ""
     //     })
     //     .then(res => {
-    //       console.log(res.object);
     //       this.modeConfigData[0].data = res.object.totalCount;
     //     })
     //     .catch();
@@ -154,7 +153,6 @@ export default {
       this.$refs.table.getData();
     },
     search($ruleForm) {
-      console.log($ruleForm);
       const params = {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,
@@ -168,9 +166,7 @@ export default {
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     },
-    handle_remind(row) {
-      console.log(row)
-    },
+    handle_remind(row) {},
     handle_detail(row) {
       this.$router.push({
         name: 'statisticsAll',

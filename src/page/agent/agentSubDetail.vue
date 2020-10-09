@@ -118,7 +118,6 @@ export default {
       this.showName = true
     },
     on_save() {
-      console.log(this.agentNo)
       if (!this.agentNo) {
         this.$message({
           message: '请选择上级服务商',

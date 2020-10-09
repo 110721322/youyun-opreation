@@ -136,7 +136,7 @@ export default {
   created() {
     var myDate = new Date()
     const m = myDate.getMonth() + 1
-    if (myDate.getMonth() < 10) {
+    if (m < 10) {
       this.tradeMonth = myDate.getFullYear() + "-" + "0" + m + "-" + "01"
     } else {
       this.tradeMonth = myDate.getFullYear() + "-" + m + "-" + "01"
@@ -169,8 +169,7 @@ export default {
         this.configData1 = SERVICE_CONFIG1
         this.api = api_statistice.selectAgentDataByPage
       }
-      this.$refs.table.getData()
-      console.log(this.$refs.table)
+      this.$refs.table.getData();
     },
     search($ruleform) {
       this.params = {

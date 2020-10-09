@@ -75,7 +75,6 @@ export default {
       this.params = params;
       api.queryDetailCount(params).then(res => {
         if (res.object) {
-          // console.log(res.object)
           this.couponStatics = res.object
         }
       })
@@ -104,7 +103,6 @@ export default {
         activityNo: activityNo
       }).then(res => {
         if (res.object) {
-          // console.log(res.object)
           this.couponStatics = res.object
         }
       })

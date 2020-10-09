@@ -42,7 +42,6 @@ export default {
               label: item[urlOptions.valueName]
             });
           });
-          console.log('newArr', newArr);
           this.checkOptions = newArr;
         }).catch(err => {
           console.log(err);

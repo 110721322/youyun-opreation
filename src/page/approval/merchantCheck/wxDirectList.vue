@@ -109,7 +109,6 @@ export default {
             channelCode: "wechat",
             channelAgentCode: this.channelAgentCode
           }).then(res => {
-            console.log(res)
             api.updateOthersInfo({
               merchantNo: this.merchantNo,
               channelCode: "wechat",

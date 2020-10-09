@@ -47,9 +47,7 @@ export default {
     };
   },
   watch: {},
-  created() {
-    console.log(this.placeholder);
-  },
+  created() {},
   methods: {
     onChage($data) {
       this.$emit("select", $data);

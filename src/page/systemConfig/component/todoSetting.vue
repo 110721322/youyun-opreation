@@ -130,22 +130,18 @@ export default {
           //   res.object.isTaskCountdownCn = false
           // }
           Object.keys(res.object).forEach((item, index) => {
-            console.log(item)
             if (item === "isTaskCountdown") {
               this.$set(this.ruleForm, "isTaskCountdown", Boolean(res.object[item]));
               return;
             }
             this.$set(this.ruleForm, item, res.object[item]);
-            console.log(this.ruleForm)
           });
-          console.log(this.ruleForm)
         })
     },
     cancel(done) {
       this.drawer = false;
     },
     confirm($ruleForm) {
-      console.log($ruleForm)
       this.$message({
         type: 'warning',
         message: '请记得保存'
@@ -161,7 +157,6 @@ export default {
       this.drawer = true;
     },
     save() {
-      console.log(this.ruleForm)
       api.update({
         isTaskCountdown: this.ruleForm.isTaskCountdown ? 1 : 0,
         perCustomerTransaction: this.ruleForm.perCustomerTransaction,

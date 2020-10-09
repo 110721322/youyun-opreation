@@ -211,7 +211,6 @@ export default {
         })
         return false
       } else {
-        console.log(this.selectData)
         api.agentBanListAdd({
           agentNos: this.selectData
         }).then(res => {

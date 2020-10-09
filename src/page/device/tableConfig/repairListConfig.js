@@ -144,7 +144,6 @@ export const REPAIRLIST_CONFIG = {
         emitName: 'Receipt',
         type: 'text',
         isShow: ($item) => {
-          console.log($item)
           if ($item.children) {
             return false
           } else {

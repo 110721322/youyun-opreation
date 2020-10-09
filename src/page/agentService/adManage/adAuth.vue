@@ -78,7 +78,6 @@ export default {
   },
   methods: {
     handleEditAuth($row) {
-      console.log('$rowww', $row);
       this.rowAgentNo = $row.agentNo;
       // 编辑前重赋值
       FORM_CONFIG.formData.formData.forEach((item, index) => {
@@ -88,7 +87,6 @@ export default {
       this.drawer = true;
     },
     confirm($ruleForm) {
-      console.log("ruleForm值", $ruleForm);
       apiAgent.advertPrivilegeUpdate({
         agentNo: this.rowAgentNo,
         privilegeList: $ruleForm.baseData
@@ -105,7 +103,6 @@ export default {
       this.drawer = false;
     },
     search($ruleForm) {
-      console.log('$ruleForm', $ruleForm);
       this.params = {
         cityCode: $ruleForm.area ? $ruleForm.area[1] : '',
         provinceCode: $ruleForm.area ? $ruleForm.area[0] : '',

@@ -92,7 +92,6 @@ export default {
   mounted() {},
   methods: {
     search($ruleForm) {
-      console.log($ruleForm)
       var settleStatus = this.activeIndex
       const params = {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
@@ -114,7 +113,6 @@ export default {
         channelMerchantNo: channelMerchantNo || null,
         channel: channel || null
       }).then(res => {
-        console.log(res)
         this.modeConfigData = [
           {
             title: "商家数量",

@@ -52,9 +52,7 @@ export default {
       isMove2: 1
     };
   },
-  created() {
-    // console.log(this.item);
-  },
+  created() {},
 
   methods: {
     onClick_item($item) {
@@ -93,7 +91,6 @@ export default {
       return path.resolve(this.basePath, routePath);
     },
     leave() {
-      // console.log(this.item);
       // this.isMove = false;
       // this.showMenu2 = false;
     },

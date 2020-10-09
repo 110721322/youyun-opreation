@@ -53,7 +53,6 @@ export default {
       agentNo: this.agentNo,
       tradeMonth: this.rewardDate
     }
-    // console.log(this.params)
   },
   methods: {
     search($ruleform) {
@@ -63,8 +62,6 @@ export default {
         rewardDate: $ruleform.date,
         merchantName: $ruleform.inputSelect === 'merchantName' ? $ruleform.inputForm : ""
       }
-      console.log(this.params)
-      console.log($ruleform)
     }
   }
 }

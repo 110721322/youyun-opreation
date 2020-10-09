@@ -95,7 +95,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$route.path, 222222)
     this.agentNo = this.$route.query.agentNo
     this.rewardDate = this.$route.query.tradeMonth
     this.merchantName = this.$route.query.merchantName

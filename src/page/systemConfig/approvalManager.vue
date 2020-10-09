@@ -89,9 +89,7 @@ export default {
   },
   mounted() {},
   methods: {
-    onChange_resource($value) {
-      console.log($value);
-    },
+    onChange_resource($value) {},
     search() {
       // eslint-disable-next-line no-console
       if (this.ruleForm === 2) {
@@ -100,10 +98,7 @@ export default {
         });
       }
     },
-    selectionChange($val) {
-      // eslint-disable-next-line no-console
-      console.log($val);
-    },
+    selectionChange($val) {},
     cancel(done) {
       done();
     },
@@ -112,7 +107,6 @@ export default {
     },
     onClick_addItem() {
       this.checkListLength++;
-      console.log(this.checkListLength);
     }
   }
 };

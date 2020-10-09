@@ -108,7 +108,6 @@ export default {
   mounted() {},
   methods: {
     search($ruleform) {
-      console.log($ruleform)
       this.params = {
         rewardDate: $ruleform.date ? $ruleform.date : "",
         agentNo: $ruleform.inputSelect === 'agentNo' ? $ruleform.inputForm : "",
@@ -119,13 +118,12 @@ export default {
       this.drawer = true
     },
     confirm($filel) {
-      console.log($filel)
       api_statistice.excelTemplate({
         param: $filel.date,
         type: "alipayRewardInput",
         url: $filel.excil.dialogImageUrl
       }).then(res => {
-        console.log(res)
+
       }).catch(err => {
         console.log(err)
       })
