@@ -559,6 +559,7 @@ export default {
             var area = []
             area.push(res.object.provinceCode, res.object.cityCode, res.object.areaCode)
             res.object.area = area
+            res.object.areaEmailAddress = res.object.provinceName + res.object.cityName + res.object.areaName + res.object.expAddress
           }
           if (res.object.activeMode) {
             res.object.activeModeCn = '产品代理'
@@ -706,7 +707,7 @@ export default {
     orderEquipment() {
       this.equipment = true
       this.equipmentConfigData = ORDER_EQUIPMENT
-      this.equipmentConfigData.formData[7].initVal = this.agentDetail.expAddress
+      this.equipmentConfigData.formData[7].initVal = this.agentDetail.areaEmailAddress ? this.agentDetail.areaEmailAddress : ''
     },
     // 标签输入框
     tagInput(value) {},
