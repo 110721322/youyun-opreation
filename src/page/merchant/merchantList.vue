@@ -73,8 +73,8 @@ export default {
     };
   },
   created() {
-    this.params.beginTime = this.getDay(0) + ' 00:00:00';
-    this.params.endTime = this.getDay(0) + ' 23:59:59';
+    this.params.beginTime = this.getDay(0);
+    this.params.endTime = this.getDay(0);
   },
   mounted() {
     this.queryInit()
@@ -122,10 +122,10 @@ export default {
         }
       } else {
         this.params = {
-          beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
-          endDate: $ruleForm.date ? $ruleForm.date[1] : null,
-          provinceCode: $ruleForm.address ? $ruleForm.address[0] : null,
-          cityCode: $ruleForm.address ? $ruleForm.address[1] : null,
+          beginDate: $ruleForm.date[0] ? $ruleForm.date[0] : this.getDay(0),
+          endDate: $ruleForm.date[0] ? $ruleForm.date[1] : this.getDay(0),
+          provinceCode: $ruleForm.address[0] ? $ruleForm.address[0] : null,
+          cityCode: $ruleForm.address[0] ? $ruleForm.address[1] : null,
           useChannelCode: $ruleForm.useChannelCode,
           channelStatus: $ruleForm.channelStatus,
           categoryCOde: $ruleForm.categoryCOde,

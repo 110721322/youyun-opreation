@@ -738,7 +738,7 @@ export default {
     buyDevice($model) {
       this.drawer = true;
       FORM_CONFIG[$model].formData[5].initVal = this.ruleForm.channelAgentName;
-      FORM_CONFIG[$model].formData[8].initVal = this.ruleForm.expAddress;
+      FORM_CONFIG[$model].formData[8].initVal = this.ruleForm.areaEmailAddress ? this.ruleForm.areaEmailAddress : '';
       FORM_CONFIG[$model].formData[11].initVal = this.ruleForm.channelAgentCode;
       this.formType = $model;
       this.fromConfigData = FORM_CONFIG[$model];
@@ -1002,18 +1002,22 @@ export default {
         result.forEach(m => {
           if (m.value === res.object.expProvinceCode) {
             provinceName = m.label
+            ruleForm.provinceName = m.label
           }
           if (m.value === res.object.expCityCode) {
             cityName = m.label
+            ruleForm.cityName = m.label
           }
           if (m.value === res.object.expAreaCode) {
             areaName = m.label
+            ruleForm.areaName = m.label
           }
         })
         if (res.object.provinceCode) {
           var area = []
           area.push(res.object.provinceCode, res.object.cityCode, res.object.areaCode)
           res.object.area = area
+          res.object.areaEmailAddress = res.object.provinceName + res.object.cityName + res.object.areaName + res.object.expAddress
         }
         if (res.object.expAreaCode) {
           var expAreaData = []

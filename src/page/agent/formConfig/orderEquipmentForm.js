@@ -75,7 +75,7 @@ export const ORDER_EQUIPMENT = {
       rules: setRules('打款凭证').isRequired.get
     },
     {
-      type: 0,
+      type: "show",
       label: '邮寄地址',
       key: 'buyerAddress',
       initVal: '',
