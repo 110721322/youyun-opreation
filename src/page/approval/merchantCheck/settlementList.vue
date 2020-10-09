@@ -55,7 +55,7 @@ export default {
   created() {
     this.params.beginDate = this.getDay(0);
     this.params.endDate = this.getDay(0);
-    this.params = api.settleCardAuditQueryByPage
+    this.api = api.settleCardAuditQueryByPage
   },
   methods: {
     getDay(day) {
@@ -106,8 +106,8 @@ export default {
       const params = {
         beginDate: $ruleForm.date[0] ? $ruleForm.date[0] : this.getDay(0),
         endDate: $ruleForm.date[0] ? $ruleForm.date[1] : this.getDay(0),
-        auditStatus: $ruleForm.auditStatus,
-        operateUserNo: $ruleForm.operateUserNo
+        auditStatus: $ruleForm.auditStatus ? $ruleForm.auditStatus : "",
+        operationId: $ruleForm.operationId ? $ruleForm.operationId : ""
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;

@@ -33,7 +33,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '通道状态',
-      key: 'status',
+      key: 'auditStatus',
       labelWidth: '80px',
       span: 11,
       options: [
