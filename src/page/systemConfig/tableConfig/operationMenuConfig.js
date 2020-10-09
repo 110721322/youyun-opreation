@@ -5,6 +5,16 @@ export const MENU_CONFIG = {
       label: '菜单名称',
       prop: 'menuName',
       width: '150px'
+    },
+    {
+      label: "图标",
+      prop: "menuIcon",
+      width: "150px",
+      render: (h, params) => {
+        return (
+          <i class={"iconfont " + params.row.menuIcon}></i>
+        )
+      }
     }
   ],
   childrenKey: 'childrenMenus',
