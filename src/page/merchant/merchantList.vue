@@ -116,22 +116,20 @@ export default {
       });
     },
     search($ruleForm) {
-      if ($ruleForm.inputFormVal) {
-        this.params = {
-          [$ruleForm.inputForm]: $ruleForm.inputFormVal
-        }
-      } else {
-        this.params = {
-          beginDate: $ruleForm.date[0] ? $ruleForm.date[0] : this.getDay(0),
-          endDate: $ruleForm.date[0] ? $ruleForm.date[1] : this.getDay(0),
-          provinceCode: $ruleForm.address[0] ? $ruleForm.address[0] : null,
-          cityCode: $ruleForm.address[0] ? $ruleForm.address[1] : null,
-          useChannelCode: $ruleForm.useChannelCode,
-          channelStatus: $ruleForm.channelStatus,
-          categoryCOde: $ruleForm.categoryCOde,
-          operateNo: $ruleForm.operateNo
-        };
+      console.log($ruleForm)
+      var params = {}
+      params = {
+        beginTime: $ruleForm.date[0] ? $ruleForm.date[0] : this.getDay(0),
+        endTime: $ruleForm.date[0] ? $ruleForm.date[1] : this.getDay(0),
+        provinceCode: $ruleForm.address ? $ruleForm.address[0] : null,
+        cityCode: $ruleForm.address ? $ruleForm.address[1] : null,
+        useChannelCode: $ruleForm.useChannelCode ? $ruleForm.useChannelCode : null,
+        channelStatus: $ruleForm.channelStatus ? $ruleForm.channelStatus : null,
+        categoryCode: $ruleForm.categoryCode ? $ruleForm.categoryCode : null,
+        operateNo: $ruleForm.operateNo ? $ruleForm.operateNo : null
       }
+      params[$ruleForm.inputForm] = $ruleForm.inputFormVal
+      this.params = params
     },
     openAgentManager() {},
     openMerchantManager() {}
