@@ -116,14 +116,13 @@ export default {
       });
     },
     search($ruleForm) {
-      console.log($ruleForm)
       var params = {}
       params = {
         beginTime: $ruleForm.date[0] ? $ruleForm.date[0] : this.getDay(0),
         endTime: $ruleForm.date[0] ? $ruleForm.date[1] : this.getDay(0),
         provinceCode: $ruleForm.address ? $ruleForm.address[0] : null,
         cityCode: $ruleForm.address ? $ruleForm.address[1] : null,
-        useChannelCode: $ruleForm.useChannelCode ? $ruleForm.useChannelCode : null,
+        useChannelCode: $ruleForm.channelCode ? $ruleForm.channelCode : null,
         channelStatus: $ruleForm.channelStatus ? $ruleForm.channelStatus : null,
         categoryCode: $ruleForm.categoryCode ? $ruleForm.categoryCode : null,
         operateNo: $ruleForm.operateNo ? $ruleForm.operateNo : null

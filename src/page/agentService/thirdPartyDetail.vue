@@ -1,13 +1,15 @@
 <template>
   <div class="detail_page">
     <div class="p_head">新增对接商</div>
-    <Form
-      :form-base-data="fromConfigData.formData"
-      :show-foot-btn="fromConfigData.showFootBtn"
-      label-width="130px"
-      @cancel="cancel"
-      @confirm="confirm"
-    ></Form>
+    <div v-if="showPage">
+      <Form
+        :form-base-data="fromConfigData.formData"
+        :show-foot-btn="fromConfigData.showFootBtn"
+        label-width="130px"
+        @cancel="cancel"
+        @confirm="confirm"
+      ></Form>
+    </div>
   </div>
 </template>
 
@@ -22,7 +24,8 @@ export default {
   data() {
     return {
       fromConfigData: FORM_CONFIG.detailData,
-      id: ""
+      id: "",
+      showPage: false
     };
   },
   created() {
@@ -31,28 +34,40 @@ export default {
     if (this.$route.query.id) {
       this.id = this.$route.query.id
       this.queryById(this.$route.query.id)
+    } else {
+      this.showPage = true;
     }
   },
   methods: {
     queryById(id) {
-      api.getOpenOperatorDetail({
-        id: id
-      }).then(res => {
-        // 编辑前重赋值
-        // res.object.netStatus = res.object.netStatus.Number()
-        FORM_CONFIG.editData.formData.forEach((item, index) => {
-          item.initVal = res.object[item.key];
+      setTimeout(() => {
+        api.getOpenOperatorDetail({
+          id: id
+        }).then(res => {
+          // 编辑前重赋值
+          // res.object.netStatus = res.object.netStatus.Number()
+          FORM_CONFIG.editData.formData.forEach((item, index) => {
+            item.initVal = res.object[item.key];
+          });
+          this.fromConfigData = FORM_CONFIG.editData;
+          this.fromConfigData.formData[7].initVal = this.fromConfigData.formData[7].initVal.toString();
+          this.showPage = true;
+        }).catch(err => {
+          this.$message(err);
         });
-        this.fromConfigData = FORM_CONFIG.editData;
-        this.fromConfigData.formData[7].initVal = this.fromConfigData.formData[7].initVal.toString()
-      }).catch(err => {
-        this.$message(err);
-      });
+      }, 300)
     },
     confirm($form) {
       if (!$form.name || !$form.developerId || !$form.phone || !$form.allotCount || !$form.agentNo) {
         this.$message({
           message: '请填写必填信息',
+          type: 'warning'
+        })
+        return
+      }
+      if (!this.$g.utils.checkPhone($form.phone)) {
+        this.$message({
+          message: '请填写正确格式的手机号',
           type: 'warning'
         })
         return
@@ -72,14 +87,19 @@ export default {
         params.id = this.id
       }
       api.addOpenAgent(params).then(res => {
-        if (res.status === 0) {
+        if (res.status === 0 && res.object) {
           this.$message({
             message: this.id ? "编辑成功" : "添加成功",
             type: "success"
-          })
+          });
           this.$router.replace({
             name: '/agentService/thirdParty'
-          })
+          });
+        } else {
+          this.$message({
+            message: this.id ? "编辑失败" : "添加失败",
+            type: "error"
+          });
         }
       })
     },
