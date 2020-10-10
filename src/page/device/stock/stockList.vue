@@ -116,7 +116,7 @@ export default {
     },
     confirm($data) {
       if (this.formStatus === "add" || this.formStatus === "edit") {
-        if (!$data.deviceModel || !$data.deviceImg || !$data.costPrice || !$data.salePrice || !$data.sort) {
+        if (!$data.deviceImg || !$data.costPrice || !$data.salePrice || !$data.sort) {
           this.$message({
             message: "请填写必填信息",
             type: "warning"

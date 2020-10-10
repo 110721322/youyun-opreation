@@ -56,6 +56,7 @@
         </div> -->
         <BaseCrud
           ref="agentTable"
+          :refName="'agent'"
           :params="params1"
           :grid-config="configData2.gridConfig"
           :grid-btn-config="configData2.gridBtnConfig"

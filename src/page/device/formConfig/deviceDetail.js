@@ -120,7 +120,8 @@ export const FORM_CONFIG = {
           keyName: 'agentNo',
           valueName: 'agentName',
           method: 'get'
-        }
+        },
+        rules: setRules('商户').isRequired.get
       },
       {
         type: 1,
