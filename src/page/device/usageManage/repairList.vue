@@ -69,21 +69,15 @@ export default {
       direction: "rtl",
       formStatus: "",
       activityRow: {},
-      params: {
-        agentNameNo: "",
-        agentNo: "",
-        currentPage: 0,
-        deviceId: "",
-        operationId: "",
-        orderNo: "",
-        pageSize: 20,
-        status: ""
-      },
-      api: api.deviceMaintainQueryByPage
+      params: {},
+      api: ""
     };
   },
   mounted() {},
   created() {
+    this.params.beginTime = this.getDay(0);
+    this.params.endTime = this.getDay(0);
+    this.api = api.deviceMaintainQueryByPage
   },
   methods: {
     getDay(day) {
@@ -238,12 +232,13 @@ export default {
       }
     },
     search($ruleForm) {
+      console.log($ruleForm)
       const params = {
-        beginTime: $ruleForm.date ? $ruleForm.date[0] : null,
-        endTime: $ruleForm.date ? $ruleForm.date[1] : null,
-        deviceId: $ruleForm.deviceId,
-        operationId: $ruleForm.operationId,
-        status: $ruleForm.status
+        beginTime: $ruleForm.date[0] ? $ruleForm.date[0] : this.getDay(0),
+        endTime: $ruleForm.date[0] ? $ruleForm.date[1] : this.getDay(0),
+        deviceId: $ruleForm.deviceId ? $ruleForm.deviceId : null,
+        operationId: $ruleForm.operationId ? $ruleForm.operationId : null,
+        status: $ruleForm.status ? $ruleForm.status : ""
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;

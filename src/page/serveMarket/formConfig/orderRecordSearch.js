@@ -7,27 +7,38 @@ export const ORDER_RECORD_SEARCH = {
       label: "创建时间",
       key: "data",
       initVal: null,
-      dateType: "date"
+      dateType: "date",
+      class: 'max-width',
+      labelWidth: '80px',
+      span: 22
     },
     {
       type: 0,
       label: '订单号',
-      key: 'outputNo'
+      key: 'outputNo',
+      labelWidth: '80px',
+      span: 11
     },
     {
       type: 0,
       label: '联系人',
-      key: 'buyerName'
+      key: 'buyerName',
+      labelWidth: '80px',
+      span: 11
     },
     {
       type: 0,
       label: '联系电话',
-      key: 'buyerPhone'
+      key: 'buyerPhone',
+      labelWidth: '80px',
+      span: 11
     },
     {
       type: 1,
       label: '订单状态',
       key: 'status',
+      labelWidth: '80px',
+      span: 11,
       options: [
         {
           label: '全部',
