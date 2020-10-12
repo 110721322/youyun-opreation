@@ -860,15 +860,15 @@ export default {
         }
         this.financeDrawer = true
       }
-      // if ($model === 'address') {
-      //   this.editType = 'editMailAddress'
-      //   this.drawer = true;
-      //   const newFromConfigData = FORM_CONFIG[$model];
-      //   newFromConfigData.formData.forEach((item, index) => {
-      //     item.initVal = this.ruleForm[item.key];
-      //   });
-      //   this.fromConfigData = this.$g.utils.deepClone(newFromConfigData);
-      // }
+      if ($model === 'address') {
+        this.editType = 'editMailAddress'
+        this.drawer = true;
+        const newFromConfigData = FORM_CONFIG[$model];
+        newFromConfigData.formData.forEach((item, index) => {
+          item.initVal = this.ruleForm[item.key];
+        });
+        this.fromConfigData = this.$g.utils.deepClone(newFromConfigData);
+      }
     },
     rateEdit($model) {
       if ($model === 'rateInfo') {
@@ -988,59 +988,27 @@ export default {
         }
       }
       if (this.editType === 'editMailAddress') {
-        if (!row.activeScopeCode[0]) {
-          this.$message({
-            message: '请选择服务范围',
-            type: 'warning'
-          })
-          return
-        }
-        if (!row.activeMode || !row.chargeFeePercent || !row.expandSub) {
-          this.$message({
-            message: '请填写完整信息',
-            type: 'warning'
-          })
-          return false
-        }
-        var activeScope = {}
-        if (row.addressObj && row.activeScopeCode[0]) {
-          activeScope = {
-            cityCode: row.addressObj[1].value,
-            cityName: row.addressObj[1].label,
-            provinceCode: row.addressObj[0].value,
-            provinceName: row.addressObj[0].label
-          }
-        }
-        if (row.activeScopeCode[0] && !row.addressObj) {
-          var result = this.$g.utils.getNestedArr(areaData, 'children')
-          result.forEach(m => {
-            if (m.value === row.activeScopeCode[0]) {
-              activeScope.provinceCode = this.ruleForm.activeScopeCode[0]
-              activeScope.provinceName = m.label
-            }
-            if (m.value === row.activeScopeCode[1]) {
-              activeScope.cityCode = this.ruleForm.activeScopeCode[1]
-              activeScope.cityName = m.label
-            }
-          })
-        }
-        api.updateAgentPrivilege({
-          activeMode: row.activeMode,
-          chargeFeePercent: this.$g.utils.AccDiv(row.chargeFeePercent, 100),
-          expandSub: row.expandSub,
-          agentNo: this.$route.query.agentNo,
-          activeScope: activeScope
+        console.log(row)
+        api.updatePostAddress({
+          relateCode: this.$route.query.agentNo,
+          personName: row.personName,
+          personMobile: row.personMobile,
+          provinceCode: row.area[0],
+          cityCode: row.area[1],
+          areaCode: row.area[2],
+          detailAddress: row.detailAddress
         }).then(res => {
           if (res.status === 0) {
             this.$message({
-              message: '权限编辑成功',
+              message: '邮寄地址更新成功',
               type: 'success'
             })
+            this.getDetail(this.$route.query.agentNo)
+            this.editType = ''
+            this.drawer = false
           }
-          this.getDetail(this.$route.query.agentNo)
-          this.editType = ''
-          this.drawer = false
-        }).catch(() => {
+        }).catch(err => {
+          console.log(err)
         })
       }
       if (this.editType === 'editRenew') {

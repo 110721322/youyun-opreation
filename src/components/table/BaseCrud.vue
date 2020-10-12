@@ -384,6 +384,8 @@ export default {
     justify-content: space-between;
     text-align: right;
     margin-top: 25px;
+    align-items: center;
+    flex-wrap: wrap;
   }
 }
 .icon-increase {

@@ -8,8 +8,7 @@ export const SEARCH_CONFIG = {
       label: '筛选时间',
       key: 'date',
       class: 'max-width',
-      querySelectAll: true,
-      isSelectToday: true,
+      format: "yyyy-MM-dd",
       labelWidth: '80px',
       span: 22
     },
@@ -20,11 +19,11 @@ export const SEARCH_CONFIG = {
       options: [
         {
           label: '商户ID',
-          value: 'merchantNo'
+          value: 'channelMerchantNo'
         },
         {
           label: '商户名称',
-          value: 'merchantName'
+          value: 'channel'
         }
       ],
       labelWidth: '80px',

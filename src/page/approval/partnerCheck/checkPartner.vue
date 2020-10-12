@@ -7,23 +7,23 @@
 
     <div class="table_box">
       <BaseCrud
-          ref="table"
-          :params="params"
-          :api-service="api"
-          :grid-config="configData.gridConfig"
-          :grid-btn-config="configData.gridBtnConfig"
-          :grid-data="testData"
-          :form-config="configData.formConfig"
-          :form-data="configData.formModel"
-          :grid-edit-width="150"
-          :is-async="true"
-          :is-select="false"
-          :is-expand="false"
-          :row-key="'id'"
-          :default-expand-all="false"
-          :hide-edit-area="configData.hideEditArea"
-          @detail="handleDetail"
-          @preApprove="handlePreApprove"
+        ref="table"
+        :params="params"
+        :api-service="api"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :grid-data="testData"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="150"
+        :is-async="true"
+        :is-select="false"
+        :is-expand="false"
+        :row-key="'id'"
+        :default-expand-all="false"
+        :hide-edit-area="configData.hideEditArea"
+        @detail="handleDetail"
+        @preApprove="handlePreApprove"
       ></BaseCrud>
     </div>
   </div>
@@ -96,7 +96,10 @@ export default {
         beginDate: $ruleForm.date[0] ? $ruleForm.date[0] : this.getDay(0),
         endDate: $ruleForm.date[0] ? $ruleForm.date[1] : this.getDay(0),
         contractStatus: $ruleForm.contractStatus,
-        jobType: $ruleForm.jobType
+        jobType: $ruleForm.jobType,
+        partnerName: $ruleForm.partnerName,
+        mobile: $ruleForm.mobile,
+        operationId: $ruleForm.operationId
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;

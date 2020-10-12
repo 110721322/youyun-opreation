@@ -36,7 +36,7 @@
         <div class="left_step">步骤一:</div>
         <ul class="right_step">
           <li class="right_title">选择服务时间</li>
-          <li class="right_list">目前服务时间可购买：1年，2年和3年。服务到期后若不进行续费购买将无法展开该服务</li>
+          <li class="right_list">目前服务时间可购买：1年。服务到期后若不进行续费购买将无法展开该服务</li>
         </ul>
       </div>
       <div class="operation_step">
