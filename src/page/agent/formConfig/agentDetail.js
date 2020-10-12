@@ -236,30 +236,30 @@ export const FORM_CONFIG = {
         label: '续费时间',
         key: 'monthCount',
         options: [
-          {
-            label: '1个月',
-            value: 1
-          },
-          {
-            label: '2个月',
-            value: 2
-          },
-          {
-            label: '6个月',
-            value: 6
-          },
+          // {
+          //   label: '1个月',
+          //   value: 1
+          // },
+          // {
+          //   label: '2个月',
+          //   value: 2
+          // },
+          // {
+          //   label: '6个月',
+          //   value: 6
+          // },
           {
             label: '1年',
             value: 12
-          },
-          {
-            label: '2年',
-            value: 24
-          },
-          {
-            label: '3年',
-            value: 36
           }
+          // {
+          //   label: '2年',
+          //   value: 24
+          // },
+          // {
+          //   label: '3年',
+          //   value: 36
+          // }
         ],
         rules: setRules('请选择').isSelected.get
       },

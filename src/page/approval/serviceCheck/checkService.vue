@@ -7,23 +7,23 @@
 
     <div class="table_box">
       <BaseCrud
-          ref="table"
-          :params="params"
-          :api-service="api"
-          :grid-config="configData.gridConfig"
-          :grid-btn-config="configData.gridBtnConfig"
-          :grid-data="testData"
-          :form-config="configData.formConfig"
-          :form-data="configData.formModel"
-          :grid-edit-width="150"
-          :is-async="true"
-          :is-select="false"
-          :is-expand="false"
-          :row-key="'id'"
-          :default-expand-all="false"
-          :hide-edit-area="configData.hideEditArea"
-          @detail="handleDetail"
-          @preApprove="handlePreApprove"
+        ref="table"
+        :params="params"
+        :api-service="api"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :grid-data="testData"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="150"
+        :is-async="true"
+        :is-select="false"
+        :is-expand="false"
+        :row-key="'id'"
+        :default-expand-all="false"
+        :hide-edit-area="configData.hideEditArea"
+        @detail="handleDetail"
+        @preApprove="handlePreApprove"
       ></BaseCrud>
     </div>
   </div>
@@ -46,7 +46,10 @@ export default {
       testData: [],
       direction: "rtl",
       searchHeight: "260",
-      params: {},
+      params: {
+        beginDate: this.$g.utils.getToday(),
+        endDate: this.$g.utils.getToday()
+      },
       api: api.querySubAudit
     };
   },
@@ -73,7 +76,9 @@ export default {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,
         contractStatus: $ruleForm.contractStatus,
-        operateUserNo: $ruleForm.operateUserNo
+        operationId: $ruleForm.operationId,
+        personName: $ruleForm.personName,
+        personMobile: $ruleForm.personMobile
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;

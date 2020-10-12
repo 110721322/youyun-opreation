@@ -265,9 +265,11 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-content: center;
+  z-index: 1000;
 }
 .form-box {
   padding: 0 24px;
+  padding-bottom: 80px;
 }
 .select_data {
   width: 100%;

@@ -26,12 +26,14 @@
           点击上传
         </el-button>
       </el-upload>
-      <el-button @click="dialogVisible = false">
-        取消
-      </el-button>
-      <el-button type="primary" @click="handleSubmit">
-        确认
-      </el-button>
+      <div style="margin-top:24px">
+        <el-button @click="dialogVisible = false">
+          取消
+        </el-button>
+        <el-button type="primary" @click="handleSubmit">
+          确认
+        </el-button>
+      </div>
     </el-dialog>
   </div>
 </template>

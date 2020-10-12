@@ -8,8 +8,7 @@ export const SEARCH_CONFIG = {
       label: '筛选时间',
       key: 'date',
       class: 'max-width',
-      format: "yyyy-MM-dd HH:mm:ss",
-      datatype: "datetimerange",
+      format: "yyyy-MM-dd",
       labelWidth: '80px',
       span: 22
     },
@@ -20,11 +19,11 @@ export const SEARCH_CONFIG = {
       options: [
         {
           label: '商户ID',
-          value: 'merchantNo'
+          value: 'channelMerchantNo'
         },
         {
           label: '商户名称',
-          value: 'merchantName'
+          value: 'channel'
         }
       ],
       labelWidth: '80px',
@@ -33,7 +32,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '通道状态',
-      key: 'status',
+      key: 'auditStatus',
       labelWidth: '80px',
       span: 11,
       options: [

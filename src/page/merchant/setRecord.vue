@@ -81,7 +81,7 @@ export default {
     this.params = {
       beginDate: result,
       endDate: result,
-      settleStatus: settleStatus === "1" ? "settleFail" : settleStatus === "1" ? "noSettle" : "finishSettle"
+      settleStatus: settleStatus === "1" ? "settleFail" : settleStatus === "2" ? "noSettle" : "finishSettle"
     }
     var merchantNo = ''
     var merchantName = ''
@@ -99,7 +99,7 @@ export default {
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,
         channel: $ruleForm.channel,
         channelMerchantNo: $ruleForm.channelMerchantNo,
-        settleStatus: settleStatus === "1" ? "settleFail" : settleStatus === "1" ? "noSettle" : "finishSettle"
+        settleStatus: settleStatus === "1" ? "settleFail" : settleStatus === "2" ? "noSettle" : "finishSettle"
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
@@ -112,7 +112,10 @@ export default {
         merchantNo: merchantNo || null,
         merchantName: merchantName || null,
         channelMerchantNo: channelMerchantNo || null,
-        channel: channel || null
+        channel: channel || null,
+        settleStatus: this.params.settleStatus,
+        settleType: this.params.settleType,
+        merchantNoList: this.params.merchantNoList || []
       }).then(res => {
         console.log(res)
         this.modeConfigData = [

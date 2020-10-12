@@ -111,6 +111,7 @@ export default {
     width: 100%;
     padding: 24px 24px 80px 24px;
     box-sizing: border-box;
+    position: relative;
   }
   .top {
     width: 100%;
@@ -204,7 +205,7 @@ export default {
     border-radius: 4px;
   }
   .bottom {
-    position: fixed;
+    position: absolute;
     left: 0;
     bottom: 0;
     width: 100%;

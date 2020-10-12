@@ -95,20 +95,20 @@ export default {
             },
             {
               name: "支付宝/微信费率",
-              key: "alipayRatePecent"
+              key: "alipayRate"
             },
             {
               name: "云闪付费率（单笔≤1000元）",
-              key: "cloudPayLe1000RatePecent"
+              key: "cloudPayLe1000Rate"
             },
 
             {
               name: "云闪付费率（单笔＞1000元）",
-              key: "cloudPayGt1000RatePecent"
+              key: "cloudPayGt1000Rate"
             },
             {
               name: "合伙人佣金提成",
-              key: "kickbackPecent"
+              key: "kickbackPercent"
             }
           ]
         },

@@ -4,30 +4,30 @@
       <span class="title">商户间连审核</span>
     </div>
     <Search
-        :open-height="searchHeight"
-        :form-base-data="searchConfig.formData"
-        @search="search"
+      :open-height="searchHeight"
+      :form-base-data="searchConfig.formData"
+      @search="search"
     />
 
     <div class="table_box">
       <BaseCrud
-          ref="table"
-          :params="params"
-          :api-service="api"
-          :grid-config="configData.gridConfig"
-          :grid-btn-config="configData.gridBtnConfig"
-          :grid-data="testData"
-          :form-config="configData.formConfig"
-          :form-data="configData.formModel"
-          :grid-edit-width="150"
-          :is-async="true"
-          :is-select="false"
-          :is-expand="false"
-          :row-key="'id'"
-          :default-expand-all="false"
-          :hide-edit-area="configData.hideEditArea"
-          @detail="handleDetail"
-          @record="handleRecord"
+        ref="table"
+        :params="params"
+        :api-service="api"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :grid-data="testData"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="150"
+        :is-async="true"
+        :is-select="false"
+        :is-expand="false"
+        :row-key="'id'"
+        :default-expand-all="false"
+        :hide-edit-area="configData.hideEditArea"
+        @detail="handleDetail"
+        @record="handleRecord"
       >
       </BaseCrud>
     </div>
@@ -60,8 +60,8 @@ export default {
       this.params.merchantNo = this.$route.query.merchantNo
     }
     this.api = api.queryLeshuaAuditPageByCondition
-    this.params.beginDate = this.getDay(0) + " 00:00:00";
-    this.params.endDate = this.getDay(0) + " 23:59:59";
+    this.params.beginDate = this.getDay(0);
+    this.params.endDate = this.getDay(0);
   },
   mounted() {
     // this.search();
@@ -91,7 +91,8 @@ export default {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,
         status: $ruleForm.status,
-        operationUserNo: $ruleForm.operationUserNo
+        operationUserNo: $ruleForm.operationUserNo,
+        operationId: $ruleForm.operationId
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;

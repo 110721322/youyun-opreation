@@ -743,6 +743,18 @@ export default {
   margin-top: 16px;
   overflow: auto;
 }
+/*滚动条样式*/
+.right ::-webkit-scrollbar {
+  width: 8px;
+}
+.right ::-webkit-scrollbar-thumb {
+  background: #C3C3C3;
+  border-radius: 4px;
+}
+.right ::-webkit-scrollbar-track {
+  background: white;
+  border-radius: 4px;
+}
 .data_box {
   position: relative;
   margin: 24px;
