@@ -69,3 +69,23 @@ export const FORM_CONFIG = {
     }
   ]
 }
+
+export const FORM_CONFIG2 = {
+  formData: [
+    {
+      type: 1,
+      label: '所属运营',
+      key: 'operationId',
+      initVal: "",
+      urlOptions: {
+        url: apiAgent.queryAllOperation,
+        keyName: 'operationId',
+        valueName: 'operationName',
+        method: 'get'
+      },
+      rules: [
+        {required: true, message: "请选择所属运营", trigger: "blur"}
+      ]
+    }
+  ]
+}

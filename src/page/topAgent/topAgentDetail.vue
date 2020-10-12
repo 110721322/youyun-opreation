@@ -6,8 +6,8 @@
       </div>
     </div>
 
-    <detailMode :rule-form="ruleForm" :config-data="configData" v-if="ruleForm.businessType === 'enterprise'" @edit="itemEdit"></detailMode>
-    <detailMode :rule-form="ruleForm" :config-data="configData1" v-if="ruleForm.businessType === 'individual'" @edit="itemEdit"></detailMode>
+    <detailMode v-if="ruleForm.businessType === 'enterprise'" :rule-form="ruleForm" :config-data="configData" @edit="itemEdit"></detailMode>
+    <detailMode v-if="ruleForm.businessType === 'individual'" :rule-form="ruleForm" :config-data="configData1" @edit="itemEdit"></detailMode>
 
     <detailMode5 :rule-form="ruleForm" :config-data="configData2" @edit="itemEdit" @handle_seem="itemSeem"></detailMode5>
 
@@ -21,98 +21,98 @@
       </el-row>
     </div>
 
-<!--    <el-row :gutter="20">-->
-<!--      <el-col :span="9">-->
-<!--        <div class="bg_box" style="margin-right:0;margin-top:0;height:314px">-->
-<!--          <div class="title">沟通数据</div>-->
-<!--          <div style="text-align:center;">-->
-<!--            <el-date-picker-->
-<!--              v-model="timeDate"-->
-<!--              type="datetimerange"-->
-<!--              :picker-options="pickerOptions"-->
-<!--              range-separator="至"-->
-<!--              start-placeholder="开始日期"-->
-<!--              end-placeholder="结束日期"-->
-<!--              align="right"-->
-<!--              format="yyyy-MM-dd HH:mm:ss"-->
-<!--              value-format="yyyy-MM-dd HH:mm:ss"-->
-<!--              @change="dateChange"-->
-<!--              class="selectDate"-->
-<!--            >-->
-<!--            </el-date-picker>-->
-<!--          </div>-->
+    <!--    <el-row :gutter="20">-->
+    <!--      <el-col :span="9">-->
+    <!--        <div class="bg_box" style="margin-right:0;margin-top:0;height:314px">-->
+    <!--          <div class="title">沟通数据</div>-->
+    <!--          <div style="text-align:center;">-->
+    <!--            <el-date-picker-->
+    <!--              v-model="timeDate"-->
+    <!--              type="datetimerange"-->
+    <!--              :picker-options="pickerOptions"-->
+    <!--              range-separator="至"-->
+    <!--              start-placeholder="开始日期"-->
+    <!--              end-placeholder="结束日期"-->
+    <!--              align="right"-->
+    <!--              format="yyyy-MM-dd HH:mm:ss"-->
+    <!--              value-format="yyyy-MM-dd HH:mm:ss"-->
+    <!--              @change="dateChange"-->
+    <!--              class="selectDate"-->
+    <!--            >-->
+    <!--            </el-date-picker>-->
+    <!--          </div>-->
 
-<!--          <el-row v-if="summaryInfo">-->
-<!--            <el-col :span="8" class="data_item" style="height:58px">-->
-<!--              <div class="data_item_title">{{ summaryInfo.theme1 }}</div>-->
-<!--              <div>{{ summaryInfo.theme1Count }}次</div>-->
-<!--            </el-col>-->
-<!--            <el-col :span="8" class="data_item" style="height:58px">-->
-<!--              <div class="data_item_title">{{ summaryInfo.theme2 }}</div>-->
-<!--              <div>{{ summaryInfo.theme2Count }}次</div>-->
-<!--            </el-col>-->
-<!--            <el-col :span="8" class="data_item border_none" style="height:58px">-->
-<!--              <div class="data_item_title">沟通类型</div>-->
-<!--              <div>{{ summaryInfo.otherThemeCount }}次</div>-->
-<!--            </el-col>-->
-<!--          </el-row>-->
-<!--        </div>-->
-<!--      </el-col>-->
-<!--      <el-col :span="15">-->
-<!--        <div class="bg_box" style="margin-left:0;margin-top:0;height:314px">-->
-<!--          <img class="title_img" src="@/assets/img/clock.png" alt />-->
-<!--          <div class="title">-->
-<!--            待沟通{{ willConactNum }}次-->
-<!--            <el-button type="primary" style="float:right;margin:10px 24px" @click="addContacts">添加沟通计划</el-button>-->
-<!--          </div>-->
+    <!--          <el-row v-if="summaryInfo">-->
+    <!--            <el-col :span="8" class="data_item" style="height:58px">-->
+    <!--              <div class="data_item_title">{{ summaryInfo.theme1 }}</div>-->
+    <!--              <div>{{ summaryInfo.theme1Count }}次</div>-->
+    <!--            </el-col>-->
+    <!--            <el-col :span="8" class="data_item" style="height:58px">-->
+    <!--              <div class="data_item_title">{{ summaryInfo.theme2 }}</div>-->
+    <!--              <div>{{ summaryInfo.theme2Count }}次</div>-->
+    <!--            </el-col>-->
+    <!--            <el-col :span="8" class="data_item border_none" style="height:58px">-->
+    <!--              <div class="data_item_title">沟通类型</div>-->
+    <!--              <div>{{ summaryInfo.otherThemeCount }}次</div>-->
+    <!--            </el-col>-->
+    <!--          </el-row>-->
+    <!--        </div>-->
+    <!--      </el-col>-->
+    <!--      <el-col :span="15">-->
+    <!--        <div class="bg_box" style="margin-left:0;margin-top:0;height:314px">-->
+    <!--          <img class="title_img" src="@/assets/img/clock.png" alt />-->
+    <!--          <div class="title">-->
+    <!--            待沟通{{ willConactNum }}次-->
+    <!--            <el-button type="primary" style="float:right;margin:10px 24px" @click="addContacts">添加沟通计划</el-button>-->
+    <!--          </div>-->
 
-<!--          <BaseCrud-->
-<!--            ref="planTable"-->
-<!--            :grid-config="tableConfigData.gridConfig"-->
-<!--            :grid-btn-config="tableConfigData.gridBtnConfig"-->
-<!--            :form-config="tableConfigData.formConfig"-->
-<!--            :form-data="tableConfigData.formModel"-->
-<!--            :grid-edit-width="100"-->
-<!--            :table-height="212"-->
-<!--            form-title="用户"-->
-<!--            :is-async="false"-->
-<!--            :params="params"-->
-<!--            :api-service="api1"-->
-<!--            style="margin:24px;border:1px solid #EBEEF5;height:212px;overflow:hidden"-->
-<!--            @detail="editDetail"-->
-<!--          ></BaseCrud>-->
-<!--        </div>-->
-<!--      </el-col>-->
-<!--    </el-row>-->
-<!--    <div class="bg_box" style="height:411px;margin-top:0;">-->
-<!--      <div class="title">-->
-<!--        历史沟通记录-->
-<!--        <el-button type="primary" style="float:right;margin:10px 24px" @click="addSubtotal">添加沟通小计</el-button>-->
-<!--        <el-button style="float:right;margin:10px 0px" @click="findLiaison = true">查看联系人</el-button>-->
-<!--      </div>-->
+    <!--          <BaseCrud-->
+    <!--            ref="planTable"-->
+    <!--            :grid-config="tableConfigData.gridConfig"-->
+    <!--            :grid-btn-config="tableConfigData.gridBtnConfig"-->
+    <!--            :form-config="tableConfigData.formConfig"-->
+    <!--            :form-data="tableConfigData.formModel"-->
+    <!--            :grid-edit-width="100"-->
+    <!--            :table-height="212"-->
+    <!--            form-title="用户"-->
+    <!--            :is-async="false"-->
+    <!--            :params="params"-->
+    <!--            :api-service="api1"-->
+    <!--            style="margin:24px;border:1px solid #EBEEF5;height:212px;overflow:hidden"-->
+    <!--            @detail="editDetail"-->
+    <!--          ></BaseCrud>-->
+    <!--        </div>-->
+    <!--      </el-col>-->
+    <!--    </el-row>-->
+    <!--    <div class="bg_box" style="height:411px;margin-top:0;">-->
+    <!--      <div class="title">-->
+    <!--        历史沟通记录-->
+    <!--        <el-button type="primary" style="float:right;margin:10px 24px" @click="addSubtotal">添加沟通小计</el-button>-->
+    <!--        <el-button style="float:right;margin:10px 0px" @click="findLiaison = true">查看联系人</el-button>-->
+    <!--      </div>-->
 
-<!--      <BaseCrud-->
-<!--        :grid-config="tableConfigData2.gridConfig"-->
-<!--        :grid-btn-config="tableConfigData2.gridBtnConfig"-->
-<!--        :form-config="tableConfigData2.formConfig"-->
-<!--        :form-data="tableConfigData2.formModel"-->
-<!--        :grid-edit-width="100"-->
-<!--        :table-height="309"-->
-<!--        form-title="用户"-->
-<!--        :is-async="true"-->
-<!--        :params="params"-->
-<!--        :api-service="api2"-->
-<!--        style="margin:24px;border:1px solid #EBEEF5;height:309px;overflow:hidden"-->
-<!--        @detail="viewDetail"-->
-<!--      ></BaseCrud>-->
-<!--    </div>-->
+    <!--      <BaseCrud-->
+    <!--        :grid-config="tableConfigData2.gridConfig"-->
+    <!--        :grid-btn-config="tableConfigData2.gridBtnConfig"-->
+    <!--        :form-config="tableConfigData2.formConfig"-->
+    <!--        :form-data="tableConfigData2.formModel"-->
+    <!--        :grid-edit-width="100"-->
+    <!--        :table-height="309"-->
+    <!--        form-title="用户"-->
+    <!--        :is-async="true"-->
+    <!--        :params="params"-->
+    <!--        :api-service="api2"-->
+    <!--        style="margin:24px;border:1px solid #EBEEF5;height:309px;overflow:hidden"-->
+    <!--        @detail="viewDetail"-->
+    <!--      ></BaseCrud>-->
+    <!--    </div>-->
 
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
-        :isDrawer="true"
+        :is-drawer="true"
         @cancel="cancel"
         @confirm="confirm"
       ></Form>
@@ -123,7 +123,7 @@
       <Form
         v-if="addContactsDraw"
         :form-base-data="contactConfigData"
-        :isDrawer="true"
+        :is-drawer="true"
         :show-foot-btn="contactConfigData.showFootBtn"
         @confirm="handel_addContacts"
         @cancel="cancel"
@@ -165,7 +165,7 @@
     <el-drawer :visible.sync="addLiaison" :with-header="false" size="500px">
       <Form
         ref="liaisonRef"
-        :isDrawer="true"
+        :is-drawer="true"
         :form-base-data="liaisonConfigData.formData"
         :show-foot-btn="liaisonConfigData.showFootBtn"
         @confirm="handel_addLiaison"
@@ -174,7 +174,7 @@
     </el-drawer>
     <el-drawer :visible.sync="financeDrawer" :with-header="false" size="500px">
       <div class="financeTitle">财务信息</div>
-      <el-form :model="financeModel" :rules="rules">
+      <el-form ref="financialRef" :model="financeModel" :rules="rules">
         <el-form-item label="结算卡类型" prop="bankAccountType" style="margin: 24px 20% 0 24px;" label-width="120px">
           <el-radio-group v-model="financeModel.bankAccountType">
             <el-radio label="public">对公</el-radio>
@@ -193,8 +193,8 @@
             placeholder="请输入关键词"
             :remote-method="remoteMethod"
             :loading="loading"
-            @change="handleSelect"
             style="width:100%"
+            @change="handleSelect"
           >
             <el-option
               v-for="item in bankOptions"
@@ -261,7 +261,7 @@
       </ul>
     </el-dialog>
     <el-drawer :visible.sync="innerDrawer" :with-header="false" size="550px">
-      <power-set v-if="innerDrawer" :role-id="ruleForm.roleId" :template-list="permissionTemplate" :api-service="permissionApi" @confirm="saveUserPermission"></power-set>
+      <power-set v-if="innerDrawer" :role-id="ruleForm.roleId" :template-list="permissionTemplate" :api-service="permissionApi" @confirm="saveUserPermission" @cancel="innerDrawer = false"></power-set>
     </el-drawer>
   </div>
 </template>
@@ -272,7 +272,7 @@ import api from "@/api/api_agent.js";
 import api_dataMarket from "@/api/api_dataMarket.js";
 import api_device from "@/api/api_device.js";
 import api_systemConfig from "@/api/api_systemConfig";
-import PowerSet from "../systemConfig/component/powerSet";
+import PowerSet from "./components/powerSet";
 // import api_serve from "@/api/api_serve"
 // import BaseCrud from "@/components/table/BaseCrud.vue";
 import detailMode from "@/components/detailMode/detailMode.vue";
@@ -856,6 +856,11 @@ export default {
     },
     // 编辑保存财务信息
     handel_save() {
+      let validateStatus;
+      this.$refs.financialRef.validate(valid => {
+        validateStatus = !!valid
+      });
+      if (!validateStatus) return;
       var $ruleForm = {
         bankContactLine: this.financeModel.bankContactLine,
         bankBranchName: this.bankName,

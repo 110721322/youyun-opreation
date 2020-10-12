@@ -114,6 +114,7 @@ import { JOBCONFIG } from "./tableConfig/jogConfig";
 import { FORM_CONFIG } from "./formConfig/userManager";
 import { SEARCH_CONFIG } from "./formConfig/userManagerSearch";
 import { USERLIST_CONFIG } from "./tableConfig/userManagerConfig";
+import { mapState } from "vuex"
 
 export default {
   name: "UserManager",
@@ -149,6 +150,28 @@ export default {
       dataItem: [],
       fieldsList: []
     };
+  },
+  computed: {
+    ...mapState({
+      employeeList: (state) => state.system.employeeList,
+      positionList: (state) => state.system.positionList
+    })
+  },
+  watch: {
+    employeeList: {
+      handler() {
+        this.searchConfig.formData[4].options = this.employeeList
+        FORM_CONFIG.editData.formData[6].options = this.employeeList
+      },
+      deep: true
+    },
+    positionList: {
+      handler() {
+        this.searchConfig.formData[3].options = this.positionList
+        FORM_CONFIG.editData.formData[5].options = this.positionList
+      },
+      deep: true
+    }
   },
   beforeCreate() {
     api.allMemberList();

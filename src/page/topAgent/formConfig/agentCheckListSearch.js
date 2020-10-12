@@ -1,4 +1,5 @@
 import store from "@/store"
+import apiAgent from "@/api/api_agent.js";
 
 export const FORM_CONFIG = {
   formData: [
@@ -129,6 +130,26 @@ export const FORM_CONFIG2 = {
           label: '已完成',
           value: 3
         }
+      ]
+    }
+  ]
+}
+
+export const FORM_CONFIG3 = {
+  formData: [
+    {
+      type: 1,
+      label: '所属运营',
+      key: 'operationId',
+      initVal: "",
+      urlOptions: {
+        url: apiAgent.queryAllOperation,
+        keyName: 'operationId',
+        valueName: 'operationName',
+        method: 'get'
+      },
+      rules: [
+        {required: true, message: "请选择所属运营", trigger: "blur"}
       ]
     }
   ]

@@ -8,5 +8,7 @@ export default {
   // 补充资料/详情-邮寄地址更新
   updateAddress: (params) => API.POST('/operation/v1/topAgent/updateAddress', params),
   // 补充资料/详情-费率更新
-  updateFee: (params) => API.POST('/operation/v1/topAgent/updateFee', params)
+  updateFee: (params) => API.POST('/operation/v1/topAgent/updateFee', params),
+  // 顶级服务商转移运营
+  updateOperationId: (params) => API.POST('/operation/v1/topAgent/updateOperationId', params)
 }

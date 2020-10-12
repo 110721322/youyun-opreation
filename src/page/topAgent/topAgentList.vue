@@ -9,6 +9,9 @@
         @reset="reset"
     />
     <div class="table_box">
+      <div class="two-btn">
+        <el-button type="primary" class="s-table-btn" @click="updateOperation">转移运营</el-button>
+      </div>
       <BaseCrud
           ref="table"
           :grid-config="configData.gridConfig"
@@ -18,7 +21,7 @@
           :grid-edit-width="220"
           form-title="用户"
           :is-async="true"
-          :is-select="false"
+          :is-select="true"
           :params="params"
           :api-service="apiService"
           @selectionChange="selectionChange"
@@ -29,20 +32,34 @@
           @addInfo="openDetail"
       />
     </div>
+    <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
+      <div class="p_head">分配运营</div>
+      <Form
+          v-if="drawer"
+          ref="memberEdit"
+          :form-base-data="formConfig.formData"
+          :show-foot-btn="true"
+          :isDrawer="true"
+          @cancel="drawer = false"
+          @confirm="transfer"
+      ></Form>
+    </el-drawer>
   </div>
 </template>
 <script>
 import search from "@/components/search/search.vue";
 import api_dataMarket from "@/api/api_dataMarket";
+import api_topAgent from "@/api/api_topAgent";
 import api from "@/api/api_agent";
 import BaseCrud from "@/components/table/BaseCrud.vue";
+import Form from "@/components/form/index.vue";
 import { USER_CONFIG } from "./tableConfig/topAgentConfig";
-import { FORM_CONFIG } from "./formConfig/topAgentSearch";
+import { FORM_CONFIG, FORM_CONFIG2 } from "./formConfig/topAgentSearch";
 import { mapActions } from 'vuex'
 
 export default {
   name: "TopAgentList",
-  components: { search, BaseCrud },
+  components: { search, BaseCrud, Form },
   // components: {  dataMode, BaseCrud },
 
   data() {
@@ -50,8 +67,10 @@ export default {
       searchMaxHeight: "280",
       configData: USER_CONFIG,
       searchConfig: FORM_CONFIG,
+      formConfig: FORM_CONFIG2,
       testData: [],
       selectData: [],
+      drawer: false,
       params: {
         channelAgentCode: null,
         channelAgentName: null,
@@ -94,29 +113,35 @@ export default {
         this.setUserList(userList)
       })
     },
-    transfer() {
+    updateOperation() {
       if (this.selectData.length) {
-        this.$confirm("是否批量转移运营？", "转移运营", {
-          distinguishCancelAndClose: true,
-          confirmButtonText: "确认",
-          cancelButtonText: "取消"
-        }).then(() => {
-          api_dataMarket.transferOperate({
-            agentNos: [],
-            operateUserNo: ""
-          }).then(res => {
-            this.$message({
-              type: "info",
-              message: "转移成功"
-            });
-          });
-        }).catch(() => {});
+        this.drawer = true;
       } else {
         this.$message({
           type: "info",
-          message: "请选择代理商"
+          message: "请选择服务商"
         });
       }
+    },
+    transfer($ruleForm) {
+      this.$confirm("是否批量转移运营？", "转移运营", {
+        distinguishCancelAndClose: true,
+        confirmButtonText: "确认",
+        cancelButtonText: "取消"
+      }).then(() => {
+        api_topAgent.updateOperationId({
+          topAgentNos: this.selectData.map(item => { return item.channelAgentCode }).join(','),
+          operationId: $ruleForm.operationId
+        }).then(res => {
+          if (res.code) return res;
+          this.$message({
+            type: "success",
+            message: "转移成功"
+          });
+          this.$refs.table.getData();
+          this.drawer = false;
+        });
+      })
     },
     selectionChange($val) {
       this.selectData = $val;
@@ -226,7 +251,8 @@ export default {
   }
   .two-btn {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
+    margin-bottom: 8px;
   }
   .select_data {
     width: 100%;
