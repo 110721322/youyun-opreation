@@ -49,8 +49,6 @@ export default {
     };
   },
   created() {
-    this.params.beginDate = this.getDay(0);
-    this.params.endDate = this.getDay(0);
   },
   mounted() {},
   methods: {
@@ -74,10 +72,10 @@ export default {
     },
     search($form) {
       this.params = {
-        beginDate: $form.date[0],
-        endDate: $form.date[1],
-        payType: $form.payType ? $form.payType : '',
-        status: $form.status ? $form.status : '',
+        beginDate: $form.date[0] ? $form.date[0] : null,
+        endDate: $form.date[0] ? $form.date[1] : null,
+        payType: $form.payType ? $form.payType : null,
+        status: $form.status ? $form.status : null,
         auditStatus: $form.status === 1 ? 'audit' : $form.status === 2 ? 'success' : $form.status === 3 ? 'reject' : ''
       }
       this.params[$form.inputSelect] = $form.inputForm
