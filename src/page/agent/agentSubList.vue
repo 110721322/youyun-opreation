@@ -87,8 +87,8 @@ export default {
         personMobile: $form.personMobile || null,
         status: $form.status || null,
         regionCode: $form.regionCode || null,
-        activeDateStart: $form.date ? $form.date[0] + " 00:00:00" : null,
-        activeDateEnd: $form.date ? $form.date[1] + " 23:59:59" : null
+        beginDate: $form.date[0] ? $form.date[0] : null,
+        endDate: $form.date[0] ? $form.date[1] : null
       }
       if ($form.area) {
         this.params.activeScopeProvinceCode = $form.area[0]

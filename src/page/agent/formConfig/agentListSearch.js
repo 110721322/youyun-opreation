@@ -4,6 +4,15 @@ import areaData from "@/assets/data/areaData";
 export const FORM_CONFIG = {
   formData: [
     {
+      type: 9,
+      label: '筛选时间',
+      key: 'date',
+      querySelectAll: true,
+      isSelectToday: true,
+      labelWidth: '90px',
+      span: 22
+    },
+    {
       type: 10,
       label: '服务商名称/ID',
       key: '',

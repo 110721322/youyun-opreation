@@ -159,6 +159,8 @@ export default {
     },
     search($form) {
       this.params = {
+        beginDate: $form.date[0] ? $form.date[0] : null,
+        endDate: $form.date[0] ? $form.date[1] : null,
         operationId: $form.operationId,
         status: $form.status ? $form.status : null,
         personName: $form.personName ? $form.personName : null,

@@ -4,8 +4,8 @@ export const SEARCH_CONFIG = {
       type: 9,
       label: '筛选时间',
       key: 'date',
-      format: "yyyy-MM-dd HH:mm:ss",
-      datatype: "datetimerange",
+      querySelectAll: true,
+      isSelectToday: true,
       class: 'max-width',
       labelWidth: '80px',
       span: 22
