@@ -32,6 +32,7 @@
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
+        ref="rejectForm"
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
         label-width="130px"
@@ -90,32 +91,24 @@ export default {
   },
   methods: {
     confirm($data) {
-      if (!$data.reason) {
-        this.$message({
-          message: '请填写驳回理由',
-          type: 'warning'
-        })
-        return false
-      } else {
-        api.rejectTransfer({
-          reason: $data.reason,
-          id: this.id
-        }).then(res => {
-          if (res.status === 0) {
-            this.$message({
-              message: '已驳回',
-              type: 'success'
-            })
-            this.drawer = false
-            this.$refs.table.getData()
-          } else {
-            this.$message({
-              message: res.errorMessage,
-              type: 'info'
-            })
-          }
-        })
-      }
+      api.rejectTransfer({
+        reason: $data.reason,
+        id: this.id
+      }).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            message: '已驳回',
+            type: 'success'
+          })
+          this.drawer = false
+          this.$refs.table.getData()
+        } else {
+          this.$message({
+            message: res.errorMessage,
+            type: 'info'
+          })
+        }
+      })
     },
     search($ruleForm) {
       this.params = {
@@ -134,6 +127,9 @@ export default {
       this.formStatus = "reject";
       this.fromConfigData = FORM_CONFIG.rejectData;
       this.drawer = true;
+      if (this.$refs['rejectForm']) {
+        this.$refs['rejectForm'].init()
+      }
     },
     onClick_adopt($row) {
       this.$confirm("确定打款成功，通过吗", "提示", {
