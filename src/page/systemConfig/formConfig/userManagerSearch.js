@@ -1,13 +1,4 @@
 import { PERSON_MANAGE_CONDITION } from "../../../libs/data/permissionBtns";
-import store from '@/store'
-
-function getEmployeeList() {
-  return store.state.system.employeeList;
-}
-
-function getPositionList() {
-  return store.state.system.positionList;
-}
 
 export const SEARCH_CONFIG = {
   permission: {
@@ -73,7 +64,7 @@ export const SEARCH_CONFIG = {
       key: 'position',
       labelWidth: '80px',
       span: 11,
-      options: getPositionList()
+      options: []
     },
     {
       type: 1,
@@ -81,7 +72,7 @@ export const SEARCH_CONFIG = {
       key: 'superiorName',
       labelWidth: '80px',
       span: 11,
-      options: getEmployeeList()
+      options: []
     }
   ]
 }

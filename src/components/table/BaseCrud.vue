@@ -1,7 +1,7 @@
 <template>
   <div class="crud">
     <el-table
-      :ref="refName"
+      :ref="refName ? refName : 'table'"
       v-loading="listLoading"
       :data="showGridData"
       style="width: 100%;font-size:14px"
@@ -212,6 +212,18 @@ export default {
       if (this.apiService) {
         this.getData();
       }
+    },
+    multipleSelection() {
+      if (this.multipleSelection.length === this.showGridData.length) {
+        this.checkAll = true;
+        this.isIndeterminate = false;
+      } else if (this.multipleSelection.length > 0 && this.multipleSelection.length < this.showGridData.length) {
+        this.checkAll = false;
+        this.isIndeterminate = true;
+      } else {
+        this.checkAll = false;
+        this.isIndeterminate = false;
+      }
     }
   },
   mounted() {
@@ -223,16 +235,13 @@ export default {
   methods: {
     toggleSelection() {
       const refName = this.refName ? this.refName : 'table'
-      if (this.checkAll) {
-        this.$refs[refName].clearSelection()
+      if (this.multipleSelection.length === this.showGridData.length) {
+        this.$refs[refName].clearSelection();
+      } else {
+        this.$refs[refName].clearSelection();
         this.showGridData.forEach(row => {
           this.$refs[refName].toggleRowSelection(row);
-        })
-        return
-      }
-      if (!this.checkAll) {
-        this.$refs[refName].clearSelection()
-        return;
+        });
       }
     },
     onClick_handleToggle($row, $item) {
@@ -334,17 +343,8 @@ export default {
       }
     },
     handleSelectionChange(val) {
-      this.multipleSelection = val
-      if (val.length > 0 && val.length === this.showGridData.length) {
-        this.checkAll = true
-        this.$emit("selectionChange", val);
-        return
-      }
-      if (val.length !== this.showGridData.length) {
-        this.checkAll = false
-        this.$emit("selectionChange", val);
-        return
-      }
+      this.multipleSelection = val;
+      this.$emit("selectionChange", val);
     },
     cancelEdit($row) {
       $row.edit = false;

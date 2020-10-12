@@ -197,100 +197,100 @@
               </el-form-item>
               <el-form-item prop="company">
                 <el-input
-                  v-model="registerForm.company"
-                  class="login-input"
-                  type="text"
-                  placeholder="请输入公司名称"
-                  size="large"
-                  @keyup.native.enter="onClick_register"
+                    v-model="registerForm.company"
+                    class="login-input"
+                    type="text"
+                    placeholder="请输入公司名称"
+                    size="large"
+                    @keyup.native.enter="onClick_register"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-office-building"></i>
                 </el-input>
               </el-form-item>
               <el-form-item prop="personName">
                 <el-input
-                  v-model="registerForm.personName"
-                  type="text"
-                  class="login-input"
-                  placeholder="请输入法人姓名"
-                  size="large"
-                  @keyup.native.enter="onClick_register"
+                    v-model="registerForm.personName"
+                    type="text"
+                    class="login-input"
+                    placeholder="请输入法人姓名"
+                    size="large"
+                    @keyup.native.enter="onClick_register"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-user"></i>
                 </el-input>
               </el-form-item>
               <el-form-item prop="personMobile">
                 <el-input
-                  v-model="registerForm.personMobile"
-                  :maxlength="11"
-                  type="text"
-                  class="login-input"
-                  placeholder="请输入法人手机号"
-                  size="large"
-                  @keyup.native.enter="onClick_register"
+                    v-model="registerForm.personMobile"
+                    :maxlength="11"
+                    type="text"
+                    class="login-input"
+                    placeholder="请输入法人手机号"
+                    size="large"
+                    @keyup.native.enter="onClick_register"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-phone"></i>
                 </el-input>
               </el-form-item>
               <el-form-item prop="phone">
                 <el-input
-                  v-model="registerForm.phone"
-                  :maxlength="11"
-                  type="text"
-                  class="login-input"
-                  placeholder="请输入登录手机号"
-                  size="large"
-                  @keyup.native.enter="onClick_register"
+                    v-model="registerForm.phone"
+                    :maxlength="11"
+                    type="text"
+                    class="login-input"
+                    placeholder="请输入登录手机号"
+                    size="large"
+                    @keyup.native.enter="onClick_register"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-phone"></i>
                 </el-input>
               </el-form-item>
               <el-form-item prop="password">
                 <el-input
-                  v-model="registerForm.password"
-                  :minlength="6"
-                  :maxlength="20"
-                  autocomplete="on"
-                  type="password"
-                  class="login-input"
-                  placeholder="请输入密码"
-                  size="large"
-                  show-password
-                  @keyup.native.enter="onClick_register"
+                    v-model="registerForm.password"
+                    :minlength="6"
+                    :maxlength="20"
+                    autocomplete="on"
+                    type="password"
+                    class="login-input"
+                    placeholder="请输入密码"
+                    size="large"
+                    show-password
+                    @keyup.native.enter="onClick_register"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-lock"></i>
                 </el-input>
               </el-form-item>
               <el-form-item prop="email">
                 <el-input
-                  v-model="registerForm.email"
-                  type="text"
-                  class="login-input"
-                  placeholder="请输入邮箱"
-                  size="large"
-                  @keyup.native.enter="onClick_register"
+                    v-model="registerForm.email"
+                    type="text"
+                    class="login-input"
+                    placeholder="请输入邮箱"
+                    size="large"
+                    @keyup.native.enter="onClick_register"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-message"></i>
                 </el-input>
               </el-form-item>
               <el-form-item prop="county">
                 <el-cascader
-                  v-model="registerForm.county"
-                  class="login-input"
-                  :options="options"
-                  placeholder="省/市/区"
-                  @change="changeCounty"
+                    v-model="registerForm.county"
+                    class="login-input"
+                    :options="options"
+                    placeholder="省/市/区"
+                    @change="changeCounty"
                 >
                 </el-cascader>
               </el-form-item>
               <el-form-item prop="address">
                 <el-input
-                  v-model="registerForm.address"
-                  type="text"
-                  class="login-input"
-                  placeholder="请输入详细地址"
-                  size="large"
-                  @keyup.native.enter="onClick_register"
+                    v-model="registerForm.address"
+                    type="text"
+                    class="login-input"
+                    placeholder="请输入详细地址"
+                    size="large"
+                    @keyup.native.enter="onClick_register"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-location-information"></i>
                 </el-input>
@@ -673,6 +673,7 @@ export default {
     }
     .regist-content {
       width: 100%;
+      overflow-y: auto;
       .regist-title {
         font-size: 20px;
         font-weight: 500;

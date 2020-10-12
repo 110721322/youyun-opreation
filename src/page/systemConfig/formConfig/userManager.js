@@ -1,13 +1,4 @@
 import { validEmail } from "@/libs/kit/validate";
-import store from "@/store";
-
-function getEmployeeList() {
-  return store.state.system.employeeList;
-}
-
-function getPositionList() {
-  return store.state.system.positionList;
-}
 
 export const FORM_CONFIG = {
   editData: {
@@ -82,7 +73,7 @@ export const FORM_CONFIG = {
         label: "职位",
         key: "position",
         initVal: [],
-        options: getPositionList(),
+        options: [],
         rules: [
           {required: true, message: '请选择状态', trigger: 'blur'}
         ]
@@ -93,7 +84,7 @@ export const FORM_CONFIG = {
         label: "直属上级",
         key: "superiorId",
         initVal: [],
-        options: getEmployeeList(),
+        options: [],
         rules: [
           {required: true, message: '请选择直属上级', trigger: 'blur'}
         ]
