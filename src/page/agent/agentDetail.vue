@@ -860,15 +860,6 @@ export default {
         }
         this.financeDrawer = true
       }
-      // if ($model === 'address') {
-      //   this.editType = 'editMailAddress'
-      //   this.drawer = true;
-      //   const newFromConfigData = FORM_CONFIG[$model];
-      //   newFromConfigData.formData.forEach((item, index) => {
-      //     item.initVal = this.ruleForm[item.key];
-      //   });
-      //   this.fromConfigData = this.$g.utils.deepClone(newFromConfigData);
-      // }
     },
     rateEdit($model) {
       if ($model === 'rateInfo') {
