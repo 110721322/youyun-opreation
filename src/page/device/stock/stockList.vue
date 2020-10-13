@@ -173,9 +173,16 @@ export default {
         })
       }
       if (this.formStatus === "buy") {
-        if (!$data.count || !$data.amount || !$data.actualAmount || !$data.agentNo || !$data.payType || !$data.buyerName || !$data.buyerPhone || !$data.buyerAddress) {
+        if (!$data.payType) {
           this.$message({
-            message: '请填写必填信息',
+            message: '请选择支付方式',
+            type: 'warning'
+          })
+          return;
+        }
+        if (!this.$g.utils.checkPhone($data.buyerPhone)) {
+          this.$message({
+            message: '手机号格式不正确',
             type: 'warning'
           })
           return;

@@ -66,15 +66,17 @@ export default {
   mounted() {},
   methods: {
     search($ruleForm) {
-      const params = {
-        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
-        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
-        regionCode: $ruleForm.regionCode,
-        city: $ruleForm.city,
-        deviceId: $ruleForm.deviceId
-      };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
-      this.params = params;
+      if ($ruleForm) {
+        const params = {
+          beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
+          endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+          regionCode: $ruleForm.regionCode,
+          city: $ruleForm.city,
+          deviceId: $ruleForm.deviceId
+        };
+        params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+        this.params = params;
+      }
     },
     selectionChange($val) {},
     cancel(done) {

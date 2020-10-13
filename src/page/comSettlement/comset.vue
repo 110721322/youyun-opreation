@@ -3,7 +3,7 @@
     <div class="top_head">
       <span>佣金结算</span>
       <span>结算时间为每月28日至下月10日，需快递发票单</span>
-      <span>查看发票信息></span>
+      <span @click="handleLookBill">查看发票信息></span>
     </div>
     <div class="content">
       <ul class="content-banner">
@@ -76,6 +76,10 @@
         </div>
       </el-drawer>
     </div>
+
+    <el-dialog width="942px" title="发票实例" :visible.sync="billInfoModalVisible">
+      <BillInfoModal />
+    </el-dialog>
   </div>
 </template>
 
@@ -84,12 +88,14 @@ import BaseCrud from "@/components/table/BaseCrud.vue";
 import { SERVICE_CONFIG } from "./tableConfig/comsetConfig";
 import Form from "@/components/form/index.vue";
 import { FORM_CONFIG } from "./formConfig/thirdPartyDetail";
+import BillInfoModal from './components/billInfoModal';
 import api from "@/api/api_comSettlement";
 export default {
   name: "Comset",
   components: {
     BaseCrud,
-    Form
+    Form,
+    BillInfoModal
   },
   data() {
     return {
@@ -114,7 +120,8 @@ export default {
       settleCommission: 0,
       platformCommission: 0,
       actualAmount: 0,
-      settleInfo: {}
+      settleInfo: {},
+      billInfoModalVisible: false
     }
   },
   created() {
@@ -248,12 +255,16 @@ export default {
           }
         })
       }
+    },
+    // 查看发票信息
+    handleLookBill() {
+      this.billInfoModalVisible = true;
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .top_head {
     width: 100%;
     height: 76px;
@@ -353,5 +364,12 @@ export default {
     font-size: 14px;
     color: #606266;
   }
+/deep/ .el-dialog__header {
+  padding: 16px 24px;
+  background: #FAFAFA;
+}
+/deep/ .el-dialog .el-dialog__body {
+  padding: 0 !important;
+}
 </style>
 

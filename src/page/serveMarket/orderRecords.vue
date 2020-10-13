@@ -60,8 +60,8 @@ export default {
         agentNo: localStorage.getItem('agentNo'),
         currentPage: 0,
         pageSize: 10,
-        beginTime: this.$g.utils.getToday(),
-        endTime: this.$g.utils.getToday()
+        beginDate: this.$g.utils.getToday(),
+        endDate: this.$g.utils.getToday()
       },
       fromConfigData: {},
       drawer: false,
@@ -88,8 +88,8 @@ export default {
         buyerPhone: $ruleForm.buyerPhone,
         outputNo: $ruleForm.outputNo,
         status: $ruleForm.status,
-        beginTime: $ruleForm.data[0],
-        endTime: $ruleForm.data[1]
+        beginTime: $ruleForm.data[0] ? $ruleForm.data[0] + ' 00:00:00' : this.$g.utils.getToday() + ' 00:00:00',
+        endTime: $ruleForm.data[0] ? $ruleForm.data[1] + ' 00:00:00' : this.$g.utils.getToday() + ' 00:00:00'
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
@@ -112,9 +112,6 @@ export default {
     width: 30%;
     margin-left: 24px;
     flex-grow: 1;
-  }
-  .searchForm {
-    padding: 0 0 !important;
   }
   .s_box {
     margin: 0 0;
