@@ -364,7 +364,10 @@ export default {
     font-size: 14px;
     color: #606266;
   }
-
+/deep/ .el-dialog__header {
+  padding: 16px 24px;
+  background: #FAFAFA;
+}
 /deep/ .el-dialog .el-dialog__body {
   padding: 0 !important;
 }
