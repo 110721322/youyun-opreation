@@ -71,6 +71,13 @@ export const FORM_CONFIG = {
         rules: setRules('邮箱').isSelected.get
       },
       {
+        type: 0,
+        label: '备注',
+        key: 'remark',
+        inputType: 'textarea',
+        rules: setRules('备注').isRequired.get
+      },
+      {
         type: 1,
         label: '所属服务商',
         key: 'agentNo',

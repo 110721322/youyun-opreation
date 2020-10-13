@@ -36,6 +36,7 @@
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
+        ref="form"
         :isDrawer='true'
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
@@ -216,6 +217,7 @@ export default {
             })
             this.drawer = false
             this.$refs.table.getData()
+            this.$refs.form.resetForm()
           }
         }).catch(err => {
           this.$message({

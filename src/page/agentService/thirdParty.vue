@@ -4,9 +4,9 @@
       <span class="title">第三方对接列表</span>
     </div>
     <Search
-        :is-show-all="false"
-        :form-base-data="searchConfig.formData"
-        @search="search"
+      :is-show-all="false"
+      :form-base-data="searchConfig.formData"
+      @search="search"
     />
 
     <div class="table_box">
@@ -14,23 +14,23 @@
         <el-button class="btn" type="primary" @click="onClick_addDocker">新增对接商</el-button>
       </div>
       <BaseCrud
-          ref="table"
-          :params="params"
-          :api-service="api"
-          :grid-config="configData.gridConfig"
-          :grid-btn-config="configData.gridBtnConfig"
-          :grid-data="testData"
-          :form-config="configData.formConfig"
-          :form-data="configData.formModel"
-          :grid-edit-width="150"
-          :is-async="true"
-          :is-select="false"
-          :row-key="'id'"
-          :default-expand-all="false"
-          :hide-edit-area="configData.hideEditArea"
-          @detail="handleDetail"
-          @freeze="handleFreeze"
-          @unfreeze="handleUnfreeze"
+        ref="table"
+        :params="params"
+        :api-service="api"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :grid-data="testData"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="150"
+        :is-async="true"
+        :is-select="false"
+        :row-key="'id'"
+        :default-expand-all="false"
+        :hide-edit-area="configData.hideEditArea"
+        @detail="handleDetail"
+        @freeze="handleFreeze"
+        @unfreeze="handleUnfreeze"
       ></BaseCrud>
     </div>
   </div>

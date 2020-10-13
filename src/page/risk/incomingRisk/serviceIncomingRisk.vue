@@ -114,8 +114,8 @@ export default {
   mounted() {
   },
   created() {
-    this.params.beginDate = this.getDay(0);
-    this.params.endDate = this.getDay(0);
+    // this.params.beginDate = this.getDay(0);
+    // this.params.endDate = this.getDay(0);
   },
   methods: {
     getDay(day) {

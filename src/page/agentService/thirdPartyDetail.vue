@@ -1,6 +1,6 @@
 <template>
   <div class="detail_page">
-    <div class="p_head">新增对接商</div>
+    <div class="p_head">第三方对接信息</div>
     <div v-if="showPage">
       <Form
         :form-base-data="fromConfigData.formData"
