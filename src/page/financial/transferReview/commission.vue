@@ -189,8 +189,8 @@ export default {
   },
   created() {
     this.params = {
-      beginTime: this.$g.utils.getToday(),
-      endTime: this.$g.utils.getToday(),
+      beginTime: this.$g.utils.getToday(0),
+      endTime: this.$g.utils.getToday(0),
       typeFlag: this.activeName,
       settleStatus: 0
     };

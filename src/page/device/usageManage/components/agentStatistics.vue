@@ -47,8 +47,8 @@ export default {
       drawer: false,
       direction: "rtl",
       params: {
-        beginDate: this.$g.utils.getToday(),
-        endDate: this.$g.utils.getToday(),
+        beginDate: this.$g.utils.getToday(0),
+        endDate: this.$g.utils.getToday(0),
         agentNo: "",
         cityCode: "",
         currentPage: 1,
