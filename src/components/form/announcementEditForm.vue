@@ -27,7 +27,7 @@
             </template>
           </components>
 
-          <template v-if="formItem.showDemoImg">
+          <!-- <template v-if="formItem.showDemoImg">
             <div class="demoImg" @click="onClick_showDemoImg">
               查看示例:
               <img :src="formItem.demoImgUrl" />
@@ -35,7 +35,7 @@
           </template>
           <el-dialog title="查看示例" :visible.sync="dialogTableVisible">
             <img :src="formItem.demoImgUrl" />
-          </el-dialog>
+          </el-dialog> -->
         </el-form-item>
       </div>
       <div class="btn-box">
