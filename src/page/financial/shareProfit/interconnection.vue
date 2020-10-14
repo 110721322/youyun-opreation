@@ -41,8 +41,8 @@ export default {
       configData: SERVICE_CONFIG,
       testData: [],
       params: {
-        beginDate: this.$g.utils.getToday(),
-        endDate: this.$g.utils.getToday()
+        beginDate: this.$g.utils.getToday(0),
+        endDate: this.$g.utils.getToday(0)
       },
       api: api_statistice.selectIndirectDataByPage
     }
