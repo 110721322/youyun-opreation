@@ -56,23 +56,41 @@ export default {
       configData: ORDER_RECORD_CONFIG,
       testData: [],
       rankListData: [],
-      params: {
-        agentNo: localStorage.getItem('agentNo'),
-        currentPage: 0,
-        pageSize: 10,
-        beginDate: this.$g.utils.getToday(),
-        endDate: this.$g.utils.getToday()
-      },
+      params: {},
       fromConfigData: {},
       drawer: false,
       formStatus: "",
       api: api.queryOrderList
     };
   },
-  created() {},
+  created() {
+    this.params = {
+      agentNo: this.$store.state.admin.userInfo.number,
+      beginTime: this.getDay(0),
+      endTime: this.getDay(0)
+    }
+  },
   mounted() {
   },
   methods: {
+    getDay(day) {
+      var today = new Date();
+      const targetdayMilliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day;
+      today.setTime(targetdayMilliseconds); // 注意，这行是关键代码
+      var tYear = today.getFullYear();
+      var tMonth = today.getMonth();
+      var tDate = today.getDate();
+      tMonth = this.doHandleMonth(tMonth + 1);
+      tDate = this.doHandleMonth(tDate);
+      return tYear + "-" + tMonth + "-" + tDate;
+    },
+    doHandleMonth(month) {
+      var m = month;
+      if (month.toString().length === 1) {
+        m = "0" + month;
+      }
+      return m;
+    },
     handel_detail($row) {
       this.$router.push({
         name: 'equimentOrderDetail',
@@ -83,13 +101,13 @@ export default {
     },
     search($ruleForm) {
       const params = {
-        agentNo: localStorage.getItem('agentNo'),
+        agentNo: this.$store.state.admin.userInfo.number,
         buyerName: $ruleForm.buyerName,
         buyerPhone: $ruleForm.buyerPhone,
         outputNo: $ruleForm.outputNo,
         status: $ruleForm.status,
-        beginTime: $ruleForm.data[0] ? $ruleForm.data[0] + ' 00:00:00' : this.$g.utils.getToday() + ' 00:00:00',
-        endTime: $ruleForm.data[0] ? $ruleForm.data[1] + ' 00:00:00' : this.$g.utils.getToday() + ' 00:00:00'
+        beginTime: $ruleForm.data[0] ? $ruleForm.data[0] : this.getDay(0),
+        endTime: $ruleForm.data[0] ? $ruleForm.data[1] : this.getDay(0)
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
