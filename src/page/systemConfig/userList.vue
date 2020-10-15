@@ -120,13 +120,14 @@ export default {
       this.params = {
         sex: $ruleForm.sex,
         state: null,
-        startTime: ($ruleForm.inputFormVal || $ruleForm.date.length === 0) ? "" : $ruleForm.date[0] + ' 00:00:00',
-        endTime: ($ruleForm.inputFormVal || $ruleForm.date.length === 0) ? "" : $ruleForm.date[1] + ' 23:59:59',
+        startTime: $ruleForm.date.length === 0 ? "" : $ruleForm.date[0] + ' 00:00:00',
+        endTime: $ruleForm.date.length === 0 ? "" : $ruleForm.date[1] + ' 23:59:59',
         [$ruleForm.inputForm]: $ruleForm.inputFormVal
       };
     },
     onClick_addUser() {
-      this.drawerAddPhone = true;
+      this.addPhoneList = [""]
+      this.drawerAddPhone = true
     },
     handleClick() {
       let addPhoneList = this.addPhoneList;

@@ -382,8 +382,8 @@ export default {
   methods: {
     queryEquipment() {
       var params = {
-        beginDate: this.$g.utils.getToday(-1),
-        endDate: this.$g.utils.getToday(-1)
+        beginDate: this.$g.utils.getToday(0),
+        endDate: this.$g.utils.getToday(0)
       }
       api.queryUsing(params).then(res => {
         this.deviceListData = res.object;
@@ -517,8 +517,8 @@ export default {
     // 查询所有省份正在使用的数量/查询省份使用排行榜
     queryAllProvince($data) {
       if (!$data) {
-        this.beginDate = this.$g.utils.getToday(-1)
-        this.endDate = this.$g.utils.getToday(-1)
+        this.beginDate = this.$g.utils.getToday(0)
+        this.endDate = this.$g.utils.getToday(0)
       }
       api.queryAllProvince({
         beginDate: this.beginDate,

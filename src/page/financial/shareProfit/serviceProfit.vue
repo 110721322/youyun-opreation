@@ -33,7 +33,7 @@
         <!-- 支付方式 -->
         <BaseCrud
           v-if="selectIndex===0"
-          ref="table"
+          ref="table1"
           :params="params"
           :api-service="api"
           :grid-config="configData.gridConfig"
@@ -52,7 +52,7 @@
         <!-- 通道 -->
         <BaseCrud
           v-if="selectIndex===1"
-          ref="table"
+          ref="table2"
           :params="params"
           :api-service="api"
           :grid-config="configData1.gridConfig"
@@ -169,7 +169,6 @@ export default {
         this.configData1 = SERVICE_CONFIG1
         this.api = api_statistice.selectAgentDataByPage
       }
-      this.$refs.table.getData();
     },
     search($ruleform) {
       this.params = {
