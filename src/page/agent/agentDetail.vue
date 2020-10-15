@@ -582,7 +582,7 @@ export default {
             agentDetail.cityName = agentDetail.postCityMsg
             agentDetail.areaName = agentDetail.postAreaMsg
             var area = []
-            area.push(agentDetail.provinceCode, agentDetail.cityCode, agentDetail.areaCode)
+            area.push(agentDetail.postProvinceCode, agentDetail.postCityCode, agentDetail.postAreaCode)
             agentDetail.area = area
           }
           this.agentDetail = agentDetail
