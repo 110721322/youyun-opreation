@@ -54,14 +54,20 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      params: {},
+      params: {
+        beginDate: this.$g.utils.getToday(),
+        endDate: this.$g.utils.getToday()
+      },
       api: api.getOpenOperatorPageList
     };
   },
   mounted() {},
   methods: {
     search($ruleForm) {
-      const params = {};
+      const params = {
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
+        endDate: $ruleForm.date ? $ruleForm.date[1] : null
+      };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     },

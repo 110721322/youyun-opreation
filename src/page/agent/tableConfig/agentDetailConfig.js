@@ -207,11 +207,11 @@ export const DETAILCONFIG = {
             items: [
               {
                 name: "收件人",
-                key: "personName"
+                key: "postPersonName"
               },
               {
                 name: "详细地址",
-                key: "detailAddress"
+                key: "postDetailAddress"
               }
             ]
           },
@@ -219,7 +219,7 @@ export const DETAILCONFIG = {
             items: [
               {
                 name: "手机号",
-                key: "personMobile"
+                key: "postPersonMobile"
               }
             ]
           },

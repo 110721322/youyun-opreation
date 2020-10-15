@@ -536,45 +536,57 @@ export default {
         agentNo: agentNo
       }).then(res => {
         if (res.object) {
-          if (res.object.expandSub === 1) {
-            res.object.expandSubCn = '是'
+          const agentDetail = this.$g.utils.deepClone(res.object)
+          if (agentDetail.expandSub === 1) {
+            agentDetail.expandSubCn = '是'
           }
-          if (res.object.expandSub === 0 || res.object.expandSub === null) {
-            res.object.expandSubCn = '否'
+          if (agentDetail.expandSub === 0 || agentDetail.expandSub === null) {
+            agentDetail.expandSubCn = '否'
           }
-          res.object.renewTypeCn = '固定续费'
-          res.object.labelList.forEach(item => {
+          agentDetail.renewTypeCn = '固定续费'
+          agentDetail.labelList.forEach(item => {
             this.dynamicTags.push(item.name);
           });
-          if (res.object.wechatPayRate) {
-            res.object.alipayRate = this.$g.utils.AccMul(res.object.alipayRate, 1000);
-            res.object.wechatPayRate = this.$g.utils.AccMul(res.object.wechatPayRate, 1000);
-            res.object.cloudPayGt1000Rate = this.$g.utils.AccMul(res.object.cloudPayGt1000Rate, 1000);
-            res.object.cloudPayLe1000Rate = this.$g.utils.AccMul(res.object.cloudPayLe1000Rate, 1000);
+          if (agentDetail.wechatPayRate) {
+            agentDetail.alipayRate = this.$g.utils.AccMul(agentDetail.alipayRate, 1000);
+            agentDetail.wechatPayRate = this.$g.utils.AccMul(agentDetail.wechatPayRate, 1000);
+            agentDetail.cloudPayGt1000Rate = this.$g.utils.AccMul(agentDetail.cloudPayGt1000Rate, 1000);
+            agentDetail.cloudPayLe1000Rate = this.$g.utils.AccMul(agentDetail.cloudPayLe1000Rate, 1000);
           }
-          if (res.object.chargeFeePercent) {
-            res.object.chargeFeePercent = this.$g.utils.AccMul(res.object.chargeFeePercent, 100)
+          if (agentDetail.chargeFeePercent) {
+            agentDetail.chargeFeePercent = this.$g.utils.AccMul(agentDetail.chargeFeePercent, 100)
           }
-          if (res.object.provinceCode) {
-            var area = []
-            area.push(res.object.provinceCode, res.object.cityCode, res.object.areaCode)
-            res.object.area = area
-            res.object.areaEmailAddress = res.object.provinceName + res.object.cityName + res.object.areaName + res.object.expAddress
+          if (agentDetail.provinceCode) {
+            // var area = []
+            // area.push(agentDetail.provinceCode, agentDetail.cityCode, agentDetail.areaCode)
+            // agentDetail.area = area
+            // agentDetail.areaEmailAddress = agentDetail.provinceName + agentDetail.cityName + agentDetail.areaName + agentDetail.expAddress
           }
-          if (res.object.activeMode) {
-            res.object.activeModeCn = '产品代理'
+          if (agentDetail.activeMode) {
+            agentDetail.activeModeCn = '产品代理'
           }
-          if (res.object.bankAccountType === 'private') {
-            res.object.bankAccountTypeCn = '对私'
+          if (agentDetail.bankAccountType === 'private') {
+            agentDetail.bankAccountTypeCn = '对私'
           }
-          if (res.object.bankAccountType === 'public') {
-            res.object.bankAccountTypeCn = '对公'
+          if (agentDetail.bankAccountType === 'public') {
+            agentDetail.bankAccountTypeCn = '对公'
           }
           var active = []
-          active.push(res.object.activeScope.provinceCode, res.object.activeScope.cityCode)
-          res.object.activeScopeCode = active
-          this.agentDetail = res.object
-          this.ruleForm = res.object
+          active.push(agentDetail.activeScope.provinceCode, agentDetail.activeScope.cityCode)
+          agentDetail.activeScopeCode = active
+          if (agentDetail.postId) {
+            agentDetail.detailAddress = agentDetail.postDetailAddress
+            agentDetail.personMobile = agentDetail.postPersonMobile
+            agentDetail.personName = agentDetail.postPersonName
+            agentDetail.provinceName = agentDetail.postProvinceMsg
+            agentDetail.cityName = agentDetail.postCityMsg
+            agentDetail.areaName = agentDetail.postAreaMsg
+            var area = []
+            area.push(agentDetail.provinceCode, agentDetail.cityCode, agentDetail.areaCode)
+            agentDetail.area = area
+          }
+          this.agentDetail = agentDetail
+          this.ruleForm = agentDetail
         }
       });
     },
@@ -821,7 +833,7 @@ export default {
     },
     itemEdit($model) {
       if ($model === 'address') {
-        this.editType = 'editAddress'
+        this.editType = 'editMailAddress'
         this.fromConfigData = {}
         setTimeout(() => {
           const newFromConfigData = FORM_CONFIG[$model];
@@ -980,7 +992,9 @@ export default {
       }
       if (this.editType === 'editMailAddress') {
         console.log(row)
-        api.updatePostAddress({
+        const apiJudge = this.agentDetail.postId ? 'updatePostAddress' : 'addPostAddress'
+        api[apiJudge]({
+          id: this.agentDetail.postId,
           relateCode: this.$route.query.agentNo,
           personName: row.personName,
           personMobile: row.personMobile,
