@@ -200,9 +200,7 @@ export default {
     this.params = {
       beginTime: this.$g.utils.getToday(0),
       endTime: this.$g.utils.getToday(0),
-      typeFlag: this.activeName,
-      settleStatus: 0,
-      agentNo: this.$route.query.agentNo || null
+      typeFlag: this.activeName
     };
   },
   methods: {
@@ -246,11 +244,15 @@ export default {
     },
     search($ruleForm) {
       this.params = {
-        typeFlag: '0',
-        beginTime: $ruleForm.date[0] || '',
-        endTime: $ruleForm.date[1] || ''
+        beginTime: $ruleForm.date[0] ? $ruleForm.date[0] : this.$g.utils.getToday(0),
+        endTime: $ruleForm.date[1] ? $ruleForm.date[0] : this.$g.utils.getToday(0)
       };
-      this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      if (this.activeName === '0') {
+        this.params.typeFlag = '0'
+      }
+      if (this.activeName === '1') {
+        this.params.typeFlag = '1'
+      }
     },
     onClick_detail($row) {
       const queryDetailApi = this.activeName === '0' ? 'topQueryDetail' : 'queryDetail'

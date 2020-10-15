@@ -22,6 +22,7 @@ export default {
   props: {
     ruleForm: Object,
     formItem: Object,
+    isRest: Boolean,
     pickerOptions: {
       type: Object,
       default() {
@@ -49,7 +50,13 @@ export default {
       return item.style ? item.style : "float: left;width: 100%;max-width: 294px;";
     }
   },
-  watch: {},
+  watch: {
+    isRest: function($new) {
+      if ($new) {
+        this.timeInterval = "";
+      }
+    }
+  },
   created() {},
   methods: {
     onChage($data) {

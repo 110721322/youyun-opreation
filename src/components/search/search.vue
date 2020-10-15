@@ -188,8 +188,6 @@ export default {
     resetForm() {
       // 初始化表单
       this.isRest = true;
-      setTimeout(() => {
-      }, 500);
       this.$nextTick(() => {
         this.isRest = false;
         this.$refs.formTep.resetFields();

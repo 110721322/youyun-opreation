@@ -85,9 +85,6 @@ export default {
   },
   mounted() {},
   created() {
-    var result = this.$g.utils.getToday1()
-    this.params.startDate = result;
-    this.params.endDate = result;
   },
   methods: {
     confirm($data) {

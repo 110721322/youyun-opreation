@@ -63,12 +63,9 @@ export default {
       fromConfigData: FORM_CONFIG.formData,
       testData: [],
       drawer: false,
-      direction: "rtl",
       params: {
-        currentPage: 1,
         deviceIdentifier: '',
-        deviceInputId: this.$route.query.id,
-        pageSize: 1
+        deviceInputId: this.$route.query.id
       },
       rowId: '',
       api: api.queryInputPage
@@ -117,7 +114,7 @@ export default {
       newFromConfigData.formData.forEach((item, index) => {
         item.initVal = $row[item.key];
       });
-      this.fromConfigData = newFromConfigData;
+      this.fromConfigData = this.$g.utils.deepClone(newFromConfigData);
       this.drawer = true;
     },
     onClick_remove($row) {

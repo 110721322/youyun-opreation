@@ -238,8 +238,10 @@ export default {
     },
     search($ruleForm) {
       this.params = {
-        beginTime: $ruleForm.date[0],
-        endTime: $ruleForm.date[1]
+        typeFlag: this.activeName,
+        settleStatus: 0,
+        beginTime: $ruleForm.date[0] ? $ruleForm.date[0] : this.$g.utils.getToday(0),
+        endTime: $ruleForm.date[1] ? $ruleForm.date[1] : this.$g.utils.getToday(0)
       };
     },
     onClick_detail($row) {
