@@ -223,7 +223,7 @@ export default {
     openAgentManager(row) {
       api.generateLoginTicket({
         system: 'agent',
-        phone: row.personMobile,
+        phone: row.loginAccount,
         password: row.password
       }).then(res => {
         if (res.status === 0) {

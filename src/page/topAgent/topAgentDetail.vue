@@ -387,7 +387,7 @@ export default {
           colorName: "yellow"
         }
       ],
-      // activeClass: "red",
+      activeClass: "",
       activeValue: "情绪客户",
       financeModel: {
         bankAccountType: "public",
