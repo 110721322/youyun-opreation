@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p_head_detail" :class="[activeClass]">
+    <div class="p_head_detail">
       <div class="top">
         <span>{{ ruleForm.channelAgentName }}</span>
       </div>
@@ -463,7 +463,7 @@ export default {
       })
     },
     onClick_changeClientType($item) {
-      this.activeClass = $item.colorName;
+      // this.activeClass = $item.colorName;
       this.activeValue = $item.value;
     },
     // 沟通模块
