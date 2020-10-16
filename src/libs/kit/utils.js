@@ -48,6 +48,14 @@ export default {
     n = (r1 >= r2) ? r1 : r2;
     return ((arg1 * m - arg2 * m) / m).toFixed(n);
   },
+  toLocaleString($num) {
+    $num = this.AccMul($num);
+    if ($num) {
+      return Number($num).toLocaleString();
+    } else {
+      return 0
+    }
+  },
   // 一下方法已经加入到工具类库中,在此只作为实例.
   setSessionData: (k, v) => {
     sessionStorage.setItem(k, JSON.stringify(v));

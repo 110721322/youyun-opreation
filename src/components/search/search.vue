@@ -102,23 +102,6 @@ export default {
     },
     formBaseData: Array,
     rules: Object,
-    openHeight: String,
-    showFootBtn: {
-      type: Boolean,
-      default() {
-        return true;
-      }
-    },
-    showFootCancel: {
-      type: Boolean,
-      default() {
-        return true;
-      }
-    },
-    footBtnLabel: {
-      type: String,
-      default: "保存"
-    },
     labelPosition: {
       type: String,
       default: "right"
@@ -126,18 +109,6 @@ export default {
     labelWidth: {
       type: String,
       default: "100px"
-    },
-    showFootReset: {
-      type: Boolean,
-      default() {
-        return false;
-      }
-    },
-    showFootClear: {
-      type: Boolean,
-      default() {
-        return false;
-      }
     },
     permission: {
       type: Object,

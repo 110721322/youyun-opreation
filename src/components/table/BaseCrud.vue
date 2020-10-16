@@ -138,12 +138,6 @@ export default {
     Cell
   },
   props: [
-    // 表单标题，例如用户、角色
-    "formTitle",
-    // 表单配置
-    "formConfig",
-    // 表单的model数据
-    "formData",
     // 表格配置
     "gridConfig",
     // 表格按钮配置

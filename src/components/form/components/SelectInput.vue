@@ -4,9 +4,11 @@
       v-if="selectOption.isAutocomplete"
       v-model="inputForm"
       :placeholder="formItem.placeholder?formItem.placeholder:'请输入内容'"
-      value-key="agentName"
-      label="agentNo"
+      :value-key="selectOption.value"
+      :value="selectOption.valueKey"
+      label="label"
       class="input-with-select"
+      :style="selectOption.style"
       size="large"
       :fetch-suggestions="querySearchAsync"
       @select="onAutoSelect"
@@ -14,9 +16,9 @@
     >
 
       <el-select
+        v-if="!formItem.hiddenSelect"
         slot="prepend"
         v-model="inputSelect"
-        style="width:294px"
         placeholder="请选择"
         @change="onSelect"
       >
@@ -39,7 +41,7 @@
       <el-select
         slot="prepend"
         v-model="inputSelect"
-        style="width:294px"
+        style="min-width: 150px;"
         placeholder="请选择"
         @change="onSelect"
       >
@@ -85,16 +87,20 @@ export default {
   created() {
     this.inputSelect = this.formItem.options[0].value;
     this.selectOption = this.formItem.options[0];
+    this.ruleForm[this.formItem.key] = this.inputSelect;
   },
   methods: {
     onInput() {
       this.ruleForm.inputSelect = this.selectOption.valueKey ? this.selectOption.valueKey : this.inputSelect;
       this.ruleForm.inputForm = this.inputForm;
+      this.ruleForm[this.formItem.key] = this.ruleForm.inputSelect;
+      this.ruleForm[this.formItem.key + 'Val'] = this.inputForm;
     },
     onSelect() {
       this.inputForm = null;
       this.selectOption = this.formItem.options.filter(ele => ele.value === this.inputSelect)[0];
       this.ruleForm.inputSelect = this.selectOption.valueKey ? this.selectOption.valueKey : this.inputSelect;
+      this.ruleForm[this.formItem.key] = this.ruleForm.inputSelect;
     },
     onAutoSelect(e) {
       this.ruleForm.inputForm = e[this.selectOption.valueKey]
@@ -102,7 +108,7 @@ export default {
     querySearchAsync(queryString, callback) {
       const {api} = this.selectOption;
       const params = {
-        agentName: queryString
+        [this.selectOption.value]: queryString
       }
       api(params).then(res => {
         this.autoCompleteList = res.object;
@@ -115,11 +121,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.input-with-select {
-  // width: 774px;
-}
+  .input-with-select {
+    // width: 774px;
+  }
 
-.el-select .el-input {
-  width: 130px;
-}
+  .el-select .el-input {
+    width: 130px;
+  }
+  /deep/.el-input__inner{
+    width: 100%;
+    // max-width: 294px;
+  }
 </style>

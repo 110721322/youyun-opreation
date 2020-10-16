@@ -14,8 +14,7 @@ export default {
   name: "",
   props: {
     ruleForm: Object,
-    formItem: Object,
-    remoteMethod: Function
+    formItem: Object
   },
   data() {
     return {};

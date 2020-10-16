@@ -8,9 +8,11 @@
       :remote="formItem.isSearch"
       :placeholder="placeholder"
       :remote-method="remoteMethod"
+      :loading="formItem.isSearch && loading"
       :disabled="formItem.isDisabled"
       :style="selectStyle"
       @change="changeEvent"
+      @visible-change="visibleChange"
     >
       <el-option
         v-for="item in selectOptions"
@@ -29,18 +31,18 @@ export default {
   name: "",
   props: {
     ruleForm: Object,
-    formItem: Object,
-    remoteMethod: Function
+    formItem: Object
   },
   data() {
     return {
-      selectOptions: []
+      selectOptions: [],
+      loading: false
     };
   },
   computed: {
     selectStyle() {
       const item = this.formItem;
-      return item.style ? item.style : "max-width:294px;width:294px;";
+      return item.style ? item.style : "width:294px;max-width: 294px;";
     },
 
     placeholder() {
@@ -59,19 +61,21 @@ export default {
       if (this.formItem.options) {
         return this.formItem.options;
       } else {
-        return null
+        return []
       }
     }
   },
   watch: {
-    options() {
-      this.selectOptions = this.options;
+    options: {
+      handler() {
+        this.selectOptionsFun();
+      },
+      deep: true
     }
   },
   created() {
     this.selectOptionsFun();
   },
-
   methods: {
     changeEvent($event) {
       const checked = this.selectOptions.filter($item => {
@@ -82,6 +86,8 @@ export default {
       if (this.$g.utils.isFunction(this.formItem.callback)) {
         this.formItem.callback(this.ruleForm, checked)
       }
+      // this.ruleForm[this.formItem.key] = checked.value
+      this.$emit('selectChange', this.ruleForm)
     },
     isArray(value) {
       return g.utils.isArr(value);
@@ -96,11 +102,13 @@ export default {
       if (options) {
         this.selectOptions = options;
       } else {
+        this.loading = true;
         urlOptions
           .url(
             urlOptions.params || {}
           )
           .then(res => {
+            this.loading = false;
             const newArr = [];
             if (res.object) {
               for (const item of res.object) {
@@ -109,19 +117,60 @@ export default {
                 newArr.push(item);
               }
             }
-            if (res.datas) {
-              for (const item of res.datas) {
+            if (res.data) {
+              for (const item of res.data) {
                 item.value = item[urlOptions.keyName];
                 item.label = item[urlOptions.valueName];
                 newArr.push(item);
               }
             }
             this.selectOptions = newArr;
+            // 设置初始值
+            if (this.formItem.requireFirst && (!this.ruleForm[this.formItem.key])) {
+              this.ruleForm[this.formItem.key] = this.selectOptions[0].value
+            }
           })
           .catch(err => {
             console.error(err);
           });
       }
+    },
+    visibleChange($status) {
+      if (this.formItem.isSearch && $status) {
+        this.remoteMethod("")
+      }
+    },
+    remoteMethod($query) {
+      const { urlOptions } = this.formItem;
+      const params = this.$g.utils.deepClone(urlOptions.params)
+      Object.assign(params, {[urlOptions.searchKey]: $query})
+      this.loading = true;
+      urlOptions
+        .url(
+          params || {}
+        )
+        .then(res => {
+          this.loading = false;
+          const newArr = [];
+          if (res.object) {
+            for (const item of res.object) {
+              item.value = item[urlOptions.keyName];
+              item.label = item[urlOptions.valueName];
+              newArr.push(item);
+            }
+          }
+          if (res.data) {
+            for (const item of res.data) {
+              item.value = item[urlOptions.keyName];
+              item.label = item[urlOptions.valueName];
+              newArr.push(item);
+            }
+          }
+          this.selectOptions = newArr;
+        })
+        .catch(err => {
+          console.error(err);
+        });
     }
   }
 };
