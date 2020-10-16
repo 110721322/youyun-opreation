@@ -43,7 +43,7 @@ const routeList = [
 const computedRoleRouter = ((routes) => {
   let buttonList;
 
-  routes = utils.filterNestedArr(routes,'children');
+  routes = utils.filterNestedArr(routes,'children', 'isShow');
   buttonList = computedRoleBtn(routes);
 
   store.dispatch('setRoleRoutes',routes);
@@ -62,7 +62,7 @@ const computedRoleBtn = ((routes) => {
   })
 
   //过滤不显示的按钮
-  childrenList = utils.filterNestedArr(childrenList,'buttonList','isShow');
+  childrenList = utils.filterNestedArr(childrenList,'buttonList');
   //提取所有按钮
   buttonList = utils.getNestedArr(childrenList, 'buttonList',false);
   //按buttonId升序排列

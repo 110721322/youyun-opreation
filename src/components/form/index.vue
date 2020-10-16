@@ -11,8 +11,6 @@
         :rules="rules"
         :label-width="labelWidth"
       >
-        <slot name="form-item"></slot>
-        <slot name="btn"></slot>
         <template v-for="formItem in formBaseData">
           <el-form-item
             v-if="isShow(formItem)"
@@ -24,6 +22,10 @@
           >
             <components :is="transType(formItem.type)" ref="formItem" :rule-form="ruleForm" :form-item="formItem"></components>
             <span v-if="formItem.tip" style="font-size: 12px;color: #909399;">{{ formItem.tip }}</span>
+            <slot :name="formItem.slot"></slot>
+            <el-tooltip v-if="formItem.tooltip" effect="dark" :content="formItem.tooltip" placement="top">
+              <i class="iconfont iconshuoming tooltip"></i>
+            </el-tooltip>
           </el-form-item>
         </template>
         <slot name="content"></slot>

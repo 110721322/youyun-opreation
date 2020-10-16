@@ -225,7 +225,7 @@ export default {
     openAgentManager(row) {
       api.generateLoginTicket({
         system: 'operation',
-        phone: row.personMobile,
+        phone: row.loginAccount,
         password: row.password
       }).then(res => {
         if (res.status === 0) {
