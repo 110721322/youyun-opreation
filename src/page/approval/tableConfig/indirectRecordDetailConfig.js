@@ -7,7 +7,7 @@ export const RECORD_CONFIG = {
     },
     {
       label: '操作人',
-      prop: 'operateUserName',
+      prop: 'operationName',
       width: '150px'
     },
     {

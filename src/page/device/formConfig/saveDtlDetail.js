@@ -25,6 +25,8 @@ export const FORM_CONFIG = {
       {
         type: 11,
         label: '保修截止日期',
+        datatype: 'date',
+        format: 'yyyy-MM-dd',
         key: 'deadline',
         rules: setRules('设备类型').isSelected.get
       },

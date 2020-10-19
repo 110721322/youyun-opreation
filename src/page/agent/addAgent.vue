@@ -49,7 +49,7 @@ export default {
           account: $item.account,
           address: $item.address,
           email: $item.email,
-          operationId: $item.operationId,
+          // operationId: $item.operationId,
           activeMode: $item.activeMode
         }).then(res => {
           if (res.status === 0) {
