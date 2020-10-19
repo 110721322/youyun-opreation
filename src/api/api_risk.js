@@ -45,5 +45,7 @@ export default {
   // 乐刷风控-下载资料包
   getDownloadUrl: (params) => API.GET('/operation/v1/merchantBanAppeal/leshua/getDownloadUrl', params),
   // 平台风控-详情
-  banGetDetail: (params) => API.GET('/operation/v1/merchantBanAppeal/getDetail', params)
+  banGetDetail: (params) => API.GET('/operation/v1/merchantBanAppeal/getDetail', params),
+  // 加入人员下拉列表
+  getAllJobName: () => API.GET('/operation/v1/merchantBanList/getAllJobName')
 };
