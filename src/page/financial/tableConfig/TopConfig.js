@@ -2,14 +2,9 @@ export const TOPERVICE_CONFIG = {
   gridConfig: [
     {
       label: '顶级服务商',
-      prop: 'channelAgentName',
+      prop: [{key: "channelAgentName"}, {key: "channelAgentCode"}],
       width: '90px'
     },
-    // {
-    //   label: '所属上级服务商',
-    //   prop: 'topSrevice',
-    //   width: '90px'
-    // },
     {
       label: '联系人',
       prop: 'contact',
@@ -17,8 +12,7 @@ export const TOPERVICE_CONFIG = {
     },
     {
       label: '结算账号',
-      prop: 'settleAccount',
-      // prop: [{ key: "name" }, { key: "phone"}],
+      prop: [{ key: "settleBankName" }, { key: "settleAccount"}],
       width: '90px'
     },
     {
@@ -39,12 +33,16 @@ export const TOPERVICE_CONFIG = {
       label: '云闪付',
       prop: 'cloudPayCommission'
     },
-    {
-      label: '银联',
-      prop: 'unionpayTradeAmount'
-    },
+    // {
+    //   label: '银联',
+    //   prop: 'unionpayTradeAmount'
+    // },
     {
       label: '活动',
+      prop: 'activityReward'
+    },
+    {
+      label: '结算状态',
       prop: 'activityReward'
     }
   ],

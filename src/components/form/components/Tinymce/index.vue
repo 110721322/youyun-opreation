@@ -31,7 +31,6 @@ export default {
   props: {
     ruleForm: Object,
     formItem: Object,
-    remoteMethod: Function,
     id: {
       type: String,
       default: function() {

@@ -91,6 +91,7 @@ export default {
       configData: SERVICE_CONFIG,
       configData1: SERVICE_CONFIG1,
       testData: [],
+      selectDate: "",
       searchHeight: '300',
       agendoquery: '',
       params: {
@@ -123,15 +124,6 @@ export default {
       api: api_statistice.selectTopAgentDataByPage
     }
   },
-  computed: {
-    // api() {
-    //   if (this.mainIndex === 0) {
-    //     return api_statistice.selectTopAgentDataByPage
-    //   } else {
-    //     return api_statistice.selectAgentDataByPage
-    //   }
-    // }
-  },
   mounted() {},
   created() {
     var myDate = new Date()
@@ -158,7 +150,7 @@ export default {
     onClick_main(index) {
       this.mainIndex = index
       this.params = {
-        tradeMonth: this.tradeMonth
+        tradeMonth: this.selectDate ? this.selectDate + "-01" : this.tradeMonth
       }
       if (this.mainIndex === 0) {
         this.configData = TOPERVICE_CONFIG
@@ -172,9 +164,9 @@ export default {
     },
     search($ruleform) {
       this.params = {
-        tradeMonth: $ruleform.date ? ($ruleform.date + "-" + "01") : this.tradeMonth
+        tradeMonth: $ruleform.date ? $ruleform.date + "-01" : this.tradeMonth
       }
-      this.tradeMonth = $ruleform.date ? ($ruleform.date + "-" + "01") : this.tradeMonth
+      this.selectDate = $ruleform.date ? $ruleform.date : null
     },
     handleDetail($row) {
       if (this.mainIndex === 0) {
@@ -182,8 +174,8 @@ export default {
           name: 'serviceProfitDetail',
           query: {
             enterType: 0,
-            agentNo: $row.channelAgentCode,
-            tradeMonth: this.tradeMonth,
+            channelAgentCode: $row.channelAgentCode,
+            tradeMonth: this.selectDate,
             mainIndex: this.mainIndex
           }
         })
@@ -194,7 +186,7 @@ export default {
           query: {
             enterType: 1,
             agentNo: $row.agentNo,
-            tradeMonth: this.tradeMonth,
+            tradeMonth: this.selectDate,
             mainIndex: this.mainIndex
           }
         })

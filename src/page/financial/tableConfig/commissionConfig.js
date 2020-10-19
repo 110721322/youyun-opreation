@@ -3,7 +3,7 @@ export const TABLE_CONFIG = {
     {
       label: '顶级服务商',
       prop: [{ key: 'channelAgentName' }, { key: 'channelAgentCode', label: 'ID:' }],
-      width: '90px'
+      width: '150px'
     },
     // {
     //   label: '服务商',
@@ -23,7 +23,7 @@ export const TABLE_CONFIG = {
     {
       label: '结算卡号',
       prop: 'settleAccount',
-      width: '130px'
+      width: '160px'
     },
     {
       label: '结算类型',
@@ -34,31 +34,12 @@ export const TABLE_CONFIG = {
     {
       label: '审核状态',
       prop: 'settleStatusName',
-      // render: (h, params) => {
-      //   const status = params.row.status;
-      //   return h('el-tooltip', {
-      //     attrs: {
-      //       content: status,
-      //       placement: "top"
-      //     }
-      //   }, status);
-      // },
       width: '90px'
     },
     {
       label: '法人',
       prop: 'settleName',
-      width: '150px'
-      // type: 'img'
-      // render: (h, params) => {
-      //   const imgUrl = params.row.renewImg;
-      //   return h('el-image', {
-      //     props: {
-      //       src: imgUrl,
-      //       'preview-src-list': [imgUrl]
-      //     }
-      //   }, '正常');
-      // }
+      width: '80px'
     },
     {
       label: '创建时间',

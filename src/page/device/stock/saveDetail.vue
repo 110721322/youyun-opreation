@@ -63,12 +63,9 @@ export default {
       fromConfigData: FORM_CONFIG.formData,
       testData: [],
       drawer: false,
-      direction: "rtl",
       params: {
-        currentPage: 1,
         deviceIdentifier: '',
-        deviceInputId: this.$route.query.id,
-        pageSize: 1
+        deviceInputId: this.$route.query.id
       },
       rowId: '',
       api: api.queryInputPage
@@ -91,6 +88,14 @@ export default {
       this.drawer = true;
     },
     confirm($data) {
+      console.log($data)
+      if (!$data.deadline || !$data.deviceIdentifier) {
+        this.$message({
+          message: "请填写必填信息",
+          type: "info"
+        })
+        return
+      }
       api
         .deviceDetailUpdate({
           id: this.rowId,
@@ -98,13 +103,15 @@ export default {
           deviceIdentifier: $data.deviceIdentifier
         })
         .then(res => {
-          this.drawer = false;
-          this.$refs.table.getData();
-          this.$message("保存成功");
+          if (res.status === 0) {
+            this.drawer = false;
+            this.$refs.table.getData();
+            this.$message({
+              message: "编辑成功",
+              type: "success"
+            });
+          }
         })
-        .catch(err => {
-          this.$message(err);
-        });
     },
     cancel() {
       this.drawer = false;
@@ -117,7 +124,7 @@ export default {
       newFromConfigData.formData.forEach((item, index) => {
         item.initVal = $row[item.key];
       });
-      this.fromConfigData = newFromConfigData;
+      this.fromConfigData = this.$g.utils.deepClone(newFromConfigData);
       this.drawer = true;
     },
     onClick_remove($row) {

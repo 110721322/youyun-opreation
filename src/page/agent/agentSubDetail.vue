@@ -31,7 +31,7 @@
         </li>
         <li>
           <span>账号类型：</span>
-          <span>{{ ruleForm.bankAccountTypeCn }}</span>
+          <span>{{ ruleForm.bankAccountType }}</span>
         </li>
         <li>
           <span>公司名称：</span>
@@ -107,7 +107,7 @@ export default {
           provinceName: request.provinceName,
           cityName: request.cityName,
           areaName: request.areaName,
-          bankAccountTypeCn: request.bankAccountTypeCn
+          bankAccountType: request.bankAccountType
         }
       })
     },

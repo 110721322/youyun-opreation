@@ -39,7 +39,8 @@ export default {
   components: { Search, BaseCrud },
   data() {
     return {
-      agentNo: '',
+      agentNo: "",
+      channelAgentCode: '',
       tradeMonth: '',
       searchConfig: SEARCH_CONFIG,
       configData: SERVICE_CONFIG,
@@ -48,38 +49,37 @@ export default {
       api: ""
     }
   },
-  computed: {},
   mounted() {},
   created() {
+    this.tradeMonth = this.$route.query.tradeMonth + "-01"
     if (this.$route.query.mainIndex === 1) {
+      this.agentNo = this.$route.query.agentNo
+      this.params = {
+        agentNo: this.agentNo,
+        tradeMonth: this.tradeMonth
+      }
       this.api = api_statistice.selectMerchantDataByPage
       this.configData = SERVICE_CONFIG
     } else {
+      this.channelAgentCode = this.$route.query.channelAgentCode
+      this.params = {
+        channelAgentCode: this.channelAgentCode,
+        tradeMonth: this.tradeMonth
+      }
       this.api = api_statistice.selectTopAgentMerchantDetailByPage
       this.configData = SERVICE_CONFIG
     }
-    this.agentNo = this.$route.query.agentNo
-    this.tradeMonth = this.$route.query.tradeMonth
-    this.params = {
-      agentNo: this.agentNo,
-      tradeMonth: this.tradeMonth
-    }
   },
   methods: {
-    search($ruleform) {
-      api_statistice
-        .selectByName({
-          merchantName: $ruleform.inputForm
-        })
-        .then(result => {
-          this.params = {
-            merchantNo: $ruleform.inputForm ? result.object[0].merchantNo : "",
-            tradeMonth: this.tradeMonth
-          }
-        })
-        .catch(err => {
-          console.error(err);
-        });
+    search($ruleForm) {
+      this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      if (this.$route.query.mainIndex === 1) {
+        this.api = api_statistice.selectMerchantDataByPage
+        this.configData = SERVICE_CONFIG
+      } else {
+        this.api = api_statistice.selectTopAgentMerchantDetailByPage
+        this.configData = SERVICE_CONFIG
+      }
     }
   },
   DateNo() {

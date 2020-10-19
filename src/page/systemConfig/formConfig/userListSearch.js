@@ -43,7 +43,7 @@ export const SEARCH_CONFIG = {
       span: 11,
       options: [
         {
-          label: '保密',
+          label: '全部',
           value: null
         },
         {

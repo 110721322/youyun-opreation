@@ -46,7 +46,29 @@ export const INDIRECTLIST_CONFIG = {
       {
         name: '详情',
         emitName: 'detail',
-        type: 'text'
+        type: 'text',
+        isShow: ($item) => {
+          const status = $item.channelStatusList;
+          if (status[0].channelStatus !== 'nonOpen') {
+            return true;
+          } else {
+            return false
+          }
+        }
+      },
+      {
+        name: '预审核',
+        emitName: 'detail',
+        type: 'text',
+        isShow: ($item) => {
+          console.log($item)
+          const status = $item.channelStatusList;
+          if (status[0].channelStatus === 'nonOpen') {
+            return true;
+          } else {
+            return false
+          }
+        }
       },
       {
         name: '预审核记录',

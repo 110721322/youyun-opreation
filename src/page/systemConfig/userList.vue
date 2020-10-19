@@ -59,8 +59,13 @@
               v-model="addPhoneList[index]"
               class="add-phone-input"
             ></el-input>
-            <div class="add-icon-box" @click="onClick_addPhoneItem">
-              <i class="el-icon-plus"></i>
+            <div class="operation-icon-box">
+              <div class="add-icon-box" @click="onClick_addPhoneItem">
+                <i class="el-icon-plus"></i>
+              </div>
+              <div v-if="isShowDel" class="del-icon-box" @click="handleDeletePhoneItem">
+                <i class="el-icon-minus"></i>
+              </div>
             </div>
             <div class="add-icon-box" v-if="addPhoneList.length>1" @click="onClick_reducePhoneItem" style="right:-80px">
               <i class="el-icon-minus"></i>
@@ -107,20 +112,29 @@ export default {
       },
       api: api.queryEmployeeList,
       addPhoneList: [""],
-      activityRow: {}
+      activityRow: {},
+      // 是否展示删减按钮
+      isShowDel: false
     };
   },
   mounted() {},
   methods: {
     onClick_addPhoneItem() {
+      if (this.addPhoneList.length > 0) {
+        this.isShowDel = true;
+      }
       if (this.addPhoneList.length < 20) {
         this.addPhoneList.push("");
       } else {
         this.$message("一次最多添加20个");
       }
     },
-    onClick_reducePhoneItem() {
-      this.addPhoneList.pop()
+    handleDeletePhoneItem() {
+      this.addPhoneList.pop();
+      if (this.addPhoneList.length <= 1) {
+        this.isShowDel = false;
+        return;
+      }
     },
     search($ruleForm) {
       this.params = {
@@ -261,11 +275,21 @@ export default {
   .input-box {
     width: 50%;
     position: relative;
-    .add-icon-box {
+    .operation-icon-box {
       position: absolute;
       bottom: 20px;
-      right: -40px;
+      right: -50px;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      width: 50px;
+    }
+    .add-icon-box, .del-icon-box {
+      margin-left: 5px;
       font-size: 20px;
+      cursor: pointer;
     }
   }
   .add-phone-input {

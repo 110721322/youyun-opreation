@@ -49,6 +49,10 @@ export const SEARCH_CONFIG = {
       span: 11,
       options: [
         {
+          label: '全部',
+          value: null
+        },
+        {
           label: '女',
           value: 0
         },

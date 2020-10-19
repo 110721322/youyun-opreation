@@ -45,7 +45,6 @@ export default {
       searchConfig: SEARCH_CONFIG,
       configData: SETTELMENTLIST_CONFIG,
       testData: [],
-      direction: "rtl",
       searchHeight: "260",
       params: {},
       api: ""
@@ -55,7 +54,7 @@ export default {
   created() {
     this.params.beginDate = this.getDay(0);
     this.params.endDate = this.getDay(0);
-    this.api = api.settleCardAuditQueryByPage
+    this.api = api.settleCardAudit
   },
   methods: {
     getDay(day) {

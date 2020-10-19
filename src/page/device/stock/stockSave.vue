@@ -44,13 +44,15 @@
             <el-date-picker
                 v-model="formVal.deadline"
                 type="date"
+                value-format="yyyy-MM-dd"
                 placeholder="选择日期">
             </el-date-picker>
           </el-form-item>
           <el-form-item label="入库时间" prop="inputTime" label-width="120px">
             <el-date-picker
                 v-model="formVal.inputTime"
-                type="date"
+                type="datetime"
+                value-format="yyyy-MM-dd hh:mm:ss"
                 placeholder="选择日期">
             </el-date-picker>
           </el-form-item>

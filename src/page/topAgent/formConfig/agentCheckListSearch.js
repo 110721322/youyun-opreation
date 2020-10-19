@@ -1,4 +1,3 @@
-import store from "@/store"
 import apiAgent from "@/api/api_agent.js";
 
 export const FORM_CONFIG = {
@@ -47,7 +46,12 @@ export const FORM_CONFIG = {
       key: 'operationId',
       labelWidth: '80px',
       span: 11,
-      options: store.state.dataMarket.userList
+      urlOptions: {
+        url: apiAgent.queryAllOperation,
+        keyName: 'operationId',
+        valueName: 'operationName',
+        method: 'get'
+      }
     },
     {
       type: 1,

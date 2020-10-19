@@ -6,7 +6,7 @@ export const SERVICE_CONFIG = {
     },
     {
       label: '服务商',
-      prop: 'agentName'
+      prop: [{key: "agentName"}, {key: "agentNo", label: "ID:"}]
     },
     {
       label: '小蜻蜓奖励活动',

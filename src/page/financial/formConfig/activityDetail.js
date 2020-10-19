@@ -1,15 +1,6 @@
 export const SEARCH_CONFIG = {
   formData: [
     {
-      type: 11,
-      label: '奖励核算时间',
-      key: 'date',
-      labelWidth: '110px',
-      datatype: 'date',
-      format: 'yyyy-MM-dd',
-      span: 22
-    },
-    {
       type: 10,
       label: '精准筛选',
       key: '',
@@ -25,6 +16,15 @@ export const SEARCH_CONFIG = {
         }
       ],
       labelWidth: '80px',
+      span: 22
+    },
+    {
+      type: 11,
+      label: '奖励核算时间',
+      key: 'date',
+      labelWidth: '110px',
+      datatype: 'datetime',
+      format: 'yyyy-MM-dd hh:mm:ss',
       span: 22
     }
   ]

@@ -2,14 +2,9 @@ export const TOPVICE_CONFIG1 = {
   gridConfig: [
     {
       label: '顶级服务商',
-      prop: 'channelAgentName',
+      prop: [{key: "channelAgentName"}, {key: "channelAgentCode"}],
       width: '90px'
     },
-    // {
-    //   label: '所属上级服务商',
-    //   prop: 'topSrevice',
-    //   width: '90px'
-    // },
     {
       label: '联系人',
       prop: 'contact',
@@ -17,7 +12,7 @@ export const TOPVICE_CONFIG1 = {
     },
     {
       label: '结算账号',
-      prop: 'settleAccount',
+      prop: [{ key: "settleBankName" }, { key: "settleAccount"}],
       width: '90px'
     },
     {

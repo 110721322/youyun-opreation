@@ -12,11 +12,17 @@ import Result from '../page/personInfo/result.vue'
 import ErrorPage from '../page/404/404.vue'
 import noJurisdiction from '../page/401/401.vue'
 import RegistSuccess from '../page/login/registSuccess'
+import Doc from "../page/doc"
 
 Vue.use(VueRouter)
 
 const router = new VueRouter({
   routes: [
+    {
+      path: '/doc',
+      name: 'doc',
+      component: Doc
+    },
     {
       path: '/',
       component: Layout,

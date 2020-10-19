@@ -59,7 +59,7 @@ axios.interceptors.response.use((response) => {
   } else if (response.data && response.data.status === 1 && response.data.code !== null && response.data.code === -1) {
     if (_isShowMessage) {
       Message({
-        message: response.data.message || "登录失效，请重新登录",
+        message: response.data.errorMessage || "登录失效，请重新登录",
         duration: 1500,
         type: 'error'
       })

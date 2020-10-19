@@ -59,7 +59,7 @@ export default {
       this.params = {
         agentNo: this.agentNo,
         merchantNo: $ruleform.inputSelect === 'merchantNo' ? $ruleform.inputForm : "",
-        rewardDate: $ruleform.date,
+        rewardDate: $ruleform.date ? $ruleform.date : '',
         merchantName: $ruleform.inputSelect === 'merchantName' ? $ruleform.inputForm : ""
       }
     }
