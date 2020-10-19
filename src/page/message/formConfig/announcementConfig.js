@@ -57,12 +57,12 @@ export const FORM_CONFIG = {
         type: 1,
         label: '显示方式',
         key: 'displayType',
-        initVal: 0,
+        initVal: 1,
         options: [
-          {
-            label: '不显示',
-            value: 0
-          },
+          // {
+          //   label: '不显示',
+          //   value: 0
+          // },
           {
             label: '只显示一次',
             value: 1

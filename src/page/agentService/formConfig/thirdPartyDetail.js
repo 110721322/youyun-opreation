@@ -3,7 +3,7 @@ import api from "@/api/api_agent"
 
 export const FORM_CONFIG = {
   detailData: {
-    showFootBtn: true,
+    showFootBtn: false,
     formData: [
       {
         type: 0,
@@ -97,7 +97,7 @@ export const FORM_CONFIG = {
     ]
   },
   editData: {
-    showFootBtn: true,
+    showFootBtn: false,
     formData: [
       {
         type: 0,

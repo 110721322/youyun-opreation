@@ -49,7 +49,7 @@ export const INDIRECTLIST_CONFIG = {
         type: 'text'
       },
       {
-        name: '审核记录',
+        name: '预审核记录',
         emitName: 'record',
         type: 'text'
       }

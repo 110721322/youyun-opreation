@@ -62,6 +62,9 @@
             <div class="add-icon-box" @click="onClick_addPhoneItem">
               <i class="el-icon-plus"></i>
             </div>
+            <div class="add-icon-box" v-if="addPhoneList.length>1" @click="onClick_reducePhoneItem" style="right:-80px">
+              <i class="el-icon-minus"></i>
+            </div>
           </div>
         </div>
       </div>
@@ -115,6 +118,9 @@ export default {
       } else {
         this.$message("一次最多添加20个");
       }
+    },
+    onClick_reducePhoneItem() {
+      this.addPhoneList.pop()
     },
     search($ruleForm) {
       this.params = {
