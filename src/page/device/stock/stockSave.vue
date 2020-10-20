@@ -291,8 +291,7 @@ export default {
           this.$refs.table.getData();
           this.drawer = false;
         }
-      }).catch(err => {
-        this.$message(err);
+      }).catch(() => {
       });
     },
     onClick_detail($item) {

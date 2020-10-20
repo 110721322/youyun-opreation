@@ -102,7 +102,7 @@ export const USER_CONFIG = {
         emitName: 'thaw',
         type: 'text',
         isShow: ($row) => {
-          if ($row.isBlocked === 2) {
+          if ($row.isBlocked === 1) {
             return true;
           } else {
             return false;
@@ -112,7 +112,14 @@ export const USER_CONFIG = {
       {
         name: '服务商后台',
         emitName: 'openAgentManager',
-        type: 'text'
+        type: 'text',
+        isShow: ($row) => {
+          if ($row.isBlocked === 0) {
+            return true;
+          } else {
+            return false;
+          }
+        }
       },
       {
         name: '商户列表',
