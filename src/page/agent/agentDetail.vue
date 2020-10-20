@@ -991,7 +991,6 @@ export default {
         }
       }
       if (this.editType === 'editMailAddress') {
-        console.log(row)
         const apiJudge = this.agentDetail.postId ? 'updatePostAddress' : 'addPostAddress'
         api[apiJudge]({
           id: this.agentDetail.postId,

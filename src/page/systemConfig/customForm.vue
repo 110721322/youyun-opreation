@@ -121,7 +121,7 @@ export default {
         {
           name: "成员信息（注册信息）",
           type: "employee_register",
-          formLoaction: "成员注册-完善个人信息"
+          formLoaction: "系统配置-成员列表-操作-编辑"
         }
       ],
       selectMenu: {},

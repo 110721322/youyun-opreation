@@ -191,6 +191,7 @@ export default {
           const fieldsList = res.object;
           for (const field of FORM_CONFIG.editData.formData) {
             const fieldConfig = fieldsList.filter(item => item.id === field.id)[0]
+            console.log(fieldConfig)
             if (fieldConfig) {
               field.isShow = fieldConfig.isDisplay;
               field.rules[0].required = fieldConfig.isNeed;

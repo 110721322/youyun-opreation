@@ -85,7 +85,7 @@ import Search from "@/components/search/search.vue";
 import Form from "@/components/form/index.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import api from "@/api/api_memberManage.js";
-
+import api_params from "@/api/api_params.js";
 import { validPhone } from "@/libs/kit/validate";
 import { FORM_CONFIG } from "./formConfig/userListForm";
 import { SEARCH_CONFIG } from "./formConfig/userListSearch";
@@ -117,8 +117,27 @@ export default {
       isShowDel: false
     };
   },
-  mounted() {},
+  mounted() {
+    this.getTableData()
+  },
   methods: {
+    getTableData() {
+      api_params
+        .queryAllFormFieldsByType({
+          type: "employee_register"
+        })
+        .then(res => {
+          if (!this.$g.utils.isArr(res.object) || res.code) return res;
+          const fieldsList = res.object;
+          for (const field of FORM_CONFIG.editData.formData) {
+            const fieldConfig = fieldsList.filter(item => item.id === field.id)[0]
+            if (fieldConfig) {
+              field.isShow = fieldConfig.isDisplay;
+              field.rules[0].required = fieldConfig.isNeed;
+            }
+          }
+        })
+    },
     onClick_addPhoneItem() {
       if (this.addPhoneList.length > 0) {
         this.isShowDel = true;

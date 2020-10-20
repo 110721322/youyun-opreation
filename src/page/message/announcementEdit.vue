@@ -57,7 +57,7 @@ export default {
         if (item.key === "time") {
           item.initVal = []
         } else if (item.key === "displayType") {
-          item.initVal = 0
+          item.initVal = 1
         } else {
           item.initVal = ''
         }
