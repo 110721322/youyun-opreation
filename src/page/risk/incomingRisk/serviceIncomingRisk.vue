@@ -166,7 +166,7 @@ export default {
       const params = {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,
-        operateUserNo: $ruleForm.operateUserNo
+        operateId: $ruleForm.operateId
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;

@@ -32,7 +32,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '加入人员',
-      key: 'operateUserNo',
+      key: 'operateId',
       labelWidth: '80px',
       span: 11,
       urlOptions: {

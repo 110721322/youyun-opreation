@@ -64,7 +64,7 @@ export const USER_CONFIG = {
         if (params.row.contractStatus === 'waitSign') {
           return [h('span', {
             'class': "dot " + "platformAudit"
-          }), '待审核']
+          }), '待签约']
         }
         if (params.row.contractStatus === 'reject') {
           return [h('span', {

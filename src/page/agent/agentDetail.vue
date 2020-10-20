@@ -878,7 +878,7 @@ export default {
         this.editType = 'editRateInfo'
       }
       if ($model === 'mailAddress') {
-        this.editType = 'editMailAddress'
+        this.editType = 'editAuthority'
       }
       if ($model === 'renew') {
         this.editType = 'editRenew'
@@ -1042,14 +1042,37 @@ export default {
           })
         }
       }
-      if (this.editType === 'editAddress') {
-        if (!row.area[0] || !row.detailAddress || !row.personMobile || !row.personName) {
+      if (this.editType === 'editAuthority') {
+        console.log(row)
+        if (!row.activeMode || !row.activeScopeCode[0] || !row.chargeFeePercent || (row.expandSub === '')) {
           this.$message({
             message: "请填写必填系信息",
             type: "warning"
           })
           return
         }
+        api.updateAgentPrivilege({
+          agentNo: this.$route.query.agentNo,
+          activeScope: {
+            provinceCode: row.addressObj[0].value,
+            provinceName: row.addressObj[0].label,
+            cityCode: row.addressObj[1].value,
+            cityName: row.addressObj[1].label
+          },
+          expandSub: row.expandSub,
+          activeMode: row.activeMode,
+          chargeFeePercent: this.$g.utils.AccDiv(row.chargeFeePercent, 100)
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: "编辑权限成功",
+              type: "success"
+            })
+            this.getDetail(this.$route.query.agentNo)
+            this.editType = ''
+            this.drawer = false
+          }
+        })
       }
     },
     equipment_confirm($ruleForm) {
