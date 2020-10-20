@@ -115,7 +115,7 @@ export default {
             agentNo: row.agentNo
           }).then(res => {
             this.$message({
-              type: "info",
+              type: "success",
               message: "已解冻"
             })
             this.$refs.table.getData()
@@ -143,14 +143,13 @@ export default {
         .catch(() => {});
     },
     openAgentManager(row) {
-      console.log(row)
       api.generateLoginTicket({
         system: 'agent',
         phone: row.loginAccount,
         password: row.password
       }).then(res => {
         if (res.status === 0) {
-          window.location.href = `http://service.intranet.aduer.com/ticket=${res.object}`
+          window.open(process.env.VUE_APP_AGENTURL + '#/login?ticket' + '=' + res.object)
         }
       })
     },
