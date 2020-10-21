@@ -522,8 +522,7 @@ export default {
             this.editType = ''
             this.financeDrawer = false
           }
-        }).catch(err => {
-          console.log(err)
+        }).catch(() => {
         })
       }
     },
@@ -945,8 +944,7 @@ export default {
             this.editType = ''
             this.drawer = false
           }
-        }).catch(err => {
-          console.log(err)
+        }).catch(() => {
         })
       }
       if (this.editType === 'editRateInfo') {
@@ -1011,8 +1009,7 @@ export default {
             this.editType = ''
             this.drawer = false
           }
-        }).catch(err => {
-          console.log(err)
+        }).catch(() => {
         })
       }
       if (this.editType === 'editRenew') {
@@ -1042,7 +1039,6 @@ export default {
         }
       }
       if (this.editType === 'editAuthority') {
-        console.log(row)
         if (!row.activeMode || !row.activeScopeCode[0] || !row.chargeFeePercent || (row.expandSub === '')) {
           this.$message({
             message: "请填写必填系信息",
@@ -1113,8 +1109,7 @@ export default {
         if (res.datas) {
           this.contactsList = res.datas
         }
-      }).catch(err => {
-        console.log(err)
+      }).catch(() => {
       })
     },
     // 查看沟通记录详情

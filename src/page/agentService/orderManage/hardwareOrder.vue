@@ -85,8 +85,8 @@ export default {
     },
     search($ruleForm) {
       this.params = {
-        agentNo: $ruleForm.agentNo ? $ruleForm.agentNo : null,
-        outputNo: $ruleForm.outputNo ? $ruleForm.outputNo : null,
+        agentNo: $ruleForm.agentNo ? $ruleForm.agentNo : this.$g.utils.getNowFormatDate() + ' ' + '00' + ':' + '00' + ':' + '00',
+        outputNo: $ruleForm.outputNo ? $ruleForm.outputNo : this.$g.utils.getNowFormatDate() + ' ' + '23' + ':' + '59' + ':' + '59',
         outputType: $ruleForm.outputType,
         status: $ruleForm.status,
         beginTime: $ruleForm.date ? $ruleForm.date[0] : null,

@@ -146,8 +146,6 @@ export default {
           this.dialogVisible = false
           this.selectData = []
           this.$refs.child.getData()
-        }).catch(err => {
-          console.log(err)
         })
       }
     },
@@ -201,7 +199,7 @@ export default {
             this.$refs.child.getData()
           }
         });
-      }).catch(() => {});
+      })
     },
     frozen(row) {
       this.$confirm("是否要冻结该代理商？", "冻结代理商", {
@@ -218,7 +216,7 @@ export default {
           });
           this.$refs.child.getData()
         });
-      }).catch(() => {});
+      })
     },
     openAgentManager(row) {
       api.generateLoginTicket({

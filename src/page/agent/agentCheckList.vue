@@ -116,11 +116,9 @@ export default {
               });
             }
             this.$refs.table.getData();
-          }).catch(err => {
-            console.error(err);
+          }).catch(() => {
           });
         })
-        .catch(() => {});
     },
     activation(row) {
       this.$confirm("是否要激活该代理商？", "激活代理商", {
@@ -139,11 +137,9 @@ export default {
               });
               this.$refs.table.getData();
             }
-          }).catch(err => {
-            console.error(err);
+          }).catch(() => {
           });
         })
-        .catch(() => {});
     },
     cancel() {
       this.drawer = false
@@ -168,8 +164,7 @@ export default {
         }
         this.drawer = false
         this.$refs.table.getData()
-      }).catch(err => {
-        console.error(err);
+      }).catch(() => {
       });
     },
     adopt(row) {
@@ -186,6 +181,5 @@ export default {
   padding: 24px;
   overflow: hidden;
   background: #fff;
-  /* min-width: 1000px; */
 }
 </style>

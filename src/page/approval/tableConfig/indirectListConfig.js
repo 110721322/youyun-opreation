@@ -49,7 +49,7 @@ export const INDIRECTLIST_CONFIG = {
         type: 'text',
         isShow: ($item) => {
           const status = $item.channelStatusList;
-          if (status[0].channelStatus !== 'nonOpen') {
+          if (status[0].channelStatus !== 'nonOpen' && status[0].channelStatus !== 'platformAudit') {
             return true;
           } else {
             return false
@@ -63,7 +63,7 @@ export const INDIRECTLIST_CONFIG = {
         isShow: ($item) => {
           console.log($item)
           const status = $item.channelStatusList;
-          if (status[0].channelStatus === 'nonOpen') {
+          if (status[0].channelStatus === 'platformAudit' || status[0].channelStatus === 'nonOpen') {
             return true;
           } else {
             return false

@@ -44,7 +44,6 @@ export default {
       searchConfig: SEARCH_CONFIG,
       configData: TABLE_CONFIG,
       testData: [],
-      direction: "rtl",
       searchHeight: "260",
       drawer: false,
       id: this.$route.query.id,

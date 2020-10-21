@@ -61,11 +61,7 @@ export default {
               type: 'success'
             })
           }
-        }).catch(err => {
-          this.$message({
-            message: err.errorMessage,
-            type: 'warning'
-          })
+        }).catch(() => {
         })
       }
     },
