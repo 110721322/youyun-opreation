@@ -121,7 +121,6 @@ export default {
             this.$refs.table.getData()
           })
         })
-        .catch(() => {});
     },
     frozen(row) {
       this.$confirm("是否要冻结该代理商？", "冻结代理商", {
@@ -140,7 +139,6 @@ export default {
             this.$refs.table.getData()
           })
         })
-        .catch(() => {});
     },
     openAgentManager(row) {
       api.generateLoginTicket({

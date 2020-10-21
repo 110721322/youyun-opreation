@@ -182,9 +182,7 @@ export default {
     queryAllPrivilegeType() {
       apiAgent.queryAllPrivilegeType({}).then(res => {
         this.options = res.object;
-      }).catch(err => {
-        this.$message(err);
-      });
+      })
     },
     queryById() {
       apiAgent.queryById({ id: this.id }).then(res => {
@@ -195,9 +193,7 @@ export default {
         this.fromConfigData = FORM_CONFIG.editData;
         this.loading = false;
         this.showForm = true;
-      }).catch(err => {
-        this.$message(err);
-      });
+      })
     },
     handleClose(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
@@ -218,8 +214,6 @@ export default {
       }
       apiAgent.queryAllDistributeAgent(this.par).then(res => {
         this.testData = res.datas;
-      }).catch(err => {
-        this.$message(err);
       })
     },
     cancel() {
@@ -261,8 +255,6 @@ export default {
           endTime: $form.time[1]
         }).then(res => {
           this.$router.back(-1);
-        }).catch(err => {
-          this.$message(err);
         })
       } else {
         apiAgent.advertDistributeAdd({
@@ -275,8 +267,6 @@ export default {
           endTime: $form.time[1]
         }).then(res => {
           this.$router.back(-1);
-        }).catch(err => {
-          this.$message(err);
         })
       }
     },
