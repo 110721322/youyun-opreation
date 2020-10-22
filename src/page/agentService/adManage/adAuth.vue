@@ -95,8 +95,6 @@ export default {
           this.$refs.table.getData();
           this.drawer = false;
         }
-      }).catch(err => {
-        console.log(err);
       });
     },
     cancel() {

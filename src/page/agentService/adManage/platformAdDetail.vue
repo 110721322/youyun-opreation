@@ -42,9 +42,7 @@ export default {
         });
         this.fromConfigData = FORM_CONFIG.editData;
         this.show = true;
-      }).catch(err => {
-        this.$message(err);
-      });
+      })
     },
     cancel(done) {
       this.$router.back(-1);

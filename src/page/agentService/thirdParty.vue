@@ -65,8 +65,8 @@ export default {
   methods: {
     search($ruleForm) {
       const params = {
-        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
-        endDate: $ruleForm.date ? $ruleForm.date[1] : null
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : this.$g.utils.getToday(),
+        endDate: $ruleForm.date ? $ruleForm.date[1] : this.$g.utils.getToday()
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;

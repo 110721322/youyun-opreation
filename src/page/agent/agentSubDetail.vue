@@ -133,17 +133,7 @@ export default {
               message: '更换上级服务商成功',
               type: 'success'
             })
-          } else {
-            this.$message({
-              message: res.errMessage,
-              type: 'fail'
-            })
           }
-        }).catch(err => {
-          this.$message({
-            message: err.errMessage,
-            type: 'fail'
-          })
         })
         this.getDeatil(this.$route.query.agentNo)
         this.showName = true
@@ -159,8 +149,6 @@ export default {
             this.options = res.object
           }
           this.loading = false
-        }).catch(err => {
-          console.log(err)
         })
       } else {
         this.options = [];

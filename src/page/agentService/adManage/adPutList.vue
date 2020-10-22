@@ -74,9 +74,7 @@ export default {
           this.$refs.table.getData();
           this.$message({ type: "success", message: "删除成功!"});
         });
-      }).catch(() => {
-        this.$message({ type: "info", message: "已取消" });
-      });
+      })
     },
     onClick_edit($row) {
       this.$router.push({
