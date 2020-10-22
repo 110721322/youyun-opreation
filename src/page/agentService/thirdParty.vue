@@ -117,7 +117,7 @@ export default {
     },
     onClick_addDocker() {
       this.$router.push({
-        name: "thirdPartyDetail"
+        name: "thirdPartyAdd"
       });
     }
   }

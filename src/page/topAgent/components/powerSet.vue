@@ -26,7 +26,7 @@
             :data="templateMapList"
             label="icon"
             node-key="checkedId"
-            show-checkbox
+            :show-checkbox="roleId !== 13?true:false"
             default-expand-all
             :default-checked-keys="checkedIds"
             :check-strictly="true"
@@ -47,7 +47,7 @@
         <!-- 菜单树结束 -->
       </el-form>
     </div>
-    <div class="foot_btn_box">
+    <div class="foot_btn_box" v-if="roleId !== 13">
       <el-checkbox v-model="checkAll" :indeterminate="indeterminate" @change="checkAllChange">全选</el-checkbox>
       <div class="btn-list">
         <el-button type="primary" class="foot_btn" @click="confirm">确定</el-button>

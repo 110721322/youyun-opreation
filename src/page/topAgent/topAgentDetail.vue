@@ -401,7 +401,8 @@ export default {
       bankOptions: [],
       innerDrawer: false,
       permissionApi: api_systemConfig.getPermistionTemplate,
-      permissionTemplate: []
+      permissionTemplate: [],
+      ifBuyMode: false
     };
   },
   created() {
@@ -417,9 +418,17 @@ export default {
   },
   mounted() {
     this.getAgentDetail();
+    this.officialModeActive()
     // this.initCommunication();
   },
   methods: {
+    officialModeActive() {
+      api_topAgent.officialModeActive({}).then(res => {
+        if (res.status === 0) {
+          this.ifBuyMode = res.object
+        }
+      })
+    },
     remoteMethod(query) {
       if (query !== '') {
         this.loading = true;
