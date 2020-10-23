@@ -10,7 +10,7 @@
         mode="horizontal"
         @select="onClick_main"
       >
-        <el-menu-item v-for="(item, index) in mainData" :key="index" :index="index">{{ item.value }}</el-menu-item>
+        <el-menu-item v-for="(item, index) in mainData" :key="index" :index="index.toString()">{{ item.value }}</el-menu-item>
       </el-menu>
     </div>
     <Search
@@ -27,12 +27,12 @@
         mode="horizontal"
         @select="onClick_select"
       >
-        <el-menu-item v-for="(item, index) in selectData" :key="index" :index="index">{{ item.value }}</el-menu-item>
+        <el-menu-item v-for="(item, index) in selectData" :key="index" :index="index.toString()">{{ item.value }}</el-menu-item>
       </el-menu>
       <div class="table_box">
         <!-- 支付方式 -->
         <BaseCrud
-          v-if="selectIndex===0"
+          v-if="selectIndex==='0'"
           ref="table1"
           :params="params"
           :api-service="api"
@@ -51,7 +51,7 @@
         ></BaseCrud>
         <!-- 通道 -->
         <BaseCrud
-          v-if="selectIndex===1"
+          v-if="selectIndex==='1'"
           ref="table2"
           :params="params"
           :api-service="api"
@@ -119,8 +119,8 @@ export default {
           id: 2
         }
       ],
-      selectIndex: 0,
-      mainIndex: 0,
+      selectIndex: '0',
+      mainIndex: '0',
       api: api_statistice.selectTopAgentDataByPage
     }
   },
@@ -133,7 +133,7 @@ export default {
     } else {
       this.tradeMonth = myDate.getFullYear() + "-" + m + "-" + "01"
     }
-    if (this.mainIndex === 0) {
+    if (this.mainIndex === '0') {
       this.configData = TOPERVICE_CONFIG
       this.configData1 = TOPVICE_CONFIG1
     }
@@ -152,11 +152,11 @@ export default {
       this.params = {
         tradeMonth: this.selectDate ? this.selectDate + "-01" : this.tradeMonth
       }
-      if (this.mainIndex === 0) {
+      if (this.mainIndex === '0') {
         this.configData = TOPERVICE_CONFIG
         this.configData1 = TOPVICE_CONFIG1
         this.api = api_statistice.selectTopAgentDataByPage
-      } else if (this.mainIndex === 1) {
+      } else if (this.mainIndex === '1') {
         this.configData = SERVICE_CONFIG
         this.configData1 = SERVICE_CONFIG1
         this.api = api_statistice.selectAgentDataByPage
@@ -169,7 +169,7 @@ export default {
       this.selectDate = $ruleform.date ? $ruleform.date : null
     },
     handleDetail($row) {
-      if (this.mainIndex === 0) {
+      if (this.mainIndex === '0') {
         this.$router.push({
           name: 'serviceProfitDetail',
           query: {
@@ -180,7 +180,7 @@ export default {
           }
         })
       }
-      if (this.mainIndex === 1) {
+      if (this.mainIndex === '1') {
         this.$router.push({
           name: 'serviceProfitDetail',
           query: {
