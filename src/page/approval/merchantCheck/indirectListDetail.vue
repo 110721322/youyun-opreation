@@ -513,9 +513,6 @@ export default {
     },
     onClick_cancelEdit($item) {
       $item.edit = false;
-    },
-    getHeadClass() {
-      return "background:#EFEFEF";
     }
   }
 };

@@ -80,7 +80,7 @@ export default {
     },
     search($form) {
       this.params = {
-        labelId: $form.labelId || null,
+        // labelId: $form.labelId || null,
         activeScopeType: $form.activeScopeType || null,
         operationId: $form.operationId || null,
         personName: $form.personName || null,

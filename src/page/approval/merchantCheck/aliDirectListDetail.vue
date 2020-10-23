@@ -258,9 +258,7 @@ export default {
               this.getAliData()
               this.drawer = false;
             }
-          }).catch(err => {
-            this.$message(err);
-          });
+          })
         }
       }
     },
@@ -287,11 +285,6 @@ export default {
               })
               this.getAliData()
             }
-          }).catch(err => {
-            this.$message({
-              type: "info",
-              message: err.errorMessage
-            })
           })
         }).catch(() => {
           this.$message({
@@ -312,12 +305,7 @@ export default {
             });
             this.getAliData()
           }
-        }).catch(err => {
-          this.$message({
-            message: err.errorMessage,
-            type: 'info'
-          });
-        });
+        })
       }
     },
     onClick_download() {

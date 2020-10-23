@@ -88,7 +88,7 @@ export default {
             this.$refs.table.getData()
           }
         });
-      }).catch(() => {});
+      })
     },
     handleFreeze(row) {
       this.$confirm("是否要冻结该代理商？冻结后不能添加新设备", "冻结代理商", {
@@ -107,7 +107,7 @@ export default {
             this.$refs.table.getData()
           }
         });
-      }).catch(() => {});
+      })
     },
     handleDetail($row) {
       this.$router.push({

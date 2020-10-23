@@ -326,9 +326,7 @@ export default {
               this.getAliData()
               this.drawer = false;
             }
-          }).catch(err => {
-            this.$message(err);
-          });
+          })
         }
       }
     },
@@ -355,11 +353,6 @@ export default {
               })
               this.getAliData()
             }
-          }).catch(err => {
-            this.$message({
-              type: "info",
-              message: err.errorMessage
-            })
           })
         }).catch(() => {
           this.$message({
@@ -380,12 +373,7 @@ export default {
             });
             this.getAliData()
           }
-        }).catch(err => {
-          this.$message({
-            message: err.errorMessage,
-            type: 'info'
-          });
-        });
+        })
       }
     },
     onClick_download() {
@@ -406,18 +394,6 @@ export default {
       this.drawer = true;
       this.formStatus = "reject";
       this.fromConfigData = FORM_CONFIG.rejectData;
-    },
-    onClick_edit($item) {
-      $item.edit = true;
-    },
-    onClick_okEdit($item) {
-      $item.edit = false;
-    },
-    onClick_cancelEdit($item) {
-      $item.edit = false;
-    },
-    getHeadClass() {
-      return "background:#EFEFEF";
     }
   }
 };
