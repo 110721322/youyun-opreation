@@ -50,7 +50,7 @@ export const SEARCH_CONFIG = {
       options: [
         {
           label: '待审核',
-          value: 'audit'
+          value: 'waitSign'
         },
         {
           label: '审核通过',

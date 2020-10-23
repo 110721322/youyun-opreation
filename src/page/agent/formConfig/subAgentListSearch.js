@@ -30,19 +30,19 @@ export const FORM_CONFIG = {
       labelWidth: '80px',
       span: 22
     },
-    {
-      type: 1,
-      label: '标签',
-      key: 'labelId',
-      labelWidth: '80px',
-      span: 11,
-      urlOptions: {
-        url: apiAgent.selectByChannelAgentCode,
-        keyName: 'id',
-        valueName: 'name',
-        method: 'get'
-      }
-    },
+    // {
+    //   type: 1,
+    //   label: '标签',
+    //   key: 'labelId',
+    //   labelWidth: '80px',
+    //   span: 11,
+    //   urlOptions: {
+    //     url: apiAgent.selectByChannelAgentCode,
+    //     keyName: 'id',
+    //     valueName: 'name',
+    //     method: 'get'
+    //   }
+    // },
     {
       type: 1,
       label: '所属大区',

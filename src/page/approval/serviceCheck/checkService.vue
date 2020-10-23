@@ -44,7 +44,6 @@ export default {
       searchConfig: SEARCH_CONFIG,
       configData: CHECKSERVICELIST_CONFIG,
       testData: [],
-      direction: "rtl",
       searchHeight: "260",
       params: {},
       api: ""

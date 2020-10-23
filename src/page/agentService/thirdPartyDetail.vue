@@ -67,9 +67,7 @@ export default {
           });
           this.fromConfigData.formData[7].initVal = this.fromConfigData.formData[7].initVal.toString();
           this.showPage = true;
-        }).catch(err => {
-          this.$message(err);
-        });
+        })
       }, 300)
     },
     confirm($form) {

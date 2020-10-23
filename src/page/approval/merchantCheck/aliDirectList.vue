@@ -110,12 +110,7 @@ export default {
             this.drawer = false
             this.$refs.table.getData()
           }
-        }).catch(err => {
-          this.$message({
-            message: err.errorMessage,
-            type: 'info'
-          });
-        });
+        })
       }
       if (this.formStatus === "pass") {
         if (!$data.appid || !$data.pid || !$data.rate) {
@@ -197,8 +192,8 @@ export default {
     },
     search($ruleForm) {
       const params = {
-        beginTime: $ruleForm.date ? $ruleForm.date[0] : null,
-        endTime: $ruleForm.date ? $ruleForm.date[1] : null,
+        beginTime: $ruleForm.date ? $ruleForm.date[0] : this.getDay(0),
+        endTime: $ruleForm.date ? $ruleForm.date[1] : this.getDay(0),
         channelStatus: $ruleForm.channelStatus,
         operationUserNo: $ruleForm.operationUserNo
       };
