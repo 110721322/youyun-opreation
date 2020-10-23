@@ -55,8 +55,8 @@ export default {
       testData: [],
       drawer: false,
       params: {
-        beginDate: this.$g.utils.getToday(),
-        endDate: this.$g.utils.getToday()
+        // beginDate: this.$g.utils.getToday(),
+        // endDate: this.$g.utils.getToday()
       },
       api: api.getOpenOperatorPageList
     };
