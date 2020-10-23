@@ -289,12 +289,7 @@ export default {
             this.drawer = false;
             this.getServiceData()
           }
-        }).catch(err => {
-          this.$message({
-            message: err.errorMessage,
-            type: 'info'
-          });
-        });
+        })
       }
     },
     onClick_sign() {
@@ -307,18 +302,8 @@ export default {
             type: 'success'
           })
           this.getServiceData()
-        } else {
-          this.$message({
-            message: res.errorMessage,
-            type: 'info'
-          })
         }
-      }).catch(err => {
-        this.$message({
-          message: err.errorMessage,
-          type: 'info'
-        })
-      });
+      })
     },
     cancel() {
       this.drawer = false;
@@ -326,18 +311,6 @@ export default {
     onClick_reject() {
       this.drawer = true;
       this.fromConfigData = FORM_CONFIG.rejectReason;
-    },
-    onClick_edit($item) {
-      $item.edit = true;
-    },
-    onClick_okEdit($item) {
-      $item.edit = false;
-    },
-    onClick_cancelEdit($item) {
-      $item.edit = false;
-    },
-    getHeadClass() {
-      return "background:#EFEFEF";
     }
   }
 };

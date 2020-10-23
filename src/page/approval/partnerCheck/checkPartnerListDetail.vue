@@ -262,9 +262,7 @@ export default {
           })
           this.getPartenDetail()
         }
-      }).catch(err => {
-        this.$message(err);
-      });
+      })
     },
     cancel() {
       this.drawer = false;

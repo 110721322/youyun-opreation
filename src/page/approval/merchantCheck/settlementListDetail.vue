@@ -195,8 +195,6 @@ export default {
             this.getDetail()
             this.drawer = false
           }
-        }).catch(err => {
-          console.log(err)
         })
       }
     },
@@ -206,18 +204,6 @@ export default {
     onClick_reject() {
       this.drawer = true;
       this.fromConfigData = FORM_CONFIG.rejectReason;
-    },
-    onClick_edit($item) {
-      $item.edit = true;
-    },
-    onClick_okEdit($item) {
-      $item.edit = false;
-    },
-    onClick_cancelEdit($item) {
-      $item.edit = false;
-    },
-    getHeadClass() {
-      return "background:#EFEFEF";
     }
   }
 };

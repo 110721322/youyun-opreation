@@ -89,12 +89,7 @@ export default {
             this.drawer = false
             this.$refs.table.getData()
           }
-        }).catch(err => {
-          this.$message({
-            message: err.errorMessage,
-            type: 'info'
-          });
-        });
+        })
       }
       if (this.formStatus === "pass") {
         if (!$data.appid || !$data.pid || !$data.rate) {

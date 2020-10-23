@@ -49,7 +49,6 @@ export default {
       searchConfig: SEARCH_CONFIG,
       configData: INDIRECTLIST_CONFIG,
       testData: [],
-      direction: "rtl",
       searchHeight: "320",
       params: {},
       api: ""
@@ -126,12 +125,15 @@ export default {
   overflow: hidden;
   background: #fff;
 }
+
 .form_item {
   float: left !important;
 }
+
 .clear_both {
   clear: both !important;
 }
+
 .btn_list {
   /* background: rebeccapurple; */
   position: absolute;
@@ -143,19 +145,22 @@ export default {
 .demo-table-expand {
   font-size: 0;
 }
+
 .demo-table-expand label {
   width: 90px;
   color: #99a9bf;
 }
+
 .demo-table-expand .el-form-item {
   margin-right: 0;
   margin-bottom: 0;
-  /* width: 25%; */
 }
+
 .form-box {
   display: flex;
   justify-content: space-between;
 }
+
 .dot {
   display: inline-block;
   width: 5px;
@@ -163,15 +168,15 @@ export default {
   border-radius: 50%;
   vertical-align: middle;
   margin: 0 5px;
-  /*&.opened {*/
-  /*  background-color: #52c41a;*/
-  /*}*/
+
   &.review {
     background-color: #ffc620;
   }
+
   &.channelReject {
     background-color: #f5222d !important;
   }
+
   &.nonOpen {
     background-color: #9c9c9c;
   }

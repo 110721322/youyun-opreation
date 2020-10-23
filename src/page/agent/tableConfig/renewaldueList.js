@@ -30,7 +30,7 @@ export const TABLE_CONFIG = {
     },
     {
       label: '支付方式',
-      prop: 'renewType',
+      prop: 'payType',
       width: '120px'
     },
     {

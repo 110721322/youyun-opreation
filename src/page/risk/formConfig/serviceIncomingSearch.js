@@ -7,6 +7,7 @@ export const SEARCH_CONFIG = {
       label: '筛选时间',
       key: 'date',
       labelWidth: '80px',
+      querySelectAll: true,
       isSelectToday: true,
       span: 22
     },
@@ -32,7 +33,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '加入人员',
-      key: 'operateId',
+      key: 'operationId',
       labelWidth: '80px',
       span: 11,
       urlOptions: {
