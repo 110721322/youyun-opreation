@@ -157,6 +157,29 @@ export default {
       if ($currentNode.checkedKeys.indexOf($data.checkedId) === -1) { // 不选中
         const filterList = this.$g.utils.getNestedArr($data.children, 'children').map(item => { return item.checkedId })
         this.checkedList = $currentNode.checkedNodes.filter(item => filterList.indexOf(item.checkedId) === -1)
+        // 处理子节点全部不选中后，父节点取消选中
+        var parentItem = {}
+        var haveCheck = false
+        this.templateMapList.forEach((item, index) => {
+          if ($data.menuId === item.id) {
+            parentItem = item
+          }
+        });
+        if (Object.keys(parentItem).length !== 0) {
+          for (var i = 0; i < parentItem.children.length; i++) {
+            if ($currentNode.checkedKeys.indexOf(parentItem.children[i].checkedId) !== -1) {
+              haveCheck = true
+              return false;
+            }
+          }
+        }
+        if (!haveCheck) {
+          this.checkedList.forEach((item, index) => {
+            if (item.checkedId === parentItem.checkedId) {
+              this.checkedList.splice(index, 1)
+            }
+          })
+        }
       } else { // 选中
         const addList = this.$g.utils.getNestedArr($data.children, 'children')
         let parentNodes = this.$g.utils.filterNestedArr3(this.$g.utils.deepClone(this.templateMapList), 'children', filterParent)
