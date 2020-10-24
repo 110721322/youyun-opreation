@@ -218,9 +218,7 @@ export default {
           }).then(res => {
             this.$message("已驳回");
             this.drawer = false;
-          }).catch(err => {
-            this.$message(err);
-          });
+          })
           break;
         case "adopt":api[successApi]({
           id: this.activeRow.id,
@@ -229,9 +227,7 @@ export default {
         }).then(res => {
           this.$message("已通过");
           this.drawer = false;
-        }).catch(err => {
-          this.$message(err);
-        });
+        })
           break;
         default:break;
       }

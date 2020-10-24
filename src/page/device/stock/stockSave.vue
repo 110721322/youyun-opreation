@@ -164,11 +164,9 @@ export default {
   computed: {
   },
   created() {
-    const beginDate = this.$g.utils.getNowFormatDate() + ' ' + '00' + ':' + '00' + ':' + '00'
-    const endDate = this.$g.utils.getNowFormatDate() + ' ' + '23' + ':' + '59' + ':' + '59'
     this.params = {
-      beginDate: beginDate,
-      endDate: endDate
+      beginDate: this.$g.utils.getNowFormatDate() + ' ' + '00:00:00',
+      endDate: this.$g.utils.getNowFormatDate() + ' ' + '23:59:59'
     }
     this.api = api.deviceInputQueryByPage
   },
@@ -190,8 +188,8 @@ export default {
     },
     search($ruleForm) {
       const params = {
-        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
-        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : this.$g.utils.getNowFormatDate() + ' ' + '00:00:00',
+        endDate: $ruleForm.date ? $ruleForm.date[1] : this.$g.utils.getNowFormatDate() + ' ' + '23:59:59',
         deviceId: $ruleForm.deviceId ? $ruleForm.deviceId : ''
       };
       this.params = params;
@@ -325,16 +323,18 @@ export default {
   overflow: hidden;
   background: #fff;
 }
+
 .form_item {
   float: left !important;
 }
+
 .clear_both {
   clear: both !important;
 }
+
 .btn_list {
   /* background: rebeccapurple; */
   position: absolute;
-  right: 0;
   bottom: 21px;
   right: 24px;
 }
@@ -342,15 +342,18 @@ export default {
 .demo-table-expand {
   font-size: 0;
 }
+
 .demo-table-expand label {
   width: 90px;
   color: #99a9bf;
 }
+
 .demo-table-expand .el-form-item {
   margin-right: 0;
   margin-bottom: 0;
   /* width: 25%; */
 }
+
 .form-box {
   display: flex;
   justify-content: space-between;
@@ -359,6 +362,7 @@ export default {
 .tabale_title_box {
   height: 52px;
   width: 100%;
+
   .title {
     font-size: 16px;
     font-family: PingFangSC-Medium, PingFang SC;
@@ -368,6 +372,7 @@ export default {
     margin-left: 10px;
     // line-height: 52px;
   }
+
   .btn {
     float: right;
   }
@@ -392,6 +397,7 @@ export default {
   justify-content: center;
   align-items: center;
   background: #fff;
+
   button {
     height: 40px;
     padding: 0 16px;
@@ -404,27 +410,32 @@ export default {
   padding: 24px 0;
   border: 1px solid #ebeef5;
   border-radius: 4px;
+
   .cursorCount {
     width: 100%;
     margin-bottom: 16px;
     font-size: 16px;
     text-align: center;
+
     span:nth-child(2) {
       padding: 0 16px;
       color: #1989FA;
       cursor: pointer;
     }
   }
-  .add_box {
+
+    .add_box {
     width: 100%;
     height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-bottom: 1px solid #ebeef5;
+
     .el-input--small {
       width: 200px;
     }
+
     span {
       color: #1989FA;
       padding-left: 16px;

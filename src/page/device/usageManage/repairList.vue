@@ -66,7 +66,6 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl",
       formStatus: "",
       activityRow: {},
       params: {},
@@ -127,21 +126,24 @@ export default {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认",
         cancelButtonText: "取消"
-      })
-        .then(() => {
-          api
-            .receive({
-              id: $row.id
-            })
-            .then(result => {
-              this.$refs.table.getData();
-              this.$message("收货成功");
-            })
-            .catch(err => {
-              console.error(err);
+      }).then(() => {
+        api.receive({
+          id: $row.id
+        }).then(result => {
+          if (result.status === 0) {
+            this.$refs.table.getData();
+            this.$message({
+              message: "收货成功",
+              type: "success"
             });
+          }
         })
-        .catch(() => {});
+      }).catch(() => {
+        this.$message({
+          message: "取消操作",
+          type: "info"
+        });
+      });
     },
     onClick_pass($row) {
       this.$confirm("确定通过该维修单吗", "提示", {
@@ -152,16 +154,20 @@ export default {
         api.auditPass({
           id: $row.id
         }).then(result => {
-          if (result.object) {
+          if (result.status === 0) {
             this.$refs.table.getData();
-            this.$message("通过成功");
-          } else {
-            this.$message(result.errorMessage);
+            this.$message({
+              message: "通过成功",
+              type: "success"
+            });
           }
-        }).catch(err => {
-          console.error(err);
+        })
+      }).catch(() => {
+        this.$message({
+          message: "取消操作",
+          type: "info"
         });
-      }).catch(() => {});
+      });
     },
     confirm($data) {
       switch (this.formStatus) {
@@ -176,9 +182,6 @@ export default {
               this.drawer = false;
               this.$message("已驳回");
             })
-            .catch(err => {
-              this.$message(err);
-            });
           break;
         case "send":
           api
@@ -191,9 +194,6 @@ export default {
               this.drawer = false;
               this.$message("提交成功");
             })
-            .catch(err => {
-              this.$message(err);
-            });
           break;
         case "distribution":
           api
@@ -207,9 +207,6 @@ export default {
               this.drawer = false;
               this.$message("分配成功");
             })
-            .catch(err => {
-              this.$message(err);
-            });
           break;
         case "done":
           api
@@ -222,9 +219,6 @@ export default {
               this.drawer = false;
               this.$message("提交成功");
             })
-            .catch(err => {
-              this.$message(err);
-            });
           break;
 
         default:
@@ -232,7 +226,6 @@ export default {
       }
     },
     search($ruleForm) {
-      console.log($ruleForm)
       const params = {
         beginTime: $ruleForm.date[0] ? $ruleForm.date[0] : this.getDay(0),
         endTime: $ruleForm.date[0] ? $ruleForm.date[1] : this.getDay(0),

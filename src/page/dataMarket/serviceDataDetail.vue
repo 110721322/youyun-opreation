@@ -40,16 +40,13 @@ export default {
       testData: [],
       searchHeight: "320",
       params: {
-        agentNo: null,
-        agentName: null,
-        positionLabelId: null,
         beginDate: this.$g.utils.getToday(),
         endDate: this.$g.utils.getToday(),
         sortField: this.$route.query.sortField ? this.$route.query.sortField : 'tradeAmount',
         sortRule: 'desc',
         regionCode: null,
         operationId: null,
-        currentPage: 0,
+        currentPage: 1,
         pageSize: 10
       },
       api: api.queryAgentTradeList
@@ -63,14 +60,12 @@ export default {
       this.params = {
         [$ruleForm.agent]: $ruleForm['agentVal'],
         positionLabelId: $ruleForm['positionLabelId'],
-        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
-        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : this.$g.utils.getToday(),
+        endDate: $ruleForm.date ? $ruleForm.date[1] : this.$g.utils.getToday(),
         sortField: this.params.sortField,
         sortRule: this.params.sortRule,
         regionCode: $ruleForm['regionCode'],
-        operationId: $ruleForm['operationId'],
-        currentPage: this.params.currentPage,
-        pageSize: this.params.pageSize
+        operationId: $ruleForm['operationId']
       };
     },
     tradeDataQueryInit() {

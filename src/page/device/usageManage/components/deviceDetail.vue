@@ -66,8 +66,8 @@ export default {
   methods: {
     search($ruleForm) {
       const params = {
-        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
-        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : this.$g.utils.getToday(0),
+        endDate: $ruleForm.date ? $ruleForm.date[1] : this.$g.utils.getToday(0),
         deviceId: $ruleForm.deviceId ? $ruleForm.deviceId : '',
         deviceIdentifier: $ruleForm.deviceIdentifier ? $ruleForm.deviceIdentifier : '',
         agentNo: $ruleForm.agentNo ? $ruleForm.agentNo : '',
@@ -83,9 +83,6 @@ export default {
         .then(res => {
           this.$set($item, "processList", res.object);
         })
-        .catch(err => {
-          this.$message(err);
-        });
       $table.toggleRowExpansion($item);
     }
   }
