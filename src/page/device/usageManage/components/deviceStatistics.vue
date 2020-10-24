@@ -386,7 +386,7 @@ export default {
         endDate: this.$g.utils.getToday(0)
       }
       api.queryUsing(params).then(res => {
-        this.deviceListData = res.object;
+        this.deviceListData = res.datas;
       })
         .catch(err => {
           this.$message(err);
@@ -418,7 +418,7 @@ export default {
             prop: "regionName",
             hasDot: false
           };
-          res.object.forEach(v => {
+          res.datas.forEach(v => {
             if (!v.activationCount) {
               v.activationCount = 0
             }
@@ -432,8 +432,8 @@ export default {
               v.usingCount = 0
             }
           })
-          this.detailData = res.object;
-          this.transferEchartsData(res.object, this.barOption, "regionName");
+          this.detailData = res.datas;
+          this.transferEchartsData(res.datas, this.barOption, "regionName");
           this.showBar();
         })
     },
@@ -451,8 +451,8 @@ export default {
             prop: "mccName",
             hasDot: false
           };
-          this.detailData = res.object;
-          this.transferEchartsData(res.object, this.barOption, "mccName");
+          this.detailData = res.datas;
+          this.transferEchartsData(res.datas, this.barOption, "mccName");
           this.showBar();
         })
     },
@@ -470,8 +470,8 @@ export default {
             prop: "regionName",
             hasDot: false
           };
-          this.detailData2 = res.object;
-          this.transferEchartsData(res.object, this.barOption2, "regionName");
+          this.detailData2 = res.datas;
+          this.transferEchartsData(res.datas, this.barOption2, "regionName");
           this.showBar2();
         })
     },
@@ -489,8 +489,8 @@ export default {
             prop: "mccName",
             hasDot: false
           };
-          this.detailData2 = res.object;
-          this.transferEchartsData(res.object, this.barOption2, "mccName");
+          this.detailData2 = res.datas;
+          this.transferEchartsData(res.datas, this.barOption2, "mccName");
           this.showBar2();
         })
     },
@@ -514,7 +514,7 @@ export default {
         deviceId: this.deviceId
       }).then(res => {
         var result = this.$g.utils.getNestedArr(areaData, 'children');
-        res.object.forEach((v) => {
+        res.datas.forEach((v) => {
           result.forEach(m => {
             if (v.provinceCode === m.value) {
               v.provinceName = m.label
@@ -527,7 +527,7 @@ export default {
           })
           v.deviceProportionPecent = this.$g.utils.AccMul(v.deviceProportion, 100)
         })
-        this.mapData = res.object;
+        this.mapData = res.datas;
         this.initMap();
       })
     },
@@ -560,7 +560,7 @@ export default {
           endDate: $ruleForm.date[1]
         })
         .then(res => {
-          this.deviceListData = res.object;
+          this.deviceListData = res.datas;
         })
         .catch(err => {
           this.$message(err);

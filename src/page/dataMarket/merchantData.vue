@@ -311,7 +311,7 @@ export default {
     handleChecked() {},
     queryUserDiagram() {
       return api.queryUserDiagram('merchant').then(res => {
-        this.pagePermission = this.$g.utils.isArr(res.object) ? res.object : [];
+        this.pagePermission = this.$g.utils.isArr(res.datas) ? res.datas : [];
       })
     },
     showRightbar() {
@@ -377,8 +377,8 @@ export default {
       api
         .merchantDataQueryAllProvinceCountAndRank(this.ruleForm)
         .then(res => {
-          if (this.$g.utils.isArr(res.object)) {
-            this.mapData = res.object.map($item => {
+          if (this.$g.utils.isArr(res.datas)) {
+            this.mapData = res.datas.map($item => {
               areaData.forEach(($province, $index) => {
                 if ($item.provinceCode === $province.value) {
                   $item.name = provinceData[$index].name
@@ -404,7 +404,7 @@ export default {
       Object.assign(params, this.ruleForm);
       api.selectRegionMerchantCount(params)
         .then(res => {
-          this.regionDataList = res.object;
+          this.regionDataList = res.datas;
         })
     },
     // 商户数据-行业占比
@@ -416,7 +416,7 @@ export default {
       Object.assign(params, this.ruleForm);
       api.selectCategoryMerchantCount(params)
         .then(res => {
-          this.industryDataList = res.object;
+          this.industryDataList = res.datas;
         })
     },
     // 商户平均交易额走势折线图数据获取
@@ -425,8 +425,8 @@ export default {
       api
         .queryDailyTradeAvg(this.ruleForm)
         .then(res => {
-          this.lineOption.xAxis[0].data = this.$g.utils.isArr(res.object.dateArr) ? res.object.dateArr : [];
-          this.lineOption.series[0].data = this.$g.utils.isArr(res.object.tradeAmountArr) ? res.object.tradeAmountArr : [];
+          this.lineOption.xAxis[0].data = this.$g.utils.isArr(res.datas.dateArr) ? res.datas.dateArr : [];
+          this.lineOption.series[0].data = this.$g.utils.isArr(res.datas.tradeAmountArr) ? res.datas.tradeAmountArr : [];
           this.showLine();
         })
     },
@@ -441,7 +441,7 @@ export default {
       api
         .queryTradeTop5ByCondition(params)
         .then(res => {
-          this.tradeRank = this.$g.utils.isArr(res.object) ? res.object : [];
+          this.tradeRank = this.$g.utils.isArr(res.datas) ? res.datas : [];
         })
     },
     // 平均交易笔数分布
@@ -454,22 +454,22 @@ export default {
       api
         .queryTradeCountRatio(params)
         .then(res => {
-          if (this.$g.utils.isObj(res.object)) {
+          if (this.$g.utils.isObj(res.datas)) {
             this.averageDataList = [
               {
-                ratio: res.object.ratio1,
+                ratio: res.datas.ratio1,
                 name: "1-10笔比例"
               },
               {
-                ratio: res.object.ratio2,
+                ratio: res.datas.ratio2,
                 name: "11-100笔比例"
               },
               {
-                ratio: res.object.ratio3,
+                ratio: res.datas.ratio3,
                 name: "101-1000笔比例"
               },
               {
-                ratio: res.object.ratio4,
+                ratio: res.datas.ratio4,
                 name: "1001笔以上"
               }
             ]

@@ -165,8 +165,8 @@ export default {
       api.selectProductCombo({
         productCode: this.productItem.productCode
       }).then(res => {
-        if (res.object) {
-          this.comboList = res.object || []
+        if (res.datas) {
+          this.comboList = res.datas || []
           this.comboItem = this.comboList[this.selectIndex] || {}
           this.comboPrice = this.comboList[this.selectIndex].comboAmount || 0
         }
@@ -175,8 +175,8 @@ export default {
     // 剩余短信
     getLastCode() {
       api.getSmsCount({}).then(res => {
-        if (res.object) {
-          this.codeNum = res.object
+        if (res.datas) {
+          this.codeNum = res.datas
         }
       })
     },
@@ -191,7 +191,7 @@ export default {
         voucher: this.ruleForm.imgUrl
       }
       api.createOrder(params).then(res => {
-        if (res.object) {
+        if (res.datas) {
           this.$message.success('成功')
           this.$router.go(-1)
         }

@@ -36,7 +36,7 @@ export default {
         const urlOptions = this.formItem.urlOptions;
         urlOptions.url({}).then(res => {
           const newArr = [];
-          res.object.forEach(item => {
+          res.datas.forEach(item => {
             newArr.push({
               value: item[urlOptions.keyName],
               label: item[urlOptions.valueName]

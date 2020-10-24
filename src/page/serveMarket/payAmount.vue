@@ -97,7 +97,7 @@ export default {
         voucher: this.ruleForm.imgUrl
       }
       api.createOrder(params).then(res => {
-        if (res.object) {
+        if (res.datas) {
           this.$router.push({
             name: "payStatus"
           })

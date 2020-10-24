@@ -76,8 +76,8 @@ export default {
    * @returns {Promise<>}
    */
   tradeDataQueryInit: (params) => API.POST('/operation/v1/tradeData/queryInit', params).then(res => {
-    if (!utils.isObj(res.object)) return res;
-    const { labelList, userDTOList, regionSetList, AgentTypes, categoryList } = res.object;
+    if (!utils.isObj(res.datas)) return res;
+    const { labelList, userDTOList, regionSetList, AgentTypes, categoryList } = res.datas;
     if (utils.isArr(labelList)) store.dispatch('setTradeLabel', labelList);
     if (utils.isArr(regionSetList)) store.dispatch('setTradeRegion', regionSetList);
     if (utils.isArr(userDTOList)) store.dispatch('setTradeUSER', userDTOList);

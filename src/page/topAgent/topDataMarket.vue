@@ -221,7 +221,7 @@ export default {
     // 新增商户数量排行
     queryListByNewMerchantCount() {
       api.queryListByNewMerchantCount(this.queryParams).then(res => {
-        this.addMerchantCount = res.object;
+        this.addMerchantCount = res.datas;
       }).catch(err => {
         this.$message(err);
       });
@@ -229,7 +229,7 @@ export default {
     // 服务商平均交易额走势
     queryTradeAverageList() {
       api.queryTradeAverageList(this.queryParams).then(res => {
-        this.averageList = res.object;
+        this.averageList = res.datas;
         this.drawLine()
       }).catch(err => {
         this.$message(err);
@@ -238,7 +238,7 @@ export default {
     // 总交易排行榜
     queryListByTurnover() {
       api.queryListByTurnover(this.queryParams).then(res => {
-        this.totalAmountRank = res.object;
+        this.totalAmountRank = res.datas;
       }).catch(err => {
         this.$message(err);
       });
@@ -254,14 +254,14 @@ export default {
     },
     queryTopAgentNumber() {
       api.queryTopAgentNumber().then(res => {
-        if (res.object.length > 0) {
+        if (res.datas.length > 0) {
           var total = 0
-          for (let i = 0; i < res.object.length; i++) {
-            total += res.object[i].topAgentNumbers
+          for (let i = 0; i < res.datas.length; i++) {
+            total += res.datas[i].topAgentNumbers
           }
           this.totalNum = total
         }
-        this.mapData = res.object.map($item => {
+        this.mapData = res.datas.map($item => {
           areaData.forEach(($province, $index) => {
             if ($item.provinceCode === $province.value) {
               $item.name = provinceData[$index].name

@@ -127,8 +127,8 @@ export default {
           type: "employee_register"
         })
         .then(res => {
-          if (!this.$g.utils.isArr(res.object) || res.code) return res;
-          const fieldsList = res.object;
+          if (!this.$g.utils.isArr(res.datas) || res.code) return res;
+          const fieldsList = res.datas;
           for (const field of FORM_CONFIG.editData.formData) {
             const fieldConfig = fieldsList.filter(item => item.id === field.id)[0]
             if (fieldConfig) {
@@ -237,7 +237,7 @@ export default {
         .then(res => {
           if (res.code) return res;
           FORM_CONFIG.editData.formData.forEach((item, index) => {
-            item.initVal = res.object[item.key];
+            item.initVal = res.datas[item.key];
           });
           this.activityRow = $row;
           this.fromConfigData = FORM_CONFIG.editData;

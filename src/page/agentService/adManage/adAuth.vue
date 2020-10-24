@@ -91,7 +91,7 @@ export default {
         agentNo: this.rowAgentNo,
         privilegeList: $ruleForm.baseData
       }).then(res => {
-        if (res.object) {
+        if (res.datas) {
           this.$refs.table.getData();
           this.drawer = false;
         }

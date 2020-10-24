@@ -134,21 +134,21 @@ export default {
       api.getDetailByMerchantNo({
         merchantNo: this.merchantNo
       }).then(res => {
-        if (res.object.merchantType === "personal") {
+        if (res.datas.merchantType === "personal") {
           this.configData2.items = this.configData2.items.filter(item => {
             if (item.key !== 'shopLicenseNo' && item.key !== 'shopLicenseImg') {
               return true
             }
           })
         }
-        this.commonData = res.object;
+        this.commonData = res.datas;
       }).catch();
     },
     getBusiness() {
       api.getBusinessDetail({
         merchantNo: this.merchantNo
       }).then(res => {
-        this.businessData = res.object
+        this.businessData = res.datas
       })
     },
     itemEdit() {

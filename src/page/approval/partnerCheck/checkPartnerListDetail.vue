@@ -182,20 +182,20 @@ export default {
       api.getDetailByPartnerNo({
         agentPartnerNo: this.agentPartnerNo
       }).then(res => {
-        if (res.object.jobType === 'expander') {
-          res.object.jobType = '拓展员'
+        if (res.datas.jobType === 'expander') {
+          res.datas.jobType = '拓展员'
         }
-        if (res.object.jobType === 'inboundMen') {
-          res.object.jobType = '入件操作员'
+        if (res.datas.jobType === 'inboundMen') {
+          res.datas.jobType = '入件操作员'
         }
-        if (res.object.cloudPayGt1000Rate) {
-          res.object.cloudPayGt1000RatePecent = this.$g.utils.AccMul(res.object.cloudPayGt1000Rate, 1000) + '‰'
-          res.object.cloudPayLe1000RatePecent = this.$g.utils.AccMul(res.object.cloudPayLe1000Rate, 1000) + '‰'
-          res.object.kickbackPecent = this.$g.utils.AccMul(res.object.kickbackPercent, 1000) + '‰'
-          res.object.alipayRatePecent = this.$g.utils.AccMul(res.object.alipayRate, 1000) + '‰'
+        if (res.datas.cloudPayGt1000Rate) {
+          res.datas.cloudPayGt1000RatePecent = this.$g.utils.AccMul(res.datas.cloudPayGt1000Rate, 1000) + '‰'
+          res.datas.cloudPayLe1000RatePecent = this.$g.utils.AccMul(res.datas.cloudPayLe1000Rate, 1000) + '‰'
+          res.datas.kickbackPecent = this.$g.utils.AccMul(res.datas.kickbackPercent, 1000) + '‰'
+          res.datas.alipayRatePecent = this.$g.utils.AccMul(res.datas.alipayRate, 1000) + '‰'
         }
-        this.ruleForm = res.object
-        this.currentType = res.object.contractStatus
+        this.ruleForm = res.datas
+        this.currentType = res.datas.contractStatus
       })
     },
     confirm($data) {

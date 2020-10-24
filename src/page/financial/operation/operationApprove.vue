@@ -271,7 +271,7 @@ export default {
           settleMobile,
           alternatePhone,
           settleRemark
-        } = res.object;
+        } = res.datas;
         const settleTypes = [];
         for (const key in settleType) {
           settleTypes.push({
@@ -297,7 +297,7 @@ export default {
           }
         };
         DETAIL_FORM_CONFIG.detailData.formData.forEach((item, index) => {
-          item.initVal = res.object[item.key];
+          item.initVal = res.datas[item.key];
         });
         this.detailFormConfigData = DETAIL_FORM_CONFIG.detailData;
         this.detailDrawer = true;
@@ -313,9 +313,9 @@ export default {
       }).then(res => {
         // 编辑前重赋值
         FORM_CONFIG.rejectData.formData.forEach((item, index) => {
-          item.initVal = res.object[item.key];
+          item.initVal = res.datas[item.key];
         });
-        FORM_CONFIG.rejectData.processData = res.object.map
+        FORM_CONFIG.rejectData.processData = res.datas.map
         this.activeRow = $row;
         this.formStatus = "reject";
         this.fromConfigData = FORM_CONFIG.rejectData;
@@ -330,9 +330,9 @@ export default {
       }).then(res => {
         // 编辑前重赋值
         FORM_CONFIG.adoptData.formData.forEach((item, index) => {
-          item.initVal = res.object[item.key];
+          item.initVal = res.datas[item.key];
         });
-        FORM_CONFIG.adoptData.processData = res.object.map
+        FORM_CONFIG.adoptData.processData = res.datas.map
         this.activeRow = $row;
         this.formStatus = "adopt";
         this.fromConfigData = FORM_CONFIG.adoptData;
@@ -349,10 +349,10 @@ export default {
       api[typeMonthDetailApi]({
         idList: $row.agentTradeIdList
       }).then(res => {
-        if (res.object) {
+        if (res.datas) {
           var keyArr = []
-          res.object.forEach((a, b) => {
-            res.object.forEach((c, d) => {
+          res.datas.forEach((a, b) => {
+            res.datas.forEach((c, d) => {
               if (a.settleType === c.settleType) {
                 keyArr.push({settleType: a.settleType, dateArr: [], settleTypeName: a.settleTypeName})
               }
@@ -361,7 +361,7 @@ export default {
           // var newArr = []
           if (keyArr.length > 0) {
             keyArr.forEach((item, index) => {
-              res.object.forEach((dItem, dIndex) => {
+              res.datas.forEach((dItem, dIndex) => {
                 if (item.settleType === dItem.settleType) {
                   item.dateArr.push(dItem.tradeMonth)
                 }

@@ -264,43 +264,43 @@ export default {
         channelCode: this.channelCode,
         channelAgentCode: this.channelAgentCode
       }).then(res => {
-        if (res.object.merchantType === 'enterprise') {
-          res.object.merchantType = '企业'
+        if (res.datas.merchantType === 'enterprise') {
+          res.datas.merchantType = '企业'
         }
-        if (res.object.merchantType === 'individual') {
-          res.object.merchantType = '个体工商户'
+        if (res.datas.merchantType === 'individual') {
+          res.datas.merchantType = '个体工商户'
         }
-        if (res.object.merchantType === 'private') {
-          res.object.merchantType = '个人'
+        if (res.datas.merchantType === 'private') {
+          res.datas.merchantType = '个人'
         }
-        if (res.object.bankAccountType === 'public') {
-          res.object.bankAccountType = '对公'
+        if (res.datas.bankAccountType === 'public') {
+          res.datas.bankAccountType = '对公'
         }
-        if (res.object.bankAccountType === 'private') {
-          res.object.bankAccountType = '对私'
+        if (res.datas.bankAccountType === 'private') {
+          res.datas.bankAccountType = '对私'
         }
         var result = this.$g.utils.getNestedArr(areaData, 'children')
         result.forEach(m => {
-          if (res.object.cityCode === m.value) {
-            res.object.cityName = m.label
+          if (res.datas.cityCode === m.value) {
+            res.datas.cityName = m.label
           }
-          if (res.object.areaCode === m.value) {
-            res.object.areaName = m.label
+          if (res.datas.areaCode === m.value) {
+            res.datas.areaName = m.label
           }
-          if (res.object.provinceCode === m.value) {
-            res.object.provinceName = m.label
+          if (res.datas.provinceCode === m.value) {
+            res.datas.provinceName = m.label
           }
         })
-        if (res.object.shopLicenseBegDate) {
-          res.object.shopLicenseTime = res.object.shopLicenseBegDate + '至' + res.object.shopLicenseEndDate
+        if (res.datas.shopLicenseBegDate) {
+          res.datas.shopLicenseTime = res.datas.shopLicenseBegDate + '至' + res.datas.shopLicenseEndDate
         }
-        if (res.object.idCardBeginDate) {
-          res.object.idCardExpireTime = res.object.idCardBeginDate + '至' + res.object.idCardExpireDate
+        if (res.datas.idCardBeginDate) {
+          res.datas.idCardExpireTime = res.datas.idCardBeginDate + '至' + res.datas.idCardExpireDate
         }
-        res.object.wechatPayRatePecent = this.$g.utils.AccMul(res.object.wechatPayRate, 1000) + '‰'
-        res.object.detailComAddress = res.object.provinceName + res.object.cityName + res.object.areaName + res.object.address
-        this.ruleForm = res.object;
-        this.currentType = res.object.status
+        res.datas.wechatPayRatePecent = this.$g.utils.AccMul(res.datas.wechatPayRate, 1000) + '‰'
+        res.datas.detailComAddress = res.datas.provinceName + res.datas.cityName + res.datas.areaName + res.datas.address
+        this.ruleForm = res.datas;
+        this.currentType = res.datas.status
       }).catch();
     },
     confirm($data) {

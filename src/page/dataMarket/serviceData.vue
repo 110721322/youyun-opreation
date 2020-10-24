@@ -321,7 +321,7 @@ export default {
     handleChecked() {},
     queryUserDiagram() {
       return api.queryUserDiagram('agent').then(res => {
-        this.pagePermission = this.$g.utils.isArr(res.object) ? res.object : [];
+        this.pagePermission = this.$g.utils.isArr(res.datas) ? res.datas : [];
       })
     },
     showRightbar() {
@@ -355,8 +355,8 @@ export default {
       api
         .queryAgentDailyAverageTrade(this.ruleForm)
         .then(res => {
-          this.lineOption.xAxis[0].data = this.$g.utils.isArr(res.object.date) ? res.object.date : [];
-          this.lineOption.series[0].data = this.$g.utils.isArr(res.object.avgAmount) ? res.object.avgAmount : [];
+          this.lineOption.xAxis[0].data = this.$g.utils.isArr(res.datas.date) ? res.datas.date : [];
+          this.lineOption.series[0].data = this.$g.utils.isArr(res.datas.avgAmount) ? res.datas.avgAmount : [];
           this.showLine();
         })
     },
@@ -368,7 +368,7 @@ export default {
       api
         .queryAgentTradeAmountRank(params)
         .then(res => {
-          this.testData5 = res.object;
+          this.testData5 = res.datas;
         })
     },
     // 新增商户数量排行
@@ -379,7 +379,7 @@ export default {
       api
         .queryNewMerchantRank(params)
         .then(res => {
-          this.testData2 = res.object;
+          this.testData2 = res.datas;
         })
     },
     // 服务商交易统计-服务商刷脸订单排行
@@ -399,7 +399,7 @@ export default {
                 return '¥' + $row['actualAmount'];
               }
             }
-            this.testData4 = res.object
+            this.testData4 = res.datas
           })
       } else {
         api
@@ -410,7 +410,7 @@ export default {
               prop: "tradeCount",
               width: "176px"
             }
-            this.testData4 = res.object;
+            this.testData4 = res.datas;
           })
       }
     },
@@ -420,14 +420,14 @@ export default {
       api
         .queryAllProvinceCount({})
         .then(res => {
-          if (res.object.length > 0) {
+          if (res.datas.length > 0) {
             var total = 0
-            for (let i = 0; i < res.object.length; i++) {
-              total += res.object[i].count
+            for (let i = 0; i < res.datas.length; i++) {
+              total += res.datas[i].count
             }
             this.totalNum = total
           }
-          this.mapData = res.object.map($item => {
+          this.mapData = res.datas.map($item => {
             areaData.forEach(($province, $index) => {
               if ($item.provinceCode === $province.value) {
                 $item.name = provinceData[$index].name

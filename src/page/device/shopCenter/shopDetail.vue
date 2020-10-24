@@ -39,7 +39,7 @@ export default {
         .then(res => {
           const newFromConfigData = FORM_CONFIG.editData;
           newFromConfigData.formData.forEach((item, index) => {
-            item.initVal = res.object[item.key];
+            item.initVal = res.datas[item.key];
           });
           this.fromConfigData = newFromConfigData;
         })

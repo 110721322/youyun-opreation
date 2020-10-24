@@ -181,14 +181,14 @@ export default {
     },
     queryAllPrivilegeType() {
       apiAgent.queryAllPrivilegeType({}).then(res => {
-        this.options = res.object;
+        this.options = res.datas;
       })
     },
     queryById() {
       apiAgent.queryById({ id: this.id }).then(res => {
         // 编辑前重赋值
         FORM_CONFIG.editData.formData.forEach((item, index) => {
-          item.initVal = res.object[item.key];
+          item.initVal = res.datas[item.key];
         });
         this.fromConfigData = FORM_CONFIG.editData;
         this.loading = false;

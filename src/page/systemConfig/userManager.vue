@@ -187,8 +187,8 @@ export default {
           type: "employee_edit"
         })
         .then(res => {
-          if (!this.$g.utils.isArr(res.object) || res.code) return res;
-          const fieldsList = res.object;
+          if (!this.$g.utils.isArr(res.datas) || res.code) return res;
+          const fieldsList = res.datas;
           for (const field of FORM_CONFIG.editData.formData) {
             const fieldConfig = fieldsList.filter(item => item.id === field.id)[0]
             console.log(fieldConfig)
@@ -254,7 +254,7 @@ export default {
         })
         .then(res => {
           if (res.code) return res
-          this.perfectRow = res.object;
+          this.perfectRow = res.datas;
           this.perfectRow.roleId = $row.roleId;
           this.activityRow = $row;
           this.drawerPersonInfo = true;
@@ -280,7 +280,7 @@ export default {
         })
         .then(res => {
           if (res.code) return res;
-          this.dataItem = [res.object]
+          this.dataItem = [res.datas]
           this.resolveData(this.dataItem)
           this.drawerOrganization = true;
         })
@@ -305,7 +305,7 @@ export default {
             if (item.key === "password") {
               item.initVal = ""
             } else {
-              item.initVal = res.object[item.key];
+              item.initVal = res.datas[item.key];
             }
           });
           this.activityRow = $row;

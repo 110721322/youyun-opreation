@@ -63,7 +63,7 @@ export default {
       }
       api.addOpenAgent(params).then(res => {
         this.fromConfigData = FORM_CONFIG.detailData
-        if (res.status === 0 && res.object) {
+        if (res.status === 0 && res.datas) {
           this.$message({
             message: "添加成功",
             type: "success"

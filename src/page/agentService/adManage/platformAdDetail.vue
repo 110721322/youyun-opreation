@@ -38,7 +38,7 @@ export default {
       apiAgent.advertQueryById({ id: this.id }).then(res => {
         // 编辑前重赋值
         FORM_CONFIG.editData.formData.forEach((item, index) => {
-          item.initVal = res.object[item.key];
+          item.initVal = res.datas[item.key];
         });
         this.fromConfigData = FORM_CONFIG.editData;
         this.show = true;

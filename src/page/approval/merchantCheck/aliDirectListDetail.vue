@@ -211,28 +211,28 @@ export default {
         channelCode: this.channelCode,
         channelAgentCode: this.channelAgentCode
       }).then(res => {
-        if (res.object.merchantType === 'enterprise') {
-          res.object.merchantType = '企业'
+        if (res.datas.merchantType === 'enterprise') {
+          res.datas.merchantType = '企业'
         }
-        if (res.object.merchantType === 'individual') {
-          res.object.merchantType = '个体工商户'
+        if (res.datas.merchantType === 'individual') {
+          res.datas.merchantType = '个体工商户'
         }
-        if (res.object.merchantType === 'private') {
-          res.object.merchantType = '个人'
+        if (res.datas.merchantType === 'private') {
+          res.datas.merchantType = '个人'
         }
-        if (res.object.bankAccountType === 'public') {
-          res.object.bankAccountType = '对公'
+        if (res.datas.bankAccountType === 'public') {
+          res.datas.bankAccountType = '对公'
         }
-        if (res.object.bankAccountType === 'private') {
-          res.object.bankAccountType = '对私'
+        if (res.datas.bankAccountType === 'private') {
+          res.datas.bankAccountType = '对私'
         }
-        if (res.object.status === 'platformReject' || res.object.status === 'channelReject') {
-          res.object.rejectReason = '驳回原因：' + res.object.rejectReason
+        if (res.datas.status === 'platformReject' || res.datas.status === 'channelReject') {
+          res.datas.rejectReason = '驳回原因：' + res.datas.rejectReason
         }
-        res.object.shopLicenseTime = res.object.shopLicenseBegDate + '至' + res.object.shopLicenseEndDate
-        res.object.alipayRatePecent = this.$g.utils.AccMul(res.object.alipayRate, 1000) + '‰'
-        this.ruleForm = res.object;
-        this.currentType = res.object.status
+        res.datas.shopLicenseTime = res.datas.shopLicenseBegDate + '至' + res.datas.shopLicenseEndDate
+        res.datas.alipayRatePecent = this.$g.utils.AccMul(res.datas.alipayRate, 1000) + '‰'
+        this.ruleForm = res.datas;
+        this.currentType = res.datas.status
       }).catch();
     },
     confirm($data) {

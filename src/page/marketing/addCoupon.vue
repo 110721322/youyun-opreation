@@ -150,8 +150,8 @@ export default {
         promoCodeEndTime: params.dateArr ? params.dateArr[1] : null,
         suffixUrl: 'a.html'
       }).then(res => {
-        if (res.object) {
-          this.activityDetail = res.object
+        if (res.datas) {
+          this.activityDetail = res.datas
           this.thirdStep = 1
         }
       })

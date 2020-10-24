@@ -73,7 +73,7 @@ export default {
       api.selectModuleProduct({
         moduleCode: 'businessMode'
       }).then(res => {
-        this.modelList = res.object
+        this.modelList = res.datas
       })
     }
   }

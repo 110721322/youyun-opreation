@@ -111,7 +111,7 @@ export default {
         [this.selectOption.value]: queryString
       }
       api(params).then(res => {
-        this.autoCompleteList = res.object;
+        this.autoCompleteList = res.datas;
         callback(this.autoCompleteList);
       })
       return queryString;

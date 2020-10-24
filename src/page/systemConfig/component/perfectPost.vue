@@ -109,7 +109,7 @@ export default {
       }
       api_systemConfig.getPermistionTemplate(params).then(res => {
         if (res.status === 0) {
-          this.permissionTemplate = res.object;
+          this.permissionTemplate = res.datas;
           this.innerDrawer = true;
         }
       })
@@ -122,7 +122,7 @@ export default {
       }
       api_systemConfig.getAuditTemplate(params).then(res => {
         if (res.status === 0) {
-          this.auditTemplate = res.object;
+          this.auditTemplate = res.datas;
           this.auditDrawer = true;
         }
       })

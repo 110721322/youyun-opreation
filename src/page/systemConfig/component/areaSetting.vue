@@ -126,7 +126,7 @@ export default {
     },
     queryAllRegion() {
       api.queryRegionProvince({}).then(res => {
-        this.areaList = res.object;
+        this.areaList = res.datas;
         this.areaList = this.areaList.map($area => {
           $area.addOption = "";
           $area.province = $area.provinceCodes.map($code => {

@@ -107,7 +107,7 @@ export default {
       api.queryMallDeviceDetail({
         deviceId: this.enterInfo.deviceId
       }).then(res => {
-        this.goodsData.push(res.object)
+        this.goodsData.push(res.datas)
       }).catch(err => {
         console.log(err)
       })
@@ -132,7 +132,7 @@ export default {
         buyerRemark: this.textarea,
         outputType: 1
       }).then(res => {
-        if (!res.object) {
+        if (!res.datas) {
           this.$message({
             message: res.errorMessage + ',请修改购买数量',
             type: 'warning'
@@ -141,7 +141,7 @@ export default {
           this.$router.push({
             name: 'equimentPay',
             query: {
-              orderInfo: res.object,
+              orderInfo: res.datas,
               deviceInfos: deviceInfos,
               address: this.addressList[0]
             }

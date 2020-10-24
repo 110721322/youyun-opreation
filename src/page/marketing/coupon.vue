@@ -105,9 +105,9 @@ export default {
       api.queryQrCodeDetail({
         qrCodeNo: $row.qrCodeNo
       }).then(res => {
-        if (res.object) {
+        if (res.datas) {
           this.dialogVisible = true
-          this.couponForm = res.object
+          this.couponForm = res.datas
         }
       })
     },
@@ -156,7 +156,7 @@ export default {
       //   activityNo: this.couponForm.activityNo,
       //   id: this.couponForm.id
       // }).then(res => {
-      //   if (res.object) {
+      //   if (res.datas) {
       //     this.dialogVisible = false
       //     this.$message({
       //       type: "info",

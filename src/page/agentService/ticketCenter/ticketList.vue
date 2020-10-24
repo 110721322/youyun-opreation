@@ -147,7 +147,7 @@ export default {
             JSON.stringify(FORM_CONFIG.checkReplyData)
           );
           FormData.formData.forEach((item, index) => {
-            item.initVal = res.object[item.key];
+            item.initVal = res.datas[item.key];
           });
           this.activityRow = $row;
           this.formStatus = "checkReply";

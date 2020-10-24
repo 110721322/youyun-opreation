@@ -462,8 +462,8 @@ export default {
             name: query,
             limit: 30
           }).then(res => {
-            if (res.object) {
-              this.bankOptions = res.object
+            if (res.datas) {
+              this.bankOptions = res.datas
             }
           })
         }, 200);
@@ -475,26 +475,26 @@ export default {
       api.getBankLineByNo({
         unionCode: item
       }).then(res => {
-        // this.dataForm.bankArea[0] = res.object.provinceCode
-        // this.dataForm.bankArea = res.object.cityCode
+        // this.dataForm.bankArea[0] = res.datas.provinceCode
+        // this.dataForm.bankArea = res.datas.cityCode
         var provinceName = ''
         var cityName = ''
         var areaName = ''
         var result = this.$g.utils.getNestedArr(areaData, 'children')
         result.forEach(m => {
-          if (m.value === res.object.provinceCode) {
+          if (m.value === res.datas.provinceCode) {
             provinceName = m.label
           }
-          if (m.value === res.object.cityCode) {
+          if (m.value === res.datas.cityCode) {
             cityName = m.label
           }
-          if (m.value === res.object.areaCode) {
+          if (m.value === res.datas.areaCode) {
             areaName = m.label
           }
         })
-        this.bankName = res.object.bankName
+        this.bankName = res.datas.bankName
         this.area = provinceName + '/' + cityName + '/' + areaName
-        this.areaCodeNum = res.object.areaCode
+        this.areaCodeNum = res.datas.areaCode
       })
     },
     handel_save() {
@@ -534,8 +534,8 @@ export default {
       api.getAgentDetail({
         agentNo: agentNo
       }).then(res => {
-        if (res.object) {
-          const agentDetail = this.$g.utils.deepClone(res.object)
+        if (res.datas) {
+          const agentDetail = this.$g.utils.deepClone(res.datas)
           if (agentDetail.expandSub === 1) {
             agentDetail.expandSubCn = '是'
           }
@@ -623,7 +623,7 @@ export default {
         this.addContactsDraw = true
         const newFromConfigData = CONTACTS_CONFIG.formData2;
         newFromConfigData.forEach((item, index) => {
-          item.initVal = res.object[item.key];
+          item.initVal = res.datas[item.key];
         });
         this.contactConfigData = newFromConfigData;
         this.contactConfigData.title = '编辑沟通计划'
@@ -748,7 +748,7 @@ export default {
         beginDate: value[0],
         endDate: value[1]
       }).then(res => {
-        this.summaryInfo = res.object
+        this.summaryInfo = res.datas
       }).catch(() => {})
     },
     // 查询沟通计划列表
@@ -1133,7 +1133,7 @@ export default {
       api.talkListsGetById({
         id: row.id
       }).then(res => {
-        this.talkListDetail = res.object
+        this.talkListDetail = res.datas
       }).catch(err => {
         console.log(err)
       })
@@ -1228,7 +1228,7 @@ export default {
       api.queryWait({
         relateCode: this.$route.query.agentNo
       }).then(res => {
-        this.willConactNum = res.object
+        this.willConactNum = res.datas
       }).catch(() => {})
     }
   }

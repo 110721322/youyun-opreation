@@ -221,52 +221,52 @@ export default {
       api.getSubAgentDetail({
         agentNo: this.agentNo
       }).then(res => {
-        if (res.object.bankAccountType === 'public') {
-          res.object.bankAccountType = '对公'
+        if (res.datas.bankAccountType === 'public') {
+          res.datas.bankAccountType = '对公'
         }
-        if (res.object.bankAccountType === 'private') {
-          res.object.bankAccountType = '对私'
+        if (res.datas.bankAccountType === 'private') {
+          res.datas.bankAccountType = '对私'
         }
-        if (res.object.businessType === 'enterprise') {
-          res.object.businessTypeCn = '企业'
+        if (res.datas.businessType === 'enterprise') {
+          res.datas.businessTypeCn = '企业'
         }
-        if (res.object.businessType === 'individual' || res.object.businessType === '') {
-          res.object.businessTypeCn = '个人'
+        if (res.datas.businessType === 'individual' || res.datas.businessType === '') {
+          res.datas.businessTypeCn = '个人'
         }
         var result = this.$g.utils.getNestedArr(areaData, 'children')
         result.forEach(m => {
-          if (res.object.cityCode === m.value) {
-            res.object.cityName = m.label
+          if (res.datas.cityCode === m.value) {
+            res.datas.cityName = m.label
           }
-          if (res.object.areaCode === m.value) {
-            res.object.areaName = m.label
+          if (res.datas.areaCode === m.value) {
+            res.datas.areaName = m.label
           }
-          if (res.object.provinceCode === m.value) {
-            res.object.provinceName = m.label
+          if (res.datas.provinceCode === m.value) {
+            res.datas.provinceName = m.label
           }
-          if (res.object.activeScopeCityCode === m.value) {
-            res.object.activeScopeCityName = m.label
+          if (res.datas.activeScopeCityCode === m.value) {
+            res.datas.activeScopeCityName = m.label
           }
-          if (res.object.activeScopeProvinceCode === m.value) {
-            res.object.activeScopeProvinceName = m.label
+          if (res.datas.activeScopeProvinceCode === m.value) {
+            res.datas.activeScopeProvinceName = m.label
           }
-          res.object.activeScope = res.object.activeScopeProvinceName + res.object.activeScopeCityName
+          res.datas.activeScope = res.datas.activeScopeProvinceName + res.datas.activeScopeCityName
         })
-        res.object.areaAddress = res.object.provinceName + res.object.cityName + res.object.areaName
-        if (res.object.cloudPayGt1000Rate) {
-          res.object.cloudPayGt1000RatePecent = this.$g.utils.AccMul(res.object.cloudPayGt1000Rate, 1000) + '‰'
-          res.object.cloudPayLe1000RatePecent = this.$g.utils.AccMul(res.object.cloudPayLe1000Rate, 1000) + '‰'
+        res.datas.areaAddress = res.datas.provinceName + res.datas.cityName + res.datas.areaName
+        if (res.datas.cloudPayGt1000Rate) {
+          res.datas.cloudPayGt1000RatePecent = this.$g.utils.AccMul(res.datas.cloudPayGt1000Rate, 1000) + '‰'
+          res.datas.cloudPayLe1000RatePecent = this.$g.utils.AccMul(res.datas.cloudPayLe1000Rate, 1000) + '‰'
         }
-        if (!res.object.cloudPayGt1000Rate) {
-          res.object.cloudPayGt1000RatePecent = 0 + '‰'
-          res.object.cloudPayLe1000RatePecent = 0 + '‰'
+        if (!res.datas.cloudPayGt1000Rate) {
+          res.datas.cloudPayGt1000RatePecent = 0 + '‰'
+          res.datas.cloudPayLe1000RatePecent = 0 + '‰'
         }
-        if (res.object.alipayRate || res.object.wechatPayRate) {
-          res.object.alipayRatePecent = this.$g.utils.AccMul(res.object.alipayRate, 1000) + '‰'
-          res.object.wechatPayRatePecent = this.$g.utils.AccMul(res.object.wechatPayRatePecent, 1000) + '‰'
+        if (res.datas.alipayRate || res.datas.wechatPayRate) {
+          res.datas.alipayRatePecent = this.$g.utils.AccMul(res.datas.alipayRate, 1000) + '‰'
+          res.datas.wechatPayRatePecent = this.$g.utils.AccMul(res.datas.wechatPayRatePecent, 1000) + '‰'
         }
-        this.ruleForm = res.object
-        this.currentType = res.object.contractStatus
+        this.ruleForm = res.datas
+        this.currentType = res.datas.contractStatus
       }).catch();
     },
     confirm($data) {

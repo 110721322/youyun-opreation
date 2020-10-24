@@ -40,13 +40,13 @@ export default {
           this.detailGet = true
           this.fromConfigData.formData.forEach((item, index) => {
             if (item.key === "time") {
-              item.initVal = [res.object.displayStartDate, res.object.displayEndDate]
+              item.initVal = [res.datas.displayStartDate, res.datas.displayEndDate]
             } else if (item.key === 'isReadable') {
-              item.initVal = res.object[item.key]
+              item.initVal = res.datas[item.key]
             } else {
-              item.initVal = res.object[item.key]
+              item.initVal = res.datas[item.key]
             }
-            // this.$set(item, item.initVal, res.object[item.key]);
+            // this.$set(item, item.initVal, res.datas[item.key]);
           });
         })
         .catch(err => {
