@@ -48,14 +48,7 @@ export default {
       direction: "rtl",
       params: {
         beginDate: this.$g.utils.getToday(0),
-        endDate: this.$g.utils.getToday(0),
-        agentNo: "",
-        cityCode: "",
-        currentPage: 1,
-        deviceId: '',
-        pageSize: 10,
-        provinceCode: "",
-        regionCode: ""
+        endDate: this.$g.utils.getToday(0)
       },
       api: api.deviceDataQueryByPage
     };

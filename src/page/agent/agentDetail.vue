@@ -1039,12 +1039,27 @@ export default {
         }
       }
       if (this.editType === 'editAuthority') {
+        console.log(row)
         if (!row.activeMode || !row.activeScopeCode[0] || !row.chargeFeePercent || (row.expandSub === '')) {
           this.$message({
-            message: "请填写必填系信息",
+            message: "请填写必填信息",
             type: "warning"
           })
           return
+        }
+        if (!row.addressObj) {
+          var arr = []
+          arr = [
+            {
+              label: this.agentDetail.activeScope.cityName,
+              value: this.agentDetail.activeScope.cityCode
+            },
+            {
+              label: this.agentDetail.activeScope.provinceName,
+              value: this.agentDetail.activeScope.provinceCode
+            }
+          ]
+          row.addressObj = arr
         }
         api.updateAgentPrivilege({
           agentNo: this.$route.query.agentNo,

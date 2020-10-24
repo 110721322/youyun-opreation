@@ -69,78 +69,77 @@ export default {
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     },
-    selectionChange($val) {},
     onClick_delete($row) {
       this.$confirm("是否要删除该设备？", "提示", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认删除",
         cancelButtonText: "取消"
-      })
-        .then(() => {
-          api
-            .deviceMallDelete({
-              id: $row.id
-            })
-            .then(result => {
-              this.$refs.table.getData();
-              this.$message({
-                type: "info",
-                message: "删除成功"
-              });
-            })
-            .catch(err => {
-              console.error(err);
+      }).then(() => {
+        api.deviceMallDelete({
+          id: $row.id
+        }).then(result => {
+          if (result.status === 0) {
+            this.$refs.table.getData();
+            this.$message({
+              type: "success",
+              message: "删除成功"
             });
+          }
         })
-        .catch(() => {});
+      }).catch(() => {
+        this.$message({
+          type: "info",
+          message: "取消操作"
+        });
+      });
     },
     onClick_off($row, $item) {
       this.$confirm("是否要下架该设备？", "提示", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认下架",
         cancelButtonText: "取消"
-      })
-        .then(() => {
-          api
-            .off({
-              id: $row.id
-            })
-            .then(result => {
-              this.$refs.table.getData();
-              this.$message({
-                type: "info",
-                message: "下架成功"
-              });
-            })
-            .catch(err => {
-              console.error(err);
+      }).then(() => {
+        api.off({
+          id: $row.id
+        }).then(result => {
+          if (result.status === 0) {
+            this.$refs.table.getData();
+            this.$message({
+              type: "success",
+              message: "下架成功"
             });
+          }
         })
-        .catch(() => {});
+      }).catch(() => {
+        this.$message({
+          type: "info",
+          message: "取消操作"
+        });
+      });
     },
     onClick_on($row) {
       this.$confirm("是否要上架该设备？", "提示", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认上架",
         cancelButtonText: "取消"
-      })
-        .then(() => {
-          api
-            .on({
-              id: $row.id
-            })
-            .then(result => {
-              this.$refs.table.getData();
-              this.$message({
-                type: "info",
-                message: "上架成功"
-              });
-            })
-            .catch(err => {
-              console.error(err);
+      }).then(() => {
+        api.on({
+          id: $row.id
+        }).then(result => {
+          if (result.status === 0) {
+            this.$refs.table.getData();
+            this.$message({
+              type: "success",
+              message: "上架成功"
             });
+          }
         })
-        .catch(() => {});
+      }).catch(() => {
+        this.$message({
+          type: "info",
+          message: "取消操作"
+        });
+      });
     },
     onClick_edit($row) {
       this.$router.push({
@@ -152,9 +151,6 @@ export default {
       this.$router.push({
         name: "shopCenterDetail"
       });
-    },
-    cancel(done) {
-      done();
     }
   }
 };
@@ -168,16 +164,18 @@ export default {
   overflow: hidden;
   background: #fff;
 }
+
 .form_item {
   float: left !important;
 }
+
 .clear_both {
   clear: both !important;
 }
+
 .btn_list {
   /* background: rebeccapurple; */
   position: absolute;
-  right: 0;
   bottom: 21px;
   right: 24px;
 }
@@ -185,15 +183,17 @@ export default {
 .demo-table-expand {
   font-size: 0;
 }
+
 .demo-table-expand label {
   width: 90px;
   color: #99a9bf;
 }
+
 .demo-table-expand .el-form-item {
   margin-right: 0;
   margin-bottom: 0;
-  /* width: 25%; */
 }
+
 .form-box {
   display: flex;
   justify-content: space-between;
@@ -202,6 +202,7 @@ export default {
 .tabale_title_box {
   height: 52px;
   width: 100%;
+
   .title {
     font-size: 16px;
     font-family: PingFangSC-Medium, PingFang SC;
@@ -211,6 +212,7 @@ export default {
     margin-left: 10px;
     // line-height: 52px;
   }
+
   .btn {
     float: right;
   }

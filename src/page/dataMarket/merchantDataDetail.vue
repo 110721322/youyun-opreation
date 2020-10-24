@@ -40,18 +40,11 @@ export default {
       testData: [],
       searchHeight: "380",
       params: {
-        agentNo: null,
-        agentName: null,
-        merchantName: null,
-        merchantNo: null,
         beginDate: this.$g.utils.getToday(),
         endDate: this.$g.utils.getToday(),
         sortField: this.$route.query.sortField ? this.$route.query.sortField : 'tradeAmount',
         sortRule: 'desc',
-        provinceCode: null,
-        cityCode: null,
-        category: null,
-        currentPage: 0,
+        currentPage: 1,
         pageSize: 10
       },
       api: api.queryTradeSummaryAndCycleByCondition
@@ -64,8 +57,8 @@ export default {
     search($ruleForm) {
       this.params = {
         [$ruleForm.field]: $ruleForm['fieldVal'],
-        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
-        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : this.$g.utils.getToday(),
+        endDate: $ruleForm.date ? $ruleForm.date[1] : this.$g.utils.getToday(),
         sortField: this.params.sortField,
         sortRule: this.params.sortRule,
         provinceCode: $ruleForm['area'] ? $ruleForm['area'][0] : null,

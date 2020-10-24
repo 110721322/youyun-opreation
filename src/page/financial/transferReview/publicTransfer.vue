@@ -144,12 +144,7 @@ export default {
             });
             this.$refs.table.getData()
           }
-        }).catch(err => {
-          this.$message({
-            message: err.errorMessage,
-            type: 'warning'
-          })
-        });
+        })
       }).catch(() => {
         this.$message({
           message: '取消操作',

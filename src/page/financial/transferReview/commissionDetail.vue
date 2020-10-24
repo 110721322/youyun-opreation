@@ -36,7 +36,6 @@ export default {
     return {
       configData: RECORD_CONFIG,
       testData: [],
-      direction: "rtl",
       params: {
         idList: this.$route.query.idList.split(',')
       },
