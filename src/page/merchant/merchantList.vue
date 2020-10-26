@@ -125,7 +125,7 @@ export default {
         useChannelCode: $ruleForm.channelCode ? $ruleForm.channelCode : null,
         channelStatus: $ruleForm.channelStatus ? $ruleForm.channelStatus : null,
         categoryCode: $ruleForm.categoryCode ? $ruleForm.categoryCode : null,
-        operateNo: $ruleForm.operateNo ? $ruleForm.operateNo : null
+        operationId: $ruleForm.operationId ? $ruleForm.operationId : null
       }
       params[$ruleForm.inputForm] = $ruleForm.inputFormVal
       this.params = params
