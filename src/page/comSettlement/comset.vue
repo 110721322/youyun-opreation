@@ -131,7 +131,7 @@ export default {
   methods: {
     getSettleNum() {
       api.querySettleSum({}).then(res => {
-        this.settleNum = res.datas
+        this.settleNum = res.data
       })
     },
     checkChange($val) {
@@ -162,24 +162,24 @@ export default {
         })
       } else {
         api.initSettle({}).then(res => {
-          if (res.datas) {
+          if (res.data) {
             this.drawer = true
-            this.info = res.datas.settleMap
-            this.settleInfo = res.datas
+            this.info = res.data.settleMap
+            this.settleInfo = res.data
             const newFromConfigData = FORM_CONFIG.detailData.formData
-            newFromConfigData[2].initVal = res.datas.settleAccount
-            newFromConfigData[3].initVal = res.datas.settleMobile
+            newFromConfigData[2].initVal = res.data.settleAccount
+            newFromConfigData[3].initVal = res.data.settleMobile
             this.fromConfigData.formData = newFromConfigData
             var keyArr = []
-            for (const keyItem in res.datas.settleMap) {
+            for (const keyItem in res.data.settleMap) {
               keyArr.push({key: keyItem})
             }
             keyArr.forEach((item, index) => {
-              const name = res.datas.settleMap[item.key][0].settleTypeName
+              const name = res.data.settleMap[item.key][0].settleTypeName
               item.name = name
               const dateArr = []
               var totalSettleAmount = 0
-              res.datas.settleMap[item.key].forEach((dateItem, dateIndex) => {
+              res.data.settleMap[item.key].forEach((dateItem, dateIndex) => {
                 dateArr.push(dateItem.tradeMonth)
                 totalSettleAmount += dateItem.settleAmount
               })

@@ -47,7 +47,7 @@ export default {
       api.selectModuleProduct({
         moduleCode: 'payChannel'
       }).then(res => {
-        this.tradeList = res.datas
+        this.tradeList = res.data
       })
     }
   }

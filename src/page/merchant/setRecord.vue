@@ -119,19 +119,19 @@ export default {
         this.modeConfigData = [
           {
             title: "商家数量",
-            data: res.datas.merchantCount
+            data: res.data.merchantCount
           },
           {
             title: "交易金额",
-            data: res.datas.totalActualAmount
+            data: res.data.totalActualAmount
           },
           {
             title: "手续费",
-            data: res.datas.totalServiceFee
+            data: res.data.totalServiceFee
           },
           {
             title: "结算金额",
-            data: res.datas.totalSettleAmount
+            data: res.data.totalSettleAmount
           }
         ]
       })

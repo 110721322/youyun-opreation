@@ -124,8 +124,8 @@ export default {
         taskType: this.statisticsData.taskType,
         status: this.statisticsData.status
       }).then(res => {
-        if (res.datas.datas) {
-          res.datas.datas.forEach(m => {
+        if (res.data.datas) {
+          res.data.datas.forEach(m => {
             var newArr = {}
             newArr = m.agentSettleRecord
             this.commissionData.push(newArr)

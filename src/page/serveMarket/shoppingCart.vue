@@ -80,8 +80,8 @@ export default {
       api.queryShopCartList({
         userId: localStorage.getItem('agentUserId')
       }).then(res => {
-        if (res.datas) {
-          this.shopList = res.datas
+        if (res.data) {
+          this.shopList = res.data
         }
       }).catch(err => {
         console.log(err)
@@ -162,7 +162,7 @@ export default {
           this.$router.push({
             name: 'equimentOrder',
             query: {
-              cartList: res.datas
+              cartList: res.data
             }
           })
         }).catch(err => {

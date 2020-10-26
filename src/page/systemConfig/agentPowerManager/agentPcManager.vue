@@ -80,7 +80,7 @@ export default {
       }
       this.selectRoleId = $row.roleId;
       api_systemConfig.getRolePermission(params).then(res => {
-        this.templateList = res.datas;
+        this.templateList = res.data;
         this.drawer = true;
       })
     },

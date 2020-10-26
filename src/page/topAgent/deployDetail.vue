@@ -60,7 +60,7 @@ export default {
   methods: {
     getSourceCodeDeployDetail() {
       api.getSourceCodeDeployDetail({channelAgentCode: this.channelAgentCode}).then(res => {
-        this.detail = res.datas;
+        this.detail = res.data;
       })
     }
   }

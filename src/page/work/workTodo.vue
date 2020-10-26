@@ -278,15 +278,15 @@ export default {
         undoType: this.undoType,
         taskType: this.taskType
       }).then(res => {
-        this.menuConfig = res.datas
-        this.undoType = res.datas[0].undoType
-        this.taskType = res.datas[0].taskType
+        this.menuConfig = res.data
+        this.undoType = res.data[0].undoType
+        this.taskType = res.data[0].taskType
         this.getTask()
       })
     },
     queryTaskList() {
       api.queryAllList({}).then(res => {
-        this.options = res.datas
+        this.options = res.data
       }).catch()
     },
     getTask() {
@@ -299,7 +299,7 @@ export default {
         taskOwner: this.taskOwner
       }).then(res => {
         this.openType = this.taskType + '/' + this.undoType;
-        this.listData = res.datas.datas;
+        this.listData = res.data.datas;
       })
     },
     cancel() {
@@ -702,7 +702,7 @@ export default {
         })
         .then(res => {
           this.openType = $data.taskType + '/' + $data.undoType;
-          this.listData = res.datas.datas;
+          this.listData = res.data.datas;
         })
         .catch(err => {
           console.error(err);

@@ -81,7 +81,7 @@ export default {
       api.queryCommission({
         tradeMonth: this.tradeMonth
       }).then(res => {
-        this.commission = res.datas
+        this.commission = res.data
       })
     },
     search($form) {

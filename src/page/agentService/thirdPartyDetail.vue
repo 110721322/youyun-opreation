@@ -61,9 +61,9 @@ export default {
           id: id
         }).then(res => {
           // 编辑前重赋值
-          // res.datas.netStatus = res.datas.netStatus.Number()
+          // res.data.netStatus = res.data.netStatus.Number()
           this.fromConfigData.formData.forEach((item, index) => {
-            item.initVal = res.datas[item.key];
+            item.initVal = res.data[item.key];
           });
           this.fromConfigData.formData[7].initVal = this.fromConfigData.formData[7].initVal.toString();
           this.showPage = true;
@@ -104,7 +104,7 @@ export default {
         this.isEdit = false
         this.fromConfigData = FORM_CONFIG.detailData
         this.fromConfigData.showFootBtn = false
-        if (res.status === 0 && res.datas) {
+        if (res.status === 0 && res.data) {
           this.$message({
             message: this.id ? "编辑成功" : "添加成功",
             type: "success"

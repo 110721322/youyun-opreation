@@ -221,52 +221,52 @@ export default {
       api.getSubAgentDetail({
         agentNo: this.agentNo
       }).then(res => {
-        if (res.datas.bankAccountType === 'public') {
-          res.datas.bankAccountType = '对公'
+        if (res.data.bankAccountType === 'public') {
+          res.data.bankAccountType = '对公'
         }
-        if (res.datas.bankAccountType === 'private') {
-          res.datas.bankAccountType = '对私'
+        if (res.data.bankAccountType === 'private') {
+          res.data.bankAccountType = '对私'
         }
-        if (res.datas.businessType === 'enterprise') {
-          res.datas.businessTypeCn = '企业'
+        if (res.data.businessType === 'enterprise') {
+          res.data.businessTypeCn = '企业'
         }
-        if (res.datas.businessType === 'individual' || res.datas.businessType === '') {
-          res.datas.businessTypeCn = '个人'
+        if (res.data.businessType === 'individual' || res.data.businessType === '') {
+          res.data.businessTypeCn = '个人'
         }
         var result = this.$g.utils.getNestedArr(areaData, 'children')
         result.forEach(m => {
-          if (res.datas.cityCode === m.value) {
-            res.datas.cityName = m.label
+          if (res.data.cityCode === m.value) {
+            res.data.cityName = m.label
           }
-          if (res.datas.areaCode === m.value) {
-            res.datas.areaName = m.label
+          if (res.data.areaCode === m.value) {
+            res.data.areaName = m.label
           }
-          if (res.datas.provinceCode === m.value) {
-            res.datas.provinceName = m.label
+          if (res.data.provinceCode === m.value) {
+            res.data.provinceName = m.label
           }
-          if (res.datas.activeScopeCityCode === m.value) {
-            res.datas.activeScopeCityName = m.label
+          if (res.data.activeScopeCityCode === m.value) {
+            res.data.activeScopeCityName = m.label
           }
-          if (res.datas.activeScopeProvinceCode === m.value) {
-            res.datas.activeScopeProvinceName = m.label
+          if (res.data.activeScopeProvinceCode === m.value) {
+            res.data.activeScopeProvinceName = m.label
           }
-          res.datas.activeScope = res.datas.activeScopeProvinceName + res.datas.activeScopeCityName
+          res.data.activeScope = res.data.activeScopeProvinceName + res.data.activeScopeCityName
         })
-        res.datas.areaAddress = res.datas.provinceName + res.datas.cityName + res.datas.areaName
-        if (res.datas.cloudPayGt1000Rate) {
-          res.datas.cloudPayGt1000RatePecent = this.$g.utils.AccMul(res.datas.cloudPayGt1000Rate, 1000) + '‰'
-          res.datas.cloudPayLe1000RatePecent = this.$g.utils.AccMul(res.datas.cloudPayLe1000Rate, 1000) + '‰'
+        res.data.areaAddress = res.data.provinceName + res.data.cityName + res.data.areaName
+        if (res.data.cloudPayGt1000Rate) {
+          res.data.cloudPayGt1000RatePecent = this.$g.utils.AccMul(res.data.cloudPayGt1000Rate, 1000) + '‰'
+          res.data.cloudPayLe1000RatePecent = this.$g.utils.AccMul(res.data.cloudPayLe1000Rate, 1000) + '‰'
         }
-        if (!res.datas.cloudPayGt1000Rate) {
-          res.datas.cloudPayGt1000RatePecent = 0 + '‰'
-          res.datas.cloudPayLe1000RatePecent = 0 + '‰'
+        if (!res.data.cloudPayGt1000Rate) {
+          res.data.cloudPayGt1000RatePecent = 0 + '‰'
+          res.data.cloudPayLe1000RatePecent = 0 + '‰'
         }
-        if (res.datas.alipayRate || res.datas.wechatPayRate) {
-          res.datas.alipayRatePecent = this.$g.utils.AccMul(res.datas.alipayRate, 1000) + '‰'
-          res.datas.wechatPayRatePecent = this.$g.utils.AccMul(res.datas.wechatPayRatePecent, 1000) + '‰'
+        if (res.data.alipayRate || res.data.wechatPayRate) {
+          res.data.alipayRatePecent = this.$g.utils.AccMul(res.data.alipayRate, 1000) + '‰'
+          res.data.wechatPayRatePecent = this.$g.utils.AccMul(res.data.wechatPayRatePecent, 1000) + '‰'
         }
-        this.ruleForm = res.datas
-        this.currentType = res.datas.contractStatus
+        this.ruleForm = res.data
+        this.currentType = res.data.contractStatus
       }).catch();
     },
     confirm($data) {

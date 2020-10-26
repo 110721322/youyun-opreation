@@ -216,7 +216,7 @@ export default {
           id: this.$route.query.id
         })
         .then(res => {
-          this.ruleForm = res.datas;
+          this.ruleForm = res.data;
         })
         .catch(err => {
           this.$message(err);

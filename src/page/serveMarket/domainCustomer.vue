@@ -119,8 +119,8 @@ export default {
       api.selectProductCombo({
         productCode: this.productItem.productCode
       }).then(res => {
-        if (res.datas) {
-          this.comboList = res.datas || []
+        if (res.data) {
+          this.comboList = res.data || []
           this.comboItem = this.comboList[this.selectIndex] || {}
           this.comboPrice = this.comboList[this.selectIndex].comboAmount || 0
         }
@@ -130,7 +130,7 @@ export default {
       api.customDomainGeneration({
         ...$val
       }).then(res => {
-        if (res.datas) {
+        if (res.data) {
           this.$message.success('成功')
           this.$router.go(-1)
         }
@@ -138,8 +138,8 @@ export default {
     },
     domainGenerationDetail() {
       api.domainGenerationDetail({}).then(res => {
-        if (res.datas) {
-          this.detail = res.datas;
+        if (res.data) {
+          this.detail = res.data;
           if (this.detail.mainDomain || this.detail.oaDomain || this.detail.agentDomain || this.detail.merchantDomain) {
             this.ifHaveDomain = true
           } else {

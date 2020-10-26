@@ -148,7 +148,7 @@ export default {
       api
         .moodColorQueryByConditionAgent()
         .then(res => {
-          this.formData.moodColor = res.datas;
+          this.formData.moodColor = res.data;
         })
         .catch(err => {
           this.$message(err);
@@ -159,7 +159,7 @@ export default {
       api
         .labelQueryByConditionAgent()
         .then(res => {
-          this.formData.agentTags.tags = res.datas;
+          this.formData.agentTags.tags = res.data;
         })
         .catch(err => {
           this.$message(err);
@@ -170,7 +170,7 @@ export default {
       api
         .labelQueryByConditionUser()
         .then(res => {
-          this.formData.positionTags.tags = res.datas;
+          this.formData.positionTags.tags = res.data;
         })
         .catch(err => {
           this.$message(err);

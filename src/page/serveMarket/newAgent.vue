@@ -158,8 +158,8 @@ export default {
       api.selectProductCombo({
         productCode: this.productItem.productCode
       }).then(res => {
-        if (res.datas) {
-          this.comboList = res.datas || []
+        if (res.data) {
+          this.comboList = res.data || []
           this.comboItem = this.comboList[this.selectIndex] || {}
           this.comboPrice = this.comboList[this.selectIndex].comboAmount || 0
         }
@@ -169,15 +169,15 @@ export default {
       api.saveSourceCodeConfig({
         ...$val
       }).then(res => {
-        if (res.datas) {
+        if (res.data) {
           this.centerDialogVisible = true
         }
       })
     },
     getSourceCodeDeployDetail() {
       apiAgent.getSourceCodeDeployDetail({}).then(res => {
-        if (res.datas) {
-          this.detail = res.datas;
+        if (res.data) {
+          this.detail = res.data;
         }
       })
     }

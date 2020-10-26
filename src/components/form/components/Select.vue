@@ -110,8 +110,8 @@ export default {
           .then(res => {
             this.loading = false;
             const newArr = [];
-            if (res.datas) {
-              for (const item of res.datas) {
+            if (res.data) {
+              for (const item of res.data) {
                 item.value = item[urlOptions.keyName];
                 item.label = item[urlOptions.valueName];
                 newArr.push(item);
@@ -152,8 +152,8 @@ export default {
         .then(res => {
           this.loading = false;
           const newArr = [];
-          if (res.datas) {
-            for (const item of res.datas) {
+          if (res.data) {
+            for (const item of res.data) {
               item.value = item[urlOptions.keyName];
               item.label = item[urlOptions.valueName];
               newArr.push(item);

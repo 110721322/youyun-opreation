@@ -63,9 +63,9 @@ export default {
       api.queryMallDeviceDetail({
         deviceId: deviceId
       }).then(res => {
-        this.goodsDetail = res.datas
-        if (res.datas.img) {
-          const imgData = res.datas.img.split(',')
+        this.goodsDetail = res.data
+        if (res.data.img) {
+          const imgData = res.data.img.split(',')
           this.imgData = imgData
         }
       }).catch(err => {
@@ -76,10 +76,10 @@ export default {
       api.queryAddress({
         agentNo: localStorage.getItem('agentNo')
       }).then(res => {
-        if (res.datas) {
-          for (const i in res.datas) {
-            if (res.datas[i].defaultType) {
-              this.address = res.datas[i]
+        if (res.data) {
+          for (const i in res.data) {
+            if (res.data[i].defaultType) {
+              this.address = res.data[i]
             }
           }
         }
@@ -121,7 +121,7 @@ export default {
           buyerRemark: '',
           outputType: 1
         }).then(res => {
-          if (!res.datas) {
+          if (!res.data) {
             this.$message({
               message: res.errorMessage + ',请修改购买数量',
               type: 'warning'
@@ -130,7 +130,7 @@ export default {
             this.$router.push({
               name: 'equimentPay',
               query: {
-                orderInfo: res.datas,
+                orderInfo: res.data,
                 deviceInfos: deviceInfos,
                 address: this.address
               }

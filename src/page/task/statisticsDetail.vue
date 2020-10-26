@@ -112,11 +112,11 @@ export default {
         receiverId: this.receiverId,
         status: this.activeIndex === '2' ? 'initiated' : 'undo'
       }).then(res => {
-        this.taskList = res.datas
+        this.taskList = res.data
         this.modeConfigData = [
           {
             title: "任务总数",
-            data: res.datas.totalCount
+            data: res.data.totalCount
           }
         ]
       })
@@ -131,7 +131,7 @@ export default {
     //       taskOwner: ""
     //     })
     //     .then(res => {
-    //       this.modeConfigData[0].data = res.datas.totalCount;
+    //       this.modeConfigData[0].data = res.data.totalCount;
     //     })
     //     .catch();
     // },

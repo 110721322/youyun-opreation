@@ -147,7 +147,7 @@ export default {
         password: row.password
       }).then(res => {
         if (res.status === 0) {
-          window.open(process.env.VUE_APP_AGENTURL + '#/login?ticket' + '=' + res.datas)
+          window.open(process.env.VUE_APP_AGENTURL + '#/login?ticket' + '=' + res.data)
         }
       })
     },

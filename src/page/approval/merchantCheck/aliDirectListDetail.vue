@@ -211,28 +211,28 @@ export default {
         channelCode: this.channelCode,
         channelAgentCode: this.channelAgentCode
       }).then(res => {
-        if (res.datas.merchantType === 'enterprise') {
-          res.datas.merchantType = '企业'
+        if (res.data.merchantType === 'enterprise') {
+          res.data.merchantType = '企业'
         }
-        if (res.datas.merchantType === 'individual') {
-          res.datas.merchantType = '个体工商户'
+        if (res.data.merchantType === 'individual') {
+          res.data.merchantType = '个体工商户'
         }
-        if (res.datas.merchantType === 'private') {
-          res.datas.merchantType = '个人'
+        if (res.data.merchantType === 'private') {
+          res.data.merchantType = '个人'
         }
-        if (res.datas.bankAccountType === 'public') {
-          res.datas.bankAccountType = '对公'
+        if (res.data.bankAccountType === 'public') {
+          res.data.bankAccountType = '对公'
         }
-        if (res.datas.bankAccountType === 'private') {
-          res.datas.bankAccountType = '对私'
+        if (res.data.bankAccountType === 'private') {
+          res.data.bankAccountType = '对私'
         }
-        if (res.datas.status === 'platformReject' || res.datas.status === 'channelReject') {
-          res.datas.rejectReason = '驳回原因：' + res.datas.rejectReason
+        if (res.data.status === 'platformReject' || res.data.status === 'channelReject') {
+          res.data.rejectReason = '驳回原因：' + res.data.rejectReason
         }
-        res.datas.shopLicenseTime = res.datas.shopLicenseBegDate + '至' + res.datas.shopLicenseEndDate
-        res.datas.alipayRatePecent = this.$g.utils.AccMul(res.datas.alipayRate, 1000) + '‰'
-        this.ruleForm = res.datas;
-        this.currentType = res.datas.status
+        res.data.shopLicenseTime = res.data.shopLicenseBegDate + '至' + res.data.shopLicenseEndDate
+        res.data.alipayRatePecent = this.$g.utils.AccMul(res.data.alipayRate, 1000) + '‰'
+        this.ruleForm = res.data;
+        this.currentType = res.data.status
       }).catch();
     },
     confirm($data) {

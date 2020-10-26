@@ -176,16 +176,16 @@ export default {
   methods: {
     checkOrderDetail(id) {
       api.deviceOutputQueryById({id: id}).then(res => {
-        this.orderDetail = res.datas
+        this.orderDetail = res.data
       })
     },
     finishOutputInfo() {
       api.finishOutputInfo({ outputId: this.id }).then(res => {
-        this.deviceModelList = res.datas.infoResponseVOList;
-        if (res.datas.infoResponseVOList.length > 0) {
-          this.deviceInfo = res.datas.infoResponseVOList[0].deviceDetailList
+        this.deviceModelList = res.data.infoResponseVOList;
+        if (res.data.infoResponseVOList.length > 0) {
+          this.deviceInfo = res.data.infoResponseVOList[0].deviceDetailList
         }
-        this.ruleForm2 = res.datas;
+        this.ruleForm2 = res.data;
       });
     },
     onClick_getData($item, index) {

@@ -159,8 +159,8 @@ export default {
           type: this.type
         })
         .then(res => {
-          this.tableData = res.datas;
-          this.cloneTableData = this.$g.utils.deepClone(res.datas);
+          this.tableData = res.data;
+          this.cloneTableData = this.$g.utils.deepClone(res.data);
         })
         .catch();
     },

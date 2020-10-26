@@ -279,16 +279,16 @@ export default {
       this.apiService(this.queryParams)
         .then(res => {
           // debugger;
-          if (g.utils.isArr(res.datas) || g.utils.isArr(res.datas)) {
-            this.copyGridData = res.datas || res.datas;
+          if (g.utils.isArr(res.data) || g.utils.isArr(res.data)) {
+            this.copyGridData = res.data || res.data;
           } else {
-            if (g.utils.isObj(res.datas) && res.datas.datas) {
-              this.copyGridData = res.datas.datas
+            if (g.utils.isObj(res.data) && res.data.datas) {
+              this.copyGridData = res.data.datas
             } else {
               this.copyGridData =
-                res.datas === null || res.datas === null
+                res.data === null || res.data === null
                   ? []
-                  : res.datas || res.datas;
+                  : res.data || res.data;
             }
           }
           this.dataTotal = res.totalCount;

@@ -185,26 +185,26 @@ export default {
     },
     getHardDetail() {
       api.hardwareDetail(this.params).then(res => {
-        this.tableData = res.datas.infoVOList
+        this.tableData = res.data.infoVOList
         this.ruleForm = {
-          buyerName: res.datas.buyerName,
-          buyerPhone: res.datas.buyerPhone,
-          buyerAddress: res.datas.buyerAddress
+          buyerName: res.data.buyerName,
+          buyerPhone: res.data.buyerPhone,
+          buyerAddress: res.data.buyerAddress
         }
         this.ruleForm2 = {
-          actualAmount: res.datas.actualAmount,
-          payTypeDesc: res.datas.payTypeDesc
+          actualAmount: res.data.actualAmount,
+          payTypeDesc: res.data.payTypeDesc
         }
         this.ruleForm3 = {
-          outputNo: res.datas.outputNo,
-          createTime: res.datas.createTime,
-          agentName: res.datas.agentName,
-          amount: res.datas.amount,
-          statusDesc: res.datas.statusDesc,
-          buyerRemark: res.datas.buyerRemark
+          outputNo: res.data.outputNo,
+          createTime: res.data.createTime,
+          agentName: res.data.agentName,
+          amount: res.data.amount,
+          statusDesc: res.data.statusDesc,
+          buyerRemark: res.data.buyerRemark
         }
-        this.rejectTitle = res.datas.rejectRemark
-        if (res.datas.rejectRemark) {
+        this.rejectTitle = res.data.rejectRemark
+        if (res.data.rejectRemark) {
           this.showComponents.showRejectTitle = true
         } else {
           this.showComponents.showRejectTitle = false

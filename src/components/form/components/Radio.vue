@@ -35,7 +35,7 @@ export default {
         urlOptions.url({})
           .then(res => {
             const newArr = [];
-            for (const item of res.datas) {
+            for (const item of res.data) {
               newArr.push({
                 value: item[urlOptions.keyName],
                 label: item[urlOptions.valueName]

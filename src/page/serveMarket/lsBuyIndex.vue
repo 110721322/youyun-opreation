@@ -113,8 +113,8 @@ export default {
       api.selectProductCombo({
         productCode: this.productItem.productCode
       }).then(res => {
-        if (res.datas) {
-          this.comboList = res.datas || []
+        if (res.data) {
+          this.comboList = res.data || []
           this.comboItem = this.comboList[this.selectIndex] || {}
           this.comboPrice = this.comboList[this.selectIndex].comboAmount || 0
         }
@@ -122,8 +122,8 @@ export default {
     },
     getLeShuaDetail() {
       api.getLeShuaDetail({}).then(res => {
-        if (res.datas) {
-          this.detail = res.datas
+        if (res.data) {
+          this.detail = res.data
           if (this.detail.channelAgentId || this.detail.channelAgentCode || this.detail.alipayRate || this.detail.wechatPayRate || this.detail.cloudPayLe1000Rate || this.detail.cloudPayGt1000Rate || this.detail.requestKey) {
             this.showEdit = true
           } else {
@@ -150,7 +150,7 @@ export default {
         ...$val,
         notifyKey: 'notifyKey'
       }).then(res => {
-        if (res.datas) {
+        if (res.data) {
           this.$message.success('成功')
           this.$router.go(-1)
         }

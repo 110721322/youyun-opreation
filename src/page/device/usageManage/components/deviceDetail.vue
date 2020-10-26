@@ -81,7 +81,7 @@ export default {
           deviceIdentifier: $item.deviceIdentifier
         })
         .then(res => {
-          this.$set($item, "processList", res.datas);
+          this.$set($item, "processList", res.data);
         })
       $table.toggleRowExpansion($item);
     }

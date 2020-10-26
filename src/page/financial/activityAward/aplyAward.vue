@@ -134,7 +134,7 @@ export default {
         type: "dragonflyInput",
         url: $filel.excil
       }).then(res => {
-        if (res.datas) {
+        if (res.data) {
           this.$refs.table.getData()
         }
       }).catch(err => {

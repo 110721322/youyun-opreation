@@ -153,7 +153,7 @@ export default {
       if (this.queryParams) {
         this.apiService(this.queryParams).then(res => {
           this.checkedList = [];
-          this.templateListClone = res.datas;
+          this.templateListClone = res.data;
           this.templateMapList = this.templateMap();
         })
       }

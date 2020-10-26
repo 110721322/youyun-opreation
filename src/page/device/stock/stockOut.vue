@@ -138,7 +138,7 @@ export default {
           url: $data.deviceIdentifierList.dialogImageUrl,
           type: "deviceOutput"
         }).then(res => {
-          this.device = res.datas;
+          this.device = res.data;
           api.finishOutput({
             expressNo: $data.expressNo,
             outputRemark: $data.outputRemark,
@@ -215,7 +215,7 @@ export default {
       const newFromConfigData = FORM_CONFIG.checkData;
       api.deviceOutputQueryById({ id: $row.id }).then(res => {
         newFromConfigData.formData.forEach((item, index) => {
-          item.initVal = res.datas[item.key];
+          item.initVal = res.data[item.key];
         });
         this.fromConfigData = newFromConfigData;
         this.formStatus = "check";

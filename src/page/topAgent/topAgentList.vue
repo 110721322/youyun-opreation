@@ -90,19 +90,19 @@ export default {
     ...mapActions(['setLabelList', 'setRegionList', 'setUserList']),
     queryInit() {
       api_dataMarket.queryInit().then(res => {
-        const labelList = res.datas.labelList.map($ele => {
+        const labelList = res.data.labelList.map($ele => {
           return {
             label: $ele.name,
             value: $ele.id
           }
         })
-        const regionList = res.datas.regionSetList.map($ele => {
+        const regionList = res.data.regionSetList.map($ele => {
           return {
             label: $ele.regionName,
             value: $ele.regionCode
           }
         })
-        const userList = res.datas.userDTOList.map($ele => {
+        const userList = res.data.userDTOList.map($ele => {
           return {
             label: $ele.jobName || $ele.name,
             value: $ele.id
@@ -229,7 +229,7 @@ export default {
         password: row.password
       }).then(res => {
         if (res.status === 0) {
-          window.location.href = process.env.VUE_APP_BASEURL + '#/login?ticket' + '=' + res.datas
+          window.location.href = process.env.VUE_APP_BASEURL + '#/login?ticket' + '=' + res.data
         }
       })
     },
