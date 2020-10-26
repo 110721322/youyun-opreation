@@ -73,7 +73,7 @@ export const FORM_CONFIG = {
       options: areaData
     },
     {
-      type: 8,
+      type: 1,
       label: '开通通道详情',
       key: 'channelStatus',
       labelWidth: '110px',
