@@ -48,15 +48,9 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl",
       params: {
         beginDate: this.$g.utils.getToday(),
-        endDate: this.$g.utils.getToday(),
-        agentNo: "",
-        deviceId: "",
-        deviceIdentifier: "",
-        freezeStatus: "",
-        merchantNo: ""
+        endDate: this.$g.utils.getToday()
       },
       api: api.deviceMerchantQueryByPage
     };
@@ -86,12 +80,20 @@ export default {
         api.unfreeze({
           id: $row.deviceDetailId
         }).then(result => {
-          this.$refs.table.getData();
-          this.$message("已启用");
-        }).catch(err => {
-          this.$message(err.errorMessage)
-        });
-      }).catch(() => {});
+          if (result.status === 0) {
+            this.$refs.table.getData();
+            this.$message({
+              message: "启用成功",
+              type: "success"
+            });
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          message: "取消操作",
+          type: "info"
+        })
+      });
     },
     search($ruleForm) {
       const params = {
@@ -102,10 +104,6 @@ export default {
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
-    },
-    selectionChange($val) {},
-    cancel(done) {
-      done();
     }
   }
 };

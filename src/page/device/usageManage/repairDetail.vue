@@ -170,9 +170,6 @@ export default {
         .then(res => {
           this.ruleForm = res.object;
         })
-        .catch(err => {
-          this.$message(err);
-        });
     }
   }
 };

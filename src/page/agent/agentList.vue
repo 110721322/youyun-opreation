@@ -167,10 +167,10 @@ export default {
         activeScopeType: $form.activeScopeType ? $form.activeScopeType : null,
         labelId: $form.labelId ? $form.labelId : null
       }
-      if ($form.area) {
-        this.params.provinceCode = $form.provinceCode
-        this.params.cityCode = $form.cityCode
-        this.params.areaCode = $form.areaCode
+      if ($form.area[0]) {
+        this.params.provinceCode = $form.area[0]
+        this.params.cityCode = $form.area[1]
+        this.params.areaCode = $form.area[2]
       }
       this.params[$form.inputSelect] = $form.inputForm;
     },

@@ -177,8 +177,6 @@ export default {
     checkOrderDetail(id) {
       api.deviceOutputQueryById({id: id}).then(res => {
         this.orderDetail = res.object
-      }).catch(err => {
-        console.log(err)
       })
     },
     finishOutputInfo() {
@@ -209,9 +207,9 @@ export default {
         detailId: $item.detailId,
         deviceIdentifier: $item.deviceIdentifier
       }).then(res => {
-        this.finishOutputInfo()
-      }).catch(err => {
-        console.log(err.errorMessage)
+        if (res.status === 0) {
+          this.finishOutputInfo()
+        }
       })
     },
     onClick_cancelEdit($item) {

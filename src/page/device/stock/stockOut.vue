@@ -120,8 +120,8 @@ export default {
     },
     search($ruleForm) {
       const params = {
-        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
-        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : this.getDay(0),
+        endDate: $ruleForm.date ? $ruleForm.date[1] : this.getDay(0),
         deviceId: $ruleForm.deviceId ? $ruleForm.deviceId : '',
         status: $ruleForm.status ? $ruleForm.status : '',
         saleUserId: $ruleForm.saleUserId ? $ruleForm.saleUserId : '',
@@ -151,15 +151,16 @@ export default {
               }
             ]
           }).then(res => {
-            this.$refs.table.getData();
-            this.drawer = false;
-            this.$message("保存成功");
-          }).catch(err => {
-            this.$message(err);
-          });
-        }).catch(err => {
-          this.$message(err);
-        });
+            if (res.status === 0) {
+              this.$refs.table.getData();
+              this.drawer = false;
+              this.$message({
+                message: "保存成功",
+                type: "success"
+              });
+            }
+          })
+        })
       } else {
         switch (this.formStatus) {
           case "reject":
@@ -167,12 +168,15 @@ export default {
               rejectRemark: $data.rejectRemark,
               id: this.tableId
             }).then(res => {
-              this.$refs.table.getData();
-              this.drawer = false;
-              this.$message("已驳回");
-            }).catch(err => {
-              this.$message(err);
-            });
+              if (res.status === 0) {
+                this.$refs.table.getData();
+                this.drawer = false;
+                this.$message({
+                  message: "已驳回",
+                  type: "success"
+                });
+              }
+            })
             break;
           case "check":
             this.drawer = false;
@@ -183,12 +187,15 @@ export default {
               typeNo: this.tableId,
               distributionUserId: $data.distributionUserId
             }).then(res => {
-              this.$refs.table.getData();
-              this.drawer = false;
-              this.$message("分配成功");
-            }).catch(err => {
-              this.$message(err);
-            });
+              if (res.status === 0) {
+                this.$refs.table.getData();
+                this.drawer = false;
+                this.$message({
+                  message: "分配成功",
+                  type: "success"
+                });
+              }
+            })
             break;
           default:
             break;
@@ -213,9 +220,7 @@ export default {
         this.fromConfigData = newFromConfigData;
         this.formStatus = "check";
         this.drawer = true;
-      }).catch(err => {
-        this.$message(err);
-      });
+      })
     },
     onClick_detail($item) {
       this.$router.push({
@@ -251,16 +256,18 @@ export default {
   overflow: hidden;
   background: #fff;
 }
+
 .form_item {
   float: left !important;
 }
+
 .clear_both {
   clear: both !important;
 }
+
 .btn_list {
   /* background: rebeccapurple; */
   position: absolute;
-  right: 0;
   bottom: 21px;
   right: 24px;
 }
@@ -268,15 +275,17 @@ export default {
 .demo-table-expand {
   font-size: 0;
 }
+
 .demo-table-expand label {
   width: 90px;
   color: #99a9bf;
 }
+
 .demo-table-expand .el-form-item {
   margin-right: 0;
   margin-bottom: 0;
-  /* width: 25%; */
 }
+
 .form-box {
   display: flex;
   justify-content: space-between;
@@ -289,15 +298,16 @@ export default {
   width: 90px;
   color: #99a9bf;
 }
+
 .demo-table-expand .el-form-item {
   margin-right: 0;
   margin-bottom: 0;
-  /* width: 25%; */
 }
 
 .tabale_title_box {
   height: 52px;
   width: 100%;
+
   .title {
     font-size: 16px;
     font-family: PingFangSC-Medium, PingFang SC;
@@ -307,6 +317,7 @@ export default {
     margin-left: 10px;
     // line-height: 52px;
   }
+
   .btn {
     float: right;
   }

@@ -436,9 +436,6 @@ export default {
           this.transferEchartsData(res.object, this.barOption, "regionName");
           this.showBar();
         })
-        .catch(err => {
-          this.$message(err);
-        });
     },
     // 行业设备数量使用情况
     queryMcc() {
@@ -458,9 +455,6 @@ export default {
           this.transferEchartsData(res.object, this.barOption, "mccName");
           this.showBar();
         })
-        .catch(err => {
-          this.$message(err);
-        });
     },
     // 大区设备交易情况
     queryRegionTrade() {
@@ -480,9 +474,6 @@ export default {
           this.transferEchartsData(res.object, this.barOption2, "regionName");
           this.showBar2();
         })
-        .catch(err => {
-          this.$message(err);
-        });
     },
     // 行业设备交易情况
     queryMccTrade() {
@@ -502,9 +493,6 @@ export default {
           this.transferEchartsData(res.object, this.barOption2, "mccName");
           this.showBar2();
         })
-        .catch(err => {
-          this.$message(err);
-        });
     },
     handleProvince($itemData) {
       if ($itemData) {
