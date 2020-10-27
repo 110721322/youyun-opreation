@@ -182,20 +182,20 @@ export default {
       api.getDetailByPartnerNo({
         agentPartnerNo: this.agentPartnerNo
       }).then(res => {
-        if (res.object.jobType === 'expander') {
-          res.object.jobType = '拓展员'
+        if (res.data.jobType === 'expander') {
+          res.data.jobType = '拓展员'
         }
-        if (res.object.jobType === 'inboundMen') {
-          res.object.jobType = '入件操作员'
+        if (res.data.jobType === 'inboundMen') {
+          res.data.jobType = '入件操作员'
         }
-        if (res.object.cloudPayGt1000Rate) {
-          res.object.cloudPayGt1000RatePecent = this.$g.utils.AccMul(res.object.cloudPayGt1000Rate, 1000) + '‰'
-          res.object.cloudPayLe1000RatePecent = this.$g.utils.AccMul(res.object.cloudPayLe1000Rate, 1000) + '‰'
-          res.object.kickbackPecent = this.$g.utils.AccMul(res.object.kickbackPercent, 1000) + '‰'
-          res.object.alipayRatePecent = this.$g.utils.AccMul(res.object.alipayRate, 1000) + '‰'
+        if (res.data.cloudPayGt1000Rate) {
+          res.data.cloudPayGt1000RatePecent = this.$g.utils.AccMul(res.data.cloudPayGt1000Rate, 1000) + '‰'
+          res.data.cloudPayLe1000RatePecent = this.$g.utils.AccMul(res.data.cloudPayLe1000Rate, 1000) + '‰'
+          res.data.kickbackPecent = this.$g.utils.AccMul(res.data.kickbackPercent, 1000) + '‰'
+          res.data.alipayRatePecent = this.$g.utils.AccMul(res.data.alipayRate, 1000) + '‰'
         }
-        this.ruleForm = res.object
-        this.currentType = res.object.contractStatus
+        this.ruleForm = res.data
+        this.currentType = res.data.contractStatus
       })
     },
     confirm($data) {

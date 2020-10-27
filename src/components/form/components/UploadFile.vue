@@ -55,7 +55,7 @@ export default {
         api
           .uploadPicExcel({})
           .then(result => {
-            this.ossData = result.object;
+            this.ossData = result.data;
 
             resolve(true);
           })

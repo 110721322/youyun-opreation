@@ -11,7 +11,7 @@ export default {
   jobInformation: (params) => API.POST('/operation/v1/employee/jobInformation', params),
   perfectUpdate: (params) => API.POST('/operation/v1/employee/perfectUpdate', params),
   superiorsList: (params) => API.POST('/operation/v1/employee/superiorsList', params).then(res => {
-    let superiorList = res.object;
+    let superiorList = res.data;
     if (utils.isArr(superiorList) && superiorList.length > 0) {
       superiorList = superiorList.map($ele => {
         return {
@@ -29,7 +29,7 @@ export default {
    */
   allMemberList: (params) => API.POST('/operation/v1/employee/queryAllEmployeeList', params)
     .then(res => {
-      let employeeList = res.object;
+      let employeeList = res.data;
       if (utils.isArr(employeeList) && employeeList.length > 0) {
         employeeList = employeeList.map($ele => {
           return {
@@ -47,7 +47,7 @@ export default {
    */
   jobsList: (params) => API.GET('/operation/v1/position/selectAll', params)
     .then(res => {
-      let positionList = res.object;
+      let positionList = res.data;
       if (utils.isArr(positionList) && positionList.length > 0) {
         positionList = positionList.map($ele => {
           return {

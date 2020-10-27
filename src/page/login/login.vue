@@ -542,23 +542,23 @@ export default {
         }
         return;
       }
-      const userId = res.object.user.id
-      const roleId = res.object.user.roleId
-      this.saveAccessToken(res.object.accessToken)
-      this.saveUserInfo(res.object.user)
+      const userId = res.data.user.id
+      const roleId = res.data.user.roleId
+      this.saveAccessToken(res.data.accessToken)
+      this.saveUserInfo(res.data.user)
       this.connactWebSocket({
         from: 'operation',
         userId: userId,
-        accessToken: res.object.accessToken
+        accessToken: res.data.accessToken
       });
       this.$store.dispatch('setTodoList');
       api.queryUserVueRouterList({
-        userToken: res.object.accessToken,
+        userToken: res.data.accessToken,
         system: 'operation',
         userId: userId,
         roleId: roleId
       }).then(res => {
-        computedRoleRouter(res.object)
+        computedRoleRouter(res.data)
         this.addRoutes();
         this.$router.push(`/`);
       })

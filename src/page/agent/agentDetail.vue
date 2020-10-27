@@ -462,8 +462,8 @@ export default {
             name: query,
             limit: 30
           }).then(res => {
-            if (res.object) {
-              this.bankOptions = res.object
+            if (res.data) {
+              this.bankOptions = res.data
             }
           })
         }, 200);
@@ -475,26 +475,26 @@ export default {
       api.getBankLineByNo({
         unionCode: item
       }).then(res => {
-        // this.dataForm.bankArea[0] = res.object.provinceCode
-        // this.dataForm.bankArea = res.object.cityCode
+        // this.dataForm.bankArea[0] = res.data.provinceCode
+        // this.dataForm.bankArea = res.data.cityCode
         var provinceName = ''
         var cityName = ''
         var areaName = ''
         var result = this.$g.utils.getNestedArr(areaData, 'children')
         result.forEach(m => {
-          if (m.value === res.object.provinceCode) {
+          if (m.value === res.data.provinceCode) {
             provinceName = m.label
           }
-          if (m.value === res.object.cityCode) {
+          if (m.value === res.data.cityCode) {
             cityName = m.label
           }
-          if (m.value === res.object.areaCode) {
+          if (m.value === res.data.areaCode) {
             areaName = m.label
           }
         })
-        this.bankName = res.object.bankName
+        this.bankName = res.data.bankName
         this.area = provinceName + '/' + cityName + '/' + areaName
-        this.areaCodeNum = res.object.areaCode
+        this.areaCodeNum = res.data.areaCode
       })
     },
     handel_save() {
@@ -534,8 +534,8 @@ export default {
       api.getAgentDetail({
         agentNo: agentNo
       }).then(res => {
-        if (res.object) {
-          const agentDetail = this.$g.utils.deepClone(res.object)
+        if (res.data) {
+          const agentDetail = this.$g.utils.deepClone(res.data)
           if (agentDetail.expandSub === 1) {
             agentDetail.expandSubCn = '是'
           }
@@ -623,7 +623,7 @@ export default {
         this.addContactsDraw = true
         const newFromConfigData = CONTACTS_CONFIG.formData2;
         newFromConfigData.forEach((item, index) => {
-          item.initVal = res.object[item.key];
+          item.initVal = res.data[item.key];
         });
         this.contactConfigData = newFromConfigData;
         this.contactConfigData.title = '编辑沟通计划'
@@ -748,7 +748,7 @@ export default {
         beginDate: value[0],
         endDate: value[1]
       }).then(res => {
-        this.summaryInfo = res.object
+        this.summaryInfo = res.data
       }).catch(() => {})
     },
     // 查询沟通计划列表
@@ -756,7 +756,7 @@ export default {
       api.queryTalkPlan({
         relateCode: this.$route.query.agentNo
       }).then(res => {
-        this.talkPlanList = res.datas
+        this.talkPlanList = res.data
       })
     },
     // 查询沟通记录列表
@@ -764,7 +764,7 @@ export default {
       api.queryPlanList({
         relateCode: this.$route.query.agentNo
       }).then(res => {
-        res.datas.forEach(m => {
+        res.data.forEach(m => {
           if (m.theme === 'dailyTalk') {
             m.themeName = '日常沟通'
             if (m.subTheme === 'question') {
@@ -808,7 +808,7 @@ export default {
             }
           }
         })
-        this.channelList = res.datas
+        this.channelList = res.data
       }).catch(() => {
       })
     },
@@ -1121,8 +1121,8 @@ export default {
       api.addressBookQuery({
         relateCode: this.$route.query.agentNo
       }).then(res => {
-        if (res.datas) {
-          this.contactsList = res.datas
+        if (res.data) {
+          this.contactsList = res.data
         }
       }).catch(() => {
       })
@@ -1133,7 +1133,7 @@ export default {
       api.talkListsGetById({
         id: row.id
       }).then(res => {
-        this.talkListDetail = res.object
+        this.talkListDetail = res.data
       }).catch(err => {
         console.log(err)
       })
@@ -1228,7 +1228,7 @@ export default {
       api.queryWait({
         relateCode: this.$route.query.agentNo
       }).then(res => {
-        this.willConactNum = res.object
+        this.willConactNum = res.data
       }).catch(() => {})
     }
   }

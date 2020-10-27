@@ -46,7 +46,7 @@ export default {
       api.selectModuleProduct({
         moduleCode: 'applicationCenter'
       }).then(res => {
-        const modelList = res.object
+        const modelList = res.data
         this.modelList = modelList
       })
     }

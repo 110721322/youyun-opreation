@@ -168,7 +168,7 @@ export default {
           id: this.id
         })
         .then(res => {
-          this.ruleForm = res.object;
+          this.ruleForm = res.data;
         })
     }
   }

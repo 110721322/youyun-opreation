@@ -75,8 +75,8 @@ export default {
     },
     getPromoCode() {
       api.getPromoCodeListByChannelAgentCode({}).then(res => {
-        if (res.object) {
-          this.promoCodeList = res.object || []
+        if (res.data) {
+          this.promoCodeList = res.data || []
           if (localStorage.getItem('promoCodeId')) {
             this.promoCodeId = parseInt(localStorage.getItem('promoCodeId'))
           }

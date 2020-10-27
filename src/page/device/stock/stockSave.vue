@@ -207,7 +207,7 @@ export default {
     },
     queryAllDevice() {
       api.queryAllDeviceModel().then(res => {
-        this.decviceList = res.object
+        this.decviceList = res.data
       })
     },
     upExecl($data) {
@@ -235,14 +235,14 @@ export default {
           url: this.excelData,
           type: "deviceInput"
         }).then(res => {
-          if (res.object.length === 0) {
+          if (res.data.length === 0) {
             this.$message({
               message: "请填写设备标识",
               type: "warning"
             })
             return
           }
-          $data.deviceIdentifierList = res.object
+          $data.deviceIdentifierList = res.data
           this.deviceInputAdd($data);
         })
       }

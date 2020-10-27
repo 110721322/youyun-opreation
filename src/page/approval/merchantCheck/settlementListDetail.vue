@@ -105,49 +105,49 @@ export default {
       api.getMerchantSettleDetail({
         id: this.id
       }).then(res => {
-        if (res.object.old.merchantType === 'enterprise') {
-          res.object.old.merchantType = '企业'
+        if (res.data.old.merchantType === 'enterprise') {
+          res.data.old.merchantType = '企业'
         }
-        if (res.object.old.merchantType === 'individual') {
-          res.object.old.merchantType = '个体工商户'
+        if (res.data.old.merchantType === 'individual') {
+          res.data.old.merchantType = '个体工商户'
         }
-        if (res.object.old.merchantType === 'private') {
-          res.object.old.merchantType = '个人'
+        if (res.data.old.merchantType === 'private') {
+          res.data.old.merchantType = '个人'
         }
-        if (res.object.old.bankAccountType === 'public') {
-          res.object.old.bankAccountTypeCn = '对公-法人'
+        if (res.data.old.bankAccountType === 'public') {
+          res.data.old.bankAccountTypeCn = '对公-法人'
         }
-        if (res.object.old.bankAccountType === 'private') {
-          if (res.object.old.settleLawFlag === 'legal') {
-            res.object.old.bankAccountTypeCn = '对私-法人'
+        if (res.data.old.bankAccountType === 'private') {
+          if (res.data.old.settleLawFlag === 'legal') {
+            res.data.old.bankAccountTypeCn = '对私-法人'
           }
-          if (res.object.old.settleLawFlag === 'unlegal') {
-            res.object.old.bankAccountTypeCn = '对私-非法人'
-          }
-        }
-        if (res.object.new.merchantType === 'enterprise') {
-          res.object.new.merchantType = '企业'
-        }
-        if (res.object.new.merchantType === 'individual') {
-          res.object.new.merchantType = '个体工商户'
-        }
-        if (res.object.new.merchantType === 'private') {
-          res.object.new.merchantType = '个人'
-        }
-        if (res.object.new.bankAccountType === 'public') {
-          res.object.new.bankAccountTypeCn = '对公-法人'
-        }
-        if (res.object.new.bankAccountType === 'private') {
-          if (res.object.new.settleLawFlag === 'legal') {
-            res.object.new.bankAccountTypeCn = '对私-法人'
-          }
-          if (res.object.new.settleLawFlag === 'unlegal') {
-            res.object.new.bankAccountTypeCn = '对私-非法人'
+          if (res.data.old.settleLawFlag === 'unlegal') {
+            res.data.old.bankAccountTypeCn = '对私-非法人'
           }
         }
-        this.ruleForm = res.object
-        this.rejectTitle = "驳回原因：" + res.object.rejectReason
-        this.currentType = res.object.auditStatus
+        if (res.data.new.merchantType === 'enterprise') {
+          res.data.new.merchantType = '企业'
+        }
+        if (res.data.new.merchantType === 'individual') {
+          res.data.new.merchantType = '个体工商户'
+        }
+        if (res.data.new.merchantType === 'private') {
+          res.data.new.merchantType = '个人'
+        }
+        if (res.data.new.bankAccountType === 'public') {
+          res.data.new.bankAccountTypeCn = '对公-法人'
+        }
+        if (res.data.new.bankAccountType === 'private') {
+          if (res.data.new.settleLawFlag === 'legal') {
+            res.data.new.bankAccountTypeCn = '对私-法人'
+          }
+          if (res.data.new.settleLawFlag === 'unlegal') {
+            res.data.new.bankAccountTypeCn = '对私-非法人'
+          }
+        }
+        this.ruleForm = res.data
+        this.rejectTitle = "驳回原因：" + res.data.rejectReason
+        this.currentType = res.data.auditStatus
         this.merchantType = res.onject.merchantType
       })
     },

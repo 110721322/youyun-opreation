@@ -107,7 +107,7 @@ export default {
       if (this.selectData.length) {
         this.dialogVisible = true
         commonApi.listOperations().then(res => {
-          this.options = res.object
+          this.options = res.data
         })
       } else {
         this.$message({
@@ -225,7 +225,7 @@ export default {
         password: row.password
       }).then(res => {
         if (res.status === 0) {
-          window.open(process.env.VUE_APP_AGENTURL + '#/login?ticket' + '=' + res.object)
+          window.open(process.env.VUE_APP_AGENTURL + '#/login?ticket' + '=' + res.data)
         }
       })
     },

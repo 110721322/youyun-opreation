@@ -405,42 +405,42 @@ export default {
         channelCode: this.channelStatusList[activeIndex].channelCode,
         channelAgentCode: this.channelStatusList[activeIndex].channelAgentCode
       }).then(res => {
-        if (res.object.bankAccountType === 'public') {
-          if (res.object.settleLawFlag === 'legal') {
-            res.object.accountType = '对公-法人'
+        if (res.data.bankAccountType === 'public') {
+          if (res.data.settleLawFlag === 'legal') {
+            res.data.accountType = '对公-法人'
           }
-          if (res.object.settleLawFlag === 'unlegal') {
-            res.object.accountType = '对公-非法人'
-          }
-        }
-        if (res.object.bankAccountType === 'private') {
-          if (res.object.settleLawFlag === 'legal') {
-            res.object.accountType = '对私-法人'
-          }
-          if (res.object.settleLawFlag === 'unlegal') {
-            res.object.accountType = '对私-非法人'
+          if (res.data.settleLawFlag === 'unlegal') {
+            res.data.accountType = '对公-非法人'
           }
         }
-        if (res.object.merchantType === 'enterprise') {
-          res.object.merchantTypeName = '企业'
+        if (res.data.bankAccountType === 'private') {
+          if (res.data.settleLawFlag === 'legal') {
+            res.data.accountType = '对私-法人'
+          }
+          if (res.data.settleLawFlag === 'unlegal') {
+            res.data.accountType = '对私-非法人'
+          }
         }
-        if (res.object.merchantType === 'personal') {
-          res.object.merchantTypeName = '个人'
+        if (res.data.merchantType === 'enterprise') {
+          res.data.merchantTypeName = '企业'
         }
-        if (res.object.merchantType === 'individual') {
-          res.object.merchantTypeName = '个体工商户'
+        if (res.data.merchantType === 'personal') {
+          res.data.merchantTypeName = '个人'
         }
-        if (res.object.cloudPayLe1000Rate) {
-          res.object.cloudPayLe1000RatePecent = this.$g.utils.AccMul(res.object.cloudPayLe1000Rate, 1000) + '‰'
-          res.object.cloudPayGt1000RatePecent = this.$g.utils.AccMul(res.object.cloudPayGt1000Rate, 1000) + '‰'
+        if (res.data.merchantType === 'individual') {
+          res.data.merchantTypeName = '个体工商户'
         }
-        if (!res.object.cloudPayLe1000Rate) {
-          res.object.cloudPayGt1000RatePecent = '0‰'
-          res.object.cloudPayLe1000RatePecent = '0‰'
+        if (res.data.cloudPayLe1000Rate) {
+          res.data.cloudPayLe1000RatePecent = this.$g.utils.AccMul(res.data.cloudPayLe1000Rate, 1000) + '‰'
+          res.data.cloudPayGt1000RatePecent = this.$g.utils.AccMul(res.data.cloudPayGt1000Rate, 1000) + '‰'
         }
-        res.object.alipayRatePecent = this.$g.utils.AccMul(res.object.alipayRate, 1000) + '‰'
-        this.ruleForm = res.object
-        this.currentType = res.object.status
+        if (!res.data.cloudPayLe1000Rate) {
+          res.data.cloudPayGt1000RatePecent = '0‰'
+          res.data.cloudPayLe1000RatePecent = '0‰'
+        }
+        res.data.alipayRatePecent = this.$g.utils.AccMul(res.data.alipayRate, 1000) + '‰'
+        this.ruleForm = res.data
+        this.currentType = res.data.status
       })
     },
     onClick_pass() {

@@ -181,14 +181,14 @@ export default {
     },
     queryAllPrivilegeType() {
       apiAgent.queryAllPrivilegeType({}).then(res => {
-        this.options = res.object;
+        this.options = res.data;
       })
     },
     queryById() {
       apiAgent.queryById({ id: this.id }).then(res => {
         // 编辑前重赋值
         FORM_CONFIG.editData.formData.forEach((item, index) => {
-          item.initVal = res.object[item.key];
+          item.initVal = res.data[item.key];
         });
         this.fromConfigData = FORM_CONFIG.editData;
         this.loading = false;
@@ -213,7 +213,7 @@ export default {
         this.par.agentName = this.input;
       }
       apiAgent.queryAllDistributeAgent(this.par).then(res => {
-        this.testData = res.datas;
+        this.testData = res.data;
       })
     },
     cancel() {

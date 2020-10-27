@@ -243,8 +243,8 @@ export default {
       api.appealGetData({
         id: this.id
       }).then(res => {
-        this.ruleForm = res.object;
-        this.currentType = res.object.status
+        this.ruleForm = res.data;
+        this.currentType = res.data.status
       }).catch(err => {
         this.$message(err);
       });

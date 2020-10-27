@@ -123,18 +123,18 @@ export default {
       api
         .details()
         .then(res => {
-          // if (res.object.isTaskCountdown === 1) {
-          //   res.object.isTaskCountdownCn = true
+          // if (res.data.isTaskCountdown === 1) {
+          //   res.data.isTaskCountdownCn = true
           // }
-          // if (res.object.isTaskCountdown === 0) {
-          //   res.object.isTaskCountdownCn = false
+          // if (res.data.isTaskCountdown === 0) {
+          //   res.data.isTaskCountdownCn = false
           // }
-          Object.keys(res.object).forEach((item, index) => {
+          Object.keys(res.data).forEach((item, index) => {
             if (item === "isTaskCountdown") {
-              this.$set(this.ruleForm, "isTaskCountdown", Boolean(res.object[item]));
+              this.$set(this.ruleForm, "isTaskCountdown", Boolean(res.data[item]));
               return;
             }
-            this.$set(this.ruleForm, item, res.object[item]);
+            this.$set(this.ruleForm, item, res.data[item]);
           });
         })
     },

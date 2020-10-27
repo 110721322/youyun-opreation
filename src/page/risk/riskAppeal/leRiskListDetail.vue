@@ -277,8 +277,8 @@ export default {
       api.appealGetData({
         id: this.id
       }).then(res => {
-        this.ruleForm = res.object;
-        this.currentType = res.object.status
+        this.ruleForm = res.data;
+        this.currentType = res.data.status
       }).catch(err => {
         this.$message(err.errorMessage);
       });
@@ -287,7 +287,7 @@ export default {
       api.queryByCondition({
         banAppealId: this.id
       }).then(res => {
-        this.appealData = res.object;
+        this.appealData = res.data;
       }).catch(err => {
         this.$message(err);
       });
@@ -358,9 +358,9 @@ export default {
       api.getDownloadUrl({
         id: this.id
       }).then(res => {
-        const key = res.object.taskKey
+        const key = res.data.taskKey
         this.getZip(key)
-        // window.open(res.object);
+        // window.open(res.data);
       }).catch();
     },
     getZip(key) {
@@ -368,7 +368,7 @@ export default {
         key: key
       }).then(res => {
         window.location.href = g.config.server + `/common/v1/progress/result?key=${key}`;
-        // const str = res.object.split('/')
+        // const str = res.data.split('/')
         // if (str[0] === str[1]) {
         // window.location.href = zipApi.zipResult({key: key})
         // }

@@ -211,28 +211,28 @@ export default {
         channelCode: this.channelCode,
         channelAgentCode: this.channelAgentCode
       }).then(res => {
-        if (res.object.merchantType === 'enterprise') {
-          res.object.merchantType = '企业'
+        if (res.data.merchantType === 'enterprise') {
+          res.data.merchantType = '企业'
         }
-        if (res.object.merchantType === 'individual') {
-          res.object.merchantType = '个体工商户'
+        if (res.data.merchantType === 'individual') {
+          res.data.merchantType = '个体工商户'
         }
-        if (res.object.merchantType === 'private') {
-          res.object.merchantType = '个人'
+        if (res.data.merchantType === 'private') {
+          res.data.merchantType = '个人'
         }
-        if (res.object.bankAccountType === 'public') {
-          res.object.bankAccountType = '对公'
+        if (res.data.bankAccountType === 'public') {
+          res.data.bankAccountType = '对公'
         }
-        if (res.object.bankAccountType === 'private') {
-          res.object.bankAccountType = '对私'
+        if (res.data.bankAccountType === 'private') {
+          res.data.bankAccountType = '对私'
         }
-        if (res.object.status === 'platformReject' || res.object.status === 'channelReject') {
-          res.object.rejectReason = '驳回原因：' + res.object.rejectReason
+        if (res.data.status === 'platformReject' || res.data.status === 'channelReject') {
+          res.data.rejectReason = '驳回原因：' + res.data.rejectReason
         }
-        res.object.shopLicenseTime = res.object.shopLicenseBegDate + '至' + res.object.shopLicenseEndDate
-        res.object.alipayRatePecent = this.$g.utils.AccMul(res.object.alipayRate, 1000) + '‰'
-        this.ruleForm = res.object;
-        this.currentType = res.object.status
+        res.data.shopLicenseTime = res.data.shopLicenseBegDate + '至' + res.data.shopLicenseEndDate
+        res.data.alipayRatePecent = this.$g.utils.AccMul(res.data.alipayRate, 1000) + '‰'
+        this.ruleForm = res.data;
+        this.currentType = res.data.status
       }).catch();
     },
     confirm($data) {

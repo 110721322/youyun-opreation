@@ -425,7 +425,7 @@ export default {
     officialModeActive() {
       api_topAgent.officialModeActive({}).then(res => {
         if (res.status === 0) {
-          this.ifBuyMode = res.object
+          this.ifBuyMode = res.data
         }
       })
     },
@@ -438,8 +438,8 @@ export default {
             name: query,
             limit: 30
           }).then(res => {
-            if (res.object) {
-              this.bankOptions = res.object
+            if (res.data) {
+              this.bankOptions = res.data
             }
           })
         }, 200);
@@ -456,19 +456,19 @@ export default {
         var areaName = ''
         var result = this.$g.utils.getNestedArr(areaData, 'children')
         result.forEach(m => {
-          if (m.value === res.object.provinceCode) {
+          if (m.value === res.data.provinceCode) {
             provinceName = m.label
           }
-          if (m.value === res.object.cityCode) {
+          if (m.value === res.data.cityCode) {
             cityName = m.label
           }
-          if (m.value === res.object.areaCode) {
+          if (m.value === res.data.areaCode) {
             areaName = m.label
           }
         })
-        this.bankName = res.object.bankName
+        this.bankName = res.data.bankName
         this.area = provinceName + '/' + cityName + '/' + areaName
-        this.areaCodeNum = res.object.areaCode
+        this.areaCodeNum = res.data.areaCode
       })
     },
     onClick_changeClientType($item) {
@@ -493,7 +493,7 @@ export default {
         beginDate: this.timeDate[0],
         endDate: this.timeDate[1]
       }).then(res => {
-        this.summaryInfo = res.object
+        this.summaryInfo = res.data
       })
     },
     // 查询通讯簿
@@ -501,8 +501,8 @@ export default {
       api.addressBookQuery({
         relateCode: this.channelAgentCode
       }).then(res => {
-        if (res.datas) {
-          this.contactsList = res.datas
+        if (res.data) {
+          this.contactsList = res.data
         }
       })
     },
@@ -511,7 +511,7 @@ export default {
       api.queryWait({
         relateCode: this.channelAgentCode
       }).then(res => {
-        this.willConactNum = res.object
+        this.willConactNum = res.data
       }).catch(() => {})
     },
     // 编辑沟通计划
@@ -524,7 +524,7 @@ export default {
         this.addContactsDraw = true
         const newFromConfigData = CONTACTS_CONFIG.formData2;
         newFromConfigData.forEach((item, index) => {
-          item.initVal = res.object[item.key];
+          item.initVal = res.data[item.key];
         });
         this.contactConfigData = newFromConfigData;
       }).catch(() => {})
@@ -547,7 +547,7 @@ export default {
       api.talkListsGetById({
         id: row.id
       }).then(res => {
-        this.talkListDetail = res.object
+        this.talkListDetail = res.data
       })
     },
     // 弹出新增联系人的右边抽屉
@@ -760,7 +760,7 @@ export default {
       }
       api_systemConfig.getPermistionTemplate(params).then(res => {
         if (res.status === 0) {
-          this.permissionTemplate = res.object;
+          this.permissionTemplate = res.data;
           this.innerDrawer = true;
         }
       })
@@ -1008,46 +1008,46 @@ export default {
         channelAgentCode: this.channelAgentCode,
         roleCode: store.state.admin.userInfo.roleId
       }).then(res => {
-        const ruleForm = res.object
+        const ruleForm = res.data
         var provinceName = ''
         var cityName = ''
         var areaName = ''
         var result = this.$g.utils.getNestedArr(areaData, 'children')
         result.forEach(m => {
-          if (m.value === res.object.expProvinceCode) {
+          if (m.value === res.data.expProvinceCode) {
             provinceName = m.label
             ruleForm.provinceName = m.label
           }
-          if (m.value === res.object.expCityCode) {
+          if (m.value === res.data.expCityCode) {
             cityName = m.label
             ruleForm.cityName = m.label
           }
-          if (m.value === res.object.expAreaCode) {
+          if (m.value === res.data.expAreaCode) {
             areaName = m.label
             ruleForm.areaName = m.label
           }
         })
-        if (res.object.provinceCode) {
+        if (res.data.provinceCode) {
           var area = []
-          area.push(res.object.provinceCode, res.object.cityCode, res.object.areaCode)
-          res.object.area = area
-          res.object.areaEmailAddress = res.object.provinceName + res.object.cityName + res.object.areaName + res.object.expAddress
+          area.push(res.data.provinceCode, res.data.cityCode, res.data.areaCode)
+          res.data.area = area
+          res.data.areaEmailAddress = res.data.provinceName + res.data.cityName + res.data.areaName + res.data.expAddress
         }
-        if (res.object.expAreaCode) {
+        if (res.data.expAreaCode) {
           var expAreaData = []
-          expAreaData.push(res.object.expProvinceCode, res.object.expCityCode, res.object.expAreaCode)
-          res.object.expAreaData = expAreaData
+          expAreaData.push(res.data.expProvinceCode, res.data.expCityCode, res.data.expAreaCode)
+          res.data.expAreaData = expAreaData
         }
-        if (res.object.businessModes) {
-          res.object.businessModes.forEach(m => {
+        if (res.data.businessModes) {
+          res.data.businessModes.forEach(m => {
             if (m.modeName === '小马哥代理') {
-              res.object.businessExpiredDate = m.expiredDate
+              res.data.businessExpiredDate = m.expiredDate
             } else {
-              res.object.businessExpiredDate = ''
+              res.data.businessExpiredDate = ''
             }
           })
         }
-        res.object.emailDetailAddress = provinceName + cityName + areaName
+        res.data.emailDetailAddress = provinceName + cityName + areaName
         ruleForm.wechatPayRate = this.$g.utils.AccMul(ruleForm.wechatPayRate, 1000);
         ruleForm.alipayRate = this.$g.utils.AccMul(ruleForm.alipayRate, 1000);
         ruleForm.cloudPayLe1000Rate = this.$g.utils.AccMul(ruleForm.cloudPayLe1000Rate, 1000);

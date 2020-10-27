@@ -89,13 +89,13 @@ export default {
       api.subAgentDetail({
         agentNo: agentNo
       }).then(res => {
-        if (res.object.bankAccountType === 'public') {
-          res.object.bankAccountTypeCn = '对公'
+        if (res.data.bankAccountType === 'public') {
+          res.data.bankAccountTypeCn = '对公'
         }
-        if (res.object.bankAccountType === 'private') {
-          res.object.bankAccountTypeCn = '对私'
+        if (res.data.bankAccountType === 'private') {
+          res.data.bankAccountTypeCn = '对私'
         }
-        var request = res.object;
+        var request = res.data;
         this.ruleForm = {
           agentName: request.agentName,
           personName: request.personName,
@@ -145,8 +145,8 @@ export default {
         api.queryNamesByCondition({
           agentName: query
         }).then(res => {
-          if (res.object) {
-            this.options = res.object
+          if (res.data) {
+            this.options = res.data
           }
           this.loading = false
         })
