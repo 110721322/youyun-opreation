@@ -97,16 +97,17 @@ export default {
   overflow: hidden;
   background: #fff;
 }
+
 .form_item {
   float: left !important;
 }
+
 .clear_both {
   clear: both !important;
 }
+
 .btn_list {
-  /* background: rebeccapurple; */
   position: absolute;
-  right: 0;
   bottom: 21px;
   right: 24px;
 }
@@ -114,15 +115,18 @@ export default {
 .demo-table-expand {
   font-size: 0;
 }
+
 .demo-table-expand label {
   width: 90px;
   color: #99a9bf;
 }
+
 .demo-table-expand .el-form-item {
   margin-right: 0;
   margin-bottom: 0;
   /* width: 25%; */
 }
+
 .form-box {
   display: flex;
   justify-content: space-between;
@@ -131,10 +135,12 @@ export default {
 .demo-table-expand {
   font-size: 0;
 }
+
 .demo-table-expand label {
   width: 90px;
   color: #99a9bf;
 }
+
 .demo-table-expand .el-form-item {
   margin-right: 0;
   margin-bottom: 0;
@@ -144,6 +150,7 @@ export default {
 .tabale_title_box {
   height: 52px;
   width: 100%;
+
   .title {
     font-size: 16px;
     font-family: PingFangSC-Medium, PingFang SC;
@@ -153,6 +160,7 @@ export default {
     margin-left: 10px;
     // line-height: 52px;
   }
+
   .btn {
     float: right;
   }

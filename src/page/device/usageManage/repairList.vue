@@ -236,7 +236,6 @@ export default {
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     },
-    selectionChange($val) {},
     onClick_detail($row) {
       this.$router.push({
         name: "repairDetail",

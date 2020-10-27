@@ -137,8 +137,6 @@ export default {
         if (res.object) {
           this.$refs.table.getData()
         }
-      }).catch(err => {
-        console.log(err)
       })
       this.drawer = false
     },

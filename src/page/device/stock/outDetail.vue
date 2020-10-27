@@ -230,16 +230,18 @@ export default {
   overflow: hidden;
   background: #fff;
 }
+
 .form_item {
   float: left !important;
 }
+
 .clear_both {
   clear: both !important;
 }
+
 .btn_list {
   /* background: rebeccapurple; */
   position: absolute;
-  right: 0;
   bottom: 21px;
   right: 24px;
 }
@@ -247,19 +249,23 @@ export default {
 .demo-table-expand {
   font-size: 0;
 }
+
 .demo-table-expand label {
   width: 90px;
   color: #99a9bf;
 }
+
 .demo-table-expand .el-form-item {
   margin-right: 0;
   margin-bottom: 0;
   /* width: 25%; */
 }
+
 .form-box {
   display: flex;
   justify-content: space-between;
 }
+
 .left_box {
   width: 290px;
   height: 457px;
@@ -267,23 +273,28 @@ export default {
   border-right: 1px solid #ebeef5;
   float: left;
 }
+
 .right_box {
   float: left;
   width: calc(100% - 290px - 48px);
   margin: 24px;
 }
+
 .device_list {
   margin-top: 20px;
   height: 392px;
   overflow: auto;
 }
+
 .device_item {
   width: 100%;
   height: 48px;
 }
+
 .device_item.select_item {
   background: #F1F5F6;
 }
+
 .device_name {
   width: 101px;
   height: 48px;
@@ -294,6 +305,7 @@ export default {
   float: left;
   margin-left: 30px;
 }
+
 .device_num {
   width: 31px;
   height: 22px;
@@ -304,53 +316,62 @@ export default {
   float: right;
   margin-right: 30px;
 }
-  .shipping {
-    width: 100%;
-    padding: 24px 24px;
-  }
-  .shipping_title {
-    width: 100%;
-    height: 64px;
-    background: #ffffff;
-    padding-left: 24px;
-    line-height: 64px;
-    font-size: 16px;
-    font-weight: 500;
-    border-bottom: 1px solid #EBEEF5;
-  }
-  .shipping_content {
-    width: 100%;
-    background: #ffffff;
-    padding: 32px 32px;
-  }
-  .shipping_content .pay_img{
-    width: 100%;
-    margin-bottom: 32px;
-  }
-  .pay_img img {
-    width: 100px;
-    height: 100px;
-    border-radius: 4px;
-    display: block;
-    margin-bottom: 8px;
-  }
-  .pay_img p {
-    padding-left: 22px;
-    font-size: 14px;
-    color: #606266;
-  }
-  .shipping_content ul {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .shipping_content ul li {
-    width: 33.3%;
-    margin-bottom: 16px;
-    line-height: 22px;
-    font-size: 14px;
-  }
-  .shipping_content ul li span:nth-child(2) {
-    font-size: 14px;
-    color: #606266;
-  }
+
+.shipping {
+  width: 100%;
+  padding: 24px 24px;
+}
+
+.shipping_title {
+  width: 100%;
+  height: 64px;
+  background: #fff;
+  padding-left: 24px;
+  line-height: 64px;
+  font-size: 16px;
+  font-weight: 500;
+  border-bottom: 1px solid #EBEEF5;
+}
+
+.shipping_content {
+  width: 100%;
+  background: #fff;
+  padding: 32px 32px;
+}
+
+.shipping_content .pay_img{
+  width: 100%;
+  margin-bottom: 32px;
+}
+
+.pay_img img {
+  width: 100px;
+  height: 100px;
+  border-radius: 4px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.pay_img p {
+  padding-left: 22px;
+  font-size: 14px;
+  color: #606266;
+}
+
+.shipping_content ul {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.shipping_content ul li {
+  width: 33.3%;
+  margin-bottom: 16px;
+  line-height: 22px;
+  font-size: 14px;
+}
+
+.shipping_content ul li span:nth-child(2) {
+  font-size: 14px;
+  color: #606266;
+}
 </style>

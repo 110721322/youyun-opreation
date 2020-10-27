@@ -374,10 +374,10 @@ export default {
   created() {
     this.queryEquipment()
     this.handleProvince()
+    this.queryRegion()
+    this.queryRegionTrade()
   },
   mounted() {
-    this.queryRegion();
-    this.queryRegionTrade();
   },
   methods: {
     queryEquipment() {

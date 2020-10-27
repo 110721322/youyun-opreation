@@ -371,7 +371,7 @@ export default {
         personMobile: '',
         email: '',
         address: '',
-        county: '',
+        county: [],
         provinceCode: '',
         cityCode: '',
         areaCode: '',
