@@ -1,4 +1,4 @@
-import { validEmail } from "@/libs/kit/validate";
+// import { validEmail } from "@/libs/kit/validate";
 
 export const FORM_CONFIG = {
   editData: {
@@ -141,17 +141,18 @@ export const FORM_CONFIG = {
         key: "email",
         initVal: "",
         rules: [
-          {required: true, message: '请输入邮箱', trigger: 'blur'},
-          {
-            validator: (rule, value, callback) => {
-              if (!validEmail(value)) {
-                callback(new Error("请输入正确的邮箱"))
-              } else {
-                callback();
-              }
-            },
-            trigger: "blur"
-          }
+          {required: true, message: '请输入邮箱', trigger: 'blur'}
+          // {
+          //   validator: (rule, value, callback) => {
+          //     if (value === '') {
+          //       callback();
+          //     }
+          //     if (!validEmail(value) && value !== '') {
+          //       callback(new Error("请输入正确的邮箱"))
+          //     }
+          //   },
+          //   trigger: "blur"
+          // }
         ]
       }
     ]

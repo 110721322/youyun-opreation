@@ -160,12 +160,17 @@ export default {
           this.$message({
             type: "success",
             message: "已通过"
-          });
+          })
+          this.$router.push({
+            name: 'agentDetail',
+            query: {
+              agentNo: this.agentNo
+            }
+          })
         }
         this.drawer = false
-        this.$refs.table.getData()
-      }).catch(() => {
-      });
+        // this.$refs.table.getData()
+      })
     },
     adopt(row) {
       this.drawer = true

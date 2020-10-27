@@ -15,6 +15,7 @@
             </div>
             <p class="title1">欢迎使用小马哥服务商管理系统</p>
             <p class="title2">平台将在一个工作日内为您进行资料审核请您耐心等待</p>
+            <el-button type="primary" @click="handel_back">返回登录</el-button>
           </div>
         </div>
       </div>
@@ -27,6 +28,11 @@ export default {
   name: "RegistSuccess",
   data() {
     return {}
+  },
+  methods: {
+    handel_back() {
+      this.$router.replace(`/login`);
+    }
   }
 }
 </script>
@@ -84,6 +90,12 @@ export default {
                 height: 80px;
                 margin:0 auto;
               }
+            }
+            button {
+              display: block;
+              padding: 9px 15px;
+              margin-top: 30px;
+              margin-left: calc(50% - 40px);
             }
           }
           p {

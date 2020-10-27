@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="p_head">服务商审核列表</div>
+    <div class="p_head">顶级服务商审核列表</div>
     <search
       :open-height="searchMaxHeight"
       :form-base-data="searchConfig.formData"
@@ -170,8 +170,13 @@ export default {
             type: "success",
             message: "已通过"
           });
+          this.$router.push({
+            name: "topAgentDetail",
+            query: {
+              channelAgentCode: this.selectOption.channelAgentCode
+            }
+          })
           this.drawer = false;
-          this.$refs.table.getData();
         })
       })
     }

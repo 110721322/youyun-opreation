@@ -97,8 +97,8 @@ export default {
     },
     search($ruleForm) {
       const params = {
-        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
-        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        beginDate: $ruleForm.date[0] ? $ruleForm.date[0] : this.$g.utils.getToday(),
+        endDate: $ruleForm.date[0] ? $ruleForm.date[1] : this.$g.utils.getToday(),
         deviceId: $ruleForm.deviceId,
         freezeStatus: $ruleForm.freezeStatus
       };

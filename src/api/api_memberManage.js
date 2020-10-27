@@ -45,7 +45,7 @@ export default {
    * @param params
    * @returns {Promise<*>}
    */
-  jobsList: (params) => API.POST('/operation/v1/employee/getPositionList', params)
+  jobsList: (params) => API.GET('/operation/v1/position/selectAll', params)
     .then(res => {
       let positionList = res.object;
       if (utils.isArr(positionList) && positionList.length > 0) {

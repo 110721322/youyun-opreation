@@ -69,7 +69,7 @@
           :form-config="jobconfigData.formConfig"
           :form-data="jobconfigData.formModel"
           :grid-edit-width="150"
-          :is-async="true"
+          :is-async="false"
           :is-select="false"
           :is-expand="false"
           :default-expand-all="false"

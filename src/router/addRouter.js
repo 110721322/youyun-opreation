@@ -1788,7 +1788,7 @@ const asyncRoutes = {
         path: '/topAgent/topAgentList/topAgentDetail',
         name: 'topAgentDetail',
         meta: {
-          title: '服务商详情',
+          title: '顶级服务商详情',
           icon: 'topAgentDetail',
           fatherName: 'topAgentList',
           parentName: 'topAgent'

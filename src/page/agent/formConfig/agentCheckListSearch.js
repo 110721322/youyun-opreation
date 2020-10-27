@@ -49,10 +49,6 @@ export const FORM_CONFIG = {
       span: 11,
       options: [
         {
-          label: '待签约',
-          value: 'waitSign'
-        },
-        {
           label: '待审核',
           value: 'audit'
         },

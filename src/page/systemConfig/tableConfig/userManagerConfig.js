@@ -4,38 +4,32 @@ export const USERLIST_CONFIG = {
   gridConfig: [
     {
       label: '花名',
-      prop: 'jobName',
-      width: '150px'
+      prop: 'jobName'
     },
     {
       label: '工号',
-      prop: 'jobNumber',
-      width: '150px'
+      prop: 'jobNumber'
     },
     {
       label: '姓名',
-      prop: 'name',
-      width: '150px'
+      prop: 'name'
     },
     {
       label: '职位',
-      prop: 'positionName',
-      width: '150px'
+      prop: 'positionName'
     },
     {
       label: '上级',
-      prop: 'superiorName',
-      width: '150px'
+      prop: 'superiorName'
     },
     {
       label: '手机号',
       prop: 'phone',
-      width: '150px'
+      width: '120px'
     },
     {
       label: '性别',
       prop: 'sex',
-      width: '150px',
       formatter($row) {
         const sex = $row[this.prop];
         if (sex === 0) {
@@ -49,17 +43,15 @@ export const USERLIST_CONFIG = {
     {
       label: '创建时间',
       prop: 'createTime',
-      width: '180px'
+      width: '150px'
     },
     {
       label: '邮箱',
-      prop: 'email',
-      width: '150px'
+      prop: 'email'
     },
     {
       label: '状态',
       prop: 'status',
-      width: '150px',
       formatter($row) {
         const status = $row[this.prop];
         if (status === 'lock') {
