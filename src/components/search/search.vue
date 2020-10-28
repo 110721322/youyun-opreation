@@ -36,6 +36,7 @@
                   :type="formItem.timeType"
                   :is-rest="isRest"
                   @dataSelect="handleDataSelect"
+                  @timeSearch="timeSearch"
                 />
               </el-form-item>
             </el-col>
@@ -132,6 +133,9 @@ export default {
   methods: {
     handleDataSelect($time) {
       this.$emit("dataSelect", $time);
+    },
+    timeSearch($item) {
+      this.$emit("search", this.ruleForm);
     },
     init() {
       if (this.formBaseData.length > 0) {

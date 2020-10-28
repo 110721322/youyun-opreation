@@ -64,9 +64,10 @@ export default {
   mounted() {},
   methods: {
     search($ruleForm) {
+      console.log($ruleForm)
       const params = {
-        beginDate: $ruleForm.date ? $ruleForm.date[0] : this.$g.utils.getToday(),
-        endDate: $ruleForm.date ? $ruleForm.date[1] : this.$g.utils.getToday()
+        beginDate: $ruleForm.date[0] ? $ruleForm.date[0] : "",
+        endDate: $ruleForm.date[0] ? $ruleForm.date[1] : ""
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
