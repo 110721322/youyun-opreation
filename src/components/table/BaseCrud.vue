@@ -382,6 +382,15 @@ export default {
     flex-wrap: wrap;
   }
 }
+
+.el-table td div {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .icon-increase {
   color: #3abd2d;
   margin-right: 8px;

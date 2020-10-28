@@ -3,7 +3,7 @@ export const USER_CONFIG = {
     {
       label: '服务商',
       prop: [{ key: 'agentName' }, { key: 'agentNo', label: "ID:" }],
-      width: '200px'
+      width: '180px'
     },
     {
       label: '开通时间',

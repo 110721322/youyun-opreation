@@ -6,7 +6,6 @@ export const SEARCH_CONFIG = {
       key: 'date',
       isSelectToday: true,
       querySelectAll: true,
-      datatype: 'datetimerange',
       labelWidth: '80px',
       class: 'max-width',
       span: 24
