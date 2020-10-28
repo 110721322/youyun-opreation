@@ -60,8 +60,8 @@ export default {
   methods: {
     search($form) {
       this.params = {
-        beginTime: $form.date[0] ? $form.date[0] : null,
-        endTime: $form.date[1] ? $form.date[1] : null,
+        beginTime: $form.date[0] ? $form.date[0] + ' 00:00:00' : null,
+        endTime: $form.date[1] ? $form.date[1] + ' 23:59:59' : null,
         settleStatus: $form.settleStatus || 0
       }
     }
