@@ -117,13 +117,6 @@ export default {
                 newArr.push(item);
               }
             }
-            if (res.data) {
-              for (const item of res.data) {
-                item.value = item[urlOptions.keyName];
-                item.label = item[urlOptions.valueName];
-                newArr.push(item);
-              }
-            }
             this.selectOptions = newArr;
             // 设置初始值
             if (this.formItem.requireFirst && (!this.ruleForm[this.formItem.key])) {
@@ -159,18 +152,8 @@ export default {
               newArr.push(item);
             }
           }
-          if (res.data) {
-            for (const item of res.data) {
-              item.value = item[urlOptions.keyName];
-              item.label = item[urlOptions.valueName];
-              newArr.push(item);
-            }
-          }
           this.selectOptions = newArr;
         })
-        .catch(err => {
-          console.error(err);
-        });
     }
   }
 };

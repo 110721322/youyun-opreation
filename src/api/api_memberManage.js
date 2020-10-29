@@ -34,7 +34,8 @@ export default {
         employeeList = employeeList.map($ele => {
           return {
             label: $ele.jobName || $ele.name || $ele.nickName || $ele.superiorId,
-            value: $ele.id
+            value: $ele.id,
+            roleId: $ele.roleId
           };
         })
         store.dispatch('setEmployeeList', employeeList)
@@ -51,8 +52,8 @@ export default {
       if (utils.isArr(positionList) && positionList.length > 0) {
         positionList = positionList.map($ele => {
           return {
-            label: $ele.positionName,
-            value: $ele.positionId
+            label: $ele.name,
+            value: $ele.id
           };
         })
         store.dispatch('setPositionList', positionList)

@@ -207,7 +207,7 @@ export default {
     },
     changeEmployee($option) {
       this.queryParams = {
-        userId: $option.id,
+        userId: $option.value,
         roleId: $option.roleId,
         system: 'operation'
       }

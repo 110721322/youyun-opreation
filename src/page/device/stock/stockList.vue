@@ -94,6 +94,7 @@ export default {
     onClick_buy($row) {
       this.deviceId = $row.id;
       this.deviceModel = $row.deviceModel
+      this.salePrice = $row.salePrice
       this.fromConfigData = FORM_CONFIG.buyData;
       this.fromConfigData.formData[1].initVal = $row.deviceModel
       this.formStatus = "buy";
@@ -204,7 +205,7 @@ export default {
             count: $data.count,
             deviceModel: this.deviceModel,
             deviceId: this.deviceId,
-            salePrice: $data.actualAmount
+            salePrice: this.salePrice
           }]
         }).then(res => {
           if (res.status === 0) {

@@ -8,7 +8,7 @@ export const FORM_CONFIG = {
       label: '筛选时间',
       querySelectAll: true,
       key: 'date',
-      labelWidth: '80px',
+      labelWidth: '110px',
       datatype: 'datetimerange',
       span: 22,
       isSelectToday: true
@@ -17,7 +17,6 @@ export const FORM_CONFIG = {
       type: 10,
       label: '精准筛选',
       key: 'inputForm',
-      placeholder: "请输入商户号",
       options: [
         {
           label: '商户ID',

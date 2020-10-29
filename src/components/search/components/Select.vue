@@ -100,9 +100,6 @@ export default {
             }
             this.selectOptions = newArr;
           })
-          .catch(err => {
-            console.log(err);
-          });
       }
     }
   }
