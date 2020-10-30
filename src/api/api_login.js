@@ -16,5 +16,7 @@ export default {
   // 发送忘记密码的验证码
   sendForgetCode: (params) => API.GET('/common/v1/user/sendForgetPasswordCode', params),
   // 跨平台登录
-  loginWithTicket: (params) => API.GET('/common/v1/user/loginWithTicket', params)
+  loginWithTicket: (params) => API.GET('/common/v1/user/loginWithTicket', params),
+  // 修改密码（登录之后在头部导航栏点击修改）
+  updatePassword: (params) => API.POST('/merchant/v1/merchantInfo/updatePassword', params)
 };

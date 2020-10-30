@@ -31,6 +31,10 @@ module.exports = {
         '/agent': {
           target: process.env.VUE_APP_AGENTURL,
           changeOrigin: true
+        },
+        '/merchant': {
+          target: process.env.VUE_APP_MERCHANTURL,
+          changeOrigin: true
         }
       }
     },

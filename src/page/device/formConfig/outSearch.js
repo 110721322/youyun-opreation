@@ -57,16 +57,32 @@ export const SEARCH_CONFIG = {
           value: ''
         },
         {
-          label: '未激活',
+          label: '待付款',
           value: 1
         },
         {
-          label: '激活成功',
+          label: '已关闭',
           value: 2
         },
         {
-          label: '激活失败',
+          label: '财务审核中',
           value: 3
+        },
+        {
+          label: '财务驳回',
+          value: 4
+        },
+        {
+          label: '待发货',
+          value: 5
+        },
+        {
+          label: '已发货',
+          value: 6
+        },
+        {
+          label: '发货驳回',
+          value: 7
         }
       ]
     },

@@ -51,6 +51,7 @@
       </el-dropdown>
     </div>
     <el-drawer :visible.sync="passwordDrawer" :with-header="false" size="500px">
+      <div class="p_head">修改密码</div>
       <Form
           v-if="passwordDrawer"
           :form-base-data="formConfig.formData"
@@ -155,10 +156,37 @@ export default {
     modify() {
       this.passwordDrawer = true
     },
-    confirm() {
-      this.passwordDrawer = true
+    confirm($ruleForm) {
+      // this.passwordDrawer = true
+      if ($ruleForm.oldPassword === $ruleForm.newPassword) {
+        this.$message({
+          type: 'warning',
+          message: "修改密码原密码相同，请重新输入",
+          duration: 2000
+        })
+        return;
+      }
+      if ($ruleForm.newPassword !== $ruleForm.repeatPassword) {
+        this.$message({
+          type: 'warning',
+          message: "修改密码与确认密码不同，请重新输入",
+          duration: 2000
+        })
+        return;
+      }
+      $ruleForm.merchantNo = this.$store.state.admin.userInfo.number
+      api.updatePassword($ruleForm).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            type: 'success',
+            message: "已修改",
+            duration: 2000
+          })
+          this.passwordDrawer = false;
+        }
+      })
     },
-    cancle() {
+    cancel() {
       this.passwordDrawer = false
     }
   }

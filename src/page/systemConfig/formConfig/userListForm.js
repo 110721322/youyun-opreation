@@ -162,28 +162,28 @@ export const FORM_CONFIG = {
           {required: true, message: '请选择状态', trigger: 'blur'}
         ]
       },
-      {
-        type: 1,
-        id: 19,
-        label: "职位",
-        key: "position",
-        initVal: [],
-        options: [],
-        rules: [
-          {required: true, message: '请选择状态', trigger: 'blur'}
-        ]
-      },
-      {
-        type: 1,
-        id: 24,
-        label: "直属上级",
-        key: "superiorId",
-        initVal: [],
-        options: [],
-        rules: [
-          {required: true, message: '请选择直属上级', trigger: 'blur'}
-        ]
-      },
+      // {
+      //   type: 1,
+      //   id: 19,
+      //   label: "职位",
+      //   key: "position",
+      //   initVal: [],
+      //   options: [],
+      //   rules: [
+      //     {required: true, message: '请选择状态', trigger: 'blur'}
+      //   ]
+      // },
+      // {
+      //   type: 1,
+      //   id: 24,
+      //   label: "直属上级",
+      //   key: "superiorId",
+      //   initVal: [],
+      //   options: [],
+      //   rules: [
+      //     {required: true, message: '请选择直属上级', trigger: 'blur'}
+      //   ]
+      // },
       {
         type: 0,
         label: "密码",
