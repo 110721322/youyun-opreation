@@ -24,8 +24,6 @@
           :api-service="api"
           @selectionChange="selectionChange"
           @detail="go_detail"
-          @openAgentManager="openAgentManager"
-          @openMerchantManager="openMerchantManager"
       >
         <div slot="head" slot-scope="item">
           <span>{{ item.item.label }}</span>
@@ -73,8 +71,6 @@ export default {
     };
   },
   created() {
-    this.params.beginTime = this.getDay(0);
-    this.params.endTime = this.getDay(0);
   },
   mounted() {
     this.queryInit()
@@ -118,8 +114,8 @@ export default {
     search($ruleForm) {
       var params = {}
       params = {
-        beginTime: $ruleForm.date[0] ? $ruleForm.date[0] : this.getDay(0),
-        endTime: $ruleForm.date[0] ? $ruleForm.date[1] : this.getDay(0),
+        beginTime: $ruleForm.date[0] ? $ruleForm.date[0] : '',
+        endTime: $ruleForm.date[0] ? $ruleForm.date[1] : '',
         provinceCode: $ruleForm.address ? $ruleForm.address[0] : null,
         cityCode: $ruleForm.address ? $ruleForm.address[1] : null,
         useChannelCode: $ruleForm.channelCode ? $ruleForm.channelCode : null,
@@ -129,9 +125,7 @@ export default {
       }
       params[$ruleForm.inputForm] = $ruleForm.inputFormVal
       this.params = params
-    },
-    openAgentManager() {},
-    openMerchantManager() {}
+    }
   }
 };
 </script>

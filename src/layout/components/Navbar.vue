@@ -91,7 +91,7 @@ export default {
         formData: [
           {
             type: 0,
-            label: '原始密码',
+            label: '输入原密码',
             inputType: "password",
             key: 'oldPassword',
             rules: [
@@ -100,7 +100,7 @@ export default {
           },
           {
             type: 0,
-            label: '修改密码',
+            label: '输入新密码',
             inputType: "password",
             key: 'newPassword',
             rules: [
@@ -109,7 +109,7 @@ export default {
           },
           {
             type: 0,
-            label: '新密码确认',
+            label: '确认新密码',
             inputType: "password",
             key: 'repeatPassword',
             rules: [

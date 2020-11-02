@@ -110,7 +110,7 @@ axios.interceptors.response.use((response) => {
         break;
 
       case 500:
-        error.message = error.response.data.errorMessage || '服务器内部错误';
+        error.message = error.response.data.message || '服务器内部错误';
         break;
 
       case 501:
