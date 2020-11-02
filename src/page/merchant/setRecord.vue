@@ -158,6 +158,7 @@ export default {
           this.configData = SUCCESS_CONFIG;
           break;
       }
+      this.getSettle(this.params.beginDate, this.params.endDate, this.params.merchantNo, this.params.merchantName, this.params.channelMerchantNo, this.params.channel)
       this.isChangeMode = false;
       setTimeout(() => {
         this.isChangeMode = true;
