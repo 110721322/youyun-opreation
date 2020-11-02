@@ -57,22 +57,6 @@ export const SEARCH_CONFIG = {
           value: ''
         },
         {
-          label: '待付款',
-          value: 1
-        },
-        {
-          label: '已关闭',
-          value: 2
-        },
-        {
-          label: '财务审核中',
-          value: 3
-        },
-        {
-          label: '财务驳回',
-          value: 4
-        },
-        {
           label: '待发货',
           value: 5
         },
@@ -81,7 +65,7 @@ export const SEARCH_CONFIG = {
           value: 6
         },
         {
-          label: '发货驳回',
+          label: '已驳回',
           value: 7
         }
       ]

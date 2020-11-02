@@ -75,6 +75,7 @@ export const FORM_CONFIG = {
         label: '备注',
         key: 'remark',
         inputType: 'textarea',
+        maxlength: '50',
         rules: setRules('备注').isRequired.get
       },
       {
@@ -82,14 +83,16 @@ export const FORM_CONFIG = {
         label: '所属服务商',
         key: 'agentNo',
         isSearch: true,
+        visibleChange: true,
         urlOptions: {
           url: api.agentList,
           keyName: 'agentNo',
           valueName: 'agentName',
           method: 'get',
+          searchKey: 'agentName',
           params: {
             currentPage: 1,
-            pageSize: 10000
+            pageSize: 10
           }
         },
         rules: setRules('所属服务商').isSelected.get
@@ -169,14 +172,16 @@ export const FORM_CONFIG = {
         label: '所属服务商',
         key: 'agentNo',
         isSearch: true,
+        visibleChange: true,
         urlOptions: {
           url: api.agentList,
           keyName: 'agentNo',
           valueName: 'agentName',
           method: 'get',
+          searchKey: 'agentName',
           params: {
             currentPage: 1,
-            pageSize: 10000
+            pageSize: 10
           }
         },
         rules: setRules('所属服务商').isSelected.get

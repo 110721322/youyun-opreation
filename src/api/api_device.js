@@ -44,7 +44,7 @@ export default {
   // operation/v1/deviceOutput/distribute
   distribute: (params) => API.POST('/operation/v1/deviceOutput/distribute', params),
   // 设备管理-库存管理-出库管理-发货驳回
-  reject: (params) => API.GET('/operation/v1/deviceOutput/reject', params),
+  reject: (params) => API.POST('/operation/v1/deviceOutput/reject', params),
   // 设备管理-库存管理-出库管理-完成发货
   finishOutput: (params) => API.POST('/operation/v1/deviceOutput/finishOutput', params),
   // 设备管理-库存管理-出库管理-查看发货信息

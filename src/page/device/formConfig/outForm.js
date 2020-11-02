@@ -123,7 +123,7 @@ export const FORM_CONFIG = {
         label: '驳回原因',
         key: 'rejectRemark',
         inputType: 'textarea',
-        rules: setRules('邮箱').isRequired.get
+        rules: setRules('驳回原因').isRequired.get
       }
     ]
   }
