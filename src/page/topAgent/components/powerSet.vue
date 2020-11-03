@@ -5,12 +5,20 @@
     <div class="content_drawer">
       <el-form ref="form" label-width="120px" style="padding: 24px;">
         <el-form-item v-if="roleId !== 13" label="复制成员权限:">
-          <el-select v-model="bindEmployee" placeholder="请选择成员" @change="changeEmployee">
+          <el-select
+            v-model="bindEmployee"
+            placeholder="请选择成员"
+            @change="changeEmployee"
+            :remote-method="remoteMethod"
+            filterable
+            remote
+            :loading="loading"
+          >
             <el-option
               v-for="(person,index) in employeeList"
               :key="index"
-              :label="person.label"
-              :value="person"
+              :label="person.channelAgentName"
+              :value="person.operationId + '/' + person.roleId + '&' + index"
             >
             </el-option>
           </el-select>
@@ -57,6 +65,7 @@
   </div>
 </template>
 <script>
+import api from "@/api/api_dataMarket"
 export default {
   name: "PowerSet",
   props: {
@@ -78,7 +87,8 @@ export default {
       checkedList: [],
       templateListClone: [],
       templateMapList: [],
-      employeeList: this.$store.state.system.employeeList // 成员列表
+      employeeList: [], // 成员列表
+      loading: false
     };
   },
   computed: {
@@ -116,9 +126,41 @@ export default {
     this.checkedList = [];
     this.templateListClone = this.templateList;
     this.templateMapList = this.templateMap();
+    this.searchTopAgent()
     this.allCheckOption = this.$g.utils.getNestedArr(this.templateMapList, 'children')
   },
   methods: {
+    /**
+     * 默认选择10条数据
+     **/
+    searchTopAgent() {
+      api.topAgentPageByCondition({
+        currentPage: 1,
+        pageSize: 10
+      }).then(res => {
+        this.employeeList = res.data
+      })
+    },
+    /**
+     * 模糊查询顶级服务商
+     **/
+    remoteMethod($query) {
+      if ($query !== '') {
+        this.loading = true
+        setTimeout(() => {
+          this.loading = false
+          api.topAgentPageByCondition({
+            currentPage: 1,
+            pageSize: 10,
+            channelAgentName: $query
+          }).then(res => {
+            this.employeeList = res.data
+          })
+        }, 200)
+      } else {
+        this.searchTopAgent()
+      }
+    },
     templateMap() {
       const that = this;
       //  映射模板列表的回调函数,处理逻辑部分，将模板列表映射为elemment-tree规范的数组高维数组
@@ -230,10 +272,11 @@ export default {
     },
     changeEmployee($option) {
       this.queryParams = {
-        userId: $option.id,
-        roleId: $option.roleId,
+        userId: $option.split('/')[0],
+        roleId: $option.split('/')[1].split('&')[0],
         system: 'operation'
       }
+      console.log(this.queryParams)
     },
     /**
      * 复制权限

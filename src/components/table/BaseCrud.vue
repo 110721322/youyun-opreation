@@ -204,6 +204,7 @@ export default {
     },
     params() {
       if (this.apiService) {
+        this.currentPage = 1;
         this.getData();
       }
     },
