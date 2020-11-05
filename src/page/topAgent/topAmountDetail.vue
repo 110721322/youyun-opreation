@@ -63,7 +63,7 @@ export default {
       this.params = {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,
-        [$ruleForm.inputSelect]: $ruleForm.inputForm ? $ruleForm.inputForm : null,
+        [$ruleForm.search]: $ruleForm.searchVal,
         labelId: $ruleForm.labelId,
         regionCode: $ruleForm.regionCode,
         provinceCode: $ruleForm.area ? $ruleForm.area[0] : null,

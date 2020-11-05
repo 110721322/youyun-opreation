@@ -79,11 +79,7 @@ export default {
     };
   },
   created() {
-    this.params = {
-      "agentName": "008小老猪",
-      "agentNo": "王哈小5f",
-      "tradeMonth": "2020-03-17"
-    }
+    this.params = {}
   },
   mounted() {
     // this.getData();
@@ -125,11 +121,8 @@ export default {
     },
     search($form) {
       this.params = {
-        "agentName": "",
-        "agentNo": "",
-        "tradeMonth": $form.date || ""
+        [$form.search]: $form.searchVal
       }
-      this.params[$form.inputSelect] = $form.inputForm
     }
   }
 };

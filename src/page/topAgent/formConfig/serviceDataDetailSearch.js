@@ -18,7 +18,7 @@ export const FORM_CONFIG = {
     {
       type: 10,
       label: '精准筛选',
-      key: 'id',
+      key: 'search',
       class: 'max-width',
       options: [
         {
@@ -33,14 +33,14 @@ export const FORM_CONFIG = {
       labelWidth: '80px',
       span: 22
     },
-    {
-      type: 1,
-      label: '标签',
-      key: 'labelId',
-      labelWidth: '80px',
-      span: 11,
-      options: store.state.dataMarket.labelList
-    },
+    // {
+    //   type: 1,
+    //   label: '标签',
+    //   key: 'labelId',
+    //   labelWidth: '80px',
+    //   span: 11,
+    //   options: store.state.dataMarket.labelList
+    // },
     {
       type: 1,
       label: '所属大区',

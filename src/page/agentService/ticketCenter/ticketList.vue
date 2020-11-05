@@ -165,9 +165,9 @@ export default {
         questionModule: $ruleForm.questionModule,
         questionType: $ruleForm.questionType,
         operatorId: $ruleForm.operatorId,
-        status: $ruleForm.status
-      };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+        status: $ruleForm.status,
+        [$ruleForm.search]: $ruleForm.searchVal
+      }
       this.params = params;
     }
   }

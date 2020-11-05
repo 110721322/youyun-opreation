@@ -64,9 +64,9 @@ export default {
           endDate: $ruleForm.date ? $ruleForm.date[1] : this.$g.utils.getToday(0),
           regionCode: $ruleForm.regionCode,
           city: $ruleForm.city,
-          deviceId: $ruleForm.deviceId
+          deviceId: $ruleForm.deviceId,
+          [$ruleForm.search]: $ruleForm.searchVal
         };
-        params[$ruleForm.inputSelect] = $ruleForm.inputForm;
         this.params = params;
       }
     }

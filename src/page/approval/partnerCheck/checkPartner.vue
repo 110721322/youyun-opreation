@@ -81,9 +81,9 @@ export default {
         jobType: $ruleForm.jobType,
         partnerName: $ruleForm.partnerName,
         mobile: $ruleForm.mobile,
-        operationId: $ruleForm.operationId
+        operationId: $ruleForm.operationId,
+        [$ruleForm.search]: $ruleForm.searchVal
       };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     }
   }

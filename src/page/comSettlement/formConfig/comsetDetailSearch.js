@@ -3,15 +3,15 @@ export const SEARCH_CONFIG = {
     {
       type: 10,
       label: '精准筛选',
-      key: '',
+      key: 'search',
       class: 'max-width',
       options: [
         {
-          label: '服务商ID',
+          label: '商户ID',
           value: 'merchantNo'
         },
         {
-          label: '服务商名称',
+          label: '商户名称',
           value: 'merchantName'
         }
       ],

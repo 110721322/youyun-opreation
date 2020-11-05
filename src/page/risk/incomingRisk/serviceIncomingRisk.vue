@@ -146,9 +146,9 @@ export default {
       const params = {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,
-        operationId: $ruleForm.operationId
+        operationId: $ruleForm.operationId,
+        [$ruleForm.search]: $ruleForm.searchVal
       };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     },
     onClick_remove(row) {

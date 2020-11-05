@@ -114,9 +114,8 @@ export default {
     search($ruleform) {
       this.params = {
         agentNo: this.agentNo,
-        merchantNo: $ruleform.inputSelect === 'agentNo' ? $ruleform.inputForm : "",
         rewardDate: $ruleform.date ? $ruleform.date : this.rewardDate,
-        merchantName: $ruleform.inputSelect === 'agentName' ? $ruleform.inputForm : ""
+        [$ruleform.search]: $ruleform.searchVal
       }
     },
     openDraw() {

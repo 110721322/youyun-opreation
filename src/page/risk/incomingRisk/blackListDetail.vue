@@ -57,7 +57,7 @@ export default {
     search($ruleForm) {
       this.params = {
         beginTime: $ruleForm.date[0] ? $ruleForm.date[0] : this.$g.utils.getToday(0),
-        endTime: $ruleForm.date[0] ? $ruleForm.date[1] : this.getToday(0),
+        endTime: $ruleForm.date[0] ? $ruleForm.date[1] : this.$g.utils.getToday(0),
         operationId: $ruleForm.operateUserNo ? $ruleForm.operateUserNo : null,
         banField: $ruleForm.banFieldVal ? $ruleForm.banFieldVal : null
       }
@@ -75,5 +75,4 @@ export default {
   background: #fff;
 }
 </style>
-<style>
-</style>
+

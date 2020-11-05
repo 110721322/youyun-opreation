@@ -88,9 +88,9 @@ export default {
         beginDate: $ruleForm.date[0] ? $ruleForm.date[0] : this.$g.utils.getToday(-6),
         endDate: $ruleForm.date[0] ? $ruleForm.date[1] : this.$g.utils.getToday(0),
         auditStatus: $ruleForm.auditStatus ? $ruleForm.auditStatus : "",
-        operationId: $ruleForm.operationId ? $ruleForm.operationId : ""
+        operationId: $ruleForm.operationId ? $ruleForm.operationId : "",
+        [$ruleForm.search]: $ruleForm.searchVal
       };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     }
   }

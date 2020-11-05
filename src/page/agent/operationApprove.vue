@@ -101,7 +101,11 @@ export default {
     this.getTableData();
   },
   methods: {
-    search() {},
+    search($form) {
+      this.params = {
+        [$form.search]: $form.searchVal
+      }
+    },
     getTableData() {
       this.testData = [
         {

@@ -108,9 +108,9 @@ export default {
         status: $ruleForm.status ? $ruleForm.status : '',
         saleUserId: $ruleForm.saleUserId ? $ruleForm.saleUserId : '',
         outputUserId: $ruleForm.outputUserId ? $ruleForm.outputUserId : '',
-        distributionUserId: '1'
+        distributionUserId: '1',
+        [$ruleForm.search]: $ruleForm.searchVal
       };
-      this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     },
     confirm($data) {

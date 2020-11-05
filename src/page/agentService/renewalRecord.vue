@@ -69,9 +69,9 @@ export default {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,
         operateUserNo: $ruleForm.operateUserNo,
-        status: $ruleForm.status
+        status: $ruleForm.status,
+        [$ruleForm.search]: $ruleForm.searchVal
       };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     }
   }

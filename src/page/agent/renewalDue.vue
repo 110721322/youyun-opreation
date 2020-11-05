@@ -76,9 +76,9 @@ export default {
         endDate: $form.date[0] ? $form.date[1] : null,
         payType: $form.payType ? $form.payType : null,
         status: $form.status ? $form.status : null,
-        auditStatus: $form.status === 1 ? 'audit' : $form.status === 2 ? 'success' : $form.status === 3 ? 'reject' : ''
+        auditStatus: $form.status === 1 ? 'audit' : $form.status === 2 ? 'success' : $form.status === 3 ? 'reject' : '',
+        [$form.search]: $form.searchVal
       }
-      this.params[$form.inputSelect] = $form.inputForm
     },
     go_detail(row) {
       this.$router.push({

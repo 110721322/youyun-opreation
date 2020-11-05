@@ -177,9 +177,9 @@ export default {
         beginTime: $ruleForm.date ? $ruleForm.date[0] : this.$g.utils.getToday(-6),
         endTime: $ruleForm.date ? $ruleForm.date[1] : this.$g.utils.getToday(0),
         channelStatus: $ruleForm.channelStatus,
-        operationUserNo: $ruleForm.operationUserNo
-      };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+        operationUserNo: $ruleForm.operationUserNo,
+        [$ruleForm.search]: $ruleForm.searchVal
+      }
       this.params = params;
     }
   }

@@ -72,7 +72,9 @@ export default {
   },
   methods: {
     search($ruleForm) {
-      this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      this.params = {
+        [$ruleForm.search]: $ruleForm.searchVal
+      }
       if (this.$route.query.mainIndex === 1) {
         this.api = api_statistice.selectMerchantDataByPage
         this.configData = SERVICE_CONFIG

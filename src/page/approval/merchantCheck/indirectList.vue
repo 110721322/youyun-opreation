@@ -72,9 +72,9 @@ export default {
         endDate: $ruleForm.date[0] ? $ruleForm.date[1] : this.$g.utils.getToday(0),
         status: $ruleForm.status,
         operationUserNo: $ruleForm.operationUserNo,
-        operationId: $ruleForm.operationId
+        operationId: $ruleForm.operationId,
+        [$ruleForm.search]: $ruleForm.searchVal
       };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     },
     handleDetail(row) {

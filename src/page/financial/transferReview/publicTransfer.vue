@@ -111,9 +111,9 @@ export default {
       this.params = {
         startDate: $ruleForm.date ? $ruleForm.date[0] : '',
         endDate: $ruleForm.date ? $ruleForm.date[1] : '',
-        auditStatus: $ruleForm.auditStatus
+        auditStatus: $ruleForm.auditStatus,
+        [$ruleForm.search]: $ruleForm.searchVal
       };
-      this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
     },
     onClick_detail($row) {
       this.reason = $row.reason

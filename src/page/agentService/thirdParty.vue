@@ -64,13 +64,11 @@ export default {
   mounted() {},
   methods: {
     search($ruleForm) {
-      console.log($ruleForm)
-      const params = {
+      this.params = {
         beginDate: $ruleForm.date[0] ? $ruleForm.date[0] : "",
-        endDate: $ruleForm.date[0] ? $ruleForm.date[1] : ""
-      };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
-      this.params = params;
+        endDate: $ruleForm.date[0] ? $ruleForm.date[1] : "",
+        [$ruleForm.search]: $ruleForm.searchVal
+      }
     },
     handleUnfreeze(row) {
       this.$confirm("是否要解冻该代理商？", "解冻代理商", {

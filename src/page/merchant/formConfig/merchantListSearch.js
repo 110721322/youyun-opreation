@@ -33,11 +33,11 @@ export const FORM_CONFIG = {
         {
           label: '乐刷商户号',
           value: 'leShuaMerchantNo'
-        },
-        {
-          label: '新大陆商户号',
-          value: 'newlandMerchantNo'
         }
+        // {
+        //   label: '新大陆商户号',
+        //   value: 'newlandMerchantNo'
+        // }
       ],
       labelWidth: '110px',
       span: 22
@@ -52,15 +52,15 @@ export const FORM_CONFIG = {
         {
           label: '乐刷',
           value: "leShua"
-        },
-        {
-          label: '支付宝直连',
-          value: "alipay"
-        },
-        {
-          label: '微信直连',
-          value: "weChat"
         }
+        // {
+        //   label: '支付宝直连',
+        //   value: "alipay"
+        // },
+        // {
+        //   label: '微信直连',
+        //   value: "weChat"
+        // }
       ]
     },
     {

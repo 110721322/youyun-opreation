@@ -79,9 +79,9 @@ export default {
         contractStatus: $ruleForm.contractStatus,
         operationId: $ruleForm.operationId,
         personName: $ruleForm.personName,
-        personMobile: $ruleForm.personMobile
+        personMobile: $ruleForm.personMobile,
+        [$ruleForm.search]: $ruleForm.searchVal
       };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     }
   }

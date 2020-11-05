@@ -88,13 +88,13 @@ export default {
         status: $form.status || null,
         regionCode: $form.regionCode || null,
         beginDate: $form.date[0] ? $form.date[0] : null,
-        endDate: $form.date[0] ? $form.date[1] : null
+        endDate: $form.date[0] ? $form.date[1] : null,
+        [$form.search]: $form.searchVal
       }
       if ($form.area) {
         this.params.activeScopeProvinceCode = $form.area[0]
         this.activeScopeCityCode = $form.area[1]
       }
-      this.params[$form.inputSelect] = $form.inputForm
     },
     openDetail(row) {
       this.$router.push({
