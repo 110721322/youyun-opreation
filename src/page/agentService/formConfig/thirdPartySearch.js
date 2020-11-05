@@ -23,7 +23,7 @@ export const SEARCH_CONFIG = {
           value: 'agentName'
         }
       ],
-      labelWidth: '80px',
+      labelWidth: '90px',
       span: 22
     }
   ]

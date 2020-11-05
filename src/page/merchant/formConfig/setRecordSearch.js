@@ -5,7 +5,8 @@ export const FORM_CONFIG = {
       label: '筛选时间',
       key: 'date',
       class: 'max-width',
-      labelWidth: '80px',
+      selectSevenDay: true,
+      labelWidth: '90px',
       span: 22
     },
     {

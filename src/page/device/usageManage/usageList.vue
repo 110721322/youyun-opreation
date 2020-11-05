@@ -49,8 +49,8 @@ export default {
       testData: [],
       drawer: false,
       params: {
-        beginDate: this.$g.utils.getToday(),
-        endDate: this.$g.utils.getToday()
+        beginDate: this.$g.utils.getToday(-6),
+        endDate: this.$g.utils.getToday(0)
       },
       api: api.deviceMerchantQueryByPage
     };
@@ -97,8 +97,8 @@ export default {
     },
     search($ruleForm) {
       const params = {
-        beginDate: $ruleForm.date[0] ? $ruleForm.date[0] : this.$g.utils.getToday(),
-        endDate: $ruleForm.date[0] ? $ruleForm.date[1] : this.$g.utils.getToday(),
+        beginDate: $ruleForm.date[0] ? $ruleForm.date[0] : this.$g.utils.getToday(-6),
+        endDate: $ruleForm.date[0] ? $ruleForm.date[1] : this.$g.utils.getToday(0),
         deviceId: $ruleForm.deviceId,
         freezeStatus: $ruleForm.freezeStatus
       };

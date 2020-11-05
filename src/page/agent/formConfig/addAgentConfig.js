@@ -25,25 +25,26 @@ export const FORM_CONFIG = {
       type: 0,
       label: '公司名称',
       key: 'agentName',
-      rules: setRules('请输入').isRequired.get
+      placeholder: '请输入公司全称',
+      rules: setRules('公司全称').isRequired.get
     },
     {
       type: 0,
       label: '法人姓名',
       key: 'personName',
-      rules: setRules('请输入').isRequired.get
+      rules: setRules('法人姓名').isRequired.get
     },
     {
       type: 0,
       label: '法人电话',
       key: 'personMobile',
-      rules: setRules('请输入').isRequired.get
+      rules: setRules('法人电话').isRequired.get
     },
     {
       type: 8,
       label: '公司地址',
       key: 'companyAddress',
-      rules: setRules('请输入').isSelected.get,
+      rules: setRules('公司地址').isSelected.get,
       options: areaData
     },
     {
@@ -51,12 +52,13 @@ export const FORM_CONFIG = {
       label: '详细地址',
       key: 'address',
       placeholder: '请输入详细地址',
-      rules: setRules('请输入').isRequired.get
+      rules: setRules('详细地址').isRequired.get
     },
     {
       type: 0,
       label: '邮箱',
-      key: 'email'
+      key: 'email',
+      rules: setRules('邮箱').isRequired.get
     },
     {
       type: 0,
@@ -64,7 +66,7 @@ export const FORM_CONFIG = {
       key: 'account',
       placeholder: '请输入登录后台的手机号',
       tip: '注：密码会已短信形式发送到该手机号中',
-      rules: setRules('请输入').isRequired.get
+      rules: setRules('后台账号').isRequired.get
     },
     // {
     //   type: 1,

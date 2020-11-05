@@ -56,7 +56,7 @@ export const TOPERVICE_CONFIG = {
     view: false,
     expands: [
       {
-        name: '详情',
+        name: '明细',
         emitName: 'detail',
         type: 'text'
       }

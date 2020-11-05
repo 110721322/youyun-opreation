@@ -103,10 +103,7 @@ export default {
             let end = "";
             if (this.dateList[0].label === "今天") {
               end = this.getDay(0);
-              start = this.getDay(-this.dateList[0].value + 1);
-            } else {
-              end = this.getDay(-1);
-              start = this.getDay(-this.dateList[0].value);
+              start = this.getDay(0);
             }
             this.timeInterval = [start, end];
           } else if (this.datatype === "datetimerange") {
@@ -114,10 +111,10 @@ export default {
             let end = "";
             if (this.dateList[0].label === "今天") {
               end = this.getDay(0) + " 23:59:59";
-              start = this.getDay(-(this.dateList[0].value - 1)) + " 00:00:00";
+              start = this.getDay(0) + " 00:00:00";
             } else {
               end = this.getDay(-1) + " 23:59:59";
-              start = this.getDay(-this.dateList[0].value) + " 00:00:00";
+              start = this.getDay(-1) + " 00:00:00";
             }
             this.timeInterval = [start, end];
           }
@@ -130,6 +127,24 @@ export default {
         }
         if (this.datatype === "datetimerange") {
           this.defaultTime = ["00:00:00", "23:59:59"];
+        }
+        if (this.formItem.selectSevenDay) {
+          this.selectItem = {
+            label: "近7天",
+            value: 7
+          }
+          let start = "";
+          let end = "";
+          end = this.getDay(0);
+          start = this.getDay(-6);
+          if (this.datatype === 'daterange') {
+            this.timeInterval = [start, end];
+          }
+          if (this.datatype === 'datetimerange') {
+            this.timeInterval = [start + ' 00:00:00', end + ' 23:59:59'];
+          }
+          this.$emit("dataSelect", this.timeInterval);
+          this.ruleForm[this.formItem.key] = this.timeInterval;
         }
       }
     }
@@ -174,6 +189,25 @@ export default {
     if (this.datatype === "datetimerange") {
       this.defaultTime = ["00:00:00", "23:59:59"];
     }
+    if (this.formItem.selectSevenDay) {
+      this.dateList[0].label = "今天"
+      this.selectItem = {
+        label: "近7天",
+        value: 7
+      }
+      let start = "";
+      let end = "";
+      end = this.getDay(0);
+      start = this.getDay(-6);
+      if (this.datatype === 'daterange') {
+        this.timeInterval = [start, end];
+      }
+      if (this.datatype === 'datetimerange') {
+        this.timeInterval = [start + ' 00:00:00', end + ' 23:59:59'];
+      }
+      this.$emit("dataSelect", this.timeInterval);
+      this.ruleForm[this.formItem.key] = this.timeInterval;
+    }
   },
   methods: {
     onChage($data) {
@@ -211,10 +245,10 @@ export default {
         let end = "";
         if ($item.label === "今天") {
           end = this.getDay(0) + " 23:59:59";
-          start = this.getDay(-($item.value - 1)) + " 00:00:00";
+          start = this.getDay(-($item.value + 1)) + " 00:00:00";
         } else {
-          end = this.getDay(-1) + " 23:59:59";
-          start = this.getDay(-$item.value) + " 00:00:00";
+          end = this.getDay(0) + " 23:59:59";
+          start = this.getDay(-$item.value + 1) + " 00:00:00";
         }
         this.timeInterval = [start, end];
       }

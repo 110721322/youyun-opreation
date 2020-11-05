@@ -54,8 +54,8 @@ export default {
       testData: [],
       drawer: false,
       params: {
-        beginDate: this.$g.utils.getToday(),
-        endDate: this.$g.utils.getToday()
+        beginDate: this.$g.utils.getToday(-6),
+        endDate: this.$g.utils.getToday(0)
       },
       api: '',
       ruleForm: {
@@ -73,8 +73,8 @@ export default {
   methods: {
     search($ruleForm) {
       const params = {
-        beginDate: $ruleForm.date ? $ruleForm.date[0] : this.$g.utils.getToday(),
-        endDate: $ruleForm.date ? $ruleForm.date[1] : this.$g.utils.getToday(),
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : this.$g.utils.getToday(-6),
+        endDate: $ruleForm.date ? $ruleForm.date[1] : this.$g.utils.getToday(0),
         deviceIdentifier: $ruleForm.deviceIdentifier ? $ruleForm.deviceIdentifier : '',
         deviceId: $ruleForm.deviceId ? $ruleForm.deviceId : '',
         status: $ruleForm.status ? $ruleForm.status : ''

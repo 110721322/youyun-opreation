@@ -72,28 +72,10 @@ export default {
   },
   mounted() {},
   created() {
-    this.params.beginTime = this.getDay(0);
-    this.params.endTime = this.getDay(0);
+    this.params.beginTime = this.$g.utils.getToday(-6);
+    this.params.endTime = this.$g.utils.getToday(0);
   },
   methods: {
-    getDay(day) {
-      var today = new Date();
-      const targetdayMilliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day;
-      today.setTime(targetdayMilliseconds); // 注意，这行是关键代码
-      var tYear = today.getFullYear();
-      var tMonth = today.getMonth();
-      var tDate = today.getDate();
-      tMonth = this.doHandleMonth(tMonth + 1);
-      tDate = this.doHandleMonth(tDate);
-      return tYear + "-" + tMonth + "-" + tDate;
-    },
-    doHandleMonth(month) {
-      var m = month;
-      if (month.toString().length === 1) {
-        m = "0" + month;
-      }
-      return m;
-    },
     confirm($data) {
       if (this.formStatus === "reject") {
         api.rejectDirectChannelAudit({
@@ -192,8 +174,8 @@ export default {
     },
     search($ruleForm) {
       const params = {
-        beginTime: $ruleForm.date ? $ruleForm.date[0] : this.getDay(0),
-        endTime: $ruleForm.date ? $ruleForm.date[1] : this.getDay(0),
+        beginTime: $ruleForm.date ? $ruleForm.date[0] : this.$g.utils.getToday(-6),
+        endTime: $ruleForm.date ? $ruleForm.date[1] : this.$g.utils.getToday(0),
         channelStatus: $ruleForm.channelStatus,
         operationUserNo: $ruleForm.operationUserNo
       };

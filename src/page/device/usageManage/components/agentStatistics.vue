@@ -46,7 +46,7 @@ export default {
       testData: [],
       drawer: false,
       params: {
-        beginDate: this.$g.utils.getToday(0),
+        beginDate: this.$g.utils.getToday(-6),
         endDate: this.$g.utils.getToday(0)
       },
       api: api.deviceDataQueryByPage
@@ -60,8 +60,8 @@ export default {
     search($ruleForm) {
       if ($ruleForm) {
         const params = {
-          beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
-          endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+          beginDate: $ruleForm.date ? $ruleForm.date[0] : this.$g.utils.getToday(-6),
+          endDate: $ruleForm.date ? $ruleForm.date[1] : this.$g.utils.getToday(0),
           regionCode: $ruleForm.regionCode,
           city: $ruleForm.city,
           deviceId: $ruleForm.deviceId

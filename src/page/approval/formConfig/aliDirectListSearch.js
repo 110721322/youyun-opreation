@@ -9,6 +9,7 @@ export const SEARCH_CONFIG = {
       key: 'date',
       class: 'max-width',
       format: "yyyy-MM-dd",
+      selectSevenDay: true,
       labelWidth: '80px',
       span: 22
     },

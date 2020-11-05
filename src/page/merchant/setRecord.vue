@@ -76,33 +76,32 @@ export default {
     };
   },
   created() {
-    var result = this.$g.utils.getToday1()
     var settleStatus = this.activeIndex
     this.params = {
-      beginDate: result,
-      endDate: result,
+      beginDate: this.$g.utils.getToday(-6),
+      endDate: this.$g.utils.getToday(0),
       settleStatus: settleStatus === "1" ? "settleFail" : settleStatus === "2" ? "noSettle" : "finishSettle"
     }
     var merchantNo = ''
     var merchantName = ''
     var channelMerchantNo = ''
     var channel = ''
-    this.getSettle(result, result, merchantNo, merchantName, channelMerchantNo, channel)
+    this.getSettle(this.$g.utils.getToday(-6), this.$g.utils.getToday(0), merchantNo, merchantName, channelMerchantNo, channel)
   },
   mounted() {},
   methods: {
     search($ruleForm) {
       var settleStatus = this.activeIndex
       const params = {
-        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
-        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : this.$g.utils.getToday(-6),
+        endDate: $ruleForm.date ? $ruleForm.date[1] : this.$g.utils.getToday(0),
         channel: $ruleForm.channel,
         channelMerchantNo: $ruleForm.channelMerchantNo,
         settleStatus: settleStatus === "1" ? "settleFail" : settleStatus === "2" ? "noSettle" : "finishSettle"
       };
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
-      this.getSettle($ruleForm.date[0], $ruleForm.date[1], $ruleForm.inputForm, $ruleForm.inputForm, $ruleForm.channelMerchantNo, $ruleForm.channel)
+      this.getSettle(params.beginDate, params.endDate, $ruleForm.inputForm, $ruleForm.inputForm, $ruleForm.channelMerchantNo, $ruleForm.channel)
     },
     getSettle(beginDate, endDate, merchantNo, merchantName, channelMerchantNo, channel) {
       api.getSettleByCondition({

@@ -102,7 +102,7 @@ export const FORM_CONFIG = {
     formData: [
       {
         type: 6,
-        id: 15,
+        id: 3,
         label: "头像",
         key: "img",
         initVal: "",
@@ -114,7 +114,7 @@ export const FORM_CONFIG = {
         type: 0,
         label: "花名",
         key: "jobName",
-        id: 16,
+        id: 4,
         initVal: "",
         rules: [
           {required: true, message: '请输入花名', trigger: 'blur'}
@@ -124,7 +124,7 @@ export const FORM_CONFIG = {
         type: 0,
         label: "姓名",
         key: "name",
-        id: 17,
+        id: 5,
         initVal: "",
         rules: [
           {required: true, message: '请输入姓名', trigger: 'blur'}
@@ -133,7 +133,7 @@ export const FORM_CONFIG = {
       {
         type: 5,
         label: "性别",
-        id: 20,
+        id: 8,
         key: "sex",
         initVal: "",
         options: [
@@ -153,7 +153,7 @@ export const FORM_CONFIG = {
       {
         type: 4,
         label: "状态",
-        id: 23,
+        id: 11,
         key: "status",
         initVal: "",
         activeValue: "normal",
@@ -164,7 +164,7 @@ export const FORM_CONFIG = {
       },
       // {
       //   type: 1,
-      //   id: 19,
+      //   id: 7,
       //   label: "职位",
       //   key: "position",
       //   initVal: [],
@@ -175,7 +175,7 @@ export const FORM_CONFIG = {
       // },
       // {
       //   type: 1,
-      //   id: 24,
+      //   id: 12,
       //   label: "直属上级",
       //   key: "superiorId",
       //   initVal: [],
@@ -189,7 +189,7 @@ export const FORM_CONFIG = {
         label: "密码",
         inputType: "password",
         maxlength: 20,
-        id: 13,
+        id: 1,
         key: "password",
         initVal: "",
         rules: [
@@ -209,7 +209,7 @@ export const FORM_CONFIG = {
       },
       {
         type: 0,
-        id: 18,
+        id: 6,
         label: "工号",
         key: "jobNumber",
         initVal: "",
@@ -219,7 +219,7 @@ export const FORM_CONFIG = {
       },
       {
         type: 11,
-        id: 21,
+        id: 9,
         label: "生日",
         key: "birthday",
         format: "yyyy-MM-dd",
@@ -231,7 +231,7 @@ export const FORM_CONFIG = {
       },
       {
         type: 0,
-        id: 22,
+        id: 10,
         label: "邮箱",
         key: "email",
         initVal: "",

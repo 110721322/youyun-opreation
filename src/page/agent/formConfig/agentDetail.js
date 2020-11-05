@@ -106,7 +106,7 @@ export const FORM_CONFIG = {
       {
         type: 8,
         label: '选择地区',
-        key: 'area',
+        key: 'postArea',
         style: 'width:294px',
         labelWidth: '185px',
         options: areaData,
@@ -193,7 +193,7 @@ export const FORM_CONFIG = {
         type: 5,
         label: '服务类型',
         key: 'activeMode',
-        initVal: '',
+        initVal: 'relyus',
         options: [
           {
             label: '产品代理',

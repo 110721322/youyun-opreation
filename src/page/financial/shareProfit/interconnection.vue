@@ -41,7 +41,7 @@ export default {
       configData: SERVICE_CONFIG,
       testData: [],
       params: {
-        beginDate: this.$g.utils.getToday(0),
+        beginDate: this.$g.utils.getToday(-6),
         endDate: this.$g.utils.getToday(0)
       },
       api: api_statistice.selectIndirectDataByPage
@@ -56,8 +56,8 @@ export default {
   methods: {
     search($datatime) {
       this.params = {
-        beginDate: $datatime.date[0],
-        endDate: $datatime.date[1]
+        beginDate: $datatime.date[0] ? $datatime.date[0] : this.$g.utils.getToday(-6),
+        endDate: $datatime.date[1] ? $datatime.date[1] : this.$g.utils.getToday(0)
       }
     }
   }

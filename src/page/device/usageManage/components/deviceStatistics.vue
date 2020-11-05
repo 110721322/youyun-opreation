@@ -382,15 +382,12 @@ export default {
   methods: {
     queryEquipment() {
       var params = {
-        beginDate: this.$g.utils.getToday(0),
+        beginDate: this.$g.utils.getToday(-6),
         endDate: this.$g.utils.getToday(0)
       }
       api.queryUsing(params).then(res => {
         this.deviceListData = res.data;
       })
-        .catch(err => {
-          this.$message(err);
-        });
     },
     handleNumRadioChange($data) {
       $data === "region" ? this.queryRegion() : null;
@@ -505,7 +502,7 @@ export default {
     // 查询所有省份正在使用的数量/查询省份使用排行榜
     queryAllProvince($data) {
       if (!$data) {
-        this.beginDate = this.$g.utils.getToday(0)
+        this.beginDate = this.$g.utils.getToday(-6)
         this.endDate = this.$g.utils.getToday(0)
       }
       api.queryAllProvince({

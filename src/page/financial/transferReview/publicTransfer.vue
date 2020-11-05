@@ -109,8 +109,8 @@ export default {
     },
     search($ruleForm) {
       this.params = {
-        startDate: $ruleForm.date ? $ruleForm.date[0].split(' ')[0] : null,
-        endDate: $ruleForm.date ? $ruleForm.date[1].split(' ')[0] : null,
+        startDate: $ruleForm.date ? $ruleForm.date[0] : '',
+        endDate: $ruleForm.date ? $ruleForm.date[1] : '',
         auditStatus: $ruleForm.auditStatus
       };
       this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;

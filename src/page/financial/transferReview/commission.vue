@@ -189,7 +189,7 @@ export default {
   },
   created() {
     this.params = {
-      beginTime: this.$g.utils.getToday(0),
+      beginTime: this.$g.utils.getToday(-6),
       endTime: this.$g.utils.getToday(0),
       typeFlag: this.activeName,
       settleStatus: 0
@@ -236,7 +236,7 @@ export default {
       this.params = {
         typeFlag: this.activeName,
         settleStatus: 0,
-        beginTime: $ruleForm.date[0] ? $ruleForm.date[0] : this.$g.utils.getToday(0),
+        beginTime: $ruleForm.date[0] ? $ruleForm.date[0] : this.$g.utils.getToday(-6),
         endTime: $ruleForm.date[1] ? $ruleForm.date[1] : this.$g.utils.getToday(0)
       };
     },

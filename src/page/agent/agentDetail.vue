@@ -448,8 +448,8 @@ export default {
     this.getQueryWait()
     this.getRelatedLabels()
     this.getAddressBookQuery()
-    this.getQueryTalkPlan()
-    this.getQueryPlanList()
+    // this.getQueryTalkPlan()
+    // this.getQueryPlanList()
   },
   mounted() {},
   methods: {
@@ -540,6 +540,7 @@ export default {
             agentDetail.expandSubCn = '是'
           }
           if (agentDetail.expandSub === 0 || agentDetail.expandSub === null) {
+            agentDetail.expandSub = 0
             agentDetail.expandSubCn = '否'
           }
           agentDetail.renewTypeCn = '固定续费'
@@ -556,12 +557,13 @@ export default {
             agentDetail.chargeFeePercent = this.$g.utils.AccMul(agentDetail.chargeFeePercent, 100)
           }
           if (agentDetail.provinceCode) {
-            // var area = []
-            // area.push(agentDetail.provinceCode, agentDetail.cityCode, agentDetail.areaCode)
-            // agentDetail.area = area
+            var area = []
+            area.push(agentDetail.provinceCode, agentDetail.cityCode, agentDetail.areaCode)
+            agentDetail.area = area
             // agentDetail.areaEmailAddress = agentDetail.provinceName + agentDetail.cityName + agentDetail.areaName + agentDetail.expAddress
           }
           if (agentDetail.activeMode) {
+            agentDetail.activeMode = 'relyus'
             agentDetail.activeModeCn = '产品代理'
           }
           if (agentDetail.bankAccountType === 'private') {
@@ -580,9 +582,9 @@ export default {
             agentDetail.provinceName = agentDetail.postProvinceMsg
             agentDetail.cityName = agentDetail.postCityMsg
             agentDetail.areaName = agentDetail.postAreaMsg
-            var area = []
-            area.push(agentDetail.postProvinceCode, agentDetail.postCityCode, agentDetail.postAreaCode)
-            agentDetail.area = area
+            var area1 = []
+            area1.push(agentDetail.postProvinceCode, agentDetail.postCityCode, agentDetail.postAreaCode)
+            agentDetail.postArea = area1
           }
           this.agentDetail = agentDetail
           this.ruleForm = agentDetail
@@ -718,7 +720,7 @@ export default {
     orderEquipment() {
       this.equipment = true
       this.equipmentConfigData = ORDER_EQUIPMENT
-      this.equipmentConfigData.formData[7].initVal = this.agentDetail.areaEmailAddress ? this.agentDetail.areaEmailAddress : ''
+      this.equipmentConfigData.formData[7].initVal = this.agentDetail.postProvinceMsg ? this.agentDetail.postProvinceMsg + this.agentDetail.postCityMsg + this.agentDetail.postAreaMsg + this.agentDetail.postDetailAddress : ''
     },
     // 标签输入框
     tagInput(value) {},
@@ -889,6 +891,7 @@ export default {
           item.initVal = this.agentDetail[item.key];
         });
         this.fromConfigData = this.$g.utils.deepClone(newFromConfigData);
+        console.log(this.fromConfigData)
       }, 200)
     },
     cancel() {
@@ -995,9 +998,9 @@ export default {
           relateCode: this.$route.query.agentNo,
           personName: row.personName,
           personMobile: row.personMobile,
-          provinceCode: row.area[0],
-          cityCode: row.area[1],
-          areaCode: row.area[2],
+          provinceCode: row.postArea[0],
+          cityCode: row.postArea[1],
+          areaCode: row.postArea[2],
           detailAddress: row.detailAddress
         }).then(res => {
           if (res.status === 0) {
@@ -1039,7 +1042,6 @@ export default {
         }
       }
       if (this.editType === 'editAuthority') {
-        console.log(row)
         if (!row.activeMode || !row.activeScopeCode[0] || !row.chargeFeePercent || (row.expandSub === '')) {
           this.$message({
             message: "请填写必填信息",

@@ -10,6 +10,7 @@ export const SEARCH_CONFIG = {
       class: 'max-width',
       format: "yyyy-MM-dd",
       labelWidth: '80px',
+      selectSevenDay: true,
       span: 22
     },
     {

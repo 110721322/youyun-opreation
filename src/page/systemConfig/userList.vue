@@ -124,7 +124,7 @@ export default {
     getTableData() {
       api_params
         .queryAllFormFieldsByType({
-          type: "employee_register"
+          type: "employee_edit"
         })
         .then(res => {
           if (!this.$g.utils.isArr(res.data) || res.code) return res;

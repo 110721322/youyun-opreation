@@ -54,7 +54,13 @@ export const OUTLIST_CONFIG = {
       {
         name: '详情',
         emitName: 'detail',
-        type: 'text'
+        type: 'text',
+        isShow: ($item) => {
+          if ($item.status !== 7) {
+            return true
+          }
+          return false
+        }
       },
       {
         name: '发货',
