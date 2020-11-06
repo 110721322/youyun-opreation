@@ -121,9 +121,9 @@ export default {
         useChannelCode: $ruleForm.channelCode ? $ruleForm.channelCode : null,
         channelStatus: $ruleForm.channelStatus ? $ruleForm.channelStatus : null,
         categoryCode: $ruleForm.categoryCode ? $ruleForm.categoryCode : null,
-        operationId: $ruleForm.operationId ? $ruleForm.operationId : null
+        operationId: $ruleForm.operationId ? $ruleForm.operationId : null,
+        [$ruleForm.search]: $ruleForm.searchVal
       }
-      params[$ruleForm.inputForm] = $ruleForm.inputFormVal
       this.params = params
     }
   }

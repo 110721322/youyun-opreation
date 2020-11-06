@@ -67,9 +67,9 @@
                 <i class="el-icon-minus"></i>
               </div>
             </div>
-            <div class="add-icon-box" v-if="addPhoneList.length>1" @click="onClick_reducePhoneItem" style="right:-80px">
-              <i class="el-icon-minus"></i>
-            </div>
+<!--            <div class="add-icon-box" v-if="addPhoneList.length>1" @click="onClick_reducePhoneItem" style="right:-80px">-->
+<!--              <i class="el-icon-minus"></i>-->
+<!--            </div>-->
           </div>
         </div>
       </div>

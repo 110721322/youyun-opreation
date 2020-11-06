@@ -177,9 +177,9 @@ export default {
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,
         operateUserNo: $ruleForm.operateUserNo ? $ruleForm.operateUserNo : null,
         status: $ruleForm.status ? $ruleForm.status : "",
-        channelMerchantNo: $ruleForm.operateUserNo ? $ruleForm.operateUserNo : null
+        channelMerchantNo: $ruleForm.operateUserNo ? $ruleForm.operateUserNo : null,
+        [$ruleForm.search]: $ruleForm.searchVal
       };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     }
   }

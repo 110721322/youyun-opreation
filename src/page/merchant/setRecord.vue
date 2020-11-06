@@ -97,9 +97,9 @@ export default {
         endDate: $ruleForm.date ? $ruleForm.date[1] : this.$g.utils.getToday(0),
         channel: $ruleForm.channel,
         channelMerchantNo: $ruleForm.channelMerchantNo,
-        settleStatus: settleStatus === "1" ? "settleFail" : settleStatus === "2" ? "noSettle" : "finishSettle"
+        settleStatus: settleStatus === "1" ? "settleFail" : settleStatus === "2" ? "noSettle" : "finishSettle",
+        [$ruleForm.search]: $ruleForm.searchVal
       };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
       this.getSettle(params.beginDate, params.endDate, $ruleForm.inputForm, $ruleForm.inputForm, $ruleForm.channelMerchantNo, $ruleForm.channel)
     },

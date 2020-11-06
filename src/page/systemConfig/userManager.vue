@@ -191,7 +191,6 @@ export default {
           const fieldsList = res.data;
           for (const field of FORM_CONFIG.editData.formData) {
             const fieldConfig = fieldsList.filter(item => item.id === field.id)[0]
-            console.log(fieldConfig)
             if (fieldConfig) {
               field.isShow = fieldConfig.isDisplay;
               field.rules[0].required = fieldConfig.isNeed;
@@ -287,7 +286,7 @@ export default {
     },
     resolveData(arr) {
       arr.forEach((item, index) => {
-        item.label = item.name
+        item.label = item.jobName
         item.children = item.lowerUserList
         if (item.lowerUserList) {
           this.resolveData(item.lowerUserList)
