@@ -3,7 +3,7 @@
     <div class="login-box">
       <div class="left-box">
         <div class="logo">
-          <img src="../../assets/img/loginLogo.png" alt class="logo-img" />
+          <img src="../../assets/img/faceOk.png" alt class="logo-img" />
         </div>
         <div class="title">智慧办公系统</div>
         <div v-if="isLogin" class="login-content">
@@ -651,13 +651,13 @@ export default {
     padding-left: 7.3%;
     background: #f0f3f7;
     .logo {
-      width: 100px;
-      height: 50px;
+      width: 113px;
+      height: 41px;
       margin-top: 30px;
       .logo-img {
         display: inline-block;
-        width: 100%;
-        height: 100%;
+        width: 113px;
+        height: 41px;
       }
     }
     .title {

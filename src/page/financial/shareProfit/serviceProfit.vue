@@ -9,8 +9,18 @@
         class="el-menu"
         mode="horizontal"
         @select="onClick_main"
+        v-if="roleId === 12"
       >
         <el-menu-item v-for="(item, index) in mainData" :key="index" :index="index.toString()">{{ item.value }}</el-menu-item>
+      </el-menu>
+      <el-menu
+          :default-active="mainIndex"
+          class="el-menu"
+          mode="horizontal"
+          @select="onClick_main"
+          v-else
+      >
+        <el-menu-item v-for="(item, index) in mainData1" :key="index" :index="index.toString()">{{ item.value }}</el-menu-item>
       </el-menu>
     </div>
     <Search
@@ -119,9 +129,16 @@ export default {
           id: 2
         }
       ],
-      selectIndex: '0',
-      mainIndex: '0',
-      api: api_statistice.selectTopAgentDataByPage
+      mainData1: [
+        {
+          value: '服务商',
+          id: 2
+        }
+      ],
+      selectIndex: "0",
+      mainIndex: "0",
+      roleId: "",
+      api: ""
     }
   },
   mounted() {},
@@ -133,13 +150,20 @@ export default {
     } else {
       this.tradeMonth = myDate.getFullYear() + "-" + m + "-" + "01"
     }
-    if (this.mainIndex === '0') {
+    if (this.$store.state.admin.userInfo.roleId === 12) {
       this.configData = TOPERVICE_CONFIG
       this.configData1 = TOPVICE_CONFIG1
+      this.api = api_statistice.selectTopAgentDataByPage
+    }
+    if (this.$store.state.admin.userInfo.roleId !== 12) {
+      this.configData = SERVICE_CONFIG
+      this.configData1 = SERVICE_CONFIG1
+      this.api = api_statistice.selectAgentDataByPage
     }
     this.params = {
       tradeMonth: this.tradeMonth
     }
+    this.roleId = this.$store.state.admin.userInfo.roleId
     // this.api = api_statistice.selectTopAgentDataByPage
     // this.search()
   },
@@ -152,11 +176,17 @@ export default {
       this.params = {
         tradeMonth: this.selectDate ? this.selectDate + "-01" : this.tradeMonth
       }
-      if (this.mainIndex === '0') {
-        this.configData = TOPERVICE_CONFIG
-        this.configData1 = TOPVICE_CONFIG1
-        this.api = api_statistice.selectTopAgentDataByPage
-      } else if (this.mainIndex === '1') {
+      if (this.roleId === 12) {
+        if (this.mainIndex === '0') {
+          this.configData = TOPERVICE_CONFIG
+          this.configData1 = TOPVICE_CONFIG1
+          this.api = api_statistice.selectTopAgentDataByPage
+        } else {
+          this.configData = SERVICE_CONFIG
+          this.configData1 = SERVICE_CONFIG1
+          this.api = api_statistice.selectAgentDataByPage
+        }
+      } else {
         this.configData = SERVICE_CONFIG
         this.configData1 = SERVICE_CONFIG1
         this.api = api_statistice.selectAgentDataByPage
@@ -170,15 +200,27 @@ export default {
     },
     handleDetail($row) {
       if (this.mainIndex === '0') {
-        this.$router.push({
-          name: 'serviceProfitDetail',
-          query: {
-            enterType: 0,
-            channelAgentCode: $row.channelAgentCode,
-            tradeMonth: this.selectDate,
-            mainIndex: this.mainIndex
-          }
-        })
+        if (this.roleId === 12) {
+          this.$router.push({
+            name: 'serviceProfitDetail',
+            query: {
+              enterType: 0,
+              channelAgentCode: $row.channelAgentCode,
+              tradeMonth: this.selectDate,
+              mainIndex: this.mainIndex
+            }
+          })
+        } else {
+          this.$router.push({
+            name: 'serviceProfitDetail',
+            query: {
+              enterType: 1,
+              agentNo: $row.agentNo,
+              tradeMonth: this.selectDate,
+              mainIndex: this.mainIndex
+            }
+          })
+        }
       }
       if (this.mainIndex === '1') {
         this.$router.push({
