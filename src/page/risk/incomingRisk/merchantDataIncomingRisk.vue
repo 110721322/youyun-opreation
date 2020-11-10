@@ -105,7 +105,7 @@ export default {
     },
     search($ruleForm) {
       const params = {
-        operateUserNo: $ruleForm.operateUserNo,
+        operationId: $ruleForm.operateUserNo,
         beginDate: $ruleForm.date[0],
         endDate: $ruleForm.date[1],
         type: $ruleForm.type

@@ -5,9 +5,9 @@ export const SEARCH_CONFIG = {
       type: 9,
       label: '筛选时间',
       key: 'date',
-      labelWidth: '80px',
+      labelWidth: '100px',
       selectSevenDay: true,
-      span: 22
+      span: 21
     },
     {
       type: 1,

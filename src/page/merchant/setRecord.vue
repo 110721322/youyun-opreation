@@ -78,8 +78,8 @@ export default {
   created() {
     var settleStatus = this.activeIndex
     this.params = {
-      beginDate: this.$g.utils.getToday(-6),
-      endDate: this.$g.utils.getToday(0),
+      beginDate: this.$g.utils.getToday(-7),
+      endDate: this.$g.utils.getToday(-1),
       settleStatus: settleStatus === "1" ? "settleFail" : settleStatus === "2" ? "noSettle" : "finishSettle"
     }
     var merchantNo = ''
@@ -93,8 +93,8 @@ export default {
     search($ruleForm) {
       var settleStatus = this.activeIndex
       const params = {
-        beginDate: $ruleForm.date ? $ruleForm.date[0] : this.$g.utils.getToday(-6),
-        endDate: $ruleForm.date ? $ruleForm.date[1] : this.$g.utils.getToday(0),
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : this.$g.utils.getToday(-7),
+        endDate: $ruleForm.date ? $ruleForm.date[1] : this.$g.utils.getToday(-1),
         channel: $ruleForm.channel,
         channelMerchantNo: $ruleForm.channelMerchantNo,
         settleStatus: settleStatus === "1" ? "settleFail" : settleStatus === "2" ? "noSettle" : "finishSettle",
@@ -143,6 +143,8 @@ export default {
     handleSelect($item) {
       // eslint-disable-next-line no-console
       this.activeIndex = $item;
+      this.params.beginDate = this.$g.utils.getToday(-7)
+      this.params.endDate = this.$g.utils.getToday(-1)
       switch ($item) {
         case "1":
           this.params.settleStatus = 'settleFail'
@@ -157,7 +159,7 @@ export default {
           this.configData = SUCCESS_CONFIG;
           break;
       }
-      this.getSettle(this.$g.utils.getToday(-6), this.$g.utils.getToday(0), this.params.merchantNo, this.params.merchantName, this.params.channelMerchantNo, this.params.channel)
+      this.getSettle(this.$g.utils.getToday(-7), this.$g.utils.getToday(-1), this.params.merchantNo, this.params.merchantName, this.params.channelMerchantNo, this.params.channel)
       this.isChangeMode = false;
       setTimeout(() => {
         this.isChangeMode = true;

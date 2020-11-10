@@ -135,8 +135,8 @@ export default {
           }
           let start = "";
           let end = "";
-          end = this.getDay(0);
-          start = this.getDay(-6);
+          end = this.getDay(-1);
+          start = this.getDay(-7);
           if (this.datatype === 'daterange') {
             this.timeInterval = [start, end];
           }
@@ -197,8 +197,8 @@ export default {
       }
       let start = "";
       let end = "";
-      end = this.getDay(0);
-      start = this.getDay(-6);
+      end = this.getDay(-1);
+      start = this.getDay(-7);
       if (this.datatype === 'daterange') {
         this.timeInterval = [start, end];
       }
@@ -248,7 +248,7 @@ export default {
           start = this.getDay(-($item.value + 1)) + " 00:00:00";
         } else {
           end = this.getDay(0) + " 23:59:59";
-          start = this.getDay(-$item.value + 1) + " 00:00:00";
+          start = this.getDay(-$item.value) + " 00:00:00";
         }
         this.timeInterval = [start, end];
       }

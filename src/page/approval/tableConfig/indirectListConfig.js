@@ -61,7 +61,6 @@ export const INDIRECTLIST_CONFIG = {
         emitName: 'detail',
         type: 'text',
         isShow: ($item) => {
-          console.log($item)
           const status = $item.channelStatusList;
           if (status[0].channelStatus === 'platformAudit' || status[0].channelStatus === 'nonOpen') {
             return true;
