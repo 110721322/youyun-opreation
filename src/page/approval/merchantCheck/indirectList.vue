@@ -67,15 +67,14 @@ export default {
   },
   methods: {
     search($ruleForm) {
-      const params = {
+      this.params = {
         beginDate: $ruleForm.date[0] ? $ruleForm.date[0] : this.$g.utils.getToday(-6),
         endDate: $ruleForm.date[0] ? $ruleForm.date[1] : this.$g.utils.getToday(0),
         status: $ruleForm.status,
         operationUserNo: $ruleForm.operationUserNo,
         operationId: $ruleForm.operationId,
         [$ruleForm.search]: $ruleForm.searchVal
-      };
-      this.params = params;
+      }
     },
     handleDetail(row) {
       this.$router.push({

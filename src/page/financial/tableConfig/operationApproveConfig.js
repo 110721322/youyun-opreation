@@ -51,7 +51,7 @@ export const OPERATIONAPPROVE_CONFIG = {
         emitName: 'reject',
         type: 'text',
         isShow: ($row) => {
-          if ($row.settleStatus === '61' || $row.settleStatus === '62') {
+          if ($row.settleStatus === '21') {
             return true;
           } else {
             return false;
@@ -63,19 +63,7 @@ export const OPERATIONAPPROVE_CONFIG = {
         emitName: 'adopt',
         type: 'text',
         isShow: ($row) => {
-          if ($row.settleStatus === '61' || $row.settleStatus === '62') {
-            return true;
-          } else {
-            return false;
-          }
-        }
-      },
-      {
-        name: '审批中',
-        emitName: 'reviewing',
-        type: 'text',
-        isShow: ($row) => {
-          if ($row.settleStatus === '21' || $row.settleStatus === '22') {
+          if ($row.settleStatus === '21') {
             return true;
           } else {
             return false;

@@ -7,28 +7,35 @@ export const FORM_CONFIG = {
       key: 'date',
       querySelectAll: true,
       isSelectToday: true,
-      labelWidth: '90px',
+      labelWidth: '100px',
       span: 22
+    },
+    {
+      type: 0,
+      label: '公司名称',
+      key: 'agentName',
+      labelWidth: '100px',
+      span: 11
     },
     {
       type: 0,
       label: '法人姓名',
       key: 'personName',
-      labelWidth: '90px',
+      labelWidth: '100px',
       span: 11
     },
     {
       type: 0,
-      label: '法人电话',
+      label: '法人手机号',
       key: 'personMobile',
-      labelWidth: '90px',
+      labelWidth: '100px',
       span: 11
     },
     {
       type: 1,
       label: '服务商类型',
       key: 'businessType',
-      labelWidth: '90px',
+      labelWidth: '100px',
       span: 11,
       options: [
         {
@@ -45,7 +52,7 @@ export const FORM_CONFIG = {
       type: 1,
       label: '状态',
       key: 'contractStatus',
-      labelWidth: '90px',
+      labelWidth: '100px',
       span: 11,
       options: [
         {
@@ -67,7 +74,7 @@ export const FORM_CONFIG = {
       label: '所属运营',
       key: 'operationId',
       class: "clear_both",
-      labelWidth: '90px',
+      labelWidth: '100px',
       span: 11,
       urlOptions: {
         url: apiAgent.queryAllOperation,

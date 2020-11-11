@@ -3,27 +3,28 @@ export const USER_CONFIG = {
     {
       label: '创建时间',
       prop: 'createTime',
-      width: '120px'
+      render: (h, params) => {
+        const time = params.row.createTime.substring(0, 10)
+        return h(
+          'span', time
+        )
+      }
     },
     {
       label: '顶级服务商ID',
-      prop: 'channelAgentCode',
-      width: '150px'
+      prop: 'channelAgentCode'
     },
     {
-      label: '服务商名称',
-      prop: 'channelAgentName',
-      width: '150px'
+      label: '顶级服务商名称',
+      prop: 'channelAgentName'
     },
     {
       label: '法人',
-      prop: 'personName',
-      width: '60px'
+      prop: 'personName'
     },
     {
       label: '所属运营',
-      prop: 'operationName',
-      width: '150px'
+      prop: 'operationName'
     },
     {
       label: '状态',

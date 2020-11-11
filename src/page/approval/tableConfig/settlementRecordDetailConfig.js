@@ -7,30 +7,13 @@ export const RECORD_CONFIG = {
     },
     {
       label: '操作人',
-      prop: 'operateUserName',
+      prop: 'operationName',
       width: '150px'
     },
     {
       label: '操作通道',
       prop: 'channel',
-      width: '150px',
-      render: (h, params) => {
-        if (params.row.channel === 'leshua') {
-          return h(
-            'span', '乐刷'
-          )
-        }
-        if (params.row.channel === 'wechat') {
-          return h(
-            'span', '微信'
-          )
-        }
-        if (params.row.channel === 'alipay') {
-          return h(
-            'span', '支付宝'
-          )
-        }
-      }
+      width: '150px'
     },
     {
       label: '操作内容',

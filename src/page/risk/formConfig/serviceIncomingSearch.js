@@ -13,7 +13,7 @@ export const SEARCH_CONFIG = {
     },
     {
       type: 10,
-      label: '精准筛选',
+      label: '筛选',
       key: 'search',
       class: 'max-width',
       placeholder: "请输入商户号",

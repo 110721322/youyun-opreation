@@ -4,7 +4,7 @@ export const SEARCH_CONFIG = {
   formData: [
     {
       type: 10,
-      label: '服务商名称/ID',
+      label: '筛选',
       key: '',
       class: 'max-width',
       options: [
@@ -17,7 +17,7 @@ export const SEARCH_CONFIG = {
           value: 'agentName'
         }
       ],
-      labelWidth: '130px',
+      labelWidth: '90px',
       span: 22
     },
     {
@@ -25,14 +25,14 @@ export const SEARCH_CONFIG = {
       label: '服务地区',
       key: 'area',
       options: areaData,
-      labelWidth: '80px',
+      labelWidth: '90px',
       span: 11
     },
     {
       type: 1,
       label: '所属运营',
       key: 'operationId',
-      labelWidth: '80px',
+      labelWidth: '90px',
       span: 11,
       urlOptions: {
         url: apiAgent.queryAllOperation,
@@ -45,7 +45,7 @@ export const SEARCH_CONFIG = {
       type: 1,
       label: '开启权限',
       key: 'privilege',
-      labelWidth: '80px',
+      labelWidth: '90px',
       span: 11,
       urlOptions: {
         url: apiAgent.queryAllPrivilege,

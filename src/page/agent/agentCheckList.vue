@@ -96,7 +96,8 @@ export default {
         personMobile: $form.personMobile ? $form.personMobile : null,
         businessType: $form.businessType ? $form.businessType : null,
         contractStatus: $form.contractStatus ? $form.contractStatus : null,
-        operationId: $form.operationId ? $form.operationId : null
+        operationId: $form.operationId ? $form.operationId : null,
+        agentName: $form.agentName ? $form.agentName : null
       }
     },
     reject(row) {

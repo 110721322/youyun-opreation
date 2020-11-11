@@ -12,7 +12,7 @@ export const SEARCH_CONFIG = {
     },
     {
       type: 10,
-      label: '入件风控',
+      label: '筛选',
       key: 'banField',
       placeholder: "",
       options: [

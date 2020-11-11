@@ -14,7 +14,8 @@ export const APISRARD_CONFIG = {
       type: 'uploadFile',
       label: '上传文件',
       key: 'excil',
-      dateurl: "excel/alipay_reward.xls"
+      dateurl: "excel/alipay_reward.xls",
+      labelWidth: '100px'
     }
   ]
 }

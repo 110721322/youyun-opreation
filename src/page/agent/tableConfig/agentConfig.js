@@ -3,24 +3,27 @@ export const USER_CONFIG = {
     {
       label: '服务商',
       prop: [{ key: 'agentName' }, { key: 'agentNo', label: "ID:" }],
-      width: '180px'
+      width: '100px'
     },
     {
       label: '开通时间',
       prop: 'createTime',
-      width: '200px',
-      sortable: true
+      sortable: true,
+      render: (h, params) => {
+        return h(
+          'span', params.row.createTime.substring(0, 10)
+        )
+      }
     },
     {
       label: '到期时间',
       prop: 'expireDate',
-      width: '200px',
       sortable: true
     },
     {
       label: '商户数量（个）',
       prop: 'merchantCount',
-      width: '150px',
+      width: '100px',
       sortable: true
     },
     // {
@@ -31,7 +34,6 @@ export const USER_CONFIG = {
     {
       label: '状态',
       prop: 'contractStatus',
-      width: '185px',
       render: (h, params) => {
         if (params.row.contractStatus === 'audit') {
           return [h('span', {
@@ -57,18 +59,15 @@ export const USER_CONFIG = {
     },
     {
       label: '所属大区',
-      prop: 'regionName',
-      width: '150px'
+      prop: 'regionName'
     },
     {
       label: '服务地区',
-      prop: 'activeScopeProvinceName',
-      width: '150px'
+      prop: 'activeScopeProvinceName'
     },
     {
       label: '所属运营',
-      prop: 'operationName',
-      width: '150px'
+      prop: 'operationName'
     }
   ],
   // crud的模态框表单配置，可配置表单类型，验证规则，是否必填,col-span布局可通过span参数配置

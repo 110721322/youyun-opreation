@@ -13,7 +13,7 @@ export const FORM_CONFIG = {
     },
     {
       type: 10,
-      label: '精准筛选',
+      label: '筛选',
       key: 'search',
       class: 'max-width',
       options: [

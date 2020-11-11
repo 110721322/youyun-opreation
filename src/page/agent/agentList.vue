@@ -165,14 +165,14 @@ export default {
         personMobile: $form.personMobile ? $form.personMobile : null,
         regionCode: $form.regionCode ? $form.regionCode : null,
         activeScopeType: $form.activeScopeType ? $form.activeScopeType : null,
-        labelId: $form.labelId ? $form.labelId : null
+        labelId: $form.labelId ? $form.labelId : null,
+        [$form.search]: $form.searchVal
       }
-      if ($form.area[0]) {
+      if ($form.area && $form.area[0]) {
         this.params.provinceCode = $form.area[0]
         this.params.cityCode = $form.area[1]
         this.params.areaCode = $form.area[2]
       }
-      this.params[$form.inputSelect] = $form.inputForm;
     },
     openDetail($row) {
       this.$router.push({

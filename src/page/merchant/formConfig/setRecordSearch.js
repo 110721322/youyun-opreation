@@ -11,18 +11,18 @@ export const FORM_CONFIG = {
     },
     {
       type: 10,
-      label: '精准筛选',
+      label: '筛选',
       key: 'search',
       class: 'max-width',
       placeholder: "请输入商户号",
       options: [
         {
-          label: '商户ID',
-          value: 'merchantNo'
-        },
-        {
           label: '商户名称',
           value: 'merchantName'
+        },
+        {
+          label: '商户ID',
+          value: 'merchantNo'
         }
       ],
       labelWidth: '90px',
@@ -33,8 +33,7 @@ export const FORM_CONFIG = {
       label: '渠道商户号',
       key: 'channelMerchantNo',
       labelWidth: '90px',
-      span: 11,
-      placeholder: "请输入渠道商户号"
+      span: 11
     },
     {
       type: 1,

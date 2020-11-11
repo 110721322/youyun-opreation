@@ -15,24 +15,24 @@ export const SEARCH_CONFIG = {
     },
     {
       type: 10,
-      label: '精准筛选',
+      label: '筛选',
       key: 'search',
       options: [
-        {
-          label: '商户ID',
-          value: 'merchantNo'
-        },
         {
           label: '商户名称',
           value: 'merchantName'
         },
         {
-          label: '服务商ID',
-          value: 'agentNo'
+          label: '商户ID',
+          value: 'merchantNo'
         },
         {
           label: '服务商名称',
           value: 'agentName'
+        },
+        {
+          label: '服务商ID',
+          value: 'agentNo'
         }
       ],
       labelWidth: '80px',

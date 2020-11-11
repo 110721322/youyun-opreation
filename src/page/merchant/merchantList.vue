@@ -16,7 +16,7 @@
           :grid-data="testData"
           :form-config="configData.formConfig"
           :form-data="configData.formModel"
-          :grid-edit-width="80"
+          :grid-edit-width="200"
           form-title="用户"
           :is-async="true"
           :is-select="false"
@@ -24,6 +24,8 @@
           :api-service="api"
           @selectionChange="selectionChange"
           @detail="go_detail"
+          @openAgentManager="openAgentManager"
+          @openMerchantManager="openMerchantManager"
       >
         <div slot="head" slot-scope="item">
           <span>{{ item.item.label }}</span>
@@ -76,24 +78,6 @@ export default {
     this.queryInit()
   },
   methods: {
-    getDay(day) {
-      var today = new Date();
-      const targetdayMilliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day;
-      today.setTime(targetdayMilliseconds); // 注意，这行是关键代码
-      var tYear = today.getFullYear();
-      var tMonth = today.getMonth();
-      var tDate = today.getDate();
-      tMonth = this.doHandleMonth(tMonth + 1);
-      tDate = this.doHandleMonth(tDate);
-      return tYear + "-" + tMonth + "-" + tDate;
-    },
-    doHandleMonth(month) {
-      var m = month;
-      if (month.toString().length === 1) {
-        m = "0" + month;
-      }
-      return m;
-    },
     queryInit() {
       api.queryInit({
       }).then(res => {
@@ -110,6 +94,12 @@ export default {
           merchantNo: row.merchantNo
         }
       });
+    },
+    openAgentManager($row) {
+      console.log($row)
+    },
+    openMerchantManager($row) {
+      console.log($row)
     },
     search($ruleForm) {
       var params = {}

@@ -135,8 +135,8 @@ export default {
           }
           let start = "";
           let end = "";
-          end = this.getDay(-1);
-          start = this.getDay(-7);
+          end = this.getDay(0);
+          start = this.getDay(-6);
           if (this.datatype === 'daterange') {
             this.timeInterval = [start, end];
           }
@@ -151,31 +151,22 @@ export default {
   },
   created() {
     this.getToday()
+    this.datatype = this.formItem.datatype || "daterange"
+    if (this.datatype === "datetimerange") {
+      this.defaultTime = ["00:00:00", "23:59:59"];
+    }
     if (this.formItem.isSelectToday) {
       this.dateList[0].label = "今天";
+      let start = "";
+      let end = "";
       if (this.datatype === "daterange") {
-        let start = "";
-        let end = "";
-        if (this.dateList[0].label === "今天") {
-          end = this.getDay(0);
-          start = this.getDay(-this.dateList[0].value + 1);
-        } else {
-          end = this.getDay(-1);
-          start = this.getDay(-this.dateList[0].value);
-        }
-        this.timeInterval = [start, end];
+        start = this.getDay(0);
+        end = this.getDay(0);
       } else if (this.datatype === "datetimerange") {
-        let start = "";
-        let end = "";
-        if (this.dateList[0].label === "今天") {
-          end = this.getDay(0) + " 23:59:59";
-          start = this.getDay(-(this.dateList[0].value - 1)) + " 00:00:00";
-        } else {
-          end = this.getDay(-1) + " 23:59:59";
-          start = this.getDay(-this.dateList[0].value) + " 00:00:00";
-        }
-        this.timeInterval = [start, end];
+        start = this.getDay(0) + " 00:00:00";
+        end = this.getDay(0) + " 23:59:59";
       }
+      this.timeInterval = [start, end];
       this.$emit("dataSelect", this.timeInterval);
       this.ruleForm[this.formItem.key] = this.timeInterval;
     }
@@ -183,22 +174,17 @@ export default {
       this.timeInterval = [];
       this.selectItem = {};
       this.ruleForm[this.formItem.key] = this.timeInterval;
-      return;
-    }
-    this.datatype = this.formItem.datatype || "daterange"
-    if (this.datatype === "datetimerange") {
-      this.defaultTime = ["00:00:00", "23:59:59"];
     }
     if (this.formItem.selectSevenDay) {
-      this.dateList[0].label = "今天"
+      this.dateList[0].label = "今天";
       this.selectItem = {
         label: "近7天",
         value: 7
       }
       let start = "";
       let end = "";
-      end = this.getDay(-1);
-      start = this.getDay(-7);
+      end = this.getDay(0);
+      start = this.getDay(-6);
       if (this.datatype === 'daterange') {
         this.timeInterval = [start, end];
       }
@@ -228,31 +214,29 @@ export default {
       this.$emit("timeSearch", this.ruleForm)
     },
     onClick_item($item) {
+      console.log($item)
       this.selectItem = $item;
+      let start = "";
+      let end = "";
       if (this.datatype === "daterange") {
-        let start = "";
-        let end = "";
         if ($item.label === "今天") {
+          start = this.getDay(0);
           end = this.getDay(0);
-          start = this.getDay(-$item.value + 1);
         } else {
-          end = this.getDay(-1);
-          start = this.getDay(-$item.value);
+          start = this.getDay(-$item.value + 1);
+          end = this.getDay(0);
         }
         this.timeInterval = [start, end];
       } else if (this.datatype === "datetimerange") {
-        let start = "";
-        let end = "";
         if ($item.label === "今天") {
+          start = this.getDay(0) + " 00:00:00";
           end = this.getDay(0) + " 23:59:59";
-          start = this.getDay(-($item.value + 1)) + " 00:00:00";
         } else {
+          start = this.getDay(-$item.value + 1) + " 00:00:00";
           end = this.getDay(0) + " 23:59:59";
-          start = this.getDay(-$item.value) + " 00:00:00";
         }
         this.timeInterval = [start, end];
       }
-
       this.$emit("dataSelect", this.timeInterval);
       this.ruleForm[this.formItem.key] = this.timeInterval;
       this.$emit("timeSearch", this.ruleForm)

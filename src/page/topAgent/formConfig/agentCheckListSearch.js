@@ -2,49 +2,43 @@ import apiAgent from "@/api/api_agent.js";
 
 export const FORM_CONFIG = {
   formData: [
-    // {
-    //   type: 10,
-    //   label: '服务商名称/ID',
-    //   key: 'channelAgent',
-    //   class: 'max-width',
-    //   options: [
-    //     {
-    //       label: '服务商ID',
-    //       value: 'channelAgentCode'
-    //     },
-    //     {
-    //       label: '服务商名称',
-    //       value: 'channelAgentName'
-    //     }
-    //   ],
-    //   labelWidth: '100px'
-    // },
     {
-      type: 0,
-      label: '顶级服务商名称',
-      key: 'channelAgentName',
-      labelWidth: '120px',
-      span: 11
+      type: 10,
+      label: '筛选',
+      key: 'search',
+      class: 'max-width',
+      options: [
+        {
+          label: '顶级服务商名称',
+          value: 'channelAgentName'
+        },
+        {
+          label: '顶级服务商ID',
+          value: 'channelAgentCode'
+        }
+      ],
+      labelWidth: '90px',
+      span: 22
     },
     {
       type: 0,
       label: '法人姓名',
       key: 'personName',
-      labelWidth: '120px',
+      labelWidth: '90px',
       span: 11
     },
     {
       type: 0,
       label: '法人电话',
       key: 'personMobile',
-      labelWidth: '120px',
+      labelWidth: '90px',
       span: 11
     },
     {
       type: 1,
       label: '所属运营',
       key: 'operationId',
-      labelWidth: '120px',
+      labelWidth: '90px',
       span: 11,
       urlOptions: {
         url: apiAgent.queryAllOperation,
@@ -57,7 +51,7 @@ export const FORM_CONFIG = {
       type: 1,
       label: '状态',
       key: 'status',
-      labelWidth: '120px',
+      labelWidth: '90px',
       span: 11,
       options: [
         {
@@ -77,7 +71,7 @@ export const FORM_CONFIG2 = {
   formData: [
     {
       type: 10,
-      label: '服务商名称/ID',
+      label: '筛选',
       key: 'channelAgent',
       class: 'max-width',
       options: [
@@ -90,7 +84,7 @@ export const FORM_CONFIG2 = {
           value: 'topAgentName'
         }
       ],
-      labelWidth: '150px',
+      labelWidth: '90px',
       span: 22
     },
     {
@@ -98,28 +92,28 @@ export const FORM_CONFIG2 = {
       label: '筛选时间',
       key: 'date',
       class: "max-width",
-      labelWidth: '80px',
+      labelWidth: '90px',
       span: 11
     },
     {
       type: 0,
       label: '法人姓名',
       key: 'personName',
-      labelWidth: '80px',
+      labelWidth: '90px',
       span: 11
     },
     {
       type: 0,
       label: '法人电话',
       key: 'personMobile',
-      labelWidth: '80px',
+      labelWidth: '90px',
       span: 11
     },
     {
       type: 1,
       label: '状态',
       key: 'status',
-      labelWidth: '80px',
+      labelWidth: '90px',
       span: 11,
       options: [
         {

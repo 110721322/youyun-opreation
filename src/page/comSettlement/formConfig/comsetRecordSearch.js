@@ -22,32 +22,12 @@ export const SEARCH_CONFIG = {
           value: ''
         },
         {
-          label: '未结算',
-          value: 3
-        },
-        {
-          label: '已结算',
-          value: 1
-        },
-        {
-          label: '结算中',
-          value: 2
-        },
-        {
-          label: '驳回',
-          value: 4
-        },
-        {
           label: '运营审核中',
           value: 21
         },
         {
           label: '财务审核中',
           value: 22
-        },
-        {
-          label: '全部',
-          value: 0
         },
         {
           label: '运营驳回',

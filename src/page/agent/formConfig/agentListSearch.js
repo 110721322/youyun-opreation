@@ -8,22 +8,21 @@ export const FORM_CONFIG = {
       label: '筛选时间',
       key: 'date',
       querySelectAll: true,
-      isSelectToday: true,
       labelWidth: '110px',
       span: 22
     },
     {
       type: 10,
-      label: '服务商名称/ID',
-      key: '',
+      label: '筛选',
+      key: 'search',
       options: [
-        {
-          label: '服务商ID',
-          value: 'agentNo'
-        },
         {
           label: '服务商名称',
           value: 'agentName'
+        },
+        {
+          label: '服务商ID',
+          value: 'agentNo'
         }
       ],
       labelWidth: '110px',

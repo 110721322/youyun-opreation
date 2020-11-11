@@ -2,28 +2,19 @@ export const USER_CONFIG = {
   gridConfig: [
     {
       label: '公司名称',
-      prop: 'agentName',
-      width: '90px'
+      prop: 'agentName'
     },
     {
       label: '法人姓名',
-      prop: 'personName',
-      width: '90px'
-    },
-    {
-      label: '法人手机号',
-      prop: 'personMobile',
-      width: '90px'
+      prop: [{key: 'personName'}, {key: 'personMobile'}]
     },
     {
       label: '邮箱',
-      prop: 'email',
-      width: '90px'
+      prop: 'email'
     },
     {
       label: '服务商类型',
       prop: 'businessType',
-      width: '90px',
       render: (h, params) => {
         if (params.row.businessType === 'individual') {
           return h(
@@ -40,17 +31,21 @@ export const USER_CONFIG = {
     {
       label: '公司地址',
       prop: 'companyAddress',
-      width: '120px',
       render: (h, params) => {
         return h(
           'span', `${params.row.provinceName}${params.row.cityName}${params.row.areaName}${params.row.companyAddress}`
         )
-      }
+      },
+      width: '120px'
     },
     {
       label: '创建时间',
       prop: 'createTime',
-      width: '120px'
+      render: (h, params) => {
+        return h(
+          'span', params.row.createTime.substring(0, 10)
+        )
+      }
     },
     {
       label: '状态',

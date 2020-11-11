@@ -10,12 +10,12 @@ export const FORM_CONFIG = {
       class: 'max-width',
       querySelectAll: true,
       isSelectToday: true,
-      labelWidth: '80px',
+      labelWidth: '120px',
       span: 22
     },
     {
       type: 10,
-      label: '精准筛选',
+      label: '筛选',
       key: 'search',
       options: [
         {
@@ -27,7 +27,7 @@ export const FORM_CONFIG = {
           value: 'agentName'
         }
       ],
-      labelWidth: '80px',
+      labelWidth: '120px',
       span: 22
     },
     // {
@@ -47,7 +47,7 @@ export const FORM_CONFIG = {
       type: 1,
       label: '所属大区',
       key: 'regionCode',
-      labelWidth: '80px',
+      labelWidth: '120px',
       span: 11,
       urlOptions: {
         url: apiAgent.queryAllRegion,
@@ -57,10 +57,35 @@ export const FORM_CONFIG = {
       }
     },
     {
+      type: 1,
+      label: '服务商等级',
+      key: 'activeScopeType',
+      labelWidth: '120px',
+      span: 11,
+      options: [
+        {
+          label: '全部',
+          value: ''
+        },
+        {
+          label: '国代',
+          value: 'all'
+        },
+        {
+          label: '省代',
+          value: 'province'
+        },
+        {
+          label: '市代',
+          value: 'city'
+        }
+      ]
+    },
+    {
       type: 8,
       label: '服务地区',
       key: 'area',
-      labelWidth: '80px',
+      labelWidth: '120px',
       span: 11,
       options: areaData
     },
@@ -68,7 +93,7 @@ export const FORM_CONFIG = {
       type: 1,
       label: '所属运营',
       key: 'operateUserNo',
-      labelWidth: '80px',
+      labelWidth: '120px',
       span: 11,
       urlOptions: {
         url: apiAgent.queryAllOperation,
@@ -81,9 +106,13 @@ export const FORM_CONFIG = {
       type: 1,
       label: '状态',
       key: 'status',
-      labelWidth: '80px',
+      labelWidth: '120px',
       span: 11,
       options: [
+        {
+          lanel: '全部',
+          value: ''
+        },
         {
           label: '待补全',
           value: 'incomplete'

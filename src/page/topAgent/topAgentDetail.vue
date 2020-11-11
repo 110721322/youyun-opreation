@@ -164,6 +164,7 @@
 
     <el-drawer :visible.sync="addLiaison" :with-header="false" size="500px">
       <Form
+        v-if="addLiaison"
         ref="liaisonRef"
         :is-drawer="true"
         :form-base-data="liaisonConfigData.formData"
