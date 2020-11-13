@@ -18,12 +18,12 @@ export const SEARCH_CONFIG = {
       span: 22,
       options: [
         {
-          label: '服务商ID',
-          value: 'agentNo'
-        },
-        {
           label: '服务商名称',
           value: 'agentName'
+        },
+        {
+          label: '服务商ID',
+          value: 'agentNo'
         }
       ]
     },

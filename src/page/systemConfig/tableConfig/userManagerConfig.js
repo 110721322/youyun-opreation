@@ -80,17 +80,22 @@ export const USERLIST_CONFIG = {
         permission: PERSON_MANAGE_COMPLETE,
         isShow($row) {
           const infoStatus = $row.infoStatus;
-          switch (infoStatus) {
-            case 0:
-              return true;
-            case 1:
-              return true;
-            case 2:
-              return false;
-            case 3:
-              return false;
-            default:
-              return true;
+          const userType = $row.userType
+          if (userType !== 11) {
+            switch (infoStatus) {
+              case 0:
+                return true;
+              case 1:
+                return true;
+              case 2:
+                return false;
+              case 3:
+                return false;
+              default:
+                return true;
+            }
+          } else {
+            return false
           }
         }
       },

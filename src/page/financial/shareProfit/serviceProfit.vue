@@ -207,7 +207,7 @@ export default {
               enterType: 0,
               channelAgentCode: $row.channelAgentCode,
               tradeMonth: this.selectDate,
-              mainIndex: this.mainIndex
+              roleId: this.roleId
             }
           })
         } else {
@@ -217,7 +217,7 @@ export default {
               enterType: 1,
               agentNo: $row.agentNo,
               tradeMonth: this.selectDate,
-              mainIndex: this.mainIndex
+              roleId: this.roleId
             }
           })
         }
@@ -229,7 +229,7 @@ export default {
             enterType: 1,
             agentNo: $row.agentNo,
             tradeMonth: this.selectDate,
-            mainIndex: this.mainIndex
+            roleId: this.roleId
           }
         })
       }

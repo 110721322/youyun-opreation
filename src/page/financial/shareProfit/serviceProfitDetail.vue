@@ -52,7 +52,7 @@ export default {
   mounted() {},
   created() {
     this.tradeMonth = this.$route.query.tradeMonth + "-01"
-    if (this.$route.query.mainIndex === 1) {
+    if (this.$route.query.roleId !== 12) {
       this.agentNo = this.$route.query.agentNo
       this.params = {
         agentNo: this.agentNo,
@@ -75,10 +75,12 @@ export default {
       this.params = {
         [$ruleForm.search]: $ruleForm.searchVal
       }
-      if (this.$route.query.mainIndex === 1) {
+      if (this.$route.query.roleId !== 12) {
         this.api = api_statistice.selectMerchantDataByPage
         this.configData = SERVICE_CONFIG
       } else {
+        this.params['channelAgentCode'] = this.channelAgentCode
+        this.params['tradeMonth'] = this.tradeMonth
         this.api = api_statistice.selectTopAgentMerchantDetailByPage
         this.configData = SERVICE_CONFIG
       }

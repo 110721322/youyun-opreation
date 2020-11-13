@@ -243,12 +243,12 @@ export default {
               message: '已驳回',
               type: 'success'
             });
-            this.getPartenDetail()
+            this.$router.replace({
+              name: 'checkPartner'
+            })
           }
           this.drawer = false;
-        }).catch(err => {
-          this.$message(err);
-        });
+        })
       }
     },
     onClick_sign() {
@@ -260,7 +260,9 @@ export default {
             message: '已通过',
             type: 'success'
           })
-          this.getPartenDetail()
+          this.$router.replace({
+            name: 'checkPartner'
+          })
         }
       })
     },

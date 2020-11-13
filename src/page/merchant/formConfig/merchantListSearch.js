@@ -9,7 +9,6 @@ export const FORM_CONFIG = {
       querySelectAll: true,
       key: 'date',
       labelWidth: '110px',
-      datatype: 'datetimerange',
       span: 22,
       isSelectToday: true
     },
@@ -79,7 +78,7 @@ export const FORM_CONFIG = {
       span: 11,
       options: [
         {
-          label: '待审核',
+          label: '待开通',
           value: 'nonOpen'
         },
         {

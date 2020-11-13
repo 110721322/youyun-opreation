@@ -6,12 +6,12 @@ export const SEARCH_CONFIG = {
       key: 'search',
       options: [
         {
-          label: '服务商ID',
-          value: 'merchantNo'
-        },
-        {
           label: '服务商名称',
           value: 'merchantName'
+        },
+        {
+          label: '服务商ID',
+          value: 'merchantNo'
         }
       ],
       labelWidth: '80px',

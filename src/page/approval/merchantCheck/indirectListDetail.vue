@@ -488,7 +488,9 @@ export default {
               type: 'success'
             })
             this.drawer = false
-            this.getDetail()
+            this.$router.replace({
+              name: 'indirectList'
+            })
           }
         })
       }

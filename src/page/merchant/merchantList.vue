@@ -2,30 +2,30 @@
   <div>
     <div class="p_head">商户列表</div>
     <search
-        :open-height="searchMaxHeight"
-        :form-base-data="searchConfig.formData"
-        :show-foot-btn="searchConfig.showFootBtn"
-        @search="search"
+      :open-height="searchMaxHeight"
+      :form-base-data="searchConfig.formData"
+      :show-foot-btn="searchConfig.showFootBtn"
+      @search="search"
     />
     <!-- <data-mode></data-mode> -->
     <div class="table_box">
       <BaseCrud
-          ref="table"
-          :grid-config="configData.gridConfig"
-          :grid-btn-config="configData.gridBtnConfig"
-          :grid-data="testData"
-          :form-config="configData.formConfig"
-          :form-data="configData.formModel"
-          :grid-edit-width="200"
-          form-title="用户"
-          :is-async="true"
-          :is-select="false"
-          :params="params"
-          :api-service="api"
-          @selectionChange="selectionChange"
-          @detail="go_detail"
-          @openAgentManager="openAgentManager"
-          @openMerchantManager="openMerchantManager"
+        ref="table"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :grid-data="testData"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="200"
+        form-title="用户"
+        :is-async="true"
+        :is-select="false"
+        :params="params"
+        :api-service="api"
+        @selectionChange="selectionChange"
+        @detail="go_detail"
+        @openAgentManager="openAgentManager"
+        @openMerchantManager="openMerchantManager"
       >
         <div slot="head" slot-scope="item">
           <span>{{ item.item.label }}</span>
@@ -102,10 +102,9 @@ export default {
       console.log($row)
     },
     search($ruleForm) {
-      var params = {}
-      params = {
-        beginTime: $ruleForm.date[0] ? $ruleForm.date[0] : '',
-        endTime: $ruleForm.date[0] ? $ruleForm.date[1] : '',
+      this.params = {
+        beginTime: $ruleForm.date[0] ? $ruleForm.date[0] : null,
+        endTime: $ruleForm.date[0] ? $ruleForm.date[1] : null,
         provinceCode: $ruleForm.address ? $ruleForm.address[0] : null,
         cityCode: $ruleForm.address ? $ruleForm.address[1] : null,
         useChannelCode: $ruleForm.channelCode ? $ruleForm.channelCode : null,
@@ -114,7 +113,6 @@ export default {
         operationId: $ruleForm.operationId ? $ruleForm.operationId : null,
         [$ruleForm.search]: $ruleForm.searchVal
       }
-      this.params = params
     }
   }
 };

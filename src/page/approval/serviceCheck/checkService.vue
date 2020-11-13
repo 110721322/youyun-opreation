@@ -73,16 +73,15 @@ export default {
       });
     },
     search($ruleForm) {
-      const params = {
+      this.params = {
         beginDate: $ruleForm.date[0] ? $ruleForm.date[0] : this.$g.utils.getToday(-6),
         endDate: $ruleForm.date[0] ? $ruleForm.date[1] : this.$g.utils.getToday(0),
-        contractStatus: $ruleForm.contractStatus,
-        operationId: $ruleForm.operationId,
-        personName: $ruleForm.personName,
-        personMobile: $ruleForm.personMobile,
+        contractStatus: $ruleForm.contractStatus ? $ruleForm.contractStatus : null,
+        operationId: $ruleForm.operationId ? $ruleForm.operationId : null,
+        personName: $ruleForm.personName ? $ruleForm.personName : null,
+        personMobile: $ruleForm.personMobile ? $ruleForm.personMobile : null,
         [$ruleForm.search]: $ruleForm.searchVal
       };
-      this.params = params;
     }
   }
 };
