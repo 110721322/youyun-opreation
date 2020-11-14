@@ -16,15 +16,14 @@ export const SEARCH_CONFIG = {
       label: '筛选',
       key: 'search',
       class: 'max-width',
-      placeholder: "请输入商户号",
       options: [
-        {
-          label: '服务商ID',
-          value: 'agentNo'
-        },
         {
           label: '服务商名称',
           value: 'agentName'
+        },
+        {
+          label: '服务商ID',
+          value: 'agentNo'
         }
       ],
       labelWidth: '80px',
@@ -32,7 +31,7 @@ export const SEARCH_CONFIG = {
     },
     {
       type: 1,
-      label: '加入人员',
+      label: '所属运营',
       key: 'operationId',
       labelWidth: '80px',
       span: 11,

@@ -22,7 +22,6 @@
         :is-select="false"
         :params="params"
         :api-service="api"
-        @selectionChange="selectionChange"
         @detail="go_detail"
         @openAgentManager="openAgentManager"
         @openMerchantManager="openMerchantManager"
@@ -75,18 +74,8 @@ export default {
   created() {
   },
   mounted() {
-    this.queryInit()
   },
   methods: {
-    queryInit() {
-      api.queryInit({
-      }).then(res => {
-
-      }).catch(err => {
-        console.log(err)
-      })
-    },
-    selectionChange($val) {},
     go_detail(row) {
       this.$router.push({
         name: "merchantDetail",

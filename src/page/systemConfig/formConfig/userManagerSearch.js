@@ -73,7 +73,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '上级',
-      key: 'superiorName',
+      key: 'superiorId',
       labelWidth: '80px',
       span: 11,
       options: []

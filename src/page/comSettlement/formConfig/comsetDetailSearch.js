@@ -7,12 +7,12 @@ export const SEARCH_CONFIG = {
       class: 'max-width',
       options: [
         {
-          label: '商户ID',
-          value: 'merchantNo'
-        },
-        {
           label: '商户名称',
           value: 'merchantName'
+        },
+        {
+          label: '商户ID',
+          value: 'merchantNo'
         }
       ],
       labelWidth: '80px',

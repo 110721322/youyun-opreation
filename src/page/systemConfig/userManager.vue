@@ -205,7 +205,7 @@ export default {
       this.params = {
         sex: $ruleForm.inputFormVal ? "" : $ruleForm.sex,
         position: $ruleForm.inputFormVal ? "" : $ruleForm.position,
-        superiorName: $ruleForm.inputFormVal ? "" : $ruleForm.superiorName,
+        superiorId: $ruleForm.inputFormVal ? "" : $ruleForm.superiorId,
         state: 0,
         startTime: ($ruleForm.inputFormVal || $ruleForm.date.length === 0) ? "" : $ruleForm.date[0] + ' 00:00:00',
         endTime: ($ruleForm.inputFormVal || $ruleForm.date.length === 0) ? "" : $ruleForm.date[1] + ' 23:59:59',

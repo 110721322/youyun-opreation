@@ -85,7 +85,6 @@ export default {
       })
     },
     search($form) {
-      console.log($form);
       this.params = {
         tradeMonth: this.tradeMonth,
         [$form.search]: $form.searchVal

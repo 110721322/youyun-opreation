@@ -17,12 +17,12 @@ export const SEARCH_CONFIG = {
       key: 'search',
       options: [
         {
-          label: '商户ID',
-          value: 'merchantNo'
-        },
-        {
           label: '商户名称',
           value: 'merchantName'
+        },
+        {
+          label: '商户ID',
+          value: 'merchantNo'
         },
         {
           label: '乐刷商户号',

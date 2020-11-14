@@ -65,15 +65,14 @@ export default {
   mounted() {},
   methods: {
     search($ruleForm) {
-      const params = {
+      this.params = {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : this.$g.utils.getToday(-6),
         endDate: $ruleForm.date ? $ruleForm.date[1] : this.$g.utils.getToday(0),
-        deviceId: $ruleForm.deviceId ? $ruleForm.deviceId : '',
-        deviceIdentifier: $ruleForm.deviceIdentifier ? $ruleForm.deviceIdentifier : '',
-        agentNo: $ruleForm.agentNo ? $ruleForm.agentNo : '',
-        merchantNo: $ruleForm.merchantNo ? $ruleForm.merchantNo : ''
+        deviceId: $ruleForm.deviceId ? $ruleForm.deviceId : null,
+        deviceIdentifier: $ruleForm.deviceIdentifier ? $ruleForm.deviceIdentifier : null,
+        agentNo: $ruleForm.agentNo ? $ruleForm.agentNo : null,
+        merchantNo: $ruleForm.merchantNo ? $ruleForm.merchantNo : null
       };
-      this.params = params;
     },
     onClick_showLife($item, $table) {
       api

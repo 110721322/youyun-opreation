@@ -155,7 +155,7 @@ export default {
     settleDrawer() {
       this.isCheck = []
       this.settleCommission = 0
-      if (this.settleNum.totalAmount === 0) {
+      if (this.settleNum.totalCommission === 0) {
         this.$message({
           message: '暂无可结算金额',
           type: 'warning'
