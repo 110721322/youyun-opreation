@@ -30,54 +30,56 @@
       @search="search"
     />
     <div class="select">
-      <el-menu
-        style="margin-bottom: 8px"
-        :default-active="selectIndex"
-        class="el-menu"
-        mode="horizontal"
-        @select="onClick_select"
-      >
-        <el-menu-item v-for="(item, index) in selectData" :key="index" :index="index.toString()">{{ item.value }}</el-menu-item>
-      </el-menu>
-      <div class="table_box">
-        <!-- 支付方式 -->
-        <BaseCrud
-          v-if="selectIndex==='0'"
-          ref="table1"
-          :params="params"
-          :api-service="api"
-          :grid-config="configData.gridConfig"
-          :grid-btn-config="configData.gridBtnConfig"
-          :grid-data="testData"
-          :form-config="configData.formConfig"
-          :form-data="configData.formModel"
-          :grid-edit-width="100"
-          :is-async="true"
-          :is-select="false"
-          :is-expand="false"
-          :row-key="'id'"
-          :default-expand-all="false"
-          @detail="handleDetail"
-        ></BaseCrud>
-        <!-- 通道 -->
-        <BaseCrud
-          v-if="selectIndex==='1'"
-          ref="table2"
-          :params="params"
-          :api-service="api"
-          :grid-config="configData1.gridConfig"
-          :grid-btn-config="configData1.gridBtnConfig"
-          :grid-data="testData"
-          :form-config="configData1.formConfig"
-          :form-data="configData1.formModel"
-          :grid-edit-width="100"
-          :is-async="true"
-          :is-select="false"
-          :is-expand="false"
-          :row-key="'id'"
-          :default-expand-all="false"
-          @detail="handleDetail"
-        ></BaseCrud>
+      <div style="background: #fff;padding: 24px 24px;">
+        <el-menu
+            style="margin-bottom: 8px"
+            :default-active="selectIndex"
+            class="el-menu"
+            mode="horizontal"
+            @select="onClick_select"
+        >
+          <el-menu-item v-for="(item, index) in selectData" :key="index" :index="index.toString()">{{ item.value }}</el-menu-item>
+        </el-menu>
+        <div class="table_box">
+          <!-- 支付方式 -->
+          <BaseCrud
+              v-if="selectIndex==='0'"
+              ref="table1"
+              :params="params"
+              :api-service="api"
+              :grid-config="configData.gridConfig"
+              :grid-btn-config="configData.gridBtnConfig"
+              :grid-data="testData"
+              :form-config="configData.formConfig"
+              :form-data="configData.formModel"
+              :grid-edit-width="100"
+              :is-async="true"
+              :is-select="false"
+              :is-expand="false"
+              :row-key="'id'"
+              :default-expand-all="false"
+              @detail="handleDetail"
+          ></BaseCrud>
+          <!-- 通道 -->
+          <BaseCrud
+              v-if="selectIndex==='1'"
+              ref="table2"
+              :params="params"
+              :api-service="api"
+              :grid-config="configData1.gridConfig"
+              :grid-btn-config="configData1.gridBtnConfig"
+              :grid-data="testData"
+              :form-config="configData1.formConfig"
+              :form-data="configData1.formModel"
+              :grid-edit-width="100"
+              :is-async="true"
+              :is-select="false"
+              :is-expand="false"
+              :row-key="'id'"
+              :default-expand-all="false"
+              @detail="handleDetail"
+          ></BaseCrud>
+        </div>
       </div>
     </div>
   </div>
@@ -285,8 +287,6 @@ export default {
     .select {
       width: 100%;
       padding: 24px;
-      background: #ffffff;
-      margin:24px;
       .select-top {
         width: 100%;
         display: flex;

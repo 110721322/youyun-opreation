@@ -60,10 +60,6 @@ export const FORM_CONFIG = {
           value: 'audit'
         },
         {
-          label: '审核通过',
-          value: 'success'
-        },
-        {
           label: '审核拒绝',
           value: 'reject'
         }

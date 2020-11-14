@@ -177,9 +177,11 @@ export default {
     flex-wrap: wrap;
     li {
       display: flex;
+      align-items: center;
       width: 33%;
       margin-bottom: 32px;
       font-size: 14px;
+      line-height: 32px;
       span:nth-child(1) {
         color: #000000;
         opacity: 0.85;

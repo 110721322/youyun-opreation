@@ -21,9 +21,9 @@ export const USER_CONFIG = {
       sortable: true
     },
     {
-      label: '商户数量（个）',
+      label: '商户数量(个)',
       prop: 'merchantCount',
-      width: '100px',
+      width: '120px',
       sortable: true
     },
     // {

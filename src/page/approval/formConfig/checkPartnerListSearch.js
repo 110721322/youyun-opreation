@@ -68,6 +68,10 @@ export const SEARCH_CONFIG = {
       span: 11,
       options: [
         {
+          label: '全部',
+          value: ''
+        },
+        {
           label: '待审核',
           value: 'waitSign'
         },

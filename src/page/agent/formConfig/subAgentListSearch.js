@@ -110,7 +110,7 @@ export const FORM_CONFIG = {
       span: 11,
       options: [
         {
-          lanel: '全部',
+          label: '全部',
           value: ''
         },
         {
