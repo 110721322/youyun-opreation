@@ -65,11 +65,12 @@ export default {
       }).then(() => {
         api.unbind({ id: $row.deviceDetailId}).then(result => {
           this.$refs.table.getData();
-          this.$message("已解绑");
-        }).catch(err => {
-          this.$message(err.errorMessage)
-        });
-      }).catch((e) => {});
+          this.$message({
+            message: '已解绑',
+            type: 'success'
+          });
+        })
+      })
     },
     unfreeze($row) {
       this.$confirm("确定启用该设备吗", "提示", {
@@ -96,14 +97,13 @@ export default {
       });
     },
     search($ruleForm) {
-      const params = {
+      this.params = {
         beginDate: $ruleForm.date[0] ? $ruleForm.date[0] : this.$g.utils.getToday(-6),
         endDate: $ruleForm.date[0] ? $ruleForm.date[1] : this.$g.utils.getToday(0),
         deviceId: $ruleForm.deviceId,
         freezeStatus: $ruleForm.freezeStatus,
         [$ruleForm.search]: $ruleForm.searchVal
       }
-      this.params = params;
     }
   }
 };

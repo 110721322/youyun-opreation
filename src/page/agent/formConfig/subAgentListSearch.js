@@ -56,31 +56,31 @@ export const FORM_CONFIG = {
         method: 'get'
       }
     },
-    {
-      type: 1,
-      label: '服务商等级',
-      key: 'activeScopeType',
-      labelWidth: '120px',
-      span: 11,
-      options: [
-        {
-          label: '全部',
-          value: ''
-        },
-        {
-          label: '国代',
-          value: 'all'
-        },
-        {
-          label: '省代',
-          value: 'province'
-        },
-        {
-          label: '市代',
-          value: 'city'
-        }
-      ]
-    },
+    // {
+    //   type: 1,
+    //   label: '服务商等级',
+    //   key: 'activeScopeType',
+    //   labelWidth: '120px',
+    //   span: 11,
+    //   options: [
+    //     {
+    //       label: '全部',
+    //       value: ''
+    //     },
+    //     {
+    //       label: '国代',
+    //       value: 'all'
+    //     },
+    //     {
+    //       label: '省代',
+    //       value: 'province'
+    //     },
+    //     {
+    //       label: '市代',
+    //       value: 'city'
+    //     }
+    //   ]
+    // },
     {
       type: 8,
       label: '服务地区',

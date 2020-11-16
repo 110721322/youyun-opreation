@@ -53,6 +53,7 @@
 
 <script>
 import api from "@/api/api_merchant";
+import apiLog from "@/api/api_agent"
 import search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { USER_CONFIG } from "./tableConfig/merchantConfig";
@@ -84,11 +85,38 @@ export default {
         }
       });
     },
+    // openAgentManager(row) {
+    //   api.generateLoginTicket({
+    //     system: 'agent',
+    //     phone: row.loginAccount,
+    //     password: row.password
+    //   }).then(res => {
+    //     if (res.status === 0) {
+    //       window.open(process.env.VUE_APP_AGENTURL + '#/login?ticket' + '=' + res.data)
+    //     }
+    //   })
+    // },
     openAgentManager($row) {
-      console.log($row)
+      apiLog.generateLoginTicket({
+        system: 'agent',
+        phone: $row.agentLoginAccount,
+        password: $row.agentPassword
+      }).then(res => {
+        if (res.status === 0) {
+          window.open(process.env.VUE_APP_AGENTURL + '#/login?ticket' + '=' + res.data)
+        }
+      })
     },
     openMerchantManager($row) {
-      console.log($row)
+      apiLog.generateLoginTicket({
+        system: 'agent',
+        phone: $row.merchantLoginAccount,
+        password: $row.merchantPassword
+      }).then(res => {
+        if (res.status === 0) {
+          window.open(process.env.VUE_APP_MERCHANTURL + '#/login?ticket' + '=' + res.data)
+        }
+      })
     },
     search($ruleForm) {
       this.params = {

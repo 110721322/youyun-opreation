@@ -4,55 +4,55 @@
       <span class="title">出库管理</span>
     </div>
     <search
-        :open-height="searchMaxHeight"
-        :form-base-data="searchConfig.formData"
-        :show-foot-btn="searchConfig.showFootBtn"
-        @search="search"
+      :open-height="searchMaxHeight"
+      :form-base-data="searchConfig.formData"
+      :show-foot-btn="searchConfig.showFootBtn"
+      @search="search"
     />
     <div class="table_box">
       <BaseCrud
-          ref="table"
-          :params="params"
-          :api-service="api"
-          :grid-config="configData.gridConfig"
-          :grid-btn-config="configData.gridBtnConfig"
-          :grid-data="testData"
-          :form-config="configData.formConfig"
-          :form-data="configData.formModel"
-          :grid-edit-width="200"
-          :is-async="true"
-          :is-select="false"
-          :is-expand="true"
-          :row-key="'id'"
-          :default-expand-all="false"
-          :hide-edit-area="configData.hideEditArea"
-          @reject="onClick_reject"
-          @check="onClick_check"
-          @detail="onClick_detail"
-          @send="onClick_send"
-          @distribution="onClick_distribution"
-        >
-          <template v-slot="{ row }">
-            <el-form label-position="left" inline class="demo-table-expand">
-              <div v-for="(item,index) in row.infoVOList" :key="index">
-                <el-form-item :label="item.deviceModel + ':'">
-                  <span>{{ item.count+'台' }}</span>
-                </el-form-item>
-              </div>
-            </el-form>
-          </template>
-        </BaseCrud>
-      </div>
-      <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
-        <div class="p_head">{{ fromConfigData.title }}</div>
-        <Form
-          v-if="drawer"
-          :form-base-data="fromConfigData.formData"
-          :show-foot-btn="fromConfigData.showFootBtn"
-          :foot-btn-label="fromConfigData.footBtnLabel"
-          label-width="130px"
-          @cancel="cancel"
-          @confirm="confirm"
+        ref="table"
+        :params="params"
+        :api-service="api"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :grid-data="testData"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="200"
+        :is-async="true"
+        :is-select="false"
+        :is-expand="true"
+        :row-key="'id'"
+        :default-expand-all="false"
+        :hide-edit-area="configData.hideEditArea"
+        @reject="onClick_reject"
+        @check="onClick_check"
+        @detail="onClick_detail"
+        @send="onClick_send"
+        @distribution="onClick_distribution"
+      >
+        <template v-slot="{ row }">
+          <el-form label-position="left" inline class="demo-table-expand">
+            <div v-for="(item,index) in row.infoVOList" :key="index">
+              <el-form-item :label="item.deviceModel + ':'">
+                <span>{{ item.count+'台' }}</span>
+              </el-form-item>
+            </div>
+          </el-form>
+        </template>
+      </BaseCrud>
+    </div>
+    <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
+      <div class="p_head">{{ fromConfigData.title }}</div>
+      <Form
+        v-if="drawer"
+        :form-base-data="fromConfigData.formData"
+        :show-foot-btn="fromConfigData.showFootBtn"
+        :foot-btn-label="fromConfigData.footBtnLabel"
+        label-width="130px"
+        @cancel="cancel"
+        @confirm="confirm"
       ></Form>
     </el-drawer>
   </div>

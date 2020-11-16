@@ -181,6 +181,7 @@ export default {
       formStatus: null,
       activeRow: {},
       activeName: '0',
+      agentNo: '',
       detailDrawer: false,
       settleDetailData: {}
     };
@@ -211,6 +212,7 @@ export default {
       switch (this.formStatus) {
         case "reject":
           api[rejectApi]({
+            agentNo: this.agentNo,
             channelAgentCode: this.channelAgentCode,
             id: this.activeRow.id,
             rejectReason: $data.rejectReason
@@ -227,6 +229,7 @@ export default {
           break;
         case "adopt":api[successApi]({
           id: this.activeRow.id,
+          agentNo: this.agentNo,
           adviseCommission: $data.adviseCommission,
           operationRemark: $data.operationRemark,
           channelAgentCode: this.channelAgentCode
@@ -313,6 +316,7 @@ export default {
       api[queryDetailApi]({// 通过/驳回详情
         id: $row.id || null
       }).then(res => {
+        this.agentNo = res.data.agentNo
         this.channelAgentCode = res.data.channelAgentCode
         // 编辑前重赋值
         FORM_CONFIG.rejectData.formData.forEach((item, index) => {
