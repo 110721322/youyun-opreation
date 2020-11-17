@@ -13,11 +13,6 @@ const has = Vue.directive('has', {
         $el.parentNode.removeChild($el);
       }
     }
-    /*else         // 获取路由按钮权限
-    {
-      console.log(vnode.context.$route);
-      btnPermissions = vnode.context.$route.meta.permissions.split(',');
-    }*/
   }
 });
 

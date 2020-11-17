@@ -52,9 +52,7 @@
 
 <script>
 import api from "@/api/api_login";
-// import Hamburger from './Head/index.vue'
 import Breadcrumb from "./breadcrumb.vue";
-// import Screenfull from "./Screenfull/index.vue";
 import avatar from "@/assets/img/icon_avatar.png"
 import { mapActions } from 'vuex';
 export default {

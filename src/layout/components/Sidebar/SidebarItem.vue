@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!item.hidden" @mouseleave="leave(item)" @mouseenter="enter(item)">
+  <div v-if="!item.hidden" @mouseenter="enter(item)">
     <template v-if="!(item.children && item.children.length > 0 )">
       <el-menu-item :index="item.name" popper-append-to-body class="el-menu-item" @click="onClick_item(item)">
         <item :icon="item.meta.icon" :title="item.meta.title" />
@@ -19,8 +19,6 @@
 </template>
 
 <script>
-import path from "path";
-import { isExternal } from "@/libs/kit/validate";
 import Item from "./Item";
 import FixiOSBug from "./FixiOSBug";
 // import menu2 from "./menu2.vue";
@@ -30,30 +28,11 @@ export default {
   components: { Item },
   mixins: [FixiOSBug],
   props: {
-    // route object
     item: {
       type: Object,
       required: true
-    },
-    isNest: {
-      type: Boolean,
-      default: false
-    },
-    basePath: {
-      type: String,
-      default: ""
     }
   },
-  data() {
-    this.onlyOneChild = null;
-    return {
-      showMenu2: false,
-      menu2Data: [],
-      isMove2: 1
-    };
-  },
-  created() {},
-
   methods: {
     onClick_item($item) {
       if ($item.children && $item.children.length > 0) {
@@ -72,27 +51,6 @@ export default {
           name: $item.name
         })
       }
-    },
-    hasOneShowingChild(children = [], parent) {
-      if (children.length === 0) {
-        this.onlyOneChild = { ...parent, path: "", noShowingChildren: true };
-        return true;
-      } else {
-        return false;
-      }
-    },
-    resolvePath(routePath) {
-      if (isExternal(routePath)) {
-        return routePath;
-      }
-      if (isExternal(this.basePath)) {
-        return this.basePath;
-      }
-      return path.resolve(this.basePath, routePath);
-    },
-    leave() {
-      // this.isMove = false;
-      // this.showMenu2 = false;
     },
     enter(item) {
       EventBus.$emit("enterItem", item);

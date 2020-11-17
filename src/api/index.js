@@ -59,7 +59,7 @@ axios.interceptors.response.use((response) => {
   } else if (response.data && response.data.status === 1 && response.data.code !== null && response.data.code === -1) {
     if (_isShowMessage) {
       Message({
-        message: response.data.errorMessage || "登录失效，请重新登录",
+        message: response.data.errorMessage || response.data.message || "登录失效，请重新登录",
         duration: 1500,
         type: 'error'
       })
@@ -71,7 +71,7 @@ axios.interceptors.response.use((response) => {
   } else {
     if (_isShowMessage) {
       Message({
-        message: response.data.errorMessage || "出现错误，请稍后再试",
+        message: response.data.errorMessage || response.data.message || "出现错误，请稍后再试",
         duration: 1500,
         type: 'error'
       })
@@ -110,7 +110,7 @@ axios.interceptors.response.use((response) => {
         break;
 
       case 500:
-        error.message = error.response.data.errorMessage || '服务器内部错误';
+        error.message = error.response.data.errorMessage || error.response.data.message || '服务器内部错误';
         break;
 
       case 501:

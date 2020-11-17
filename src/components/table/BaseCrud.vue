@@ -64,13 +64,6 @@
               >取消</el-button>
             </template>
             <span v-else>{{ item.formatter ? item.formatter(scope.row, index) : scope.row[item.prop] }}</span>
-            <template v-if="item.hasImg">
-              <img
-                :src="item.imgUrl"
-                :style="item.imgStyle"
-                @click="onClick_handleToggle(scope.row,item)"
-              >
-            </template>
           </span>
           <span v-if="(item.prop instanceof Array)">
             <div

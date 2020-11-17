@@ -8,13 +8,13 @@
           class="menu2"
           @mouseleave="leave"
         >
-          <menu2 :menu2-data="menuHoverData.children" :root-path="menuHoverData.path"></menu2>
+          <menu2 :menu2-data="menuHoverData.children"></menu2>
         </div>
         <div
           v-else-if="showMenu2 && routeMenuData && routeMenuData.children && routeMenuData.children.length > 0"
           class="menu2"
         >
-          <menu2 :menu2-data="routeMenuData.children" :root-path="routeMenuData.path"></menu2>
+          <menu2 :menu2-data="routeMenuData.children"></menu2>
         </div>
       </div>
     </div>
@@ -43,9 +43,7 @@ export default {
   data() {
     return {
       activeName: "",
-      menu2Data: "",
-      menuHoverData: null,
-      menuHoverShow: false
+      menuHoverData: null
     };
   },
 
@@ -68,12 +66,9 @@ export default {
       } else if (this.$g.utils.isObj(this.routeMenuData)) {
         if (this.routeMenuData.children && this.routeMenuData.children.length > 0) {
           return true
-        } else {
-          return false
         }
-      } else {
-        return false
       }
+      return false
     }
   },
   watch: {
@@ -88,12 +83,7 @@ export default {
   },
   mounted() {
     EventBus.$on("enterItem", $item => {
-      this.menuHoverShow = true;
       this.menuHoverData = $item;
-    });
-
-    EventBus.$on("leaveSlideBar", () => {
-      this.leaveSlideBar()
     });
   },
   methods: {
@@ -106,16 +96,7 @@ export default {
       }
     },
     leave() {
-      this.menuHoverShow = false;
       this.menuHoverData = null;
-    },
-    leaveContainer() {
-      this.menuHoverShow = false;
-    },
-    leaveSlideBar() {
-      if (!(this.menuHoverData && this.menuHoverData.children && this.menuHoverData.children.length > 0)) {
-        this.menuHoverData = null;
-      }
     }
   }
 };

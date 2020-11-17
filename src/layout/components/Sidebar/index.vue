@@ -4,7 +4,7 @@
     <!-- <el-scrollbar> -->
     <div class="slidebar-container">
       <el-menu :default-active="activeName" :collapse="false" :unique-opened="false" :collapse-transition="false" mode="vertical" background-color="#001529" text-color="#A6ADB4">
-        <sidebar-item v-for="route in menuList" :key="route.path" :item="route" :base-path="route.path" />
+        <sidebar-item v-for="route in menuList" :key="route.path" :item="route" />
       </el-menu>
     </div>
     <!-- </el-scrollbar> -->
@@ -14,8 +14,6 @@
 <script>
 import Logo from "./Logo";
 import SidebarItem from "./SidebarItem";
-// import variables from '@/assets/css/variables.scss'
-import { EventBus } from "../../bus/event-bus.js";
 
 export default {
   components: { SidebarItem, Logo },
@@ -28,20 +26,12 @@ export default {
   },
   data() {
     return {
-      height: `${document.documentElement.clientHeight}`
+      isCollapse: true
     };
   },
   computed: {
     menuList() {
       return this.$g.utils.deepClone(this.$store.state.role.routes);
-    },
-    isCollapse() {
-      return true;
-    }
-  },
-  methods: {
-    leaveSlideBar() {
-      EventBus.$emit("leaveSlideBar")
     }
   }
 };

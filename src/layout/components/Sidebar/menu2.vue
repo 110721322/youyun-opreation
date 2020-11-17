@@ -39,8 +39,7 @@
 export default {
   name: "Sidebar2",
   props: {
-    menu2Data: Array,
-    rootPath: String
+    menu2Data: Array
   },
   computed: {
     secondName() {
