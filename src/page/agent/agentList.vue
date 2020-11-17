@@ -107,7 +107,7 @@ export default {
       if (this.selectData.length) {
         this.dialogVisible = true
         commonApi.listOperations().then(res => {
-          this.options = res.object
+          this.options = res.data
         })
       } else {
         this.$message({
@@ -146,8 +146,6 @@ export default {
           this.dialogVisible = false
           this.selectData = []
           this.$refs.child.getData()
-        }).catch(err => {
-          console.log(err)
         })
       }
     },
@@ -167,14 +165,14 @@ export default {
         personMobile: $form.personMobile ? $form.personMobile : null,
         regionCode: $form.regionCode ? $form.regionCode : null,
         activeScopeType: $form.activeScopeType ? $form.activeScopeType : null,
-        labelId: $form.labelId ? $form.labelId : null
+        labelId: $form.labelId ? $form.labelId : null,
+        [$form.search]: $form.searchVal
       }
-      if ($form.area) {
-        this.params.provinceCode = $form.provinceCode
-        this.params.cityCode = $form.cityCode
-        this.params.areaCode = $form.areaCode
+      if ($form.area && $form.area[0]) {
+        this.params.provinceCode = $form.area[0]
+        this.params.cityCode = $form.area[1]
+        this.params.areaCode = $form.area[2]
       }
-      this.params[$form.inputSelect] = $form.inputForm;
     },
     openDetail($row) {
       this.$router.push({
@@ -201,7 +199,7 @@ export default {
             this.$refs.child.getData()
           }
         });
-      }).catch(() => {});
+      })
     },
     frozen(row) {
       this.$confirm("是否要冻结该代理商？", "冻结代理商", {
@@ -218,7 +216,7 @@ export default {
           });
           this.$refs.child.getData()
         });
-      }).catch(() => {});
+      })
     },
     openAgentManager(row) {
       api.generateLoginTicket({
@@ -227,7 +225,7 @@ export default {
         password: row.password
       }).then(res => {
         if (res.status === 0) {
-          window.open(process.env.VUE_APP_AGENTURL + '#/login?ticket' + '=' + res.object)
+          window.open(process.env.VUE_APP_AGENTURL + '#/login?ticket' + '=' + res.data)
         }
       })
     },

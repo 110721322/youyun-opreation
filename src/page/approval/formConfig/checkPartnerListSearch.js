@@ -8,14 +8,14 @@ export const SEARCH_CONFIG = {
       label: '筛选时间',
       key: 'date',
       class: 'max-width',
-      isSelectToday: true,
-      labelWidth: '80px',
+      selectSevenDay: true,
+      labelWidth: '110px',
       span: 24
     },
     {
       type: 10,
-      label: '精准筛选',
-      key: '',
+      label: '筛选',
+      key: 'search',
       options: [
         {
           label: '所属服务商ID',
@@ -68,8 +68,12 @@ export const SEARCH_CONFIG = {
       span: 11,
       options: [
         {
+          label: '全部',
+          value: ''
+        },
+        {
           label: '待审核',
-          value: 'audit'
+          value: 'waitSign'
         },
         {
           label: '审核通过',

@@ -54,23 +54,47 @@ export const OUTLIST_CONFIG = {
       {
         name: '详情',
         emitName: 'detail',
-        type: 'text'
+        type: 'text',
+        isShow: ($item) => {
+          if ($item.status !== 7) {
+            return true
+          }
+          return false
+        }
       },
       {
         name: '发货',
         emitName: 'send',
-        type: 'text'
+        type: 'text',
+        isShow: ($item) => {
+          if ($item.status === 5) {
+            return true
+          }
+          return false
+        }
       },
       {
         name: '分配',
         emitName: 'distribution',
-        type: 'text'
+        type: 'text',
+        isShow: ($item) => {
+          if ($item.status === 6) {
+            return true
+          }
+          return false
+        }
       },
       {
         name: '驳回',
         emitName: 'reject',
         type: 'text',
-        style: 'color:#F5222D'
+        style: 'color:#F5222D',
+        isShow: ($item) => {
+          if ($item.status !== 3 && $item.status !== 4 && $item.status !== 7) {
+            return true
+          }
+          return false
+        }
       }
     ]
   },

@@ -2,7 +2,15 @@ export const SERVICE_CONFIG = {
   gridConfig: [
     {
       label: '返佣月份',
-      prop: 'totalTradeMonth'
+      prop: 'totalTradeMonth',
+      render: (h, params) => {
+        if (params.row.totalTradeMonth) {
+          const month = params.row.totalTradeMonth.substring(0, 7)
+          return h(
+            'span', month
+          )
+        }
+      }
     },
     {
       label: '交易金额',
@@ -23,7 +31,7 @@ export const SERVICE_CONFIG = {
     view: false,
     expands: [
       {
-        name: '详情',
+        name: '查看',
         emitName: 'detail',
         type: 'text'
       }

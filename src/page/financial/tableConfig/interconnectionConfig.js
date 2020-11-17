@@ -2,7 +2,18 @@ export const SERVICE_CONFIG = {
   gridConfig: [
     {
       label: '通道名称',
-      prop: 'payChannel'
+      prop: 'payChannel',
+      render: (h, params) => {
+        if (params.row.payChannel === 'leShua') {
+          return h(
+            'span', '乐刷'
+          )
+        } else {
+          return h(
+            'span', '-'
+          )
+        }
+      }
     },
     {
       label: '总流水',

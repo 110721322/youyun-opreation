@@ -181,23 +181,19 @@ export default {
     },
     queryAllPrivilegeType() {
       apiAgent.queryAllPrivilegeType({}).then(res => {
-        this.options = res.object;
-      }).catch(err => {
-        this.$message(err);
-      });
+        this.options = res.data;
+      })
     },
     queryById() {
       apiAgent.queryById({ id: this.id }).then(res => {
         // 编辑前重赋值
         FORM_CONFIG.editData.formData.forEach((item, index) => {
-          item.initVal = res.object[item.key];
+          item.initVal = res.data[item.key];
         });
         this.fromConfigData = FORM_CONFIG.editData;
         this.loading = false;
         this.showForm = true;
-      }).catch(err => {
-        this.$message(err);
-      });
+      })
     },
     handleClose(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
@@ -217,9 +213,7 @@ export default {
         this.par.agentName = this.input;
       }
       apiAgent.queryAllDistributeAgent(this.par).then(res => {
-        this.testData = res.datas;
-      }).catch(err => {
-        this.$message(err);
+        this.testData = res.data;
       })
     },
     cancel() {
@@ -261,8 +255,6 @@ export default {
           endTime: $form.time[1]
         }).then(res => {
           this.$router.back(-1);
-        }).catch(err => {
-          this.$message(err);
         })
       } else {
         apiAgent.advertDistributeAdd({
@@ -275,8 +267,6 @@ export default {
           endTime: $form.time[1]
         }).then(res => {
           this.$router.back(-1);
-        }).catch(err => {
-          this.$message(err);
         })
       }
     },

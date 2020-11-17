@@ -46,10 +46,31 @@ export const INDIRECTLIST_CONFIG = {
       {
         name: '详情',
         emitName: 'detail',
-        type: 'text'
+        type: 'text',
+        isShow: ($item) => {
+          const status = $item.channelStatusList;
+          if (status[0].channelStatus !== 'nonOpen' && status[0].channelStatus !== 'platformAudit') {
+            return true;
+          } else {
+            return false
+          }
+        }
       },
       {
-        name: '审核记录',
+        name: '预审核',
+        emitName: 'detail',
+        type: 'text',
+        isShow: ($item) => {
+          const status = $item.channelStatusList;
+          if (status[0].channelStatus === 'platformAudit' || status[0].channelStatus === 'nonOpen') {
+            return true;
+          } else {
+            return false
+          }
+        }
+      },
+      {
+        name: '预审核记录',
         emitName: 'record',
         type: 'text'
       }

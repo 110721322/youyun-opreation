@@ -17,7 +17,7 @@ export const SEARCH_CONFIG = {
     },
     {
       type: 10,
-      label: '精准筛选',
+      label: '筛选',
       key: 'inputForm',
       class: 'max-width',
       options: [
@@ -73,7 +73,7 @@ export const SEARCH_CONFIG = {
     {
       type: 1,
       label: '上级',
-      key: 'superiorName',
+      key: 'superiorId',
       labelWidth: '80px',
       span: 11,
       options: []

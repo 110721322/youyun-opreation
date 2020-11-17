@@ -264,43 +264,43 @@ export default {
         channelCode: this.channelCode,
         channelAgentCode: this.channelAgentCode
       }).then(res => {
-        if (res.object.merchantType === 'enterprise') {
-          res.object.merchantType = '企业'
+        if (res.data.merchantType === 'enterprise') {
+          res.data.merchantType = '企业'
         }
-        if (res.object.merchantType === 'individual') {
-          res.object.merchantType = '个体工商户'
+        if (res.data.merchantType === 'individual') {
+          res.data.merchantType = '个体工商户'
         }
-        if (res.object.merchantType === 'private') {
-          res.object.merchantType = '个人'
+        if (res.data.merchantType === 'private') {
+          res.data.merchantType = '个人'
         }
-        if (res.object.bankAccountType === 'public') {
-          res.object.bankAccountType = '对公'
+        if (res.data.bankAccountType === 'public') {
+          res.data.bankAccountType = '对公'
         }
-        if (res.object.bankAccountType === 'private') {
-          res.object.bankAccountType = '对私'
+        if (res.data.bankAccountType === 'private') {
+          res.data.bankAccountType = '对私'
         }
         var result = this.$g.utils.getNestedArr(areaData, 'children')
         result.forEach(m => {
-          if (res.object.cityCode === m.value) {
-            res.object.cityName = m.label
+          if (res.data.cityCode === m.value) {
+            res.data.cityName = m.label
           }
-          if (res.object.areaCode === m.value) {
-            res.object.areaName = m.label
+          if (res.data.areaCode === m.value) {
+            res.data.areaName = m.label
           }
-          if (res.object.provinceCode === m.value) {
-            res.object.provinceName = m.label
+          if (res.data.provinceCode === m.value) {
+            res.data.provinceName = m.label
           }
         })
-        if (res.object.shopLicenseBegDate) {
-          res.object.shopLicenseTime = res.object.shopLicenseBegDate + '至' + res.object.shopLicenseEndDate
+        if (res.data.shopLicenseBegDate) {
+          res.data.shopLicenseTime = res.data.shopLicenseBegDate + '至' + res.data.shopLicenseEndDate
         }
-        if (res.object.idCardBeginDate) {
-          res.object.idCardExpireTime = res.object.idCardBeginDate + '至' + res.object.idCardExpireDate
+        if (res.data.idCardBeginDate) {
+          res.data.idCardExpireTime = res.data.idCardBeginDate + '至' + res.data.idCardExpireDate
         }
-        res.object.wechatPayRatePecent = this.$g.utils.AccMul(res.object.wechatPayRate, 1000) + '‰'
-        res.object.detailComAddress = res.object.provinceName + res.object.cityName + res.object.areaName + res.object.address
-        this.ruleForm = res.object;
-        this.currentType = res.object.status
+        res.data.wechatPayRatePecent = this.$g.utils.AccMul(res.data.wechatPayRate, 1000) + '‰'
+        res.data.detailComAddress = res.data.provinceName + res.data.cityName + res.data.areaName + res.data.address
+        this.ruleForm = res.data;
+        this.currentType = res.data.status
       }).catch();
     },
     confirm($data) {
@@ -326,9 +326,7 @@ export default {
               this.getAliData()
               this.drawer = false;
             }
-          }).catch(err => {
-            this.$message(err);
-          });
+          })
         }
       }
     },
@@ -355,11 +353,6 @@ export default {
               })
               this.getAliData()
             }
-          }).catch(err => {
-            this.$message({
-              type: "info",
-              message: err.errorMessage
-            })
           })
         }).catch(() => {
           this.$message({
@@ -380,12 +373,7 @@ export default {
             });
             this.getAliData()
           }
-        }).catch(err => {
-          this.$message({
-            message: err.errorMessage,
-            type: 'info'
-          });
-        });
+        })
       }
     },
     onClick_download() {
@@ -406,18 +394,6 @@ export default {
       this.drawer = true;
       this.formStatus = "reject";
       this.fromConfigData = FORM_CONFIG.rejectData;
-    },
-    onClick_edit($item) {
-      $item.edit = true;
-    },
-    onClick_okEdit($item) {
-      $item.edit = false;
-    },
-    onClick_cancelEdit($item) {
-      $item.edit = false;
-    },
-    getHeadClass() {
-      return "background:#EFEFEF";
     }
   }
 };

@@ -98,7 +98,26 @@ export default {
         this.selectItem = {};
         if (this.formItem.isSelectToday) {
           this.dateList[0].label = "今天";
-          this.onClick_item(this.dateList[0]);
+          if (this.datatype === "daterange") {
+            let start = "";
+            let end = "";
+            if (this.dateList[0].label === "今天") {
+              end = this.getDay(0);
+              start = this.getDay(0);
+            }
+            this.timeInterval = [start, end];
+          } else if (this.datatype === "datetimerange") {
+            let start = "";
+            let end = "";
+            if (this.dateList[0].label === "今天") {
+              end = this.getDay(0) + " 23:59:59";
+              start = this.getDay(0) + " 00:00:00";
+            } else {
+              end = this.getDay(-1) + " 23:59:59";
+              start = this.getDay(-1) + " 00:00:00";
+            }
+            this.timeInterval = [start, end];
+          }
         }
         if (this.formItem.querySelectAll) {
           this.timeInterval = [];
@@ -109,24 +128,71 @@ export default {
         if (this.datatype === "datetimerange") {
           this.defaultTime = ["00:00:00", "23:59:59"];
         }
+        if (this.formItem.selectSevenDay) {
+          this.selectItem = {
+            label: "近7天",
+            value: 7
+          }
+          let start = "";
+          let end = "";
+          end = this.getDay(0);
+          start = this.getDay(-6);
+          if (this.datatype === 'daterange') {
+            this.timeInterval = [start, end];
+          }
+          if (this.datatype === 'datetimerange') {
+            this.timeInterval = [start + ' 00:00:00', end + ' 23:59:59'];
+          }
+          this.$emit("dataSelect", this.timeInterval);
+          this.ruleForm[this.formItem.key] = this.timeInterval;
+        }
       }
     }
   },
   created() {
     this.getToday()
+    this.datatype = this.formItem.datatype || "daterange"
+    if (this.datatype === "datetimerange") {
+      this.defaultTime = ["00:00:00", "23:59:59"];
+    }
     if (this.formItem.isSelectToday) {
       this.dateList[0].label = "今天";
-      this.onClick_item(this.dateList[0]);
+      let start = "";
+      let end = "";
+      if (this.datatype === "daterange") {
+        start = this.getDay(0);
+        end = this.getDay(0);
+      } else if (this.datatype === "datetimerange") {
+        start = this.getDay(0) + " 00:00:00";
+        end = this.getDay(0) + " 23:59:59";
+      }
+      this.timeInterval = [start, end];
+      this.$emit("dataSelect", this.timeInterval);
+      this.ruleForm[this.formItem.key] = this.timeInterval;
     }
     if (this.formItem.querySelectAll) {
       this.timeInterval = [];
       this.selectItem = {};
       this.ruleForm[this.formItem.key] = this.timeInterval;
-      return;
     }
-    this.datatype = this.formItem.datatype || "daterange"
-    if (this.datatype === "datetimerange") {
-      this.defaultTime = ["00:00:00", "23:59:59"];
+    if (this.formItem.selectSevenDay) {
+      this.dateList[0].label = "今天";
+      this.selectItem = {
+        label: "近7天",
+        value: 7
+      }
+      let start = "";
+      let end = "";
+      end = this.getDay(0);
+      start = this.getDay(-6);
+      if (this.datatype === 'daterange') {
+        this.timeInterval = [start, end];
+      }
+      if (this.datatype === 'datetimerange') {
+        this.timeInterval = [start + ' 00:00:00', end + ' 23:59:59'];
+      }
+      this.$emit("dataSelect", this.timeInterval);
+      this.ruleForm[this.formItem.key] = this.timeInterval;
     }
   },
   methods: {
@@ -145,35 +211,35 @@ export default {
 
       this.$emit("dataSelect", timeArr);
       this.ruleForm[this.formItem.key] = timeArr;
+      this.$emit("timeSearch", this.ruleForm)
     },
     onClick_item($item) {
+      console.log($item)
       this.selectItem = $item;
+      let start = "";
+      let end = "";
       if (this.datatype === "daterange") {
-        let start = "";
-        let end = "";
         if ($item.label === "今天") {
+          start = this.getDay(0);
           end = this.getDay(0);
-          start = this.getDay(-$item.value + 1);
         } else {
-          end = this.getDay(-1);
-          start = this.getDay(-$item.value);
+          start = this.getDay(-$item.value + 1);
+          end = this.getDay(0);
         }
         this.timeInterval = [start, end];
       } else if (this.datatype === "datetimerange") {
-        let start = "";
-        let end = "";
         if ($item.label === "今天") {
+          start = this.getDay(0) + " 00:00:00";
           end = this.getDay(0) + " 23:59:59";
-          start = this.getDay(-($item.value - 1)) + " 00:00:00";
         } else {
-          end = this.getDay(-1) + " 23:59:59";
-          start = this.getDay(-$item.value) + " 00:00:00";
+          start = this.getDay(-$item.value + 1) + " 00:00:00";
+          end = this.getDay(0) + " 23:59:59";
         }
         this.timeInterval = [start, end];
       }
-
       this.$emit("dataSelect", this.timeInterval);
       this.ruleForm[this.formItem.key] = this.timeInterval;
+      this.$emit("timeSearch", this.ruleForm)
     },
     getToday() {
       let end, start;

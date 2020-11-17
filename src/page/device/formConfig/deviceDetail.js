@@ -74,7 +74,7 @@ export const FORM_CONFIG = {
       {
         type: 'show',
         label: '营销人员',
-        initVal: store.state.admin.userInfo.name,
+        initVal: store.state.admin.userInfo.jobName,
         labelWidth: '100px'
       },
       {

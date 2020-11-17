@@ -31,14 +31,14 @@ export const FORM_CONFIG = {
         label: '公司名称',
         key: 'agentName',
         initVal: '',
-        rules: setRules('请填写').isRequired.get
+        rules: setRules('公司名称').isRequired.get
       },
       {
         type: 0,
         label: '法人姓名',
         key: 'personName',
         initVal: '',
-        rules: setRules('请填写').isRequired.get
+        rules: setRules('法人姓名').isRequired.get
       },
       {
         type: 0,
@@ -64,7 +64,7 @@ export const FORM_CONFIG = {
         type: 0,
         label: '详细地址',
         key: 'companyAddress',
-        rules: setRules('请填写').isRequired.get
+        rules: setRules('详细地址').isRequired.get
       },
       {
         type: 6,
@@ -92,33 +92,32 @@ export const FORM_CONFIG = {
         label: '收件人',
         key: 'personName',
         initVal: '',
-        placeholder: '请填写收件人姓名',
-        rules: setRules('请填写').isRequired.get
+        rules: setRules('收件人').isRequired.get
       },
       {
         type: 0,
         label: '联系方式',
         key: 'personMobile',
         initVal: '',
-        placeholder: '请填写联系方式',
-        rules: setRules('请填写').isRequired.get
+        rules: setRules('联系方式').isRequired.get
       },
       {
         type: 8,
         label: '选择地区',
-        key: 'area',
+        key: 'postArea',
         style: 'width:294px',
         labelWidth: '185px',
         options: areaData,
-        rules: setRules('请填写').isSelected.get
+        rules: [
+          {required: true, message: "请选择地区", trigger: "change"}
+        ]
       },
       {
         type: 0,
         label: '详细地址',
         key: 'detailAddress',
         initVal: '',
-        placeholder: '请填写详细地址',
-        rules: setRules('请填写').isRequired.get
+        rules: setRules('详细地址').isRequired.get
       }
     ]
   },
@@ -128,14 +127,16 @@ export const FORM_CONFIG = {
     formData: [
       {
         type: 0,
-        label: '微信费率',
+        label: '微信/支付宝费率',
         labelWidth: '300px',
         key: 'wechatPayRate',
         initVal: '',
         placeholder: '建议范围2.6-6',
         isShowSlot: true,
         showSlotName: '‰',
-        rules: setRules('请输入').isSelected.get
+        rules: [
+          {required: true, message: "请填写微信/支付宝费率", trigger: "blur"}
+        ]
       },
       {
         type: 0,
@@ -145,7 +146,9 @@ export const FORM_CONFIG = {
         isShowSlot: true,
         showSlotName: '‰',
         placeholder: '输入范围2.3-10',
-        rules: setRules('请输入').isSelected.get
+        rules: [
+          {required: true, message: "请填写云闪付(单笔<=1000)", trigger: "blur"}
+        ]
       },
       {
         type: 0,
@@ -155,7 +158,9 @@ export const FORM_CONFIG = {
         isShowSlot: true,
         showSlotName: '‰',
         placeholder: '输入范围2.3-10',
-        rules: setRules('请输入').isSelected.get
+        rules: [
+          {required: true, message: "请填写云闪付(单笔>1000)", trigger: "blur"}
+        ]
       }
     ]
   },
@@ -170,7 +175,9 @@ export const FORM_CONFIG = {
         style: 'width:294px',
         labelWidth: '185px',
         options: serviceData,
-        rules: setRules('请选择').isSelected.get
+        rules: [
+          {required: true, message: "请选择服务地区", trigger: "change"}
+        ]
       },
       {
         type: 5,
@@ -187,13 +194,13 @@ export const FORM_CONFIG = {
             value: 0
           }
         ],
-        rules: setRules('请输入').isSelected.get
+        rules: setRules('可否开通下级').isSelected.get
       },
       {
         type: 5,
         label: '服务类型',
         key: 'activeMode',
-        initVal: '',
+        initVal: 'relyus',
         options: [
           {
             label: '产品代理',
@@ -204,7 +211,7 @@ export const FORM_CONFIG = {
           //   value: 'oem'
           // }
         ],
-        rules: setRules('请输入').isRequired.get
+        rules: setRules('服务类型').isRequired.get
       },
       {
         type: 0,
@@ -212,8 +219,7 @@ export const FORM_CONFIG = {
         key: 'chargeFeePercent',
         labelWidth: '111px',
         initVal: '',
-        placeholder: '请输入',
-        rules: setRules('请输入').isSelected.get,
+        rules: setRules('平台分润抽成').isSelected.get,
         isShowSlot: true,
         showSlotName: '%'
       }
@@ -227,8 +233,8 @@ export const FORM_CONFIG = {
         type: 0,
         label: '续费方式',
         key: '',
-        placeholder: '固定续费',
         initVal: '固定续费',
+        placeholder: '固定续费',
         isDisabled: true
       },
       {
@@ -261,14 +267,13 @@ export const FORM_CONFIG = {
           //   value: 36
           // }
         ],
-        rules: setRules('请选择').isSelected.get
+        rules: setRules('续费时间').isSelected.get
       },
       {
         type: 0,
         label: '续费金额',
         key: 'renewValue',
-        initVal: '',
-        placeholder: '请输入金额'
+        initVal: ''
       }
     ]
   },
@@ -299,7 +304,10 @@ export const FORM_CONFIG = {
         },
         callback($ruleForm, $option) {
           $ruleForm['deviceModel'] = $option.deviceModel;
-        }
+        },
+        rules: [
+          {required: true, message: "请选择设备型号", trigger: "change"}
+        ]
       },
       {
         type: 0,

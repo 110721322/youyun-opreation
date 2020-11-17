@@ -80,7 +80,7 @@ export default {
     },
     search($form) {
       this.params = {
-        labelId: $form.labelId || null,
+        // labelId: $form.labelId || null,
         activeScopeType: $form.activeScopeType || null,
         operationId: $form.operationId || null,
         personName: $form.personName || null,
@@ -88,13 +88,13 @@ export default {
         status: $form.status || null,
         regionCode: $form.regionCode || null,
         beginDate: $form.date[0] ? $form.date[0] : null,
-        endDate: $form.date[0] ? $form.date[1] : null
+        endDate: $form.date[0] ? $form.date[1] : null,
+        [$form.search]: $form.searchVal
       }
       if ($form.area) {
         this.params.activeScopeProvinceCode = $form.area[0]
         this.activeScopeCityCode = $form.area[1]
       }
-      this.params[$form.inputSelect] = $form.inputForm
     },
     openDetail(row) {
       this.$router.push({
@@ -115,13 +115,12 @@ export default {
             agentNo: row.agentNo
           }).then(res => {
             this.$message({
-              type: "info",
+              type: "success",
               message: "已解冻"
             })
             this.$refs.table.getData()
           })
         })
-        .catch(() => {});
     },
     frozen(row) {
       this.$confirm("是否要冻结该代理商？", "冻结代理商", {
@@ -140,16 +139,15 @@ export default {
             this.$refs.table.getData()
           })
         })
-        .catch(() => {});
     },
     openAgentManager(row) {
       api.generateLoginTicket({
         system: 'agent',
-        phone: row.personMobile,
+        phone: row.loginAccount,
         password: row.password
       }).then(res => {
         if (res.status === 0) {
-          window.location.href = `http://service.intranet.aduer.com/ticket=${res.object}`
+          window.open(process.env.VUE_APP_AGENTURL + '#/login?ticket' + '=' + res.data)
         }
       })
     },

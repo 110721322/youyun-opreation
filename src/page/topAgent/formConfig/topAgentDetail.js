@@ -79,7 +79,7 @@ export const FORM_CONFIG = {
         label: '公司详细地址',
         key: 'address',
         rules: [
-          {required: true, message: "请输入公司地址", trigger: "blur"}
+          {required: true, message: "请输入公司详细地址", trigger: "blur"}
         ]
       },
       {
@@ -100,53 +100,6 @@ export const FORM_CONFIG = {
       }
     ]
   },
-  finance: {
-    title: '财务信息',
-    showFootBtn: true,
-    formData: [
-      {
-        type: 5,
-        label: '结算卡类型',
-        key: 'bankAccountType',
-        options: [
-          {
-            label: '对私',
-            value: 'private'
-          },
-          {
-            label: '对公',
-            value: 'public'
-          }
-        ]
-      },
-      {
-        type: 0,
-        label: '开户名',
-        key: 'bankAccountHolder',
-        initVal: ''
-      },
-      {
-        type: 0,
-        label: '银行卡号',
-        key: 'bankCardNo',
-        initVal: ''
-      },
-      {
-        type: 8,
-        label: '开户支行地区',
-        key: 'bankArea',
-        initVal: '',
-        options: areaData
-      },
-      {
-        type: 0,
-        label: '开户支行',
-        key: 'bankBranchName',
-        initVal: '',
-        isSearch: true
-      }
-    ]
-  },
   address: {
     title: '邮寄地址',
     showFootBtn: true,
@@ -156,7 +109,6 @@ export const FORM_CONFIG = {
         label: '收件人',
         key: 'expReceiver',
         initVal: '',
-        placeholder: '请填写',
         rules: [
           {required: true, message: "请填写收件人", trigger: "blur"}
         ]
@@ -166,7 +118,6 @@ export const FORM_CONFIG = {
         label: '联系方式',
         key: 'expMobile',
         initVal: '',
-        placeholder: '请填写',
         rules: [
           {required: true, message: "请填写联系方式", trigger: "blur"}
         ]
@@ -179,7 +130,7 @@ export const FORM_CONFIG = {
         labelWidth: '185px',
         options: areaData,
         rules: [
-          {required: true, message: "请选择邮寄地区", trigger: "blur"}
+          {required: true, message: "请选择邮寄地区", trigger: "change"}
         ]
       },
       {
@@ -187,7 +138,6 @@ export const FORM_CONFIG = {
         label: '详细地址',
         key: 'expAddress',
         initVal: '',
-        placeholder: '请填写',
         rules: [
           {required: true, message: "请填写详细地址", trigger: "blur"}
         ]
@@ -207,7 +157,9 @@ export const FORM_CONFIG = {
         placeholder: '输入范围3-6',
         isShowSlot: true,
         showSlotName: '‰',
-        rules: setRules('请输入').isSelected.get
+        rules: [
+          {required: true, message: "请填写微信/支付宝费率", trigger: "blur"}
+        ]
       },
       {
         type: 0,
@@ -217,7 +169,9 @@ export const FORM_CONFIG = {
         isShowSlot: true,
         showSlotName: '‰',
         placeholder: '输入范围2.3-10',
-        rules: setRules('请输入').isSelected.get
+        rules: [
+          {required: true, message: "请填写云闪付(单笔<=1000)费率", trigger: "blur"}
+        ]
       },
       {
         type: 0,
@@ -227,7 +181,9 @@ export const FORM_CONFIG = {
         isShowSlot: true,
         showSlotName: '‰',
         placeholder: '输入范围2.3-10',
-        rules: setRules('请输入').isSelected.get
+        rules: [
+          {required: true, message: "请填写云闪付(单笔>1000)费率", trigger: "blur"}
+        ]
       }
     ]
   },
@@ -368,7 +324,9 @@ export const FORM_CONFIG = {
         callback($ruleForm, $option) {
           $ruleForm['deviceModel'] = $option.deviceModel;
         },
-        rules: setRules('设备型号').isSelected.get
+        rules: [
+          {required: true, message: "请选择设备型号", trigger: "change"}
+        ]
       },
       {
         type: 0,
@@ -413,7 +371,10 @@ export const FORM_CONFIG = {
           keyName: 'status',
           valueName: 'statusDesc',
           method: 'get'
-        }
+        },
+        rules: [
+          {required: true, message: "请选择支付方式", trigger: "change"}
+        ]
       },
       {
         type: 6,

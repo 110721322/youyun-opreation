@@ -60,7 +60,8 @@ export default {
         agentNo: this.agentNo,
         merchantNo: $ruleform.inputSelect === 'merchantNo' ? $ruleform.inputForm : "",
         rewardDate: $ruleform.date ? $ruleform.date : '',
-        merchantName: $ruleform.inputSelect === 'merchantName' ? $ruleform.inputForm : ""
+        merchantName: $ruleform.inputSelect === 'merchantName' ? $ruleform.inputForm : "",
+        [$ruleform.search]: $ruleform.searchVal
       }
     }
   }

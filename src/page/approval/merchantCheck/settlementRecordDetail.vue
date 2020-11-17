@@ -37,7 +37,6 @@ export default {
     return {
       configData: RECORD_CONFIG,
       testData: [],
-      direction: "rtl",
       params: {},
       api: api.preAuditRecordQueryByPage
     };

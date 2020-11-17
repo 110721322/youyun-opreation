@@ -57,10 +57,12 @@ export default {
 .hideScroll::-webkit-scrollbar {
   width: 0 !important;
 }
+
 .hideScroll {
   -ms-overflow-style: none;
   overflow: -moz-scrollbars-none;
 }
+
 .process-page {
   display: flex;
   justify-content: space-between;

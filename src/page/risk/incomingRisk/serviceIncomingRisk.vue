@@ -33,7 +33,7 @@
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <div class="search-box">
-        <span class="label">精准筛选:</span>
+        <span class="label">筛选:</span>
         <el-input v-model="input" placeholder="请输入内容" class="input-with-select" size="40%">
           <el-select slot="prepend" v-model="select" style="width:130px" placeholder="请选择">
             <el-option label="服务商名称" value="1"></el-option>
@@ -114,28 +114,8 @@ export default {
   mounted() {
   },
   created() {
-    // this.params.beginDate = this.getDay(0);
-    // this.params.endDate = this.getDay(0);
   },
   methods: {
-    getDay(day) {
-      var today = new Date();
-      const targetdayMilliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day;
-      today.setTime(targetdayMilliseconds); // 注意，这行是关键代码
-      var tYear = today.getFullYear();
-      var tMonth = today.getMonth();
-      var tDate = today.getDate();
-      tMonth = this.doHandleMonth(tMonth + 1);
-      tDate = this.doHandleMonth(tDate);
-      return tYear + "-" + tMonth + "-" + tDate;
-    },
-    doHandleMonth(month) {
-      var m = month;
-      if (month.toString().length === 1) {
-        m = "0" + month;
-      }
-      return m;
-    },
     selectionChange($val) {
       this.selectData = []
       const selectValue = []
@@ -145,8 +125,15 @@ export default {
       this.selectData = selectValue
     },
     onClick_reset() {
-      this.input = "";
-      this.select = "";
+      this.select = "1"
+      this.input = ""
+      this.params1 = {
+        agentName: null,
+        agentNo: null
+      }
+      if (this.$refs['agentTable']) {
+        this.$refs['agentTable'].$children[0].clearSelection()
+      }
     },
     onClick_search() {
       if (!this.select) {
@@ -154,22 +141,21 @@ export default {
       }
       if (this.select === '1') {
         this.params1 = {
-          agentName: this.input
+          agentName: this.input ? this.input : null
         }
       } else {
         this.params1 = {
-          agentNo: this.input
+          agentNo: this.input ? this.input : null
         }
       }
     },
     search($ruleForm) {
-      const params = {
+      this.params = {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,
-        operateUserNo: $ruleForm.operateUserNo
+        operationId: $ruleForm.operationId,
+        [$ruleForm.search]: $ruleForm.searchVal
       };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
-      this.params = params;
     },
     onClick_remove(row) {
       this.$confirm("确定将该服务商移出黑名单吗?", "提示", {
@@ -185,17 +171,7 @@ export default {
               type: 'success'
             })
             this.$refs.table.getData()
-          } else {
-            this.$message({
-              message: res.errorMessage,
-              type: 'info'
-            })
           }
-        }).catch(err => {
-          this.$message({
-            type: "info",
-            message: err.errorMessage
-          });
         })
       }).catch(() => {
         this.$message({
@@ -236,8 +212,8 @@ export default {
       this.select = "1"
       this.input = ""
       this.params1 = {
-        agentName: "",
-        agentNo: ""
+        agentName: null,
+        agentNo: null
       }
       if (this.$refs['agentTable']) {
         this.$refs['agentTable'].$children[0].clearSelection()
@@ -297,7 +273,7 @@ export default {
   align-items: center;
   padding: 24px;
   .label {
-    width: 100px;
+    width: 50px;
   }
 }
 .search-btn {

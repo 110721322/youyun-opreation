@@ -24,7 +24,11 @@ export default {
   merchantUpdateAuditStatusOfPass: (params) => API.POST('/operation/v1/merchantAudit/updateAuditStatusOfPass', params),
   merchantUpdateAuditStatusOfReject: (params) => API.POST('/operation/v1/merchantAudit/updateAuditStatusOfReject', params),
   // 预审核列表
-  preAuditRecordQueryByPage: (params) => API.GET('/operation/v1/merchantPreAuditRecord/queryByPage', params),
+  preAuditRecordQueryByPage: (params) => API.GET('/operation/v1/merchantPreAuditRecord/queryByPage/settleCard', params),
+  // 入件预审核列表
+  register: (params) => API.GET('/operation/v1/merchantPreAuditRecord/queryByPage/register', params),
+  // 结算卡审核-列表
+  settleCardAudit: (params) => API.GET('/operation/v1/merchantSettleCardAudit/queryByPage', params),
   // 结算卡审核-列表
   settleCardAuditQueryByPage: (params) => API.GET('/operation/v1/merchantSettleCardAudit/queryByPage', params),
   // 结算卡审核-详情

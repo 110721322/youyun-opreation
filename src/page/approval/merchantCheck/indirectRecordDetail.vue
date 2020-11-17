@@ -38,7 +38,7 @@ export default {
       configData: RECORD_CONFIG,
       testData: [],
       params: {},
-      api: api.preAuditRecordQueryByPage
+      api: api.register
     };
   },
   created() {

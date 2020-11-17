@@ -5,12 +5,13 @@ export const SEARCH_CONFIG = {
       label: '筛选时间',
       key: 'date',
       class: 'max-width',
+      selectSevenDay: true,
       labelWidth: '80px',
       span: 22
     },
     // {
     //   type: 10,
-    //   label: '精准筛选',
+    //   label: '筛选',
     //   key: '',
     //   options: [
     //     {
@@ -34,20 +35,8 @@ export const SEARCH_CONFIG = {
       span: 11,
       options: [
         {
-          label: '已结算',
-          value: 1
-        },
-        {
-          label: '结算中',
-          value: 2
-        },
-        {
-          label: '未结算',
-          value: 3
-        },
-        {
-          label: '驳回',
-          value: 4
+          label: '全部',
+          value: '0'
         },
         {
           label: '运营审核中',

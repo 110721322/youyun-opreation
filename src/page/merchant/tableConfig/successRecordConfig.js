@@ -12,7 +12,7 @@ export const SUCCESS_CONFIG = {
     },
     {
       label: '交易日期',
-      prop: 'tel',
+      prop: 'tradeDate',
       width: '150px'
     },
     {

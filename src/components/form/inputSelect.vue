@@ -187,16 +187,16 @@ export default {
           )
           .then(res => {
             const newArr = [];
-            if (res.object) {
-              for (const item of res.object) {
+            if (res.data) {
+              for (const item of res.data) {
                 newArr.push({
                   value: item[urlOptions.keyName],
                   label: item[urlOptions.valueName]
                 });
               }
             }
-            if (res.datas) {
-              for (const item of res.datas) {
+            if (res.data) {
+              for (const item of res.data) {
                 newArr.push({
                   value: item[urlOptions.keyName],
                   label: item[urlOptions.valueName]

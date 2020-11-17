@@ -147,7 +147,7 @@ export default {
             JSON.stringify(FORM_CONFIG.checkReplyData)
           );
           FormData.formData.forEach((item, index) => {
-            item.initVal = res.object[item.key];
+            item.initVal = res.data[item.key];
           });
           this.activityRow = $row;
           this.formStatus = "checkReply";
@@ -165,9 +165,9 @@ export default {
         questionModule: $ruleForm.questionModule,
         questionType: $ruleForm.questionType,
         operatorId: $ruleForm.operatorId,
-        status: $ruleForm.status
-      };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+        status: $ruleForm.status,
+        [$ruleForm.search]: $ruleForm.searchVal
+      }
       this.params = params;
     }
   }

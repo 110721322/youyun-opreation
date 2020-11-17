@@ -79,11 +79,7 @@ export default {
     };
   },
   created() {
-    this.params = {
-      "agentName": "008小老猪",
-      "agentNo": "王哈小5f",
-      "tradeMonth": "2020-03-17"
-    }
+    this.params = {}
   },
   mounted() {
     // this.getData();
@@ -100,36 +96,33 @@ export default {
         this.overviewData = [
           {
             title: "订单分润总额",
-            data: res.object.officeCommission + '元'
+            data: res.data.officeCommission + '元'
           },
           {
             title: "服务商订单分润",
-            data: res.object.agentCommission + '元'
+            data: res.data.agentCommission + '元'
           },
           {
             title: "平台订单分润",
-            data: res.object.platformCommission + '元'
+            data: res.data.platformCommission + '元'
           }
         ]
         this.overviewData2 = [
           {
             title: "官方活动奖励",
-            data: res.object.officeActivityCommission + '元'
+            data: res.data.officeActivityCommission + '元'
           },
           {
             title: "平台活动奖励",
-            data: res.object.platformActivityCommission + '元'
+            data: res.data.platformActivityCommission + '元'
           }
         ]
       })
     },
     search($form) {
       this.params = {
-        "agentName": "",
-        "agentNo": "",
-        "tradeMonth": $form.date || ""
+        [$form.search]: $form.searchVal
       }
-      this.params[$form.inputSelect] = $form.inputForm
     }
   }
 };

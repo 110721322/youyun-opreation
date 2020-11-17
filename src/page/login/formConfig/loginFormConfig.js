@@ -40,7 +40,7 @@ export const REGISTER_FORM_CONFIG = {
       { required: true, message: '请输入详细地址', trigger: 'blur' }
     ],
     county: [
-      { required: true, message: '请选择省市区', trigger: 'blur' }
+      { required: true, message: '请选择省市区', trigger: 'change' }
     ],
     phone: [
       { required: true, message: '请输入登录手机号', trigger: 'blur' },

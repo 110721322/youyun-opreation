@@ -69,7 +69,7 @@
           :form-config="jobconfigData.formConfig"
           :form-data="jobconfigData.formModel"
           :grid-edit-width="150"
-          :is-async="true"
+          :is-async="false"
           :is-select="false"
           :is-expand="false"
           :default-expand-all="false"
@@ -187,8 +187,8 @@ export default {
           type: "employee_edit"
         })
         .then(res => {
-          if (!this.$g.utils.isArr(res.object) || res.code) return res;
-          const fieldsList = res.object;
+          if (!this.$g.utils.isArr(res.data) || res.code) return res;
+          const fieldsList = res.data;
           for (const field of FORM_CONFIG.editData.formData) {
             const fieldConfig = fieldsList.filter(item => item.id === field.id)[0]
             if (fieldConfig) {
@@ -205,7 +205,7 @@ export default {
       this.params = {
         sex: $ruleForm.inputFormVal ? "" : $ruleForm.sex,
         position: $ruleForm.inputFormVal ? "" : $ruleForm.position,
-        superiorName: $ruleForm.inputFormVal ? "" : $ruleForm.superiorName,
+        superiorId: $ruleForm.inputFormVal ? "" : $ruleForm.superiorId,
         state: 0,
         startTime: ($ruleForm.inputFormVal || $ruleForm.date.length === 0) ? "" : $ruleForm.date[0] + ' 00:00:00',
         endTime: ($ruleForm.inputFormVal || $ruleForm.date.length === 0) ? "" : $ruleForm.date[1] + ' 23:59:59',
@@ -253,7 +253,7 @@ export default {
         })
         .then(res => {
           if (res.code) return res
-          this.perfectRow = res.object;
+          this.perfectRow = res.data;
           this.perfectRow.roleId = $row.roleId;
           this.activityRow = $row;
           this.drawerPersonInfo = true;
@@ -279,14 +279,14 @@ export default {
         })
         .then(res => {
           if (res.code) return res;
-          this.dataItem = [res.object]
+          this.dataItem = [res.data]
           this.resolveData(this.dataItem)
           this.drawerOrganization = true;
         })
     },
     resolveData(arr) {
       arr.forEach((item, index) => {
-        item.label = item.name
+        item.label = item.jobName
         item.children = item.lowerUserList
         if (item.lowerUserList) {
           this.resolveData(item.lowerUserList)
@@ -304,7 +304,7 @@ export default {
             if (item.key === "password") {
               item.initVal = ""
             } else {
-              item.initVal = res.object[item.key];
+              item.initVal = res.data[item.key];
             }
           });
           this.activityRow = $row;

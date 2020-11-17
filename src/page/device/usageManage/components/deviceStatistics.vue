@@ -374,23 +374,20 @@ export default {
   created() {
     this.queryEquipment()
     this.handleProvince()
+    this.queryRegion()
+    this.queryRegionTrade()
   },
   mounted() {
-    this.queryRegion();
-    this.queryRegionTrade();
   },
   methods: {
     queryEquipment() {
       var params = {
-        beginDate: this.$g.utils.getToday(0),
+        beginDate: this.$g.utils.getToday(-6),
         endDate: this.$g.utils.getToday(0)
       }
       api.queryUsing(params).then(res => {
-        this.deviceListData = res.object;
+        this.deviceListData = res.data;
       })
-        .catch(err => {
-          this.$message(err);
-        });
     },
     handleNumRadioChange($data) {
       $data === "region" ? this.queryRegion() : null;
@@ -418,7 +415,7 @@ export default {
             prop: "regionName",
             hasDot: false
           };
-          res.object.forEach(v => {
+          res.data.forEach(v => {
             if (!v.activationCount) {
               v.activationCount = 0
             }
@@ -432,13 +429,10 @@ export default {
               v.usingCount = 0
             }
           })
-          this.detailData = res.object;
-          this.transferEchartsData(res.object, this.barOption, "regionName");
+          this.detailData = res.data;
+          this.transferEchartsData(res.data, this.barOption, "regionName");
           this.showBar();
         })
-        .catch(err => {
-          this.$message(err);
-        });
     },
     // 行业设备数量使用情况
     queryMcc() {
@@ -454,13 +448,10 @@ export default {
             prop: "mccName",
             hasDot: false
           };
-          this.detailData = res.object;
-          this.transferEchartsData(res.object, this.barOption, "mccName");
+          this.detailData = res.data;
+          this.transferEchartsData(res.data, this.barOption, "mccName");
           this.showBar();
         })
-        .catch(err => {
-          this.$message(err);
-        });
     },
     // 大区设备交易情况
     queryRegionTrade() {
@@ -476,13 +467,10 @@ export default {
             prop: "regionName",
             hasDot: false
           };
-          this.detailData2 = res.object;
-          this.transferEchartsData(res.object, this.barOption2, "regionName");
+          this.detailData2 = res.data;
+          this.transferEchartsData(res.data, this.barOption2, "regionName");
           this.showBar2();
         })
-        .catch(err => {
-          this.$message(err);
-        });
     },
     // 行业设备交易情况
     queryMccTrade() {
@@ -498,13 +486,10 @@ export default {
             prop: "mccName",
             hasDot: false
           };
-          this.detailData2 = res.object;
-          this.transferEchartsData(res.object, this.barOption2, "mccName");
+          this.detailData2 = res.data;
+          this.transferEchartsData(res.data, this.barOption2, "mccName");
           this.showBar2();
         })
-        .catch(err => {
-          this.$message(err);
-        });
     },
     handleProvince($itemData) {
       if ($itemData) {
@@ -517,7 +502,7 @@ export default {
     // 查询所有省份正在使用的数量/查询省份使用排行榜
     queryAllProvince($data) {
       if (!$data) {
-        this.beginDate = this.$g.utils.getToday(0)
+        this.beginDate = this.$g.utils.getToday(-6)
         this.endDate = this.$g.utils.getToday(0)
       }
       api.queryAllProvince({
@@ -526,7 +511,7 @@ export default {
         deviceId: this.deviceId
       }).then(res => {
         var result = this.$g.utils.getNestedArr(areaData, 'children');
-        res.object.forEach((v) => {
+        res.data.forEach((v) => {
           result.forEach(m => {
             if (v.provinceCode === m.value) {
               v.provinceName = m.label
@@ -539,7 +524,7 @@ export default {
           })
           v.deviceProportionPecent = this.$g.utils.AccMul(v.deviceProportion, 100)
         })
-        this.mapData = res.object;
+        this.mapData = res.data;
         this.initMap();
       })
     },
@@ -572,7 +557,7 @@ export default {
           endDate: $ruleForm.date[1]
         })
         .then(res => {
-          this.deviceListData = res.object;
+          this.deviceListData = res.data;
         })
         .catch(err => {
           this.$message(err);

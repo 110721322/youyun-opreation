@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="p_head">服务商审核列表</div>
+    <div class="p_head">顶级服务商审核列表</div>
     <search
       :open-height="searchMaxHeight"
       :form-base-data="searchConfig.formData"
@@ -82,19 +82,19 @@ export default {
     ...mapActions(['setLabelList', 'setRegionList', 'setUserList']),
     queryInit() {
       api_dataMarket.queryInit().then(res => {
-        const labelList = res.object.labelList.map($ele => {
+        const labelList = res.data.labelList.map($ele => {
           return {
             label: $ele.name,
             value: $ele.id
           }
         })
-        const regionList = res.object.regionSetList.map($ele => {
+        const regionList = res.data.regionSetList.map($ele => {
           return {
             label: $ele.regionName,
             value: $ele.regionCode
           }
         })
-        const userList = res.object.userDTOList.map($ele => {
+        const userList = res.data.userDTOList.map($ele => {
           return {
             label: $ele.jobName || $ele.name,
             value: $ele.id
@@ -170,8 +170,13 @@ export default {
             type: "success",
             message: "已通过"
           });
+          this.$router.push({
+            name: "topAgentDetail",
+            query: {
+              channelAgentCode: this.selectOption.channelAgentCode
+            }
+          })
           this.drawer = false;
-          this.$refs.table.getData();
         })
       })
     }

@@ -82,12 +82,18 @@ export default {
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     },
-    selectionChange($val) {},
     onClick_addDevice() {
       this.fromConfigData = FORM_CONFIG.deviceData;
       this.drawer = true;
     },
     confirm($data) {
+      if (!$data.deadline || !$data.deviceIdentifier) {
+        this.$message({
+          message: "请填写必填信息",
+          type: "info"
+        })
+        return
+      }
       api
         .deviceDetailUpdate({
           id: this.rowId,
@@ -95,13 +101,15 @@ export default {
           deviceIdentifier: $data.deviceIdentifier
         })
         .then(res => {
-          this.drawer = false;
-          this.$refs.table.getData();
-          this.$message("保存成功");
+          if (res.status === 0) {
+            this.drawer = false;
+            this.$refs.table.getData();
+            this.$message({
+              message: "编辑成功",
+              type: "success"
+            });
+          }
         })
-        .catch(err => {
-          this.$message(err);
-        });
     },
     cancel() {
       this.drawer = false;
@@ -122,21 +130,24 @@ export default {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认",
         cancelButtonText: "取消"
-      })
-        .then(() => {
-          api
-            .deviceDetailDelete({
-              id: $row.id
-            })
-            .then(result => {
-              this.$refs.table.getData();
-              this.$message("已删除");
-            })
-            .catch(err => {
-              console.error(err);
+      }).then(() => {
+        api.deviceDetailDelete({
+          id: $row.id
+        }).then(result => {
+          if (result.status === 0) {
+            this.$refs.table.getData();
+            this.$message({
+              message: "已删除",
+              type: "success"
             });
+          }
         })
-        .catch(() => {});
+      }).catch(() => {
+        this.$message({
+          message: "取消操作",
+          type: "info"
+        });
+      });
     }
   }
 };

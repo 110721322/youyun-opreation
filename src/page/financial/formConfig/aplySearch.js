@@ -2,16 +2,16 @@ export const SEARCH_CONFIG = {
   formData: [
     {
       type: 10,
-      label: '精准筛选',
-      key: '',
+      label: '筛选',
+      key: 'search',
       options: [
-        {
-          label: '服务商ID',
-          value: 'merchantNo'
-        },
         {
           label: '服务商名称',
           value: 'merchantName'
+        },
+        {
+          label: '服务商ID',
+          value: 'merchantNo'
         }
       ],
       labelWidth: '80px',

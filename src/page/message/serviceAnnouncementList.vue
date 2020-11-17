@@ -72,7 +72,7 @@ export default {
     },
     onClick_addAnnouncement() {
       this.$router.push({
-        name: 'agentAnnounceDetail'
+        name: 'agentAnnounceAdd'
       });
     },
     go_detail() {

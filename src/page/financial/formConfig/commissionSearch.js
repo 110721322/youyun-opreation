@@ -5,12 +5,13 @@ export const SEARCH_CONFIG = {
       label: '筛选时间',
       key: 'date',
       class: 'max-width',
+      selectSevenDay: true,
       labelWidth: '80px',
       span: 22
     }
     // {
     //   type: 10,
-    //   label: '精准筛选',
+    //   label: '筛选',
     //   key: '',
     //   class: 'max-width',
     //   options: [

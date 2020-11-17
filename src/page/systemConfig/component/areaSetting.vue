@@ -106,9 +106,6 @@ export default {
               this.queryAllRegion()
               this.drawer = false;
             })
-            .catch(err => {
-              this.$message(err);
-            });
           break;
         case "add":
           api
@@ -121,9 +118,6 @@ export default {
               this.queryAllRegion()
               this.drawer = false;
             })
-            .catch(err => {
-              this.$message(err);
-            });
           break;
 
         default:
@@ -132,7 +126,7 @@ export default {
     },
     queryAllRegion() {
       api.queryRegionProvince({}).then(res => {
-        this.areaList = res.object;
+        this.areaList = res.data;
         this.areaList = this.areaList.map($area => {
           $area.addOption = "";
           $area.province = $area.provinceCodes.map($code => {
@@ -178,9 +172,6 @@ export default {
           })
           this.queryAllRegion();
         })
-        .catch(err => {
-          this.$message(err);
-        });
     },
     areaSelect($item) {
       this.$set($item, "isShowSelect", true);
@@ -194,14 +185,17 @@ export default {
       api
         .saveRegionProvinceSet(params)
         .then(res => {
-          this.$message({
-            type: 'success',
-            message: '添加成功'
-          })
-          this.queryAllRegion()
+          if (res.status === 0) {
+            this.$message({
+              type: 'success',
+              message: '添加成功'
+            })
+            this.queryAllRegion()
+          }
         })
         .catch(err => {
-          this.$message(err);
+          console.log(err)
+          $item.addOption = ''
         });
     },
     cancel() {

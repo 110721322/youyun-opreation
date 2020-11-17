@@ -161,17 +161,12 @@ export default {
               type: 'warning',
               showCancelButton: false,
               showClose: false
-            }).then(res => {
+            }).then(() => {
               this.$router.replace({
                 name: 'orderRecords'
               })
             })
           }
-        }).catch(err => {
-          this.$message({
-            message: err.errorMessage,
-            type: "warning"
-          })
         })
       }
     }

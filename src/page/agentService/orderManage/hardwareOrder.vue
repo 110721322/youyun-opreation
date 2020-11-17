@@ -89,10 +89,10 @@ export default {
         outputNo: $ruleForm.outputNo ? $ruleForm.outputNo : null,
         outputType: $ruleForm.outputType,
         status: $ruleForm.status,
-        beginTime: $ruleForm.date ? $ruleForm.date[0] : null,
-        endTime: $ruleForm.date ? $ruleForm.date[1] : null
+        beginTime: $ruleForm.date ? $ruleForm.date[0] : this.$g.utils.getNowFormatDate() + ' 00:00:00',
+        endTime: $ruleForm.date ? $ruleForm.date[1] : this.$g.utils.getNowFormatDate() + ' 23:59:59',
+        [$ruleForm.search]: $ruleForm.searchVal
       };
-      this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
     }
   }
 };

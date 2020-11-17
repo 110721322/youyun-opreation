@@ -221,52 +221,52 @@ export default {
       api.getSubAgentDetail({
         agentNo: this.agentNo
       }).then(res => {
-        if (res.object.bankAccountType === 'public') {
-          res.object.bankAccountType = '对公'
+        if (res.data.bankAccountType === 'public') {
+          res.data.bankAccountType = '对公'
         }
-        if (res.object.bankAccountType === 'private') {
-          res.object.bankAccountType = '对私'
+        if (res.data.bankAccountType === 'private') {
+          res.data.bankAccountType = '对私'
         }
-        if (res.object.businessType === 'enterprise') {
-          res.object.businessTypeCn = '企业'
+        if (res.data.businessType === 'enterprise') {
+          res.data.businessTypeCn = '企业'
         }
-        if (res.object.businessType === 'individual' || res.object.businessType === '') {
-          res.object.businessTypeCn = '个人'
+        if (res.data.businessType === 'individual' || res.data.businessType === '') {
+          res.data.businessTypeCn = '个人'
         }
         var result = this.$g.utils.getNestedArr(areaData, 'children')
         result.forEach(m => {
-          if (res.object.cityCode === m.value) {
-            res.object.cityName = m.label
+          if (res.data.cityCode === m.value) {
+            res.data.cityName = m.label
           }
-          if (res.object.areaCode === m.value) {
-            res.object.areaName = m.label
+          if (res.data.areaCode === m.value) {
+            res.data.areaName = m.label
           }
-          if (res.object.provinceCode === m.value) {
-            res.object.provinceName = m.label
+          if (res.data.provinceCode === m.value) {
+            res.data.provinceName = m.label
           }
-          if (res.object.activeScopeCityCode === m.value) {
-            res.object.activeScopeCityName = m.label
+          if (res.data.activeScopeCityCode === m.value) {
+            res.data.activeScopeCityName = m.label
           }
-          if (res.object.activeScopeProvinceCode === m.value) {
-            res.object.activeScopeProvinceName = m.label
+          if (res.data.activeScopeProvinceCode === m.value) {
+            res.data.activeScopeProvinceName = m.label
           }
-          res.object.activeScope = res.object.activeScopeProvinceName + res.object.activeScopeCityName
+          res.data.activeScope = res.data.activeScopeProvinceName + res.data.activeScopeCityName
         })
-        res.object.areaAddress = res.object.provinceName + res.object.cityName + res.object.areaName
-        if (res.object.cloudPayGt1000Rate) {
-          res.object.cloudPayGt1000RatePecent = this.$g.utils.AccMul(res.object.cloudPayGt1000Rate, 1000) + '‰'
-          res.object.cloudPayLe1000RatePecent = this.$g.utils.AccMul(res.object.cloudPayLe1000Rate, 1000) + '‰'
+        res.data.areaAddress = res.data.provinceName + res.data.cityName + res.data.areaName
+        if (res.data.cloudPayGt1000Rate) {
+          res.data.cloudPayGt1000RatePecent = this.$g.utils.AccMul(res.data.cloudPayGt1000Rate, 1000) + '‰'
+          res.data.cloudPayLe1000RatePecent = this.$g.utils.AccMul(res.data.cloudPayLe1000Rate, 1000) + '‰'
         }
-        if (!res.object.cloudPayGt1000Rate) {
-          res.object.cloudPayGt1000RatePecent = 0 + '‰'
-          res.object.cloudPayLe1000RatePecent = 0 + '‰'
+        if (!res.data.cloudPayGt1000Rate) {
+          res.data.cloudPayGt1000RatePecent = 0 + '‰'
+          res.data.cloudPayLe1000RatePecent = 0 + '‰'
         }
-        if (res.object.alipayRate || res.object.wechatPayRate) {
-          res.object.alipayRatePecent = this.$g.utils.AccMul(res.object.alipayRate, 1000) + '‰'
-          res.object.wechatPayRatePecent = this.$g.utils.AccMul(res.object.wechatPayRatePecent, 1000) + '‰'
+        if (res.data.alipayRate || res.data.wechatPayRate) {
+          res.data.alipayRatePecent = this.$g.utils.AccMul(res.data.alipayRate, 1000) + '‰'
+          res.data.wechatPayRatePecent = this.$g.utils.AccMul(res.data.wechatPayRatePecent, 1000) + '‰'
         }
-        this.ruleForm = res.object
-        this.currentType = res.object.contractStatus
+        this.ruleForm = res.data
+        this.currentType = res.data.contractStatus
       }).catch();
     },
     confirm($data) {
@@ -289,12 +289,7 @@ export default {
             this.drawer = false;
             this.getServiceData()
           }
-        }).catch(err => {
-          this.$message({
-            message: err.errorMessage,
-            type: 'info'
-          });
-        });
+        })
       }
     },
     onClick_sign() {
@@ -307,18 +302,8 @@ export default {
             type: 'success'
           })
           this.getServiceData()
-        } else {
-          this.$message({
-            message: res.errorMessage,
-            type: 'info'
-          })
         }
-      }).catch(err => {
-        this.$message({
-          message: err.errorMessage,
-          type: 'info'
-        })
-      });
+      })
     },
     cancel() {
       this.drawer = false;
@@ -326,18 +311,6 @@ export default {
     onClick_reject() {
       this.drawer = true;
       this.fromConfigData = FORM_CONFIG.rejectReason;
-    },
-    onClick_edit($item) {
-      $item.edit = true;
-    },
-    onClick_okEdit($item) {
-      $item.edit = false;
-    },
-    onClick_cancelEdit($item) {
-      $item.edit = false;
-    },
-    getHeadClass() {
-      return "background:#EFEFEF";
     }
   }
 };

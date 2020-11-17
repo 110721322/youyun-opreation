@@ -5,17 +5,32 @@ export const USERLIST_CONFIG = {
     {
       label: '花名',
       prop: 'jobName',
-      width: '150px'
+      width: '150px',
+      render: (h, params) => {
+        return h(
+          'span', params.row.jobName ? params.row.jobName : '-'
+        )
+      }
     },
     {
       label: '工号',
       prop: 'jobNumber',
-      width: '150px'
+      width: '150px',
+      render: (h, params) => {
+        return h(
+          'span', params.row.jobNumber ? params.row.jobNumber : '-'
+        )
+      }
     },
     {
       label: '姓名',
       prop: 'name',
-      width: '150px'
+      width: '150px',
+      render: (h, params) => {
+        return h(
+          'span', params.row.name ? params.row.name : '-'
+        )
+      }
     },
     {
       label: '手机号',
@@ -31,10 +46,13 @@ export const USERLIST_CONFIG = {
           return h(
             'span', '男'
           )
-        }
-        if (params.row.sex === 0) {
+        } else if (params.row.sex === 0) {
           return h(
             'span', '女'
+          )
+        } else {
+          return h(
+            'span', '-'
           )
         }
       }
@@ -47,7 +65,12 @@ export const USERLIST_CONFIG = {
     {
       label: '邮箱',
       prop: 'email',
-      width: '150px'
+      width: '150px',
+      render: (h, params) => {
+        return h(
+          'span', params.row.email ? params.row.email : '-'
+        )
+      }
     }
   ],
 

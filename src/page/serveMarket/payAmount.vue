@@ -28,13 +28,24 @@
         <li v-if="selectIndex===1">
           <span style="color:red">*</span><span>上传凭证：</span>
           <div class="photo">
-            <Upload :formItem="formItem" :ruleForm="ruleForm" />
+            <Upload :form-item="formItem" :rule-form="ruleForm" />
           </div>
         </li>
-        <p v-if="selectIndex===1">查看示例</p>
+        <p v-if="selectIndex===1" style="cursor: pointer" @click="seeExamples">查看示例</p>
         <button class="option_btn" @click="onClick_tostatus">我已完成</button>
       </ul>
     </div>
+    <el-dialog
+      title="凭证示例"
+      :visible.sync="dialogVisible"
+      width="500px"
+    >
+      <img style="display: block; width: 270px; height: 406px; margin: 0 auto;" src="../../assets/img/settlePay.png" alt="">
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -66,7 +77,8 @@ export default {
         key: 'imgUrl',
         maxNum: 1
       },
-      ruleForm: {}
+      ruleForm: {},
+      dialogVisible: false
     }
   },
   created() {
@@ -74,7 +86,17 @@ export default {
     this.modelName = JSON.parse(localStorage.getItem('productItem')).productName
     this.amount = localStorage.getItem('amount')
   },
+  beforeDestroy() {
+    // localStorage.setItem('comboItem', '')
+    // localStorage.setItem('productItem', '')
+    // localStorage.setItem('amount', '')
+    // localStorage.setItem('voucher', '')
+    // localStorage.setItem('promoCodeId', '')
+  },
   methods: {
+    seeExamples() {
+      this.dialogVisible = true
+    },
     onClick_select(index) {
       if (index === 0) {
         this.$message.error('暂不支持扫码支付');
@@ -97,20 +119,13 @@ export default {
         voucher: this.ruleForm.imgUrl
       }
       api.createOrder(params).then(res => {
-        if (res.object) {
+        if (res.data) {
           this.$router.push({
             name: "payStatus"
           })
         }
       })
     }
-  },
-  beforeDestroy() {
-    // localStorage.setItem('comboItem', '')
-    // localStorage.setItem('productItem', '')
-    // localStorage.setItem('amount', '')
-    // localStorage.setItem('voucher', '')
-    // localStorage.setItem('promoCodeId', '')
   }
 }
 </script>

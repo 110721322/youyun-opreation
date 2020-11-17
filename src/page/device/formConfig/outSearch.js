@@ -7,14 +7,14 @@ export const SEARCH_CONFIG = {
       type: 9,
       label: '筛选时间',
       key: 'date',
-      isSelectToday: true,
+      selectSevenDay: true,
       labelWidth: '80px',
       span: 22
     },
     {
       type: 10,
-      label: '精准筛选',
-      key: '',
+      label: '筛选',
+      key: 'search',
       class: 'max-width',
       options: [
         {
@@ -57,16 +57,16 @@ export const SEARCH_CONFIG = {
           value: ''
         },
         {
-          label: '未激活',
-          value: 1
+          label: '待发货',
+          value: 5
         },
         {
-          label: '激活成功',
-          value: 2
+          label: '已发货',
+          value: 6
         },
         {
-          label: '激活失败',
-          value: 3
+          label: '已驳回',
+          value: 7
         }
       ]
     },

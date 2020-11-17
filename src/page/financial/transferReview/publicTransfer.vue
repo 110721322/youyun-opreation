@@ -109,11 +109,11 @@ export default {
     },
     search($ruleForm) {
       this.params = {
-        startDate: $ruleForm.date ? $ruleForm.date[0].split(' ')[0] : null,
-        endDate: $ruleForm.date ? $ruleForm.date[1].split(' ')[0] : null,
-        auditStatus: $ruleForm.auditStatus
+        startDate: $ruleForm.date ? $ruleForm.date[0] : '',
+        endDate: $ruleForm.date ? $ruleForm.date[1] : '',
+        auditStatus: $ruleForm.auditStatus,
+        [$ruleForm.search]: $ruleForm.searchVal
       };
-      this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
     },
     onClick_detail($row) {
       this.reason = $row.reason
@@ -144,12 +144,7 @@ export default {
             });
             this.$refs.table.getData()
           }
-        }).catch(err => {
-          this.$message({
-            message: err.errorMessage,
-            type: 'warning'
-          })
-        });
+        })
       }).catch(() => {
         this.$message({
           message: '取消操作',

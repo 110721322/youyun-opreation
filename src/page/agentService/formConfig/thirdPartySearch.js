@@ -11,19 +11,19 @@ export const SEARCH_CONFIG = {
     },
     {
       type: 10,
-      label: '精准筛选',
-      key: '',
+      label: '筛选',
+      key: 'search',
       options: [
-        {
-          label: '服务商ID',
-          value: 'agentNo'
-        },
         {
           label: '服务商名称',
           value: 'agentName'
+        },
+        {
+          label: '服务商ID',
+          value: 'agentNo'
         }
       ],
-      labelWidth: '80px',
+      labelWidth: '90px',
       span: 22
     }
   ]

@@ -62,6 +62,7 @@ export default {
     onChage($data) {
       this.$emit("select", $data);
       this.ruleForm[this.formItem.key] = $data;
+      this.$emit("timeSearch", this.ruleForm)
     }
   }
 };

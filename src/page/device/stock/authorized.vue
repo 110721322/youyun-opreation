@@ -53,16 +53,11 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl",
       params: {
-        beginDate: this.$g.utils.getToday(),
-        endDate: this.$g.utils.getToday(),
-        currentPage: 1,
-        deviceId: 1,
-        deviceIdentifier: "",
-        pageSize: 1,
-        status: 1
+        beginDate: this.$g.utils.getToday(-6),
+        endDate: this.$g.utils.getToday(0)
       },
+      api: '',
       ruleForm: {
         key: 'file'
       },
@@ -73,20 +68,13 @@ export default {
     };
   },
   created() {
-    const beginDate = this.$g.utils.getNowFormatDate()
-    const endDate = this.$g.utils.getNowFormatDate()
-    this.params = {
-      beginDate: beginDate,
-      endDate: endDate
-    }
-    this.api = api.deviceActivationQueryByPage
   },
   mounted() {},
   methods: {
     search($ruleForm) {
       const params = {
-        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
-        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : this.$g.utils.getToday(-6),
+        endDate: $ruleForm.date ? $ruleForm.date[1] : this.$g.utils.getToday(0),
         deviceIdentifier: $ruleForm.deviceIdentifier ? $ruleForm.deviceIdentifier : '',
         deviceId: $ruleForm.deviceId ? $ruleForm.deviceId : '',
         status: $ruleForm.status ? $ruleForm.status : ''

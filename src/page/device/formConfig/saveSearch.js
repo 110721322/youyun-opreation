@@ -7,6 +7,7 @@ export const SEARCH_CONFIG = {
       label: '筛选时间',
       key: 'date',
       datatype: 'datetimerange',
+      selectSevenDay: true,
       format: 'yyyy-MM-dd HH:mm:ss',
       labelWidth: '80px',
       span: 22

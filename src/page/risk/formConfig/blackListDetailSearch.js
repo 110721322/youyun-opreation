@@ -1,16 +1,17 @@
-import apiAgent from "@/api/api_agent.js";
+import api from "@/api/api_risk.js";
 export const SEARCH_CONFIG = {
   formData: [
     {
       type: 9,
       label: '筛选时间',
       key: 'date',
+      selectSevenDay: true,
       labelWidth: '80px',
       span: 22
     },
     {
       type: 10,
-      label: '精准筛选',
+      label: '筛选',
       key: 'banField',
       options: [
         {
@@ -35,14 +36,14 @@ export const SEARCH_CONFIG = {
     },
     {
       type: 1,
-      label: '所属运营',
+      label: '加入人员',
       key: 'operateUserNo',
       labelWidth: '80px',
       span: 11,
       urlOptions: {
-        url: apiAgent.queryAllOperation,
-        keyName: 'operationId',
-        valueName: 'operationName',
+        url: api.getAllJobName,
+        keyName: 'id',
+        valueName: 'jobName',
         method: 'get'
       }
     }

@@ -39,13 +39,10 @@ export default {
         .then(res => {
           const newFromConfigData = FORM_CONFIG.editData;
           newFromConfigData.formData.forEach((item, index) => {
-            item.initVal = res.object[item.key];
+            item.initVal = res.data[item.key];
           });
           this.fromConfigData = newFromConfigData;
         })
-        .catch(err => {
-          this.$message(err);
-        });
     },
     cancel(done) {
       this.$router.back();
@@ -77,8 +74,13 @@ export default {
             video: $ruleForm.video
           })
           .then(res => {
-            this.$message("保存成功");
-            this.$router.replace({ name: "shopCenter" });
+            if (res.status === 0) {
+              this.$message({
+                message: '保存成功',
+                type: 'success'
+              });
+              this.$router.replace({ name: "shopCenter" });
+            }
           })
       } else {
         api
@@ -99,7 +101,6 @@ export default {
               this.$router.replace({ name: "shopCenter" });
             }
           })
-          .catch(() => {});
       }
     }
   }
@@ -112,6 +113,5 @@ export default {
   background: #fff;
   margin: 0 24px;
   padding-top: 24px;
-  /* height: calc(100% - 24px); */
 }
 </style>

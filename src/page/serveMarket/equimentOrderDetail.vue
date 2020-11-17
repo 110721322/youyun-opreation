@@ -135,15 +135,15 @@ export default {
   methods: {
     getOrderDetail(id) {
       api.queryOrderDetail({ id: id}).then(res => {
-        this.ruleFormBasic = res.object;
-        this.infoDTOList = res.object.infoDTOList;
-        if (res.object.status === 1) {
-          this.getTime(res.object.createTime)
+        this.ruleFormBasic = res.data;
+        this.infoDTOList = res.data.infoDTOList;
+        if (res.data.status === 1) {
+          this.getTime(res.data.createTime)
         }
         this.orderInfo = {
-          actualAmount: res.object.actualAmount,
-          outputNo: res.object.outputNo,
-          createTime: res.object.createTime
+          actualAmount: res.data.actualAmount,
+          outputNo: res.data.outputNo,
+          createTime: res.data.createTime
         }
       });
     },

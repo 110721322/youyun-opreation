@@ -49,7 +49,6 @@ export default {
       searchConfig: SEARCH_CONFIG,
       configData: INDIRECTLIST_CONFIG,
       testData: [],
-      direction: "rtl",
       searchHeight: "320",
       params: {},
       api: ""
@@ -59,42 +58,23 @@ export default {
     if (this.$route.query.merchantNo) {
       this.params.merchantNo = this.$route.query.merchantNo
     }
-    this.params.beginDate = this.getDay(0);
-    this.params.endDate = this.getDay(0);
+    this.params.beginDate = this.$g.utils.getToday(-6);
+    this.params.endDate = this.$g.utils.getToday(0);
     this.api = api.queryLeshuaAuditPageByCondition
   },
   mounted() {
     // this.search();
   },
   methods: {
-    getDay(day) {
-      var today = new Date();
-      const targetdayMilliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day;
-      today.setTime(targetdayMilliseconds); // 注意，这行是关键代码
-      var tYear = today.getFullYear();
-      var tMonth = today.getMonth();
-      var tDate = today.getDate();
-      tMonth = this.doHandleMonth(tMonth + 1);
-      tDate = this.doHandleMonth(tDate);
-      return tYear + "-" + tMonth + "-" + tDate;
-    },
-    doHandleMonth(month) {
-      var m = month;
-      if (month.toString().length === 1) {
-        m = "0" + month;
-      }
-      return m;
-    },
     search($ruleForm) {
-      const params = {
-        beginDate: $ruleForm.date[0] ? $ruleForm.date[0] : this.getDay(0),
-        endDate: $ruleForm.date[0] ? $ruleForm.date[1] : this.getDay(0),
+      this.params = {
+        beginDate: $ruleForm.date[0] ? $ruleForm.date[0] : this.$g.utils.getToday(-6),
+        endDate: $ruleForm.date[0] ? $ruleForm.date[1] : this.$g.utils.getToday(0),
         status: $ruleForm.status,
         operationUserNo: $ruleForm.operationUserNo,
-        operationId: $ruleForm.operationId
-      };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
-      this.params = params;
+        operationId: $ruleForm.operationId,
+        [$ruleForm.search]: $ruleForm.searchVal
+      }
     },
     handleDetail(row) {
       this.$router.push({
@@ -126,12 +106,15 @@ export default {
   overflow: hidden;
   background: #fff;
 }
+
 .form_item {
   float: left !important;
 }
+
 .clear_both {
   clear: both !important;
 }
+
 .btn_list {
   /* background: rebeccapurple; */
   position: absolute;
@@ -143,19 +126,22 @@ export default {
 .demo-table-expand {
   font-size: 0;
 }
+
 .demo-table-expand label {
   width: 90px;
   color: #99a9bf;
 }
+
 .demo-table-expand .el-form-item {
   margin-right: 0;
   margin-bottom: 0;
-  /* width: 25%; */
 }
+
 .form-box {
   display: flex;
   justify-content: space-between;
 }
+
 .dot {
   display: inline-block;
   width: 5px;
@@ -163,15 +149,15 @@ export default {
   border-radius: 50%;
   vertical-align: middle;
   margin: 0 5px;
-  /*&.opened {*/
-  /*  background-color: #52c41a;*/
-  /*}*/
+
   &.review {
     background-color: #ffc620;
   }
+
   &.channelReject {
     background-color: #f5222d !important;
   }
+
   &.nonOpen {
     background-color: #9c9c9c;
   }

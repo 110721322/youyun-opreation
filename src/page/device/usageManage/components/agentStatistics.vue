@@ -45,17 +45,9 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl",
       params: {
-        beginDate: this.$g.utils.getToday(0),
-        endDate: this.$g.utils.getToday(0),
-        agentNo: "",
-        cityCode: "",
-        currentPage: 1,
-        deviceId: '',
-        pageSize: 10,
-        provinceCode: "",
-        regionCode: ""
+        beginDate: this.$g.utils.getToday(-6),
+        endDate: this.$g.utils.getToday(0)
       },
       api: api.deviceDataQueryByPage
     };
@@ -68,19 +60,15 @@ export default {
     search($ruleForm) {
       if ($ruleForm) {
         const params = {
-          beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
-          endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+          beginDate: $ruleForm.date ? $ruleForm.date[0] : this.$g.utils.getToday(-6),
+          endDate: $ruleForm.date ? $ruleForm.date[1] : this.$g.utils.getToday(0),
           regionCode: $ruleForm.regionCode,
           city: $ruleForm.city,
-          deviceId: $ruleForm.deviceId
+          deviceId: $ruleForm.deviceId,
+          [$ruleForm.search]: $ruleForm.searchVal
         };
-        params[$ruleForm.inputSelect] = $ruleForm.inputForm;
         this.params = params;
       }
-    },
-    selectionChange($val) {},
-    cancel(done) {
-      done();
     }
   }
 };
@@ -94,16 +82,18 @@ export default {
   overflow: hidden;
   background: #fff;
 }
+
 .form_item {
   float: left !important;
 }
+
 .clear_both {
   clear: both !important;
 }
+
 .btn_list {
   /* background: rebeccapurple; */
   position: absolute;
-  right: 0;
   bottom: 21px;
   right: 24px;
 }
@@ -111,15 +101,18 @@ export default {
 .demo-table-expand {
   font-size: 0;
 }
+
 .demo-table-expand label {
   width: 90px;
   color: #99a9bf;
 }
+
 .demo-table-expand .el-form-item {
   margin-right: 0;
   margin-bottom: 0;
   /* width: 25%; */
 }
+
 .form-box {
   display: flex;
   justify-content: space-between;
@@ -128,28 +121,29 @@ export default {
 .demo-table-expand {
   font-size: 0;
 }
+
 .demo-table-expand label {
   width: 90px;
   color: #99a9bf;
 }
+
 .demo-table-expand .el-form-item {
   margin-right: 0;
   margin-bottom: 0;
-  /* width: 25%; */
 }
 
 .tabale_title_box {
   height: 52px;
   width: 100%;
+
   .title {
     font-size: 16px;
-    font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 500;
     color: rgba(51, 51, 53, 1);
     float: left;
     margin-left: 10px;
-    // line-height: 52px;
   }
+
   .btn {
     float: right;
   }

@@ -76,33 +76,32 @@ export default {
     };
   },
   created() {
-    var result = this.$g.utils.getToday1()
     var settleStatus = this.activeIndex
     this.params = {
-      beginDate: result,
-      endDate: result,
+      beginDate: this.$g.utils.getToday(-7),
+      endDate: this.$g.utils.getToday(-1),
       settleStatus: settleStatus === "1" ? "settleFail" : settleStatus === "2" ? "noSettle" : "finishSettle"
     }
     var merchantNo = ''
     var merchantName = ''
     var channelMerchantNo = ''
     var channel = ''
-    this.getSettle(result, result, merchantNo, merchantName, channelMerchantNo, channel)
+    this.getSettle(this.$g.utils.getToday(-6), this.$g.utils.getToday(0), merchantNo, merchantName, channelMerchantNo, channel)
   },
   mounted() {},
   methods: {
     search($ruleForm) {
       var settleStatus = this.activeIndex
       const params = {
-        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
-        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : this.$g.utils.getToday(-7),
+        endDate: $ruleForm.date ? $ruleForm.date[1] : this.$g.utils.getToday(-1),
         channel: $ruleForm.channel,
         channelMerchantNo: $ruleForm.channelMerchantNo,
-        settleStatus: settleStatus === "1" ? "settleFail" : settleStatus === "2" ? "noSettle" : "finishSettle"
+        settleStatus: settleStatus === "1" ? "settleFail" : settleStatus === "2" ? "noSettle" : "finishSettle",
+        [$ruleForm.search]: $ruleForm.searchVal
       };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
-      this.getSettle($ruleForm.date[0], $ruleForm.date[1], $ruleForm.inputForm, $ruleForm.inputForm, $ruleForm.channelMerchantNo, $ruleForm.channel)
+      this.getSettle(params.beginDate, params.endDate, $ruleForm.inputForm, $ruleForm.inputForm, $ruleForm.channelMerchantNo, $ruleForm.channel)
     },
     getSettle(beginDate, endDate, merchantNo, merchantName, channelMerchantNo, channel) {
       api.getSettleByCondition({
@@ -119,19 +118,19 @@ export default {
         this.modeConfigData = [
           {
             title: "商家数量",
-            data: res.object.merchantCount
+            data: res.data.merchantCount
           },
           {
             title: "交易金额",
-            data: res.object.totalActualAmount
+            data: res.data.totalActualAmount
           },
           {
             title: "手续费",
-            data: res.object.totalServiceFee
+            data: res.data.totalServiceFee
           },
           {
             title: "结算金额",
-            data: res.object.totalSettleAmount
+            data: res.data.totalSettleAmount
           }
         ]
       })
@@ -144,6 +143,8 @@ export default {
     handleSelect($item) {
       // eslint-disable-next-line no-console
       this.activeIndex = $item;
+      this.params.beginDate = this.$g.utils.getToday(-7)
+      this.params.endDate = this.$g.utils.getToday(-1)
       switch ($item) {
         case "1":
           this.params.settleStatus = 'settleFail'
@@ -158,6 +159,7 @@ export default {
           this.configData = SUCCESS_CONFIG;
           break;
       }
+      this.getSettle(this.$g.utils.getToday(-7), this.$g.utils.getToday(-1), this.params.merchantNo, this.params.merchantName, this.params.channelMerchantNo, this.params.channel)
       this.isChangeMode = false;
       setTimeout(() => {
         this.isChangeMode = true;

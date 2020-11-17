@@ -131,7 +131,7 @@ export default {
   methods: {
     getSettleNum() {
       api.querySettleSum({}).then(res => {
-        this.settleNum = res.object
+        this.settleNum = res.data
       })
     },
     checkChange($val) {
@@ -155,31 +155,31 @@ export default {
     settleDrawer() {
       this.isCheck = []
       this.settleCommission = 0
-      if (this.settleNum.totalAmount === 0) {
+      if (this.settleNum.totalCommission === 0) {
         this.$message({
           message: '暂无可结算金额',
           type: 'warning'
         })
       } else {
         api.initSettle({}).then(res => {
-          if (res.object) {
+          if (res.data) {
             this.drawer = true
-            this.info = res.object.settleMap
-            this.settleInfo = res.object
+            this.info = res.data.settleMap
+            this.settleInfo = res.data
             const newFromConfigData = FORM_CONFIG.detailData.formData
-            newFromConfigData[2].initVal = res.object.settleAccount
-            newFromConfigData[3].initVal = res.object.settleMobile
+            newFromConfigData[2].initVal = res.data.settleAccount
+            newFromConfigData[3].initVal = res.data.settleMobile
             this.fromConfigData.formData = newFromConfigData
             var keyArr = []
-            for (const keyItem in res.object.settleMap) {
+            for (const keyItem in res.data.settleMap) {
               keyArr.push({key: keyItem})
             }
             keyArr.forEach((item, index) => {
-              const name = res.object.settleMap[item.key][0].settleTypeName
+              const name = res.data.settleMap[item.key][0].settleTypeName
               item.name = name
               const dateArr = []
               var totalSettleAmount = 0
-              res.object.settleMap[item.key].forEach((dateItem, dateIndex) => {
+              res.data.settleMap[item.key].forEach((dateItem, dateIndex) => {
                 dateArr.push(dateItem.tradeMonth)
                 totalSettleAmount += dateItem.settleAmount
               })

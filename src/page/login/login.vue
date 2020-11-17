@@ -3,7 +3,7 @@
     <div class="login-box">
       <div class="left-box">
         <div class="logo">
-          <img src="../../assets/img/loginLogo.png" alt class="logo-img" />
+          <img src="../../assets/img/faceOk.png" alt class="logo-img" />
         </div>
         <div class="title">智慧办公系统</div>
         <div v-if="isLogin" class="login-content">
@@ -197,100 +197,101 @@
               </el-form-item>
               <el-form-item prop="company">
                 <el-input
-                    v-model="registerForm.company"
-                    class="login-input"
-                    type="text"
-                    placeholder="请输入公司名称"
-                    size="large"
-                    @keyup.native.enter="onClick_register"
+                  v-model="registerForm.company"
+                  class="login-input"
+                  type="text"
+                  autocomplete="off"
+                  placeholder="请输入公司名称"
+                  size="large"
+                  @keyup.native.enter="onClick_register"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-office-building"></i>
                 </el-input>
               </el-form-item>
               <el-form-item prop="personName">
                 <el-input
-                    v-model="registerForm.personName"
-                    type="text"
-                    class="login-input"
-                    placeholder="请输入法人姓名"
-                    size="large"
-                    @keyup.native.enter="onClick_register"
+                  v-model="registerForm.personName"
+                  type="text"
+                  class="login-input"
+                  placeholder="请输入法人姓名"
+                  size="large"
+                  @keyup.native.enter="onClick_register"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-user"></i>
                 </el-input>
               </el-form-item>
               <el-form-item prop="personMobile">
                 <el-input
-                    v-model="registerForm.personMobile"
-                    :maxlength="11"
-                    type="text"
-                    class="login-input"
-                    placeholder="请输入法人手机号"
-                    size="large"
-                    @keyup.native.enter="onClick_register"
+                  v-model="registerForm.personMobile"
+                  :maxlength="11"
+                  type="text"
+                  class="login-input"
+                  placeholder="请输入法人手机号"
+                  size="large"
+                  @keyup.native.enter="onClick_register"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-phone"></i>
                 </el-input>
               </el-form-item>
               <el-form-item prop="phone">
                 <el-input
-                    v-model="registerForm.phone"
-                    :maxlength="11"
-                    type="text"
-                    class="login-input"
-                    placeholder="请输入登录手机号"
-                    size="large"
-                    @keyup.native.enter="onClick_register"
+                  v-model="registerForm.phone"
+                  :maxlength="11"
+                  type="text"
+                  class="login-input"
+                  placeholder="请输入登录手机号"
+                  size="large"
+                  @keyup.native.enter="onClick_register"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-phone"></i>
                 </el-input>
               </el-form-item>
               <el-form-item prop="password">
                 <el-input
-                    v-model="registerForm.password"
-                    :minlength="6"
-                    :maxlength="20"
-                    autocomplete="on"
-                    type="password"
-                    class="login-input"
-                    placeholder="请输入密码"
-                    size="large"
-                    show-password
-                    @keyup.native.enter="onClick_register"
+                  v-model="registerForm.password"
+                  :minlength="6"
+                  :maxlength="20"
+                  type="password"
+                  class="login-input"
+                  placeholder="请输入密码"
+                  autocomplete="off"
+                  size="large"
+                  show-password
+                  @keyup.native.enter="onClick_register"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-lock"></i>
                 </el-input>
               </el-form-item>
               <el-form-item prop="email">
                 <el-input
-                    v-model="registerForm.email"
-                    type="text"
-                    class="login-input"
-                    placeholder="请输入邮箱"
-                    size="large"
-                    @keyup.native.enter="onClick_register"
+                  v-model="registerForm.email"
+                  type="text"
+                  class="login-input"
+                  placeholder="请输入邮箱"
+                  size="large"
+                  @keyup.native.enter="onClick_register"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-message"></i>
                 </el-input>
               </el-form-item>
               <el-form-item prop="county">
                 <el-cascader
-                    v-model="registerForm.county"
-                    class="login-input"
-                    :options="options"
-                    placeholder="省/市/区"
-                    @change="changeCounty"
+                  v-model="registerForm.county"
+                  class="login-input"
+                  :options="options"
+                  placeholder="省/市/区"
+                  @change="changeCounty"
                 >
                 </el-cascader>
               </el-form-item>
               <el-form-item prop="address">
                 <el-input
-                    v-model="registerForm.address"
-                    type="text"
-                    class="login-input"
-                    placeholder="请输入详细地址"
-                    size="large"
-                    @keyup.native.enter="onClick_register"
+                  v-model="registerForm.address"
+                  type="text"
+                  class="login-input"
+                  placeholder="请输入详细地址"
+                  size="large"
+                  @keyup.native.enter="onClick_register"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-location-information"></i>
                 </el-input>
@@ -370,7 +371,7 @@ export default {
         personMobile: '',
         email: '',
         address: '',
-        county: '',
+        county: [],
         provinceCode: '',
         cityCode: '',
         areaCode: '',
@@ -541,23 +542,23 @@ export default {
         }
         return;
       }
-      const userId = res.object.user.id
-      const roleId = res.object.user.roleId
-      this.saveAccessToken(res.object.accessToken)
-      this.saveUserInfo(res.object.user)
+      const userId = res.data.user.id
+      const roleId = res.data.user.roleId
+      this.saveAccessToken(res.data.accessToken)
+      this.saveUserInfo(res.data.user)
       this.connactWebSocket({
         from: 'operation',
         userId: userId,
-        accessToken: res.object.accessToken
+        accessToken: res.data.accessToken
       });
       this.$store.dispatch('setTodoList');
       api.queryUserVueRouterList({
-        userToken: res.object.accessToken,
+        userToken: res.data.accessToken,
         system: 'operation',
         userId: userId,
         roleId: roleId
       }).then(res => {
-        computedRoleRouter(res.object)
+        computedRoleRouter(res.data)
         this.addRoutes();
         this.$router.push(`/`);
       })
@@ -650,13 +651,13 @@ export default {
     padding-left: 7.3%;
     background: #f0f3f7;
     .logo {
-      width: 100px;
-      height: 50px;
+      width: 113px;
+      height: 41px;
       margin-top: 30px;
       .logo-img {
         display: inline-block;
-        width: 100%;
-        height: 100%;
+        width: 113px;
+        height: 41px;
       }
     }
     .title {

@@ -5,7 +5,7 @@ export const SEARCH_CONFIG = {
     {
       type: 14,
       label: '精准筛选',
-      key: '',
+      key: 'search',
       placeholder: "请输入商户号",
       options: [
         {

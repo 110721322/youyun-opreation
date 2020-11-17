@@ -126,7 +126,7 @@ export default {
         currentPage: 1,
         pageSize: 10
       }).then(res => {
-        this.mallList = res.object
+        this.mallList = res.data
       }).catch(err => {
         console.log(err)
       })
@@ -136,7 +136,7 @@ export default {
       api.queryShopCartList({
         userId: this.$store.state.admin.userInfo.id
       }).then(res => {
-        this.totalNum = res.object.FACE.length + res.object.POSS.length + res.object.OTHER.length
+        this.totalNum = res.data.FACE.length + res.data.POSS.length + res.data.OTHER.length
       })
     },
     handleChange(index, value) {},

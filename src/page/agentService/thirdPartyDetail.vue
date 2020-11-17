@@ -1,7 +1,10 @@
 <template>
   <div class="detail_page">
-    <div class="p_head">第三方对接信息</div>
-    <div v-if="showPage">
+    <div class="flex-between flex-align-center">
+      <div class="p_head">第三方对接信息</div>
+      <el-button v-if="(!isEdit)&&id" type="primary" style="margin-right:24px;" size="mini" @click="editDetail">编辑</el-button>
+    </div>
+    <div v-if="showPage" style="padding-bottom:40px">
       <Form
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
@@ -25,36 +28,46 @@ export default {
     return {
       fromConfigData: FORM_CONFIG.detailData,
       id: "",
-      showPage: false
+      showPage: false,
+      isEdit: false
     };
   },
   created() {
-  },
-  mounted() {
     if (this.$route.query.id) {
       this.id = this.$route.query.id
+      FORM_CONFIG.detailData.formData.forEach((item, index) => {
+        item.isDisabled = true
+      })
       this.queryById(this.$route.query.id)
     } else {
       this.showPage = true;
+      this.fromConfigData.showFootBtn = true
     }
   },
+  mounted() {
+  },
   methods: {
+    editDetail() {
+      this.showPage = false
+      this.isEdit = true
+      this.fromConfigData = FORM_CONFIG.editData
+      this.fromConfigData.showFootBtn = true
+      this.queryById(this.$route.query.id)
+      // console.log(this.fromConfigData)
+    },
     queryById(id) {
       setTimeout(() => {
         api.getOpenOperatorDetail({
           id: id
         }).then(res => {
           // 编辑前重赋值
-          // res.object.netStatus = res.object.netStatus.Number()
-          FORM_CONFIG.editData.formData.forEach((item, index) => {
-            item.initVal = res.object[item.key];
+          // res.data.netStatus = res.data.netStatus.Number()
+          this.fromConfigData.formData.forEach((item, index) => {
+            item.initVal = res.data[item.key];
           });
-          this.fromConfigData = FORM_CONFIG.editData;
           this.fromConfigData.formData[7].initVal = this.fromConfigData.formData[7].initVal.toString();
           this.showPage = true;
-        }).catch(err => {
-          this.$message(err);
-        });
+        })
       }, 300)
     },
     confirm($form) {
@@ -87,14 +100,19 @@ export default {
         params.id = this.id
       }
       api.addOpenAgent(params).then(res => {
-        if (res.status === 0 && res.object) {
+        this.showPage = false
+        this.isEdit = false
+        this.fromConfigData = FORM_CONFIG.detailData
+        this.fromConfigData.showFootBtn = false
+        if (res.status === 0 && res.data) {
           this.$message({
             message: this.id ? "编辑成功" : "添加成功",
             type: "success"
           });
-          this.$router.replace({
-            name: '/agentService/thirdParty'
-          });
+          // this.$router.replace({
+          //   name: '/agentService/thirdParty'
+          // });
+          this.queryById(this.$route.query.id)
         } else {
           this.$message({
             message: this.id ? "编辑失败" : "添加失败",
@@ -104,7 +122,15 @@ export default {
       })
     },
     cancel(done) {
-      this.$router.back(-1);
+      if (this.$route.query.id) {
+        this.showPage = false
+        this.isEdit = false
+        this.fromConfigData = FORM_CONFIG.detailData
+        this.fromConfigData.showFootBtn = false
+        this.queryById(this.$route.query.id)
+      } else {
+        this.$router.back(-1);
+      }
     }
   }
 };

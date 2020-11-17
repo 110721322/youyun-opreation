@@ -101,6 +101,7 @@ export default {
       this.selectOption = this.formItem.options.filter(ele => ele.value === this.inputSelect)[0];
       this.ruleForm.inputSelect = this.selectOption.valueKey ? this.selectOption.valueKey : this.inputSelect;
       this.ruleForm[this.formItem.key] = this.ruleForm.inputSelect;
+      this.ruleForm[this.formItem.key + 'Val'] = this.inputForm;
     },
     onAutoSelect(e) {
       this.ruleForm.inputForm = e[this.selectOption.valueKey]
@@ -111,7 +112,7 @@ export default {
         [this.selectOption.value]: queryString
       }
       api(params).then(res => {
-        this.autoCompleteList = res.object;
+        this.autoCompleteList = res.data;
         callback(this.autoCompleteList);
       })
       return queryString;

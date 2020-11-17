@@ -11,6 +11,15 @@ const Timestamp = new Date().getTime(); // 当前时间为了防止打包缓存�
 
 module.exports = {
   // publicPath: process.env.NODE_ENV === 'development' ? '' : '././',
+  pwa: {
+    iconPaths: {
+      favicon32: '@/assets/img/ome_image.png',
+      favicon16: '@/assets/img/ome_image.png',
+      appleTouchIcon: '@/assets/img/ome_image.png',
+      maskIcon: '@/assets/img/ome_image.png',
+      msTileImage: '@/assets/img/ome_image.png'
+    }
+  },
   configureWebpack: {
     resolve: {
       alias: {
@@ -30,6 +39,10 @@ module.exports = {
         },
         '/agent': {
           target: process.env.VUE_APP_AGENTURL,
+          changeOrigin: true
+        },
+        '/merchant': {
+          target: process.env.VUE_APP_MERCHANTURL,
           changeOrigin: true
         }
       }

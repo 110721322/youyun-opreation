@@ -89,13 +89,13 @@ export default {
       api.subAgentDetail({
         agentNo: agentNo
       }).then(res => {
-        if (res.object.bankAccountType === 'public') {
-          res.object.bankAccountTypeCn = '对公'
+        if (res.data.bankAccountType === 'public') {
+          res.data.bankAccountTypeCn = '对公'
         }
-        if (res.object.bankAccountType === 'private') {
-          res.object.bankAccountTypeCn = '对私'
+        if (res.data.bankAccountType === 'private') {
+          res.data.bankAccountTypeCn = '对私'
         }
-        var request = res.object;
+        var request = res.data;
         this.ruleForm = {
           agentName: request.agentName,
           personName: request.personName,
@@ -133,17 +133,7 @@ export default {
               message: '更换上级服务商成功',
               type: 'success'
             })
-          } else {
-            this.$message({
-              message: res.errMessage,
-              type: 'fail'
-            })
           }
-        }).catch(err => {
-          this.$message({
-            message: err.errMessage,
-            type: 'fail'
-          })
         })
         this.getDeatil(this.$route.query.agentNo)
         this.showName = true
@@ -155,12 +145,10 @@ export default {
         api.queryNamesByCondition({
           agentName: query
         }).then(res => {
-          if (res.object) {
-            this.options = res.object
+          if (res.data) {
+            this.options = res.data
           }
           this.loading = false
-        }).catch(err => {
-          console.log(err)
         })
       } else {
         this.options = [];
@@ -189,9 +177,11 @@ export default {
     flex-wrap: wrap;
     li {
       display: flex;
+      align-items: center;
       width: 33%;
       margin-bottom: 32px;
       font-size: 14px;
+      line-height: 32px;
       span:nth-child(1) {
         color: #000000;
         opacity: 0.85;

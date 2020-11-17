@@ -48,15 +48,9 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl",
       params: {
-        beginDate: this.$g.utils.getToday(),
-        endDate: this.$g.utils.getToday(),
-        agentNo: "",
-        deviceId: "",
-        deviceIdentifier: "",
-        freezeStatus: "",
-        merchantNo: ""
+        beginDate: this.$g.utils.getToday(-6),
+        endDate: this.$g.utils.getToday(0)
       },
       api: api.deviceMerchantQueryByPage
     };
@@ -71,11 +65,12 @@ export default {
       }).then(() => {
         api.unbind({ id: $row.deviceDetailId}).then(result => {
           this.$refs.table.getData();
-          this.$message("已解绑");
-        }).catch(err => {
-          this.$message(err.errorMessage)
-        });
-      }).catch((e) => {});
+          this.$message({
+            message: '已解绑',
+            type: 'success'
+          });
+        })
+      })
     },
     unfreeze($row) {
       this.$confirm("确定启用该设备吗", "提示", {
@@ -86,26 +81,29 @@ export default {
         api.unfreeze({
           id: $row.deviceDetailId
         }).then(result => {
-          this.$refs.table.getData();
-          this.$message("已启用");
-        }).catch(err => {
-          this.$message(err.errorMessage)
-        });
-      }).catch(() => {});
+          if (result.status === 0) {
+            this.$refs.table.getData();
+            this.$message({
+              message: "启用成功",
+              type: "success"
+            });
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          message: "取消操作",
+          type: "info"
+        })
+      });
     },
     search($ruleForm) {
-      const params = {
-        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
-        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
+      this.params = {
+        beginDate: $ruleForm.date[0] ? $ruleForm.date[0] : this.$g.utils.getToday(-6),
+        endDate: $ruleForm.date[0] ? $ruleForm.date[1] : this.$g.utils.getToday(0),
         deviceId: $ruleForm.deviceId,
-        freezeStatus: $ruleForm.freezeStatus
-      };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
-      this.params = params;
-    },
-    selectionChange($val) {},
-    cancel(done) {
-      done();
+        freezeStatus: $ruleForm.freezeStatus,
+        [$ruleForm.search]: $ruleForm.searchVal
+      }
     }
   }
 };

@@ -1,8 +1,8 @@
 export const SERVICE_CONFIG = {
   gridConfig: [
     {
-      label: '商家名称',
-      prop: 'merchantName',
+      label: '商家',
+      prop: [{key: 'merchantName'}, {key: 'merchantNo', label: 'ID:' }],
       width: '90px'
     },
     {

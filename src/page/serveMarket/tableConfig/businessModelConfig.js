@@ -4,8 +4,8 @@ export const BUSINESS_CONFIG = {
       label: '序号',
       prop: 'index',
       width: '60px',
-      formatter($row, $index) {
-        return $index + 1;
+      render: (h, params) => {
+        return h('span', params.index + 1);
       }
     },
     {

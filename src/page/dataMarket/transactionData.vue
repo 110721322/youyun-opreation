@@ -466,19 +466,19 @@ export default {
     ...mapActions(['setLabelList', 'setRegionList', 'setUserList']),
     queryInit() {
       api_dataMarket.queryInit().then(res => {
-        const labelList = res.object.labelList.map($ele => {
+        const labelList = res.data.labelList.map($ele => {
           return {
             label: $ele.name,
             value: $ele.id
           }
         })
-        const regionList = res.object.regionSetList.map($ele => {
+        const regionList = res.data.regionSetList.map($ele => {
           return {
             label: $ele.regionName,
             value: $ele.regionCode
           }
         })
-        const userList = res.object.userDTOList.map($ele => {
+        const userList = res.data.userDTOList.map($ele => {
           return {
             label: $ele.jobName || $ele.name,
             value: $ele.id
@@ -520,7 +520,7 @@ export default {
     handleChecked() {},
     queryUserDiagram() {
       api.queryUserDiagram('deal').then(res => {
-        this.pagePermission = this.$g.utils.isArr(res.object) ? res.object : [];
+        this.pagePermission = this.$g.utils.isArr(res.data) ? res.data : [];
         this.search();
         this.search2();
       })
@@ -560,7 +560,7 @@ export default {
           positionLabelId: $ruleForm.positionLabelId || ''
         })
         .then(res => {
-          this.tradeByTypeData = res.object;
+          this.tradeByTypeData = res.data;
           this.drawEcharts();
         })
     },
@@ -618,12 +618,12 @@ export default {
       if (JSON.stringify(this.ruleForm2) === "{}") return;
       if (this.hasPermission('regionTradeRatio')) {
         api.tradeDataQueryRegionTradeSummaryByCondition(this.ruleForm2).then(res => {
-          this.regionDataList = this.$g.utils.isArr(res.object) ? res.object : [];
+          this.regionDataList = this.$g.utils.isArr(res.data) ? res.data : [];
         })
       }
       if (this.hasPermission('industryTradeRatio')) {
         api.queryCategoryIndustryByCondition(this.ruleForm2).then(res => {
-          this.industryDataList = this.$g.utils.isArr(res.object) ? res.object : [];
+          this.industryDataList = this.$g.utils.isArr(res.data) ? res.data : [];
         })
       }
     },

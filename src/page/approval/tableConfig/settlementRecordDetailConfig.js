@@ -7,57 +7,18 @@ export const RECORD_CONFIG = {
     },
     {
       label: '操作人',
-      prop: 'operateUserName',
+      prop: 'operationName',
       width: '150px'
     },
     {
       label: '操作通道',
       prop: 'channel',
-      width: '150px',
-      render: (h, params) => {
-        if (params.row.channel === 'leshua') {
-          return h(
-            'span', '乐刷'
-          )
-        }
-        if (params.row.channel === 'wechat') {
-          return h(
-            'span', '微信'
-          )
-        }
-        if (params.row.channel === 'alipay') {
-          return h(
-            'span', '支付宝'
-          )
-        }
-      }
+      width: '150px'
     },
     {
       label: '操作内容',
       prop: 'auditStatus',
-      width: '250px',
-      render: (h, params) => {
-        if (params.row.auditStatus === 'channelPass') {
-          return h(
-            'span', '通过'
-          )
-        }
-        if (params.row.auditStatus === 'platformAudit') {
-          return h(
-            'span', '平台审核中'
-          )
-        }
-        if (params.row.auditStatus === 'platformReject') {
-          return h(
-            'span', '平台驳回'
-          )
-        }
-        if (params.row.auditStatus === 'channelReject') {
-          return h(
-            'span', '通道驳回'
-          )
-        }
-      }
+      width: '250px'
     }
   ],
 

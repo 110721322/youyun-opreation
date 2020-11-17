@@ -2,30 +2,29 @@
   <div>
     <div class="p_head">商户列表</div>
     <search
-        :open-height="searchMaxHeight"
-        :form-base-data="searchConfig.formData"
-        :show-foot-btn="searchConfig.showFootBtn"
-        @search="search"
+      :open-height="searchMaxHeight"
+      :form-base-data="searchConfig.formData"
+      :show-foot-btn="searchConfig.showFootBtn"
+      @search="search"
     />
     <!-- <data-mode></data-mode> -->
     <div class="table_box">
       <BaseCrud
-          ref="table"
-          :grid-config="configData.gridConfig"
-          :grid-btn-config="configData.gridBtnConfig"
-          :grid-data="testData"
-          :form-config="configData.formConfig"
-          :form-data="configData.formModel"
-          :grid-edit-width="80"
-          form-title="用户"
-          :is-async="true"
-          :is-select="false"
-          :params="params"
-          :api-service="api"
-          @selectionChange="selectionChange"
-          @detail="go_detail"
-          @openAgentManager="openAgentManager"
-          @openMerchantManager="openMerchantManager"
+        ref="table"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :grid-data="testData"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="200"
+        form-title="用户"
+        :is-async="true"
+        :is-select="false"
+        :params="params"
+        :api-service="api"
+        @detail="go_detail"
+        @openAgentManager="openAgentManager"
+        @openMerchantManager="openMerchantManager"
       >
         <div slot="head" slot-scope="item">
           <span>{{ item.item.label }}</span>
@@ -54,6 +53,7 @@
 
 <script>
 import api from "@/api/api_merchant";
+import apiLog from "@/api/api_agent"
 import search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { USER_CONFIG } from "./tableConfig/merchantConfig";
@@ -73,40 +73,10 @@ export default {
     };
   },
   created() {
-    this.params.beginTime = this.getDay(0);
-    this.params.endTime = this.getDay(0);
   },
   mounted() {
-    this.queryInit()
   },
   methods: {
-    getDay(day) {
-      var today = new Date();
-      const targetdayMilliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day;
-      today.setTime(targetdayMilliseconds); // 注意，这行是关键代码
-      var tYear = today.getFullYear();
-      var tMonth = today.getMonth();
-      var tDate = today.getDate();
-      tMonth = this.doHandleMonth(tMonth + 1);
-      tDate = this.doHandleMonth(tDate);
-      return tYear + "-" + tMonth + "-" + tDate;
-    },
-    doHandleMonth(month) {
-      var m = month;
-      if (month.toString().length === 1) {
-        m = "0" + month;
-      }
-      return m;
-    },
-    queryInit() {
-      api.queryInit({
-      }).then(res => {
-
-      }).catch(err => {
-        console.log(err)
-      })
-    },
-    selectionChange($val) {},
     go_detail(row) {
       this.$router.push({
         name: "merchantDetail",
@@ -115,23 +85,52 @@ export default {
         }
       });
     },
+    // openAgentManager(row) {
+    //   api.generateLoginTicket({
+    //     system: 'agent',
+    //     phone: row.loginAccount,
+    //     password: row.password
+    //   }).then(res => {
+    //     if (res.status === 0) {
+    //       window.open(process.env.VUE_APP_AGENTURL + '#/login?ticket' + '=' + res.data)
+    //     }
+    //   })
+    // },
+    openAgentManager($row) {
+      apiLog.generateLoginTicket({
+        system: 'agent',
+        phone: $row.agentLoginAccount,
+        password: $row.agentPassword
+      }).then(res => {
+        if (res.status === 0) {
+          window.open(process.env.VUE_APP_AGENTURL + '#/login?ticket' + '=' + res.data)
+        }
+      })
+    },
+    openMerchantManager($row) {
+      apiLog.generateLoginTicket({
+        system: 'agent',
+        phone: $row.merchantLoginAccount,
+        password: $row.merchantPassword
+      }).then(res => {
+        if (res.status === 0) {
+          window.open(process.env.VUE_APP_MERCHANTURL + '#/login?ticket' + '=' + res.data)
+        }
+      })
+    },
     search($ruleForm) {
-      var params = {}
-      params = {
-        beginTime: $ruleForm.date[0] ? $ruleForm.date[0] : this.getDay(0),
-        endTime: $ruleForm.date[0] ? $ruleForm.date[1] : this.getDay(0),
+      this.params = {
+        beginTime: $ruleForm.date[0] ? $ruleForm.date[0] : null,
+        endTime: $ruleForm.date[0] ? $ruleForm.date[1] : null,
         provinceCode: $ruleForm.address ? $ruleForm.address[0] : null,
         cityCode: $ruleForm.address ? $ruleForm.address[1] : null,
         useChannelCode: $ruleForm.channelCode ? $ruleForm.channelCode : null,
         channelStatus: $ruleForm.channelStatus ? $ruleForm.channelStatus : null,
         categoryCode: $ruleForm.categoryCode ? $ruleForm.categoryCode : null,
-        operateNo: $ruleForm.operateNo ? $ruleForm.operateNo : null
+        operationId: $ruleForm.operationId ? $ruleForm.operationId : null,
+        [$ruleForm.search]: $ruleForm.searchVal
       }
-      params[$ruleForm.inputForm] = $ruleForm.inputFormVal
-      this.params = params
-    },
-    openAgentManager() {},
-    openMerchantManager() {}
+    }
   }
 };
 </script>

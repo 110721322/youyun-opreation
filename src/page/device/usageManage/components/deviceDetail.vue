@@ -56,7 +56,7 @@ export default {
       testData: [],
       drawer: false,
       params: {
-        beginDate: this.$g.utils.getToday(0),
+        beginDate: this.$g.utils.getToday(-6),
         endDate: this.$g.utils.getToday(0)
       },
       api: api.queryDetail
@@ -65,15 +65,14 @@ export default {
   mounted() {},
   methods: {
     search($ruleForm) {
-      const params = {
-        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
-        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
-        deviceId: $ruleForm.deviceId ? $ruleForm.deviceId : '',
-        deviceIdentifier: $ruleForm.deviceIdentifier ? $ruleForm.deviceIdentifier : '',
-        agentNo: $ruleForm.agentNo ? $ruleForm.agentNo : '',
-        merchantNo: $ruleForm.merchantNo ? $ruleForm.merchantNo : ''
+      this.params = {
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : this.$g.utils.getToday(-6),
+        endDate: $ruleForm.date ? $ruleForm.date[1] : this.$g.utils.getToday(0),
+        deviceId: $ruleForm.deviceId ? $ruleForm.deviceId : null,
+        deviceIdentifier: $ruleForm.deviceIdentifier ? $ruleForm.deviceIdentifier : null,
+        agentNo: $ruleForm.agentNo ? $ruleForm.agentNo : null,
+        merchantNo: $ruleForm.merchantNo ? $ruleForm.merchantNo : null
       };
-      this.params = params;
     },
     onClick_showLife($item, $table) {
       api
@@ -81,11 +80,8 @@ export default {
           deviceIdentifier: $item.deviceIdentifier
         })
         .then(res => {
-          this.$set($item, "processList", res.object);
+          this.$set($item, "processList", res.data);
         })
-        .catch(err => {
-          this.$message(err);
-        });
       $table.toggleRowExpansion($item);
     }
   }
@@ -100,16 +96,17 @@ export default {
   overflow: hidden;
   background: #fff;
 }
+
 .form_item {
   float: left !important;
 }
+
 .clear_both {
   clear: both !important;
 }
+
 .btn_list {
-  /* background: rebeccapurple; */
   position: absolute;
-  right: 0;
   bottom: 21px;
   right: 24px;
 }
@@ -117,15 +114,18 @@ export default {
 .demo-table-expand {
   font-size: 0;
 }
+
 .demo-table-expand label {
   width: 90px;
   color: #99a9bf;
 }
+
 .demo-table-expand .el-form-item {
   margin-right: 0;
   margin-bottom: 0;
   /* width: 25%; */
 }
+
 .form-box {
   display: flex;
   justify-content: space-between;
@@ -134,10 +134,12 @@ export default {
 .demo-table-expand {
   font-size: 0;
 }
+
 .demo-table-expand label {
   width: 90px;
   color: #99a9bf;
 }
+
 .demo-table-expand .el-form-item {
   margin-right: 0;
   margin-bottom: 0;
@@ -147,6 +149,7 @@ export default {
 .tabale_title_box {
   height: 52px;
   width: 100%;
+
   .title {
     font-size: 16px;
     font-family: PingFangSC-Medium, PingFang SC;
@@ -156,6 +159,7 @@ export default {
     margin-left: 10px;
     // line-height: 52px;
   }
+
   .btn {
     float: right;
   }

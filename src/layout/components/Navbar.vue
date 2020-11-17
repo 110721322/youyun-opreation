@@ -41,29 +41,82 @@
           <i class="el-icon-arrow-down el-icon--right"></i>
         </div>
         <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item divided @click.native="modify">
+            <span style="display: block;">修改密码</span>
+          </el-dropdown-item>
           <el-dropdown-item divided @click.native="logout">
-            <span style="display:block;">退出</span>
+            <span style="display: block;">退出</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
+    <el-drawer :visible.sync="passwordDrawer" :with-header="false" size="500px">
+      <div class="p_head">修改密码</div>
+      <Form
+          v-if="passwordDrawer"
+          :form-base-data="formConfig.formData"
+          :show-foot-btn="formConfig.showFootBtn"
+          label-width="130px"
+          :title="formConfig.title"
+          :is-drawer="true"
+          @confirm="confirm"
+          @cancel="cancel"
+      ></Form>
+    </el-drawer>
   </div>
 </template>
 
 <script>
 import api from "@/api/api_login";
+import Form from "@/components/form"
+// import Hamburger from './Head/index.vue'
 import Breadcrumb from "./breadcrumb.vue";
 import avatar from "@/assets/img/icon_avatar.png"
 import { mapActions } from 'vuex';
 export default {
   components: {
     // Hamburger,
-    Breadcrumb
+    Breadcrumb,
+    Form
   },
   data() {
     return {
       userInfo: this.$store.state.admin.userInfo,
-      avatar: avatar
+      avatar: avatar,
+      passwordDrawer: false,
+      formConfig: {
+        title: "修改密码",
+        showFootBtn: true,
+        formData: [
+          {
+            type: 0,
+            label: '输入原密码',
+            inputType: "password",
+            key: 'oldPassword',
+            rules: [
+              {required: true, message: '请输入原始密码', trigger: 'blur'}
+            ]
+          },
+          {
+            type: 0,
+            label: '输入新密码',
+            inputType: "password",
+            key: 'newPassword',
+            rules: [
+              {required: true, message: '请输入新密码', trigger: 'blur'}
+            ]
+          },
+          {
+            type: 0,
+            label: '确认新密码',
+            inputType: "password",
+            key: 'repeatPassword',
+            rules: [
+              {required: true, message: '请再次输入新密码', trigger: 'blur'}
+            ]
+          }
+        ]
+      }
     }
   },
   computed: {
@@ -98,6 +151,42 @@ export default {
       this.$router.push({
         path: '/work/todo'
       });
+    },
+    modify() {
+      this.passwordDrawer = true
+    },
+    confirm($ruleForm) {
+      // this.passwordDrawer = true
+      if ($ruleForm.oldPassword === $ruleForm.newPassword) {
+        this.$message({
+          type: 'warning',
+          message: "修改密码原密码相同，请重新输入",
+          duration: 2000
+        })
+        return;
+      }
+      if ($ruleForm.newPassword !== $ruleForm.repeatPassword) {
+        this.$message({
+          type: 'warning',
+          message: "修改密码与确认密码不同，请重新输入",
+          duration: 2000
+        })
+        return;
+      }
+      $ruleForm.merchantNo = this.$store.state.admin.userInfo.number
+      api.updatePassword($ruleForm).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            type: 'success',
+            message: "已修改",
+            duration: 2000
+          })
+          this.passwordDrawer = false;
+        }
+      })
+    },
+    cancel() {
+      this.passwordDrawer = false
     }
   }
 };

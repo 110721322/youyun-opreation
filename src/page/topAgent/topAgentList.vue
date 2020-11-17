@@ -1,12 +1,11 @@
 <template>
   <div class="container">
-    <div class="p_head">服务商列表</div>
+    <div class="p_head">顶级服务商列表</div>
     <search
         :open-height="searchMaxHeight"
         :form-base-data="searchConfig.formData"
         :show-foot-btn="searchConfig.showFootBtn"
         @search="search"
-        @reset="reset"
     />
     <div class="table_box">
       <div class="two-btn">
@@ -90,19 +89,19 @@ export default {
     ...mapActions(['setLabelList', 'setRegionList', 'setUserList']),
     queryInit() {
       api_dataMarket.queryInit().then(res => {
-        const labelList = res.object.labelList.map($ele => {
+        const labelList = res.data.labelList.map($ele => {
           return {
             label: $ele.name,
             value: $ele.id
           }
         })
-        const regionList = res.object.regionSetList.map($ele => {
+        const regionList = res.data.regionSetList.map($ele => {
           return {
             label: $ele.regionName,
             value: $ele.regionCode
           }
         })
-        const userList = res.object.userDTOList.map($ele => {
+        const userList = res.data.userDTOList.map($ele => {
           return {
             label: $ele.jobName || $ele.name,
             value: $ele.id
@@ -154,29 +153,9 @@ export default {
         personMobile: $form.personMobile ? $form.personMobile : null,
         regionCode: $form.regionCode ? $form.regionCode : null,
         activeScopeType: $form.activeScopeType ? $form.activeScopeType : null,
-        labelId: $form.labelId ? $form.labelId : null
+        labelId: $form.labelId ? $form.labelId : null,
+        [$form.search]: $form.searchVal
       }
-      if ($form.area) {
-        this.params.provinceCode = $form.provinceCode
-        this.params.cityCode = $form.cityCode
-        this.params.areaCode = $form.areaCode
-      }
-      this.params[$form.inputSelect] = $form.inputForm;
-    },
-    reset($form) {
-      this.params = {
-        operationId: $form.operationId,
-        status: $form.status ? $form.status : null,
-        personName: $form.personName ? $form.personName : null,
-        personMobile: $form.personMobile ? $form.personMobile : null,
-        regionCode: $form.regionCode ? $form.regionCode : null,
-        activeScopeType: $form.activeScopeType ? $form.activeScopeType : null,
-        labelId: $form.labelId ? $form.labelId : null
-      }
-      this.params.provinceCode = ''
-      this.params.cityCode = ''
-      this.params.areaCode = ''
-      this.params[$form.inputSelect] = $form.inputForm;
     },
     openDetail($row) {
       this.$router.push({
@@ -229,7 +208,7 @@ export default {
         password: row.password
       }).then(res => {
         if (res.status === 0) {
-          window.location.href = process.env.VUE_APP_BASEURL + '#/login?ticket' + '=' + res.object
+          window.location.href = process.env.VUE_APP_BASEURL + '#/login?ticket' + '=' + res.data
         }
       })
     },

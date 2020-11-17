@@ -1,4 +1,4 @@
-import apiAgent from "@/api/api_agent.js";
+import api from "@/api/api_risk.js";
 export const SEARCH_CONFIG = {
   formData: [
     {
@@ -12,7 +12,7 @@ export const SEARCH_CONFIG = {
     },
     {
       type: 10,
-      label: '入件风控',
+      label: '筛选',
       key: 'banField',
       placeholder: "",
       options: [
@@ -43,9 +43,9 @@ export const SEARCH_CONFIG = {
       labelWidth: '80px',
       span: 11,
       urlOptions: {
-        url: apiAgent.queryAllOperation,
-        keyName: 'operationId',
-        valueName: 'operationName',
+        url: api.getAllJobName,
+        keyName: 'id',
+        valueName: 'jobName',
         method: 'get'
       }
     },

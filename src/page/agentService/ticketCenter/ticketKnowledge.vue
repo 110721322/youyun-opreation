@@ -173,10 +173,10 @@ export default {
             currentPage: 0
           })
           .then(res => {
-            res.datas.forEach(item => {
+            res.data.forEach(item => {
               item.leaf = true;
             });
-            resolve(res.datas);
+            resolve(res.data);
           })
           .catch(err => {
             this.$message(err);
@@ -187,7 +187,7 @@ export default {
       api
         .queryFirstClassByPage({})
         .then(res => {
-          this.treeData = res.datas;
+          this.treeData = res.data;
         })
         .catch(err => {
           this.$message(err);
@@ -367,7 +367,7 @@ export default {
             currentPage: 0
           })
           .then(res => {
-            this.questions = res.datas;
+            this.questions = res.data;
             this.dataTotal = res.totalCount;
           })
           .catch(err => {
@@ -383,7 +383,7 @@ export default {
           currentPage: 0
         })
         .then(res => {
-          this.questions = res.datas;
+          this.questions = res.data;
           this.dataTotal = res.totalCount;
         })
         .catch(err => {
@@ -510,7 +510,7 @@ export default {
           currentPage: this.currentPage
         })
         .then(res => {
-          this.questions = res.datas;
+          this.questions = res.data;
           this.dataTotal = res.totalCount;
         })
         .catch(err => {
@@ -526,7 +526,7 @@ export default {
           currentPage: this.currentPage
         })
         .then(res => {
-          this.questions = res.datas;
+          this.questions = res.data;
           this.dataTotal = res.totalCount;
         })
         .catch(err => {

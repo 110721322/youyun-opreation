@@ -548,6 +548,17 @@ const asyncRoutes = {
           icon: 'thirdPartyDetail'
         },
         component: () => import('@/page/agentService/thirdPartyDetail.vue')
+      },
+      {
+        path: '/agentService/thirdParty/thirdPartyAdd',
+        name: 'thirdPartyAdd',
+        meta: {
+          fatherName: 'thirdParty',
+          parentName: 'agentService',
+          title: '第三方对接信息',
+          icon: 'thirdPartyAdd'
+        },
+        component: () => import('@/page/agentService/thirdPartyAdd.vue')
       }
     ]
   },
@@ -888,6 +899,17 @@ const asyncRoutes = {
           parentName: 'message'
         },
         component: () => import('@/page/message/announcementEdit.vue')
+      },
+      {
+        path: '/message/serviceAnnouncementList/agentAnnounceAdd',
+        name: 'agentAnnounceAdd',
+        meta: {
+          title: '新增服务商公告',
+          icon: 'agentAnnounceAdd',
+          fatherName: 'serviceAnnouncementList',
+          parentName: 'message'
+        },
+        component: () => import('@/page/message/announcementAdd.vue')
       }
     ]
   },
@@ -1766,7 +1788,7 @@ const asyncRoutes = {
         path: '/topAgent/topAgentList/topAgentDetail',
         name: 'topAgentDetail',
         meta: {
-          title: '服务商详情',
+          title: '顶级服务商详情',
           icon: 'topAgentDetail',
           fatherName: 'topAgentList',
           parentName: 'topAgent'

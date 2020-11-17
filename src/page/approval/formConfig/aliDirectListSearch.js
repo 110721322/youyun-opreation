@@ -9,13 +9,14 @@ export const SEARCH_CONFIG = {
       key: 'date',
       class: 'max-width',
       format: "yyyy-MM-dd",
+      selectSevenDay: true,
       labelWidth: '80px',
       span: 22
     },
     {
       type: 10,
-      label: '精准筛选',
-      key: '',
+      label: '筛选',
+      key: 'search',
       options: [
         {
           label: '商户ID',

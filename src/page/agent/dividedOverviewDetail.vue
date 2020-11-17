@@ -96,11 +96,8 @@ export default {
     },
     search($form) {
       this.params = {
-        "agentName": "008小老猪",
-        "agentNo": "王哈小5f",
-        "tradeMonth": "2020-03-17"
+        [$form.search]: $form.searchVal
       }
-      this.params[$form.inputSelect] = $form.inputForm
     }
   }
 };

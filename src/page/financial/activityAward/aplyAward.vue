@@ -111,8 +111,7 @@ export default {
     search($ruleform) {
       this.params = {
         tradeMonth: $ruleform.date,
-        agentNo: $ruleform.inputSelect === 'merchantNo' ? $ruleform.inputForm : "",
-        agentName: $ruleform.inputSelect === 'merchantName' ? $ruleform.inputForm : ""
+        [$ruleform.search]: $ruleform.searchVal
       }
     },
     handleDetail($row) {
@@ -134,11 +133,9 @@ export default {
         type: "dragonflyInput",
         url: $filel.excil
       }).then(res => {
-        if (res.object) {
+        if (res.data) {
           this.$refs.table.getData()
         }
-      }).catch(err => {
-        console.log(err)
       })
       this.drawer = false
     },

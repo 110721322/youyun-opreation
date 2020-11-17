@@ -94,6 +94,7 @@ export default {
     onClick_buy($row) {
       this.deviceId = $row.id;
       this.deviceModel = $row.deviceModel
+      this.salePrice = $row.salePrice
       this.fromConfigData = FORM_CONFIG.buyData;
       this.fromConfigData.formData[1].initVal = $row.deviceModel
       this.formStatus = "buy";
@@ -204,7 +205,7 @@ export default {
             count: $data.count,
             deviceModel: this.deviceModel,
             deviceId: this.deviceId,
-            salePrice: $data.actualAmount
+            salePrice: this.salePrice
           }]
         }).then(res => {
           if (res.status === 0) {
@@ -225,21 +226,24 @@ export default {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认",
         cancelButtonText: "取消"
-      })
-        .then(() => {
-          api
-            .deviceDelete({
-              id: $row.id
-            })
-            .then(result => {
-              this.$refs.table.getData();
-              this.$message("已删除");
-            })
-            .catch(err => {
-              console.error(err);
+      }).then(() => {
+        api.deviceDelete({
+          id: $row.id
+        }).then(result => {
+          if (result.status === 0) {
+            this.$refs.table.getData();
+            this.$message({
+              message: "删除成功",
+              type: "success"
             });
+          }
         })
-        .catch(() => {});
+      }).catch(() => {
+        this.$message({
+          message: "取消操作",
+          type: "info"
+        });
+      });
     }
   }
 };
@@ -253,16 +257,18 @@ export default {
   overflow: hidden;
   background: #fff;
 }
+
 .form_item {
   float: left !important;
 }
+
 .clear_both {
   clear: both !important;
 }
+
 .btn_list {
   /* background: rebeccapurple; */
   position: absolute;
-  right: 0;
   bottom: 21px;
   right: 24px;
 }
@@ -270,15 +276,17 @@ export default {
 .demo-table-expand {
   font-size: 0;
 }
+
 .demo-table-expand label {
   width: 90px;
   color: #99a9bf;
 }
+
 .demo-table-expand .el-form-item {
   margin-right: 0;
   margin-bottom: 0;
-  /* width: 25%; */
 }
+
 .form-box {
   display: flex;
   justify-content: space-between;
@@ -287,6 +295,7 @@ export default {
 .tabale_title_box {
   height: 52px;
   width: 100%;
+
   .title {
     font-size: 16px;
     font-family: PingFangSC-Medium, PingFang SC;
@@ -296,6 +305,7 @@ export default {
     margin-left: 10px;
     // line-height: 52px;
   }
+
   .btn {
     float: right;
   }

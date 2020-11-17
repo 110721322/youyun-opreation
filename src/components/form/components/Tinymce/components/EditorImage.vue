@@ -106,7 +106,7 @@ export default {
           api
             .EntryUploadPic({ count: 1 })
             .then(result => {
-              this.ossData = result.object;
+              this.ossData = result.data;
               resolve(true);
             })
             .catch();
@@ -114,7 +114,7 @@ export default {
           api
             .uploadPic({})
             .then(result => {
-              this.ossData = result.object;
+              this.ossData = result.data;
               resolve(true);
             })
             .catch();

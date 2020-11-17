@@ -46,7 +46,7 @@ export const CHECKPARTNERLIST_CONFIG = {
             'span', '待审核'
           )
         }
-        if (params.row.contractStatus === 'aduit') {
+        if (params.row.contractStatus === 'audit') {
           return h(
             'span', '审核中'
           )

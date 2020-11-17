@@ -52,17 +52,17 @@ export const USER_CONFIG = {
         name: '详情',
         emitName: 'detail',
         type: 'text'
+      },
+      {
+        name: '服务商后台',
+        emitName: 'openAgentManager',
+        type: 'text'
+      },
+      {
+        name: '商户后台',
+        emitName: 'openMerchantManager',
+        type: 'text'
       }
-      // {
-      //   name: '服务商后台',
-      //   emitName: 'openAgentManager',
-      //   type: 'text'
-      // },
-      // {
-      //   name: '商户后台',
-      //   emitName: 'openMerchantManager',
-      //   type: 'text'
-      // }
     ]
   },
   // 表单基础数据类型，需要预先赋值

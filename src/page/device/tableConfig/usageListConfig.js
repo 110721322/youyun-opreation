@@ -23,7 +23,8 @@ export const USAGELIST_CONFIG = {
     {
       label: '创建时间',
       prop: 'bindTime',
-      width: '150px'
+      width: '150px',
+      sortable: true
     },
     {
       label: '设备状态',

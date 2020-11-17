@@ -92,7 +92,7 @@ export default {
           )
           .then(res => {
             const newArr = [];
-            for (const item of res.object) {
+            for (const item of res.data) {
               newArr.push({
                 value: item[urlOptions.keyName],
                 label: item[urlOptions.valueName]
@@ -100,9 +100,6 @@ export default {
             }
             this.selectOptions = newArr;
           })
-          .catch(err => {
-            console.log(err);
-          });
       }
     }
   }

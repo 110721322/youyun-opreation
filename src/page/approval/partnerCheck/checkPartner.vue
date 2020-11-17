@@ -52,29 +52,11 @@ export default {
   },
   mounted() {},
   created() {
-    this.params.beginDate = this.getDay(0);
-    this.params.endDate = this.getDay(0);
+    this.params.beginDate = this.$g.utils.getToday(-6);
+    this.params.endDate = this.$g.utils.getToday(0);
     this.api = api.queryAuditPageByCondition
   },
   methods: {
-    getDay(day) {
-      var today = new Date();
-      const targetdayMilliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day;
-      today.setTime(targetdayMilliseconds); // 注意，这行是关键代码
-      var tYear = today.getFullYear();
-      var tMonth = today.getMonth();
-      var tDate = today.getDate();
-      tMonth = this.doHandleMonth(tMonth + 1);
-      tDate = this.doHandleMonth(tDate);
-      return tYear + "-" + tMonth + "-" + tDate;
-    },
-    doHandleMonth(month) {
-      var m = month;
-      if (month.toString().length === 1) {
-        m = "0" + month;
-      }
-      return m;
-    },
     handleDetail(row) {
       this.$router.push({
         name: "checkPartnerListDetail",
@@ -93,15 +75,15 @@ export default {
     },
     search($ruleForm) {
       const params = {
-        beginDate: $ruleForm.date[0] ? $ruleForm.date[0] : this.getDay(0),
-        endDate: $ruleForm.date[0] ? $ruleForm.date[1] : this.getDay(0),
+        beginDate: $ruleForm.date[0] ? $ruleForm.date[0] : this.$g.utils.getToday(-6),
+        endDate: $ruleForm.date[0] ? $ruleForm.date[1] : this.$g.utils.getToday(0),
         contractStatus: $ruleForm.contractStatus,
         jobType: $ruleForm.jobType,
         partnerName: $ruleForm.partnerName,
         mobile: $ruleForm.mobile,
-        operationId: $ruleForm.operationId
+        operationId: $ruleForm.operationId,
+        [$ruleForm.search]: $ruleForm.searchVal
       };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     }
   }

@@ -8,24 +8,22 @@ export const FORM_CONFIG = {
       label: '筛选时间',
       querySelectAll: true,
       key: 'date',
-      labelWidth: '80px',
-      datatype: 'datetimerange',
+      labelWidth: '110px',
       span: 22,
       isSelectToday: true
     },
     {
       type: 10,
-      label: '精准筛选',
-      key: 'inputForm',
-      placeholder: "请输入商户号",
+      label: '筛选',
+      key: 'search',
       options: [
-        {
-          label: '商户ID',
-          value: 'merchantNo'
-        },
         {
           label: '商户名称',
           value: 'merchantName'
+        },
+        {
+          label: '商户ID',
+          value: 'merchantNo'
         },
         {
           label: '所属服务商名称',
@@ -34,11 +32,11 @@ export const FORM_CONFIG = {
         {
           label: '乐刷商户号',
           value: 'leShuaMerchantNo'
-        },
-        {
-          label: '新大陆商户号',
-          value: 'newlandMerchantNo'
         }
+        // {
+        //   label: '新大陆商户号',
+        //   value: 'newlandMerchantNo'
+        // }
       ],
       labelWidth: '110px',
       span: 22
@@ -53,15 +51,15 @@ export const FORM_CONFIG = {
         {
           label: '乐刷',
           value: "leShua"
-        },
-        {
-          label: '支付宝直连',
-          value: "alipay"
-        },
-        {
-          label: '微信直连',
-          value: "weChat"
         }
+        // {
+        //   label: '支付宝直连',
+        //   value: "alipay"
+        // },
+        // {
+        //   label: '微信直连',
+        //   value: "weChat"
+        // }
       ]
     },
     {
@@ -73,14 +71,14 @@ export const FORM_CONFIG = {
       options: areaData
     },
     {
-      type: 8,
+      type: 1,
       label: '开通通道详情',
       key: 'channelStatus',
       labelWidth: '110px',
       span: 11,
       options: [
         {
-          label: '待审核',
+          label: '待开通',
           value: 'nonOpen'
         },
         {

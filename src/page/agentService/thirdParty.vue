@@ -55,8 +55,8 @@ export default {
       testData: [],
       drawer: false,
       params: {
-        beginDate: this.$g.utils.getToday(),
-        endDate: this.$g.utils.getToday()
+        // beginDate: this.$g.utils.getToday(),
+        // endDate: this.$g.utils.getToday()
       },
       api: api.getOpenOperatorPageList
     };
@@ -64,12 +64,11 @@ export default {
   mounted() {},
   methods: {
     search($ruleForm) {
-      const params = {
-        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
-        endDate: $ruleForm.date ? $ruleForm.date[1] : null
-      };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
-      this.params = params;
+      this.params = {
+        beginDate: $ruleForm.date[0] ? $ruleForm.date[0] : "",
+        endDate: $ruleForm.date[0] ? $ruleForm.date[1] : "",
+        [$ruleForm.search]: $ruleForm.searchVal
+      }
     },
     handleUnfreeze(row) {
       this.$confirm("是否要解冻该代理商？", "解冻代理商", {
@@ -88,7 +87,7 @@ export default {
             this.$refs.table.getData()
           }
         });
-      }).catch(() => {});
+      })
     },
     handleFreeze(row) {
       this.$confirm("是否要冻结该代理商？冻结后不能添加新设备", "冻结代理商", {
@@ -107,7 +106,7 @@ export default {
             this.$refs.table.getData()
           }
         });
-      }).catch(() => {});
+      })
     },
     handleDetail($row) {
       this.$router.push({
@@ -117,7 +116,7 @@ export default {
     },
     onClick_addDocker() {
       this.$router.push({
-        name: "thirdPartyDetail"
+        name: "thirdPartyAdd"
       });
     }
   }

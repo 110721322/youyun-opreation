@@ -44,7 +44,7 @@ export default {
       api.selectModuleProduct({
         moduleCode: 'brandCustom'
       }).then(res => {
-        const modelList = res.object
+        const modelList = res.data
         this.modelList = modelList
       })
     }

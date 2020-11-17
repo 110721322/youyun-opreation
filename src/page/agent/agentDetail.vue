@@ -448,8 +448,8 @@ export default {
     this.getQueryWait()
     this.getRelatedLabels()
     this.getAddressBookQuery()
-    this.getQueryTalkPlan()
-    this.getQueryPlanList()
+    // this.getQueryTalkPlan()
+    // this.getQueryPlanList()
   },
   mounted() {},
   methods: {
@@ -462,8 +462,8 @@ export default {
             name: query,
             limit: 30
           }).then(res => {
-            if (res.object) {
-              this.bankOptions = res.object
+            if (res.data) {
+              this.bankOptions = res.data
             }
           })
         }, 200);
@@ -475,26 +475,26 @@ export default {
       api.getBankLineByNo({
         unionCode: item
       }).then(res => {
-        // this.dataForm.bankArea[0] = res.object.provinceCode
-        // this.dataForm.bankArea = res.object.cityCode
+        // this.dataForm.bankArea[0] = res.data.provinceCode
+        // this.dataForm.bankArea = res.data.cityCode
         var provinceName = ''
         var cityName = ''
         var areaName = ''
         var result = this.$g.utils.getNestedArr(areaData, 'children')
         result.forEach(m => {
-          if (m.value === res.object.provinceCode) {
+          if (m.value === res.data.provinceCode) {
             provinceName = m.label
           }
-          if (m.value === res.object.cityCode) {
+          if (m.value === res.data.cityCode) {
             cityName = m.label
           }
-          if (m.value === res.object.areaCode) {
+          if (m.value === res.data.areaCode) {
             areaName = m.label
           }
         })
-        this.bankName = res.object.bankName
+        this.bankName = res.data.bankName
         this.area = provinceName + '/' + cityName + '/' + areaName
-        this.areaCodeNum = res.object.areaCode
+        this.areaCodeNum = res.data.areaCode
       })
     },
     handel_save() {
@@ -522,8 +522,7 @@ export default {
             this.editType = ''
             this.financeDrawer = false
           }
-        }).catch(err => {
-          console.log(err)
+        }).catch(() => {
         })
       }
     },
@@ -535,12 +534,13 @@ export default {
       api.getAgentDetail({
         agentNo: agentNo
       }).then(res => {
-        if (res.object) {
-          const agentDetail = this.$g.utils.deepClone(res.object)
+        if (res.data) {
+          const agentDetail = this.$g.utils.deepClone(res.data)
           if (agentDetail.expandSub === 1) {
             agentDetail.expandSubCn = '是'
           }
           if (agentDetail.expandSub === 0 || agentDetail.expandSub === null) {
+            agentDetail.expandSub = 0
             agentDetail.expandSubCn = '否'
           }
           agentDetail.renewTypeCn = '固定续费'
@@ -557,12 +557,13 @@ export default {
             agentDetail.chargeFeePercent = this.$g.utils.AccMul(agentDetail.chargeFeePercent, 100)
           }
           if (agentDetail.provinceCode) {
-            // var area = []
-            // area.push(agentDetail.provinceCode, agentDetail.cityCode, agentDetail.areaCode)
-            // agentDetail.area = area
+            var area = []
+            area.push(agentDetail.provinceCode, agentDetail.cityCode, agentDetail.areaCode)
+            agentDetail.area = area
             // agentDetail.areaEmailAddress = agentDetail.provinceName + agentDetail.cityName + agentDetail.areaName + agentDetail.expAddress
           }
           if (agentDetail.activeMode) {
+            agentDetail.activeMode = 'relyus'
             agentDetail.activeModeCn = '产品代理'
           }
           if (agentDetail.bankAccountType === 'private') {
@@ -581,9 +582,9 @@ export default {
             agentDetail.provinceName = agentDetail.postProvinceMsg
             agentDetail.cityName = agentDetail.postCityMsg
             agentDetail.areaName = agentDetail.postAreaMsg
-            var area = []
-            area.push(agentDetail.postProvinceCode, agentDetail.postCityCode, agentDetail.postAreaCode)
-            agentDetail.area = area
+            var area1 = []
+            area1.push(agentDetail.postProvinceCode, agentDetail.postCityCode, agentDetail.postAreaCode)
+            agentDetail.postArea = area1
           }
           this.agentDetail = agentDetail
           this.ruleForm = agentDetail
@@ -624,7 +625,7 @@ export default {
         this.addContactsDraw = true
         const newFromConfigData = CONTACTS_CONFIG.formData2;
         newFromConfigData.forEach((item, index) => {
-          item.initVal = res.object[item.key];
+          item.initVal = res.data[item.key];
         });
         this.contactConfigData = newFromConfigData;
         this.contactConfigData.title = '编辑沟通计划'
@@ -719,7 +720,7 @@ export default {
     orderEquipment() {
       this.equipment = true
       this.equipmentConfigData = ORDER_EQUIPMENT
-      this.equipmentConfigData.formData[7].initVal = this.agentDetail.areaEmailAddress ? this.agentDetail.areaEmailAddress : ''
+      this.equipmentConfigData.formData[7].initVal = this.agentDetail.postProvinceMsg ? this.agentDetail.postProvinceMsg + this.agentDetail.postCityMsg + this.agentDetail.postAreaMsg + this.agentDetail.postDetailAddress : ''
     },
     // 标签输入框
     tagInput(value) {},
@@ -749,7 +750,7 @@ export default {
         beginDate: value[0],
         endDate: value[1]
       }).then(res => {
-        this.summaryInfo = res.object
+        this.summaryInfo = res.data
       }).catch(() => {})
     },
     // 查询沟通计划列表
@@ -757,7 +758,7 @@ export default {
       api.queryTalkPlan({
         relateCode: this.$route.query.agentNo
       }).then(res => {
-        this.talkPlanList = res.datas
+        this.talkPlanList = res.data
       })
     },
     // 查询沟通记录列表
@@ -765,7 +766,7 @@ export default {
       api.queryPlanList({
         relateCode: this.$route.query.agentNo
       }).then(res => {
-        res.datas.forEach(m => {
+        res.data.forEach(m => {
           if (m.theme === 'dailyTalk') {
             m.themeName = '日常沟通'
             if (m.subTheme === 'question') {
@@ -809,7 +810,7 @@ export default {
             }
           }
         })
-        this.channelList = res.datas
+        this.channelList = res.data
       }).catch(() => {
       })
     },
@@ -878,7 +879,7 @@ export default {
         this.editType = 'editRateInfo'
       }
       if ($model === 'mailAddress') {
-        this.editType = 'editMailAddress'
+        this.editType = 'editAuthority'
       }
       if ($model === 'renew') {
         this.editType = 'editRenew'
@@ -890,6 +891,7 @@ export default {
           item.initVal = this.agentDetail[item.key];
         });
         this.fromConfigData = this.$g.utils.deepClone(newFromConfigData);
+        console.log(this.fromConfigData)
       }, 200)
     },
     cancel() {
@@ -945,8 +947,7 @@ export default {
             this.editType = ''
             this.drawer = false
           }
-        }).catch(err => {
-          console.log(err)
+        }).catch(() => {
         })
       }
       if (this.editType === 'editRateInfo') {
@@ -991,16 +992,15 @@ export default {
         }
       }
       if (this.editType === 'editMailAddress') {
-        console.log(row)
         const apiJudge = this.agentDetail.postId ? 'updatePostAddress' : 'addPostAddress'
         api[apiJudge]({
           id: this.agentDetail.postId,
           relateCode: this.$route.query.agentNo,
           personName: row.personName,
           personMobile: row.personMobile,
-          provinceCode: row.area[0],
-          cityCode: row.area[1],
-          areaCode: row.area[2],
+          provinceCode: row.postArea[0],
+          cityCode: row.postArea[1],
+          areaCode: row.postArea[2],
           detailAddress: row.detailAddress
         }).then(res => {
           if (res.status === 0) {
@@ -1012,8 +1012,7 @@ export default {
             this.editType = ''
             this.drawer = false
           }
-        }).catch(err => {
-          console.log(err)
+        }).catch(() => {
         })
       }
       if (this.editType === 'editRenew') {
@@ -1042,14 +1041,50 @@ export default {
           })
         }
       }
-      if (this.editType === 'editAddress') {
-        if (!row.area[0] || !row.detailAddress || !row.personMobile || !row.personName) {
+      if (this.editType === 'editAuthority') {
+        if (!row.activeMode || !row.activeScopeCode[0] || !row.chargeFeePercent || (row.expandSub === '')) {
           this.$message({
-            message: "请填写必填系信息",
+            message: "请填写必填信息",
             type: "warning"
           })
           return
         }
+        if (!row.addressObj) {
+          var arr = []
+          arr = [
+            {
+              label: this.agentDetail.activeScope.cityName,
+              value: this.agentDetail.activeScope.cityCode
+            },
+            {
+              label: this.agentDetail.activeScope.provinceName,
+              value: this.agentDetail.activeScope.provinceCode
+            }
+          ]
+          row.addressObj = arr
+        }
+        api.updateAgentPrivilege({
+          agentNo: this.$route.query.agentNo,
+          activeScope: {
+            provinceCode: row.addressObj[0].value,
+            provinceName: row.addressObj[0].label,
+            cityCode: row.addressObj[1].value,
+            cityName: row.addressObj[1].label
+          },
+          expandSub: row.expandSub,
+          activeMode: row.activeMode,
+          chargeFeePercent: this.$g.utils.AccDiv(row.chargeFeePercent, 100)
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: "编辑权限成功",
+              type: "success"
+            })
+            this.getDetail(this.$route.query.agentNo)
+            this.editType = ''
+            this.drawer = false
+          }
+        })
       }
     },
     equipment_confirm($ruleForm) {
@@ -1088,11 +1123,10 @@ export default {
       api.addressBookQuery({
         relateCode: this.$route.query.agentNo
       }).then(res => {
-        if (res.datas) {
-          this.contactsList = res.datas
+        if (res.data) {
+          this.contactsList = res.data
         }
-      }).catch(err => {
-        console.log(err)
+      }).catch(() => {
       })
     },
     // 查看沟通记录详情
@@ -1101,7 +1135,7 @@ export default {
       api.talkListsGetById({
         id: row.id
       }).then(res => {
-        this.talkListDetail = res.object
+        this.talkListDetail = res.data
       }).catch(err => {
         console.log(err)
       })
@@ -1196,7 +1230,7 @@ export default {
       api.queryWait({
         relateCode: this.$route.query.agentNo
       }).then(res => {
-        this.willConactNum = res.object
+        this.willConactNum = res.data
       }).catch(() => {})
     }
   }

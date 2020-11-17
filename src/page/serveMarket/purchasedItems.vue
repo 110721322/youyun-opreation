@@ -70,15 +70,15 @@ export default {
         {
           value: 'businessMode',
           label: '业务模式'
-        },
-        {
-          value: 'payChannel',
-          label: '交易通道'
-        },
-        {
-          value: 'brandCustom',
-          label: '品牌定制'
         }
+        // {
+        //   value: 'payChannel',
+        //   label: '交易通道'
+        // },
+        // {
+        //   value: 'brandCustom',
+        //   label: '品牌定制'
+        // }
       ],
       configData: BUSINESS_CONFIG,
       configData1: LS_CONFIG,

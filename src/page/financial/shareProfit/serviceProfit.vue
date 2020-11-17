@@ -9,8 +9,18 @@
         class="el-menu"
         mode="horizontal"
         @select="onClick_main"
+        v-if="roleId === 12"
       >
-        <el-menu-item v-for="(item, index) in mainData" :key="index" :index="index">{{ item.value }}</el-menu-item>
+        <el-menu-item v-for="(item, index) in mainData" :key="index" :index="index.toString()">{{ item.value }}</el-menu-item>
+      </el-menu>
+      <el-menu
+          :default-active="mainIndex"
+          class="el-menu"
+          mode="horizontal"
+          @select="onClick_main"
+          v-else
+      >
+        <el-menu-item v-for="(item, index) in mainData1" :key="index" :index="index.toString()">{{ item.value }}</el-menu-item>
       </el-menu>
     </div>
     <Search
@@ -20,54 +30,56 @@
       @search="search"
     />
     <div class="select">
-      <el-menu
-        style="margin-bottom: 8px"
-        :default-active="selectIndex"
-        class="el-menu"
-        mode="horizontal"
-        @select="onClick_select"
-      >
-        <el-menu-item v-for="(item, index) in selectData" :key="index" :index="index">{{ item.value }}</el-menu-item>
-      </el-menu>
-      <div class="table_box">
-        <!-- 支付方式 -->
-        <BaseCrud
-          v-if="selectIndex===0"
-          ref="table1"
-          :params="params"
-          :api-service="api"
-          :grid-config="configData.gridConfig"
-          :grid-btn-config="configData.gridBtnConfig"
-          :grid-data="testData"
-          :form-config="configData.formConfig"
-          :form-data="configData.formModel"
-          :grid-edit-width="100"
-          :is-async="true"
-          :is-select="false"
-          :is-expand="false"
-          :row-key="'id'"
-          :default-expand-all="false"
-          @detail="handleDetail"
-        ></BaseCrud>
-        <!-- 通道 -->
-        <BaseCrud
-          v-if="selectIndex===1"
-          ref="table2"
-          :params="params"
-          :api-service="api"
-          :grid-config="configData1.gridConfig"
-          :grid-btn-config="configData1.gridBtnConfig"
-          :grid-data="testData"
-          :form-config="configData1.formConfig"
-          :form-data="configData1.formModel"
-          :grid-edit-width="100"
-          :is-async="true"
-          :is-select="false"
-          :is-expand="false"
-          :row-key="'id'"
-          :default-expand-all="false"
-          @detail="handleDetail"
-        ></BaseCrud>
+      <div style="background: #fff;padding: 24px 24px;">
+        <el-menu
+            style="margin-bottom: 8px"
+            :default-active="selectIndex"
+            class="el-menu"
+            mode="horizontal"
+            @select="onClick_select"
+        >
+          <el-menu-item v-for="(item, index) in selectData" :key="index" :index="index.toString()">{{ item.value }}</el-menu-item>
+        </el-menu>
+        <div class="table_box">
+          <!-- 支付方式 -->
+          <BaseCrud
+              v-if="selectIndex==='0'"
+              ref="table1"
+              :params="params"
+              :api-service="api"
+              :grid-config="configData.gridConfig"
+              :grid-btn-config="configData.gridBtnConfig"
+              :grid-data="testData"
+              :form-config="configData.formConfig"
+              :form-data="configData.formModel"
+              :grid-edit-width="100"
+              :is-async="true"
+              :is-select="false"
+              :is-expand="false"
+              :row-key="'id'"
+              :default-expand-all="false"
+              @detail="handleDetail"
+          ></BaseCrud>
+          <!-- 通道 -->
+          <BaseCrud
+              v-if="selectIndex==='1'"
+              ref="table2"
+              :params="params"
+              :api-service="api"
+              :grid-config="configData1.gridConfig"
+              :grid-btn-config="configData1.gridBtnConfig"
+              :grid-data="testData"
+              :form-config="configData1.formConfig"
+              :form-data="configData1.formModel"
+              :grid-edit-width="100"
+              :is-async="true"
+              :is-select="false"
+              :is-expand="false"
+              :row-key="'id'"
+              :default-expand-all="false"
+              @detail="handleDetail"
+          ></BaseCrud>
+        </div>
       </div>
     </div>
   </div>
@@ -119,9 +131,16 @@ export default {
           id: 2
         }
       ],
-      selectIndex: 0,
-      mainIndex: 0,
-      api: api_statistice.selectTopAgentDataByPage
+      mainData1: [
+        {
+          value: '服务商',
+          id: 2
+        }
+      ],
+      selectIndex: "0",
+      mainIndex: "0",
+      roleId: "",
+      api: ""
     }
   },
   mounted() {},
@@ -133,13 +152,20 @@ export default {
     } else {
       this.tradeMonth = myDate.getFullYear() + "-" + m + "-" + "01"
     }
-    if (this.mainIndex === 0) {
+    if (this.$store.state.admin.userInfo.roleId === 12) {
       this.configData = TOPERVICE_CONFIG
       this.configData1 = TOPVICE_CONFIG1
+      this.api = api_statistice.selectTopAgentDataByPage
+    }
+    if (this.$store.state.admin.userInfo.roleId !== 12) {
+      this.configData = SERVICE_CONFIG
+      this.configData1 = SERVICE_CONFIG1
+      this.api = api_statistice.selectAgentDataByPage
     }
     this.params = {
       tradeMonth: this.tradeMonth
     }
+    this.roleId = this.$store.state.admin.userInfo.roleId
     // this.api = api_statistice.selectTopAgentDataByPage
     // this.search()
   },
@@ -152,11 +178,17 @@ export default {
       this.params = {
         tradeMonth: this.selectDate ? this.selectDate + "-01" : this.tradeMonth
       }
-      if (this.mainIndex === 0) {
-        this.configData = TOPERVICE_CONFIG
-        this.configData1 = TOPVICE_CONFIG1
-        this.api = api_statistice.selectTopAgentDataByPage
-      } else if (this.mainIndex === 1) {
+      if (this.roleId === 12) {
+        if (this.mainIndex === '0') {
+          this.configData = TOPERVICE_CONFIG
+          this.configData1 = TOPVICE_CONFIG1
+          this.api = api_statistice.selectTopAgentDataByPage
+        } else {
+          this.configData = SERVICE_CONFIG
+          this.configData1 = SERVICE_CONFIG1
+          this.api = api_statistice.selectAgentDataByPage
+        }
+      } else {
         this.configData = SERVICE_CONFIG
         this.configData1 = SERVICE_CONFIG1
         this.api = api_statistice.selectAgentDataByPage
@@ -169,25 +201,37 @@ export default {
       this.selectDate = $ruleform.date ? $ruleform.date : null
     },
     handleDetail($row) {
-      if (this.mainIndex === 0) {
-        this.$router.push({
-          name: 'serviceProfitDetail',
-          query: {
-            enterType: 0,
-            channelAgentCode: $row.channelAgentCode,
-            tradeMonth: this.selectDate,
-            mainIndex: this.mainIndex
-          }
-        })
+      if (this.mainIndex === '0') {
+        if (this.roleId === 12) {
+          this.$router.push({
+            name: 'serviceProfitDetail',
+            query: {
+              enterType: 0,
+              channelAgentCode: $row.channelAgentCode,
+              tradeMonth: this.selectDate,
+              roleId: this.roleId
+            }
+          })
+        } else {
+          this.$router.push({
+            name: 'serviceProfitDetail',
+            query: {
+              enterType: 1,
+              agentNo: $row.agentNo,
+              tradeMonth: this.selectDate,
+              roleId: this.roleId
+            }
+          })
+        }
       }
-      if (this.mainIndex === 1) {
+      if (this.mainIndex === '1') {
         this.$router.push({
           name: 'serviceProfitDetail',
           query: {
             enterType: 1,
             agentNo: $row.agentNo,
             tradeMonth: this.selectDate,
-            mainIndex: this.mainIndex
+            roleId: this.roleId
           }
         })
       }
@@ -243,8 +287,6 @@ export default {
     .select {
       width: 100%;
       padding: 24px;
-      background: #ffffff;
-      margin:24px;
       .select-top {
         width: 100%;
         display: flex;

@@ -8,35 +8,35 @@ export const SEARCH_CONFIG = {
       querySelectAll: true,
       isSelectToday: true,
       class: 'max-width',
-      labelWidth: '80px',
+      labelWidth: '110px',
       span: 22
     },
     {
       type: 10,
-      label: '精准筛选',
-      key: '',
+      label: '筛选',
+      key: 'search',
       options: [
-        {
-          label: '商户ID',
-          value: 'merchantNo'
-        },
         {
           label: '商户名称',
           value: 'merchantName'
+        },
+        {
+          label: '商户ID',
+          value: 'merchantNo'
         },
         {
           label: '乐刷商户号',
           value: 'channelMerchantNo'
         }
       ],
-      labelWidth: '80px',
+      labelWidth: '110px',
       span: 22
     },
     {
       type: 1,
       label: '状态',
       key: 'status',
-      labelWidth: '80px',
+      labelWidth: '110px',
       span: 11,
       options: [
         {
@@ -73,7 +73,7 @@ export const SEARCH_CONFIG = {
       type: 1,
       label: '所属运营',
       key: 'operateUserNo',
-      labelWidth: '80px',
+      labelWidth: '110px',
       span: 11,
       urlOptions: {
         url: apiAgent.queryAllOperation,
@@ -86,7 +86,7 @@ export const SEARCH_CONFIG = {
       type: 0,
       label: '乐刷商户号',
       key: 'channelMerchantNo',
-      labelWidth: '80px',
+      labelWidth: '110px',
       span: 11
     }
   ]

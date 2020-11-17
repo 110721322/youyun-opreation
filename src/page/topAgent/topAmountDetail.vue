@@ -63,7 +63,7 @@ export default {
       this.params = {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,
-        [$ruleForm.inputSelect]: $ruleForm.inputForm ? $ruleForm.inputForm : null,
+        [$ruleForm.search]: $ruleForm.searchVal,
         labelId: $ruleForm.labelId,
         regionCode: $ruleForm.regionCode,
         provinceCode: $ruleForm.area ? $ruleForm.area[0] : null,
@@ -72,19 +72,19 @@ export default {
     },
     queryInit() {
       api.queryInit().then(res => {
-        const labelList = res.object.labelList.map($ele => {
+        const labelList = res.data.labelList.map($ele => {
           return {
             label: $ele.name,
             value: $ele.id
           }
         })
-        const regionList = res.object.regionSetList.map($ele => {
+        const regionList = res.data.regionSetList.map($ele => {
           return {
             label: $ele.regionName,
             value: $ele.regionCode
           }
         })
-        const userList = res.object.userDTOList.map($ele => {
+        const userList = res.data.userDTOList.map($ele => {
           return {
             label: $ele.jobName || $ele.name,
             value: $ele.id

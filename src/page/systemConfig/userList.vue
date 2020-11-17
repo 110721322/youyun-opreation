@@ -59,9 +59,17 @@
               v-model="addPhoneList[index]"
               class="add-phone-input"
             ></el-input>
-            <div class="add-icon-box" @click="onClick_addPhoneItem">
-              <i class="el-icon-plus"></i>
+            <div class="operation-icon-box">
+              <div class="add-icon-box" @click="onClick_addPhoneItem">
+                <i class="el-icon-plus"></i>
+              </div>
+              <div v-if="isShowDel" class="del-icon-box" @click="handleDeletePhoneItem">
+                <i class="el-icon-minus"></i>
+              </div>
             </div>
+<!--            <div class="add-icon-box" v-if="addPhoneList.length>1" @click="onClick_reducePhoneItem" style="right:-80px">-->
+<!--              <i class="el-icon-minus"></i>-->
+<!--            </div>-->
           </div>
         </div>
       </div>
@@ -77,7 +85,7 @@ import Search from "@/components/search/search.vue";
 import Form from "@/components/form/index.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import api from "@/api/api_memberManage.js";
-
+import api_params from "@/api/api_params.js";
 import { validPhone } from "@/libs/kit/validate";
 import { FORM_CONFIG } from "./formConfig/userListForm";
 import { SEARCH_CONFIG } from "./formConfig/userListSearch";
@@ -104,24 +112,55 @@ export default {
       },
       api: api.queryEmployeeList,
       addPhoneList: [""],
-      activityRow: {}
+      activityRow: {},
+      // 是否展示删减按钮
+      isShowDel: false
     };
   },
-  mounted() {},
+  mounted() {
+    this.getTableData()
+  },
   methods: {
+    getTableData() {
+      api_params
+        .queryAllFormFieldsByType({
+          type: "employee_edit"
+        })
+        .then(res => {
+          if (!this.$g.utils.isArr(res.data) || res.code) return res;
+          const fieldsList = res.data;
+          for (const field of FORM_CONFIG.editData.formData) {
+            const fieldConfig = fieldsList.filter(item => item.id === field.id)[0]
+            if (fieldConfig) {
+              field.isShow = fieldConfig.isDisplay;
+              field.rules[0].required = fieldConfig.isNeed;
+            }
+          }
+        })
+    },
     onClick_addPhoneItem() {
+      if (this.addPhoneList.length > 0) {
+        this.isShowDel = true;
+      }
       if (this.addPhoneList.length < 20) {
         this.addPhoneList.push("");
       } else {
         this.$message("一次最多添加20个");
       }
     },
+    handleDeletePhoneItem() {
+      this.addPhoneList.pop();
+      if (this.addPhoneList.length <= 1) {
+        this.isShowDel = false;
+        return;
+      }
+    },
     search($ruleForm) {
       this.params = {
         sex: $ruleForm.sex,
         state: null,
-        startTime: $ruleForm.date.length === 0 ? "" : $ruleForm.date[0] + ' 00:00:00',
-        endTime: $ruleForm.date.length === 0 ? "" : $ruleForm.date[1] + ' 23:59:59',
+        startTime: ($ruleForm.date && $ruleForm.date[1]) ? $ruleForm.date[0] + ' 00:00:00' : null,
+        endTime: ($ruleForm.date && $ruleForm.date[1]) ? $ruleForm.date[1] + ' 23:59:59' : null,
         [$ruleForm.inputForm]: $ruleForm.inputFormVal
       };
     },
@@ -198,7 +237,7 @@ export default {
         .then(res => {
           if (res.code) return res;
           FORM_CONFIG.editData.formData.forEach((item, index) => {
-            item.initVal = res.object[item.key];
+            item.initVal = res.data[item.key];
           });
           this.activityRow = $row;
           this.fromConfigData = FORM_CONFIG.editData;
@@ -255,11 +294,21 @@ export default {
   .input-box {
     width: 50%;
     position: relative;
-    .add-icon-box {
+    .operation-icon-box {
       position: absolute;
       bottom: 20px;
-      right: -40px;
+      right: -50px;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      width: 50px;
+    }
+    .add-icon-box, .del-icon-box {
+      margin-left: 5px;
       font-size: 20px;
+      cursor: pointer;
     }
   }
   .add-phone-input {

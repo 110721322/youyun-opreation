@@ -89,12 +89,7 @@ export default {
             this.drawer = false
             this.$refs.table.getData()
           }
-        }).catch(err => {
-          this.$message({
-            message: err.errorMessage,
-            type: 'info'
-          });
-        });
+        })
       }
       if (this.formStatus === "pass") {
         if (!$data.appid || !$data.pid || !$data.rate) {
@@ -179,9 +174,9 @@ export default {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,
         channelStatus: $ruleForm.channelStatus,
-        operationUserNo: $ruleForm.operationUserNo
+        operationUserNo: $ruleForm.operationUserNo,
+        [$ruleForm.search]: $ruleForm.searchVal
       };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     }
   }

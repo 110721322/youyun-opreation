@@ -63,8 +63,8 @@ export default {
         [$ruleForm.channelAgent]: $ruleForm.channelAgentVal,
         personName: $ruleForm.personNam,
         personMobile: $ruleForm.personMobile,
-        beginTime: $ruleForm.date[0],
-        endTime: $ruleForm.date[1],
+        beginTime: $ruleForm.date[0] ? $ruleForm.date[0] : '',
+        endTime: $ruleForm.date[0] ? $ruleForm.date[1] : '',
         status: $ruleForm.status
       }
     },

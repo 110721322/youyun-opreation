@@ -63,21 +63,12 @@
       <div v-if="fromConfigData.processData" class="process-box">
         <template v-for="(item,index) in fromConfigData.processData">
           <div :key="index" class="process-item">
-            <div>
-              <img class="process-icon" :src="item.icon" />
-            </div>
             <div class="label">
-              {{ item.desc }}
-              <span v-if="item.username" class="name">{{ item.username }}</span>
+              <div style="font-size: 14px;">{{ item.desc }}</div>
+              <div v-if="item.username" class="name">{{ item.username }}</div>
             </div>
             <div class="time">{{ item.time }}</div>
           </div>
-          <img
-            v-if="!(index===fromConfigData.processData.length-1)"
-            :key="'img'+index"
-            :src="arrow"
-            class="arrow-img"
-          />
         </template>
       </div>
       <elForm v-if="fromConfigData.settlementData" class="formTemplate" :label-width="'130px'">
@@ -182,6 +173,7 @@ export default {
       testData: [],
       drawer: false,
       direction: "rtl",
+      channelAgentCode: '',
       arrow: arrowImg,
       params: {},
       api: api.topListOperationSettle,
@@ -189,6 +181,7 @@ export default {
       formStatus: null,
       activeRow: {},
       activeName: '0',
+      agentNo: '',
       detailDrawer: false,
       settleDetailData: {}
     };
@@ -198,7 +191,7 @@ export default {
       this.activeName = '1'
     }
     this.params = {
-      beginTime: this.$g.utils.getToday(0),
+      beginTime: this.$g.utils.getToday(-6),
       endTime: this.$g.utils.getToday(0),
       typeFlag: this.activeName
     };
@@ -219,32 +212,44 @@ export default {
       switch (this.formStatus) {
         case "reject":
           api[rejectApi]({
+            agentNo: this.agentNo,
+            channelAgentCode: this.channelAgentCode,
             id: this.activeRow.id,
             rejectReason: $data.rejectReason
           }).then(res => {
-            this.$message("已驳回");
-            this.drawer = false;
-          }).catch(err => {
-            this.$message(err);
-          });
+            if (res.status === 0) {
+              this.$message({
+                message: "已驳回",
+                type: "success"
+              });
+              this.$refs.table.getData()
+              this.drawer = false;
+            }
+          })
           break;
         case "adopt":api[successApi]({
           id: this.activeRow.id,
+          agentNo: this.agentNo,
           adviseCommission: $data.adviseCommission,
-          operationRemark: $data.operationRemark
+          operationRemark: $data.operationRemark,
+          channelAgentCode: this.channelAgentCode
         }).then(res => {
-          this.$message("已通过");
-          this.drawer = false;
-        }).catch(err => {
-          this.$message(err);
-        });
+          if (res.status === 0) {
+            this.$message({
+              message: "已通过",
+              type: "success"
+            });
+            this.$refs.table.getData()
+            this.drawer = false;
+          }
+        })
           break;
         default:break;
       }
     },
     search($ruleForm) {
       this.params = {
-        beginTime: $ruleForm.date[0] ? $ruleForm.date[0] : this.$g.utils.getToday(0),
+        beginTime: $ruleForm.date[0] ? $ruleForm.date[0] : this.$g.utils.getToday(-6),
         endTime: $ruleForm.date[1] ? $ruleForm.date[0] : this.$g.utils.getToday(0)
       };
       if (this.activeName === '0') {
@@ -271,7 +276,7 @@ export default {
           settleMobile,
           alternatePhone,
           settleRemark
-        } = res.object;
+        } = res.data;
         const settleTypes = [];
         for (const key in settleType) {
           settleTypes.push({
@@ -297,7 +302,7 @@ export default {
           }
         };
         DETAIL_FORM_CONFIG.detailData.formData.forEach((item, index) => {
-          item.initVal = res.object[item.key];
+          item.initVal = res.data[item.key];
         });
         this.detailFormConfigData = DETAIL_FORM_CONFIG.detailData;
         this.detailDrawer = true;
@@ -311,11 +316,13 @@ export default {
       api[queryDetailApi]({// 通过/驳回详情
         id: $row.id || null
       }).then(res => {
+        this.agentNo = res.data.agentNo
+        this.channelAgentCode = res.data.channelAgentCode
         // 编辑前重赋值
         FORM_CONFIG.rejectData.formData.forEach((item, index) => {
-          item.initVal = res.object[item.key];
+          item.initVal = res.data[item.key];
         });
-        FORM_CONFIG.rejectData.processData = res.object.map
+        FORM_CONFIG.rejectData.processData = res.data.map
         this.activeRow = $row;
         this.formStatus = "reject";
         this.fromConfigData = FORM_CONFIG.rejectData;
@@ -328,11 +335,12 @@ export default {
       api[queryDetailApi]({
         id: $row.id || null
       }).then(res => {
+        this.channelAgentCode = res.data.channelAgentCode
         // 编辑前重赋值
         FORM_CONFIG.adoptData.formData.forEach((item, index) => {
-          item.initVal = res.object[item.key];
+          item.initVal = res.data[item.key];
         });
-        FORM_CONFIG.adoptData.processData = res.object.map
+        FORM_CONFIG.adoptData.processData = res.data.map
         this.activeRow = $row;
         this.formStatus = "adopt";
         this.fromConfigData = FORM_CONFIG.adoptData;
@@ -349,10 +357,10 @@ export default {
       api[typeMonthDetailApi]({
         idList: $row.agentTradeIdList
       }).then(res => {
-        if (res.object) {
+        if (res.data) {
           var keyArr = []
-          res.object.forEach((a, b) => {
-            res.object.forEach((c, d) => {
+          res.data.forEach((a, b) => {
+            res.data.forEach((c, d) => {
               if (a.settleType === c.settleType) {
                 keyArr.push({settleType: a.settleType, dateArr: [], settleTypeName: a.settleTypeName})
               }
@@ -361,7 +369,7 @@ export default {
           // var newArr = []
           if (keyArr.length > 0) {
             keyArr.forEach((item, index) => {
-              res.object.forEach((dItem, dIndex) => {
+              res.data.forEach((dItem, dIndex) => {
                 if (item.settleType === dItem.settleType) {
                   item.dateArr.push(dItem.tradeMonth)
                 }
@@ -398,7 +406,7 @@ export default {
     overflow: hidden;
     justify-content: center;
     .process-item {
-      width: 120px;
+      width: 100%;
       text-align: center;
       .process-icon {
         height: 44px;

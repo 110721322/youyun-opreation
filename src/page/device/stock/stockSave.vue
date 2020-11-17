@@ -44,13 +44,15 @@
             <el-date-picker
                 v-model="formVal.deadline"
                 type="date"
+                value-format="yyyy-MM-dd"
                 placeholder="选择日期">
             </el-date-picker>
           </el-form-item>
           <el-form-item label="入库时间" prop="inputTime" label-width="120px">
             <el-date-picker
                 v-model="formVal.inputTime"
-                type="date"
+                type="datetime"
+                value-format="yyyy-MM-dd hh:mm:ss"
                 placeholder="选择日期">
             </el-date-picker>
           </el-form-item>
@@ -162,11 +164,9 @@ export default {
   computed: {
   },
   created() {
-    const beginDate = this.$g.utils.getNowFormatDate() + ' ' + '00' + ':' + '00' + ':' + '00'
-    const endDate = this.$g.utils.getNowFormatDate() + ' ' + '23' + ':' + '59' + ':' + '59'
     this.params = {
-      beginDate: beginDate,
-      endDate: endDate
+      beginDate: this.$g.utils.getToday(-6) + ' 00:00:00',
+      endDate: this.$g.utils.getToday(0) + ' 23:59:59'
     }
     this.api = api.deviceInputQueryByPage
   },
@@ -187,12 +187,11 @@ export default {
       this.list = []
     },
     search($ruleForm) {
-      const params = {
-        beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
-        endDate: $ruleForm.date ? $ruleForm.date[1] : null,
-        deviceId: $ruleForm.deviceId ? $ruleForm.deviceId : ''
+      this.params = {
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : this.$g.utils.getToday(-6) + ' 00:00:00',
+        endDate: $ruleForm.date ? $ruleForm.date[1] : this.$g.utils.getToday(0) + ' 23:59:59',
+        deviceId: $ruleForm.deviceId ? $ruleForm.deviceId : null
       };
-      this.params = params;
     },
     onClick_addDevice() {
       this.queryAllDevice()
@@ -207,7 +206,7 @@ export default {
     },
     queryAllDevice() {
       api.queryAllDeviceModel().then(res => {
-        this.decviceList = res.object
+        this.decviceList = res.data
       })
     },
     upExecl($data) {
@@ -235,14 +234,14 @@ export default {
           url: this.excelData,
           type: "deviceInput"
         }).then(res => {
-          if (res.object.length === 0) {
+          if (res.data.length === 0) {
             this.$message({
               message: "请填写设备标识",
               type: "warning"
             })
             return
           }
-          $data.deviceIdentifierList = res.object
+          $data.deviceIdentifierList = res.data
           this.deviceInputAdd($data);
         })
       }
@@ -289,9 +288,7 @@ export default {
           this.$refs.table.getData();
           this.drawer = false;
         }
-      }).catch(err => {
-        this.$message(err);
-      });
+      })
     },
     onClick_detail($item) {
       this.$router.push({
@@ -325,16 +322,18 @@ export default {
   overflow: hidden;
   background: #fff;
 }
+
 .form_item {
   float: left !important;
 }
+
 .clear_both {
   clear: both !important;
 }
+
 .btn_list {
   /* background: rebeccapurple; */
   position: absolute;
-  right: 0;
   bottom: 21px;
   right: 24px;
 }
@@ -342,15 +341,18 @@ export default {
 .demo-table-expand {
   font-size: 0;
 }
+
 .demo-table-expand label {
   width: 90px;
   color: #99a9bf;
 }
+
 .demo-table-expand .el-form-item {
   margin-right: 0;
   margin-bottom: 0;
   /* width: 25%; */
 }
+
 .form-box {
   display: flex;
   justify-content: space-between;
@@ -359,6 +361,7 @@ export default {
 .tabale_title_box {
   height: 52px;
   width: 100%;
+
   .title {
     font-size: 16px;
     font-family: PingFangSC-Medium, PingFang SC;
@@ -368,6 +371,7 @@ export default {
     margin-left: 10px;
     // line-height: 52px;
   }
+
   .btn {
     float: right;
   }
@@ -392,6 +396,7 @@ export default {
   justify-content: center;
   align-items: center;
   background: #fff;
+
   button {
     height: 40px;
     padding: 0 16px;
@@ -404,27 +409,32 @@ export default {
   padding: 24px 0;
   border: 1px solid #ebeef5;
   border-radius: 4px;
+
   .cursorCount {
     width: 100%;
     margin-bottom: 16px;
     font-size: 16px;
     text-align: center;
+
     span:nth-child(2) {
       padding: 0 16px;
       color: #1989FA;
       cursor: pointer;
     }
   }
-  .add_box {
+
+    .add_box {
     width: 100%;
     height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-bottom: 1px solid #ebeef5;
+
     .el-input--small {
       width: 200px;
     }
+
     span {
       color: #1989FA;
       padding-left: 16px;

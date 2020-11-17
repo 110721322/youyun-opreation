@@ -17,7 +17,7 @@
         :form-config="configData.formConfig"
         :form-data="configData.formModel"
         :grid-edit-width="200"
-        :is-async="true"
+        :is-async="false"
         :is-select="false"
         :is-expand="false"
         :row-key="'id'"

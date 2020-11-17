@@ -81,14 +81,14 @@ export default {
       api.queryCommission({
         tradeMonth: this.tradeMonth
       }).then(res => {
-        this.commission = res.object
+        this.commission = res.data
       })
     },
     search($form) {
       this.params = {
-        tradeMonth: this.tradeMonth
+        tradeMonth: this.tradeMonth,
+        [$form.search]: $form.searchVal
       }
-      this.params[$form.inputSelect] = $form.inputForm;
     }
   }
 }

@@ -96,7 +96,8 @@ export default {
         personMobile: $form.personMobile ? $form.personMobile : null,
         businessType: $form.businessType ? $form.businessType : null,
         contractStatus: $form.contractStatus ? $form.contractStatus : null,
-        operationId: $form.operationId ? $form.operationId : null
+        operationId: $form.operationId ? $form.operationId : null,
+        agentName: $form.agentName ? $form.agentName : null
       }
     },
     reject(row) {
@@ -116,11 +117,9 @@ export default {
               });
             }
             this.$refs.table.getData();
-          }).catch(err => {
-            console.error(err);
+          }).catch(() => {
           });
         })
-        .catch(() => {});
     },
     activation(row) {
       this.$confirm("是否要激活该代理商？", "激活代理商", {
@@ -139,11 +138,9 @@ export default {
               });
               this.$refs.table.getData();
             }
-          }).catch(err => {
-            console.error(err);
+          }).catch(() => {
           });
         })
-        .catch(() => {});
     },
     cancel() {
       this.drawer = false
@@ -164,13 +161,17 @@ export default {
           this.$message({
             type: "success",
             message: "已通过"
-          });
+          })
+          this.$router.push({
+            name: 'agentDetail',
+            query: {
+              agentNo: this.agentNo
+            }
+          })
         }
         this.drawer = false
-        this.$refs.table.getData()
-      }).catch(err => {
-        console.error(err);
-      });
+        // this.$refs.table.getData()
+      })
     },
     adopt(row) {
       this.drawer = true
@@ -186,6 +187,5 @@ export default {
   padding: 24px;
   overflow: hidden;
   background: #fff;
-  /* min-width: 1000px; */
 }
 </style>

@@ -197,6 +197,7 @@ export default {
     },
     params() {
       if (this.apiService) {
+        this.currentPage = 1;
         this.getData();
       }
     },
@@ -272,16 +273,16 @@ export default {
       this.apiService(this.queryParams)
         .then(res => {
           // debugger;
-          if (g.utils.isArr(res.object) || g.utils.isArr(res.datas)) {
-            this.copyGridData = res.datas || res.object;
+          if (g.utils.isArr(res.data) || g.utils.isArr(res.data)) {
+            this.copyGridData = res.data || res.data;
           } else {
-            if (g.utils.isObj(res.object) && res.object.datas) {
-              this.copyGridData = res.object.datas
+            if (g.utils.isObj(res.data) && res.data.datas) {
+              this.copyGridData = res.data.datas
             } else {
               this.copyGridData =
-                res.datas === null || res.object === null
+                res.data === null || res.data === null
                   ? []
-                  : res.datas || res.object;
+                  : res.data || res.data;
             }
           }
           this.dataTotal = res.totalCount;
@@ -375,6 +376,15 @@ export default {
     flex-wrap: wrap;
   }
 }
+
+.el-table td div {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .icon-increase {
   color: #3abd2d;
   margin-right: 8px;

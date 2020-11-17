@@ -74,8 +74,8 @@ export default {
       };
       this.params = params;
       api.queryDetailCount(params).then(res => {
-        if (res.object) {
-          this.couponStatics = res.object
+        if (res.data) {
+          this.couponStatics = res.data
         }
       })
     },
@@ -84,8 +84,8 @@ export default {
         activityNo: activityNo,
         id: id
       }).then(res => {
-        if (res.object) {
-          this.activityDetail = res.object
+        if (res.data) {
+          this.activityDetail = res.data
           if (this.activityDetail.promoCodeTimeFlag === '0') {
             if (this.activityDetail.promoCodeTime.indexOf('D') !== -1) {
               this.promoCodeTime = '领取后' + this.activityDetail.promoCodeTime.split('-')[1] + '天内'
@@ -102,8 +102,8 @@ export default {
       api.queryDetailCount({
         activityNo: activityNo
       }).then(res => {
-        if (res.object) {
-          this.couponStatics = res.object
+        if (res.data) {
+          this.couponStatics = res.data
         }
       })
     }

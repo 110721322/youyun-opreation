@@ -6,24 +6,24 @@ export const SEARCH_CONFIG = {
       type: 9,
       label: '筛选时间',
       key: 'date',
-      isSelectToday: true,
+      selectSevenDay: true,
       labelWidth: '80px',
       span: 22
     },
     {
       type: 10,
-      label: '精准筛选',
-      key: '',
+      label: '筛选',
+      key: 'search',
       labelWidth: '80px',
       span: 22,
       options: [
         {
-          label: '服务商ID',
-          value: 'agentNo'
-        },
-        {
           label: '服务商名称',
           value: 'agentName'
+        },
+        {
+          label: '服务商ID',
+          value: 'agentNo'
         }
       ]
     },
@@ -49,8 +49,12 @@ export const SEARCH_CONFIG = {
       span: 11,
       options: [
         {
+          label: '全部',
+          value: ''
+        },
+        {
           label: '待审核',
-          value: 'audit'
+          value: 'waitSign'
         },
         {
           label: '审核通过',

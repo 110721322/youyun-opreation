@@ -5,37 +5,56 @@ export const USERLIST_CONFIG = {
     {
       label: '花名',
       prop: 'jobName',
-      width: '150px'
+      render: (h, params) => {
+        return h(
+          'span', params.row.jobName ? params.row.jobName : '-'
+        )
+      }
     },
     {
       label: '工号',
       prop: 'jobNumber',
-      width: '150px'
+      render: (h, params) => {
+        return h(
+          'span', params.row.jobNumber ? params.row.jobNumber : '-'
+        )
+      }
     },
     {
       label: '姓名',
       prop: 'name',
-      width: '150px'
+      render: (h, params) => {
+        return h(
+          'span', params.row.name ? params.row.name : '-'
+        )
+      }
     },
     {
       label: '职位',
       prop: 'positionName',
-      width: '150px'
+      render: (h, params) => {
+        return h(
+          'span', params.row.positionName ? params.row.positionName : '-'
+        )
+      }
     },
     {
       label: '上级',
       prop: 'superiorName',
-      width: '150px'
+      render: (h, params) => {
+        return h(
+          'span', params.row.superiorName ? params.row.superiorName : '-'
+        )
+      }
     },
     {
       label: '手机号',
       prop: 'phone',
-      width: '150px'
+      width: '120px'
     },
     {
       label: '性别',
       prop: 'sex',
-      width: '150px',
       formatter($row) {
         const sex = $row[this.prop];
         if (sex === 0) {
@@ -43,23 +62,26 @@ export const USERLIST_CONFIG = {
         } else if (sex === 1) {
           return '男';
         }
-        return ''
+        return '-'
       }
     },
     {
       label: '创建时间',
       prop: 'createTime',
-      width: '180px'
+      width: '150px'
     },
     {
       label: '邮箱',
       prop: 'email',
-      width: '150px'
+      render: (h, params) => {
+        return h(
+          'span', params.row.email ? params.row.email : '-'
+        )
+      }
     },
     {
       label: '状态',
       prop: 'status',
-      width: '150px',
       formatter($row) {
         const status = $row[this.prop];
         if (status === 'lock') {
@@ -88,17 +110,22 @@ export const USERLIST_CONFIG = {
         permission: PERSON_MANAGE_COMPLETE,
         isShow($row) {
           const infoStatus = $row.infoStatus;
-          switch (infoStatus) {
-            case 0:
-              return true;
-            case 1:
-              return true;
-            case 2:
-              return false;
-            case 3:
-              return false;
-            default:
-              return true;
+          const userType = $row.userType
+          if (userType !== 11) {
+            switch (infoStatus) {
+              case 0:
+                return true;
+              case 1:
+                return true;
+              case 2:
+                return false;
+              case 3:
+                return false;
+              default:
+                return true;
+            }
+          } else {
+            return false
           }
         }
       },

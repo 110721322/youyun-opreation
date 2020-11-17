@@ -60,19 +60,19 @@ export default {
   methods: {
     search($form) {
       this.params = {
-        beginTime: $form.date[0] || null,
-        endTime: $form.date[1] || null,
-        settleStatus: $form.settleStatus || 0
+        beginTime: $form.date[0] ? $form.date[0] + ' 00:00:00' : "",
+        endTime: $form.date[1] ? $form.date[1] + ' 23:59:59' : "",
+        settleStatus: $form.settleStatus || ''
       }
-    },
-    handel_detail($row) {
-      this.drawer = true
-      api.queryDetailsById({
-        id: $row.id
-      }).then(res => {
-
-      })
     }
+    // handel_detail($row) {
+    //   this.drawer = true
+    //   api.queryDetailsById({
+    //     id: $row.id
+    //   }).then(res => {
+    //
+    //   })
+    // }
   }
 }
 </script>
