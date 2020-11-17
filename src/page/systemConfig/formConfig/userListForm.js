@@ -147,7 +147,7 @@ export const FORM_CONFIG = {
           }
         ],
         rules: [
-          {required: true, message: '请选择性别', trigger: 'blur'}
+          {required: true, message: '请选择性别', trigger: 'change'}
         ]
       },
       {
@@ -159,7 +159,7 @@ export const FORM_CONFIG = {
         activeValue: "normal",
         inactiveValue: "lock",
         rules: [
-          {required: true, message: '请选择状态', trigger: 'blur'}
+          {required: true, message: '请选择状态', trigger: 'change'}
         ]
       },
       // {

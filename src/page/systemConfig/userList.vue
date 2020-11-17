@@ -159,8 +159,8 @@ export default {
       this.params = {
         sex: $ruleForm.sex,
         state: null,
-        startTime: $ruleForm.date.length === 0 ? "" : $ruleForm.date[0] + ' 00:00:00',
-        endTime: $ruleForm.date.length === 0 ? "" : $ruleForm.date[1] + ' 23:59:59',
+        startTime: ($ruleForm.date && $ruleForm.date[1]) ? $ruleForm.date[0] + ' 00:00:00' : null,
+        endTime: ($ruleForm.date && $ruleForm.date[1]) ? $ruleForm.date[1] + ' 23:59:59' : null,
         [$ruleForm.inputForm]: $ruleForm.inputFormVal
       };
     },

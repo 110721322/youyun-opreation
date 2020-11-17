@@ -4,23 +4,48 @@ export const USERLIST_CONFIG = {
   gridConfig: [
     {
       label: '花名',
-      prop: 'jobName'
+      prop: 'jobName',
+      render: (h, params) => {
+        return h(
+          'span', params.row.jobName ? params.row.jobName : '-'
+        )
+      }
     },
     {
       label: '工号',
-      prop: 'jobNumber'
+      prop: 'jobNumber',
+      render: (h, params) => {
+        return h(
+          'span', params.row.jobNumber ? params.row.jobNumber : '-'
+        )
+      }
     },
     {
       label: '姓名',
-      prop: 'name'
+      prop: 'name',
+      render: (h, params) => {
+        return h(
+          'span', params.row.name ? params.row.name : '-'
+        )
+      }
     },
     {
       label: '职位',
-      prop: 'positionName'
+      prop: 'positionName',
+      render: (h, params) => {
+        return h(
+          'span', params.row.positionName ? params.row.positionName : '-'
+        )
+      }
     },
     {
       label: '上级',
-      prop: 'superiorName'
+      prop: 'superiorName',
+      render: (h, params) => {
+        return h(
+          'span', params.row.superiorName ? params.row.superiorName : '-'
+        )
+      }
     },
     {
       label: '手机号',
@@ -37,7 +62,7 @@ export const USERLIST_CONFIG = {
         } else if (sex === 1) {
           return '男';
         }
-        return ''
+        return '-'
       }
     },
     {
@@ -47,7 +72,12 @@ export const USERLIST_CONFIG = {
     },
     {
       label: '邮箱',
-      prop: 'email'
+      prop: 'email',
+      render: (h, params) => {
+        return h(
+          'span', params.row.email ? params.row.email : '-'
+        )
+      }
     },
     {
       label: '状态',

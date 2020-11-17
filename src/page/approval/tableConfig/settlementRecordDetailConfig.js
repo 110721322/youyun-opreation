@@ -18,29 +18,7 @@ export const RECORD_CONFIG = {
     {
       label: '操作内容',
       prop: 'auditStatus',
-      width: '250px',
-      render: (h, params) => {
-        if (params.row.auditStatus === 'channelPass') {
-          return h(
-            'span', '通过'
-          )
-        }
-        if (params.row.auditStatus === 'platformAudit') {
-          return h(
-            'span', '平台审核中'
-          )
-        }
-        if (params.row.auditStatus === 'platformReject') {
-          return h(
-            'span', '平台驳回'
-          )
-        }
-        if (params.row.auditStatus === 'channelReject') {
-          return h(
-            'span', '通道驳回'
-          )
-        }
-      }
+      width: '250px'
     }
   ],
 

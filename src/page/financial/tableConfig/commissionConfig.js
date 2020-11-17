@@ -76,7 +76,7 @@ export const TABLE_CONFIG = {
         emitName: 'reject',
         type: 'text',
         isShow: ($row) => {
-          if ($row.settleStatus === '61' || $row.settleStatus === '62') {
+          if ($row.settleStatus === '22') {
             return true;
           } else {
             return false;
@@ -88,7 +88,7 @@ export const TABLE_CONFIG = {
         emitName: 'adopt',
         type: 'text',
         isShow: ($row) => {
-          if ($row.settleStatus === '61' || $row.settleStatus === '62') {
+          if ($row.settleStatus === '22') {
             return true;
           } else {
             return false;

@@ -187,12 +187,11 @@ export default {
       this.list = []
     },
     search($ruleForm) {
-      const params = {
-        beginDate: $ruleForm.date ? $ruleForm.date[0] : this.$g.utils.getToday(-6) + ' ' + '00:00:00',
-        endDate: $ruleForm.date ? $ruleForm.date[1] : this.$g.utils.getToday(0) + ' ' + '23:59:59',
-        deviceId: $ruleForm.deviceId ? $ruleForm.deviceId : ''
+      this.params = {
+        beginDate: $ruleForm.date ? $ruleForm.date[0] : this.$g.utils.getToday(-6) + ' 00:00:00',
+        endDate: $ruleForm.date ? $ruleForm.date[1] : this.$g.utils.getToday(0) + ' 23:59:59',
+        deviceId: $ruleForm.deviceId ? $ruleForm.deviceId : null
       };
-      this.params = params;
     },
     onClick_addDevice() {
       this.queryAllDevice()
