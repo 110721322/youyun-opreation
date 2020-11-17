@@ -134,18 +134,23 @@ export const USERLIST_CONFIG = {
         emitName: 'editBasics',
         type: 'text',
         isShow($row) {
+          const userType = $row.userType
           const infoStatus = $row.infoStatus;
-          switch (infoStatus) {
-            case 0:
-              return false;
-            case 1:
-              return false;
-            case 2:
-              return true;
-            case 3:
-              return true;
-            default:
-              return false;
+          if (userType !== 11) {
+            switch (infoStatus) {
+              case 0:
+                return false;
+              case 1:
+                return false;
+              case 2:
+                return true;
+              case 3:
+                return true;
+              default:
+                return false;
+            }
+          } else {
+            return false
           }
         }
       },
@@ -155,18 +160,23 @@ export const USERLIST_CONFIG = {
         type: 'text',
         permission: PERSON_MANAGE_EDIT,
         isShow($row) {
+          const userType = $row.userType
           const infoStatus = $row.infoStatus;
-          switch (infoStatus) {
-            case 0:
-              return false;
-            case 1:
-              return false;
-            case 2:
-              return true;
-            case 3:
-              return true;
-            default:
-              return false;
+          if (userType !== 11) {
+            switch (infoStatus) {
+              case 0:
+                return false;
+              case 1:
+                return false;
+              case 2:
+                return true;
+              case 3:
+                return true;
+              default:
+                return false;
+            }
+          } else {
+            return false
           }
         }
       }

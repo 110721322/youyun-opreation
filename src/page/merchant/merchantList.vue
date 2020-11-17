@@ -109,7 +109,7 @@ export default {
     },
     openMerchantManager($row) {
       apiLog.generateLoginTicket({
-        system: 'agent',
+        system: 'merchant',
         phone: $row.merchantLoginAccount,
         password: $row.merchantPassword
       }).then(res => {
