@@ -186,10 +186,12 @@ export default {
   overflow: hidden;
   background: #fff;
 }
+
 .u-form-item {
   display: flex;
   padding-left: 73px;
   margin-bottom: 24px;
+
   label {
     display: block;
     width: 50px;
@@ -197,23 +199,28 @@ export default {
     color: #606266;
     font-size: 14px;
   }
+
   .s-required::before {
     content: '*';
     font-size: 14px;
     color: #F5222D;
   }
+
   .g-form-content {
     width: 360px;
     padding-left: 15px;
     color: #333335;
   }
 }
+
 .form_item {
   float: left !important;
 }
+
 .clear_both {
   clear: both !important;
 }
+
 .btn_list {
   /* background: rebeccapurple; */
   position: absolute;
@@ -225,15 +232,18 @@ export default {
 .demo-table-expand {
   font-size: 0;
 }
+
 .demo-table-expand label {
   width: 90px;
   color: #99a9bf;
 }
+
 .demo-table-expand .el-form-item {
   margin-right: 0;
   margin-bottom: 0;
   /* width: 25%; */
 }
+
 .form-box {
   display: flex;
   justify-content: space-between;
@@ -242,6 +252,7 @@ export default {
 .tabale_title_box {
   height: 52px;
   width: 100%;
+
   .title {
     font-size: 16px;
     font-family: PingFangSC-Medium, PingFang SC;
@@ -251,10 +262,12 @@ export default {
     margin-left: 10px;
     // line-height: 52px;
   }
+
   .btn {
     float: right;
   }
 }
+
 .foot_btn_box {
   width: 100%;
   height: 96px;
@@ -265,6 +278,7 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-content: center;
+
   .foot_btn {
     width: 113px;
     height: 40px;
@@ -272,6 +286,7 @@ export default {
     margin-left: 12px;
     margin-right: 12px;
   }
+
   .form_box {
     margin: 0 59px;
   }
