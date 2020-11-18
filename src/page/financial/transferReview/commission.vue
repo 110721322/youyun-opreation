@@ -84,6 +84,7 @@
         </template>
       </div>
       <Form
+        v-if="drawer"
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
         label-width="130px"
@@ -144,6 +145,7 @@
             <p>发票照片</p>
           </div>
           <Form
+            v-if="detailDrawer"
             :form-base-data="detailFormConfigData.formData"
             :show-foot-btn="detailFormConfigData.showFootBtn"
             label-width="130px"
@@ -168,6 +170,7 @@ export default {
   components: { Search, BaseCrud, Form },
   data() {
     return {
+      agentNo: "",
       headerCellStyle: { },
       searchHeight: "260",
       searchConfig: SEARCH_CONFIG,
@@ -214,7 +217,8 @@ export default {
         case "reject":
           api[rejectApi]({
             id: this.activeRow.id,
-            rejectReason: $data.rejectReason
+            rejectReason: $data.reason,
+            agentNo: this.agentNo
           }).then(res => {
             this.$message("已驳回");
             this.drawer = false;
@@ -222,6 +226,7 @@ export default {
           break;
         case "adopt":api[successApi]({
           id: this.activeRow.id,
+          agentNo: this.agentNo,
           actualSettleCommission: $data.actualSettleCommission,
           financeRemark: $data.financeRemark
         }).then(res => {
@@ -293,6 +298,8 @@ export default {
       this.detailDrawer = false;
     },
     onClick_reject($row) {
+      console.log($row)
+      this.agentNo = $row.agentNo
       const queryDetailApi = this.activeName === '0' ? 'topQueryDetail' : 'queryDetail'
       api[queryDetailApi]({// 通过/驳回详情
         id: $row.id || null
@@ -310,6 +317,7 @@ export default {
       })
     },
     onClick_adopt($row) {
+      this.agentNo = $row.agentNo
       const queryDetailApi = this.activeName === '0' ? 'topQueryDetail' : 'queryDetail'
       api[queryDetailApi]({
         id: $row.id || null

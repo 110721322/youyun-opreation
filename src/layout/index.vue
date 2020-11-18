@@ -118,7 +118,6 @@ export default {
     height: 100%;
     background: rgba(255, 255, 255, 1);
     box-shadow: 5px 0px 9px 0px rgba(0, 0, 0, 0.05);
-    overflow: hidden;
     position: fixed;
     top: 0;
     z-index: 1003;

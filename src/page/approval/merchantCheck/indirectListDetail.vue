@@ -1,8 +1,16 @@
 <template>
   <div>
     <template v-if="channelStatusList.length > 0">
-      <div class="tab_head">
+      <div class="tab_top">
         <span class="title">商户预审核信息</span>
+        <el-alert
+          v-if="greyListData"
+          class="detail-alert"
+          :title="'入件灰名单信息:' + greyListData"
+          type="info"
+          :closable="false"
+          show-icon
+        ></el-alert>
         <el-menu
           :default-active="activeIndex"
           class="el-menu"
@@ -28,15 +36,15 @@
           <div v-if="activeIndex" :key="activeIndex">
             <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.baseData"></detailMode>
             <!--            商户类型：企业，个体工商户-->
-            <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.merchantData" v-if="ruleForm.merchantType !== 'personal'"></detailMode>
+            <detailMode v-if="ruleForm.merchantType !== 'personal'" :img-width="4" :rule-form="ruleForm" :config-data="configData.merchantData"></detailMode>
             <!--            商户类型：个人-->
-            <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.merchantData1"  v-if="ruleForm.merchantType === 'personal'"></detailMode>
+            <detailMode v-if="ruleForm.merchantType === 'personal'" :img-width="4" :rule-form="ruleForm" :config-data="configData.merchantData1"></detailMode>
             <!--          (企业，个体工商户)对公法人-->
-            <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.settleData1" v-if="ruleForm.merchantType !== 'personal' && ruleForm.bankAccountType === 'public' && ruleForm.settleLawFlag === 'legal'"></detailMode>
+            <detailMode v-if="ruleForm.merchantType !== 'personal' && ruleForm.bankAccountType === 'public' && ruleForm.settleLawFlag === 'legal'" :img-width="4" :rule-form="ruleForm" :config-data="configData.settleData1"></detailMode>
             <!--          (企业，个体工商户，个人)对私法人-->
-            <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.settleData2" v-if="ruleForm.bankAccountType === 'private' && ruleForm.settleLawFlag  === 'legal'"></detailMode>
+            <detailMode v-if="ruleForm.bankAccountType === 'private' && ruleForm.settleLawFlag === 'legal'" :img-width="4" :rule-form="ruleForm" :config-data="configData.settleData2"></detailMode>
             <!--          (企业，个体工商户)对私非法人-->
-            <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.settleData3" v-if="ruleForm.merchantType !== 'personal' && ruleForm.bankAccountType === 'private' && ruleForm.settleLawFlag === 'unlegal'"></detailMode>
+            <detailMode v-if="ruleForm.merchantType !== 'personal' && ruleForm.bankAccountType === 'private' && ruleForm.settleLawFlag === 'unlegal'" :img-width="4" :rule-form="ruleForm" :config-data="configData.settleData3"></detailMode>
             <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.other"></detailMode>
           </div>
           <div v-if="showComponents.showOperBtns" class="btn-box">
@@ -48,11 +56,11 @@
       <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
         <div class="p_head">{{ fromConfigData.title }}</div>
         <Form
-            :form-base-data="fromConfigData.formData"
-            :show-foot-btn="fromConfigData.showFootBtn"
-            label-width="130px"
-            @cancel="cancel"
-            @confirm="confirm"
+          :form-base-data="fromConfigData.formData"
+          :show-foot-btn="fromConfigData.showFootBtn"
+          label-width="130px"
+          @cancel="cancel"
+          @confirm="confirm"
         ></Form>
       </el-drawer>
     </template>
@@ -76,6 +84,7 @@ export default {
       channelAgentCode: '',
       fromConfigData: {},
       drawer: false,
+      greyListData: '',
       activeIndex: 1,
       showComponents: {
         showRejectTitle: false,
@@ -438,6 +447,9 @@ export default {
           res.data.cloudPayGt1000RatePecent = '0‰'
           res.data.cloudPayLe1000RatePecent = '0‰'
         }
+        if (res.data.greyList && res.data.greyList.length > 0) {
+          this.greyListData = res.data.greyList.join(',')
+        }
         res.data.alipayRatePecent = this.$g.utils.AccMul(res.data.alipayRate, 1000) + '‰'
         this.ruleForm = res.data
         this.currentType = res.data.status
@@ -521,6 +533,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.tab_top {
+  width: 100%;
+  background: #fff;
+  padding-top: 24px;
+
+  .title {
+    display: block;
+    padding: 0 0 0 24px;
+    font-size: 20px;
+    font-weight: 500;
+  }
+}
+
 .btn-box {
   display: flex;
   justify-content: center;
