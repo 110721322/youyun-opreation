@@ -22,7 +22,7 @@ export const FORM_CONFIG = {
         rules: setRules('有底单号').isRequired.get
       },
       {
-        type: 0,
+        type: "show",
         label: '结算账户',
         key: 'settleAccount',
         initVal: '',
@@ -30,7 +30,7 @@ export const FORM_CONFIG = {
         isDisabled: true
       },
       {
-        type: 0,
+        type: "show",
         label: '联系电话',
         key: 'settleMobile',
         initVal: '',

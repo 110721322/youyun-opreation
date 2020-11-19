@@ -236,7 +236,7 @@ export default {
         api.submitSettle({
           expressNumber: $sunmit.expressNumber,
           settleName: this.settleInfo.settleName,
-          expressImg: $sunmit.expressImg.dialogImageUrl,
+          expressImg: $sunmit.expressImg,
           settleCommission: this.settleCommission,
           settleAccount: $sunmit.settleAccount,
           actualAmount: this.settleCommission,

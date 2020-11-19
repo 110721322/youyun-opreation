@@ -7,11 +7,11 @@
 
     <div class="table_box">
       <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="顶级服务商" name="0"></el-tab-pane>
-        <el-tab-pane label="服务商" name="1"></el-tab-pane>
+        <el-tab-pane label="顶级服务商" v-if="roleId === '12'" name="12"></el-tab-pane>
+        <el-tab-pane label="服务商" name="11"></el-tab-pane>
       </el-tabs>
       <BaseCrud
-        v-if="activeName==='0'"
+        v-if="activeName === '12'"
         ref="table"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
@@ -167,7 +167,7 @@ export default {
       headerCellStyle: { backgroundColor: "#FAFAFA" },
       searchHeight: "260",
       searchConfig: SEARCH_CONFIG,
-      configData: OPERATIONAPPROVE_CONFIG,
+      configData: {},
       fromConfigData: {},
       detailFormConfigData: DETAIL_FORM_CONFIG.detailData,
       testData: [],
@@ -180,35 +180,46 @@ export default {
       apiAgent: api.listOperationSettle,
       formStatus: null,
       activeRow: {},
-      activeName: '0',
+      activeName: String(this.$store.state.admin.userInfo.roleId),
+      roleId: String(this.$store.state.admin.userInfo.roleId),
       agentNo: '',
       detailDrawer: false,
       settleDetailData: {}
     };
   },
   created() {
-    if (this.$route.query.agentNo) {
-      this.activeName = '1'
-    }
     this.params = {
       beginTime: this.$g.utils.getToday(-6),
       endTime: this.$g.utils.getToday(0),
-      typeFlag: this.activeName
+      typeFlag: this.activeName === '12' ? '0' : '1'
     };
+    if (this.$route.query.agentNo) {
+      this.activeName = '11'
+    }
+    if (this.activeName === '11') {
+      this.configData = OPERATIONAPPROVE_CONFIG
+      this.configData.gridConfig[0].label = this.activeName === '12' ? '顶级服务商' : '服务商'
+      this.configData.gridConfig[0].prop[0].key = this.activeName === '12' ? 'channelAgentName' : 'agentName'
+      this.configData.gridConfig[0].prop[1].key = this.activeName === '12' ? 'channelAgentCode' : 'agentNo'
+      return
+    }
+    if (this.activeName === '12') {
+      this.configData = OPERATIONAPPROVE_CONFIG
+    }
   },
   methods: {
     handleClick() {
-      this.params.typeFlag = this.activeName
-      this.configData.gridConfig[0].label = this.activeName === '0' ? '顶级服务商' : '服务商'
-      this.configData.gridConfig[0].prop[0].key = this.activeName === '0' ? 'channelAgentName' : 'agentName'
-      this.configData.gridConfig[0].prop[1].key = this.activeName === '0' ? 'channelAgentCode' : 'agentNo'
+      this.params.typeFlag = this.activeName === '12' ? '0' : '1'
+      this.configData.gridConfig[0].label = this.activeName === '12' ? '顶级服务商' : '服务商'
+      this.configData.gridConfig[0].prop[0].key = this.activeName === '12' ? 'channelAgentName' : 'agentName'
+      this.configData.gridConfig[0].prop[1].key = this.activeName === '12' ? 'channelAgentCode' : 'agentNo'
       this.$nextTick(() =>
         this.$refs.table.getData()
       );
     },
     confirm($data) {
-      const rejectApi = this.activeName === '0' ? 'topOperationReject' : 'operationReject'
-      const successApi = this.activeName === '0' ? 'topOperationSuccess' : 'operationSuccess'
+      const rejectApi = this.activeName === '12' ? 'topOperationReject' : 'operationReject'
+      const successApi = this.activeName === '12' ? 'topOperationSuccess' : 'operationSuccess'
       switch (this.formStatus) {
         case "reject":
           api[rejectApi]({
@@ -249,18 +260,13 @@ export default {
     },
     search($ruleForm) {
       this.params = {
+        typeFlag: this.activeName === '12' ? '0' : '1',
         beginTime: $ruleForm.date[0] ? $ruleForm.date[0] : this.$g.utils.getToday(-6),
         endTime: $ruleForm.date[1] ? $ruleForm.date[0] : this.$g.utils.getToday(0)
       };
-      if (this.activeName === '0') {
-        this.params.typeFlag = '0'
-      }
-      if (this.activeName === '1') {
-        this.params.typeFlag = '1'
-      }
     },
     onClick_detail($row) {
-      const queryDetailApi = this.activeName === '0' ? 'topQueryDetail' : 'queryDetail'
+      const queryDetailApi = this.activeName === '12' ? 'topQueryDetail' : 'queryDetail'
       api[queryDetailApi]({
         id: $row.id || null
       }).then(res => {
@@ -312,7 +318,7 @@ export default {
       this.detailDrawer = false;
     },
     onClick_reject($row) {
-      const queryDetailApi = this.activeName === '0' ? 'topQueryDetail' : 'queryDetail'
+      const queryDetailApi = this.activeName === '12' ? 'topQueryDetail' : 'queryDetail'
       api[queryDetailApi]({// 通过/驳回详情
         id: $row.id || null
       }).then(res => {
@@ -331,7 +337,7 @@ export default {
       })
     },
     onClick_adopt($row) {
-      const queryDetailApi = this.activeName === '0' ? 'topQueryDetail' : 'queryDetail'
+      const queryDetailApi = this.activeName === '12' ? 'topQueryDetail' : 'queryDetail'
       api[queryDetailApi]({
         id: $row.id || null
       }).then(res => {
@@ -353,7 +359,7 @@ export default {
       this.topQueryTypeMonthDetail($row)
     },
     topQueryTypeMonthDetail($row) {
-      const typeMonthDetailApi = this.activeName === '0' ? 'topQueryTypeMonthDetail' : 'queryTypeMonthDetail'
+      const typeMonthDetailApi = this.activeName === '12' ? 'topQueryTypeMonthDetail' : 'queryTypeMonthDetail'
       api[typeMonthDetailApi]({
         idList: $row.agentTradeIdList
       }).then(res => {
