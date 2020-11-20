@@ -62,7 +62,8 @@ export default {
         beginTime: $ruleForm.date[0] ? $ruleForm.date[0] : this.$g.utils.getToday(-6),
         endTime: $ruleForm.date[0] ? $ruleForm.date[1] : this.$g.utils.getToday(0),
         operationId: $ruleForm.operateUserNo ? $ruleForm.operateUserNo : null,
-        banField: $ruleForm.banFieldVal ? $ruleForm.banFieldVal : null
+        banField: $ruleForm.search,
+        content: $ruleForm.searchVal
       }
     }
   }

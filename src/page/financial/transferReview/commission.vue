@@ -12,7 +12,7 @@
 
     <div class="table_box">
       <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="顶级服务商" v-if="roleId === '12'" name="12"></el-tab-pane>
+        <el-tab-pane v-if="roleId === '12'" label="顶级服务商" name="12"></el-tab-pane>
         <el-tab-pane label="服务商" name="11"></el-tab-pane>
       </el-tabs>
       <BaseCrud
@@ -78,7 +78,6 @@
           <img
             v-if="!(index===fromConfigData.processData.length-1)"
             :key="'img'+index"
-            :src="arrow"
             class="arrow-img"
           />
         </template>
@@ -220,24 +219,41 @@ export default {
       const successApi = this.activeName === '12' ? 'topFinanceSuccess' : 'financeSuccess'
       switch (this.formStatus) {
         case "reject":
-          api[rejectApi]({
+          var params = {
             id: this.activeRow.id,
-            rejectReason: $data.reason,
-            agentNo: this.agentNo
-          }).then(res => {
-            this.$message("已驳回");
-            this.drawer = false;
+            rejectReason: $data.reason
+          }
+          if (this.activeName === '12') {
+            params.channelAgentCode = this.channelAgentCode
+          } else {
+            params.agentNo = this.agentNo
+          }
+          api[rejectApi](params).then(res => {
+            if (res.status === 0) {
+              this.$message("已驳回");
+              this.drawer = false;
+              this.$refs.table.getData()
+            }
           })
           break;
-        case "adopt":api[successApi]({
-          id: this.activeRow.id,
-          agentNo: this.agentNo,
-          actualSettleCommission: $data.actualSettleCommission,
-          financeRemark: $data.financeRemark
-        }).then(res => {
-          this.$message("已通过");
-          this.drawer = false;
-        })
+        case "adopt":
+          var paramsData = {
+            id: this.activeRow.id,
+            actualSettleCommission: $data.actualSettleCommission,
+            financeRemark: $data.financeRemark
+          }
+          if (this.activeName === '12') {
+            paramsData.channelAgentCode = this.channelAgentCode
+          } else {
+            paramsData.agentNo = this.agentNo
+          }
+          api[successApi](paramsData).then(res => {
+            if (res.status === 0) {
+              this.$message("已通过");
+              this.drawer = false;
+              this.$refs.table.getData()
+            }
+          })
           break;
         default:break;
       }
@@ -303,8 +319,11 @@ export default {
       this.detailDrawer = false;
     },
     onClick_reject($row) {
-      console.log($row)
-      this.agentNo = $row.agentNo
+      if (this.activeName === '12') {
+        this.channelAgentCode = $row.channelAgentCode
+      } else {
+        this.agentNo = $row.agentNo
+      }
       const queryDetailApi = this.activeName === '12' ? 'topQueryDetail' : 'queryDetail'
       api[queryDetailApi]({// 通过/驳回详情
         id: $row.id || null
@@ -322,7 +341,11 @@ export default {
       })
     },
     onClick_adopt($row) {
-      this.agentNo = $row.agentNo
+      if (this.activeName === '12') {
+        this.channelAgentCode = $row.channelAgentCode
+      } else {
+        this.agentNo = $row.agentNo
+      }
       const queryDetailApi = this.activeName === '12' ? 'topQueryDetail' : 'queryDetail'
       api[queryDetailApi]({
         id: $row.id || null

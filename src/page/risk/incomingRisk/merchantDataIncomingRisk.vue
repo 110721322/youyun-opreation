@@ -104,14 +104,14 @@ export default {
       this.select = "";
     },
     search($ruleForm) {
-      const params = {
+      this.params = {
         operationId: $ruleForm.operateUserNo,
         beginDate: $ruleForm.date[0],
         endDate: $ruleForm.date[1],
-        type: $ruleForm.type
+        type: $ruleForm.type,
+        banField: $ruleForm.search,
+        content: $ruleForm.searchVal
       }
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
-      this.params = params;
     },
     onClick_remove(row) {
       this.$confirm("确定将该商户移出黑(灰)名单吗", "提示", {
@@ -121,14 +121,14 @@ export default {
         api.deleteById({
           id: row.id
         }).then(res => {
-          this.$message({
-            message: '移出成功',
-            type: 'success'
-          })
-          this.$refs.table.getData()
-        }).catch(err => {
-          this.$message(err);
-        });
+          if (res.status === 0) {
+            this.$message({
+              message: '移出成功',
+              type: 'success'
+            })
+            this.$refs.table.getData()
+          }
+        })
       }).catch(() => {
         this.$message({
           type: "info",
@@ -151,12 +151,7 @@ export default {
             })
           }
           this.$refs.table.getData()
-        }).catch(err => {
-          this.$message({
-            message: err.errorMessage,
-            type: 'info'
-          });
-        });
+        })
       }).catch(() => {
         this.$message({
           type: "info",
@@ -177,14 +172,9 @@ export default {
               message: '移入成功',
               type: 'success'
             })
+            this.$refs.table.getData()
           }
-          this.$refs.table.getData()
-        }).catch(err => {
-          this.$message({
-            message: err.errorMessage,
-            type: 'info'
-          });
-        });
+        })
       }).catch(() => {
         this.$message({
           type: "info",
@@ -219,12 +209,7 @@ export default {
             this.$refs.table.getData()
             this.$refs.form.resetForm()
           }
-        }).catch(err => {
-          this.$message({
-            message: err.errorMessage,
-            type: 'info'
-          });
-        });
+        })
       }
     },
     onClick_cancel() {

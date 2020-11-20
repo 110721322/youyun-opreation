@@ -13,7 +13,7 @@ export const SEARCH_CONFIG = {
     {
       type: 10,
       label: '筛选',
-      key: 'banField',
+      key: 'search',
       placeholder: "",
       options: [
         {

@@ -12,7 +12,7 @@ export const SEARCH_CONFIG = {
     {
       type: 10,
       label: '筛选',
-      key: 'banField',
+      key: 'search',
       options: [
         {
           label: '营业执照编号',
