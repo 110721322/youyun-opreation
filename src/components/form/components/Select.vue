@@ -78,15 +78,10 @@ export default {
   },
   methods: {
     changeEvent($event) {
-      const checked = this.selectOptions.filter($item => {
-        if ($item.value === this.ruleForm[this.formItem.key]) {
-          return $item;
-        }
-      })[0]
+      const checked = this.selectOptions.filter($item => $item.value === this.ruleForm[this.formItem.key])[0]
       if (this.$g.utils.isFunction(this.formItem.callback)) {
         this.formItem.callback(this.ruleForm, checked)
       }
-      // this.ruleForm[this.formItem.key] = checked.value
       this.$emit('selectChange', this.ruleForm)
     },
     isArray(value) {
@@ -102,31 +97,37 @@ export default {
       if (options) {
         this.selectOptions = options;
       } else {
-        this.loading = true;
-        urlOptions
-          .url(
-            urlOptions.params || {}
-          )
-          .then(res => {
-            this.loading = false;
-            const newArr = [];
-            if (res.data) {
-              for (const item of res.data) {
-                item.value = item[urlOptions.keyName];
-                item.label = item[urlOptions.valueName];
-                newArr.push(item);
-              }
-            }
-            this.selectOptions = newArr;
-            // 设置初始值
-            if (this.formItem.requireFirst && (!this.ruleForm[this.formItem.key])) {
-              this.ruleForm[this.formItem.key] = this.selectOptions[0].value
-            }
-          })
-          .catch(err => {
-            console.error(err);
-          });
+        this.getUrlOptions(urlOptions.params).then(() => {
+          // 设置初始值
+          if (this.formItem.requireFirst && (!this.ruleForm[this.formItem.key])) {
+            this.ruleForm[this.formItem.key] = this.selectOptions[0].value
+          }
+        })
       }
+    },
+    /**
+     * 调用api获取下拉列表
+     * @param $params
+     */
+    getUrlOptions($params) {
+      const { urlOptions } = this.formItem;
+      this.loading = true;
+      return urlOptions
+        .url($params || {})
+        .then(res => {
+          this.loading = false;
+          if (!this.$g.utils.isArr(res.data)) {
+            this.selectOptions = [];
+          } else {
+            this.selectOptions = res.data.map(item => {
+              return {
+                label: item[urlOptions.keyName],
+                value: item[urlOptions.valueName]
+              }
+            })
+          }
+          return this.selectOptions
+        })
     },
     visibleChange($status) {
       if (this.formItem.isSearch && $status) {
@@ -137,23 +138,7 @@ export default {
       const { urlOptions } = this.formItem;
       const params = this.$g.utils.deepClone(urlOptions.params)
       Object.assign(params, {[urlOptions.searchKey]: $query})
-      this.loading = true;
-      urlOptions
-        .url(
-          params || {}
-        )
-        .then(res => {
-          this.loading = false;
-          const newArr = [];
-          if (res.data) {
-            for (const item of res.data) {
-              item.value = item[urlOptions.keyName];
-              item.label = item[urlOptions.valueName];
-              newArr.push(item);
-            }
-          }
-          this.selectOptions = newArr;
-        })
+      this.getUrlOptions(params)
     }
   }
 };

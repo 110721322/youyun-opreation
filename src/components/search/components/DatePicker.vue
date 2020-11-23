@@ -15,7 +15,6 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
-// import * as g from "@/libs/global";
 
 export default {
   components: {},

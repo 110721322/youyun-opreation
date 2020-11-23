@@ -357,7 +357,7 @@ export default {
               this.$set(item, 'dateTxt', item.dateArr.join(','))
             })
           }
-          this.fromConfigData.settlementData.initValArray = keyArr || []
+          this.fromConfigData.settlementData.initValArray = keyArr
         }
       })
     },

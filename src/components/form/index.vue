@@ -41,7 +41,6 @@
 </template>
 
 <script>
-import * as g from "@/libs/global";
 import {
   transFormType,
   clearFormData,
@@ -50,7 +49,7 @@ import {
 import Input from "./components/Input.vue";
 import Select from "./components/Select.vue";
 import Check from "./components/Check.vue";
-import Date from "./components/Date.vue";
+import AppDate from "./components/AppDate.vue";
 import iSwitch from "./components/Switch.vue";
 import Radio from "./components/Radio.vue";
 import Upload from "./components/Upload.vue";
@@ -64,15 +63,13 @@ import DateTime from "./components/DateTime.vue"
 import InputSelect from "./inputSelect.vue";
 import TicketAddForm from "./ticketAddForm.vue";
 
-// import { isUndefined, deepClone } from '@/libs/lit/utils'
-
 export default {
   name: "",
   components: {
     Input,
     Select,
     Check,
-    Date,
+    AppDate,
     iSwitch,
     Radio,
     Upload,
@@ -167,13 +164,13 @@ export default {
       if (this.formBaseData.length > 0) {
         for (const iterator of this.formBaseData) {
           let initVal = iterator.initVal;
-          if (g.utils.isUndefined(initVal)) {
+          if (this.$g.utils.isUndefined(initVal)) {
             initVal = null;
           }
           this.formKeys.push(iterator.key);
           this.$set(this.ruleForm, iterator.key, initVal);
         }
-        if (this.$refs.formItem && this.$g.utils.isArr(this.$refs.formItem)) {
+        if (this.$g.utils.isArr(this.$refs.formItem)) {
           for (const componentFormItem of this.$refs.formItem) {
             if (componentFormItem.initVal) {
               componentFormItem.initVal();
@@ -187,10 +184,11 @@ export default {
       this.$refs.formTep.validate(valid => {
         // 校验
         if (valid) {
-          const formInfo = g.utils.deepClone(this.ruleForm);
+          const formInfo = this.$g.utils.deepClone(this.ruleForm);
           // 统一过滤表单
           formatFormData(formInfo, this.formKeys);
           validateStatus = true;
+          return true;
         } else {
           validateStatus = false;
           return false;

@@ -38,9 +38,9 @@
                   :src="ruleForm[item2.key]"
                   :preview-src-list="[ruleForm[item2.key]]"
                 ></el-image>
-                <span v-if="item2.type === 'descript'" class="item-value">{{ ruleForm[item2.key] === 'all' ? '全国' : ruleForm[item2.key] === 'province' ? '省' : ruleForm[item2.key] === 'city' ? '市' : '' }}</span>
-                <span v-else-if="item2.type === 'area'" class="item-value">{{ ruleForm['provinceName']+ruleForm['cityName']+ruleForm['areaName']}}</span>
-                <span v-else-if="item2.type !== 'img' && item2.type !== 'descript' " class="item-value">{{ ruleForm[item2.key] }}{{ item2.type === 'pecent' ? '‰' : item2.type === 'pecent1' ? ' %' : '' }}</span>
+                <span v-if="item2.type === 'descript'" class="item-value">{{ getDescriptText(item2) }}</span>
+                <span v-else-if="item2.type === 'area'" class="item-value">{{ areaName }}</span>
+                <span v-else-if="item2.type !== 'img'" class="item-value">{{ ruleForm[item2.key] }}{{ afterChar(item2) }}</span>
               </el-form-item>
             </el-col>
           </el-row>
@@ -62,11 +62,37 @@ export default {
       }
     };
   },
-  computed: {},
+  computed: {
+    areaName() {
+      return this.ruleForm['provinceName'] + this.ruleForm['cityName'] + this.ruleForm['areaName']
+    }
+  },
 
   methods: {
     edit($modelName) {
       this.$emit("edit", $modelName);
+    },
+    getDescriptText($item) {
+      const val = this.ruleForm[$item.key]
+      if (val === 'all') {
+        return '全国'
+      } else if (val === 'province') {
+        return '省'
+      } else if (val === 'city') {
+        return '市'
+      } else {
+        return ''
+      }
+    },
+    afterChar($item) {
+      const type = $item.type;
+      if (type === 'pecent') {
+        return '‰'
+      } else if (type === 'pecent1') {
+        return '%'
+      } else {
+        return ''
+      }
     }
   }
 };

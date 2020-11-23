@@ -16,7 +16,7 @@ export const transFormType = typeNum => {
       componentName = 'Check'
       break
     case 3:
-      componentName = 'Date'
+      componentName = 'AppDate'
       break
     case 4:
       componentName = 'iSwitch'

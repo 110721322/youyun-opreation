@@ -23,26 +23,14 @@ export default {
   created() {},
 
   methods: {
-    handleChange(val) {
-      const options = JSON.parse(JSON.stringify(this.formItem.options));
-      const obj = [];
-      obj[0] = options.find(item => {
-        return item.value === val[0];
-      });
-      if (obj[0].children) {
-        obj[1] = obj[0].children.find(item => {
-          return item.value === val[1];
-        });
-      }
-      if (obj[1].children) {
-        obj[2] = obj[1].children.find(item => {
-          return item.value === val[2];
-        });
-      }
-      obj.forEach(item => {
-        delete item.children;
-      });
-      this.ruleForm.addressObj = obj;
+    handleChange($val) {
+      let options = this.$g.utils.deepClone(this.formItem.options);
+      options = this.$g.utils.getNestedArr(options, 'children');
+      this.ruleForm.addressObj = $val.map(v => {
+        const current = options.find(item => item.value === v)
+        delete current.children;
+        return current
+      })
     }
   }
 };

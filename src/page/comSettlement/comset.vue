@@ -186,7 +186,7 @@ export default {
               item.dateTxt = dateArr.join(',')
               item.settleAmount = totalSettleAmount
             })
-            this.seetlmap.confDate = keyArr || []
+            this.seetlmap.confDate = keyArr
           }
         })
       }

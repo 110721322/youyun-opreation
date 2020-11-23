@@ -26,16 +26,6 @@
               <span style="margin-left:8px;">秒</span>
             </template>
           </components>
-
-          <!-- <template v-if="formItem.showDemoImg">
-            <div class="demoImg" @click="onClick_showDemoImg">
-              查看示例:
-              <img :src="formItem.demoImgUrl" />
-            </div>
-          </template>
-          <el-dialog title="查看示例" :visible.sync="dialogTableVisible">
-            <img :src="formItem.demoImgUrl" />
-          </el-dialog> -->
         </el-form-item>
       </div>
       <div class="btn-box">
@@ -56,11 +46,10 @@ import {
 import Input from "./components/Input.vue";
 import Select from "./components/Select.vue";
 import Check from "./components/Check.vue";
-import Date from "./components/Date.vue";
+import AppDate from "./components/AppDate.vue";
 import iSwitch from "./components/Switch.vue";
 import Radio from "./components/Radio.vue";
 import Tinymce from "./components/Tinymce/index.vue";
-// import { isUndefined, deepClone } from '@/libs/lit/utils'
 
 export default {
   name: "",
@@ -68,7 +57,7 @@ export default {
     Input,
     Select,
     Check,
-    Date,
+    AppDate,
     iSwitch,
     Radio,
     Tinymce
@@ -117,7 +106,6 @@ export default {
     return {
       ruleForm: {},
       formKeys: [],
-      dialogTableVisible: false,
       showMoreForm: false,
       inputDisable: true
     };
@@ -138,9 +126,6 @@ export default {
           this.$set(this.ruleForm, iterator.key, initVal);
         }
       }
-    },
-    onClick_showDemoImg() {
-      this.dialogTableVisible = true;
     },
     handleClick() {
       this.$refs.formTep.validate(valid => {
@@ -169,8 +154,6 @@ export default {
       });
     },
     onClick_cannel() {
-      // 初始化表单
-      // this.$emit("cancel");
       this.$router.back();
     },
     transType(value) {
