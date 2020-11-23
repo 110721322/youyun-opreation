@@ -38,10 +38,9 @@ import {
 import Input from "./components/Input.vue";
 import Select from "./components/Select.vue";
 import Check from "./components/Check.vue";
-import Date from "./components/Date.vue";
+import AppDate from "./components/AppDate.vue";
 import iSwitch from "./components/Switch.vue";
 import Radio from "./components/Radio.vue";
-// import { isUndefined, deepClone } from '@/libs/lit/utils'
 
 export default {
   name: "",
@@ -49,7 +48,7 @@ export default {
     Input,
     Select,
     Check,
-    Date,
+    AppDate,
     iSwitch,
     Radio
   },

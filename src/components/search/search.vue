@@ -73,14 +73,14 @@ import DatePicker from "./components/DatePicker.vue";
 import SelectInput from "./components/SelectInput.vue";
 import Cascader from "./components/Cascader.vue";
 import TicketAddForm from "./../form/ticketAddForm.vue";
-import Date from "../form/components/Date";
+import AppDate from "../form/components/AppDate";
 
 export default {
   name: "Search",
   components: {
     Input,
     Select,
-    Date,
+    AppDate,
     Tinymce,
     DateSelect,
     SelectInput,

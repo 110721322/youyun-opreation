@@ -272,25 +272,13 @@ export default {
       Object.assign(this.queryParams, this.params);
       this.apiService(this.queryParams)
         .then(res => {
-          // debugger;
-          if (g.utils.isArr(res.data) || g.utils.isArr(res.data)) {
-            this.copyGridData = res.data || res.data;
-          } else {
-            if (g.utils.isObj(res.data) && res.data.datas) {
-              this.copyGridData = res.data.datas
-            } else {
-              this.copyGridData =
-                res.data === null || res.data === null
-                  ? []
-                  : res.data || res.data;
-            }
-          }
+          this.listLoading = false;
+          if (!g.utils.isArr(res.data)) return res;
+          this.copyGridData = res.data;
           this.dataTotal = res.totalCount;
-          this.listLoading = false;
         })
-        .catch(err => {
+        .catch(() => {
           this.listLoading = false;
-          console.error(err);
         });
     },
 

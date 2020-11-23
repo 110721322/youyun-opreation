@@ -39,7 +39,7 @@
 </template>
 
 <script>
-// import { getToken } from 'api/qiniu'
+
 import api from "@/api/api_common";
 export default {
   name: 'EditorSlideUpload',
@@ -53,7 +53,7 @@ export default {
     return {
       loading: false,
       urlData: {
-        type: 'common' || 'excel'
+        type: 'common'
       },
       dialogVisible: false,
       listObj: {},
@@ -61,45 +61,12 @@ export default {
     }
   },
   methods: {
-    // checkAllSuccess() {
-    //   return Object.keys(this.listObj).every(
-    //     item => this.listObj[item].hasSuccess
-    //   )
-    // },
     handleSubmit() {
-      // const arr = Object.keys(this.listObj).map(v => this.listObj[v])
-      // if (!this.checkAllSuccess()) {
-      //   this.$message(
-      //     'Please wait for all images to be uploaded successfully. If there is a network problem, please refresh the page and upload again!'
-      //   )
-      //   return
-      // }
       this.$emit('successCBK', this.fileList)
       this.listObj = {}
       this.fileList = []
       this.dialogVisible = false
     },
-    // handleSuccess(response, file) {
-    //   const uid = file.uid
-    //   const objKeyArr = Object.keys(this.listObj)
-    //   for (let i = 0, len = objKeyArr.length; i < len; i++) {
-    //     if (this.listObj[objKeyArr[i]].uid === uid) {
-    //       this.listObj[objKeyArr[i]].url = response.files.file
-    //       this.listObj[objKeyArr[i]].hasSuccess = true
-    //       return
-    //     }
-    //   }
-    // },
-    // handleRemove(file) {
-    //   const uid = file.uid
-    //   const objKeyArr = Object.keys(this.listObj)
-    //   for (let i = 0, len = objKeyArr.length; i < len; i++) {
-    //     if (this.listObj[objKeyArr[i]].uid === uid) {
-    //       delete this.listObj[objKeyArr[i]]
-    //       return
-    //     }
-    //   }
-    // },
     beforeUpload(file) {
       return new Promise(resolve => {
         if (this.type === "entry") {
@@ -145,9 +112,6 @@ export default {
         contentType: false,
         success: () => {
           this.dialogImagePath = this.ossData.ossHost + "/";
-          // if (this.showFileList) {
-          //   this.uploadMultiple();
-          // } else {
           this.uploadSingle();
           // }
           this.loading = false;

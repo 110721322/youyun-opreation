@@ -108,7 +108,6 @@ export default {
       this.configData = WORK_CONFIG.channelExamine
     }
     if (undo === 2) {
-      this.openType === 2
       this.configData = WORK_CONFIG.commissionSettle
       this.getData()
     }

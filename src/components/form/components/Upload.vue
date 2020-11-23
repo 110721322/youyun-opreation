@@ -50,25 +50,21 @@ export default {
       imageList: [], // 多图上传存储ARR完整url地址
       ossData: {}, // 存签名信息
       urlData: {
-        type: 'common' || 'excel'
+        type: 'common'
       },
       maxNum: 1
     };
   },
   computed: {
     showFileList() {
-      let showFileList = true;
-      this.formItem.showFileList ? showFileList = true : showFileList = false;
-      return showFileList
+      return !!this.formItem.showFileList;
     },
     fileList() {
-      const fileList = this.imageList.map(item => {
-        const obj = {
+      return this.imageList.map(item => {
+        return {
           url: item
         }
-        return obj
       })
-      return fileList
     },
     dialogImage() {
       return this.dialogImagePath + this.dialogImageUrl;

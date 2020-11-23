@@ -56,7 +56,6 @@
 </template>
 
 <script>
-import * as g from "@/libs/global";
 export default {
   name: "InputSelect",
   props: {
@@ -169,7 +168,7 @@ export default {
   },
   methods: {
     isArray(value) {
-      return g.utils.isArr(value);
+      return this.$g.utils.isArr(value);
     },
     selectOptionsFun() {
       const { options, urlOptions } = this.formItem;
@@ -181,34 +180,30 @@ export default {
       if (options) {
         this.selectOptions = options;
       } else {
-        urlOptions
-          .url(
-            urlOptions.params || {}
-          )
-          .then(res => {
-            const newArr = [];
-            if (res.data) {
-              for (const item of res.data) {
-                newArr.push({
-                  value: item[urlOptions.keyName],
-                  label: item[urlOptions.valueName]
-                });
-              }
-            }
-            if (res.data) {
-              for (const item of res.data) {
-                newArr.push({
-                  value: item[urlOptions.keyName],
-                  label: item[urlOptions.valueName]
-                });
-              }
-            }
-            this.selectOptions = newArr;
-          })
-          .catch(err => {
-            console.error(err);
-          });
+        this.getUrlOptions(urlOptions.params)
       }
+    },
+    /**
+     * 调用api获取下拉列表
+     * @param $params
+     */
+    getUrlOptions($params) {
+      const { urlOptions } = this.formItem;
+      return urlOptions
+        .url($params || {})
+        .then(res => {
+          if (!this.$g.utils.isArr(res.data)) {
+            this.selectOptions = [];
+          } else {
+            this.selectOptions = res.data.map(item => {
+              return {
+                label: item[urlOptions.keyName],
+                value: item[urlOptions.valueName]
+              }
+            })
+          }
+          return this.selectOptions
+        })
     },
     onInput() {
       this.ruleForm.inputSelect = this.selectOption.valueKey ? this.selectOption.valueKey : this.inputSelect;
@@ -232,9 +227,9 @@ export default {
       this.selectItem = {};
       let timeArr = [];
       if (this.dateType === "daterange") {
-        timeArr = [g.utils.date($data[0]), g.utils.date($data[1])];
+        timeArr = [this.$g.utils.date($data[0]), this.$g.utils.date($data[1])];
       } else if (this.dateType === "datetimerange") {
-        timeArr = [g.utils.time($data[0]), g.utils.time($data[1])];
+        timeArr = [this.$g.utils.time($data[0]), this.$g.utils.time($data[1])];
       }
 
       this.$emit("dataSelect", timeArr);

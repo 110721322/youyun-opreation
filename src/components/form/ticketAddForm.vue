@@ -99,33 +99,7 @@ export default {
       if (options) {
         this.selectOptions1 = options;
       } else {
-        const apiUrl = urlOptions1.url ? urlOptions1.url : apiAgent.queryFirstClassByPage
-        apiUrl(
-          urlOptions1.params || {}
-        )
-          .then(res => {
-            const newArr = [];
-            if (res.data) {
-              for (const item of res.data) {
-                newArr.push({
-                  value: item[urlOptions1.keyName],
-                  label: item[urlOptions1.valueName]
-                });
-              }
-            }
-            if (res.data) {
-              for (const item of res.data) {
-                newArr.push({
-                  value: item[urlOptions1.keyName],
-                  label: item[urlOptions1.valueName]
-                });
-              }
-            }
-            this.selectOptions1 = newArr;
-          })
-          .catch(err => {
-            console.error(err);
-          });
+        this.getUrlOptions(urlOptions1.params)
       }
     },
     selectFirst() {
@@ -140,34 +114,54 @@ export default {
       if (options) {
         this.selectOptions2 = options;
       } else {
-        const apiUrl = urlOptions2.url ? urlOptions2.url : apiAgent.querySecondClassByPage
-        apiUrl({
+        this.getUrlOptionsFirst({
           firstMenuId: this.ruleForm[this.formItem.key1]
         })
-          .then(res => {
-            const newArr = [];
-            if (res.data) {
-              for (const item of res.data) {
-                newArr.push({
-                  value: item[urlOptions2.keyName],
-                  label: item[urlOptions2.valueName]
-                });
-              }
-            }
-            if (res.data) {
-              for (const item of res.data) {
-                newArr.push({
-                  value: item[urlOptions2.keyName],
-                  label: item[urlOptions2.valueName]
-                });
-              }
-            }
-            this.selectOptions2 = newArr;
-          })
-          .catch(err => {
-            console.error(err);
-          });
       }
+    },
+    /**
+     * 调用api获取下拉列表
+     * @param $params
+     */
+    getUrlOptions($params) {
+      const { urlOptions1 } = this.formItem;
+      const apiUrl = urlOptions1.url ? urlOptions1.url : apiAgent.queryFirstClassByPage
+      return apiUrl($params)
+        .then(res => {
+          if (!this.$g.utils.isArr(res.data)) {
+            this.selectOptions1 = [];
+          } else {
+            this.selectOptions1 = res.data.map(item => {
+              return {
+                label: item[urlOptions1.keyName],
+                value: item[urlOptions1.valueName]
+              }
+            })
+          }
+          return this.selectOptions1;
+        })
+    },
+    /**
+     * 调用api获取下拉列表
+     * @param $params
+     */
+    getUrlOptionsFirst($params) {
+      const { urlOptions2 } = this.formItem;
+      const apiUrl = urlOptions2.url ? urlOptions2.url : apiAgent.querySecondClassByPage
+      return apiUrl($params)
+        .then(res => {
+          if (!this.$g.utils.isArr(res.data)) {
+            this.selectOptions2 = [];
+          } else {
+            this.selectOptions2 = res.data.map(item => {
+              return {
+                label: item[urlOptions2.keyName],
+                value: item[urlOptions2.valueName]
+              }
+            })
+          }
+          return this.selectOptions2;
+        })
     },
     selectSecond() {}
   }

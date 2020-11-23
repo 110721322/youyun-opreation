@@ -57,18 +57,14 @@ const computedRoleBtn = ((routes) => {
       childrenList = [];  //主菜单+子菜单集合
 
   childrenList = utils.getNestedArr(routes, 'children')
-  childrenList = childrenList.sort(($child1,$child2) => {
-    return $child1.menuId - $child2.menuId
-  })
+  childrenList = childrenList.sort(($child1,$child2) => $child1.menuId - $child2.menuId)
 
   //过滤不显示的按钮
   childrenList = utils.filterNestedArr(childrenList,'buttonList');
   //提取所有按钮
   buttonList = utils.getNestedArr(childrenList, 'buttonList',false);
   //按buttonId升序排列
-  buttonList = buttonList.sort(($button1,$button2) => {
-    return $button1.buttonId - $button2.buttonId
-  })
+  buttonList = buttonList.sort(($button1,$button2) => $button1.buttonId - $button2.buttonId)
 
   //所有按钮已取出，删除按钮对象内的buttonList;
   buttonList.forEach(button => {

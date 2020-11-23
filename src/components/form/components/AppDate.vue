@@ -13,7 +13,6 @@
       :picker-options="pickerOptions"
       @change="onChage"
     />
-    <!--    <span class="date-item" v-for="item of dateList" :class="item.value == selectItem.value?'select':''"  @click="onClick_item(item)">{{item.label}}</span>-->
   </div>
 </template>
 <script type="text/ecmascript-6">

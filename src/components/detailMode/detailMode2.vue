@@ -78,18 +78,10 @@ export default {
   },
   computed: {
     imageList() {
-      return this.configData.items.filter($item => {
-        if ($item.type === "image") {
-          return true
-        }
-      });
+      return this.configData.items.filter($item => $item.type === "image");
     },
     textList() {
-      return this.configData.items.filter($item => {
-        if ($item.type !== "image") {
-          return true
-        }
-      });
+      return this.configData.items.filter($item => $item.type !== "image");
     }
   },
   mounted() {},
