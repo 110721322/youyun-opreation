@@ -214,7 +214,6 @@ export default {
       this.$emit("timeSearch", this.ruleForm)
     },
     onClick_item($item) {
-      console.log($item)
       this.selectItem = $item;
       let start = "";
       let end = "";

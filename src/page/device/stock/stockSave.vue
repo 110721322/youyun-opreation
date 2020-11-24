@@ -165,8 +165,8 @@ export default {
   },
   created() {
     this.params = {
-      beginDate: this.$g.utils.getToday(-6) + ' 00:00:00',
-      endDate: this.$g.utils.getToday(0) + ' 23:59:59'
+      beginTime: this.$g.utils.getToday(-6) + ' 00:00:00',
+      endTime: this.$g.utils.getToday(0) + ' 23:59:59'
     }
     this.api = api.deviceInputQueryByPage
   },
@@ -188,8 +188,8 @@ export default {
     },
     search($ruleForm) {
       this.params = {
-        beginDate: $ruleForm.date ? $ruleForm.date[0] : this.$g.utils.getToday(-6) + ' 00:00:00',
-        endDate: $ruleForm.date ? $ruleForm.date[1] : this.$g.utils.getToday(0) + ' 23:59:59',
+        beginTime: $ruleForm.date ? $ruleForm.date[0] : this.$g.utils.getToday(-6) + ' 00:00:00',
+        endTime: $ruleForm.date ? $ruleForm.date[1] : this.$g.utils.getToday(0) + ' 23:59:59',
         deviceId: $ruleForm.deviceId ? $ruleForm.deviceId : null
       };
     },
