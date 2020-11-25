@@ -23,7 +23,7 @@
           <el-menu-item
             class="el-menu-item"
             :index="item.name"
-            :class="(secondName === item.name && !thirdName) ? 'active' : ''"
+            :class="(secondName === item.name) ? 'active' : ''"
             @click="onClick_item(item)"
           >
             <span slot="title">{{ item.text }}</span>
