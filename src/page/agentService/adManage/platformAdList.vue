@@ -60,17 +60,11 @@ export default {
       api: api.advertList
     };
   },
-  mounted() {
-    // this.getTableData();
-  },
   methods: {
     search($ruleForm) {
       this.params = {
         advertType: $ruleForm.advertType
       };
-    },
-    getTableData() {
-      this.testData = [];
     },
     onClick_remove(row) {
       this.$confirm("确认删除该广告吗", "提示", {

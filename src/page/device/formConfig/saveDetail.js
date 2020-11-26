@@ -59,11 +59,7 @@ export const FORM_CONFIG = {
         key: 'deviceIdentifier',
         rules: setRules('设备标识').isSelected.get,
         isShow: ($row) => {
-          if ($row.type === 1) {
-            return true
-          } else {
-            return false
-          }
+          return $row.type === 1
         }
       }
     ]

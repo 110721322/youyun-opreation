@@ -48,12 +48,8 @@ export const INDIRECTLIST_CONFIG = {
         emitName: 'detail',
         type: 'text',
         isShow: ($item) => {
-          const status = $item.channelStatusList;
-          if (status[0].channelStatus !== 'nonOpen' && status[0].channelStatus !== 'platformAudit') {
-            return true;
-          } else {
-            return false
-          }
+          const status = $item.channelStatusList[0].channelStatus;
+          return status !== 'nonOpen' && status !== 'platformAudit'
         }
       },
       {
@@ -61,12 +57,8 @@ export const INDIRECTLIST_CONFIG = {
         emitName: 'detail',
         type: 'text',
         isShow: ($item) => {
-          const status = $item.channelStatusList;
-          if (status[0].channelStatus === 'platformAudit' || status[0].channelStatus === 'nonOpen') {
-            return true;
-          } else {
-            return false
-          }
+          const status = $item.channelStatusList[0].channelStatus;
+          return status === 'platformAudit' || status === 'nonOpen'
         }
       },
       {

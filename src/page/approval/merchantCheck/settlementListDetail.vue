@@ -14,17 +14,45 @@
           :closable="false"
           show-icon
         ></el-alert>
-        <detailMode :img-width="4" :rule-form="ruleForm.old" v-if="ruleForm.old.bankAccountType === 'public'" :config-data="configData.beforeData"></detailMode>
-        <detailMode :img-width="4" :rule-form="ruleForm.old" v-if="ruleForm.old.bankAccountType === 'private' && ruleForm.old.snewnewettleLawFlag === 'legal'" :config-data="configData.beforeData1"></detailMode>
-        <detailMode :img-width="4" :rule-form="ruleForm.old" v-if="ruleForm.old.bankAccountType === 'private' && ruleForm.old.settleLawFlag === 'unlegal'" :config-data="configData.beforeData2"></detailMode>
-        <detailMode :img-width="4" :rule-form="ruleForm.new" v-if="ruleForm.new.bankAccountType === 'public'" :config-data="configData.afterData"></detailMode>
-        <detailMode :img-width="4" :rule-form="ruleForm.new" v-if="ruleForm.new.bankAccountType === 'private' && ruleForm.new.settleLawFlag === 'legal'" :config-data="configData.afterData1"></detailMode>
-        <detailMode :img-width="4" :rule-form="ruleForm.new" v-if="ruleForm.new.bankAccountType === 'private' && ruleForm.new.settleLawFlag === 'unlegal'" :config-data="configData.afterData2"></detailMode>
+        <detailMode
+          v-if="ruleForm.old.bankAccountType === 'public'"
+          :img-width="4"
+          :rule-form="ruleForm.old"
+          :config-data="configData.beforeData"
+        ></detailMode>
+        <detailMode
+          v-if="ruleForm.old.bankAccountType === 'private' && ruleForm.old.snewnewettleLawFlag === 'legal'"
+          :img-width="4"
+          :rule-form="ruleForm.old"
+          :config-data="configData.beforeData1"
+        ></detailMode>
+        <detailMode
+          v-if="ruleForm.old.bankAccountType === 'private' && ruleForm.old.settleLawFlag === 'unlegal'"
+          :img-width="4"
+          :rule-form="ruleForm.old"
+          :config-data="configData.beforeData2"
+        ></detailMode>
+        <detailMode
+          v-if="ruleForm.new.bankAccountType === 'public'"
+          :img-width="4"
+          :rule-form="ruleForm.new"
+          :config-data="configData.afterData"
+        ></detailMode>
+        <detailMode
+          v-if="ruleForm.new.bankAccountType === 'private' && ruleForm.new.settleLawFlag === 'legal'"
+          :img-width="4"
+          :rule-form="ruleForm.new"
+          :config-data="configData.afterData1"
+        ></detailMode>
+        <detailMode
+          v-if="ruleForm.new.bankAccountType === 'private' && ruleForm.new.settleLawFlag === 'unlegal'"
+          :img-width="4"
+          :rule-form="ruleForm.new"
+          :config-data="configData.afterData2"
+        ></detailMode>
         <div v-if="showComponents.showOperBtns" class="btn-box">
           <el-button type="primary" size="normal" @click="onClick_pass">资料已全部检查,通过</el-button>
           <el-button size="normal" @click="onClick_reject">驳回</el-button>
-          <!-- <div class="btn_pass" @click="onClick_pass">资料已全部检查,通过</div> -->
-          <!-- <div class="btn-reject" @click="onClick_reject">驳回</div> -->
         </div>
       </div>
     </transition>
@@ -74,9 +102,6 @@ export default {
     currentType: function($val) {
       switch ($val) {
         case "waitSign":
-          this.showComponents.showOperBtns = true;
-          this.showComponents.showRejectTitle = false
-          break;
         case "audit":
           this.showComponents.showOperBtns = true;
           this.showComponents.showRejectTitle = false
@@ -105,51 +130,52 @@ export default {
       api.getMerchantSettleDetail({
         id: this.id
       }).then(res => {
-        if (res.data.old.merchantType === 'enterprise') {
-          res.data.old.merchantType = '企业'
-        }
-        if (res.data.old.merchantType === 'individual') {
-          res.data.old.merchantType = '个体工商户'
-        }
-        if (res.data.old.merchantType === 'private') {
-          res.data.old.merchantType = '个人'
-        }
-        if (res.data.old.bankAccountType === 'public') {
-          res.data.old.bankAccountTypeCn = '对公-法人'
-        }
-        if (res.data.old.bankAccountType === 'private') {
-          if (res.data.old.settleLawFlag === 'legal') {
-            res.data.old.bankAccountTypeCn = '对私-法人'
-          }
-          if (res.data.old.settleLawFlag === 'unlegal') {
-            res.data.old.bankAccountTypeCn = '对私-非法人'
-          }
-        }
-        if (res.data.new.merchantType === 'enterprise') {
-          res.data.new.merchantType = '企业'
-        }
-        if (res.data.new.merchantType === 'individual') {
-          res.data.new.merchantType = '个体工商户'
-        }
-        if (res.data.new.merchantType === 'private') {
-          res.data.new.merchantType = '个人'
-        }
-        if (res.data.new.bankAccountType === 'public') {
-          res.data.new.bankAccountTypeCn = '对公-法人'
-        }
-        if (res.data.new.bankAccountType === 'private') {
-          if (res.data.new.settleLawFlag === 'legal') {
-            res.data.new.bankAccountTypeCn = '对私-法人'
-          }
-          if (res.data.new.settleLawFlag === 'unlegal') {
-            res.data.new.bankAccountTypeCn = '对私-非法人'
-          }
-        }
-        this.ruleForm = res.data
+        let ruleForm = res.data;
+        ruleForm = this.initOldDetail(ruleForm);
+        ruleForm = this.initNewDetail(ruleForm);
+        this.ruleForm = ruleForm
         this.rejectTitle = "驳回原因：" + res.data.rejectReason
         this.currentType = res.data.auditStatus
         this.merchantType = res.onject.merchantType
       })
+    },
+    initOldDetail($ruleForm) {
+      if ($ruleForm.old.merchantType === 'enterprise') {
+        $ruleForm.old.merchantType = '企业'
+      } else if ($ruleForm.old.merchantType === 'individual') {
+        $ruleForm.old.merchantType = '个体工商户'
+      } else if ($ruleForm.old.merchantType === 'private') {
+        $ruleForm.old.merchantType = '个人'
+      }
+      if ($ruleForm.old.bankAccountType === 'public') {
+        $ruleForm.old.bankAccountTypeCn = '对公-法人'
+      } else if ($ruleForm.old.bankAccountType === 'private') {
+        if ($ruleForm.old.settleLawFlag === 'legal') {
+          $ruleForm.old.bankAccountTypeCn = '对私-法人'
+        } else if ($ruleForm.old.settleLawFlag === 'unlegal') {
+          $ruleForm.old.bankAccountTypeCn = '对私-非法人'
+        }
+      }
+      return $ruleForm;
+    },
+    initNewDetail($ruleForm) {
+      if ($ruleForm.new.merchantType === 'enterprise') {
+        $ruleForm.new.merchantType = '企业'
+      } else if ($ruleForm.new.merchantType === 'individual') {
+        $ruleForm.new.merchantType = '个体工商户'
+      } else if ($ruleForm.new.merchantType === 'private') {
+        $ruleForm.new.merchantType = '个人'
+      }
+      if ($ruleForm.new.bankAccountType === 'public') {
+        $ruleForm.new.bankAccountTypeCn = '对公-法人'
+      } else if ($ruleForm.new.bankAccountType === 'private') {
+        if ($ruleForm.new.settleLawFlag === 'legal') {
+          $ruleForm.new.bankAccountTypeCn = '对私-法人'
+        } else if ($ruleForm.new.settleLawFlag === 'unlegal') {
+          $ruleForm.new.bankAccountTypeCn = '对私-非法人'
+        }
+      }
+      return $ruleForm;
     },
     onClick_pass() {
       this.$confirm("是否校验完信息并通过", "提示", {
@@ -182,21 +208,20 @@ export default {
           type: 'warning'
         })
         return false
-      } else {
-        api.updateAuditStatusOfReject({
-          id: this.id,
-          reason: $data["reason"]
-        }).then(res => {
-          if (res.status === 0) {
-            this.$message({
-              message: '操作成功',
-              type: 'success'
-            })
-            this.getDetail()
-            this.drawer = false
-          }
-        })
       }
+      api.updateAuditStatusOfReject({
+        id: this.id,
+        reason: $data["reason"]
+      }).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            message: '操作成功',
+            type: 'success'
+          })
+          this.getDetail()
+          this.drawer = false
+        }
+      })
     },
     cancel() {
       this.drawer = false;

@@ -35,7 +35,6 @@
 <script>
 import search from "@/components/search/search.vue";
 import api from "@/api/api_agent.js"
-// import dataMode from '@/components/dataMode/dataMode.vue'
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { USER_CONFIG } from "./tableConfig/subAgentConfig";
 import { FORM_CONFIG } from "./formConfig/subAgentListSearch";
@@ -43,8 +42,6 @@ import { FORM_CONFIG } from "./formConfig/subAgentListSearch";
 export default {
   name: "AgentSubList",
   components: { search, BaseCrud },
-  // components: {  dataMode, BaseCrud },
-
   data() {
     return {
       searchMaxHeight: "380",

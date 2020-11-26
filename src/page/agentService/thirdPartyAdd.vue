@@ -68,9 +68,6 @@ export default {
             message: "添加成功",
             type: "success"
           });
-          // this.$router.replace({
-          //   name: '/agentService/thirdParty'
-          // });
           this.$router.back(-1);
         } else {
           this.$message({

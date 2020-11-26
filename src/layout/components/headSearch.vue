@@ -22,8 +22,6 @@
   </div>
 </template>
 <script>
-// fuse is a lightweight fuzzy-search module
-// make search results more in line with expectations
 import Fuse from "fuse.js";
 import path from "path";
 
@@ -40,8 +38,7 @@ export default {
   },
   computed: {
     routes() {
-      const routerList = this.$store.state.admin.routers ? this.$store.state.admin.routers : [];
-      return routerList;
+      return this.$store.state.admin.routers ? this.$store.state.admin.routers : [];
     }
   },
   watch: {

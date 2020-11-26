@@ -1,4 +1,4 @@
-const webConfig = {
+export default {
   server: 'http://operation.intranet.aduer.com/', // 测试环境地址
   loginserver: 'http://service.intranet.aduer.com/',  //登录开发调试端口
   agentServer: 'http://service.intranet.aduer.com/',
@@ -8,5 +8,3 @@ const webConfig = {
   globalParameObj: {}, // 全局参数
   fileDownloadUrl: 'http://service.intranet.aduer.com/'
 };
-
-export default webConfig;

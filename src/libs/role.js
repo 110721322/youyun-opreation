@@ -35,26 +35,9 @@ const routeList = [
   }
 ]
 
-
-/**
- * @param routes 路由名称
- * @type {computedRoleRouter}
- */
-const computedRoleRouter = ((routes) => {
-  let buttonList;
-
-  routes = utils.filterNestedArr(routes,'children', 'isShow');
-  buttonList = computedRoleBtn(routes);
-
-  store.dispatch('setRoleRoutes',routes);
-  store.dispatch('setRolePermission',buttonList);
-
-  return routes;
-})
-
 const computedRoleBtn = ((routes) => {
   let buttonList = [],    //权限按钮集合
-      childrenList = [];  //主菜单+子菜单集合
+    childrenList = [];  //主菜单+子菜单集合
 
   childrenList = utils.getNestedArr(routes, 'children')
   childrenList = childrenList.sort(($child1,$child2) => $child1.menuId - $child2.menuId)
@@ -72,6 +55,22 @@ const computedRoleBtn = ((routes) => {
   })
 
   return buttonList;
+})
+
+/**
+ * @param routes 路由名称
+ * @type {computedRoleRouter}
+ */
+const computedRoleRouter = ((routes) => {
+  let buttonList;
+
+  routes = utils.filterNestedArr(routes,'children', 'isShow');
+  buttonList = computedRoleBtn(routes);
+
+  store.dispatch('setRoleRoutes',routes);
+  store.dispatch('setRolePermission',buttonList);
+
+  return routes;
 })
 
 export {computedRoleRouter};

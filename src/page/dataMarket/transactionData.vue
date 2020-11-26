@@ -131,7 +131,6 @@
 
 <script>
 import api from "@/api/api_dataMarket";
-import api_dataMarket from "@/api/api_dataMarket";
 import dataItem from "./components/dataItem.vue";
 import search from "@/components/search/search.vue";
 import { FORM_CONFIG, FORM_CONFIG2 } from "./formConfig/dataViewSearch";
@@ -297,7 +296,7 @@ export default {
           faceCountRatio: this.tradeByTypeData.faceCountRatio
         }]
       ])
-      const statistics = statisticsMaps.get(this.payWay ? this.payWay : 'default')
+      const statistics = statisticsMaps.get(this.payWay) || statisticsMaps.get('default')
       return [
         {
           title: "订单总交易额",
@@ -317,6 +316,18 @@ export default {
         }
       ]
     },
+    seriesData() {
+      const map = this.tradeByTypeData.map;
+      const seriesDataMaps = new Map([
+        ['all', {tradeAmountArr: map.tradeAmount, faceAmoutArr: map.faceAmountArr, tradeCountArr: map.tradeCount, faceCountArr: map.faceCountArr}],
+        ['wxpay', {tradeAmountArr: map.wechatTradeAmount, faceAmoutArr: map.wechatFaceTradeAmountArr, tradeCountArr: map.wechatTradeCount, faceCountArr: map.wechatFaceTradeCountArr}],
+        ['alipay', {tradeAmountArr: map.alipayTradeAmount, faceAmoutArr: map.alipayFaceTradeAmountArr, tradeCountArr: map.alipayTradeCount, faceCountArr: map.alipayFaceTradeCountArr}],
+        ['yunshan', {tradeAmountArr: map.cloudPayTradeAmount, faceAmoutArr: map.cloudPayFaceAmountArr, tradeCountArr: map.cloudPayTradeCount, faceCountArr: map.cloudPayFaceCountArr}],
+        ['yinlian', {tradeAmountArr: map.unionpayTradeAmount, faceAmoutArr: [], tradeCountArr: map.unionpayTradeCount, faceCountArr: []}],
+        ['default', {tradeAmountArr: map.tradeAmount, faceAmoutArr: map.faceAmountArr, tradeCountArr: map.tradeCount, faceCountArr: map.faceCountArr}]
+      ])
+      return seriesDataMaps.get(this.payWay) || seriesDataMaps.get('default');
+    },
     echartOption() {
       const option = {
         xAxis: [
@@ -335,45 +346,27 @@ export default {
           }
         ]
       }
-      if (this.radio === 0) {
-        option.series[1].name = '订单总交易额'
-        option.series[0].name = '刷脸总交易额'
-      } else {
-        option.series[1].name = '订单总交易笔数'
-        option.series[0].name = '刷脸总交易笔数'
-      }
       if (!this.tradeByTypeData.map) {
         return option;
       }
-      const map = this.tradeByTypeData.map;
-      const xAxisData = map.date;
-      const seriesDataMaps = new Map([
-        ['all', {tradeAmountArr: map.tradeAmount, faceAmoutArr: map.faceAmountArr, tradeCountArr: map.tradeCount, faceCountArr: map.faceCountArr}],
-        ['wxpay', {tradeAmountArr: map.wechatTradeAmount, faceAmoutArr: map.wechatFaceTradeAmountArr, tradeCountArr: map.wechatTradeCount, faceCountArr: map.wechatFaceTradeCountArr}],
-        ['alipay', {tradeAmountArr: map.alipayTradeAmount, faceAmoutArr: map.alipayFaceTradeAmountArr, tradeCountArr: map.alipayTradeCount, faceCountArr: map.alipayFaceTradeCountArr}],
-        ['yunshan', {tradeAmountArr: map.cloudPayTradeAmount, faceAmoutArr: map.cloudPayFaceAmountArr, tradeCountArr: map.cloudPayTradeCount, faceCountArr: map.cloudPayFaceCountArr}],
-        ['yinlian', {tradeAmountArr: map.unionpayTradeAmount, faceAmoutArr: [], tradeCountArr: map.unionpayTradeCount, faceCountArr: []}],
-        ['default', {tradeAmountArr: map.tradeAmount, faceAmoutArr: map.faceAmountArr, tradeCountArr: map.tradeCount, faceCountArr: map.faceCountArr}]
-      ])
-      const seriesData = seriesDataMaps.get(this.payWay ? this.payWay : 'default');
-      option.xAxis[0].data = xAxisData;
+      option.xAxis[0].data = this.tradeByTypeData.map;
       if (this.radio === 0) {
-        option.series[1].data = seriesData.tradeAmountArr.map($item => {
+        option.series[1].data = this.seriesData.tradeAmountArr.map($item => {
           if (this.$g.utils.isNull($item)) return 0;
           else return $item
         })
-        option.series[0].data = seriesData.faceAmoutArr.map($item => {
+        option.series[0].data = this.seriesData.faceAmoutArr.map($item => {
           if (this.$g.utils.isNull($item)) return 0;
           else return $item
         })
         option.series[1].name = '订单总交易额'
         option.series[0].name = '刷脸总交易额'
       } else {
-        option.series[1].data = seriesData.tradeCountArr.map($item => {
+        option.series[1].data = this.seriesData.tradeCountArr.map($item => {
           if (this.$g.utils.isNull($item)) return 0;
           else return $item
         })
-        option.series[0].data = seriesData.faceCountArr.map($item => {
+        option.series[0].data = this.seriesData.faceCountArr.map($item => {
           if (this.$g.utils.isNull($item)) return 0;
           else return $item
         })
@@ -430,30 +423,22 @@ export default {
       });
       // 筛选绘图数据
       function mapPieData($key, $index) {
+        let dataList = []
         if ($index === 0) {
-          if (that.$g.utils.isArr(that.regionDataList) && that.regionDataList.length > 0) {
-            pieDataList[$index].seriesData = that.regionDataList.map((item, idx) => {
-              return {
-                value: $key === '0' ? that.$g.utils.AccMul(item.tradeAmountRatio) : that.$g.utils.AccMul(item.tradeCountRatio),
-                name: item.regionName,
-                itemStyle: {color: colors[idx]}
-              }
-            })
-          } else {
-            pieDataList[$index].seriesData = [];
-          }
+          dataList = that.regionDataList
         } else {
-          if (that.$g.utils.isArr(that.industryDataList) && that.industryDataList.length > 0) {
-            pieDataList[$index].seriesData = that.industryDataList.map((item, idx) => {
-              return {
-                value: $key === '0' ? that.$g.utils.AccMul(item.tradeAmountRatio) : that.$g.utils.AccMul(item.tradeCountRatio),
-                name: item.categoryName,
-                itemStyle: {color: colors[idx]}
-              }
-            })
-          } else {
-            pieDataList[$index].seriesData = [];
-          }
+          dataList = that.industryDataList
+        }
+        if (that.$g.utils.isArr(dataList) && dataList.length > 0) {
+          pieDataList[$index].seriesData = dataList.map((item, idx) => {
+            return {
+              value: $key === '0' ? that.$g.utils.AccMul(item.tradeAmountRatio) : that.$g.utils.AccMul(item.tradeCountRatio),
+              name: $index === 0 ? item.regionName : item.categoryName,
+              itemStyle: {color: colors[idx]}
+            }
+          })
+        } else {
+          pieDataList[$index].seriesData = [];
         }
       }
     }
@@ -465,7 +450,7 @@ export default {
   methods: {
     ...mapActions(['setLabelList', 'setRegionList', 'setUserList']),
     queryInit() {
-      api_dataMarket.queryInit().then(res => {
+      api.queryInit().then(res => {
         const labelList = res.data.labelList.map($ele => {
           return {
             label: $ele.name,

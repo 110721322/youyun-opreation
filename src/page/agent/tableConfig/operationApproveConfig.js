@@ -51,11 +51,7 @@ export const OPERATIONAPPROVE_CONFIG = {
         emitName: 'reject',
         type: 'text',
         isShow: ($row) => {
-          if ($row.showReject === true) {
-            return true;
-          } else {
-            return false;
-          }
+          return !!$row.showReject
         }
       },
       {
@@ -63,11 +59,7 @@ export const OPERATIONAPPROVE_CONFIG = {
         emitName: 'adopt',
         type: 'text',
         isShow: ($row) => {
-          if ($row.showAdopt === true) {
-            return true;
-          } else {
-            return false;
-          }
+          return !!$row.showAdopt
         }
       },
       {
@@ -75,11 +67,7 @@ export const OPERATIONAPPROVE_CONFIG = {
         emitName: 'reviewing',
         type: 'text',
         isShow: ($row) => {
-          if ($row.showReviewing === true) {
-            return true;
-          } else {
-            return false;
-          }
+          return !!$row.showReviewing
         }
       }
     ]

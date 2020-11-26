@@ -32,6 +32,7 @@ export default {
       }
 
       screenfull.toggle();
+      return true;
     },
     change() {
       this.isFullscreen = screenfull.isFullscreen;

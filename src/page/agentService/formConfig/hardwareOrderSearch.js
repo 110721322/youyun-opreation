@@ -6,7 +6,7 @@ export const SEARCH_CONFIG = {
       type: 9,
       label: '筛选时间',
       key: 'date',
-      isSelectToday: true,
+      defaultDateType: "first",
       format: "yyyy-MM-dd HH:mm:ss",
       datatype: "datetimerange",
       class: 'max-width',

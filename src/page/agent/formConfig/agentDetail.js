@@ -74,11 +74,7 @@ export const FORM_CONFIG = {
         initVal: '',
         rules: setRules('营业执照').isSelected.get,
         isShow: (item) => {
-          if (item.businessType === 'enterprise') {
-            return true
-          } else {
-            return false
-          }
+          return item.businessType === 'enterprise'
         }
       }
     ]

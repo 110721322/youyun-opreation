@@ -26,7 +26,7 @@ axios.interceptors.request.use((config) => {
 
   for (const field in config.data) {
     if (g.utils.isNull(config.data[field]) || g.utils.isUndefined(config.data[field])) {
-      config.data[field] = '';
+      delete config.data[field];
     }
   }
   if (config.method === 'post' && config.needFormData) {

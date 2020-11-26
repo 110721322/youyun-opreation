@@ -61,7 +61,7 @@ export const transFormType = typeNum => {
       componentName = 'TicketAddForm'
       break
     default:
-    // throwError("formType \"" + typeNum + "\" does not exist.open fn.js and add it");
+      componentName = ''
   }
   return componentName
 }

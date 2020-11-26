@@ -26,11 +26,6 @@ export const USER_CONFIG = {
       width: '120px',
       sortable: true
     },
-    // {
-    //   label: '开通会员商户数量（个）',
-    //   prop: 'memberMerchantCount',
-    //   width: '185px'
-    // },
     {
       label: '状态',
       prop: 'contractStatus',
@@ -39,21 +34,20 @@ export const USER_CONFIG = {
           return [h('span', {
             'class': "dot " + "platformAudit"
           }), '审核中']
-        }
-        if (params.row.contractStatus === 'wait') {
+        } else if (params.row.contractStatus === 'wait') {
           return [h('span', {
             'class': "dot " + "nonOpen"
           }), '待审核']
-        }
-        if (params.row.contractStatus === 'reject') {
+        } else if (params.row.contractStatus === 'reject') {
           return [h('span', {
             'class': "dot " + "reject"
           }), '已拒绝']
-        }
-        if (params.row.contractStatus === 'success') {
+        } else if (params.row.contractStatus === 'success') {
           return [h('span', {
             'class': "dot " + "success"
           }), '已通过']
+        } else {
+          return ''
         }
       }
     },
@@ -85,11 +79,7 @@ export const USER_CONFIG = {
         type: 'text',
         style: 'color: #3ABD2D',
         isShow: ($row) => {
-          if ($row.status === 'incomplete') {
-            return true;
-          } else {
-            return false;
-          }
+          return $row.status === 'incomplete'
         }
       },
       {
@@ -97,11 +87,7 @@ export const USER_CONFIG = {
         emitName: 'detail',
         type: 'text',
         isShow: ($row) => {
-          if ($row.status !== 'incomplete') {
-            return true;
-          } else {
-            return false;
-          }
+          return $row.status !== 'incomplete'
         }
       },
       {
@@ -109,11 +95,7 @@ export const USER_CONFIG = {
         emitName: 'thaw',
         type: 'text',
         isShow: ($row) => {
-          if ($row.isBlocked === 1) {
-            return true;
-          } else {
-            return false;
-          }
+          return $row.isBlocked === 1
         }
       },
       {
@@ -121,11 +103,7 @@ export const USER_CONFIG = {
         emitName: 'frozen',
         type: 'text',
         isShow: ($row) => {
-          if ($row.isBlocked === 0) {
-            return true;
-          } else {
-            return false;
-          }
+          return $row.isBlocked === 0
         }
       },
       {

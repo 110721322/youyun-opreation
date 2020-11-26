@@ -1,4 +1,4 @@
-const webConfig = {
+export default {
   server: 'http://link.aduer.com', // 正式
   timeout: 30000,
   successCode: 2000, // 和后端约定的接口正常状态码
@@ -6,5 +6,3 @@ const webConfig = {
   globalParameObj: {}, // 全局参数
   fileDownloadUrl: 'http://link.aduer.com'
 };
-
-export default webConfig;

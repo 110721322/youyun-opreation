@@ -38,7 +38,7 @@ export const FORM_CONFIG = {
       class: 'max-width',
       labelWidth: '80px',
       span: 11,
-      isSelectToday: true
+      defaultDateType: 'first'
     },
     {
       type: 0,

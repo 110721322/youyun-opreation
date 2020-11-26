@@ -53,7 +53,6 @@ export default {
       this.fromConfigData = FORM_CONFIG.editData
       this.fromConfigData.showFootBtn = true
       this.queryById(this.$route.query.id)
-      // console.log(this.fromConfigData)
     },
     queryById(id) {
       setTimeout(() => {
@@ -61,7 +60,6 @@ export default {
           id: id
         }).then(res => {
           // 编辑前重赋值
-          // res.data.netStatus = res.data.netStatus.Number()
           this.fromConfigData.formData.forEach((item, index) => {
             item.initVal = res.data[item.key];
           });
@@ -90,14 +88,12 @@ export default {
         developerId: $form.developerId,
         phone: $form.phone,
         allotCount: $form.allotCount,
-        asyncCallback: $form.asyncCallback ? $form.asyncCallback : undefined,
-        syncCallback: $form.syncCallback ? $form.syncCallback : undefined,
-        syncFailCallback: $form.syncFailCallback ? $form.syncFailCallback : undefined,
+        asyncCallback: $form.asyncCallback,
+        syncCallback: $form.syncCallback,
+        syncFailCallback: $form.syncFailCallback,
         netStatus: $form.netStatus,
-        agentNo: $form.agentNo
-      }
-      if (this.id) {
-        params.id = this.id
+        agentNo: $form.agentNo,
+        id: this.id
       }
       api.addOpenAgent(params).then(res => {
         this.showPage = false
@@ -109,9 +105,6 @@ export default {
             message: this.id ? "编辑成功" : "添加成功",
             type: "success"
           });
-          // this.$router.replace({
-          //   name: '/agentService/thirdParty'
-          // });
           this.queryById(this.$route.query.id)
         } else {
           this.$message({

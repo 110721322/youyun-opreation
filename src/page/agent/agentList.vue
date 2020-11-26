@@ -8,7 +8,6 @@
         @search="search"
     />
 
-    <!-- <data-mode></data-mode> -->
     <div class="table_box">
       <div class="two-btn">
         <el-button type="primary" @click="onClick_addServe">添加服务商</el-button>
@@ -41,7 +40,7 @@
         @frozen="frozen"
         @openAgentManager="openAgentManager"
         @goMerchantList="goMerchantList"
-        @completion="onCompletion">
+        @completion="openDetail">
         <el-button slot="paginationLeft" style="margin-left: 24px;" @click="transfer">批量转移运营</el-button>
       </BaseCrud>
     </div>
@@ -78,7 +77,6 @@ import { FORM_CONFIG } from "./formConfig/agentListSearch";
 export default {
   name: "AgentList",
   components: { search, BaseCrud },
-  // components: {  dataMode, BaseCrud },
 
   data() {
     return {
@@ -238,14 +236,6 @@ export default {
       this.$router.push({
         name: "addAgent"
       })
-    },
-    onCompletion($row) {
-      this.$router.push({
-        name: "agentDetail",
-        query: {
-          agentNo: $row.agentNo
-        }
-      });
     }
   }
 };

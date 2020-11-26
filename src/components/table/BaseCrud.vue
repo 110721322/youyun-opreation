@@ -304,13 +304,6 @@ export default {
       this.pageSize = size;
       this.getData();
     },
-    // 模态框数据提交
-    dialogSubmit(data) {
-      this.apiService[data.userId ? "update" : "create"](data).then(() => {
-        this.getData();
-        this.$message.success(this.dialogTitle + "成功！");
-      });
-    },
     isShowFun($row, $scope) {
       if ($row.isShow) {
         return $row.isShow($scope.row);

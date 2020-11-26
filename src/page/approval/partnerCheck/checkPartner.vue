@@ -23,7 +23,7 @@
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
         @detail="handleDetail"
-        @preApprove="handlePreApprove"
+        @preApprove="handleDetail"
       ></BaseCrud>
     </div>
   </div>
@@ -65,16 +65,8 @@ export default {
         }
       });
     },
-    handlePreApprove(row) {
-      this.$router.push({
-        name: "checkPartnerListDetail",
-        query: {
-          agentPartnerNo: row.partnerNo
-        }
-      });
-    },
     search($ruleForm) {
-      const params = {
+      this.params = {
         beginDate: $ruleForm.date[0] ? $ruleForm.date[0] : this.$g.utils.getToday(-6),
         endDate: $ruleForm.date[0] ? $ruleForm.date[1] : this.$g.utils.getToday(0),
         contractStatus: $ruleForm.contractStatus,
@@ -84,7 +76,6 @@ export default {
         operationId: $ruleForm.operationId,
         [$ruleForm.search]: $ruleForm.searchVal
       };
-      this.params = params;
     }
   }
 };

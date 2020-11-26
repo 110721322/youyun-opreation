@@ -21,9 +21,7 @@
 </template>
 
 <script>
-// import { isArr } from '@/utils'
 import * as g from "@/libs/global";
-// import { getOptionsByUrl } from "@/libs/kit/formFns";
 
 export default {
   name: "",

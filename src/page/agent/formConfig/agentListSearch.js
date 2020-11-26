@@ -7,7 +7,7 @@ export const FORM_CONFIG = {
       type: 9,
       label: '筛选时间',
       key: 'date',
-      querySelectAll: true,
+      defaultDateType: 'all',
       labelWidth: '110px',
       span: 22
     },

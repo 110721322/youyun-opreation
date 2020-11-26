@@ -21,14 +21,11 @@ Vue.prototype.$_has = function ($value) {
   let isExist = false;
   let btnPermissionsArr = store.state.role.permission;
   let result;
-  if (btnPermissionsArr == undefined || btnPermissionsArr == null) {
+  if (btnPermissionsArr === undefined || btnPermissionsArr === null) {
     return false;
   }
   result = btnPermissionsArr.filter(($ele) => {
-    if ( $ele['buttonId'] == $value && $ele.isShow )
-      return true
-    else
-      return false
+    return $ele['buttonId'] === $value && $ele.isShow
   })
   if (result.length > 0) isExist = true;
   return isExist;

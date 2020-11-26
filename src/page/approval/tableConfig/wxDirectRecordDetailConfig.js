@@ -15,21 +15,16 @@ export const RECORD_CONFIG = {
       prop: 'channel',
       width: '150px',
       render: (h, params) => {
-        if (params.row.channel === 'leshua') {
-          return h(
-            'span', '乐刷'
-          )
-        }
-        if (params.row.channel === 'wechat') {
-          return h(
-            'span', '微信'
-          )
-        }
-        if (params.row.channel === 'alipay') {
-          return h(
-            'span', '支付宝'
-          )
-        }
+        const actions = new Map([
+          ['leshua', '乐刷'],
+          ['wechat', '微信'],
+          ['alipay', '支付宝'],
+          ['default', '']
+        ])
+        const channelName = actions.get(params.row.channel) || actions.get('default');
+        return h(
+          'span', channelName
+        )
       }
     },
     {
@@ -37,26 +32,17 @@ export const RECORD_CONFIG = {
       prop: 'auditStatus',
       width: '250px',
       render: (h, params) => {
-        if (params.row.auditStatus === 'channelPass') {
-          return h(
-            'span', '通过'
-          )
-        }
-        if (params.row.auditStatus === 'platformAudit') {
-          return h(
-            'span', '平台审核中'
-          )
-        }
-        if (params.row.auditStatus === 'platformReject') {
-          return h(
-            'span', '平台驳回'
-          )
-        }
-        if (params.row.auditStatus === 'channelReject') {
-          return h(
-            'span', '通道驳回'
-          )
-        }
+        const actions = new Map([
+          ['channelPass', '通过'],
+          ['platformAudit', '平台审核中'],
+          ['platformReject', '平台驳回'],
+          ['channelReject', '通道驳回'],
+          ['default', '']
+        ])
+        const auditStatusName = actions.get(params.row.auditStatus) || actions.get('default');
+        return h(
+          'span', auditStatusName
+        )
       }
     }
   ],

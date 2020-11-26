@@ -41,7 +41,6 @@ Vue.use(ElementUI, {
   size: 'small'
 });
 
-// Vue.use(animated);
 Vue.component(VueQrcode.name, VueQrcode);
 // 挂全局方法
 Vue.prototype.$g = g;
@@ -80,7 +79,6 @@ function setWindowAttribute ($attr, $value) {
   }
 
   if (process.env.NODE_ENV === 'development') {
-    // console.log('进入', process.env.NODE_ENV);
     window[$attr] = $value;
   }
 }

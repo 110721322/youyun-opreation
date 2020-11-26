@@ -70,16 +70,16 @@ export const USER_CONFIG2 = {
           return h(
             'span', '日常沟通'
           )
-        }
-        if (params.row.theme === 'dailyTask') {
+        } else if (params.row.theme === 'dailyTask') {
           return h(
             'span', '日常沟通'
           )
-        }
-        if (params.row.theme === 'newTalk') {
+        } else if (params.row.theme === 'newTalk') {
           return h(
             'span', '新单沟通'
           )
+        } else {
+          return ''
         }
       }
     },
@@ -88,66 +88,24 @@ export const USER_CONFIG2 = {
       prop: 'subTheme',
       width: '150px',
       render: (h, params) => {
-        if (params.row.subTheme === 'question') {
-          return h(
-            'span', '问题处理'
-          )
-        }
-        if (params.row.subTheme === 'guest') {
-          return h(
-            'span', '客情维护'
-          )
-        }
-        if (params.row.subTheme === 'train') {
-          return h(
-            'span', '通知'
-          )
-        }
-        if (params.row.subTheme === 'notify') {
-          return h(
-            'span', '培训'
-          )
-        }
-        if (params.row.subTheme === 'guest') {
-          return h(
-            'span', '客情维护'
-          )
-        }
-        if (params.row.subTheme === 'settleFail') {
-          return h(
-            'span', '结算失败'
-          )
-        }
-        if (params.row.subTheme === 'msgRecharge') {
-          return h(
-            'span', '短信充值'
-          )
-        }
-        if (params.row.subTheme === 'priceException') {
-          return h(
-            'span', '客单价异常'
-          )
-        }
-        if (params.row.subTheme === 'tradeException') {
-          return h(
-            'span', '交易数据异常'
-          )
-        }
-        if (params.row.subTheme === 'open') {
-          return h(
-            'span', '开户'
-          )
-        }
-        if (params.row.subTheme === 'customerInfo') {
-          return h(
-            'span', '了解客户信息'
-          )
-        }
-        if (params.row.subTheme === 'teaching') {
-          return h(
-            'span', '新单教学'
-          )
-        }
+        const actions = new Map([
+          ['question', '问题处理'],
+          ['guest', '客情维护'],
+          ['train', '通知'],
+          ['notify', '培训'],
+          ['settleFail', '结算失败'],
+          ['msgRecharge', '短信充值'],
+          ['priceException', '客单价异常'],
+          ['tradeException', '交易数据异常'],
+          ['open', '开户'],
+          ['customerInfo', '了解客户信息'],
+          ['teaching', '新单教学'],
+          ['default', '']
+        ])
+        const action = actions.get(params.row.subTheme) || actions.get('default')
+        return h(
+          'span', action
+        )
       }
     },
     {

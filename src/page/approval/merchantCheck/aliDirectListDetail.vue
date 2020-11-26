@@ -170,6 +170,7 @@ export default {
     currentType: function($val) {
       switch ($val) {
         case "channelPass":
+        case "channelAudit":
           this.showComponents.showOperBtns = false;
           this.showComponents.showRejectTitle = false;
           break;
@@ -179,14 +180,7 @@ export default {
           break;
         case "nonOpen ":
           break;
-        case "channelAudit":
-          this.showComponents.showOperBtns = false;
-          this.showComponents.showRejectTitle = false;
-          break;
         case "platformReject":
-          this.showComponents.showOperBtns = false;
-          this.showComponents.showRejectTitle = true;
-          break;
         case "channelReject":
           this.showComponents.showOperBtns = false;
           this.showComponents.showRejectTitle = true;
@@ -243,23 +237,22 @@ export default {
             type: 'warning'
           })
           return false
-        } else {
-          api.rejectDirectAudit({
-            merchantNo: this.merchantNo,
-            reason: $data.reason,
-            channelCode: this.channelCode,
-            channelAgentCode: this.channelAgentCode
-          }).then(res => {
-            if (res.status === 0) {
-              this.$message({
-                message: '操作成功',
-                type: 'success'
-              })
-              this.getAliData()
-              this.drawer = false;
-            }
-          })
         }
+        api.rejectDirectAudit({
+          merchantNo: this.merchantNo,
+          reason: $data.reason,
+          channelCode: this.channelCode,
+          channelAgentCode: this.channelAgentCode
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '操作成功',
+              type: 'success'
+            })
+            this.getAliData()
+            this.drawer = false;
+          }
+        })
       }
     },
     handleEdit($ruleForm) {

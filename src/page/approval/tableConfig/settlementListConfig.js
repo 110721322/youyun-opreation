@@ -25,26 +25,19 @@ export const SETTELMENTLIST_CONFIG = {
       prop: 'auditStatus',
       width: '150px',
       render: (h, params) => {
-        if (params.row.auditStatus === 'audit') {
-          return [h('span', {
-            'class': "dot " + "platformAudit"
-          }), '审核中']
-        }
-        if (params.row.auditStatus === 'waitSign') {
-          return [h('span', {
-            'class': "dot " + "nonOpen"
-          }), '待审核']
-        }
-        if (params.row.auditStatus === 'reject') {
-          return [h('span', {
-            'class': "dot " + "reject"
-          }), '已驳回']
-        }
-        if (params.row.auditStatus === 'success') {
-          return [h('span', {
-            'class': "dot " + "success"
-          }), '已通过']
-        }
+        const actions = new Map([
+          ['audit', ['platformAudit', '审核中']],
+          ['waitSign', ['nonOpen', '待审核']],
+          ['reject', ['reject', '已驳回']],
+          ['success', ['success', '已通过']],
+          ['default', ['platformAudit', '']]
+        ])
+        const action = actions.get(params.row.status) || actions.get('default');
+        const className = action[0];
+        const statusName = action[1];
+        return [h('span', {
+          'class': "dot " + className
+        }), statusName]
       }
     }
   ],
@@ -63,11 +56,7 @@ export const SETTELMENTLIST_CONFIG = {
         emitName: 'detail',
         type: 'text',
         isShow: ($item) => {
-          if ($item.auditStatus !== 'waitSign') {
-            return true;
-          } else {
-            return false
-          }
+          return $item.auditStatus !== 'waitSign'
         }
       },
       {
@@ -75,11 +64,7 @@ export const SETTELMENTLIST_CONFIG = {
         emitName: 'preApprove',
         type: 'text',
         isShow: ($item) => {
-          if ($item.auditStatus === 'waitSign') {
-            return true;
-          } else {
-            return false
-          }
+          return $item.auditStatus === 'waitSign'
         }
       },
       {

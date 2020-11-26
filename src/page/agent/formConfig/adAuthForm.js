@@ -1,5 +1,3 @@
-// import { setRules } from '@/libs/kit/formFns.js'
-
 export const FORM_CONFIG = {
   formData: {
     title: '广告权限',

@@ -1,38 +1,50 @@
-// import * as API from '../../api';
-// import * as g from '../global';
-
 export default {
   //乘法
-  AccMul(arg1 = 0, arg2 = 1){
-    arg1 = Number(arg1); arg2 = Number(arg2)
+  AccMul(arg1 = 0, arg2 = 1) {
+    arg1 = Number(arg1);
+    arg2 = Number(arg2)
     var m = 0, s1 = arg1.toString(), s2 = arg2.toString();
-    try { m += s1.split(".")[1].length } catch (e) { }
-    try { m += s2.split(".")[1].length } catch (e) { }
+    try {
+      m += s1.split(".")[1].length
+    } catch (e) { }
+    try {
+      m += s2.split(".")[1].length
+    } catch (e) { }
     return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m)
   },
   //除法
-  AccDiv(arg1 = 0, arg2 = 1){
+  AccDiv(arg1 = 0, arg2 = 1) {
     arg1 = Number(arg1);
     arg2 = Number(arg2);
     var t1 = 0, t2 = 0, r1, r2;
-    try { t1 = arg1.toString().split(".")[1].length } catch (e) { }
-    try { t2 = arg2.toString().split(".")[1].length } catch (e) { }
+    try {
+      t1 = arg1.toString().split(".")[1].length
+    } catch (e) { }
+    try {
+      t2 = arg2.toString().split(".")[1].length
+    } catch (e) { }
     r1 = Number(arg1.toString().replace(".", ""))
     r2 = Number(arg2.toString().replace(".", ""))
     return this.AccMul((r1 / r2), Math.pow(10, t2 - t1));
   },
   //加法
-  AccAdd(arg1 = 0, arg2 = 0){
-    arg1 = Number(arg1); arg2 = Number(arg2)
+  AccAdd(arg1 = 0, arg2 = 0) {
+    arg1 = Number(arg1);
+    arg2 = Number(arg2)
     var r1, r2, m;
-    try { r1 = arg1.toString().split(".")[1].length } catch (e) { r1 = 0 }
-    try { r2 = arg2.toString().split(".")[1].length } catch (e) { r2 = 0 }
+    try {
+      r1 = arg1.toString().split(".")[1].length
+    } catch (e) { r1 = 0 }
+    try {
+      r2 = arg2.toString().split(".")[1].length
+    } catch (e) { r2 = 0 }
     m = Math.pow(10, Math.max(r1, r2))
     return (arg1 * m + arg2 * m) / m
   },
   //减法
-  Subtr(arg1 = 0, arg2 = 0){
-    arg1 = Number(arg1); arg2 = Number(arg2)
+  Subtr(arg1 = 0, arg2 = 0) {
+    arg1 = Number(arg1);
+    arg2 = Number(arg2)
     var r1, r2, m, n;
     try {
       r1 = arg1.toString().split(".")[1].length
@@ -53,7 +65,7 @@ export default {
     if ($num) {
       return Number($num).toLocaleString();
     } else {
-      return 0
+      return '0'
     }
   },
   // 一下方法已经加入到工具类库中,在此只作为实例.
@@ -142,11 +154,7 @@ export default {
       iY = iSs % 11;
       var eChr = str.substr(17, 1);
       var vChr = szVerCode.substr(iY, 1);
-      if (eChr === vChr) {
-        return true;
-      } else {
-        return false;
-      }
+      return eChr === vChr
     } else {
       // 15位 未增加算法验证
       return true;
@@ -211,6 +219,8 @@ export default {
       second = second < 10 ? ('0' + second) : second;
       out = y + '-' + m + '-' + d + ' ' + hour + ':' + minute + ':' + second;
       return out;
+    } else {
+      return ""
     }
   },
   date: (value) => {
@@ -228,18 +238,18 @@ export default {
         out = y + '-' + m + '-' + d;
         return out;
       }
+    } else {
+      return ""
     }
   },
+  pad(n, width = 2, z = '0') {
+    n = n + '';
+    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+  },
   // 获取ago当前日期
-  getToday: (ago = -1) => {
+  getToday(ago = -1) {
     var _time = new Date(Date.now() + ago * 24 * 60 * 60 * 1000);
-    var pad = function (n, width, z) {
-      z = z || '0';
-      n = n + '';
-      width = width || 2;
-      return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
-    };
-    return _time.getFullYear() + '-' + pad((_time.getMonth() + 1), 2) + '-' + pad(_time.getDate(), 2);
+    return _time.getFullYear() + '-' + this.pad((_time.getMonth() + 1), 2) + '-' + this.pad(_time.getDate(), 2);
   },
   // 获取当前日期 yyyy-MM-dd
   getNowFormatDate() {
@@ -254,76 +264,40 @@ export default {
     if (strDate >= 0 && strDate <= 9) {
       strDate = "0" + strDate;
     }
-    var currentdate = year + seperator1 + month + seperator1 + strDate;
-    return currentdate;
+    return year + seperator1 + month + seperator1 + strDate;
   },
   // 获取ago当前日期   年月日
-  getToday2: (ago = 0) => {
+  getToday2(ago = 0) {
     var _time = new Date(Date.now() + ago * 24 * 60 * 60 * 1000);
-    var pad = function (n, width, z) {
-      z = z || '0';
-      n = n + '';
-      width = width || 2;
-      return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
-    };
-    return _time.getFullYear() + '年' + pad((_time.getMonth() + 1), 2) + '月' + pad(_time.getDate(), 2) + '日';
+    return _time.getFullYear() + '年' + this.pad((_time.getMonth() + 1), 2) + '月' + this.pad(_time.getDate(), 2) + '日';
   },
   // 获取ago当前日期
-  getToday1: (ago = 0) => {
+  getToday1(ago = 0) {
     var _time = new Date(Date.now() + ago * 24 * 60 * 60 * 1000);
-    var pad = function (n, width, z) {
-      z = z || '0';
-      n = n + '';
-      width = width || 2;
-      return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
-    };
-    return _time.getFullYear() + '-' + pad((_time.getMonth() + 1), 2) + '-' + pad(_time.getDate(), 2);
+    return _time.getFullYear() + '-' + this.pad((_time.getMonth() + 1), 2) + '-' + this.pad(_time.getDate(), 2);
   },
   // 获取前几个月的日期
-  getAMonthAgo: (yue) => {
+  getAMonthAgo(yue) {
     var date = new Date();
     date.setMonth(date.getMonth() - yue * 1);
     var _time = new Date(date.getTime());
-    var pad = function (n, width, z) {
-      z = z || '0';
-      n = n + '';
-      width = width || 2;
-      return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
-    };
-    return _time.getFullYear() + '-' + pad((_time.getMonth() + 1), 2) + '-' + pad(_time.getDate(), 2);
+    return _time.getFullYear() + '-' + this.pad((_time.getMonth() + 1), 2) + '-' + this.pad(_time.getDate(), 2);
   },
   // 获取前几天的日期
-  getDayAgo: (day) => {
+  getDayAgo(day) {
     var _time = new Date(Date.now() - (day) * 24 * 60 * 60 * 1000);
-    var pad = function (n, width, z) {
-      z = z || '0';
-      n = n + '';
-      width = width || 2;
-      return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
-    };
-    return _time.getFullYear() + '-' + pad((_time.getMonth() + 1), 2) + '-' + pad(_time.getDate(), 2);
+    return _time.getFullYear() + '-' + this.pad((_time.getMonth() + 1), 2) + '-' + this.pad(_time.getDate(), 2);
   },
   // 校验邮箱
   checkEmail(mail) {
-    if (!(/^[A-Za-z0-9-._]+@[A-Za-z0-9-]+(.[A-Za-z0-9]+)*(.[A-Za-z]{2,6})$/.test(mail))) {
-      return false
-    } else {
-      return true
-    }
+    return (/^[A-Za-z0-9-._]+@[A-Za-z0-9-]+(.[A-Za-z0-9]+)*(.[A-Za-z]{2,6})$/.test(mail))
   },
   checkEmailOther(mail) {
-    if (!(/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(mail))) {
-      return false;
-    }
-    return true;
+    return (/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(mail))
   },
   // 校验手机号
   checkPhone(phone){
-    if(!(/^1[3456789]\d{9}$/.test(phone))){
-      return false;
-    } else {
-      return true
-    }
+    return (/^1[3456789]\d{9}$/.test(phone))
   },
 
   jugeType(obj) {
@@ -390,31 +364,6 @@ export default {
   },
 
   /**
-     * 获取深层次的数组
-     * keyName需要为a.b.c 对应data[a][b][c]
-     */
-  getDeepArr(data, keyName) {
-    // debugger;
-    if (isUndefined(keyName) || isNull(keyName)) {
-        // 没有对象数组键名
-        // 直接返回data数组
-        if (this.isArr(data)) return data
-        throwError("the data is not an Array, please provide the keyName to match correct Array");
-    } else {
-        const keyList = keyName.split(',')
-        let value = data
-        for (const iterator of keyList) {
-            if (!value.hasOwnProperty(iterator) || isUndefined(value)) {
-                throwError("please check the keyName's level")
-            }
-            value = value[iterator]
-        }
-        if (this.isArr(value)) return value
-        throwError("the data is not an Array, please provide the keyName to match correct Array");
-    }
-  },
-
-  /**
    * 映射高维数组
    * @param $data { Array }
    * @param $secondArrKey { String }
@@ -457,9 +406,7 @@ export default {
     function loopDeep ($nextData = []) {
       //过滤筛选keyName数组
       $nextData = $nextData.filter(item => {
-        if (!that.isNull(item) && !that.isUndefined(item)) {
-          return item
-        }
+        return !that.isNull(item) && !that.isUndefined(item)
       })
       //递归导入下一级数组
       $nextData.forEach(item => {
@@ -487,12 +434,9 @@ export default {
       $data = $data.filter(item => {
         item[$filterArrKey] = this.filterNestedArr(item[$filterArrKey], $filterArrKey , $isShowKey);
         if ($isShowKey) {
-          if(item[$isShowKey])
-          {
-            return item;
-          }
+          return !!item[$isShowKey]
         } else {
-          return item
+          return true
         }
       })
     }

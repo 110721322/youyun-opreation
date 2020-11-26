@@ -4,7 +4,7 @@ export const SEARCH_CONFIG = {
       type: 9,
       label: '筛选时间',
       key: 'date',
-      querySelectAll: true,
+      defaultDateType: 'all',
       labelWidth: '80px',
       span: 22
     },

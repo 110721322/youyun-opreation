@@ -45,17 +45,16 @@ export const TABLE_CONFIG = {
           return [h('span', {
             'class': "dot " + "platformAudit"
           }), '财务审核中']
-        }
-        if (params.row.status === 3) {
+        } else if (params.row.status === 3) {
           return [h('span', {
             'class': "dot " + "reject"
           }), '财务驳回']
-        }
-        if (params.row.status === 2) {
+        } else if (params.row.status === 2) {
           return [h('span', {
             'class': "dot " + "success"
           }), '已完成']
         }
+        return ""
       }
     }
   ],
