@@ -2,27 +2,27 @@
   <div>
     <div class="p_head">到期续费记录</div>
     <search
-        :open-height="searchMaxHeight"
-        :form-base-data="searchConfig.formData"
-        :show-foot-btn="searchConfig.showFootBtn"
-        @search="search"
+      :open-height="searchMaxHeight"
+      :form-base-data="searchConfig.formData"
+      :show-foot-btn="searchConfig.showFootBtn"
+      @search="search"
     />
     <div class="table_box">
       <BaseCrud
-          ref="table"
-          :grid-config="configData.gridConfig"
-          :grid-btn-config="configData.gridBtnConfig"
-          :hide-edit-area="configData.hideEditArea"
-          :grid-data="testData"
-          :form-config="configData.formConfig"
-          :form-data="configData.formModel"
-          :grid-edit-width="150"
-          form-title="用户"
-          :is-async="true"
-          :is-select="false"
-          :params="params"
-          :api-service="api"
-          @detail="go_detail"
+        ref="table"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :hide-edit-area="configData.hideEditArea"
+        :grid-data="testData"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="150"
+        form-title="用户"
+        :is-async="true"
+        :is-select="false"
+        :params="params"
+        :api-service="api"
+        @detail="go_detail"
       />
     </div>
   </div>
@@ -34,6 +34,7 @@ import api from "@/api/api_agent.js"
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { TABLE_CONFIG } from "./tableConfig/renewaldueList";
 import { SEARCH_CONFIG } from "./formConfig/renewaldueSearch";
+import { RenewalDue } from "@/libs/config/constant.config";
 
 export default {
   name: "RenewalDue",
@@ -53,12 +54,26 @@ export default {
   mounted() {},
   methods: {
     search($form) {
+      let auditStatus = null;
+      switch ($form.status) {
+        case RenewalDue.AUDIT_PENDING:
+          auditStatus = 'audit';
+          break;
+        case RenewalDue.AUDIT_SUCCESS:
+          auditStatus = 'success';
+          break;
+        case RenewalDue.AUDIT_REJECT:
+          auditStatus = 'reject';
+          break;
+        default:
+          auditStatus = null;
+      }
       this.params = {
         beginDate: $form.date[0] ? $form.date[0] : null,
         endDate: $form.date[0] ? $form.date[1] : null,
         payType: $form.payType ? $form.payType : null,
         status: $form.status ? $form.status : null,
-        auditStatus: $form.status === 1 ? 'audit' : $form.status === 2 ? 'success' : $form.status === 3 ? 'reject' : null,
+        auditStatus: auditStatus,
         [$form.search]: $form.searchVal
       }
     },

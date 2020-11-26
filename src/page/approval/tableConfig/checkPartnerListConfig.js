@@ -41,26 +41,17 @@ export const CHECKPARTNERLIST_CONFIG = {
       prop: 'contractStatus',
       width: '150px',
       render: (h, params) => {
-        if (params.row.contractStatus === 'waitSign') {
-          return h(
-            'span', '待审核'
-          )
-        }
-        if (params.row.contractStatus === 'audit') {
-          return h(
-            'span', '审核中'
-          )
-        }
-        if (params.row.contractStatus === 'success') {
-          return h(
-            'span', '审核通过'
-          )
-        }
-        if (params.row.contractStatus === 'reject') {
-          return h(
-            'span', '审核拒绝'
-          )
-        }
+        const actions = new Map([
+          ['waitSign', '待审核'],
+          ['audit', '审核中'],
+          ['success', '审核通过'],
+          ['reject', '审核拒绝'],
+          ['default', '待审核']
+        ])
+        const auditStatusName = actions.get(params.row.contractStatus) || actions.get('default')
+        return h(
+          'span', auditStatusName
+        )
       }
     }
   ],
@@ -79,11 +70,7 @@ export const CHECKPARTNERLIST_CONFIG = {
         emitName: 'detail',
         type: 'text',
         isShow: ($item) => {
-          if ($item.contractStatus !== 'waitSign') {
-            return true;
-          } else {
-            return false
-          }
+          return $item.contractStatus !== 'waitSign'
         }
       },
       {
@@ -91,11 +78,7 @@ export const CHECKPARTNERLIST_CONFIG = {
         emitName: 'preApprove',
         type: 'text',
         isShow: ($item) => {
-          if ($item.contractStatus === 'waitSign') {
-            return true;
-          } else {
-            return false
-          }
+          return $item.contractStatus === 'waitSign'
         }
       }
     ]

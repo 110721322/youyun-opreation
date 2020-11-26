@@ -17,12 +17,11 @@ export const rules = {
     const readObj = i[0];
     const message = `请选择${readObj.keyName}`;
     const trigger = 'change';
-    const result = [{
+    return [{
       required: true,
       trigger,
       message
     }];
-    return result;
   },
   intNumber: (i) => {
     const result = [{

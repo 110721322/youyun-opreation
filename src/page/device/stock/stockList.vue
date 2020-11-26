@@ -133,90 +133,97 @@ export default {
         }
       }
       if (this.formStatus === "add") {
-        api.deviceAdd({
-          costPrice: $data.costPrice,
-          deviceImg: $data.deviceImg,
-          deviceModel: $data.deviceModel,
-          deviceType: $data.deviceType,
-          salePrice: $data.salePrice,
-          sort: $data.sort,
-          classification: 1
-        }).then(res => {
-          if (res.status === 0) {
-            this.$message({
-              message: "添加成功",
-              type: "success"
-            })
-            this.drawer = false
-            this.$refs.table.getData();
-          }
-        })
+        this.addEvent($data);
+      } else if (this.formStatus === "edit") {
+        this.editEvent($data);
+      } else if (this.formStatus === "buy") {
+        this.buyEvent($data);
       }
-      if (this.formStatus === "edit") {
-        api.deviceUpdate({
-          costPrice: $data.costPrice,
-          deviceImg: $data.deviceImg,
-          deviceModel: $data.deviceModel,
-          deviceType: $data.deviceType,
-          id: this.stockId,
-          salePrice: $data.salePrice,
-          sort: $data.sort,
-          classification: 1
-        }).then(res => {
-          if (res.status === 0) {
-            this.$message({
-              message: "编辑成功",
-              type: "success"
-            })
-            this.drawer = false
-            this.$refs.table.getData();
-          }
-        })
-      }
-      if (this.formStatus === "buy") {
-        if (!$data.payType) {
+    },
+    addEvent($data) {
+      api.deviceAdd({
+        costPrice: $data.costPrice,
+        deviceImg: $data.deviceImg,
+        deviceModel: $data.deviceModel,
+        deviceType: $data.deviceType,
+        salePrice: $data.salePrice,
+        sort: $data.sort,
+        classification: 1
+      }).then(res => {
+        if (res.status === 0) {
           this.$message({
-            message: '请选择支付方式',
-            type: 'warning'
+            message: "添加成功",
+            type: "success"
           })
-          return;
+          this.drawer = false
+          this.$refs.table.getData();
         }
-        if (!this.$g.utils.checkPhone($data.buyerPhone)) {
+      })
+    },
+    editEvent($data) {
+      api.deviceUpdate({
+        costPrice: $data.costPrice,
+        deviceImg: $data.deviceImg,
+        deviceModel: $data.deviceModel,
+        deviceType: $data.deviceType,
+        id: this.stockId,
+        salePrice: $data.salePrice,
+        sort: $data.sort,
+        classification: 1
+      }).then(res => {
+        if (res.status === 0) {
           this.$message({
-            message: '手机号格式不正确',
-            type: 'warning'
+            message: "编辑成功",
+            type: "success"
           })
-          return;
+          this.drawer = false
+          this.$refs.table.getData();
         }
-        api.deviceOutputAdd({
-          saleUserName: this.$store.state.admin.userInfo.name,
-          saleUserId: this.$store.state.admin.userInfo.id,
-          amount: $data.amount,
-          actualAmount: $data.actualAmount,
-          agentNo: $data.agentNo,
-          payType: $data.payType,
-          voucher: $data.voucher ? $data.voucher : '',
-          buyerRemark: $data.buyerRemark ? $data.buyerRemark : '',
-          buyerName: $data.buyerName,
-          buyerPhone: $data.buyerPhone,
-          buyerAddress: $data.buyerAddress,
-          outputType: 2, // 运营订购
-          infoVOList: [{
-            count: $data.count,
-            deviceModel: this.deviceModel,
-            deviceId: this.deviceId,
-            salePrice: this.salePrice
-          }]
-        }).then(res => {
-          if (res.status === 0) {
-            this.$message({
-              message: '订购成功',
-              type: 'success'
-            })
-            this.drawer = false
-          }
+      })
+    },
+    buyEvent($data) {
+      if (!$data.payType) {
+        this.$message({
+          message: '请选择支付方式',
+          type: 'warning'
         })
+        return;
       }
+      if (!this.$g.utils.checkPhone($data.buyerPhone)) {
+        this.$message({
+          message: '手机号格式不正确',
+          type: 'warning'
+        })
+        return;
+      }
+      api.deviceOutputAdd({
+        saleUserName: this.$store.state.admin.userInfo.name,
+        saleUserId: this.$store.state.admin.userInfo.id,
+        amount: $data.amount,
+        actualAmount: $data.actualAmount,
+        agentNo: $data.agentNo,
+        payType: $data.payType,
+        voucher: $data.voucher ? $data.voucher : '',
+        buyerRemark: $data.buyerRemark ? $data.buyerRemark : '',
+        buyerName: $data.buyerName,
+        buyerPhone: $data.buyerPhone,
+        buyerAddress: $data.buyerAddress,
+        outputType: 2, // 运营订购
+        infoVOList: [{
+          count: $data.count,
+          deviceModel: this.deviceModel,
+          deviceId: this.deviceId,
+          salePrice: this.salePrice
+        }]
+      }).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            message: '订购成功',
+            type: 'success'
+          })
+          this.drawer = false
+        }
+      })
     },
     cancel() {
       this.drawer = false;

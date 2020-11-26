@@ -15,9 +15,23 @@
           show-icon
         ></el-alert>
         <div>
-          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.baseData" v-if="ruleForm.businessType === 'enterprise'"></detailMode>
-          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.baseData1" v-if="ruleForm.businessType === 'individual' || ruleForm.businessType === ''" ></detailMode>
-          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.serviceSetupData"></detailMode>
+          <detailMode
+            v-if="ruleForm.businessType === 'enterprise'"
+            :img-width="4"
+            :rule-form="ruleForm"
+            :config-data="configData.baseData"
+          ></detailMode>
+          <detailMode
+            v-if="ruleForm.businessType === 'individual' || ruleForm.businessType === ''"
+            :img-width="4"
+            :rule-form="ruleForm"
+            :config-data="configData.baseData1"
+          ></detailMode>
+          <detailMode
+            :img-width="4"
+            :rule-form="ruleForm"
+            :config-data="configData.serviceSetupData"
+          ></detailMode>
         </div>
         <div v-if="showComponents.showOperBtns" class="btn-box">
           <div class="btn_pass" @click="onClick_sign">资料已检查并提交签约</div>
@@ -42,7 +56,7 @@
 import api from "@/api/api_merchantAudit";
 import detailMode from "@/components/detailMode/detailMode2.vue";
 import Form from "@/components/form/index.vue";
-import { FORM_CONFIG } from "./../formConfig/checkServiceDetailConfig";
+import { FORM_CONFIG, CONFIG_DATA_SERVICE } from "../formConfig/checkServiceDetailConfig";
 import areaData from "@/assets/data/areaData";
 
 export default {
@@ -62,132 +76,7 @@ export default {
       // pass通过 preApproval预审核 checking审核中 reject驳回
       currentType: "",
       ruleForm: {},
-      configData: {
-        baseData: {
-          name: "基本信息",
-          items: [
-            {
-              name: "所属上级服务商",
-              key: "parentAgentName"
-            },
-            {
-              name: "账号类型",
-              key: "businessTypeCn"
-            },
-            {
-              name: "营业执照",
-              key: "businessLicenseImg",
-              type: "image"
-            },
-            {
-              name: "法人身份证正面照",
-              key: "idPortraitImg",
-              type: "image"
-            },
-            {
-              name: "法人身份证反面照",
-              key: "idEmblemImg",
-              type: "image"
-            },
-
-            {
-              name: "公司名称",
-              key: "agentName"
-            },
-            {
-              name: "法人姓名",
-              key: "personName"
-            },
-            {
-              name: "法人手机号",
-              key: "personMobile"
-            },
-            {
-              name: "地区",
-              key: "areaAddress"
-            },
-
-            {
-              name: "详细地址",
-              key: "companyAddress"
-            },
-            {
-              name: "邮箱",
-              key: "email"
-            }
-          ]
-        },
-        baseData1: {
-          name: "基本信息",
-          items: [
-            {
-              name: "所属上级服务商",
-              key: "parentAgentName"
-            },
-            {
-              name: "账号类型",
-              key: "businessTypeCn"
-            },
-            {
-              name: "法人身份证正面照",
-              key: "idPortraitImg",
-              type: "image"
-            },
-            {
-              name: "法人身份证反面照",
-              key: "idEmblemImg",
-              type: "image"
-            },
-
-            {
-              name: "公司名称",
-              key: "agentName"
-            },
-            {
-              name: "法人姓名",
-              key: "personName"
-            },
-            {
-              name: "法人手机号",
-              key: "personMobile"
-            },
-            {
-              name: "地区",
-              key: "areaAddress"
-            },
-
-            {
-              name: "详细地址",
-              key: "companyAddress"
-            },
-            {
-              name: "邮箱",
-              key: "email"
-            }
-          ]
-        },
-        serviceSetupData: {
-          name: "下级服务商设置",
-          items: [
-            {
-              name: "服务区域",
-              key: "activeScope"
-            },
-            {
-              name: "微信/支付宝费率",
-              key: "alipayRatePecent"
-            },
-            {
-              name: "云闪付费率（单笔≤1000元）",
-              key: "cloudPayLe1000RatePecent"
-            },
-            {
-              name: "云闪付费率（单笔＞1000元）",
-              key: "cloudPayLe1000RatePecent"
-            }
-          ]
-        }
-      }
+      configData: null
     };
   },
   watch: {
@@ -212,6 +101,9 @@ export default {
       }
     }
   },
+  created() {
+    this.configData = this.$g.utils.deepClone(CONFIG_DATA_SERVICE)
+  },
   mounted() {
     this.agentNo = this.$route.query.agentNo
     this.getServiceData()
@@ -221,53 +113,65 @@ export default {
       api.getSubAgentDetail({
         agentNo: this.agentNo
       }).then(res => {
-        if (res.data.bankAccountType === 'public') {
-          res.data.bankAccountType = '对公'
+        let ruleForm = res.data;
+        ruleForm = this.setBankAccountType(ruleForm);
+        ruleForm = this.setAddress(ruleForm);
+        this.ruleForm = this.setRate(ruleForm);
+        this.currentType = ruleForm.contractStatus
+      })
+    },
+    setBankAccountType($ruleForm) {
+      if ($ruleForm.bankAccountType === 'public') {
+        $ruleForm.bankAccountType = '对公'
+      }
+      if ($ruleForm.bankAccountType === 'private') {
+        $ruleForm.bankAccountType = '对私'
+      }
+      if ($ruleForm.businessType === 'enterprise') {
+        $ruleForm.businessTypeCn = '企业'
+      }
+      if ($ruleForm.businessType === 'individual' || $ruleForm.businessType === '') {
+        $ruleForm.businessTypeCn = '个人'
+      }
+      return $ruleForm
+    },
+    setAddress($ruleForm) {
+      const result = this.$g.utils.getNestedArr(areaData, 'children')
+      result.forEach(m => {
+        if ($ruleForm.cityCode === m.value) {
+          $ruleForm.cityName = m.label
         }
-        if (res.data.bankAccountType === 'private') {
-          res.data.bankAccountType = '对私'
+        if ($ruleForm.areaCode === m.value) {
+          $ruleForm.areaName = m.label
         }
-        if (res.data.businessType === 'enterprise') {
-          res.data.businessTypeCn = '企业'
+        if ($ruleForm.provinceCode === m.value) {
+          $ruleForm.provinceName = m.label
         }
-        if (res.data.businessType === 'individual' || res.data.businessType === '') {
-          res.data.businessTypeCn = '个人'
+        if ($ruleForm.activeScopeCityCode === m.value) {
+          $ruleForm.activeScopeCityName = m.label
         }
-        var result = this.$g.utils.getNestedArr(areaData, 'children')
-        result.forEach(m => {
-          if (res.data.cityCode === m.value) {
-            res.data.cityName = m.label
-          }
-          if (res.data.areaCode === m.value) {
-            res.data.areaName = m.label
-          }
-          if (res.data.provinceCode === m.value) {
-            res.data.provinceName = m.label
-          }
-          if (res.data.activeScopeCityCode === m.value) {
-            res.data.activeScopeCityName = m.label
-          }
-          if (res.data.activeScopeProvinceCode === m.value) {
-            res.data.activeScopeProvinceName = m.label
-          }
-          res.data.activeScope = res.data.activeScopeProvinceName + res.data.activeScopeCityName
-        })
-        res.data.areaAddress = res.data.provinceName + res.data.cityName + res.data.areaName
-        if (res.data.cloudPayGt1000Rate) {
-          res.data.cloudPayGt1000RatePecent = this.$g.utils.AccMul(res.data.cloudPayGt1000Rate, 1000) + '‰'
-          res.data.cloudPayLe1000RatePecent = this.$g.utils.AccMul(res.data.cloudPayLe1000Rate, 1000) + '‰'
+        if ($ruleForm.activeScopeProvinceCode === m.value) {
+          $ruleForm.activeScopeProvinceName = m.label
         }
-        if (!res.data.cloudPayGt1000Rate) {
-          res.data.cloudPayGt1000RatePecent = 0 + '‰'
-          res.data.cloudPayLe1000RatePecent = 0 + '‰'
-        }
-        if (res.data.alipayRate || res.data.wechatPayRate) {
-          res.data.alipayRatePecent = this.$g.utils.AccMul(res.data.alipayRate, 1000) + '‰'
-          res.data.wechatPayRatePecent = this.$g.utils.AccMul(res.data.wechatPayRatePecent, 1000) + '‰'
-        }
-        this.ruleForm = res.data
-        this.currentType = res.data.contractStatus
-      }).catch();
+        $ruleForm.activeScope = $ruleForm.activeScopeProvinceName + $ruleForm.activeScopeCityName
+      })
+      $ruleForm.areaAddress = $ruleForm.provinceName + $ruleForm.cityName + $ruleForm.areaName
+      return $ruleForm
+    },
+    setRate($ruleForm) {
+      if ($ruleForm.cloudPayGt1000Rate) {
+        $ruleForm.cloudPayGt1000RatePecent = this.$g.utils.AccMul($ruleForm.cloudPayGt1000Rate, 1000) + '‰'
+        $ruleForm.cloudPayLe1000RatePecent = this.$g.utils.AccMul($ruleForm.cloudPayLe1000Rate, 1000) + '‰'
+      }
+      if (!$ruleForm.cloudPayGt1000Rate) {
+        $ruleForm.cloudPayGt1000RatePecent = 0 + '‰'
+        $ruleForm.cloudPayLe1000RatePecent = 0 + '‰'
+      }
+      if ($ruleForm.alipayRate || $ruleForm.wechatPayRate) {
+        $ruleForm.alipayRatePecent = this.$g.utils.AccMul($ruleForm.alipayRate, 1000) + '‰'
+        $ruleForm.wechatPayRatePecent = this.$g.utils.AccMul($ruleForm.wechatPayRatePecent, 1000) + '‰'
+      }
+      return $ruleForm
     },
     confirm($data) {
       if ((!$data.reason) && (!$data.baseData)) {

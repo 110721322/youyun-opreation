@@ -160,7 +160,6 @@ export default {
   },
   methods: {
     loadNode(node, resolve) {
-      // this.resolve_had = resolve;
       if (node.level === 1) {
         // 处理展开后才能添加
         if (!node.data.children) {
@@ -313,39 +312,28 @@ export default {
       if (draggingNode.level === dropNode.level) {
         if (draggingNode.parent.id === dropNode.parent.id) {
           if (type === "prev" || type === "next") {
+            let axiosPromise = null;
             if (draggingNode.level === 1) {
-              api
-                .moveFirstMenu({
-                  changeMenuId: dropNode.data.id,
-                  id: draggingNode.data.id
-                })
-                .then(res => {
-                  this.$nextTick(() => {
-                    this.queryFirstClassByPage()
-                  });
-                  return true;
-                })
-                .catch(err => {
-                  this.$message(err);
-                  return false;
-                });
+              axiosPromise = api.moveFirstMenu
             } else if (draggingNode.level === 2) {
-              api
-                .moveSecondMenu({
-                  changeMenuId: dropNode.data.id,
-                  id: draggingNode.data.id
-                })
-                .then(res => {
-                  this.$nextTick(() => {
-                    this.queryFirstClassByPage()
-                  });
-                  return true;
-                })
-                .catch(err => {
-                  this.$message(err);
-                  return false;
-                });
+              axiosPromise = api.moveSecondMenu
+            } else {
+              return false
             }
+            axiosPromise({
+              changeMenuId: dropNode.data.id,
+              id: draggingNode.data.id
+            })
+              .then(res => {
+                this.$nextTick(() => {
+                  this.queryFirstClassByPage()
+                });
+                return true;
+              })
+              .catch(err => {
+                this.$message(err);
+                return false;
+              });
           } else {
             return false;
           }
@@ -414,10 +402,10 @@ export default {
       });
     },
     onClick_append($node, $data) { // 添加节点
-      // this.loadNode($node, this.resolve_had);
       this.$refs.tree.store.nodesMap[$data.id].expanded = true;
+      this.menuId++
       const newChild = {
-        id: this.menuId++,
+        id: this.menuId,
         menuName: "菜单名",
         isEdit: true,
         leaf: true,
@@ -436,41 +424,29 @@ export default {
         cancelButtonText: "取消"
       })
         .then(() => {
+          let axiosPromise = null;
           if (this.currentNode.level === 1) {
-            api
-              .deleteFirstClass({
-                id: this.currentData.id
-              })
-              .then(res => {
-                this.$message({
-                  type: "info",
-                  message: "已删除"
-                });
-                this.$nextTick(() => {
-                  this.queryFirstClassByPage()
-                });
-              })
-              .catch(err => {
-                this.$message(err);
-              });
+            axiosPromise = api.deleteFirstClass
           } else if (this.currentNode.level === 2) {
-            api
-              .deleteSecondClass({
-                id: this.currentData.id
-              })
-              .then(res => {
-                this.$message({
-                  type: "info",
-                  message: "已删除"
-                });
-                this.$nextTick(() => {
-                  this.queryFirstClassByPage()
-                });
-              })
-              .catch(err => {
-                this.$message(err);
-              });
+            axiosPromise = api.deleteSecondClass
+          } else {
+            return;
           }
+          axiosPromise({
+            id: this.currentData.id
+          })
+            .then(res => {
+              this.$message({
+                type: "info",
+                message: "已删除"
+              });
+              this.$nextTick(() => {
+                this.queryFirstClassByPage()
+              });
+            })
+            .catch(err => {
+              this.$message(err);
+            });
         })
         .catch(() => {});
     },

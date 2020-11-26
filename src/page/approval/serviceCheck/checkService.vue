@@ -23,7 +23,7 @@
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
         @detail="handleDetail"
-        @preApprove="handlePreApprove"
+        @preApprove="handleDetail"
       ></BaseCrud>
     </div>
   </div>
@@ -57,14 +57,6 @@ export default {
   mounted() {},
   methods: {
     handleDetail(row) {
-      this.$router.push({
-        name: "checkServiceListDetail",
-        query: {
-          agentNo: row.agentNo
-        }
-      });
-    },
-    handlePreApprove(row) {
       this.$router.push({
         name: "checkServiceListDetail",
         query: {

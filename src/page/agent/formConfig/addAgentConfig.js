@@ -1,6 +1,5 @@
 import { setRules } from '@/libs/kit/formFns.js';
 import areaData from "@/assets/data/areaData";
-// import api from "@/api/api_agent"
 
 export const FORM_CONFIG = {
   formData: [
@@ -68,19 +67,6 @@ export const FORM_CONFIG = {
       tip: '注：密码会已短信形式发送到该手机号中',
       rules: setRules('后台账号').isRequired.get
     },
-    // {
-    //   type: 1,
-    //   label: '所属运营人员',
-    //   key: 'operationId',
-    //   labelWidth: '185px',
-    //   urlOptions: {
-    //     url: api.queryAllOperation,
-    //     keyName: 'operationId',
-    //     valueName: 'operationName',
-    //     method: 'get'
-    //   },
-    //   rules: setRules('请输入').isSelected.get
-    // },
     {
       type: 5,
       label: '服务类型',
@@ -91,10 +77,6 @@ export const FORM_CONFIG = {
           label: '小马哥代理',
           value: 'xiaomage'
         }
-        // {
-        //   label: 'OEM代理',
-        //   value: 'oem'
-        // }
       ]
     }
   ]

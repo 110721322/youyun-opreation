@@ -20,11 +20,12 @@ export const USER_CONFIG = {
           return h(
             'span', '个人'
           )
-        }
-        if (params.row.businessType === 'enterprise') {
+        } else if (params.row.businessType === 'enterprise') {
           return h(
             'span', '企业'
           )
+        } else {
+          return ''
         }
       }
     },
@@ -55,21 +56,20 @@ export const USER_CONFIG = {
           return [h('span', {
             'class': "dot " + "platformAudit"
           }), '待审核']
-        }
-        if (params.row.contractStatus === 'waitSign') {
+        } else if (params.row.contractStatus === 'waitSign') {
           return [h('span', {
             'class': "dot " + "platformAudit"
           }), '待签约']
-        }
-        if (params.row.contractStatus === 'reject') {
+        } else if (params.row.contractStatus === 'reject') {
           return [h('span', {
             'class': "dot " + "reject"
           }), '已拒绝']
-        }
-        if (params.row.contractStatus === 'success') {
+        } else if (params.row.contractStatus === 'success') {
           return [h('span', {
             'class': "dot " + "success"
           }), '已通过']
+        } else {
+          return ""
         }
       }
     }
@@ -89,11 +89,7 @@ export const USER_CONFIG = {
         type: 'text',
         style: 'color:#F5222D',
         isShow: ($row) => {
-          if ($row.contractStatus === 'audit' || $row.contractStatus === 'waitSign') {
-            return true;
-          } else {
-            return false;
-          }
+          return $row.contractStatus === 'audit' || $row.contractStatus === 'waitSign'
         }
       },
       {
@@ -101,11 +97,7 @@ export const USER_CONFIG = {
         emitName: 'activation',
         type: 'text',
         isShow: ($row) => {
-          if ($row.contractStatus === 'reject') {
-            return true;
-          } else {
-            return false;
-          }
+          return $row.contractStatus === 'reject'
         }
       },
       {
@@ -113,11 +105,7 @@ export const USER_CONFIG = {
         emitName: 'adopt',
         type: 'text',
         isShow: ($row) => {
-          if ($row.contractStatus === 'audit' || $row.contractStatus === 'waitSign') {
-            return true;
-          } else {
-            return false;
-          }
+          return $row.contractStatus === 'audit' || $row.contractStatus === 'waitSign'
         }
       }
     ]

@@ -62,9 +62,6 @@ export default {
     this.params.endDate = this.$g.utils.getToday(0);
     this.api = api.queryLeshuaAuditPageByCondition
   },
-  mounted() {
-    // this.search();
-  },
   methods: {
     search($ruleForm) {
       this.params = {

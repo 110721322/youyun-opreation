@@ -15,9 +15,21 @@
           show-icon
         ></el-alert>
         <div>
-          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.baseData"></detailMode>
-          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.merchantData"></detailMode>
-          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.merchantSettle"></detailMode>
+          <detailMode
+            :img-width="4"
+            :rule-form="ruleForm"
+            :config-data="configData.baseData"
+          ></detailMode>
+          <detailMode
+            :img-width="4"
+            :rule-form="ruleForm"
+            :config-data="configData.merchantData"
+          ></detailMode>
+          <detailMode
+            :img-width="4"
+            :rule-form="ruleForm"
+            :config-data="configData.merchantSettle"
+          ></detailMode>
           <detailMode
             :is-show-edit-btn="showComponents.showOtherEdit"
             :img-width="4"
@@ -32,8 +44,6 @@
           </div>
           <el-button type="primary" size="normal" @click="onClick_sign">资料已检查并提交签约</el-button>
           <el-button size="normal" @click="onClick_reject">驳回</el-button>
-          <!-- <div class="btn_pass" @click="onClick_sign">资料已检查并提交签约</div>
-          <div class="btn-reject" @click="onClick_reject">驳回</div> -->
         </div>
       </div>
     </transition>
@@ -55,7 +65,7 @@ import api from "@/api/api_merchantAudit";
 import detailMode from "@/components/detailMode/detailMode2.vue";
 import Form from "@/components/form/index.vue";
 import areaData from "@/assets/data/areaData";
-import { FORM_CONFIG } from "./../formConfig/wxDirectListConfig";
+import { FORM_CONFIG, CONFIG_DATA } from "../formConfig/wxDirectListConfig";
 
 export default {
   name: "WxDirectListDetail",
@@ -81,148 +91,14 @@ export default {
         merchantSettle: {},
         other: {}
       },
-      configData: {
-        baseData: {
-          name: "基本信息",
-          items: [
-            {
-              name: "商户全称",
-              key: "merchantName"
-            },
-            {
-              name: "公司地址",
-              key: "detailComAddress"
-            },
-            {
-              name: "经营类目",
-              key: "category"
-            },
-            {
-              name: "法人姓名",
-              key: "lawPerson"
-            },
-
-            {
-              name: "法人手机号",
-              key: "lawMobile"
-            },
-            {
-              name: "法人身份证",
-              key: "lawIdCard"
-            }
-          ]
-        },
-        merchantData: {
-          name: "商户信息",
-          items: [
-            {
-              name: "营业执照",
-              key: "shopLicenseImg",
-              type: "image"
-            },
-            {
-              name: "门头照",
-              key: "shopFaceImg",
-              type: "image"
-            },
-            {
-              name: "法人身份证正面",
-              key: "idCardPortraitImg",
-              type: "image"
-            },
-            {
-              name: "结算人身份证反面",
-              key: "idCardEmblemImg",
-              type: "image"
-            },
-            {
-              name: "特殊资质",
-              key: "specImg",
-              type: "image"
-            },
-            {
-              name: "法人身份证有效日期",
-              key: "idCardExpireTime"
-            },
-            {
-              name: "商户类型",
-              key: "merchantType"
-            },
-            {
-              name: "商户简称",
-              key: "shortName"
-            },
-            {
-              name: "超级管理员姓名",
-              key: "wxLinkman"
-            },
-            {
-              name: "超级管理员联系方式",
-              key: "wxLinkmanPhone"
-            },
-            {
-              name: "营业执照编号",
-              key: "shopLicenseNo"
-            },
-            {
-              name: "营业执照有效日期",
-              key: "shopLicenseTime"
-            }
-          ]
-        },
-        merchantSettle: {
-          name: "商户结算卡",
-          items: [
-            {
-              name: "结算卡类型",
-              key: "bankAccountType"
-            },
-            {
-              name: "银行卡号",
-              key: "bankCardNo"
-            },
-            {
-              name: "开户支行地区",
-              key: "bankArea"
-            },
-            {
-              name: "开户支行",
-              key: "bankBranchName"
-            },
-            {
-              name: "银行预留手机号",
-              key: "bankMobile"
-            }
-          ]
-        },
-        other: {
-          name: "其他",
-          items: [
-            {
-              name: "费率",
-              key: "wechatPayRatePecent"
-            },
-            {
-              name: "邮箱",
-              key: "email"
-            },
-            {
-              name: "APPID",
-              key: "appid"
-            },
-            {
-              name: "PID",
-              key: "pid"
-            }
-          ]
-        }
-      }
+      configData: null
     };
   },
   watch: {
     currentType: function($val) {
       switch ($val) {
         case "channelPass":
+        case "channelAudit":
           this.showComponents.showOperBtns = false;
           this.showComponents.showRejectTitle = false;
           break;
@@ -232,14 +108,7 @@ export default {
           break;
         case "nonOpen":
           break;
-        case "channelAudit":
-          this.showComponents.showOperBtns = false;
-          this.showComponents.showRejectTitle = false;
-          break;
         case "platformReject":
-          this.showComponents.showOperBtns = false;
-          this.showComponents.showRejectTitle = true;
-          break;
         case "channelReject":
           this.showComponents.showOperBtns = false;
           this.showComponents.showRejectTitle = true;
@@ -250,6 +119,7 @@ export default {
     }
   },
   created() {
+    this.configData = this.$g.utils.deepClone(CONFIG_DATA)
     this.merchantNo = this.$route.query.merchantNo
     this.channelCode = this.$route.query.channelCode
     this.channelAgentCode = this.$route.query.channelAgentCode
@@ -311,23 +181,22 @@ export default {
             type: 'warning'
           })
           return false
-        } else {
-          api.rejectDirectAudit({
-            merchantNo: this.merchantNo,
-            reason: $data.reason,
-            channelCode: this.channelCode,
-            channelAgentCode: this.channelAgentCode
-          }).then(res => {
-            if (res.status === 0) {
-              this.$message({
-                message: '操作成功',
-                type: 'success'
-              })
-              this.getAliData()
-              this.drawer = false;
-            }
-          })
         }
+        api.rejectDirectAudit({
+          merchantNo: this.merchantNo,
+          reason: $data.reason,
+          channelCode: this.channelCode,
+          channelAgentCode: this.channelAgentCode
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '操作成功',
+              type: 'success'
+            })
+            this.getAliData()
+            this.drawer = false;
+          }
+        })
       }
     },
     handleEdit($ruleForm) {

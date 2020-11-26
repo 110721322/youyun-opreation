@@ -59,18 +59,14 @@
         </li>
       </ul>
     </div>
-
-    <!--    <detailMode :rule-form="ruleForm" :config-data="configData" @edit="itemEdit"></detailMode>-->
   </div>
 </template>
 
 <script>
-// import detailMode from "@/components/detailMode/detailMode2.vue";
 import api from "@/api/api_agent.js"
 
 export default {
   name: "AgentSubDetail",
-  // components: { detailMode },
   data() {
     return {
       showName: true,

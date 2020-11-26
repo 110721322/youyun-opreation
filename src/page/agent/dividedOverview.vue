@@ -41,8 +41,6 @@ import api from "@/api/api_agent.js"
 export default {
   name: "DividedOverview",
   components: { search, BaseCrud, dataMode },
-  // components: {  dataMode, BaseCrud },
-
   data() {
     return {
       searchMaxHeight: "200",
@@ -82,7 +80,6 @@ export default {
     this.params = {}
   },
   mounted() {
-    // this.getData();
     this.getTotalCommission();
   },
   methods: {

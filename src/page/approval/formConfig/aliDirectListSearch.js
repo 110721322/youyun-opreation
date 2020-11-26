@@ -1,4 +1,3 @@
-// import areaData from "@/assets/data/areaData"
 import apiAgent from "@/api/api_agent.js";
 
 export const SEARCH_CONFIG = {
@@ -9,7 +8,7 @@ export const SEARCH_CONFIG = {
       key: 'date',
       class: 'max-width',
       format: "yyyy-MM-dd",
-      selectSevenDay: true,
+      defaultDateType: 'third',
       labelWidth: '80px',
       span: 22
     },

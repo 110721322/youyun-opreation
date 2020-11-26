@@ -23,7 +23,7 @@
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
         @detail="handleDetail"
-        @preApprove="handlePreApprove"
+        @preApprove="handleDetail"
         @record="handleRecord"
         @pass="handlePass"
         @reject="handleReject"
@@ -78,68 +78,62 @@ export default {
   methods: {
     confirm($data) {
       if (this.formStatus === "reject") {
-        api.rejectDirectChannelAudit({
-          merchantNo: this.merchantNo,
-          reason: $data["reason"],
-          channelCode: "alipay",
-          channelAgentCode: this.channelAgentCode
-        }).then(res => {
-          if (res.status === 0) {
-            this.$message({
-              message: '已驳回',
-              type: 'success'
-            })
-            this.drawer = false
-            this.$refs.table.getData()
-          }
-        })
-      }
-      if (this.formStatus === "pass") {
-        if (!$data.appid || !$data.pid || !$data.rate) {
-          this.$message({
-            message: '请填写必填信息',
-            type: 'warning'
-          })
-          return false
-        } else {
-          api.passDirectChannelAudit({
-            merchantNo: this.merchantNo,
-            channelCode: "alipay",
-            channelAgentCode: this.channelAgentCode
-          }).then(res => {
-            api.updateOthersInfo({
-              merchantNo: this.merchantNo,
-              channelCode: "alipay",
-              appid: $data["appid"],
-              pid: $data["pid"]
-            }).then(rem => {
-              if (rem.status === 0) {
-                this.$message({
-                  message: '操作成功',
-                  type: 'success'
-                });
-                this.drawer = false
-                this.$refs.table.getData()
-              }
-            })
-          })
-        }
+        this.rejectEvent($data);
+      } else if (this.formStatus === "pass") {
+        this.passEvent($data)
       }
     },
     cancel() {
       this.drawer = false;
     },
-    handleDetail(row) {
-      this.$router.push({
-        name: "aliDirectListDetail",
-        query: {
-          merchantNo: row.merchantNo,
-          channelCode: row.channel,
-          channelAgentCode: row.channelAgentCode
+    rejectEvent($data) {
+      api.rejectDirectChannelAudit({
+        merchantNo: this.merchantNo,
+        reason: $data["reason"],
+        channelCode: "alipay",
+        channelAgentCode: this.channelAgentCode
+      }).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            message: '已驳回',
+            type: 'success'
+          })
+          this.drawer = false
+          this.$refs.table.getData()
         }
-      });
+      })
     },
-    handlePreApprove(row) {
+    passEvent($data) {
+      if (!$data.appid || !$data.pid || !$data.rate) {
+        this.$message({
+          message: '请填写必填信息',
+          type: 'warning'
+        })
+        return false
+      }
+      api.passDirectChannelAudit({
+        merchantNo: this.merchantNo,
+        channelCode: "alipay",
+        channelAgentCode: this.channelAgentCode
+      }).then(res => {
+        api.updateOthersInfo({
+          merchantNo: this.merchantNo,
+          channelCode: "alipay",
+          appid: $data["appid"],
+          pid: $data["pid"]
+        }).then(rem => {
+          if (rem.status === 0) {
+            this.$message({
+              message: '操作成功',
+              type: 'success'
+            });
+            this.drawer = false
+            this.$refs.table.getData()
+          }
+        })
+      })
+    },
+    handleDetail(row) {
       this.$router.push({
         name: "aliDirectListDetail",
         query: {

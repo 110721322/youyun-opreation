@@ -6,11 +6,10 @@ export const FORM_CONFIG = {
     {
       type: 9,
       label: '筛选时间',
-      querySelectAll: true,
+      defaultDateType: 'all',
       key: 'date',
       labelWidth: '110px',
-      span: 22,
-      isSelectToday: true
+      span: 22
     },
     {
       type: 10,

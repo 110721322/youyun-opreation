@@ -116,68 +116,17 @@ export default {
     confirm($data) {
       // exelc解析
       if (this.formStatus === "send") {
-        apiComm.excelUploadPic({
-          url: $data.deviceIdentifierList.dialogImageUrl,
-          type: "deviceOutput"
-        }).then(res => {
-          this.device = res.data;
-          api.finishOutput({
-            expressNo: $data.expressNo,
-            outputRemark: $data.outputRemark,
-            outputTime: $data.outputTime,
-            id: this.tableDate.id,
-            infoRequestVOList: [
-              {
-                deviceId: this.tableDeviceId,
-                deviceIdentifierList: this.device
-              }
-            ]
-          }).then(res => {
-            if (res.status === 0) {
-              this.$refs.table.getData();
-              this.drawer = false;
-              this.$message({
-                message: "保存成功",
-                type: "success"
-              });
-            }
-          })
-        })
+        this.excelUploadPic($data)
       } else {
         switch (this.formStatus) {
           case "reject":
-            api.reject({
-              rejectRemark: $data.rejectRemark,
-              id: this.tableId
-            }).then(res => {
-              if (res.status === 0) {
-                this.$refs.table.getData();
-                this.drawer = false;
-                this.$message({
-                  message: "已驳回",
-                  type: "success"
-                });
-              }
-            })
+            this.rejectEvent($data);
             break;
           case "check":
             this.drawer = false;
             break;
           case "distribution":
-            api.distribute({
-              type: "facility",
-              typeNo: this.tableId,
-              distributionUserId: $data.distributionUserId
-            }).then(res => {
-              if (res.status === 0) {
-                this.$refs.table.getData();
-                this.drawer = false;
-                this.$message({
-                  message: "分配成功",
-                  type: "success"
-                });
-              }
-            })
+            this.distributionEvent($data);
             break;
           default:
             break;
@@ -186,6 +135,66 @@ export default {
     },
     cancel() {
       this.drawer = false;
+    },
+    excelUploadPic($data) {
+      apiComm.excelUploadPic({
+        url: $data.deviceIdentifierList.dialogImageUrl,
+        type: "deviceOutput"
+      }).then(res => {
+        this.device = res.data;
+        api.finishOutput({
+          expressNo: $data.expressNo,
+          outputRemark: $data.outputRemark,
+          outputTime: $data.outputTime,
+          id: this.tableDate.id,
+          infoRequestVOList: [
+            {
+              deviceId: this.tableDeviceId,
+              deviceIdentifierList: this.device
+            }
+          ]
+        }).then(res => {
+          if (res.status === 0) {
+            this.$refs.table.getData();
+            this.drawer = false;
+            this.$message({
+              message: "保存成功",
+              type: "success"
+            });
+          }
+        })
+      })
+    },
+    rejectEvent($data) {
+      api.reject({
+        rejectRemark: $data.rejectRemark,
+        id: this.tableId
+      }).then(res => {
+        if (res.status === 0) {
+          this.$refs.table.getData();
+          this.drawer = false;
+          this.$message({
+            message: "已驳回",
+            type: "success"
+          });
+        }
+      })
+    },
+    distributionEvent($data) {
+      api.distribute({
+        type: "facility",
+        typeNo: this.tableId,
+        distributionUserId: $data.distributionUserId
+      }).then(res => {
+        if (res.status === 0) {
+          this.$refs.table.getData();
+          this.drawer = false;
+          this.$message({
+            message: "分配成功",
+            type: "success"
+          });
+        }
+      })
     },
     onClick_reject($data) {
       this.tableId = $data.id;

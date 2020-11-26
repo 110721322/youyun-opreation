@@ -1,4 +1,4 @@
-const webConfig = {
+export default {
   server: 'http://192.168.2.102:8081/', // 测试环境地址
   loginserver: 'http://192.168.2.102:8082/',  //登录开发调试端口
   agentServer: 'http://192.168.2.102:8082',
@@ -8,5 +8,3 @@ const webConfig = {
   globalParameObj: {}, // 全局参数
   fileDownloadUrl: 'http://192.168.2.102:8082'
 };
-
-export default webConfig;

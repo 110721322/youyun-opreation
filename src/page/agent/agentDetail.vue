@@ -3,48 +3,60 @@
     <div class="p_head_detail" :class="[activeClass]">
       <div class="top">
         <span>{{ agentDetail.agentName }}</span>
-<!--        <el-dropdown trigger="click" @command="onClick_changeClientType">-->
-<!--          <div class="el-dropdown-link">-->
-<!--            <div class="doit" :class="[activeClass]"></div>-->
-<!--            <div>-->
-<!--              {{ activeValue }}-->
-<!--              <i class="el-icon-caret-bottom el-icon&#45;&#45;right"></i>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--          <el-dropdown-menu slot="dropdown">-->
-<!--            <el-dropdown-item-->
-<!--              v-for="(item,index) in clientList"-->
-<!--              :key="index"-->
-<!--              :command="item"-->
-<!--            >{{ item.value }}</el-dropdown-item>-->
-<!--          </el-dropdown-menu>-->
-<!--        </el-dropdown>-->
+        <!--TODO 后续版本开发
+        <el-dropdown trigger="click" @command="onClick_changeClientType">
+          <div class="el-dropdown-link">
+            <div class="doit" :class="[activeClass]"></div>
+            <div>
+              {{ activeValue }}
+              <i class="el-icon-caret-bottom el-icon&#45;&#45;right"></i>
+            </div>
+          </div>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item
+              v-for="(item,index) in clientList"
+              :key="index"
+              :command="item"
+            >{{ item.value }}</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>-->
       </div>
-<!--      <div class="tags">-->
-<!--        <el-tag-->
-<!--          v-for="tag in dynamicTags"-->
-<!--          :key="tag"-->
-<!--          closable-->
-<!--          :disable-transitions="false"-->
-<!--          size="small"-->
-<!--          @close="handleClose(tag)"-->
-<!--        >{{ tag }}</el-tag>-->
-<!--        <el-input-->
-<!--          v-if="inputVisible"-->
-<!--          ref="saveTagInput"-->
-<!--          v-model="inputValue"-->
-<!--          class="input-new-tag"-->
-<!--          size="mini"-->
-<!--          @input="tagInput"-->
-<!--          @keyup.enter.native="handleInputConfirm"-->
-<!--          @blur="handleInputConfirm"-->
-<!--        ></el-input>-->
-<!--        <el-button v-else class="button-new-tag" size="small" @click="showInput">+ 添加标签</el-button>-->
-<!--      </div>-->
+      <!--TODO  后续版本开发
+      <div class="tags">
+        <el-tag
+          v-for="tag in dynamicTags"
+          :key="tag"
+          closable
+          :disable-transitions="false"
+          size="small"
+          @close="handleClose(tag)"
+        >{{ tag }}</el-tag>
+        <el-input
+          v-if="inputVisible"
+          ref="saveTagInput"
+          v-model="inputValue"
+          class="input-new-tag"
+          size="mini"
+          @input="tagInput"
+          @keyup.enter.native="handleInputConfirm"
+          @blur="handleInputConfirm"
+        ></el-input>
+        <el-button v-else class="button-new-tag" size="small" @click="showInput">+ 添加标签</el-button>
+      </div>-->
     </div>
 
-    <detailMode :rule-form="ruleForm" :config-data="configData" v-if="ruleForm.businessType === 'enterprise'" @edit="itemEdit"></detailMode>
-    <detailMode :rule-form="ruleForm" :config-data="configData1" @edit="itemEdit" v-if="ruleForm.businessType === 'individual'"></detailMode>
+    <detailMode
+      v-if="ruleForm.businessType === 'enterprise'"
+      :rule-form="ruleForm"
+      :config-data="configData"
+      @edit="itemEdit"
+    ></detailMode>
+    <detailMode
+      v-if="ruleForm.businessType === 'individual'"
+      :rule-form="ruleForm"
+      :config-data="configData1"
+      @edit="itemEdit"
+    ></detailMode>
     <detailMode :rule-form="ruleForm" :config-data="configData2" @edit="rateEdit"></detailMode>
 
     <div class="bg_box">
@@ -57,107 +69,164 @@
       </el-row>
     </div>
 
-<!--    <el-row :gutter="20">-->
-<!--      <el-col :span="9">-->
-<!--        <div class="bg_box" style="margin-right:0;margin-top:0;height:314px">-->
-<!--          <div class="title">沟通数据</div>-->
-<!--          <div style="text-align:center;">-->
-<!--            <el-date-picker-->
-<!--              v-model="timeDate"-->
-<!--              type="datetimerange"-->
-<!--              :picker-options="pickerOptions"-->
-<!--              range-separator="至"-->
-<!--              start-placeholder="开始日期"-->
-<!--              end-placeholder="结束日期"-->
-<!--              align="right"-->
-<!--              format="yyyy-MM-dd HH:mm:ss"-->
-<!--              value-format="yyyy-MM-dd HH:mm:ss"-->
-<!--              class="selectDate"-->
-<!--              @change="dateChange"-->
-<!--            >-->
-<!--            </el-date-picker>-->
-<!--          </div>-->
-<!--          <div class="talkInfo">-->
-<!--            <el-row>-->
-<!--              <el-col :span="8" class="data_item" style="height:58px">-->
-<!--                <div class="data_item_title">{{ summaryInfo.theme1 }}</div>-->
-<!--                <div>{{ summaryInfo.theme1Count }}次</div>-->
-<!--              </el-col>-->
-<!--              <el-col :span="8" class="data_item" style="height:58px">-->
-<!--                <div class="data_item_title">{{ summaryInfo.theme2 }}</div>-->
-<!--                <div>{{ summaryInfo.theme2Count }}次</div>-->
-<!--              </el-col>-->
-<!--              <el-col :span="8" class="data_item border_none" style="height:58px">-->
-<!--                <div class="data_item_title">沟通类型</div>-->
-<!--                <div>{{ summaryInfo.otherThemeCount }}次</div>-->
-<!--              </el-col>-->
-<!--            </el-row>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </el-col>-->
-<!--      <el-col :span="15">-->
-<!--        <div class="bg_box" style="margin-left:0;margin-top:0;height:314px">-->
-<!--          <img class="title_img" src="@/assets/img/clock.png" alt />-->
-<!--          <div class="title">-->
-<!--            待沟通<span style="color: #1989FA; padding: 0 4px;">{{ willConactNum }}</span>次-->
-<!--            <el-button type="primary" style="float: right; margin: 10px 24px;" @click="addContacts">添加沟通计划</el-button>-->
-<!--          </div>-->
+    <!--TODO  后续版本开发
+    <el-row :gutter="20">
+      <el-col :span="9">
+        <div class="bg_box" style="margin-right:0;margin-top:0;height:314px">
+          <div class="title">沟通数据</div>
+          <div style="text-align:center;">
+            <el-date-picker
+              v-model="timeDate"
+              type="datetimerange"
+              :picker-options="pickerOptions"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              align="right"
+              format="yyyy-MM-dd HH:mm:ss"
+              value-format="yyyy-MM-dd HH:mm:ss"
+              class="selectDate"
+              @change="dateChange"
+            >
+            </el-date-picker>
+          </div>
+          <div class="talkInfo">
+            <el-row>
+              <el-col :span="8" class="data_item" style="height:58px">
+                <div class="data_item_title">{{ summaryInfo.theme1 }}</div>
+                <div>{{ summaryInfo.theme1Count }}次</div>
+              </el-col>
+              <el-col :span="8" class="data_item" style="height:58px">
+                <div class="data_item_title">{{ summaryInfo.theme2 }}</div>
+                <div>{{ summaryInfo.theme2Count }}次</div>
+              </el-col>
+              <el-col :span="8" class="data_item border_none" style="height:58px">
+                <div class="data_item_title">沟通类型</div>
+                <div>{{ summaryInfo.otherThemeCount }}次</div>
+              </el-col>
+            </el-row>
+          </div>
+        </div>
+      </el-col>
+      <el-col :span="15">
+        <div class="bg_box" style="margin-left:0;margin-top:0;height:314px">
+          <img class="title_img" src="@/assets/img/clock.png" alt />
+          <div class="title">
+            待沟通<span style="color: #1989FA; padding: 0 4px;">{{ willConactNum }}</span>次
+            <el-button type="primary" style="float: right; margin: 10px 24px;" @click="addContacts">添加沟通计划</el-button>
+          </div>
 
-<!--          <BaseCrud-->
-<!--            :grid-config="tableConfigData.gridConfig"-->
-<!--            :grid-btn-config="tableConfigData.gridBtnConfig"-->
-<!--            :grid-data="talkPlanList"-->
-<!--            :form-config="tableConfigData.formConfig"-->
-<!--            :form-data="tableConfigData.formModel"-->
-<!--            :grid-edit-width="100"-->
-<!--            :table-height="212"-->
-<!--            form-title="用户"-->
-<!--            :is-async="true"-->
-<!--            :params="params1"-->
-<!--            style="margin:24px;border:1px solid #EBEEF5;height:212px;overflow:hidden"-->
-<!--            @detail="editDetail"-->
-<!--          ></BaseCrud>-->
-<!--        </div>-->
-<!--      </el-col>-->
-<!--    </el-row>-->
-<!--    <div class="bg_box" style="height:411px;margin-top:0;">-->
-<!--      <div class="title">-->
-<!--        历史沟通记录-->
-<!--        <el-button type="primary" style="float:right;margin:10px 24px" @click="addSubtotal">添加沟通小计</el-button>-->
-<!--        <el-button style="float:right;margin:10px 0px" @click="viewLiaison">查看联系人</el-button>-->
-<!--      </div>-->
+          <BaseCrud
+            :grid-config="tableConfigData.gridConfig"
+            :grid-btn-config="tableConfigData.gridBtnConfig"
+            :grid-data="talkPlanList"
+            :form-config="tableConfigData.formConfig"
+            :form-data="tableConfigData.formModel"
+            :grid-edit-width="100"
+            :table-height="212"
+            form-title="用户"
+            :is-async="true"
+            :params="params1"
+            style="margin:24px;border:1px solid #EBEEF5;height:212px;overflow:hidden"
+            @detail="editDetail"
+          ></BaseCrud>
+        </div>
+      </el-col>
+    </el-row>
+    <div class="bg_box" style="height:411px;margin-top:0;">
+      <div class="title">
+        历史沟通记录
+        <el-button type="primary" style="float:right;margin:10px 24px" @click="addSubtotal">添加沟通小计</el-button>
+        <el-button style="float:right;margin:10px 0px" @click="viewLiaison">查看联系人</el-button>
+      </div>
 
-<!--      <BaseCrud-->
-<!--        :grid-config="tableConfigData2.gridConfig"-->
-<!--        :grid-btn-config="tableConfigData2.gridBtnConfig"-->
-<!--        :grid-data="channelList"-->
-<!--        :form-config="tableConfigData2.formConfig"-->
-<!--        :form-data="tableConfigData2.formModel"-->
-<!--        :grid-edit-width="100"-->
-<!--        :table-height="309"-->
-<!--        form-title="用户"-->
-<!--        :is-async="true"-->
-<!--        :params="params2"-->
-<!--        style="margin:24px;border:1px solid #EBEEF5;height:309px;overflow:hidden"-->
-<!--        @detail="viewDetail"-->
-<!--      ></BaseCrud>-->
-<!--    </div>-->
+      <BaseCrud
+        :grid-config="tableConfigData2.gridConfig"
+        :grid-btn-config="tableConfigData2.gridBtnConfig"
+        :grid-data="channelList"
+        :form-config="tableConfigData2.formConfig"
+        :form-data="tableConfigData2.formModel"
+        :grid-edit-width="100"
+        :table-height="309"
+        form-title="用户"
+        :is-async="true"
+        :params="params2"
+        style="margin:24px;border:1px solid #EBEEF5;height:309px;overflow:hidden"
+        @detail="viewDetail"
+      ></BaseCrud>
+    </div>-->
 
     <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size="500px">
       <div class="p_head">{{ fromConfigData.title }}</div>
       <Form
-        :isDrawer="true"
+        :is-drawer="true"
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
         @confirm="handel_confirm"
         @cancel="cancel"
       ></Form>
     </el-drawer>
+    <el-drawer :visible.sync="financeDrawer" :with-header="false" size="500px">
+      <div class="financeTitle">财务信息</div>
+      <el-form :model="financeModel" :rules="rules">
+        <el-form-item label="结算卡类型" prop="bankAccountType" style="margin: 24px 24px 0 24px;" label-width="110px">
+          <el-radio-group v-model="financeModel.bankAccountType">
+            <el-radio label="public">对公</el-radio>
+            <el-radio label="private">对私</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="银行卡号" prop="bankCardNo" style="margin: 24px 24px 0 24px;" label-width="110px">
+          <el-input v-model="financeModel.bankCardNo" placeholder="请输入银行卡号" style="max-width:294px"></el-input>
+        </el-form-item>
+        <el-form-item label="开户支行" prop="bankContactLine" style="margin: 24px 24px 0 24px;" label-width="110px">
+          <el-select
+            v-model="financeModel.bankContactLine"
+            filterable
+            remote
+            reserve-keyword
+            placeholder="请输入关键词"
+            :remote-method="remoteMethod"
+            :loading="loading"
+            @change="handleSelect"
+          >
+            <el-option
+              v-for="item in bankOptions"
+              :key="item.unionCode"
+              :label="item.bankName"
+              :value="item.unionCode"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="开户支行地区" prop="bankArea" style="margin: 24px 24px 0 24px;" label-width="110px">
+          <el-input v-model="area" disabled style="max-width:294px"></el-input>
+        </el-form-item>
+        <el-form-item label="开户名" prop="bankAccountHolder" style="margin: 24px 24px 0 24px;" label-width="110px">
+          <el-input v-model="financeModel.bankAccountHolder" placeholder="请输入开户名" style="max-width:294px"></el-input>
+        </el-form-item>
+      </el-form>
+      <div class="bottom-btn">
+        <el-button type="primary" size="normal" @click="handel_save">保存</el-button>
+        <el-button size="normal" @click="handel_cancel">取消</el-button>
+      </div>
+    </el-drawer>
+    <el-drawer :visible.sync="equipment" :with-header="false" size="500px">
+      <div class="p_head">{{ equipmentConfigData.title }}</div>
+      <Form
+        ref="liaisonRef"
+        :is-drawer="true"
+        :form-base-data="equipmentConfigData.formData"
+        :show-foot-btn="equipmentConfigData.showFootBtn"
+        @confirm="equipment_confirm"
+        @cancel="cancel"
+      ></Form>
+    </el-drawer>
+    <!--TODO 后续版本开发
     <el-drawer :title="contactConfigData.title" :visible.sync="addContactsDraw" :with-header="false" size="500px">
       <div class="p_head">{{ contactConfigData.title }}</div>
       <Form
         ref="liaisonRef"
-        :isDrawer="true"
+        :is-drawer="true"
         :form-base-data="contactConfigData"
         :show-foot-btn="contactConfigData.showFootBtn"
         @confirm="handel_addContacts"
@@ -199,54 +268,12 @@
     <el-drawer :visible.sync="addLiaison" :with-header="false" size="500px">
       <Form
         ref="liaisonRef"
-        :isDrawer="true"
+        :is-drawer="true"
         :form-base-data="liaisonConfigData.formData"
         :show-foot-btn="liaisonConfigData.showFootBtn"
         @confirm="handel_addLiaison"
         @cancel="liaisonCancel"
       ></Form>
-    </el-drawer>
-    <el-drawer :visible.sync="financeDrawer" :with-header="false" size="500px">
-      <div class="financeTitle">财务信息</div>
-      <el-form :model="financeModel" :rules="rules">
-        <el-form-item label="结算卡类型" prop="bankAccountType" style="margin: 24px 24px 0 24px;" label-width="110px">
-          <el-radio-group v-model="financeModel.bankAccountType">
-            <el-radio label="public">对公</el-radio>
-            <el-radio label="private">对私</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="银行卡号" prop="bankCardNo" style="margin: 24px 24px 0 24px;" label-width="110px">
-          <el-input placeholder="请输入银行卡号" v-model="financeModel.bankCardNo" style="max-width:294px"></el-input>
-        </el-form-item>
-        <el-form-item label="开户支行" prop="bankContactLine" style="margin: 24px 24px 0 24px;" label-width="110px">
-          <el-select
-              v-model="financeModel.bankContactLine"
-              filterable
-              remote
-              reserve-keyword
-              placeholder="请输入关键词"
-              :remote-method="remoteMethod"
-              @change="handleSelect"
-              :loading="loading">
-            <el-option
-                v-for="item in bankOptions"
-                :key="item.unionCode"
-                :label="item.bankName"
-                :value="item.unionCode">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="开户支行地区" prop="bankArea" style="margin: 24px 24px 0 24px;" label-width="110px">
-          <el-input disabled v-model="area" style="max-width:294px"></el-input>
-        </el-form-item>
-        <el-form-item label="开户名" prop="bankAccountHolder" style="margin: 24px 24px 0 24px;" label-width="110px">
-          <el-input placeholder="请输入开户名" v-model="financeModel.bankAccountHolder" style="max-width:294px"></el-input>
-        </el-form-item>
-      </el-form>
-      <div class="bottom-btn">
-        <el-button type="primary" size="normal" @click="handel_save">保存</el-button>
-        <el-button size="normal" @click="handel_cancle">取消</el-button>
-      </div>
     </el-drawer>
     <el-dialog title="沟通记录详情" :visible.sync="dialogTableVisible">
       <ul class="liaison_detail">
@@ -291,37 +318,24 @@
         </li>
       </ul>
     </el-dialog>
-    <el-drawer :visible.sync="equipment" :with-header="false" size="500px">
-      <div class="p_head">{{ equipmentConfigData.title }}</div>
-      <Form
-          ref="liaisonRef"
-          :isDrawer="true"
-          :form-base-data="equipmentConfigData.formData"
-          :show-foot-btn="equipmentConfigData.showFootBtn"
-          @confirm="equipment_confirm"
-          @cancel="cancel"
-      ></Form>
-    </el-drawer>
+    -->
   </div>
 </template>
 
 <script>
 import Form from "@/components/form/index.vue";
 import api from "@/api/api_agent.js";
-// import BaseCrud from "@/components/table/BaseCrud.vue";
 import api_device from "@/api/api_device.js";
 import detailMode from "@/components/detailMode/detailMode.vue";
-import { ORDER_EQUIPMENT } from "./formConfig/orderEquipmentForm";
-import { USER_CONFIG, USER_CONFIG2 } from "./tableConfig/config_communicate";
-import { DETAILCONFIG } from "./tableConfig/agentDetailConfig";
-import { FORM_CONFIG } from "./formConfig/agentDetail";
-import { CONTACTS_CONFIG } from "./formConfig/addContacts"
-import { LISASION } from "./formConfig/addLiasion"
+import {ORDER_EQUIPMENT} from "./formConfig/orderEquipmentForm";
+import {USER_CONFIG, USER_CONFIG2} from "./tableConfig/config_communicate";
+import {DETAILCONFIG} from "./tableConfig/agentDetailConfig";
+import {FORM_CONFIG} from "./formConfig/agentDetail";
 import areaData from "@/assets/data/areaData";
 
 export default {
   name: "AgentDetail",
-  components: { detailMode, Form },
+  components: {detailMode, Form},
   data() {
     return {
       channelList: [],
@@ -379,7 +393,7 @@ export default {
       contactConfigData: {},
       fromConfigData: [],
       ruleForm: {},
-      agentNo: '',
+      agentNo: this.$route.query.agentNo,
       params1: {},
       api1: api.queryTalkPlan,
       params2: {},
@@ -411,16 +425,16 @@ export default {
       },
       rules: {
         bankAccountType: [
-          { required: true, message: '请选择结算卡类型', trigger: 'change' }
+          {required: true, message: '请选择结算卡类型', trigger: 'change'}
         ],
         bankCardNo: [
-          { required: true, message: '请填写银行卡号', trigger: 'blur' }
+          {required: true, message: '请填写银行卡号', trigger: 'blur'}
         ],
         bankContactLine: [
-          { required: true, message: '请填写开户支行', trigger: 'change' }
+          {required: true, message: '请填写开户支行', trigger: 'change'}
         ],
         bankAccountHolder: [
-          { required: true, message: '请填写开户名', trigger: 'blur' }
+          {required: true, message: '请填写开户名', trigger: 'blur'}
         ]
       },
       area: '',
@@ -431,9 +445,7 @@ export default {
     };
   },
   created() {
-    localStorage.setItem('liasionAgent', this.$route.query.agentNo)
-    this.agentNo = this.$route.query.agentNo
-    this.getDetail(this.agentNo);
+    this.getDetail();
     const now = new Date();
     const year = now.getFullYear() // 得到年份
     const month = now.getMonth() + 1// 得到月份
@@ -443,15 +455,19 @@ export default {
     var start = year + '-' + month1 + '-' + date1 + ' ' + '00' + ':' + '00' + ':' + '00'
     var end = year + '-' + month1 + '-' + date1 + ' ' + '23' + ':' + '59' + ':' + '59'
     this.timeDate = [start, end]
-    this.gatTag()
-    // this.getSelectSummary(this.timeDate)
-    this.getQueryWait()
-    this.getRelatedLabels()
-    this.getAddressBookQuery()
-    // this.getQueryTalkPlan()
-    // this.getQueryPlanList()
+    /* TODO 后续版本开发
+       localStorage.setItem('liasionAgent', this.agentNo)
+       this.getQueryWait()
+       this.gatTag()
+       this.getAddressBookQuery()
+       this.getRelatedLabels()
+       this.getSelectSummary(this.timeDate)
+       this.getQueryTalkPlan()
+       this.getQueryPlanList()
+     */
   },
-  mounted() {},
+  mounted() {
+  },
   methods: {
     remoteMethod(query) {
       if (query !== '') {
@@ -475,11 +491,9 @@ export default {
       api.getBankLineByNo({
         unionCode: item
       }).then(res => {
-        // this.dataForm.bankArea[0] = res.data.provinceCode
-        // this.dataForm.bankArea = res.data.cityCode
-        var provinceName = ''
-        var cityName = ''
-        var areaName = ''
+        var provinceName = '';
+        var cityName = '';
+        var areaName = '';
         var result = this.$g.utils.getNestedArr(areaData, 'children')
         result.forEach(m => {
           if (m.value === res.data.provinceCode) {
@@ -503,50 +517,46 @@ export default {
           message: '请填写完整信息',
           type: 'warning'
         })
-      } else {
-        api.updateFinancial({
-          agentNo: this.$route.query.agentNo,
-          bankAccountHolder: this.financeModel.bankAccountHolder,
-          bankCardNo: this.financeModel.bankCardNo,
-          bankContactLine: this.financeModel.bankContactLine,
-          bankBranchName: this.bankName,
-          bankArea: this.areaCodeNum,
-          bankAccountType: this.financeModel.bankAccountType
-        }).then(res => {
-          if (res.status === 0) {
-            this.$message({
-              message: '财务资料更新成功',
-              type: 'success'
-            })
-            this.getDetail(this.$route.query.agentNo)
-            this.editType = ''
-            this.financeDrawer = false
-          }
-        }).catch(() => {
-        })
+        return;
       }
+      api.updateFinancial({
+        agentNo: this.agentNo,
+        bankAccountHolder: this.financeModel.bankAccountHolder,
+        bankCardNo: this.financeModel.bankCardNo,
+        bankContactLine: this.financeModel.bankContactLine,
+        bankBranchName: this.bankName,
+        bankArea: this.areaCodeNum,
+        bankAccountType: this.financeModel.bankAccountType
+      }).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            message: '财务资料更新成功',
+            type: 'success'
+          })
+          this.getDetail()
+          this.editType = ''
+          this.financeDrawer = false
+        }
+      })
     },
-    handel_cancle() {
+    handel_cancel() {
       this.financeDrawer = false
     },
     // 查询服务商详情
-    getDetail(agentNo) {
+    getDetail() {
       api.getAgentDetail({
-        agentNo: agentNo
+        agentNo: this.agentNo
       }).then(res => {
         if (res.data) {
           const agentDetail = this.$g.utils.deepClone(res.data)
           if (agentDetail.expandSub === 1) {
             agentDetail.expandSubCn = '是'
-          }
-          if (agentDetail.expandSub === 0 || agentDetail.expandSub === null) {
+          } else if (agentDetail.expandSub === 0 || agentDetail.expandSub === null) {
             agentDetail.expandSub = 0
             agentDetail.expandSubCn = '否'
           }
           agentDetail.renewTypeCn = '固定续费'
-          agentDetail.labelList.forEach(item => {
-            this.dynamicTags.push(item.name);
-          });
+          this.dynamicTags = agentDetail.labelList.map(item => item.name)
           if (agentDetail.wechatPayRate) {
             agentDetail.alipayRate = this.$g.utils.AccMul(agentDetail.alipayRate, 1000);
             agentDetail.wechatPayRate = this.$g.utils.AccMul(agentDetail.wechatPayRate, 1000);
@@ -557,10 +567,7 @@ export default {
             agentDetail.chargeFeePercent = this.$g.utils.AccMul(agentDetail.chargeFeePercent, 100)
           }
           if (agentDetail.provinceCode) {
-            var area = []
-            area.push(agentDetail.provinceCode, agentDetail.cityCode, agentDetail.areaCode)
-            agentDetail.area = area
-            // agentDetail.areaEmailAddress = agentDetail.provinceName + agentDetail.cityName + agentDetail.areaName + agentDetail.expAddress
+            agentDetail.area = [agentDetail.provinceCode, agentDetail.cityCode, agentDetail.areaCode]
           }
           if (agentDetail.activeMode) {
             agentDetail.activeMode = 'relyus'
@@ -568,13 +575,10 @@ export default {
           }
           if (agentDetail.bankAccountType === 'private') {
             agentDetail.bankAccountTypeCn = '对私'
-          }
-          if (agentDetail.bankAccountType === 'public') {
+          } else if (agentDetail.bankAccountType === 'public') {
             agentDetail.bankAccountTypeCn = '对公'
           }
-          var active = []
-          active.push(agentDetail.activeScope.provinceCode, agentDetail.activeScope.cityCode)
-          agentDetail.activeScopeCode = active
+          agentDetail.activeScopeCode = [agentDetail.activeScope.provinceCode, agentDetail.activeScope.cityCode]
           if (agentDetail.postId) {
             agentDetail.detailAddress = agentDetail.postDetailAddress
             agentDetail.personMobile = agentDetail.postPersonMobile
@@ -582,23 +586,322 @@ export default {
             agentDetail.provinceName = agentDetail.postProvinceMsg
             agentDetail.cityName = agentDetail.postCityMsg
             agentDetail.areaName = agentDetail.postAreaMsg
-            var area1 = []
-            area1.push(agentDetail.postProvinceCode, agentDetail.postCityCode, agentDetail.postAreaCode)
-            agentDetail.postArea = area1
+            agentDetail.postArea = [agentDetail.postProvinceCode, agentDetail.postCityCode, agentDetail.postAreaCode]
           }
           this.agentDetail = agentDetail
           this.ruleForm = agentDetail
         }
       });
     },
+    orderEquipment() {
+      this.equipment = true
+      this.equipmentConfigData = ORDER_EQUIPMENT
+      this.equipmentConfigData.formData[7].initVal = this.agentDetail.postProvinceMsg ? this.agentDetail.postProvinceMsg + this.agentDetail.postCityMsg + this.agentDetail.postAreaMsg + this.agentDetail.postDetailAddress : ''
+    },
+    itemEdit($model) {
+      if ($model === 'address') {
+        this.editAddress();
+      } else if ($model === 'basicData') {
+        this.editBasic();
+      } else if ($model === 'finance') {
+        this.editFinance();
+      }
+    },
+    editAddress() {
+      this.editType = 'editMailAddress'
+      this.fromConfigData = {}
+      this.drawer = true;
+      this.$nextTick(() => {
+        const newFromConfigData = this.$g.utils.deepClone(FORM_CONFIG.address);
+        newFromConfigData.formData.forEach(item => {
+          item.initVal = this.agentDetail[item.key];
+        });
+        this.fromConfigData = newFromConfigData;
+      })
+    },
+    editBasic() {
+      this.fromConfigData = {}
+      this.drawer = true;
+      this.$nextTick(() => {
+        this.editType = 'editBasicData'
+        const newFromConfigData = this.$g.utils.deepClone(FORM_CONFIG.basicData);
+        newFromConfigData.formData.forEach((item, index) => {
+          item.initVal = this.agentDetail[item.key];
+        });
+        this.fromConfigData = newFromConfigData;
+      })
+    },
+    editFinance() {
+      this.editType = 'editFincance'
+      if (this.ruleForm.bankBranchName) {
+        this.remoteMethod(this.ruleForm.bankBranchName)
+        this.handleSelect(this.ruleForm.bankContactLine)
+      }
+      this.areaCodeNum = this.ruleForm.bankArea
+      this.bankName = this.ruleForm.bankBranchName
+      this.financeModel = {
+        bankContactLine: this.ruleForm.bankContactLine,
+        bankCardNo: this.ruleForm.bankCardNo,
+        bankAccountType: this.ruleForm.bankAccountType,
+        bankAccountHolder: this.ruleForm.bankAccountHolder
+      }
+      this.financeDrawer = true
+    },
+    rateEdit($model) {
+      if ($model === 'rateInfo') {
+        this.editType = 'editRateInfo'
+      }
+      if ($model === 'mailAddress') {
+        this.editType = 'editAuthority'
+      }
+      if ($model === 'renew') {
+        this.editType = 'editRenew'
+      }
+      this.drawer = true;
+      setTimeout(() => {
+        const newFromConfigData = FORM_CONFIG[$model];
+        newFromConfigData.formData.forEach((item, index) => {
+          item.initVal = this.agentDetail[item.key];
+        });
+        this.fromConfigData = this.$g.utils.deepClone(newFromConfigData);
+      }, 200)
+    },
+    cancel() {
+      this.editType = ''
+      this.drawer = false;
+      this.addContactsDraw = false
+    },
+    handel_confirm(row) {
+      if (this.editType === 'editBasicData') {
+        this.editBasicData(row);
+      } else if (this.editType === 'editRateInfo') {
+        this.editRateInfo(row);
+      } else if (this.editType === 'editMailAddress') {
+        this.editMailAddress(row);
+      } else if (this.editType === 'editRenew') {
+        this.editRenew(row);
+      } else if (this.editType === 'editAuthority') {
+        this.editAuthority(row);
+      }
+    },
+    editBasicData($row) {
+      if (!$row.businessType || !$row.agentName || !$row.personName || !$row.personMobile || !$row.companyAddress || !$row.area) {
+        this.$message({
+          message: '请填写完整信息',
+          type: 'info'
+        })
+        return
+      }
+      let businessLicenseImg = ''
+      if ($row.businessType === 'enterprise') {
+        if (!$row.businessLicenseImg) {
+          this.$message({
+            message: "请上传营业执照",
+            type: ""
+          })
+          return
+        }
+        var img = $row.businessLicenseImg.split('.com')
+        if (img[1]) {
+          businessLicenseImg = img[1].slice(1, img[1].length)
+        } else {
+          businessLicenseImg = $row.businessLicenseImg
+        }
+      }
+      api.updateAgentBaseInfo({
+        agentNo: this.agentNo,
+        businessType: $row.businessType,
+        agentName: $row.agentName,
+        personName: $row.personName,
+        personMobile: $row.personMobile,
+        email: $row.email ? $row.email : '',
+        provinceCode: $row.area[0],
+        cityCode: $row.area[1],
+        areaCode: $row.area[2],
+        companyAddress: $row.companyAddress,
+        businessLicenseImg: businessLicenseImg
+      }).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            message: '基础资料更新成功',
+            type: 'success'
+          })
+          this.getDetail()
+          this.editType = ''
+          this.drawer = false
+        }
+      })
+    },
+    editRateInfo($row) {
+      if (!$row.wechatPayRate || !$row.cloudPayLe1000Rate || !$row.cloudPayGt1000Rate) {
+        this.$message({
+          message: '请填写完整费率信息',
+          type: "warning"
+        })
+        return false
+      } else {
+        const exp = $row.wechatPayRate < 3 || $row.wechatPayRate > 6 ||
+          ($row.cloudPayLe1000Rate || $row.cloudPayGt1000Rate) < 2.3 ||
+          ($row.cloudPayLe1000Rate || $row.cloudPayGt1000Rate) > 10
+        if (exp) {
+          this.$message({
+            message: '请输入正确的费率',
+            type: "warning"
+          })
+          return false
+        } else {
+          api.updateAgentRate({
+            agentNo: this.agentNo,
+            wechatPayRate: this.$g.utils.AccDiv($row.wechatPayRate, 1000),
+            alipayRate: this.$g.utils.AccDiv($row.wechatPayRate, 1000),
+            cloudPayLe1000Rate: this.$g.utils.AccDiv($row.cloudPayLe1000Rate, 1000),
+            cloudPayGt1000Rate: this.$g.utils.AccDiv($row.cloudPayGt1000Rate, 1000)
+          }).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                message: '财务资料更新成功',
+                type: 'success'
+              })
+              this.getDetail()
+              this.editType = ''
+              this.drawer = false
+            }
+          })
+        }
+      }
+    },
+    editMailAddress($row) {
+      const apiJudge = this.agentDetail.postId ? 'updatePostAddress' : 'addPostAddress'
+      api[apiJudge]({
+        id: this.agentDetail.postId,
+        relateCode: this.agentNo,
+        personName: $row.personName,
+        personMobile: $row.personMobile,
+        provinceCode: $row.postArea[0],
+        cityCode: $row.postArea[1],
+        areaCode: $row.postArea[2],
+        detailAddress: $row.detailAddress
+      }).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            message: '邮寄地址更新成功',
+            type: 'success'
+          })
+          this.getDetail()
+          this.editType = ''
+          this.drawer = false
+        }
+      })
+    },
+    editRenew($row) {
+      if (!$row.monthCount || !$row.renewValue) {
+        this.$message({
+          message: '请填写必填信息',
+          type: 'warning'
+        })
+        return false
+      } else {
+        api.updateRenewAmount({
+          agentNo: this.agentNo,
+          monthCount: $row.monthCount,
+          renewType: 'fixed',
+          renewValue: $row.renewValue
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '编辑成功',
+              type: 'success'
+            })
+            this.getDetail()
+            this.editType = ''
+            this.drawer = false
+          }
+        })
+      }
+    },
+    editAuthority($row) {
+      if (!$row.activeMode || !$row.activeScopeCode[0] || !$row.chargeFeePercent || ($row.expandSub === '')) {
+        this.$message({
+          message: "请填写必填信息",
+          type: "warning"
+        })
+        return
+      }
+      if (!$row.addressObj) {
+        var arr = []
+        arr = [
+          {
+            label: this.agentDetail.activeScope.cityName,
+            value: this.agentDetail.activeScope.cityCode
+          },
+          {
+            label: this.agentDetail.activeScope.provinceName,
+            value: this.agentDetail.activeScope.provinceCode
+          }
+        ]
+        $row.addressObj = arr
+      }
+      api.updateAgentPrivilege({
+        agentNo: this.agentNo,
+        activeScope: {
+          provinceCode: $row.addressObj[0].value,
+          provinceName: $row.addressObj[0].label,
+          cityCode: $row.addressObj[1].value,
+          cityName: $row.addressObj[1].label
+        },
+        expandSub: $row.expandSub,
+        activeMode: $row.activeMode,
+        chargeFeePercent: this.$g.utils.AccDiv($row.chargeFeePercent, 100)
+      }).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            message: "编辑权限成功",
+            type: "success"
+          })
+          this.getDetail()
+          this.editType = ''
+          this.drawer = false
+        }
+      })
+    },
+    equipment_confirm($ruleForm) {
+      const params = {
+        saleUserId: this.$store.state.admin.userInfo.id,
+        saleUserName: this.$store.state.admin.userInfo.name,
+        amount: $ruleForm.amount,
+        buyerAddress: $ruleForm.buyerAddress,
+        buyerName: this.ruleForm.expReceiver,
+        buyerPhone: this.ruleForm.expMobile,
+        outputType: 2, // 运营订购
+        actualAmount: $ruleForm.actualAmount,
+        agentNo: this.agentNo,
+        payType: $ruleForm.payType,
+        voucher: $ruleForm.voucher.dialogImageUrl,
+        buyerRemark: $ruleForm.buyerRemark,
+        infoVOList: [{
+          count: $ruleForm.count,
+          deviceModel: $ruleForm.deviceModel,
+          deviceId: $ruleForm.deviceId,
+          salePrice: $ruleForm.actualAmount
+        }]
+      }
+      api_device.deviceOutputAdd(params).then(res => {
+        this.drawer = false;
+        if (res.status === 0) {
+          this.$message({
+            message: '订购成功',
+            type: 'success'
+          });
+        }
+      })
+    }
+    /* TODO  后续版本开发 沟通小记
     // 查询服务商已关联的标签
     getRelatedLabels() {
       api.queryRelatedLabels({
-        agentNo: this.$route.query.agentNo
+        agentNo: this.agentNo
       }).then(res => {
 
-      }).catch(err => {
-        console.log(err)
       })
     },
     // 弹出添加沟通计划侧弹窗
@@ -643,7 +946,7 @@ export default {
           api.addTalkPlan({
             addressBookId: row.addressBookId,
             nextContactTime: row.nextContactTime,
-            relateCode: this.$route.query.agentNo,
+            relateCode: this.agentNo,
             remark: row.remark,
             remindType: row.remindType
           }).then(res => {
@@ -673,7 +976,7 @@ export default {
             content: row.content,
             theme: row.theme[0],
             subTheme: row.theme[1],
-            relateCode: this.$route.query.agentNo
+            relateCode: this.agentNo
           }).then(res => {
             if (res.status === 0) {
               this.$message({
@@ -698,7 +1001,7 @@ export default {
             id: this.contactId,
             addressBookId: row.addressBookId,
             nextContactTime: row.nextContactTime,
-            relateCode: this.$route.query.agentNo,
+            relateCode: this.agentNo,
             remark: row.remark,
             remindType: row.remindType
           }).then(res => {
@@ -717,11 +1020,6 @@ export default {
         }
       }
     },
-    orderEquipment() {
-      this.equipment = true
-      this.equipmentConfigData = ORDER_EQUIPMENT
-      this.equipmentConfigData.formData[7].initVal = this.agentDetail.postProvinceMsg ? this.agentDetail.postProvinceMsg + this.agentDetail.postCityMsg + this.agentDetail.postAreaMsg + this.agentDetail.postDetailAddress : ''
-    },
     // 标签输入框
     tagInput(value) {},
     // 沟通计划切换时间
@@ -735,18 +1033,18 @@ export default {
     },
     // 获取标签信息
     gatTag() {
-      // api.queryLaBleAgent({
-      //   agentNo: this.$route.query.agentNo
-      // }).then(res => {
+      api.queryLaBleAgent({
+        agentNo: this.agentNo
+      }).then(res => {
 
-      // }).catch(err => {
-      //   console.log(err)
-      // })
+      }).catch(err => {
+        console.log(err)
+      })
     },
     // 查询沟通数据
     getSelectSummary(value) {
       api.selectSummary({
-        relateCode: this.$route.query.agentNo,
+        relateCode: this.agentNo,
         beginDate: value[0],
         endDate: value[1]
       }).then(res => {
@@ -756,7 +1054,7 @@ export default {
     // 查询沟通计划列表
     getQueryTalkPlan() {
       api.queryTalkPlan({
-        relateCode: this.$route.query.agentNo
+        relateCode: this.agentNo
       }).then(res => {
         this.talkPlanList = res.data
       })
@@ -764,7 +1062,7 @@ export default {
     // 查询沟通记录列表
     getQueryPlanList() {
       api.queryPlanList({
-        relateCode: this.$route.query.agentNo
+        relateCode: this.agentNo
       }).then(res => {
         res.data.forEach(m => {
           if (m.theme === 'dailyTalk') {
@@ -832,296 +1130,10 @@ export default {
       this.inputVisible = false;
       this.inputValue = "";
     },
-    itemEdit($model) {
-      if ($model === 'address') {
-        this.editType = 'editMailAddress'
-        this.fromConfigData = {}
-        setTimeout(() => {
-          const newFromConfigData = FORM_CONFIG[$model];
-          newFromConfigData.formData.forEach((item, index) => {
-            item.initVal = this.agentDetail[item.key];
-          });
-          this.fromConfigData = this.$g.utils.deepClone(newFromConfigData);
-        }, 200)
-        this.drawer = true;
-      }
-      if ($model === 'basicData') {
-        this.fromConfigData = {}
-        setTimeout(() => {
-          this.editType = 'editBasicData'
-          const newFromConfigData = FORM_CONFIG[$model];
-          newFromConfigData.formData.forEach((item, index) => {
-            item.initVal = this.agentDetail[item.key];
-          });
-          this.fromConfigData = this.$g.utils.deepClone(newFromConfigData);
-        }, 200)
-        this.drawer = true;
-      }
-      if ($model === 'finance') {
-        this.editType = 'editFincance'
-        if (this.ruleForm.bankBranchName) {
-          this.remoteMethod(this.ruleForm.bankBranchName)
-          this.handleSelect(this.ruleForm.bankContactLine)
-        }
-        this.areaCodeNum = this.ruleForm.bankArea
-        this.bankName = this.ruleForm.bankBranchName
-        this.financeModel = {
-          bankContactLine: this.ruleForm.bankContactLine,
-          bankCardNo: this.ruleForm.bankCardNo,
-          bankAccountType: this.ruleForm.bankAccountType,
-          bankAccountHolder: this.ruleForm.bankAccountHolder
-        }
-        this.financeDrawer = true
-      }
-    },
-    rateEdit($model) {
-      if ($model === 'rateInfo') {
-        this.editType = 'editRateInfo'
-      }
-      if ($model === 'mailAddress') {
-        this.editType = 'editAuthority'
-      }
-      if ($model === 'renew') {
-        this.editType = 'editRenew'
-      }
-      this.drawer = true;
-      setTimeout(() => {
-        const newFromConfigData = FORM_CONFIG[$model];
-        newFromConfigData.formData.forEach((item, index) => {
-          item.initVal = this.agentDetail[item.key];
-        });
-        this.fromConfigData = this.$g.utils.deepClone(newFromConfigData);
-        console.log(this.fromConfigData)
-      }, 200)
-    },
-    cancel() {
-      this.editType = ''
-      this.drawer = false;
-      this.addContactsDraw = false
-    },
-    handel_confirm(row) {
-      if (this.editType === 'editBasicData') {
-        if (!row.businessType || !row.agentName || !row.personName || !row.personMobile || !row.companyAddress || !row.area) {
-          this.$message({
-            message: '请填写完整信息',
-            type: 'info'
-          })
-          return
-        }
-        var businessLicenseImg = ''
-        if (row.businessType === 'enterprise') {
-          if (!row.businessLicenseImg) {
-            this.$message({
-              message: "请上传营业执照",
-              type: ""
-            })
-            return
-          } else {
-            var img = row.businessLicenseImg.split('.com')
-            if (img[1]) {
-              businessLicenseImg = img[1].slice(1, img[1].length)
-            } else {
-              businessLicenseImg = row.businessLicenseImg
-            }
-          }
-        }
-        api.updateAgentBaseInfo({
-          agentNo: this.$route.query.agentNo,
-          businessType: row.businessType,
-          agentName: row.agentName,
-          personName: row.personName,
-          personMobile: row.personMobile,
-          email: row.email ? row.email : '',
-          provinceCode: row.area[0],
-          cityCode: row.area[1],
-          areaCode: row.area[2],
-          companyAddress: row.companyAddress,
-          businessLicenseImg: businessLicenseImg
-        }).then(res => {
-          if (res.status === 0) {
-            this.$message({
-              message: '基础资料更新成功',
-              type: 'success'
-            })
-            this.getDetail(this.$route.query.agentNo)
-            this.editType = ''
-            this.drawer = false
-          }
-        }).catch(() => {
-        })
-      }
-      if (this.editType === 'editRateInfo') {
-        if (!row.wechatPayRate || !row.cloudPayLe1000Rate || !row.cloudPayGt1000Rate) {
-          this.$message({
-            message: '请填写完整费率信息',
-            type: "warning"
-          })
-          return false
-        } else {
-          if (row.wechatPayRate < 3 || row.wechatPayRate > 6) {
-            this.$message({
-              message: '请输入正确的费率',
-              type: "warning"
-            })
-            return false
-          } else if ((row.cloudPayLe1000Rate || row.cloudPayGt1000Rate) < 2.3 || (row.cloudPayLe1000Rate || row.cloudPayGt1000Rate) > 10) {
-            this.$message({
-              message: '请输入正确的费率',
-              type: "warning"
-            })
-            return false
-          } else {
-            api.updateAgentRate({
-              agentNo: this.$route.query.agentNo,
-              wechatPayRate: this.$g.utils.AccDiv(row.wechatPayRate, 1000),
-              alipayRate: this.$g.utils.AccDiv(row.wechatPayRate, 1000),
-              cloudPayLe1000Rate: this.$g.utils.AccDiv(row.cloudPayLe1000Rate, 1000),
-              cloudPayGt1000Rate: this.$g.utils.AccDiv(row.cloudPayGt1000Rate, 1000)
-            }).then(res => {
-              if (res.status === 0) {
-                this.$message({
-                  message: '财务资料更新成功',
-                  type: 'success'
-                })
-                this.getDetail(this.$route.query.agentNo)
-                this.editType = ''
-                this.drawer = false
-              }
-            })
-          }
-        }
-      }
-      if (this.editType === 'editMailAddress') {
-        const apiJudge = this.agentDetail.postId ? 'updatePostAddress' : 'addPostAddress'
-        api[apiJudge]({
-          id: this.agentDetail.postId,
-          relateCode: this.$route.query.agentNo,
-          personName: row.personName,
-          personMobile: row.personMobile,
-          provinceCode: row.postArea[0],
-          cityCode: row.postArea[1],
-          areaCode: row.postArea[2],
-          detailAddress: row.detailAddress
-        }).then(res => {
-          if (res.status === 0) {
-            this.$message({
-              message: '邮寄地址更新成功',
-              type: 'success'
-            })
-            this.getDetail(this.$route.query.agentNo)
-            this.editType = ''
-            this.drawer = false
-          }
-        }).catch(() => {
-        })
-      }
-      if (this.editType === 'editRenew') {
-        if (!row.monthCount || !row.renewValue) {
-          this.$message({
-            message: '请填写必填信息',
-            type: 'warning'
-          })
-          return false
-        } else {
-          api.updateRenewAmount({
-            agentNo: this.$route.query.agentNo,
-            monthCount: row.monthCount,
-            renewType: 'fixed',
-            renewValue: row.renewValue
-          }).then(res => {
-            if (res.status === 0) {
-              this.$message({
-                message: '编辑成功',
-                type: 'success'
-              })
-              this.getDetail(this.$route.query.agentNo)
-              this.editType = ''
-              this.drawer = false
-            }
-          })
-        }
-      }
-      if (this.editType === 'editAuthority') {
-        if (!row.activeMode || !row.activeScopeCode[0] || !row.chargeFeePercent || (row.expandSub === '')) {
-          this.$message({
-            message: "请填写必填信息",
-            type: "warning"
-          })
-          return
-        }
-        if (!row.addressObj) {
-          var arr = []
-          arr = [
-            {
-              label: this.agentDetail.activeScope.cityName,
-              value: this.agentDetail.activeScope.cityCode
-            },
-            {
-              label: this.agentDetail.activeScope.provinceName,
-              value: this.agentDetail.activeScope.provinceCode
-            }
-          ]
-          row.addressObj = arr
-        }
-        api.updateAgentPrivilege({
-          agentNo: this.$route.query.agentNo,
-          activeScope: {
-            provinceCode: row.addressObj[0].value,
-            provinceName: row.addressObj[0].label,
-            cityCode: row.addressObj[1].value,
-            cityName: row.addressObj[1].label
-          },
-          expandSub: row.expandSub,
-          activeMode: row.activeMode,
-          chargeFeePercent: this.$g.utils.AccDiv(row.chargeFeePercent, 100)
-        }).then(res => {
-          if (res.status === 0) {
-            this.$message({
-              message: "编辑权限成功",
-              type: "success"
-            })
-            this.getDetail(this.$route.query.agentNo)
-            this.editType = ''
-            this.drawer = false
-          }
-        })
-      }
-    },
-    equipment_confirm($ruleForm) {
-      const params = {
-        saleUserId: this.$store.state.admin.userInfo.id,
-        saleUserName: this.$store.state.admin.userInfo.name,
-        amount: $ruleForm.amount,
-        buyerAddress: $ruleForm.buyerAddress,
-        buyerName: this.ruleForm.expReceiver,
-        buyerPhone: this.ruleForm.expMobile,
-        outputType: 2, // 运营订购
-        actualAmount: $ruleForm.actualAmount,
-        agentNo: this.$route.query.agentNo,
-        payType: $ruleForm.payType,
-        voucher: $ruleForm.voucher.dialogImageUrl,
-        buyerRemark: $ruleForm.buyerRemark,
-        infoVOList: [{
-          count: $ruleForm.count,
-          deviceModel: $ruleForm.deviceModel,
-          deviceId: $ruleForm.deviceId,
-          salePrice: $ruleForm.actualAmount
-        }]
-      }
-      api_device.deviceOutputAdd(params).then(res => {
-        this.drawer = false;
-        if (res.status === 0) {
-          this.$message({
-            message: '订购成功',
-            type: 'success'
-          });
-        }
-      })
-    },
     // 查询通讯簿
     getAddressBookQuery() {
       api.addressBookQuery({
-        relateCode: this.$route.query.agentNo
+        relateCode: this.agentNo
       }).then(res => {
         if (res.data) {
           this.contactsList = res.data
@@ -1182,7 +1194,7 @@ export default {
             jobName: row.jobName,
             jobStatus: row.jobStatus,
             remark: row.remark,
-            relateCode: this.$route.query.agentNo
+            relateCode: this.agentNo
           }).then(res => {
             if (res.status === 0) {
               this.$message({
@@ -1205,7 +1217,7 @@ export default {
             jobName: row.jobName,
             jobStatus: row.jobStatus,
             remark: row.remark,
-            relateCode: this.$route.query.agentNo,
+            relateCode: this.agentNo,
             id: this.liaisonId
           }).then(res => {
             if (res.status === 0) {
@@ -1228,305 +1240,344 @@ export default {
     // 查询沟通次数
     getQueryWait() {
       api.queryWait({
-        relateCode: this.$route.query.agentNo
+        relateCode: this.agentNo
       }).then(res => {
         this.willConactNum = res.data
       }).catch(() => {})
     }
+    */
   }
 };
 </script>
 
 <style lang="scss">
-.p_head_detail {
-  height: 76px;
-  background: rgba(255, 255, 255, 1);
-  overflow: hidden;
-  &.red {
-    border-bottom: 2px solid #f5222d;
-  }
-  &.green {
-    border-bottom: 2px solid #30b08f;
-  }
-  &.yellow {
-    border-bottom: 2px solid #fec171;
-  }
-  .top {
-    padding-left: 24px;
-    line-height: 76px;
-    font-size: 20px;
-    font-weight: 500;
-    color: rgba(0, 0, 0, 0.85);
-    span {
-      margin-right: 24px;
-    }
-  }
-  .doit {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    float: left;
-    margin-top: 5px;
-    margin-right: 5px;
+  .p_head_detail {
+    height: 76px;
+    background: rgba(255, 255, 255, 1);
+    overflow: hidden;
+
     &.red {
-      background: #f5222d;
+      border-bottom: 2px solid #f5222d;
     }
+
     &.green {
-      background: #30b08f;
+      border-bottom: 2px solid #30b08f;
     }
+
     &.yellow {
-      background: #fec171;
+      border-bottom: 2px solid #fec171;
     }
-  }
 
-  .el-dropdown-link {
-    cursor: pointer;
-    color: #333335;
-    width: 100px;
-  }
-  .el-icon-arrow-down {
-    font-size: 14px;
-  }
-  .demonstration {
-    display: block;
-    color: #8492a6;
-    font-size: 14px;
-    margin-bottom: 20px;
-  }
+    .top {
+      padding-left: 24px;
+      line-height: 76px;
+      font-size: 20px;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.85);
 
-  .el-tag + .el-tag {
-    margin-left: 10px;
-  }
-  .button-new-tag {
-    margin-left: 10px;
-    height: 24px;
-    line-height: 24px;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-  .input-new-tag {
-    width: 90px;
-    margin-left: 10px;
-    vertical-align: top;
-    height: 23px;
-    line-height: 23px;
-  }
-  .tags {
-    margin-left: 32px;
-  }
-  .el-input--mini .el-input__inner {
-    height: 24px !important;
-    line-height: 24px !important;
-  }
-}
-
-.bg_box {
-  margin: 24px;
-  background: #fff;
-  overflow: hidden;
-  .title {
-    height: 54px;
-    line-height: 54px;
-    padding-left: 24px;
-    font-size: 16px;
-    font-weight: 500;
-    color: rgba(51, 51, 53, 1);
-    border-bottom: 1px solid #ebeef5;
-  }
-  .title_img {
-    width: 20px;
-    height: 20px;
-    margin: 18px 24px 0;
-    float: left;
-  }
-}
-.app {
-  border-right: 1px solid #ebeef5;
-  text-align: center;
-  font-size: 14px;
-  font-weight: 500;
-  color: rgba(0, 0, 0, 0.85);
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-content: center;
-  align-items: center;
-  height: 88px;
-  cursor: pointer;
-  :hover {
-    color: #1890ff;
-  }
-  img {
-    width: 24px;
-    height: 24px;
-    margin-right: 12px;
-  }
-}
-
-.data_item {
-  border-right: 1px solid #ccc;
-  margin-top: 16px;
-  .data_item_title {
-    font-size: 14px;
-    font-weight: 400;
-    color: rgba(0, 0, 0, 0.45);
-    border: none;
-    text-align: center;
-    margin: 3px 0 17px;
-  }
-  div {
-    text-align: center;
-    font-size: 20px;
-    font-weight: 400;
-    color: rgba(0, 0, 0, 0.85);
-  }
-}
-
-.border_none {
-  border: none;
-}
-.top_title {
-  width: 100%;
-  height: 72px;
-  padding: 0 24px 0 32px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #EBEEF5;
-  .the_title {
-    font-size: 20px;
-    font-weight: 500;
-    color: #000000;
-  }
-  button {
-    width: 80px;
-    height: 28px;
-    color: #ffffff;
-    font-size: 12px;
-    text-align: center;
-    line-height: 28px;
-    padding: 0 0;
-  }
-}
-
-.liaisonList {
-  padding: 32px 24px 100px 24px;
-  width: 100%;
-  height: 100vh;
-  overflow: auto;
-  .liaison-contant {
-    width: 100%;
-    height: 190px;
-    margin-bottom: 24px;
-    border: 1px solid #E9E9E9;
-    border-radius: 4px;
-    .liaison-top {
-      width: 100%;
-      height: 44px;
-      border-bottom: 1px solid #EBEEF5;
-      background: #EBEEF5;
-      padding: 0 24px 0 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       span {
-        font-size: 14px;
-        color: #000000;
-        opacity: 85%;
-        font-weight: 500;
-      }
-      .liaison-editor {
-        color: #1989FA;
-        font-size: 14px;
-        cursor: pointer;
+        margin-right: 24px;
       }
     }
-    .liasion-info {
-      padding: 24px 0 0 32px;
-      position: relative;
-      top: 0;
-      left: 0;
-      .info-list {
-        margin-bottom: 14px;
-        line-height: 22px;
-        font-size: 14px;
-        span:nth-child(1) {
-          color: #000000;
-        }
-        span:nth-child(2) {
-          color: #606266;
-        }
+
+    .doit {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      float: left;
+      margin-top: 5px;
+      margin-right: 5px;
+
+      &.red {
+        background: #f5222d;
       }
-      .jobStatus {
-        position: absolute;
-        right: 40px;
-        top: 20px;
-        img {
-          width: 104px;
-          height: 104px;
-        }
+
+      &.green {
+        background: #30b08f;
       }
+
+      &.yellow {
+        background: #fec171;
+      }
+    }
+
+    .el-dropdown-link {
+      cursor: pointer;
+      color: #333335;
+      width: 100px;
+    }
+
+    .el-icon-arrow-down {
+      font-size: 14px;
+    }
+
+    .demonstration {
+      display: block;
+      color: #8492a6;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .el-tag + .el-tag {
+      margin-left: 10px;
+    }
+
+    .button-new-tag {
+      margin-left: 10px;
+      height: 24px;
+      line-height: 24px;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    .input-new-tag {
+      width: 90px;
+      margin-left: 10px;
+      vertical-align: top;
+      height: 23px;
+      line-height: 23px;
+    }
+
+    .tags {
+      margin-left: 32px;
+    }
+
+    .el-input--mini .el-input__inner {
+      height: 24px !important;
+      line-height: 24px !important;
     }
   }
-}
 
-.liaison_detail {
-  width: 100%;
-  padding-left: 20%;
-  li{
+  .bg_box {
+    margin: 24px;
+    background: #fff;
+    overflow: hidden;
+
+    .title {
+      height: 54px;
+      line-height: 54px;
+      padding-left: 24px;
+      font-size: 16px;
+      font-weight: 500;
+      color: rgba(51, 51, 53, 1);
+      border-bottom: 1px solid #ebeef5;
+    }
+
+    .title_img {
+      width: 20px;
+      height: 20px;
+      margin: 18px 24px 0;
+      float: left;
+    }
+  }
+
+  .app {
+    border-right: 1px solid #ebeef5;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.85);
     display: flex;
-    line-height: 24px;
-    margin-bottom: 8px;
-    span:nth-child(1) {
-      font-size: 16px;
-      color: #333333;
-      padding-right: 20px;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    height: 88px;
+    cursor: pointer;
+
+    :hover {
+      color: #1890ff;
     }
-    span:nth-child(2) {
-      font-size: 16px;
+
+    img {
+      width: 24px;
+      height: 24px;
+      margin-right: 12px;
     }
   }
-}
 
-.selectDate {
-  // top: 30px;
-  // left: 50%;
-  // margin-left: -200px;
-  margin-top: 24px;
-  width: 100%!important;
-  max-width: 360px;
-}
+  .data_item {
+    border-right: 1px solid #ccc;
+    margin-top: 16px;
 
-.talkInfo {
-  margin-top: 50px;
-}
+    .data_item_title {
+      font-size: 14px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.45);
+      border: none;
+      text-align: center;
+      margin: 3px 0 17px;
+    }
 
-.financeTitle {
-  width: 100%;
-  height: 84px;
-  border-bottom: 1px solid #ececec;
-  line-height: 84px;
-  padding-left: 24px;
-  font-size: 28px;
-  margin-bottom: 32px;
-}
+    div {
+      text-align: center;
+      font-size: 20px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.85);
+    }
+  }
 
-.bottom-btn {
-  // width: 30%;
-  // position: fixed;
-  // bottom: 0;
-  // right: 0;
-  width: 500px;
-  padding: 16px 0px;
-  // height: 96px;
-  background: white;
-  border-top: 1px solid #ebeef5;
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-content: center;
-}
+  .border_none {
+    border: none;
+  }
+
+  .top_title {
+    width: 100%;
+    height: 72px;
+    padding: 0 24px 0 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #EBEEF5;
+
+    .the_title {
+      font-size: 20px;
+      font-weight: 500;
+      color: #000000;
+    }
+
+    button {
+      width: 80px;
+      height: 28px;
+      color: #ffffff;
+      font-size: 12px;
+      text-align: center;
+      line-height: 28px;
+      padding: 0 0;
+    }
+  }
+
+  .liaisonList {
+    padding: 32px 24px 100px 24px;
+    width: 100%;
+    height: 100vh;
+    overflow: auto;
+
+    .liaison-contant {
+      width: 100%;
+      height: 190px;
+      margin-bottom: 24px;
+      border: 1px solid #E9E9E9;
+      border-radius: 4px;
+
+      .liaison-top {
+        width: 100%;
+        height: 44px;
+        border-bottom: 1px solid #EBEEF5;
+        background: #EBEEF5;
+        padding: 0 24px 0 32px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        span {
+          font-size: 14px;
+          color: #000000;
+          opacity: 85%;
+          font-weight: 500;
+        }
+
+        .liaison-editor {
+          color: #1989FA;
+          font-size: 14px;
+          cursor: pointer;
+        }
+      }
+
+      .liasion-info {
+        padding: 24px 0 0 32px;
+        position: relative;
+        top: 0;
+        left: 0;
+
+        .info-list {
+          margin-bottom: 14px;
+          line-height: 22px;
+          font-size: 14px;
+
+          span:nth-child(1) {
+            color: #000000;
+          }
+
+          span:nth-child(2) {
+            color: #606266;
+          }
+        }
+
+        .jobStatus {
+          position: absolute;
+          right: 40px;
+          top: 20px;
+
+          img {
+            width: 104px;
+            height: 104px;
+          }
+        }
+      }
+    }
+  }
+
+  .liaison_detail {
+    width: 100%;
+    padding-left: 20%;
+
+    li {
+      display: flex;
+      line-height: 24px;
+      margin-bottom: 8px;
+
+      span:nth-child(1) {
+        font-size: 16px;
+        color: #333333;
+        padding-right: 20px;
+      }
+
+      span:nth-child(2) {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .selectDate {
+    // top: 30px;
+    // left: 50%;
+    // margin-left: -200px;
+    margin-top: 24px;
+    width: 100% !important;
+    max-width: 360px;
+  }
+
+  .talkInfo {
+    margin-top: 50px;
+  }
+
+  .financeTitle {
+    width: 100%;
+    height: 84px;
+    border-bottom: 1px solid #ececec;
+    line-height: 84px;
+    padding-left: 24px;
+    font-size: 28px;
+    margin-bottom: 32px;
+  }
+
+  .bottom-btn {
+    // width: 30%;
+    // position: fixed;
+    // bottom: 0;
+    // right: 0;
+    width: 500px;
+    padding: 16px 0px;
+    // height: 96px;
+    background: white;
+    border-top: 1px solid #ebeef5;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+  }
 </style>

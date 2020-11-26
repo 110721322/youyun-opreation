@@ -8,8 +8,7 @@ export const FORM_CONFIG = {
       label: '筛选时间',
       key: 'date',
       class: 'max-width',
-      querySelectAll: true,
-      isSelectToday: true,
+      defaultDateType: 'all',
       labelWidth: '120px',
       span: 22
     },

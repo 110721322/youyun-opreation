@@ -21,7 +21,6 @@
 <script>
 import Item from "./Item";
 import FixiOSBug from "./FixiOSBug";
-// import menu2 from "./menu2.vue";
 import { EventBus } from "../../bus/event-bus.js";
 export default {
   name: "SidebarItem",

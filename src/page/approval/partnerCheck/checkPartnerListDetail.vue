@@ -43,7 +43,7 @@
 import api from "@/api/api_merchantAudit";
 import detailMode from "@/components/detailMode/detailMode2.vue";
 import Form from "@/components/form/index.vue";
-import { FORM_CONFIG } from "./../formConfig/checkServiceDetailConfig";
+import { FORM_CONFIG, CONFIG_DATA } from "../formConfig/checkServiceDetailConfig";
 
 export default {
   name: "CheckPartnerListDetail",
@@ -59,101 +59,15 @@ export default {
         showOperBtns: false,
         showOtherEdit: false
       },
-      // pass通过 preApproval预审核 checking审核中 reject驳回
-      currentType: "",
+      currentType: "", // pass通过 preApproval预审核 checking审核中 reject驳回
       ruleForm: {},
-      configData: {
-        baseData1: {
-          name: "基本信息",
-          items: [
-            {
-              name: "身份证正面照",
-              key: "idPortraitImg",
-              type: "image"
-            },
-            {
-              name: "身份证反面照",
-              key: "idEmblemImg",
-              type: "image"
-            },
-            {
-              name: "手持身份证照",
-              key: "withIdImg",
-              type: "image"
-            },
-            {
-              name: "人员类型",
-              key: "jobType"
-            },
-            {
-              name: "合伙人姓名",
-              key: "partnerName"
-            },
-            {
-              name: "手机号码",
-              key: "mobile"
-            },
-            {
-              name: "支付宝/微信费率",
-              key: "alipayRate"
-            },
-            {
-              name: "云闪付费率（单笔≤1000元）",
-              key: "cloudPayLe1000Rate"
-            },
-
-            {
-              name: "云闪付费率（单笔＞1000元）",
-              key: "cloudPayGt1000Rate"
-            },
-            {
-              name: "合伙人佣金提成",
-              key: "kickbackPercent"
-            }
-          ]
-        },
-        baseData2: {
-          name: "基本信息",
-          items: [
-            {
-              name: "身份证正面照",
-              key: "idPortraitImg",
-              type: "image"
-            },
-            {
-              name: "身份证反面照",
-              key: "idEmblemImg",
-              type: "image"
-            },
-            {
-              name: "手持身份证照",
-              key: "withIdImg",
-              type: "image"
-            },
-            {
-              name: "人员类型",
-              key: "jobType"
-            },
-            {
-              name: "合伙人姓名",
-              key: "partnerName"
-            },
-            {
-              name: "手机号码",
-              key: "mobile"
-            }
-          ]
-        }
-      }
+      configData: null
     };
   },
   watch: {
     currentType: function($val) {
       switch ($val) {
         case "waitSign":
-          this.showComponents.showOperBtns = true;
-          this.showComponents.showRejectTitle = false;
-          break;
         case "audit":
           this.showComponents.showOperBtns = true;
           this.showComponents.showRejectTitle = false;
@@ -166,13 +80,13 @@ export default {
           this.showComponents.showRejectTitle = true;
           this.showComponents.showOperBtns = false;
           break;
-
         default:
           break;
       }
     }
   },
   created() {
+    this.configData = this.$g.utils.deepClone(CONFIG_DATA)
     this.agentPartnerNo = this.$route.query.agentPartnerNo
     this.getPartenDetail()
   },
@@ -199,57 +113,40 @@ export default {
       })
     },
     confirm($data) {
-      var rejectReason
       if (!$data.baseData && !$data.reason) {
         this.$message({
           message: '请填写驳回原因'
         })
-      } else {
-        if ($data.baseData && !$data.reason) {
-          if ($data.baseData === 1) {
-            rejectReason = '合伙人姓名与证件不符'
-          }
-          if ($data.baseData === 2) {
-            rejectReason = '合伙人身份证正面照有误'
-          }
-          if ($data.baseData === 3) {
-            rejectReason = '合伙人身份证反面照有误'
-          }
-          if ($data.baseData === 4) {
-            rejectReason = '合伙人手持身份证有误'
-          }
-        } else if (!$data.baseData && $data.reason) {
-          rejectReason = $data.reason
-        } else {
-          if ($data.baseData === 1) {
-            rejectReason = '合伙人姓名与证件不符,' + $data.reason
-          }
-          if ($data.baseData === 2) {
-            rejectReason = '合伙人姓名与证件不符,' + $data.reason
-          }
-          if ($data.baseData === 3) {
-            rejectReason = '合伙人姓名与证件不符,' + $data.reason
-          }
-          if ($data.baseData === 4) {
-            rejectReason = '合伙人姓名与证件不符,' + $data.reason
-          }
-        }
-        api.agentPartnerReject({
-          agentPartnerNo: this.agentPartnerNo,
-          reason: rejectReason
-        }).then(res => {
-          if (res.status === 0) {
-            this.$message({
-              message: '已驳回',
-              type: 'success'
-            });
-            this.$router.replace({
-              name: 'checkPartner'
-            })
-          }
-          this.drawer = false;
-        })
+        return
       }
+      const actions = new Map([
+        [1, '合伙人姓名与证件不符'],
+        [2, '合伙人身份证正面照有误'],
+        [3, '合伙人身份证反面照有误'],
+        [4, '合伙人手持身份证有误'],
+        ['default', '']
+      ])
+      let rejectReason = actions.get($data.baseData) || actions.get('default');
+      if (rejectReason && $data.reason) {
+        rejectReason = rejectReason + ',' + $data.reason
+      } else if (!rejectReason && $data.reason) {
+        rejectReason = $data.reason
+      }
+      api.agentPartnerReject({
+        agentPartnerNo: this.agentPartnerNo,
+        reason: rejectReason
+      }).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            message: '已驳回',
+            type: 'success'
+          });
+          this.$router.replace({
+            name: 'checkPartner'
+          })
+        }
+        this.drawer = false;
+      })
     },
     onClick_sign() {
       api.agentPartnerPass({

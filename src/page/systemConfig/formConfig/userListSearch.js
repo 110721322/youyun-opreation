@@ -2,9 +2,8 @@ export const SEARCH_CONFIG = {
   formData: [
     {
       type: 9,
-      querySelectAll: true,
+      defaultDateType: 'all',
       timeType: 'datetimerange',
-      isSelectToday: true,
       label: '筛选时间',
       key: 'date',
       labelWidth: '80px',

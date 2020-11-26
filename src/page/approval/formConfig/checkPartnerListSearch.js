@@ -1,4 +1,3 @@
-// import areaData from "@/assets/data/areaData"
 import apiAgent from "@/api/api_agent.js";
 
 export const SEARCH_CONFIG = {
@@ -8,7 +7,7 @@ export const SEARCH_CONFIG = {
       label: '筛选时间',
       key: 'date',
       class: 'max-width',
-      selectSevenDay: true,
+      defaultDateType: 'third',
       labelWidth: '110px',
       span: 24
     },

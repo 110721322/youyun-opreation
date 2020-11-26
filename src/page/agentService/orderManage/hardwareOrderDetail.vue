@@ -171,8 +171,7 @@ export default {
     this.getHardDetail()
   },
   methods: {
-    getSummaries(param) {
-      // const { columns, data } = param;
+    getSummaries() {
       const sums = [];
       sums[0] = "累计金额（元）";
       sums[3] = "3560.0";

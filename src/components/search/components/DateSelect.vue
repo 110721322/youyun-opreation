@@ -20,23 +20,18 @@
         v-for="item of dateList"
         :key="item.label"
         class="date-item"
-        :class="item.value == selectItem.value ? 'select' : ''"
+        :class="item.value === selectItem.value ? 'select' : ''"
         @click="onClick_item(item)"
       >{{ item.label }}</div>
     </div>
-    <!--    <span class="date-item" v-for="item of dateList" :class="item.value == selectItem.value?'select':''"  @click="onClick_item(item)">{{item.label}}</span>-->
   </div>
 </template>
 <script type="text/ecmascript-6">
-import * as g from "@/libs/global";
+import { dateSelect } from "@/libs/config/constant.config";
 
 export default {
   components: {},
   props: {
-    // datatype: {
-    //   type: String,
-    //   default: "daterange"
-    // },
     ruleForm: Object,
     formItem: Object,
     pickerOptions: {
@@ -82,7 +77,7 @@ export default {
         }
       ],
       selectItem: {},
-      datatype: "daterange"
+      datatype: dateSelect.DATE_RANGE
     };
   },
   computed: {
@@ -94,130 +89,65 @@ export default {
   watch: {
     isRest: function($new) {
       if ($new) {
-        this.getToday()
-        this.selectItem = {};
-        if (this.formItem.isSelectToday) {
-          this.dateList[0].label = "今天";
-          if (this.datatype === "daterange") {
-            let start = "";
-            let end = "";
-            if (this.dateList[0].label === "今天") {
-              end = this.getDay(0);
-              start = this.getDay(0);
-            }
-            this.timeInterval = [start, end];
-          } else if (this.datatype === "datetimerange") {
-            let start = "";
-            let end = "";
-            if (this.dateList[0].label === "今天") {
-              end = this.getDay(0) + " 23:59:59";
-              start = this.getDay(0) + " 00:00:00";
-            } else {
-              end = this.getDay(-1) + " 23:59:59";
-              start = this.getDay(-1) + " 00:00:00";
-            }
-            this.timeInterval = [start, end];
-          }
-        }
-        if (this.formItem.querySelectAll) {
-          this.timeInterval = [];
-          this.selectItem = {};
-          this.ruleForm[this.formItem.key] = this.timeInterval;
-          return;
-        }
-        if (this.datatype === "datetimerange") {
-          this.defaultTime = ["00:00:00", "23:59:59"];
-        }
-        if (this.formItem.selectSevenDay) {
-          this.selectItem = {
-            label: "近7天",
-            value: 7
-          }
-          let start = "";
-          let end = "";
-          end = this.getDay(0);
-          start = this.getDay(-6);
-          if (this.datatype === 'daterange') {
-            this.timeInterval = [start, end];
-          }
-          if (this.datatype === 'datetimerange') {
-            this.timeInterval = [start + ' 00:00:00', end + ' 23:59:59'];
-          }
-          this.$emit("dataSelect", this.timeInterval);
-          this.ruleForm[this.formItem.key] = this.timeInterval;
-        }
+        this.resetState();
       }
     }
   },
   created() {
-    this.getToday()
-    this.datatype = this.formItem.datatype || "daterange"
-    if (this.datatype === "datetimerange") {
-      this.defaultTime = ["00:00:00", "23:59:59"];
-    }
-    if (this.formItem.isSelectToday) {
-      this.dateList[0].label = "今天";
-      let start = "";
-      let end = "";
-      if (this.datatype === "daterange") {
-        start = this.getDay(0);
-        end = this.getDay(0);
-      } else if (this.datatype === "datetimerange") {
-        start = this.getDay(0) + " 00:00:00";
-        end = this.getDay(0) + " 23:59:59";
+    this.datatype = this.formItem.datatype || dateSelect.DATE_RANGE
+    this.resetState();
+  },
+  methods: {
+    resetState() {
+      const { defaultDateType } = this.formItem;
+      if (this.datatype === dateSelect.DATE_TIME_RANGE) {
+        this.defaultTime = ["00:00:00", "23:59:59"];
       }
-      this.timeInterval = [start, end];
-      this.$emit("dataSelect", this.timeInterval);
-      this.ruleForm[this.formItem.key] = this.timeInterval;
-    }
-    if (this.formItem.querySelectAll) {
+      this.getToday()
+      this.selectItem = {};
+      if (defaultDateType === dateSelect.DATE_INTERVAL_FIRST) {
+        this.resetSelectToday();
+      } else if (defaultDateType === dateSelect.DATE_INTERVAL_THIRD) {
+        this.resetSelectThird();
+      } else if (defaultDateType === dateSelect.DATE_INTERVAL_ALL) {
+        this.resetSelectAll();
+      }
+    },
+    resetSelectToday() {
+      this.dateList[0].label = "今天";
+      this.onClick_item(this.dateList[0])
+    },
+    resetSelectAll() {
       this.timeInterval = [];
       this.selectItem = {};
       this.ruleForm[this.formItem.key] = this.timeInterval;
-    }
-    if (this.formItem.selectSevenDay) {
+    },
+    resetSelectThird() {
       this.dateList[0].label = "今天";
-      this.selectItem = {
-        label: "近7天",
-        value: 7
-      }
-      let start = "";
-      let end = "";
-      end = this.getDay(0);
-      start = this.getDay(-6);
-      if (this.datatype === 'daterange') {
-        this.timeInterval = [start, end];
-      }
-      if (this.datatype === 'datetimerange') {
-        this.timeInterval = [start + ' 00:00:00', end + ' 23:59:59'];
-      }
-      this.$emit("dataSelect", this.timeInterval);
-      this.ruleForm[this.formItem.key] = this.timeInterval;
-    }
-  },
-  methods: {
+      this.onClick_item(this.dateList[2]);
+    },
     onChage($data) {
       if ($data === null) {
         this.onClick_item(this.dateList[0]);
         return;
       }
       this.selectItem = {};
-      let timeArr = [];
-      if (this.datatype === "daterange") {
-        timeArr = [g.utils.date($data[0]), g.utils.date($data[1])];
-      } else if (this.datatype === "datetimerange") {
-        timeArr = [g.utils.time($data[0]), g.utils.time($data[1])];
+      let timeInterval = [];
+      if (this.datatype === dateSelect.DATE_RANGE) {
+        timeInterval = [this.$g.utils.date($data[0]), this.$g.utils.date($data[1])];
+      } else if (this.datatype === dateSelect.DATE_TIME_RANGE) {
+        timeInterval = [this.$g.utils.time($data[0]), this.$g.utils.time($data[1])];
       }
 
-      this.$emit("dataSelect", timeArr);
-      this.ruleForm[this.formItem.key] = timeArr;
+      this.$emit("dataSelect", timeInterval);
+      this.ruleForm[this.formItem.key] = timeInterval;
       this.$emit("timeSearch", this.ruleForm)
     },
     onClick_item($item) {
       this.selectItem = $item;
       let start = "";
       let end = "";
-      if (this.datatype === "daterange") {
+      if (this.datatype === dateSelect.DATE_RANGE) {
         if ($item.label === "今天") {
           start = this.getDay(0);
           end = this.getDay(0);
@@ -226,7 +156,7 @@ export default {
           end = this.getDay(0);
         }
         this.timeInterval = [start, end];
-      } else if (this.datatype === "datetimerange") {
+      } else if (this.datatype === dateSelect.DATE_TIME_RANGE) {
         if ($item.label === "今天") {
           start = this.getDay(0) + " 00:00:00";
           end = this.getDay(0) + " 23:59:59";
@@ -242,10 +172,10 @@ export default {
     },
     getToday() {
       let end, start;
-      if (this.datatype === "daterange") {
+      if (this.datatype === dateSelect.DATE_RANGE) {
         end = this.getDay(0);
         start = this.getDay(0);
-      } else if (this.datatype === "datetimerange") {
+      } else if (this.datatype === dateSelect.DATE_TIME_RANGE) {
         end = this.getDay(0) + " 23:59:59";
         start = this.getDay(0) + " 00:00:00";
       }
@@ -309,7 +239,6 @@ export default {
   float: left;
   height: 40px;
   width: 75px;
-  //   padding: 5px;
   margin-left: 15px;
   text-align: center;
   line-height: 40px;

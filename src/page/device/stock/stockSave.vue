@@ -86,20 +86,6 @@
         <el-button type="primary" @click="confirm">保存</el-button>
         <el-button @click="cancel">取消</el-button>
       </div>
-<!--      <Form-->
-<!--        v-if="drawer"-->
-<!--        ref="form"-->
-<!--        :is-drawer="true"-->
-<!--        :form-base-data="fromConfigData.formData"-->
-<!--        :show-foot-btn="fromConfigData.showFootBtn"-->
-<!--        label-width="130px"-->
-<!--        @cancel="cancel"-->
-<!--        @confirm="confirm"-->
-<!--      >-->
-<!--        <template slot="content">-->
-<!--          <div>11111</div>-->
-<!--        </template>-->
-<!--      </Form>-->
     </el-drawer>
   </div>
 </template>
@@ -107,12 +93,12 @@
 import api from "@/api/api_device";
 import apiComm from "@/api/api_common";
 import Search from "@/components/search/search.vue";
-// import Form from "@/components/form/index.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import { FORM_CONFIG } from "./../formConfig/saveDetail";
 import { SEARCH_CONFIG } from "./../formConfig/saveSearch";
 import { SAVELIST_CONFIG } from "./../tableConfig/savelistConfig";
 import UploadFile from "@/components/form/components/UploadFile";
+import { StockSave } from "@/libs/config/constant.config";
 
 export default {
   name: "StockSave",
@@ -200,7 +186,7 @@ export default {
         deviceId: "",
         deadline: "",
         inputTime: "",
-        type: 1
+        type: StockSave.IMPORT_MULTI
       }
       this.drawer = true;
     },
@@ -221,53 +207,64 @@ export default {
         })
         return
       }
-      if ($data.type === 1 && !this.excelData) {
+      if ($data.type === StockSave.IMPORT_MULTI && !this.excelData) {
         this.$message({
           message: "请导入模板信息",
           type: "warning"
         })
         return
       }
-      if ($data.type === 1 && this.excelData) {
-        // exelc解析
-        apiComm.excelUploadPic({
-          url: this.excelData,
-          type: "deviceInput"
-        }).then(res => {
-          if (res.data.length === 0) {
-            this.$message({
-              message: "请填写设备标识",
-              type: "warning"
-            })
-            return
-          }
-          $data.deviceIdentifierList = res.data
-          this.deviceInputAdd($data);
-        })
+      if ($data.type === StockSave.IMPORT_MULTI && this.excelData) {
+        this.importMulti($data)
+      } else if ($data.type === StockSave.IMPORT_SINGLE) {
+        this.importSingle($data)
       }
-      if ($data.type === 2) {
-        if (this.list.length === 0) {
+    },
+    /**
+     * 批量导入
+     * @param $data
+     */
+    importMulti($data) {
+      // exelc解析
+      apiComm.excelUploadPic({
+        url: this.excelData,
+        type: "deviceInput"
+      }).then(res => {
+        if (res.data.length === 0) {
           this.$message({
-            message: "添加设备标识",
+            message: "请填写设备标识",
             type: "warning"
           })
-          return;
+          return
         }
-        var deviceIdentifierList = []
-        this.list.forEach(m => {
-          if (m.id === "") {
-            this.$message({
-              message: "设备标识不能为空",
-              type: "warning"
-            })
-            return;
-          } else {
-            deviceIdentifierList.push(m.id)
-          }
-        })
-        $data.deviceIdentifierList = deviceIdentifierList
+        $data.deviceIdentifierList = res.data
         this.deviceInputAdd($data);
+      })
+    },
+    /**
+     * 单个导入
+     */
+    importSingle($data) {
+      if (this.list.length === 0) {
+        this.$message({
+          message: "添加设备标识",
+          type: "warning"
+        })
+        return;
       }
+      let deviceIdentifierList = []
+      deviceIdentifierList = this.list
+        .filter(item => !!item.id)
+        .map(item => item.id)
+      if (deviceIdentifierList.length === 0) {
+        this.$message({
+          message: "设备标识不能为空",
+          type: "warning"
+        })
+        return;
+      }
+      $data.deviceIdentifierList = deviceIdentifierList
+      this.deviceInputAdd($data);
     },
     // 新增
     deviceInputAdd($data, arr) {

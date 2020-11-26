@@ -1,38 +1,36 @@
 <template>
   <div class="navbar">
-    <!-- <hamburger
-      id="hamburger-container"
-      class="hamburger-container"
-      @toggleClick="toggleSideBar"
-    />-->
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
     <div class="right-menu">
-      <!--      <template>-->
-      <!--        <el-popover-->
-      <!--          placement="bottom-end"-->
-      <!--          popper-class="popperNav"-->
-      <!--          trigger="hover"-->
-      <!--        >-->
-      <!--          <div class="sysMask">-->
-      <!--            <div class="sysMask-title">-->
-      <!--              <span>待办事项</span>-->
-      <!--              <span>{{ todoTask.todoCount }}个待办事项</span>-->
-      <!--            </div>-->
-      <!--            <ul>-->
-      <!--              <li @click="toSyswarn" v-for="(item, index) in todoTask.todos" :key="index">-->
-      <!--                <div class="sysMask-info">-->
-      <!--                  <div>{{ item.taskValue }}</div>-->
-      <!--                  <div>{{ item.count }}</div>-->
-      <!--                </div>-->
-      <!--              </li>-->
-      <!--            </ul>-->
-      <!--            <el-button type="text" class="sysBtn" @click="toSyswarn">更多待办事项 ></el-button>-->
-      <!--          </div>-->
-      <!--          <el-badge :value="todoTask.todoCount" :max="99" slot="reference" class="badge-item">-->
-      <!--            <img src="@/assets/img/ding.png" class="search_img" @click="toSyswarn" />-->
-      <!--          </el-badge>-->
-      <!--        </el-popover>-->
-      <!--      </template>-->
+      <!--TODO: @desc 消息推送后续开发留存
+          @time 2020/11/23
+          @author 流云
+            <template>
+              <el-popover
+                placement="bottom-end"
+                popper-class="popperNav"
+                trigger="hover"
+              >
+                <div class="sysMask">
+                  <div class="sysMask-title">
+                    <span>待办事项</span>
+                    <span>{{ todoTask.todoCount }}个待办事项</span>
+                  </div>
+                  <ul>
+                    <li @click="toSyswarn" v-for="(item, index) in todoTask.todos" :key="index">
+                      <div class="sysMask-info">
+                        <div>{{ item.taskValue }}</div>
+                        <div>{{ item.count }}</div>
+                      </div>
+                    </li>
+                  </ul>
+                  <el-button type="text" class="sysBtn" @click="toSyswarn">更多待办事项 ></el-button>
+                </div>
+                <el-badge :value="todoTask.todoCount" :max="99" slot="reference" class="badge-item">
+                  <img src="@/assets/img/ding.png" class="search_img" @click="toSyswarn" />
+                </el-badge>
+              </el-popover>
+            </template>-->
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
@@ -53,14 +51,14 @@
     <el-drawer :visible.sync="passwordDrawer" :with-header="false" size="500px">
       <div class="p_head">修改密码</div>
       <Form
-          v-if="passwordDrawer"
-          :form-base-data="formConfig.formData"
-          :show-foot-btn="formConfig.showFootBtn"
-          label-width="130px"
-          :title="formConfig.title"
-          :is-drawer="true"
-          @confirm="confirm"
-          @cancel="cancel"
+        v-if="passwordDrawer"
+        :form-base-data="formConfig.formData"
+        :show-foot-btn="formConfig.showFootBtn"
+        label-width="130px"
+        :title="formConfig.title"
+        :is-drawer="true"
+        @confirm="confirm"
+        @cancel="cancel"
       ></Form>
     </el-drawer>
   </div>
@@ -69,13 +67,11 @@
 <script>
 import api from "@/api/api_login";
 import Form from "@/components/form"
-// import Hamburger from './Head/index.vue'
 import Breadcrumb from "./breadcrumb.vue";
 import avatar from "@/assets/img/icon_avatar.png"
 import { mapActions } from 'vuex';
 export default {
   components: {
-    // Hamburger,
     Breadcrumb,
     Form
   },
@@ -122,18 +118,18 @@ export default {
   computed: {
     nameLabel() {
       return this.userInfo.name || this.userInfo.jobName || this.userInfo.nickName || '无名氏'
-    },
+    }
+    /* TODO 消息推送后续
     todoTask: function() {
       return this.$store.state.admin.todoList;
-    }
+    }*/
   },
   created() {
-    // this.setTodoList();
+    // TODO 消息推送后续this.setTodoList();
   },
   methods: {
     ...mapActions(['resetState']),
     async logout() {
-      // await this.$store.dispatch("user/logout");
       api
         .out({
           userToken: this.$store.state.admin.accessToken
@@ -143,6 +139,7 @@ export default {
           this.$router.replace(`/login`);
         })
     },
+    /* TODO 消息推送后续
     toSyswarn() {
       if (this.$route.path === '/work/todo') {
         this.$message.warning('您已在当前页');
@@ -151,12 +148,11 @@ export default {
       this.$router.push({
         path: '/work/todo'
       });
-    },
+    },*/
     modify() {
       this.passwordDrawer = true
     },
     confirm($ruleForm) {
-      // this.passwordDrawer = true
       if ($ruleForm.oldPassword === $ruleForm.newPassword) {
         this.$message({
           type: 'warning',

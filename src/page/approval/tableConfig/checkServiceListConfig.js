@@ -25,26 +25,19 @@ export const CHECKSERVICELIST_CONFIG = {
       prop: 'contractStatus',
       width: '150px',
       render: (h, params) => {
-        if (params.row.contractStatus === 'audit') {
-          return [h('span', {
-            'class': "dot " + "platformAudit"
-          }), '审核中']
-        }
-        if (params.row.contractStatus === 'waitSign') {
-          return [h('span', {
-            'class': "dot " + "nonOpen"
-          }), '待审核']
-        }
-        if (params.row.contractStatus === 'reject') {
-          return [h('span', {
-            'class': "dot " + "reject"
-          }), '已驳回']
-        }
-        if (params.row.contractStatus === 'success') {
-          return [h('span', {
-            'class': "dot " + "success"
-          }), '已通过']
-        }
+        const actions = new Map([
+          ['audit', ['platformAudit', '待审核']],
+          ['waitSign', ['nonOpen', '平台审核中']],
+          ['reject', ['reject', '通道审核中']],
+          ['success', ['success', '平台驳回']],
+          ['default', ['platformAudit', '']]
+        ])
+        const action = actions.get(params.row.status) || actions.get('default');
+        const className = action[0];
+        const statusName = action[1];
+        return [h('span', {
+          'class': "dot " + className
+        }), statusName]
       }
     }
   ],
@@ -63,11 +56,7 @@ export const CHECKSERVICELIST_CONFIG = {
         emitName: 'detail',
         type: 'text',
         isShow: ($item) => {
-          if ($item.contractStatus !== 'waitSign') {
-            return true;
-          } else {
-            return false
-          }
+          return $item.contractStatus !== 'waitSign'
         }
       },
       {
@@ -75,11 +64,7 @@ export const CHECKSERVICELIST_CONFIG = {
         emitName: 'preApprove',
         type: 'text',
         isShow: ($item) => {
-          if ($item.contractStatus === 'waitSign') {
-            return true;
-          } else {
-            return false
-          }
+          return $item.contractStatus === 'waitSign'
         }
       }
     ]

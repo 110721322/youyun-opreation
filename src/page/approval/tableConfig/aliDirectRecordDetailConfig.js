@@ -15,21 +15,23 @@ export const RECORD_CONFIG = {
       prop: 'channel',
       width: '150px',
       render: (h, params) => {
-        if (params.row.channel === 'leshua') {
-          return h(
-            'span', '乐刷'
-          )
+        let channelName = ''
+        switch (params.row.channel) {
+          case 'leshua':
+            channelName = '乐刷'
+            break;
+          case 'wechat':
+            channelName = '微信'
+            break;
+          case 'alipay':
+            channelName = '支付宝'
+            break;
+          default:
+            channelName = ''
         }
-        if (params.row.channel === 'wechat') {
-          return h(
-            'span', '微信'
-          )
-        }
-        if (params.row.channel === 'alipay') {
-          return h(
-            'span', '支付宝'
-          )
-        }
+        return h(
+          'span', channelName
+        )
       }
     },
     {
@@ -37,36 +39,19 @@ export const RECORD_CONFIG = {
       prop: 'auditStatus',
       width: '250px',
       render: (h, params) => {
-        if (params.row.auditStatus === 'nonOpen') {
-          return h(
-            'span', '待审核'
-          )
-        }
-        if (params.row.auditStatus === 'platformAudit') {
-          return h(
-            'span', '平台审核中'
-          )
-        }
-        if (params.row.auditStatus === 'channelAudit') {
-          return h(
-            'span', '通道审核中'
-          )
-        }
-        if (params.row.auditStatus === 'platformReject') {
-          return h(
-            'span', '平台驳回'
-          )
-        }
-        if (params.row.auditStatus === 'channelReject') {
-          return h(
-            'span', '通道驳回'
-          )
-        }
-        if (params.row.auditStatus === 'channelPass') {
-          return h(
-            'span', '通过'
-          )
-        }
+        const actions = new Map([
+          ['nonOpen', '待审核'],
+          ['platformAudit', '平台审核中'],
+          ['channelAudit', '通道审核中'],
+          ['platformReject', '平台驳回'],
+          ['channelReject', '通道驳回'],
+          ['channelPass', '通过'],
+          ['default', '待审核']
+        ])
+        const auditStatusName = actions.get(params.row.auditStatus) || actions.get('default')
+        return h(
+          'span', auditStatusName
+        )
       }
     }
   ],

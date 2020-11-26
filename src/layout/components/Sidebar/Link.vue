@@ -1,9 +1,7 @@
 <template>
-  <!-- <component v-bind:is="linkProps(to)"> -->
   <div @click="linkProps">
     <slot :to="to" />
   </div>
-  <!-- </component> -->
 </template>
 
 <script>
@@ -18,9 +16,7 @@ export default {
   },
   methods: {
     linkProps() {
-      if (isExternal(this.to)) {
-
-      } else {
+      if (!isExternal(this.to)) {
         this.$router.push({
           path: this.to
         });

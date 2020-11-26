@@ -6,7 +6,7 @@ export const SEARCH_CONFIG = {
       label: '筛选时间',
       key: 'date',
       labelWidth: '100px',
-      selectSevenDay: true,
+      defaultDateType: 'defaultDateType',
       span: 21
     },
     {

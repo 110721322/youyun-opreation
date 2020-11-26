@@ -7,7 +7,6 @@
       :show-foot-btn="searchConfig.showFootBtn"
       @search="search"
     />
-    <!-- <data-mode></data-mode> -->
     <div class="table_box">
       <BaseCrud
         ref="table"

@@ -20,36 +20,21 @@ export const ALIDIRECTLIST_CONFIG = {
       prop: 'status',
       width: '150px',
       render: (h, params) => {
-        if (params.row.status === 'nonOpen') {
-          return [h('span', {
-            'class': "dot " + "nonOpen"
-          }), '待审核']
-        }
-        if (params.row.status === 'platformAudit') {
-          return [h('span', {
-            'class': "dot " + "platformAudit"
-          }), '平台审核中']
-        }
-        if (params.row.status === 'channelAudit') {
-          return [h('span', {
-            'class': "dot " + "channelAudit"
-          }), '通道审核中']
-        }
-        if (params.row.status === 'platformReject') {
-          return [h('span', {
-            'class': "dot " + "platformReject"
-          }), '平台驳回']
-        }
-        if (params.row.status === 'channelReject') {
-          return [h('span', {
-            'class': "dot " + "channelReject"
-          }), '通道驳回']
-        }
-        if (params.row.status === 'channelPass') {
-          return [h('span', {
-            'class': "dot " + "success"
-          }), '已通过']
-        }
+        const actions = new Map([
+          ['nonOpen', ['nonOpen', '待审核']],
+          ['platformAudit', ['platformAudit', '平台审核中']],
+          ['channelAudit', ['channelAudit', '通道审核中']],
+          ['platformReject', ['platformReject', '平台驳回']],
+          ['channelReject', ['channelReject', '通道驳回']],
+          ['channelPass', ['success', '已通过']],
+          ['default', ['nonOpen', '']]
+        ])
+        const action = actions.get(params.row.status) || actions.get('default');
+        const className = action[0];
+        const statusName = action[1];
+        return [h('span', {
+          'class': "dot " + className
+        }), statusName]
       }
     }
   ],
@@ -68,11 +53,7 @@ export const ALIDIRECTLIST_CONFIG = {
         emitName: 'preApprove',
         type: 'text',
         isShow: ($item) => {
-          if ($item.status === 'nonOpen') {
-            return true;
-          } else {
-            return false
-          }
+          return $item.status === 'nonOpen'
         }
       },
       {
@@ -80,11 +61,7 @@ export const ALIDIRECTLIST_CONFIG = {
         emitName: 'detail',
         type: 'text',
         isShow: ($item) => {
-          if ($item.status !== 'nonOpen') {
-            return true;
-          } else {
-            return false
-          }
+          return $item.status !== 'nonOpen'
         }
       },
       {
@@ -92,11 +69,7 @@ export const ALIDIRECTLIST_CONFIG = {
         emitName: 'pass',
         type: 'text',
         isShow: ($item) => {
-          if ($item.status === 'channelAudit') {
-            return true;
-          } else {
-            return false
-          }
+          return $item.status === 'channelAudit'
         }
       },
       {
@@ -104,11 +77,7 @@ export const ALIDIRECTLIST_CONFIG = {
         emitName: 'reject',
         type: 'text',
         isShow: ($item) => {
-          if ($item.status === 'channelAudit') {
-            return true;
-          } else {
-            return false
-          }
+          return $item.status === 'channelAudit'
         }
       },
       {

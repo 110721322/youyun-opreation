@@ -53,8 +53,8 @@
                 <div class="left-label">结算类型：</div>
                 <div class="check-box">
                   <el-checkbox-group v-model="isCheck" @change="checkChange">
-                    <el-checkbox v-for="(confDate, index) in seetlmap.confDate" :key="index" :label="confDate" class="select-box">
-                      {{ (confDate.name+'['+confDate.dateTxt+']') }}
+                    <el-checkbox v-for="(item, index) in confDate" :key="index" :label="item" class="select-box">
+                      {{ (item.label+'['+item.dateTxt+']') }}
                     </el-checkbox>
                     <div style="margin: 15px 0;"></div>
                   </el-checkbox-group>
@@ -112,10 +112,8 @@ export default {
       activityReward: '',
       totalCommission: '',
       settleNum: {},
-      seetlmap: {
-        confDate: []
-      },
-      info: {},
+      confDate: [],
+      settleMap: {},
       isCheck: [],
       settleCommission: 0,
       platformCommission: 0,
@@ -160,36 +158,33 @@ export default {
           message: '暂无可结算金额',
           type: 'warning'
         })
-      } else {
-        api.initSettle({}).then(res => {
-          if (res.data) {
-            this.drawer = true
-            this.info = res.data.settleMap
-            this.settleInfo = res.data
-            const newFromConfigData = FORM_CONFIG.detailData.formData
-            newFromConfigData[2].initVal = res.data.settleAccount
-            newFromConfigData[3].initVal = res.data.settleMobile
-            this.fromConfigData.formData = newFromConfigData
-            var keyArr = []
-            for (const keyItem in res.data.settleMap) {
-              keyArr.push({key: keyItem})
-            }
-            keyArr.forEach((item, index) => {
-              const name = res.data.settleMap[item.key][0].settleTypeName
-              item.name = name
-              const dateArr = []
-              var totalSettleAmount = 0
-              res.data.settleMap[item.key].forEach((dateItem, dateIndex) => {
-                dateArr.push(dateItem.tradeMonth)
-                totalSettleAmount += dateItem.settleAmount
-              })
-              item.dateTxt = dateArr.join(',')
-              item.settleAmount = totalSettleAmount
-            })
-            this.seetlmap.confDate = keyArr
-          }
-        })
+        return
       }
+      api.initSettle().then(res => {
+        if (res.data) {
+          this.drawer = true
+          this.settleMap = res.data.settleMap
+          this.settleInfo = res.data
+          const formConfigData = this.$g.utils.deepClone(FORM_CONFIG.detailData.formData)
+          formConfigData[2].initVal = res.data.settleAccount
+          formConfigData[3].initVal = res.data.settleMobile
+          this.fromConfigData.formData = formConfigData
+          this.confDate = Object.keys(this.settleMap).map(item => {
+            const label = this.settleMap[item][0].settleTypeName;
+            const dateTxt = this.settleMap[item].map(settle => settle.tradeMonth).join(',')
+            let settleAmount = 0;
+            for (let i = 0, len = this.settleMap[item].length; i < len; i++) {
+              settleAmount += this.settleMap[item][i].settleAmount
+            }
+            return {
+              label,
+              dateTxt,
+              settleAmount,
+              key: item
+            }
+          })
+        }
+      })
     },
     handel_record() {
       this.$router.push({
@@ -199,62 +194,46 @@ export default {
     cancel() {
       this.drawer = false
     },
-    confirm($sunmit) {
-      if (this.isCheck.length === 0 || !$sunmit.expressNumber || !$sunmit.settleAccount || !$sunmit.settleMobile || !$sunmit.expressImg) {
+    confirm($ruleForm) {
+      if (this.isCheck.length === 0 || !$ruleForm.expressNumber || !$ruleForm.settleAccount || !$ruleForm.settleMobile || !$ruleForm.expressImg) {
         this.$message({
           message: '请填写必填信息',
           type: 'warning'
         })
         return false
-      } else {
-        var keyArr = []
-        var arr = []
-        var arr1 = []
-        var typeMonthList = []
-        for (const keyItem in this.info) {
-          keyArr.push({key: keyItem})
-        }
-        this.isCheck.forEach(m => {
-          keyArr.forEach(v => {
-            if (m.key === v.key) {
-              arr.push(this.info[m.key])
-            }
-          })
-        })
-        for (let i = 0; i < arr.length; i++) {
-          for (let j = 0; j < arr[i].length; j++) {
-            arr1.push(arr[i][j])
-          }
-        }
-        arr1.forEach(item => {
-          var obj = {}
-          obj.id = item.id
-          obj.settleType = item.settleType
-          obj.tradeMonth = item.tradeMonth
-          typeMonthList.push(obj)
-        })
-        api.submitSettle({
-          expressNumber: $sunmit.expressNumber,
-          settleName: this.settleInfo.settleName,
-          expressImg: $sunmit.expressImg,
-          settleCommission: this.settleCommission,
-          settleAccount: $sunmit.settleAccount,
-          actualAmount: this.settleCommission,
-          settleMobile: $sunmit.settleMobile,
-          alternatePhone: $sunmit.alternatePhone,
-          settleRemark: $sunmit.settleRemark,
-          typeMonthList: typeMonthList
-        }).then(res => {
-          if (res.status === 0) {
-            this.$message({
-              message: '操作成功',
-              type: 'success'
-            })
-            this.drawer = false
-            this.getSettleNum()
-          }
-        })
       }
+      let typeMonthList = [];
+      this.isCheck.forEach(item => {
+        typeMonthList.push(...this.settleMap[item.key])
+      })
+      typeMonthList = typeMonthList.map(item => {
+        return {
+          id: item.id,
+          settleType: item.settleType,
+          tradeMonth: item.tradeMonth
+        }
+      })
+      api.submitSettle({
+        expressNumber: $ruleForm.expressNumber,
+        settleName: this.settleInfo.settleName,
+        expressImg: $ruleForm.expressImg,
+        settleCommission: this.settleCommission,
+        settleAccount: $ruleForm.settleAccount,
+        actualAmount: this.settleCommission,
+        settleMobile: $ruleForm.settleMobile,
+        alternatePhone: $ruleForm.alternatePhone,
+        settleRemark: $ruleForm.settleRemark,
+        typeMonthList: typeMonthList
+      }).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            message: '操作成功',
+            type: 'success'
+          })
+          this.drawer = false
+          this.getSettleNum()
+        }
+      })
     },
     // 查看发票信息
     handleLookBill() {
