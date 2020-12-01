@@ -2,31 +2,29 @@
   <div>
     <div class="p_head">下级服务商列表</div>
     <search
-        :open-height="searchMaxHeight"
-        :form-base-data="searchConfig.formData"
-        :show-foot-btn="searchConfig.showFootBtn"
-        @search="search"
+      :open-height="searchMaxHeight"
+      :form-base-data="searchConfig.formData"
+      :show-foot-btn="searchConfig.showFootBtn"
+      @search="search"
     />
-    <!-- <data-mode></data-mode> -->
-    <div class="table_box">
+    <div class="table-box">
       <BaseCrud
-          ref="table"
-          :grid-config="configData.gridConfig"
-          :grid-btn-config="configData.gridBtnConfig"
-          :grid-data="testData"
-          :form-config="configData.formConfig"
-          :form-data="configData.formModel"
-          :grid-edit-width="300"
-          form-title="用户"
-          :is-async="true"
-          :is-select="false"
-          :params="params"
-          :api-service="api"
-          @detail="openDetail"
-          @thaw="thaw"
-          @frozen="frozen"
-          @openAgentManager="openAgentManager"
-          @goMerchantList="goMerchantList"
+        ref="table"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="300"
+        form-title="用户"
+        :is-async="true"
+        :is-select="false"
+        :params="params"
+        :api-service="api"
+        @detail="onClickOpenDetail"
+        @thaw="onClickThaw"
+        @frozen="onClickFrozen"
+        @openAgentManager="onClickOpenAgentManager"
+        @goMerchantList="onClickGoMerchantList"
       />
     </div>
   </div>
@@ -44,12 +42,11 @@ export default {
   components: { search, BaseCrud },
   data() {
     return {
-      searchMaxHeight: "380",
-      configData: USER_CONFIG,
-      searchConfig: FORM_CONFIG,
-      testData: [],
-      params: {},
-      api: api.queryPageByCondition
+      searchMaxHeight: "380", // 搜索展开项的高度
+      configData: USER_CONFIG, // 列表展示的数据
+      searchConfig: FORM_CONFIG, // 搜索项的数据
+      params: {}, // 搜索项传参
+      api: api.queryPageByCondition // 获取下级服务商列表
     };
   },
   created() {
@@ -57,24 +54,6 @@ export default {
   mounted() {
   },
   methods: {
-    getDay(day) {
-      var today = new Date();
-      const targetdayMilliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day;
-      today.setTime(targetdayMilliseconds); // 注意，这行是关键代码
-      var tYear = today.getFullYear();
-      var tMonth = today.getMonth();
-      var tDate = today.getDate();
-      tMonth = this.doHandleMonth(tMonth + 1);
-      tDate = this.doHandleMonth(tDate);
-      return tYear + "-" + tMonth + "-" + tDate;
-    },
-    doHandleMonth(month) {
-      var m = month;
-      if (month.toString().length === 1) {
-        m = "0" + month;
-      }
-      return m;
-    },
     search($form) {
       this.params = {
         // labelId: $form.labelId || null,
@@ -93,7 +72,9 @@ export default {
         this.activeScopeCityCode = $form.area[1]
       }
     },
-    openDetail(row) {
+
+    // 点击查看服务商详情页面
+    onClickOpenDetail(row) {
       this.$router.push({
         name: "agentSubListDetail",
         query: {
@@ -101,43 +82,47 @@ export default {
         }
       });
     },
-    thaw(row) {
+
+    // 点击解冻代理商
+    onClickThaw(row) {
       this.$confirm("是否要解冻该代理商？", "解冻代理商", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认解冻",
         cancelButtonText: "取消"
-      })
-        .then(() => {
-          api.unfrozen({
-            agentNo: row.agentNo
-          }).then(res => {
-            this.$message({
-              type: "success",
-              message: "已解冻"
-            })
-            this.$refs.table.getData()
+      }).then(() => {
+        api.unfrozen({
+          agentNo: row.agentNo
+        }).then(res => {
+          this.$message({
+            type: "success",
+            message: "已解冻"
           })
+          this.$refs.table.getData()
         })
+      })
     },
-    frozen(row) {
+
+    // 点击解冻代理商
+    onClickFrozen(row) {
       this.$confirm("是否要冻结该代理商？", "冻结代理商", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认冻结",
         cancelButtonText: "取消"
-      })
-        .then(() => {
-          api.frozen({
-            agentNo: row.agentNo
-          }).then(res => {
-            this.$message({
-              type: "success",
-              message: "已冻结"
-            });
-            this.$refs.table.getData()
-          })
+      }).then(() => {
+        api.frozen({
+          agentNo: row.agentNo
+        }).then(res => {
+          this.$message({
+            type: "success",
+            message: "已冻结"
+          });
+          this.$refs.table.getData()
         })
+      })
     },
-    openAgentManager(row) {
+
+    // 点击打开代理商后台
+    onClickOpenAgentManager(row) {
       api.generateLoginTicket({
         system: 'agent',
         phone: row.loginAccount,
@@ -148,7 +133,9 @@ export default {
         }
       })
     },
-    goMerchantList() {
+
+    // 点击进入商户列表页面
+    onClickGoMerchantList() {
       this.$router.push({
         name: "merchantList"
       });
@@ -158,7 +145,7 @@ export default {
 </script>
 
 <style scoped>
-.table_box {
+.table-box {
   margin: 24px;
   padding: 24px;
   overflow: hidden;

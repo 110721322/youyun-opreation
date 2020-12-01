@@ -11,7 +11,7 @@
       :closable="false"
       show-icon
     ></el-alert>
-    <div class="bg_box border">
+    <div class="bg-box border">
       <div class="title">{{ configData3.name }}</div>
       <div class="table-box">
         <el-table
@@ -29,7 +29,7 @@
           <el-table-column prop="name" label="图片">
             <template slot-scope="scope">
               <el-image
-                style="width: 65px; height: 65px;"
+                class="equip-img"
                 :src="scope.row.name"
                 :preview-src-list="[scope.row.name]"
               ></el-image>
@@ -61,53 +61,12 @@ export default {
   components: { detailMode },
   data() {
     return {
-      rejectTitle: "驳回原因：商户名称与营业执照不符合",
+      rejectTitle: "驳回原因：商户名称与营业执照不符合", // 驳回原因
       showComponents: {
         showRejectTitle: false
-      },
-      currentType: "",
-      tableData: [
-        {
-          id: "12987122",
-          name:
-            "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-          amount1: "234",
-          amount2: "3.2",
-          amount3: 3560.0
-        },
-        {
-          id: "12987123",
-          name:
-            "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-          amount1: "165",
-          amount2: "4.43",
-          amount3: 12
-        },
-        {
-          id: "12987124",
-          name:
-            "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-          amount1: "324",
-          amount2: "1.9",
-          amount3: 9
-        },
-        {
-          id: "12987125",
-          name:
-            "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-          amount1: "621",
-          amount2: "2.2",
-          amount3: 17
-        },
-        {
-          id: "12987126",
-          name:
-            "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-          amount1: "539",
-          amount2: "4.1",
-          amount3: 15
-        }
-      ],
+      }, // 是否展示驳回模块
+      currentType: "", // 当前订单的类型
+      tableData: [],
       ruleForm: {
         name: "1",
         name1: "2",
@@ -237,7 +196,7 @@ export default {
   color: #f5222d;
   width: auto;
 }
-.bg_box {
+.bg-box {
   margin: 24px;
   background: #fff;
   overflow: hidden;
@@ -266,6 +225,12 @@ export default {
     }
   }
 }
+
+.equip-img {
+  width: 65px;
+  height: 65px;
+}
+
 .table-box /deep/ th.gutter {
   background: #fafafa;
 }

@@ -3,11 +3,11 @@
     <div class="content-box">
       <div class="title">{{ fromConfigData.title }}</div>
       <Form
-          :form-base-data="fromConfigData.formData"
-          :show-foot-btn="true"
-          :label-width="'auto'"
-          @confirm="handleCommit"
-          @cancel="handel_cancel"
+        :form-base-data="fromConfigData.formData"
+        :show-foot-btn="true"
+        :label-width="'auto'"
+        @confirm="clickCommit"
+        @cancel="clickCancel"
       >
       </Form>
     </div>
@@ -23,12 +23,20 @@ export default {
   components: { Form },
   data() {
     return {
-      fromConfigData: FORM_CONFIG
+      fromConfigData: FORM_CONFIG // form表单数据
     }
   },
   methods: {
-    handleCommit($item) {
-      if (!$item.account || !$item.address || !$item.agentName || !$item.businessType || !$item.personMobile || !$item.personName || !$item.companyAddress || !$item.email) {
+    // 点击保存按钮进行提交
+    clickCommit($item) {
+      if (!$item.account ||
+        !$item.address ||
+        !$item.agentName ||
+        !$item.businessType ||
+        !$item.personMobile ||
+        !$item.personName ||
+        !$item.companyAddress ||
+        !$item.email) {
         this.$message('请完善信息')
         return
       }
@@ -54,7 +62,6 @@ export default {
         account: $item.account,
         address: $item.address,
         email: $item.email,
-        // operationId: $item.operationId,
         activeMode: $item.activeMode
       }).then(res => {
         if (res.status === 0) {
@@ -68,7 +75,9 @@ export default {
         }
       })
     },
-    handel_cancel() {
+
+    // 点击取消，返回服务商列表页面
+    clickCancel() {
       this.$router.replace({
         name: 'agentList'
       })
@@ -78,13 +87,14 @@ export default {
 </script>
 
 <style scoped>
-  .container {
-    padding: 32px 24px 0 24px;
-  }
-  .content-box {
-    width: 100%;
-    background: #ffffff;
-    padding: 10px 0 40px 0;
-    box-sizing: border-box;
-  }
+.container {
+  padding: 32px 24px 0 24px;
+}
+
+.content-box {
+  width: 100%;
+  background: #fff;
+  padding: 10px 0 40px 0;
+  box-sizing: border-box;
+}
 </style>

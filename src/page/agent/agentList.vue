@@ -2,30 +2,29 @@
   <div>
     <div class="p_head">服务商列表</div>
     <search
-        :open-height="searchMaxHeight"
-        :form-base-data="searchConfig.formData"
-        :show-foot-btn="searchConfig.showFootBtn"
-        @search="search"
+      :open-height="searchMaxHeight"
+      :form-base-data="searchConfig.formData"
+      :show-foot-btn="searchConfig.showFootBtn"
+      @search="search"
     />
 
-    <div class="table_box">
+    <div class="table-box">
       <div class="two-btn">
-        <el-button type="primary" @click="onClick_addServe">添加服务商</el-button>
+        <el-button type="primary" @click="clickAddServe">添加服务商</el-button>
       </div>
-      <!-- <div class="select_data">
+      <!--TODONEXT <div class="select_data">
         <span class="el-icon-info icon" />
         <span>
             已选择
             <span class="blue">{{ selectData.length }}</span> 项目
           </span>
-        <el-button class="btn" type="text" @click="clear">清空</el-button>
+        <el-button class="btn" type="text" @click="clickClear">清空</el-button>
       </div> -->
       <BaseCrud
-        :refName="child"
         ref="child"
+        :ref-name="child"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
-        :grid-data="testData"
         :form-config="configData.formConfig"
         :form-data="configData.formModel"
         :grid-edit-width="300"
@@ -35,13 +34,14 @@
         :params="params"
         :api-service="api"
         @selectionChange="selectionChange"
-        @detail="openDetail"
-        @thaw="thaw"
-        @frozen="frozen"
+        @detail="clickDetail"
+        @thaw="clickThaw"
+        @frozen="clickFrozen"
         @openAgentManager="openAgentManager"
         @goMerchantList="goMerchantList"
-        @completion="openDetail">
-        <el-button slot="paginationLeft" style="margin-left: 24px;" @click="transfer">批量转移运营</el-button>
+        @completion="clickDetail"
+      >
+        <el-button slot="paginationLeft" class="basecard-button" @click="transfer">批量转移运营</el-button>
       </BaseCrud>
     </div>
     <el-dialog
@@ -61,7 +61,7 @@
       </el-select>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="handle_ok">确 定</el-button>
+        <el-button type="primary" @click="clickSure">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -80,17 +80,16 @@ export default {
 
   data() {
     return {
-      operationId: '',
-      options: [],
-      searchMaxHeight: "380",
-      configData: USER_CONFIG,
-      searchConfig: FORM_CONFIG,
-      testData: [],
-      selectData: [],
-      params: {},
-      api: "",
+      operationId: '', // 服务商的ID
+      options: [], // 选择项列表
+      searchMaxHeight: "380", // 搜索展开项高度
+      configData: USER_CONFIG, // 列表展示数据
+      searchConfig: FORM_CONFIG, // 搜索项数据
+      selectData: [], // 选择项数据
+      params: {}, // 接口请求参数
+      api: "", // 调用接口
       dialogVisible: false,
-      child: 'child'
+      child: 'child' // ref的值
     };
   },
   created() {
@@ -114,11 +113,15 @@ export default {
         });
       }
     },
-    clear() {
+
+    // 清空批量选择
+    clickClear() {
       this.selectData = []
       this.$refs.child.$children[0].clearSelection();
     },
-    handle_ok() {
+
+    // 点击确认按钮，确认转移运营
+    clickSure() {
       if (!this.operationId) {
         this.$message({
           message: '请选择运营人员',
@@ -147,12 +150,18 @@ export default {
         })
       }
     },
+
+    // 关闭批量转移的窗口
     handleClose() {
       this.dialogVisible = false
     },
+
+    // 当前选中的tab表格
     selectionChange($val) {
       this.selectData = $val;
     },
+
+    // 搜索功能
     search($form) {
       this.params = {
         beginDate: $form.date[0] ? $form.date[0] : null,
@@ -172,7 +181,9 @@ export default {
         this.params.areaCode = $form.area[2]
       }
     },
-    openDetail($row) {
+
+    // 点击查看详情，进入服务商详情页面
+    clickDetail($row) {
       this.$router.push({
         name: "agentDetail",
         query: {
@@ -180,7 +191,9 @@ export default {
         }
       });
     },
-    thaw(row) {
+
+    // 点击解冻代理商的按钮解冻代理商
+    clickThaw(row) {
       this.$confirm("是否要解冻该代理商？", "解冻代理商", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认解冻",
@@ -197,25 +210,41 @@ export default {
             this.$refs.child.getData()
           }
         });
+      }).catch(() => {
+        this.$message({
+          message: '取消操作',
+          type: 'info'
+        })
       })
     },
-    frozen(row) {
+
+    // 点击冻结代理商的按钮冻结代理商
+    clickFrozen(row) {
       this.$confirm("是否要冻结该代理商？", "冻结代理商", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认冻结",
         cancelButtonText: "取消"
-      }).then(res => {
+      }).then(() => {
         api.frozen({
           agentNo: row.agentNo
         }).then(res => {
-          this.$message({
-            type: "success",
-            message: "已冻结"
-          });
-          this.$refs.child.getData()
-        });
+          if (res.status === 0) {
+            this.$message({
+              type: "success",
+              message: "已冻结"
+            })
+            this.$refs.child.getData()
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          message: '取消操作',
+          type: 'info'
+        })
       })
     },
+
+    // 打开服务商后台
     openAgentManager(row) {
       api.generateLoginTicket({
         system: 'agent',
@@ -227,12 +256,16 @@ export default {
         }
       })
     },
+
+    // 点击进入商户列表页面
     goMerchantList() {
       this.$router.push({
         name: "merchantList"
       });
     },
-    onClick_addServe() {
+
+    // 点击添加服务商按钮，跳转至添加服务商的页面
+    clickAddServe() {
       this.$router.push({
         name: "addAgent"
       })
@@ -242,24 +275,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.table_box {
+.table-box {
   margin: 24px;
   padding: 24px;
   overflow: hidden;
   background: #fff;
 }
+
 .two-btn {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 8px;
 }
+
 .select_data {
+  margin: 16px 0;
   width: 100%;
   height: 40px;
   background: rgba(230, 247, 255, 1);
   border: 1px solid rgba(186, 231, 255, 1);
   line-height: 40px;
-  margin: 16px 0;
+
   .icon {
     color: rgba(24, 144, 255, 1);
     margin: 0 8px 0 16px;
@@ -273,5 +309,9 @@ export default {
     margin-left: 16px;
     font-size: 14px;
   }
+}
+
+.basecard-button {
+  margin-left: 24px;
 }
 </style>

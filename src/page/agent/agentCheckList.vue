@@ -7,12 +7,11 @@
       :show-foot-btn="searchConfig.showFootBtn"
       @search="search"
     />
-    <div class="table_box">
+    <div class="table-box">
       <BaseCrud
         ref="table"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
-        :grid-data="testData"
         :form-config="configData.formConfig"
         :form-data="configData.formModel"
         :grid-edit-width="160"
@@ -21,20 +20,20 @@
         :is-select="false"
         :params="params"
         :api-service="api"
-        @reject="reject"
-        @activation="activation"
-        @adopt="adopt"
+        @reject="onClickReject"
+        @activation="onClickActivation"
+        @adopt="onClickAdopt"
       />
     </div>
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
       <div class="p_head">审核通过</div>
       <Form
-          :form-base-data="fromConfigData.formData"
-          :show-foot-btn="fromConfigData.showFootBtn"
-          label-width="130px"
-          :isDrawer="true"
-          @cancel="cancel"
-          @confirm="confirm"
+        :form-base-data="fromConfigData.formData"
+        :show-foot-btn="fromConfigData.showFootBtn"
+        label-width="130px"
+        :is-drawer="true"
+        @cancel="onClickCancel"
+        @confirm="onClickConfirm"
       ></Form>
     </el-drawer>
   </div>
@@ -54,39 +53,19 @@ export default {
 
   data() {
     return {
-      agentNo: '',
-      drawer: false,
-      searchMaxHeight: "320",
-      configData: USER_CONFIG,
-      searchConfig: FORM_CONFIG,
-      fromConfigData: CHECK_CONFIG,
-      testData: [],
-      params: {},
-      api: api.agentExamineList
+      agentNo: '', // 服务商的编号
+      drawer: false, // 控制侧边抽屉的显示与隐藏
+      searchMaxHeight: "320", // 搜索展开项的高度
+      configData: USER_CONFIG, // 列表项的参数
+      searchConfig: FORM_CONFIG, // 搜索项的参数
+      fromConfigData: CHECK_CONFIG, // 侧边弹窗的参数
+      params: {}, // 搜索项传参
+      api: api.agentExamineList // 请求列表
     };
   },
-  created() {
-  },
+  created() {},
   mounted() {},
   methods: {
-    getDay(day) {
-      var today = new Date();
-      const targetdayMilliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day;
-      today.setTime(targetdayMilliseconds); // 注意，这行是关键代码
-      var tYear = today.getFullYear();
-      var tMonth = today.getMonth();
-      var tDate = today.getDate();
-      tMonth = this.doHandleMonth(tMonth + 1);
-      tDate = this.doHandleMonth(tDate);
-      return tYear + "-" + tMonth + "-" + tDate;
-    },
-    doHandleMonth(month) {
-      var m = month;
-      if (month.toString().length === 1) {
-        m = "0" + month;
-      }
-      return m;
-    },
     search($form) {
       this.params = {
         beginDate: $form.date ? $form.date[0] : '',
@@ -99,52 +78,56 @@ export default {
         agentName: $form.agentName ? $form.agentName : null
       }
     },
-    reject(row) {
+
+    // 驳回代理商
+    onClickReject(row) {
       this.$confirm("是否要驳回该代理商？", "驳回代理商", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认驳回",
         cancelButtonText: "取消"
-      })
-        .then(() => {
-          api.reject({
-            agentNo: row.agentNo
-          }).then((res) => {
-            if (res.status === 0) {
-              this.$message({
-                type: "info",
-                message: "已驳回"
-              });
-            }
-            this.$refs.table.getData();
-          }).catch(() => {
-          });
+      }).then(() => {
+        api.reject({
+          agentNo: row.agentNo
+        }).then((res) => {
+          if (res.status === 0) {
+            this.$message({
+              type: "info",
+              message: "已驳回"
+            });
+          }
+          this.$refs.table.getData();
         })
+      })
     },
-    activation(row) {
+
+    // 激活代理商
+    onClickActivation(row) {
       this.$confirm("是否要激活该代理商？", "激活代理商", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认激活",
         cancelButtonText: "取消"
-      })
-        .then(() => {
-          api.activate({
-            agentNo: row.agentNo
-          }).then((res) => {
-            if (res.status === 0) {
-              this.$message({
-                type: "success",
-                message: "已激活"
-              });
-              this.$refs.table.getData();
-            }
-          }).catch(() => {
-          });
+      }).then(() => {
+        api.activate({
+          agentNo: row.agentNo
+        }).then((res) => {
+          if (res.status === 0) {
+            this.$message({
+              type: "success",
+              message: "已激活"
+            });
+            this.$refs.table.getData();
+          }
         })
+      })
     },
-    cancel() {
+
+    // 点击取消关闭侧弹窗
+    onClickCancel() {
       this.drawer = false
     },
-    confirm($form) {
+
+    // 点击确认按钮
+    onClickConfirm($form) {
       if (!$form.operationId) {
         this.$message({
           message: '请选择所属服务商',
@@ -169,10 +152,11 @@ export default {
           })
         }
         this.drawer = false
-        // this.$refs.table.getData()
       })
     },
-    adopt(row) {
+
+    // 点击通过按钮弹出侧边弹窗
+    onClickAdopt(row) {
       this.drawer = true
       this.agentNo = row.agentNo
     }
@@ -181,7 +165,7 @@ export default {
 </script>
 
 <style scoped>
-.table_box {
+.table-box {
   margin: 24px;
   padding: 24px;
   overflow: hidden;

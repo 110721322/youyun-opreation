@@ -5,24 +5,23 @@
     </div>
     <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
 
-    <div class="table_box">
+    <div class="table-box">
       <BaseCrud
-          ref="table"
-          :params="params"
-          :api-service="api"
-          :grid-config="configData.gridConfig"
-          :grid-btn-config="configData.gridBtnConfig"
-          :grid-data="testData"
-          :form-config="configData.formConfig"
-          :form-data="configData.formModel"
-          :grid-edit-width="100"
-          :is-async="true"
-          :is-select="false"
-          :is-expand="false"
-          :row-key="'id'"
-          :default-expand-all="false"
-          :hide-edit-area="configData.hideEditArea"
-          @detail="handleDetail"
+        ref="table"
+        :params="params"
+        :api-service="api"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="100"
+        :is-async="true"
+        :is-select="false"
+        :is-expand="false"
+        :row-key="'id'"
+        :default-expand-all="false"
+        :hide-edit-area="configData.hideEditArea"
+        @detail="onClickDetail"
       ></BaseCrud>
     </div>
   </div>
@@ -40,15 +39,10 @@ export default {
   components: { Search, BaseCrud },
   data() {
     return {
-      fromConfigData: {},
-      searchConfig: SEARCH_CONFIG,
-      configData: TABLE_CONFIG,
-      testData: [],
-      direction: "rtl",
-      searchHeight: "260",
-      drawer: false,
+      searchConfig: SEARCH_CONFIG, // 搜索参数
+      configData: TABLE_CONFIG, // 列表展示数据
+      searchHeight: "260", // 列表展开项数据
       params: {
-        operatorId: "",
         startTime: this.$g.utils.getToday(0) + ' 00:00:00',
         endTime: this.$g.utils.getToday(0) + ' 23:59:59'
       },
@@ -58,36 +52,31 @@ export default {
   },
   mounted() {},
   methods: {
-    cancel() {
-      this.drawer = false;
-    },
-    handleDetail($data) {
+    // 点击查看详情
+    onClickDetail($data) {
       this.$router.push({
         name: "ticketList",
         query: { id: $data.operatorId }
       });
     },
     search($ruleForm) {
-      const params = {
+      this.params = {
         startTime: $ruleForm.date ? $ruleForm.date[0] : null,
         endTime: $ruleForm.date ? $ruleForm.date[1] : null,
-        operatorId: $ruleForm.operatorId
+        operatorId: $ruleForm.operatorId,
+        [$ruleForm.inputSelect]: $ruleForm.inputForm
       };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
-      this.params = params;
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;
   overflow: hidden;
   background: #fff;
 }
-</style>
-<style>
 </style>

@@ -1,16 +1,16 @@
 <template>
-  <div class="detail_page">
+  <div class="detail-page">
     <div class="flex-between flex-align-center">
       <div class="p_head">第三方对接信息</div>
-      <el-button v-if="(!isEdit)&&id" type="primary" style="margin-right:24px;" size="mini" @click="editDetail">编辑</el-button>
+      <el-button v-if="(!isEdit) && id" type="primary" class="edit-button" size="mini" @click="clickEditDetail">编辑</el-button>
     </div>
-    <div v-if="showPage" style="padding-bottom:40px">
+    <div v-if="showPage" class="form-box">
       <Form
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
         label-width="130px"
-        @cancel="cancel"
-        @confirm="confirm"
+        @cancel="onClickCancel"
+        @confirm="onClickConfirm"
       ></Form>
     </div>
   </div>
@@ -27,9 +27,9 @@ export default {
   data() {
     return {
       fromConfigData: FORM_CONFIG.detailData,
-      id: "",
-      showPage: false,
-      isEdit: false
+      id: "", // 页面路径参数
+      showPage: false, // 是否展示表单编辑
+      isEdit: false // 是否展示编辑按钮
     };
   },
   created() {
@@ -47,7 +47,8 @@ export default {
   mounted() {
   },
   methods: {
-    editDetail() {
+    // 点击编辑按钮
+    clickEditDetail() {
       this.showPage = false
       this.isEdit = true
       this.fromConfigData = FORM_CONFIG.editData
@@ -68,8 +69,14 @@ export default {
         })
       }, 300)
     },
-    confirm($form) {
-      if (!$form.name || !$form.developerId || !$form.phone || !$form.allotCount || !$form.agentNo) {
+
+    // 点击确认按钮
+    onClickConfirm($form) {
+      if (!$form.name ||
+        !$form.developerId ||
+        !$form.phone ||
+        !$form.allotCount ||
+        !$form.agentNo) {
         this.$message({
           message: '请填写必填信息',
           type: 'warning'
@@ -100,7 +107,7 @@ export default {
         this.isEdit = false
         this.fromConfigData = FORM_CONFIG.detailData
         this.fromConfigData.showFootBtn = false
-        if (res.status === 0 && res.data) {
+        if (res.status === 0) {
           this.$message({
             message: this.id ? "编辑成功" : "添加成功",
             type: "success"
@@ -114,7 +121,9 @@ export default {
         }
       })
     },
-    cancel(done) {
+
+    // 点击取消
+    onClickCancel(done) {
       if (this.$route.query.id) {
         this.showPage = false
         this.isEdit = false
@@ -130,10 +139,17 @@ export default {
 </script>
 
 <style scoped>
-.detail_page {
+.detail-page {
+  margin: 24px 24px 0;
   width: calc(100% - 48px);
   background: #fff;
-  margin: 24px 24px 0;
-  /* height: calc(100% - 24px); */
+}
+
+.edit-button {
+  margin-right: 24px;
+}
+
+.form-box {
+  padding-bottom: 40px;
 }
 </style>

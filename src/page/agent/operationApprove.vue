@@ -5,15 +5,14 @@
     </div>
     <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
 
-    <div class="table_box">
-      <div class="tabale_title_box">
+    <div class="table-box">
+      <div class="tabale-title-box">
         <div class="title">运营结算列表</div>
-        <el-button class="btn" type="primary" @click="onClick_addBlackList">新增入件黑名单</el-button>
+        <el-button class="btn" type="primary" @click="clickAddBlackList">新增入件黑名单</el-button>
       </div>
       <BaseCrud
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
-        :grid-data="testData"
         :form-config="configData.formConfig"
         :form-data="configData.formModel"
         :grid-edit-width="200"
@@ -24,10 +23,10 @@
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
         :header-cell-style="headerCellStyle"
-        @detail="onClick_detail"
-        @reject="onClick_reject"
-        @adopt="onClick_adopt"
-        @reviewing="onClick_reviewing"
+        @detail="onClickDetail"
+        @reject="onClickReject"
+        @adopt="onClickAdopt"
+        @reviewing="onClickReviewing"
       ></BaseCrud>
     </div>
 
@@ -67,7 +66,7 @@
         :show-foot-btn="fromConfigData.showFootBtn"
         label-width="130px"
         :foot-btn-label="fromConfigData.footBtnLabel"
-        @cancel="cancel"
+        @cancel="clickCancel"
       ></Form>
     </el-drawer>
   </div>
@@ -87,18 +86,15 @@ export default {
   data() {
     return {
       headerCellStyle: { backgroundColor: "#FAFAFA" },
-      searchHeight: "260",
-      searchConfig: SEARCH_CONFIG,
-      configData: OPERATIONAPPROVE_CONFIG,
+      searchHeight: "260", // 搜索项展开高度
+      searchConfig: SEARCH_CONFIG, // 搜索项的参数
+      configData: OPERATIONAPPROVE_CONFIG, // 列表展示参数
       fromConfigData: {},
-      testData: [],
       drawer: false,
-      direction: "rtl",
       arrow: arrowImg
     };
   },
   mounted() {
-    this.getTableData();
   },
   methods: {
     search($form) {
@@ -106,154 +102,133 @@ export default {
         [$form.search]: $form.searchVal
       }
     },
-    getTableData() {
-      this.testData = [
-        {
-          service: "日常任务",
-          amount: "商户结算失败",
-          type: "4",
-          status: "提醒",
-          createTime: "XXXX店铺",
-          operTime: "20:00:23",
-          showAdopt: true,
-          showReject: true
-        },
-        {
-          service: "日常任务",
-          amount: "商户结算失败",
-          type: "4",
-          status: "提醒",
-          createTime: "XXXX店铺",
-          operTime: "20:00:23",
-          showReviewing: true
-        }
-      ];
-    },
-    selectionChange($val) {},
-    onClick_detail() {
+
+    // 点击进入详情页面
+    onClickDetail() {
       this.$router.push({ name: "dividedOverview" });
     },
-    onClick_reject() {
+
+    // 点击拒绝
+    onClickReject() {
       this.fromConfigData = FORM_CONFIG.rejectData;
       this.drawer = true;
     },
-    onClick_adopt() {
+
+    // 点击审核通过
+    onClickAdopt() {
       this.fromConfigData = FORM_CONFIG.rejectData2;
       this.drawer = true;
     },
-    onClick_reviewing() {
+
+    // 审批中
+    onClickReviewing() {
       this.$alert("任务已处理，审批中", "提示信息", {
         confirmButtonText: "确定"
       });
     },
-    cancel() {
+    clickCancel() {
       this.drawer = false;
     },
-    onClick_addBlackList() {}
+    clickAddBlackList() {}
   }
 };
 </script>
 
 <style lang="scss" scoped>
 .process-box {
-  margin-top: 24px;
   display: flex;
   align-items: center;
-  overflow: hidden;
   justify-content: center;
+  margin-top: 24px;
+  overflow: hidden;
+
   .process-item {
     width: 120px;
     text-align: center;
+
     .process-icon {
       height: 44px;
       width: 44px;
       border-radius: 50%;
     }
+
     .label {
       font-size: 14px;
-      font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
       color: #333335;
       line-height: 22px;
     }
+
     .name {
       color: #8c8c8c;
     }
+
     .time {
       font-size: 12px;
-      font-family: HelveticaNeue;
       color: rgba(0, 0, 0, 0.45);
       line-height: 12px;
     }
   }
+
   .arrow-img {
     width: 75px;
     height: 9px;
   }
 }
+
 .ellipsis {
   overflow: hidden;
-
   text-overflow: ellipsis;
-
   white-space: nowrap;
 }
+
 .formTemplate {
   margin: 20px 20px 0;
 }
+
 .formTemplate-item {
   margin-right: 20px;
 }
-.table_box {
+
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;
   overflow: hidden;
   background: #fff;
 }
-.form_item {
-  float: left !important;
-}
-.clear_both {
-  clear: both !important;
-}
-.btn_list {
-  /* background: rebeccapurple; */
-  position: absolute;
-  right: 0;
-  bottom: 21px;
-  right: 24px;
-}
 
 .demo-table-expand {
   font-size: 0;
 }
+
 .demo-table-expand label {
   width: 90px;
   color: #99a9bf;
 }
+
 .demo-table-expand .el-form-item {
   margin-right: 0;
   margin-bottom: 0;
-  /* width: 25%; */
 }
+
 .form-box {
   display: flex;
   justify-content: space-between;
 }
 
-.tabale_title_box {
+.tabale-title-box {
   height: 52px;
   width: 100%;
+
   .title {
+    margin-left: 10px;
     font-size: 16px;
-    font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 500;
     color: rgba(51, 51, 53, 1);
     float: left;
-    margin-left: 10px;
-    // line-height: 52px;
   }
+
   .btn {
     float: right;
   }

@@ -2,8 +2,8 @@
   <div>
     <div class="p_head">下级服务商信息</div>
     <div class="content">
-      <div class="list_title">基本信息</div>
-      <ul class="list_info">
+      <div class="list-title">基本信息</div>
+      <ul class="list-info">
         <li>
           <span>所属上级服务商：</span>
           <el-select
@@ -25,9 +25,9 @@
             </el-option>
           </el-select>
           <span v-if="showName === true">{{ ruleForm.parentAgentName }}</span>
-          <div v-if="showName === true" class="modify" @click="on_change">修改</div>
-          <div v-if="showName === false" class="modify" @click="on_save">保存</div>
-          <div v-if="showName === false" class="modify" @click="on_cancle">取消</div>
+          <div v-if="showName === true" class="modify" @click="clickChange">修改</div>
+          <div v-if="showName === false" class="modify" @click="clickSave">保存</div>
+          <div v-if="showName === false" class="modify" @click="clickCancle">取消</div>
         </li>
         <li>
           <span>账号类型：</span>
@@ -69,11 +69,11 @@ export default {
   name: "AgentSubDetail",
   data() {
     return {
-      showName: true,
-      ruleForm: {},
-      agentNo: '',
-      options: [],
-      loading: false
+      showName: true, // 是否展示名称
+      ruleForm: {}, // 页面数据
+      agentNo: '', // 服务商编号
+      options: [], // 选择项列表
+      loading: false // 加载
     }
   },
   mounted() {
@@ -81,6 +81,7 @@ export default {
     this.getDeatil(agentNo)
   },
   methods: {
+    // 获取服务商信息
     getDeatil(agentNo) {
       api.subAgentDetail({
         agentNo: agentNo
@@ -107,34 +108,42 @@ export default {
         }
       })
     },
-    on_change() {
+
+    // 点击更换
+    clickChange() {
       this.showName = false
     },
-    on_cancle() {
+
+    // 点击保存
+    clickSave() {
       this.showName = true
     },
-    on_save() {
+
+    // 点击取消
+    clickCancle() {
       if (!this.agentNo) {
         this.$message({
           message: '请选择上级服务商',
           type: 'warning'
         })
-      } else {
-        api.updateParentAgentNo({
-          agentNo: this.$route.query.agentNo,
-          parentAgentNo: this.agentNo
-        }).then(res => {
-          if (res.status === 0) {
-            this.$message({
-              message: '更换上级服务商成功',
-              type: 'success'
-            })
-          }
-        })
-        this.getDeatil(this.$route.query.agentNo)
-        this.showName = true
+        return
       }
+      api.updateParentAgentNo({
+        agentNo: this.$route.query.agentNo,
+        parentAgentNo: this.agentNo
+      }).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            message: '更换上级服务商成功',
+            type: 'success'
+          })
+        }
+      })
+      this.getDeatil(this.$route.query.agentNo)
+      this.showName = true
     },
+
+    // 搜索服务商
     remoteMethod(query) {
       if (query !== '') {
         this.loading = true;
@@ -157,38 +166,44 @@ export default {
 <style scoped lang="scss">
 .content {
   padding: 24px 32px;
-  .list_title {
+
+  .list-title {
     width: 100%;
-    background: #ffffff;
-    border-bottom: 1px solid #eeeeee;
+    background: #fff;
+    border-bottom: 1px solid #eee;
     line-height: 54px;
     padding-left: 24px;
     font-weight: 500;
     color: #333335;
   }
-  .list_info {
-    padding: 24px 0 0 32px;
-    background: #ffffff;
+
+  .list-info {
     display: flex;
     flex-wrap: wrap;
+    padding: 24px 0 0 32px;
+    background: #fff;
+
     li {
       display: flex;
       align-items: center;
-      width: 33%;
       margin-bottom: 32px;
+      width: 33%;
       font-size: 14px;
       line-height: 32px;
+
       span:nth-child(1) {
-        color: #000000;
+        color: #000;
         opacity: 0.85;
       }
+
       span:nth-child(2) {
         color: #606266;
       }
+
       .modify {
         padding-left: 20px;
         cursor: pointer;
-        color: #1989FA;
+        color: #1989fa;
       }
     }
   }
