@@ -17,7 +17,7 @@
         <i class="el-icon-upload el-icon--right"></i>
       </el-button>
       <div slot="tip" class="el-upload__tip">只能导入excel文件，点击
-        <el-button type="text" @click="download">下载模版</el-button>
+        <el-button type="text" @click="clickDownload">下载模版</el-button>
       </div>
     </el-upload>
   </div>
@@ -104,7 +104,7 @@ export default {
         }
       });
     },
-    download() {
+    clickDownload() {
       axios({
         method: "GET", // 如果是get方法，则写“GET”
         url: "/operation/v1/excelTemplate/download?url=" + (this.formItem.dateurl ? this.formItem.dateurl : 'excel/device_input.xlsx'),

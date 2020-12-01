@@ -1,5 +1,5 @@
 <template>
-  <div class="bg_box">
+  <div class="g-bg-box">
     <div class="title">
       {{ configData.name }}
       <slot name="operatingTop">
@@ -8,11 +8,11 @@
     </div>
     <slot name="step"></slot>
     <slot name="operatinTopCont"></slot>
-    <div v-for="(child, key) of configData.child" :key="key" class="con_box">
+    <div v-for="(child, key) of configData.child" :key="key" class="con-box">
       <div class="title">
         {{ child.name }}
         <slot name="operatingItem" :child="child">
-          <span v-if="child.ShowEditBtn" class="edit" @click="edit(child.modelName)">{{ child.ShowEditBtn }}</span>
+          <span v-if="child.ShowEditBtn" class="edit" @click="clickEdit(child.modelName)">{{ child.ShowEditBtn }}</span>
         </slot>
       </div>
       <el-form
@@ -61,7 +61,7 @@ export default {
   computed: {},
 
   methods: {
-    edit($modelName) {
+    clickEdit($modelName) {
       this.$emit("edit", $modelName);
     }
   }
@@ -69,7 +69,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.bg_box {
+.g-bg-box {
   margin: 24px;
   background: #fff;
   overflow: hidden;
@@ -98,7 +98,7 @@ export default {
     margin-right: 32px;
     cursor: pointer;
   }
-  .con_box {
+  .con-box {
     margin: 24px;
     background: #fff;
     overflow: hidden;

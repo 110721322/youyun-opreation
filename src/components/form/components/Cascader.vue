@@ -3,7 +3,7 @@
     <el-cascader
       v-model="ruleForm[formItem.key]"
       :options="formItem.options"
-      @change="handleChange"
+      @change="changeVal"
       style="max-width:294px;width:294px;"
     ></el-cascader>
   </div>
@@ -23,7 +23,7 @@ export default {
   created() {},
 
   methods: {
-    handleChange(val) {
+    changeVal(val) {
       const options = JSON.parse(JSON.stringify(this.formItem.options));
       const obj = [];
       obj[0] = options.find(item => {

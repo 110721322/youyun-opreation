@@ -13,7 +13,7 @@
       :clearable="clearable"
       :default-time="defaultTime"
       :picker-options="pickerOptions"
-      @change="onChage"
+      @change="changeDate"
     />
     <div style="flex-shrink:0">
       <div
@@ -21,10 +21,10 @@
         :key="item.label"
         class="date-item"
         :class="item.value == selectItem.value ? 'select' : ''"
-        @click="onClick_item(item)"
+        @click="clickItem(item)"
       >{{ item.label }}</div>
     </div>
-    <!--    <span class="date-item" v-for="item of dateList" :class="item.value == selectItem.value?'select':''"  @click="onClick_item(item)">{{item.label}}</span>-->
+    <!--    <span class="date-item" v-for="item of dateList" :class="item.value == selectItem.value?'select':''"  @click="clickItem(item)">{{item.label}}</span>-->
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -176,9 +176,9 @@ export default {
     }
   },
   methods: {
-    onChage($data) {
+    changeDate($data) {
       if ($data === null) {
-        this.onClick_item(this.dateList[0]);
+        this.clickItem(this.dateList[0]);
         return;
       }
       this.selectItem = {};
@@ -193,7 +193,7 @@ export default {
       this.ruleForm[this.formItem.key] = timeArr;
       this.$emit("timeSearch", this.ruleForm)
     },
-    onClick_item($item) {
+    clickItem($item) {
       this.selectItem = $item;
       if (this.datatype === "daterange") {
         let start = "";

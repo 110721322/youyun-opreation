@@ -8,7 +8,7 @@
     :max="max ? max : NaN"
     :disabled="disabled"
     :size="size"
-    @change="groupChangeFns"
+    @change="changeGroupFns"
   >
     <div v-if="buttonStyle" :style="inlineStyle ? 'display:inline-flex' : ''">
       <el-input
@@ -16,7 +16,7 @@
         v-model="searchValue"
         :placeholder="placeholder"
         clearable
-        @input="changeSearchValue"
+        @input="inputSearchValue"
       ></el-input>
       <el-checkbox-button
         v-for="list in selectOptions"
@@ -29,7 +29,7 @@
       <el-checkbox
         v-if="indeterminateFlag"
         :indeterminate="isIndeterminate"
-        @change="handleCheckAllChange"
+        @change="changeCheckAll"
       >{{ indeterminateTitle }}</el-checkbox>
       <el-checkbox
         v-for="list in selectOptions"
@@ -215,11 +215,11 @@ export default {
           obj = null;
         });
     },
-    changeSearchValue() {
+    inputSearchValue() {
       this.loadApiData();
     },
-    groupChangeFns() {},
-    handleCheckAllChange(val) {
+    changeGroupFns() {},
+    changeCheckAll(val) {
       this.form[this.keyName] = val ? this.optionValues : [];
       this.isIndeterminate = !this.isIndeterminate;
     }

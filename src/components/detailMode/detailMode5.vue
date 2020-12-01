@@ -1,5 +1,5 @@
 <template>
-  <div class="bg_box">
+  <div class="g-bg-box">
     <div class="title">
       {{ configData.name }}
       <slot name="operatingTop">
@@ -7,12 +7,12 @@
       </slot>
     </div>
     <slot name="step"></slot>
-    <div v-for="(child, key) of configData.child" :key="key" class="con_box">
+    <div v-for="(child, key) of configData.child" :key="key" class="con-box">
       <template v-if="child.models && child.models.length > 0">
         <div class="title">
           {{ child.name }}
           <slot name="operatingItem">
-            <span v-if="!child.hiddenEdit" class="edit" @click="edit(child.modelName)">编辑</span>
+            <span v-if="!child.hiddenEdit" class="edit" @click="clickEdit(child.modelName)">编辑</span>
           </slot>
         </div>
         <el-form
@@ -36,7 +36,7 @@
                   :preview-src-list="[ruleForm[item2.key]]"
                 ></el-image>
                 <span v-if="item2.type !== 'img'" class="item-value">{{ item2.key ? ruleForm[item2.key] : item2.initVal }}{{ item2.type === 'pecent' ? '‰' : '' }}</span>
-                <span v-if="item2.type === 'seem'" class="item_see" @click="handle_seem(child.modelName)">查看</span>
+                <span v-if="item2.type === 'seem'" class="item-see" @click="clickSeem(child.modelName)">查看</span>
               </el-form-item>
             </el-col>
           </el-row>
@@ -61,10 +61,10 @@ export default {
   computed: {},
 
   methods: {
-    edit($modelName) {
+    clickEdit($modelName) {
       this.$emit("edit", $modelName);
     },
-    handle_seem($modelName) {
+    clickSeem($modelName) {
       this.$emit("handle_seem", $modelName);
     }
   }
@@ -72,7 +72,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.bg_box {
+.g-bg-box {
   margin: 24px;
   background: #fff;
   overflow: hidden;
@@ -93,7 +93,7 @@ export default {
     margin-right: 32px;
     cursor: pointer;
   }
-  .con_box {
+  .con-box {
     margin: 24px;
     background: #fff;
     overflow: hidden;
@@ -113,7 +113,7 @@ export default {
   }
 }
 
-.item_see {
+.item-see {
   font-size: 14px;
   color: #1989fa;
   cursor: pointer;

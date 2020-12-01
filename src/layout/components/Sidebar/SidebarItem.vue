@@ -1,7 +1,7 @@
 <template>
-  <div v-if="!item.hidden" @mouseleave="leave(item)" @mouseenter="enter(item)">
+  <div v-if="!item.hidden" @mouseleave="mouseleaveEvent(item)" @mouseenter="mouseenterEvent(item)">
     <template v-if="!(item.children && item.children.length > 0 )">
-      <el-menu-item :index="item.name" popper-append-to-body class="el-menu-item" @click="onClick_item(item)">
+      <el-menu-item :index="item.name" popper-append-to-body class="el-menu-item" @click="clickItem(item)">
         <item :icon="item.meta.icon" :title="item.meta.title" />
       </el-menu-item>
     </template>
@@ -10,7 +10,7 @@
         :index="item.name"
         popper-append-to-body
         class="el-menu-item"
-        @click="onClick_item(item)"
+        @click="clickItem(item)"
       >
         <item :icon="item.meta.icon" :title="item.meta.title" />
       </el-menu-item>
@@ -55,7 +55,7 @@ export default {
   created() {},
 
   methods: {
-    onClick_item($item) {
+    clickItem($item) {
       if ($item.children && $item.children.length > 0) {
         const secondItem = $item.children[0];
         if (secondItem.children && secondItem.children.length > 0) {
@@ -90,11 +90,11 @@ export default {
       }
       return path.resolve(this.basePath, routePath);
     },
-    leave() {
+    mouseleaveEvent() {
       // this.isMove = false;
       // this.showMenu2 = false;
     },
-    enter(item) {
+    mouseenterEvent(item) {
       EventBus.$emit("enterItem", item);
     }
   }

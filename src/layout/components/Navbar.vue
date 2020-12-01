@@ -29,7 +29,7 @@
       <!--            <el-button type="text" class="sysBtn" @click="toSyswarn">更多待办事项 ></el-button>-->
       <!--          </div>-->
       <!--          <el-badge :value="todoTask.todoCount" :max="99" slot="reference" class="badge-item">-->
-      <!--            <img src="@/assets/img/ding.png" class="search_img" @click="toSyswarn" />-->
+      <!--            <img src="@/assets/img/ding.png" class="search-img" @click="toSyswarn" />-->
       <!--          </el-badge>-->
       <!--        </el-popover>-->
       <!--      </template>-->
@@ -235,7 +235,7 @@ export default {
     &:focus {
       outline: none;
     }
-    .search_img {
+    .search-img {
       width: 22px;
 
       cursor: pointer;

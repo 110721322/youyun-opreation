@@ -23,7 +23,7 @@
         <components :is="transType(formItem.type)" :rule-form="ruleForm" :form-item="formItem"></components>
       </el-form-item>
 
-      <el-button type="primary" class="sent_btn">发送</el-button>
+      <el-button type="primary" class="sent-btn">发送</el-button>
     </el-form>
   </div>
 </template>
@@ -160,7 +160,7 @@ export default {
 .formTemplate-item {
   margin-right: 20px;
 }
-.sent_btn {
+.sent-btn {
   display: block;
   margin: 14px auto;
   width: 113px;

@@ -1,51 +1,50 @@
 <template>
-  <div class="bg_box">
-    <div class="title">
+  <div class="g-bg-box">
+    <div class="s-title">
       {{ configData.name }}
-      <slot name="operatingTop">
-        <!-- <span class="edit" @click="edit(child.modelName)">编辑</span> -->
-      </slot>
+      <slot name="operatingTop"></slot>
     </div>
     <slot name="step"></slot>
-    <div v-for="(child, key) of configData.child" :key="key" class="con_box">
-      <template v-if="child.models && child.models.length > 0">
-        <div class="title">
-          {{ child.name }}
-          <slot name="operatingItem">
-            <span v-if="!child.hiddenEdit" class="edit" @click="edit(child.modelName)">编辑</span>
-          </slot>
-        </div>
-        <el-form
-          ref="ruleForm"
-          :inline="false"
-          :model="ruleForm"
-          :rules="rules"
-          class="form"
-          label-position="left"
-        >
-          <el-row>
-            <el-col v-for="(item, key1) of child.models" :key="key1" :span="8">
-              <el-form-item
-                v-for="(item2, key2) of item.items"
-                :key="key2"
-                :label="item2.name + '：'"
-                prop="name"
-              >
-                <el-image
-                  lazy
-                  v-if="item2.type === 'img' && ruleForm[item2.key]"
-                  style="width: 100px; height: 100px;"
-                  :src="ruleForm[item2.key]"
-                  :preview-src-list="[ruleForm[item2.key]]"
-                ></el-image>
-                <span v-if="item2.type === 'descript'" class="item-value">{{ ruleForm[item2.key] === 'all' ? '全国' : ruleForm[item2.key] === 'province' ? '省' : ruleForm[item2.key] === 'city' ? '市' : '' }}</span>
-                <span v-else-if="item2.type === 'area'" class="item-value">{{ ruleForm['provinceName']+ruleForm['cityName']+ruleForm['areaName']}}</span>
-                <span v-else-if="item2.type !== 'img' && item2.type !== 'descript' " class="item-value">{{ ruleForm[item2.key] }}{{ item2.type === 'pecent' ? '‰' : item2.type === 'pecent1' ? ' %' : '' }}</span>
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </el-form>
-      </template>
+    <div
+      v-for="(child, key) of configData.child"
+      :key="key"
+      class="g-container-box"
+    >
+      <div class="s-title">
+        {{ child.name }}
+        <slot name="operatingItem">
+          <span class="s-edit" @click="clickEdit(child.modelName)">编辑</span>
+        </slot>
+      </div>
+      <el-form
+        ref="ruleForm"
+        :inline="false"
+        :model="ruleForm"
+        :rules="rules"
+        class="s-form"
+        label-position="left"
+      >
+        <el-row>
+          <el-col v-for="(item, key1) of child.models" :key="key1" :span="8">
+            <el-form-item
+              v-for="(item2, key2) of item.items"
+              :key="key2"
+              :label="item2.name + '：'"
+              prop="name"
+            >
+              <el-image
+                v-if="item2.type === 'img'"
+                style="width: 100px; height: 100px;"
+                :src="ruleForm[item2.key]"
+                :preview-src-list="[ruleForm[item2.key]]"
+              ></el-image>
+              <span v-if="item2.type === 'descript'" class="item-value">{{ ruleForm[item2.key] === 'all' ? '全国' : ruleForm[item2.key] === 'province' ? '省' : ruleForm[item2.key] === 'city' ? '市' : '' }}</span>
+              <span v-else-if="item2.type === 'area'" class="item-value">{{ ruleForm['provinceName']+ruleForm['cityName']+ruleForm['areaName']}}</span>
+              <span v-else-if="item2.type !== 'img' && item2.type !== 'descript' " class="item-value">{{ ruleForm[item2.key] }}{{ item2.type === 'pecent' ? '‰' : item2.type === 'pecent1' ? ' %' : '' }}</span>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
     </div>
     <slot name="operatingBottom"></slot>
   </div>
@@ -65,7 +64,7 @@ export default {
   computed: {},
 
   methods: {
-    edit($modelName) {
+    clickEdit($modelName) {
       this.$emit("edit", $modelName);
     }
   }
@@ -73,20 +72,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.bg_box {
+.g-bg-box {
   margin: 24px;
   background: #fff;
   overflow: hidden;
-  .title {
+  .s-title {
     height: 54px;
     line-height: 54px;
-    padding-left: 24px;
+    padding-left: 32px;
     font-size: 16px;
     font-weight: 500;
     color: rgba(51, 51, 53, 1);
     border-bottom: 1px solid #ebeef5;
   }
-  .edit {
+  .s-edit {
     float: right;
     font-size: 14px;
     font-weight: 400;
@@ -94,19 +93,19 @@ export default {
     margin-right: 32px;
     cursor: pointer;
   }
-  .con_box {
+  .g-container-box {
     margin: 24px;
     background: #fff;
     overflow: hidden;
     border: 1px solid #e9e9e9;
-    .title {
+    .s-title {
       height: 44px;
       line-height: 44px;
       background: #fafafa;
     }
-    .form {
+    .s-form {
       margin: 32px;
-      .item-value {
+      .s-item-value {
         color: rgba(96, 98, 102, 1);
         word-wrap: break-word;
       }

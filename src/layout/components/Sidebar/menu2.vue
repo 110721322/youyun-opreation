@@ -1,8 +1,14 @@
 <template>
   <div>
-    <el-menu class="el-menu-vertical-demo" style="border-right: 0;" :default-openeds="[secondName]">
+    <el-menu
+      class="el-menu-vertical-demo"
+      style="border-right: 0;"
+      :default-openeds="[secondName]">
       <div v-for="(item, key) of menu2Data" :key="key">
-        <el-submenu v-if="item.children && item.children.length>0" :index="item.name" class="el-submenu">
+        <el-submenu
+          v-if="item.children && item.children.length>0"
+          :index="item.name"
+          class="el-submenu">
           <template slot="title">
             <span>{{ item.text }}</span>
           </template>
@@ -13,7 +19,7 @@
                 class="el-menu-item third-menu-item"
                 :class="(thirdName === childItem.name) ? 'active' : ''"
                 :index="childItem.name"
-                @click="onClick_item(childItem)"
+                @click="clickItem(childItem)"
               >{{ childItem.text }}</el-menu-item>
             </template>
           </div>
@@ -24,7 +30,7 @@
             class="el-menu-item"
             :index="item.name"
             :class="(secondName === item.name) ? 'active' : ''"
-            @click="onClick_item(item)"
+            @click="clickItem(item)"
           >
             <span slot="title">{{ item.text }}</span>
           </el-menu-item>
@@ -51,7 +57,7 @@ export default {
     }
   },
   methods: {
-    onClick_item($item) {
+    clickItem($item) {
       this.$router.push({name: $item.name})
     }
   }

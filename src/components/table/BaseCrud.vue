@@ -60,7 +60,7 @@
                 class="cancel-btn"
                 size="medium"
                 type="text"
-                @click="cancelEdit(scope.row)"
+                @click="clickCancelEdit(scope.row)"
               >取消</el-button>
             </template>
             <span v-else>{{ item.formatter ? item.formatter(scope.row, index) : scope.row[item.prop] }}</span>
@@ -68,7 +68,7 @@
               <img
                 :src="item.imgUrl"
                 :style="item.imgStyle"
-                @click="onClick_handleToggle(scope.row,item)"
+                @click="clickHandleToggle(scope.row,item)"
               >
             </template>
           </span>
@@ -95,7 +95,7 @@
                 size="medium"
                 :style="item.style"
                 :type="item.type ? item.type : 'primary'"
-                @click="handleEmit(item.emitName, scope.row)"
+                @click="clickEmit(item.emitName, scope.row)"
               >{{ item.name }}</el-button>
               <span
                 v-if="index !== gridBtnConfig.expands.length - 1"
@@ -109,7 +109,7 @@
     <!--crud的分页组件-->
     <div class="crud-pagination">
       <div>
-        <el-checkbox v-if="isSelect" v-model="checkAll" :indeterminate="isIndeterminate" @change="toggleSelection">全选</el-checkbox>
+        <el-checkbox v-if="isSelect" v-model="checkAll" :indeterminate="isIndeterminate" @change="changeToggleSelection">全选</el-checkbox>
         <slot name="paginationLeft"></slot>
       </div>
       <!--如果不是异步请求展示数据，需要隐藏分页-->
@@ -227,7 +227,7 @@ export default {
     }
   },
   methods: {
-    toggleSelection() {
+    changeToggleSelection() {
       const refName = this.refName ? this.refName : 'table'
       if (this.multipleSelection.length === this.showGridData.length) {
         this.$refs[refName].clearSelection();
@@ -238,7 +238,7 @@ export default {
         });
       }
     },
-    onClick_handleToggle($row, $item) {
+    clickHandleToggle($row, $item) {
       if (this.$refs[this.refName]) {
         this.$emit($item.emitName, $row, this.$refs[this.refName]);
       }
@@ -301,7 +301,7 @@ export default {
     },
 
     // 处理相应父组件的事件方法
-    handleEmit(emitName, row) {
+    clickEmit(emitName, row) {
       if (emitName === "rowEdit") {
         for (const item of this.gridConfig) {
           if (item.isEdit) {
@@ -340,7 +340,7 @@ export default {
       this.multipleSelection = val;
       this.$emit("selectionChange", val);
     },
-    cancelEdit($row) {
+    clickCancelEdit($row) {
       $row.edit = false;
       for (const item of this.gridConfig) {
         if (item.isEdit) {
