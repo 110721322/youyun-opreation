@@ -7,13 +7,12 @@
       :show-foot-btn="searchConfig.showFootBtn"
       @search="search"
     />
-    <div class="table_box">
+    <div class="table-box">
       <BaseCrud
         ref="table"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
         :hide-edit-area="configData.hideEditArea"
-        :grid-data="testData"
         :form-config="configData.formConfig"
         :form-data="configData.formModel"
         :grid-edit-width="150"
@@ -22,7 +21,7 @@
         :is-select="false"
         :params="params"
         :api-service="api"
-        @detail="go_detail"
+        @detail="onClickGoDetail"
       />
     </div>
   </div>
@@ -41,12 +40,11 @@ export default {
   components: { search, BaseCrud },
   data() {
     return {
-      searchMaxHeight: "380",
-      configData: TABLE_CONFIG,
-      searchConfig: SEARCH_CONFIG,
-      testData: [],
-      params: {},
-      api: api.agentRenewRecord
+      searchMaxHeight: "380", // 搜索项展开高度
+      configData: TABLE_CONFIG, // 列表展示参数
+      searchConfig: SEARCH_CONFIG, // 搜索项的参数
+      params: {}, // 搜索参数
+      api: api.agentRenewRecord // 查询到期续费记录
     };
   },
   created() {
@@ -77,7 +75,9 @@ export default {
         [$form.search]: $form.searchVal
       }
     },
-    go_detail(row) {
+
+    // 点击进入详情页面
+    onClickGoDetail(row) {
       this.$router.push({
         name: 'agentDetail',
         query: {
@@ -90,7 +90,7 @@ export default {
 </script>
 
 <style scoped>
-.table_box {
+.table-box {
   margin: 24px;
   padding: 24px;
   overflow: hidden;

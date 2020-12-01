@@ -8,8 +8,8 @@
       :form-base-data="fromConfigData.formData"
       :show-foot-btn="fromConfigData.showFootBtn"
       label-width="130px"
-      @cancel="cancel"
-      @confirm="confirm"
+      @cancel="onClickCancel"
+      @confirm="onClickConfirm"
     ></Form>
   </div>
 </template>
@@ -23,7 +23,7 @@ export default {
   components: { Form },
   data() {
     return {
-      fromConfigData: FORM_CONFIG.addData,
+      fromConfigData: FORM_CONFIG.addData, // 表单数据
       id: this.$route.query.id,
       show: false
     };
@@ -34,6 +34,7 @@ export default {
     }
   },
   methods: {
+    // 查询详情页面数据
     queryById() {
       apiAgent.advertQueryById({ id: this.id }).then(res => {
         // 编辑前重赋值
@@ -44,10 +45,14 @@ export default {
         this.show = true;
       })
     },
-    cancel(done) {
+
+    // 点击取消按钮返回上一页
+    onClickCancel(done) {
       this.$router.back(-1);
     },
-    confirm($form) {
+
+    // 点击确定按钮提交数据
+    onClickConfirm($form) {
       if (this.id) {
         apiAgent.advertUpdate({
           advertImg: $form.advertImg.dialogImageUrl,
@@ -75,13 +80,5 @@ export default {
 <style lang="scss" scoped>
 .ad-detail-box {
   overflow: hidden;
-  /deep/ .formTemplate {
-    background: #fff;
-    padding-top: 24px;
-    padding-bottom: 24px;
-  }
-  /deep/ .foot_btn_box {
-    border-top: none;
-  }
 }
 </style>

@@ -9,22 +9,21 @@
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
         label-width="130px"
-        @cancel="cancel"
-        @confirm="confirm"
-        @selectChange="selectChange"
+        @cancel="onClickCancel"
+        @confirm="onClickConfirm"
       >
         <template v-slot="{ formItem }">
-          <div v-if="formItem.putService===4">{{formItem.putService}}</div>
+          <div v-if="formItem.putService === 4">{{ formItem.putService }}</div>
         </template>
         <template v-slot="{ formItem } ">
-          <div v-if="formItem.putService===4">
+          <div v-if="formItem.putService === 4">
             <div class="select_data">
               <span class="el-icon-info icon" />
               <span>
                 已添加
                 <span class="blue">{{ dynamicTags.length }}</span> 项目
               </span>
-              <el-button class="btn" type="text" @click="onClick_clearAll">清空</el-button>
+              <el-button class="btn" type="text" @click="clickClearAll">清空</el-button>
             </div>
             <div class="tag-box">
               <el-tag
@@ -33,21 +32,21 @@
                 closable
                 class="tag-item"
                 :disable-transitions="false"
-              size="small"
-              @close="handleClose(tag)"
-            >{{ tag }}</el-tag>
-            <el-button class="button-new-tag" size="small" @click="addService">+ 添加服务商</el-button>
+                size="small"
+                @close="clickClose(tag)"
+              >{{ tag }}</el-tag>
+              <el-button class="button-new-tag" size="small" @click="clickAddService">+ 添加服务商</el-button>
+            </div>
           </div>
-        </div>
-      </template>
-    </Form>
+        </template>
+      </Form>
     </div>
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
       <div class="p_head">{{ drawerTitle }}</div>
       <div class="search-box">
         <span class="label">精准筛选:</span>
         <el-input v-model="input" placeholder="请输入内容" class="input-with-select" size="40%">
-          <el-select slot="prepend" v-model="select" style="width:130px" placeholder="请选择">
+          <el-select slot="prepend" v-model="select" class="input-select-box" placeholder="请选择">
             <el-option label="服务商ID" value="1"></el-option>
             <el-option label="服务商名称" value="2"></el-option>
           </el-select>
@@ -72,8 +71,8 @@
         </el-select>
       </div>
       <div class="search-btn">
-        <el-button type="primary" size="medium" @click="onClick_search">搜索</el-button>
-        <el-button size="medium" @click="onClick_reset">重置</el-button>
+        <el-button type="primary" size="medium" @click="clickSearch">搜索</el-button>
+        <el-button size="medium" @click="clickReset">重置</el-button>
       </div>
       <div class="form-box">
         <!-- <div class="select_data2">
@@ -82,7 +81,7 @@
             已选择
             <span class="blue">{{ selectData.length }}</span> 项目
           </span>
-          <el-button class="btn" type="text" @click="clearMrechant">清空</el-button>
+          <el-button class="btn" type="text" @click="clickClearMrechant">清空</el-button>
         </div> -->
         <BaseCrud
           v-if="drawer"
@@ -101,8 +100,8 @@
         />
       </div>
       <div class="oper-box">
-        <el-button type="primary" size="medium" @click="onClick_confirm">确定</el-button>
-        <el-button size="medium" @click="onClick_cancel">关闭</el-button>
+        <el-button type="primary" size="medium" @click="clickConfirm">确定</el-button>
+        <el-button size="medium" @click="clickCancel">关闭</el-button>
       </div>
     </el-drawer>
   </div>
@@ -142,15 +141,6 @@ export default {
       api: apiAgent.queryAllDistributeAgent
     };
   },
-  created() {
-    this.queryAllPrivilegeType();
-    if (this.id) {
-      this.queryById();
-      return;
-    }
-    this.showForm = true;
-    this.loading = false;
-  },
   computed: {
     advertType: function() {
       return this.$store.state.dataMarket.advertType;
@@ -172,18 +162,34 @@ export default {
       this.$set(this.fromConfigData, 'formData', tempData);
     }
   },
+  created() {
+    this.queryAllPrivilegeType();
+    if (this.id) {
+      this.queryById();
+      return;
+    }
+    this.showForm = true;
+    this.loading = false;
+  },
   methods: {
-    onClick_clearAll() {
+    // 点击清空按钮重置数据
+    clickClearAll() {
       this.dynamicTags = [];
     },
-    clearMrechant() {
+
+    // 点击清空重置表单数据
+    clickClearMrechant() {
       this.$refs.merchant.$children[0].clearSelection()
     },
+
+    // 查询数据
     queryAllPrivilegeType() {
       apiAgent.queryAllPrivilegeType({}).then(res => {
         this.options = res.data;
       })
     },
+
+    // 获取详情数据
     queryById() {
       apiAgent.queryById({ id: this.id }).then(res => {
         // 编辑前重赋值
@@ -195,12 +201,18 @@ export default {
         this.showForm = true;
       })
     },
-    handleClose(tag) {
+
+    // 关闭时截取数据
+    clickClose(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
     },
-    addService() {
+
+    // 点击添加按钮弹出侧边弹窗
+    clickAddService() {
       this.drawer = true;
     },
+
+    // 查询数据
     getTableData() {
       this.par = {
         provinceCode: this.select2[0],
@@ -216,7 +228,9 @@ export default {
         this.testData = res.data;
       })
     },
-    cancel() {
+
+    // 点击取消返回上一页
+    onClickCancel() {
       this.$router.go(-1);
     },
     selectionChange($val) {
@@ -231,23 +245,33 @@ export default {
       })
       this.selectData = selectData;
     },
-    onClick_confirm() {
+
+    // 点击确定
+    clickConfirm() {
       this.dynamicTags = this.myDynamicTags;
       this.drawer = false;
     },
-    onClick_reset() {
+
+    // 点击重置清空数据
+    clickReset() {
       this.input = "";
       this.select = "";
       this.select2 = "";
       this.select3 = "";
     },
-    onClick_search() {
+
+    // 点击搜索查询数据
+    clickSearch() {
       this.getTableData();
     },
-    onClick_cancel() {
+
+    // 点击取消关闭侧边弹窗
+    clickCancel() {
       this.drawer = false;
     },
-    confirm($form) {
+
+    // 点击确认按钮
+    onClickConfirm($form) {
       if (this.id) {
         apiAgent.advertDistributeUpdate({
           agentNoList: this.selectData,
@@ -269,8 +293,7 @@ export default {
           this.$router.back(-1);
         })
       }
-    },
-    selectChange(ruleForm) {}
+    }
   }
 };
 </script>
@@ -278,43 +301,54 @@ export default {
 <style lang="scss" scoped>
 .button-new-tag {
   margin-left: 10px;
-  height: 24px;
-  line-height: 24px;
   padding-top: 0;
   padding-bottom: 0;
+  height: 24px;
+  line-height: 24px;
 }
+
 .oper-box {
-  text-align: center;
   position: absolute;
   bottom: 28px;
+  padding-top: 30px;
   width: 100%;
   border-top: 1px solid #ebeef5;
-  padding-top: 30px;
+  text-align: center;
+
   .el-button {
     padding: 10px 35px;
   }
 }
+
 .form-box {
   padding: 0 24px;
 }
+
+.input-select-box {
+  width: 130px !important;
+}
+
 .tag-box {
+  margin: 16px 0 0 126px;
   padding: 9px 15px;
   width: 50%;
   height: 82px;
-  margin: 16px 0 0 126px;
   border-radius: 4px;
   border: 1px solid rgba(219, 223, 231, 1);
+
   .tag-item {
     margin: 0 5px;
   }
 }
+
 .select_data {
+  margin: 16px 0 0 126px;
   width: 50%;
   height: 40px;
   background: #e6f7ff;
   border: 1px solid #bae7ff;
   line-height: 40px;
-  margin: 16px 0 0 126px;
+
   .icon {
     color: rgba(24, 144, 255, 1);
     margin: 0 8px 0 16px;
@@ -329,13 +363,15 @@ export default {
     font-size: 14px;
   }
 }
+
 .select_data2 {
+  margin: 16px 0;
   width: 100%;
   height: 40px;
   background: rgba(230, 247, 255, 1);
   border: 1px solid rgba(186, 231, 255, 1);
   line-height: 40px;
-  margin: 16px 0;
+
   .icon {
     color: rgba(24, 144, 255, 1);
     margin: 0 8px 0 16px;
@@ -350,19 +386,23 @@ export default {
     font-size: 14px;
   }
 }
+
 .search-box {
   display: flex;
   align-items: center;
   margin: 16px 24px;
+
   .label {
-    width: 95px;
     flex-shrink: 0;
+    width: 95px;
   }
 }
+
 .search-btn {
-  text-align: right;
   padding: 0 24px;
+  text-align: right;
 }
+
 .ad-detail-box {
   overflow: hidden;
 }

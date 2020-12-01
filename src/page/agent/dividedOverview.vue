@@ -2,29 +2,28 @@
   <div>
     <div class="p_head">分润总览</div>
     <search
-        :open-height="searchMaxHeight"
-        :form-base-data="searchConfig.formData"
-        :show-foot-btn="searchConfig.showFootBtn"
-        @search="search"
+      :open-height="searchMaxHeight"
+      :form-base-data="searchConfig.formData"
+      :show-foot-btn="searchConfig.showFootBtn"
+      @search="search"
     />
     <div class="data-list">
       <data-mode :config-data="overviewData" class="data-item"></data-mode>
       <data-mode :config-data="overviewData2" class="data-item2"></data-mode>
     </div>
-    <div class="table_box">
+    <div class="table-box">
       <BaseCrud
-          :grid-config="configData.gridConfig"
-          :grid-btn-config="configData.gridBtnConfig"
-          :grid-data="testData"
-          :form-config="configData.formConfig"
-          :form-data="configData.formModel"
-          :grid-edit-width="50"
-          form-title="用户"
-          :is-async="true"
-          :is-select="false"
-          :params="params"
-          :api-service="api"
-          @detail="handleDetail"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="50"
+        form-title="用户"
+        :is-async="true"
+        :is-select="false"
+        :params="params"
+        :api-service="api"
+        @detail="onClickDetail"
       />
     </div>
   </div>
@@ -43,49 +42,28 @@ export default {
   components: { search, BaseCrud, dataMode },
   data() {
     return {
-      searchMaxHeight: "200",
-      configData: USER_CONFIG,
-      searchConfig: FORM_CONFIG,
-      testData: [],
-      overviewData: [
-        {
-          title: "订单分润总额",
-          data: "2202604.25元"
-        },
-        {
-          title: "服务商订单分润",
-          data: "2201604.25元"
-        },
-        {
-          title: "平台订单分润",
-          data: "1000.00元"
-        }
-      ],
-      overviewData2: [
-        {
-          title: "官方活动奖励",
-          data: "1000000.00元"
-        },
-        {
-          title: "平台活动奖励",
-          data: "10000.00元"
-        }
-      ],
-      tradeMonth: '',
-      params: {},
-      api: api.agentCommission
+      searchMaxHeight: "200", // 搜索项展开参数
+      configData: USER_CONFIG, // 列表展示参数
+      searchConfig: FORM_CONFIG, // 搜索项的参数
+      overviewData: [],
+      overviewData2: [],
+      tradeMonth: '', // 月份
+      params: {}, // 搜索参数
+      api: api.agentCommission // 查询分润列表
     };
   },
   created() {
-    this.params = {}
   },
   mounted() {
     this.getTotalCommission();
   },
   methods: {
-    handleDetail() {
+    // 点击进入详情页面
+    onClickDetail() {
       this.$router.push({ name: "dividedOverviewDetail" });
     },
+
+    // 获取分润的总数据
     getTotalCommission() {
       api.totalCommission({
         tradeMonth: this.tradeMonth
@@ -126,25 +104,28 @@ export default {
 </script>
 
 <style scoped>
-.table_box {
+.table-box {
   margin: 24px;
   padding: 24px;
   overflow: hidden;
   background: #fff;
 }
+
 .data-list {
   display: flex;
   margin: 24px;
 }
+
 .data-item {
   margin: 0;
-  width: 54%;
   flex-grow: 1;
+  width: 54%;
 }
+
 .data-item2 {
   margin: 0;
-  width: 44%;
   margin-left: 24px;
   flex-grow: 1;
+  width: 44%;
 }
 </style>

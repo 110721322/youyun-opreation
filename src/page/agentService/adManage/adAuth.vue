@@ -8,12 +8,11 @@
       :form-base-data="searchConfig.formData"
       @search="search"
     />
-    <div class="table_box">
+    <div class="table-box">
       <BaseCrud
         ref="table"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
-        :grid-data="testData"
         :form-config="configData.formConfig"
         :form-data="configData.formModel"
         :grid-edit-width="250"
@@ -25,7 +24,7 @@
         :hide-edit-area="configData.hideEditArea"
         :params="params"
         :api-service="api"
-        @editAuth="handleEditAuth"
+        @editAuth="onClickEditAuth"
       ></BaseCrud>
     </div>
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
@@ -35,8 +34,8 @@
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
         label-width="130px"
-        @confirm="confirm"
-        @cancel="cancel"
+        @confirm="onClickConfirm"
+        @cancel="onClickCancel"
       ></Form>
     </el-drawer>
   </div>
@@ -56,12 +55,11 @@ export default {
   components: { Search, BaseCrud, Form },
   data() {
     return {
-      searchConfig: SEARCH_CONFIG,
-      configData: TABLE_CONFIG,
-      drawer: false,
-      searchHeight: "200",
-      rowAgentNo: "",
-      testData: [],
+      searchConfig: SEARCH_CONFIG, // 搜索项的参数
+      configData: TABLE_CONFIG, // 列表展示参数
+      drawer: false, // 控制弹窗的显示与隐藏
+      searchHeight: "200", // 搜索项展开的高度
+      rowAgentNo: "", // 服务商编号
       fromConfigData: {},
       params: {
         agentNo: "",
@@ -74,10 +72,10 @@ export default {
       api: apiAgent.advertPrivilege
     };
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
-    handleEditAuth($row) {
+    // 编辑前的赋值
+    onClickEditAuth($row) {
       this.rowAgentNo = $row.agentNo;
       // 编辑前重赋值
       FORM_CONFIG.formData.formData.forEach((item, index) => {
@@ -86,7 +84,9 @@ export default {
       this.fromConfigData = FORM_CONFIG.formData;
       this.drawer = true;
     },
-    confirm($ruleForm) {
+
+    // 确认
+    onClickConfirm($ruleForm) {
       apiAgent.advertPrivilegeUpdate({
         agentNo: this.rowAgentNo,
         privilegeList: $ruleForm.baseData
@@ -97,31 +97,30 @@ export default {
         }
       });
     },
-    cancel() {
+
+    // 点击取消关闭弹窗
+    onClickCancel() {
       this.drawer = false;
     },
+
     search($ruleForm) {
       this.params = {
         cityCode: $ruleForm.area ? $ruleForm.area[1] : '',
         provinceCode: $ruleForm.area ? $ruleForm.area[0] : '',
         operationId: $ruleForm.operationId,
         privilege: $ruleForm.privilege
-      };
-      // SelectInput联合输入框赋值
-      this.params[$ruleForm.inputSelect] = $ruleForm.inputForm;
+      }
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;
   overflow: hidden;
   background: #fff;
 }
-</style>
-<style>
 </style>

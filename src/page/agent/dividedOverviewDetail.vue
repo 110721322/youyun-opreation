@@ -8,11 +8,10 @@
       :show-foot-btn="searchConfig.showFootBtn"
       @search="search"
     />
-    <div class="table_box">
+    <div class="table-box">
       <BaseCrud
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
-        :grid-data="testData"
         :form-config="configData.formConfig"
         :form-data="configData.formModel"
         :grid-edit-width="50"
@@ -37,19 +36,13 @@ import api from "@/api/api_agent.js"
 export default {
   name: "DividedOverviewDetail",
   components: { search, BaseCrud },
-  // components: {  dataMode, BaseCrud },
 
   data() {
     return {
-      searchMaxHeight: "120",
-      configData: USER_CONFIG,
-      searchConfig: FORM_CONFIG,
-      testData: [],
-      params: {
-        "merchantName": "7小02猪",
-        "merchantNo": "小王5冬3小冬a",
-        "tradeMonth": "2020-03-17"
-      },
+      searchMaxHeight: "120", // 搜索项展开高度
+      configData: USER_CONFIG, // 列表展示参数
+      searchConfig: FORM_CONFIG, // 搜索项的参数
+      params: {}, // 搜索参数
       api: api.merchantCommission
     };
   },
@@ -57,43 +50,7 @@ export default {
     this.getData();
   },
   methods: {
-    getData() {
-      this.testData = [
-        {
-          merchantName: "岳阳楼区戴斯酒店",
-          id: "岳阳楼区戴斯酒店",
-          totalCommission: "10000.00",
-          officeReward: "998.00",
-          platformReward: "998.00",
-          aliDivided: "1000.00",
-          wxDivided: "1000.00",
-          yunDivided: "1000.00",
-          yinDivided: "1000.00"
-        },
-        {
-          merchantName: "岳阳楼区戴斯酒店",
-          id: "岳阳楼区戴斯酒店",
-          totalCommission: "10000.00",
-          officeReward: "998.00",
-          platformReward: "998.00",
-          aliDivided: "1000.00",
-          wxDivided: "1000.00",
-          yunDivided: "1000.00",
-          yinDivided: "1000.00"
-        },
-        {
-          merchantName: "岳阳楼区戴斯酒店",
-          id: "岳阳楼区戴斯酒店",
-          totalCommission: "10000.00",
-          officeReward: "998.00",
-          platformReward: "998.00",
-          aliDivided: "1000.00",
-          wxDivided: "1000.00",
-          yunDivided: "1000.00",
-          yinDivided: "1000.00"
-        }
-      ];
-    },
+    getData() {},
     search($form) {
       this.params = {
         [$form.search]: $form.searchVal
@@ -104,7 +61,7 @@ export default {
 </script>
 
 <style scoped>
-.table_box {
+.table-box {
   margin: 24px;
   padding: 24px;
   overflow: hidden;

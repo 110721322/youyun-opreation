@@ -7,27 +7,26 @@
     <transition name="fade">
       <div>
         <Search
-            :form-base-data="searchConfig.formData"
-            :open-height="searchMaxHeight"
-            @search="search"
+          :form-base-data="searchConfig.formData"
+          :open-height="searchMaxHeight"
+          @search="search"
         />
-        <div class="table_box">
+        <div class="table-box">
           <BaseCrud
-              :grid-config="configData.gridConfig"
-              :grid-btn-config="configData.gridBtnConfig"
-              :grid-data="testData"
-              :form-config="configData.formConfig"
-              :form-data="configData.formModel"
-              :grid-edit-width="100"
-              :is-async="true"
-              :is-select="false"
-              :is-expand="true"
-              :row-key="index"
-              :default-expand-all="false"
-              :hide-edit-area="configData.hideEditArea"
-              :params="params"
-              :api-service="api"
-              @detail="handleDetail"
+            :grid-config="configData.gridConfig"
+            :grid-btn-config="configData.gridBtnConfig"
+            :form-config="configData.formConfig"
+            :form-data="configData.formModel"
+            :grid-edit-width="100"
+            :is-async="true"
+            :is-select="false"
+            :is-expand="true"
+            :row-key="index"
+            :default-expand-all="false"
+            :hide-edit-area="configData.hideEditArea"
+            :params="params"
+            :api-service="api"
+            @detail="onClickDetail"
           >
             <template v-slot="{ row }">
               <el-form label-position="left" inline class="demo-table-expand">
@@ -55,27 +54,22 @@ export default {
   components: { Search, BaseCrud },
   data() {
     return {
-      searchConfig: SEARCH_CONFIG,
-      searchMaxHeight: "320",
-      configData: TABLE_CONFIG,
-      testData: [],
-      isChangeMode: true,
+      searchConfig: SEARCH_CONFIG, // 搜索项数据
+      searchMaxHeight: "320", // 搜索展开项高度
+      configData: TABLE_CONFIG, // 表格数据
       params: {
-        agentNo: null,
-        outputNo: null,
-        outputType: null,
-        status: null,
-        beginTime: this.$g.utils.getNowFormatDate() + ' ' + '00' + ':' + '00' + ':' + '00',
-        endTime: this.$g.utils.getNowFormatDate() + ' ' + '23' + ':' + '59' + ':' + '59'
-      },
-      api: api.hardwarePageOrder
+        beginTime: this.$g.utils.getNowFormatDate() + ' 00:00:00',
+        endTime: this.$g.utils.getNowFormatDate() + ' 23:59:59'
+      }, // 搜索传参
+      api: api.hardwarePageOrder // 查询硬件收购列表
     };
   },
   created() {
   },
   mounted() {},
   methods: {
-    handleDetail($row) {
+    // 点击跳转至详情页
+    onClickDetail($row) {
       this.$router.push({
         name: "hardwareOrderDetail",
         query: {
@@ -99,7 +93,7 @@ export default {
 </script>
 
 <style scoped>
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;
@@ -110,15 +104,17 @@ export default {
 .demo-table-expand {
   font-size: 0;
 }
+
 .demo-table-expand label {
   width: 90px;
   color: #99a9bf;
 }
+
 .demo-table-expand .el-form-item {
   margin-right: 0;
   margin-bottom: 0;
-  /* width: 25%; */
 }
+
 .form-box {
   display: flex;
   justify-content: space-between;

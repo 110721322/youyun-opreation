@@ -7,25 +7,42 @@
     <transition name="fade">
       <div>
         <div>
-          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.orderData"></detailMode>
-          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.agentData"></detailMode>
-          <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.questionData"></detailMode>
+          <detailMode
+            :img-width="4"
+            :rule-form="ruleForm"
+            :config-data="configData.orderData"
+          >
+          </detailMode>
+          <detailMode
+            :img-width="4"
+            :rule-form="ruleForm"
+            :config-data="configData.agentData"
+          >
+          </detailMode>
+          <detailMode
+            :img-width="4"
+            :rule-form="ruleForm"
+            :config-data="configData.questionData"
+          >
+          </detailMode>
           <detailMode
             v-if="showComponents.showDealData"
             :img-width="4"
             :rule-form="ruleForm"
             :config-data="configData.dealData"
-          ></detailMode>
+          >
+          </detailMode>
           <detailMode
             v-if="showComponents.showEvaluationData"
             :img-width="4"
             :rule-form="ruleForm"
             :config-data="configData.evaluationData"
-          ></detailMode>
+          >
+          </detailMode>
         </div>
         <div v-if="showComponents.showOperBtns" class="btn-box">
-          <div class="btn_pass" @click="onClick_distribution">分配</div>
-          <div class="btn-reject" @click="onClick_reply">回复</div>
+          <div class="btn-pass" @click="clickDistribution">分配</div>
+          <div class="btn-reject" @click="clickReply">回复</div>
         </div>
       </div>
     </transition>
@@ -260,7 +277,9 @@ export default {
           break;
       }
     },
-    onClick_distribution() {
+
+    // 点击分配按钮
+    clickDistribution() {
       const FormData = JSON.parse(JSON.stringify(FORM_CONFIG.distributionData));
       this.formStatus = "distribution";
       this.fromConfigData = FormData;
@@ -269,7 +288,9 @@ export default {
     cancel() {
       this.drawer = false;
     },
-    onClick_reply() {
+
+    // 点击回复按钮
+    clickReply() {
       const FormData = JSON.parse(JSON.stringify(FORM_CONFIG.replyData));
       this.formStatus = "reply";
       this.fromConfigData = FormData;
@@ -284,22 +305,17 @@ export default {
   display: flex;
   justify-content: center;
   text-align: center;
-  .btn_download {
-    font-size: 14px;
-    font-weight: 400;
-    color: #1989fa;
-    line-height: 40px;
-    letter-spacing: 1px;
-  }
-  .btn_pass {
+
+  .btn-pass {
     margin-left: 60px;
     width: 100px;
     height: 40px;
     background: #1989fa;
     border-radius: 4px;
     line-height: 40px;
-    color: #ffffff;
+    color: #fff;
   }
+
   .btn-reject {
     width: 100px;
     height: 40px;
@@ -310,33 +326,5 @@ export default {
     color: #606266;
     margin-left: 24px;
   }
-}
-.table_box {
-  position: relative;
-  margin: 24px;
-  padding: 24px;
-  overflow: hidden;
-  background: #fff;
-}
-.form_item {
-  float: left !important;
-}
-.clear_both {
-  clear: both !important;
-}
-.btn_list {
-  /* background: rebeccapurple; */
-  position: absolute;
-  right: 0;
-  bottom: 21px;
-  right: 24px;
-}
-.detail-alert {
-  margin: 24px;
-  padding: 9px 24px;
-  background-color: #ffe8e9;
-  border: 1px solid #ff7f85;
-  color: #f5222d;
-  width: auto;
 }
 </style>

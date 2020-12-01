@@ -9,9 +9,9 @@
       @search="search"
     />
 
-    <div class="table_box">
-      <div class="tabale_title_box">
-        <el-button class="btn" type="primary" @click="onClick_addDocker">新增对接商</el-button>
+    <div class="table-box">
+      <div class="tabale-title-box">
+        <el-button class="btn" type="primary" @click="clickAddDocker">新增对接商</el-button>
       </div>
       <BaseCrud
         ref="table"
@@ -19,7 +19,6 @@
         :api-service="api"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
-        :grid-data="testData"
         :form-config="configData.formConfig"
         :form-data="configData.formModel"
         :grid-edit-width="150"
@@ -28,9 +27,9 @@
         :row-key="'id'"
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
-        @detail="handleDetail"
-        @freeze="handleFreeze"
-        @unfreeze="handleUnfreeze"
+        @detail="onClickDetail"
+        @freeze="onClickFreeze"
+        @unfreeze="onClickUnfreeze"
       ></BaseCrud>
     </div>
   </div>
@@ -48,17 +47,11 @@ export default {
   components: { Search, BaseCrud },
   data() {
     return {
-      searchMaxHeight: "200",
-      searchConfig: SEARCH_CONFIG,
-      configData: TABLE_CONFIG,
-      fromConfigData: {},
-      testData: [],
-      drawer: false,
-      params: {
-        // beginDate: this.$g.utils.getToday(),
-        // endDate: this.$g.utils.getToday()
-      },
-      api: api.getOpenOperatorPageList
+      searchMaxHeight: "200", // 搜索项展开高度
+      searchConfig: SEARCH_CONFIG, // 搜索参数
+      configData: TABLE_CONFIG, // 列表参数
+      params: {}, // 页面传参
+      api: api.getOpenOperatorPageList // 获取第三方对接的列表
     };
   },
   mounted() {},
@@ -70,7 +63,9 @@ export default {
         [$ruleForm.search]: $ruleForm.searchVal
       }
     },
-    handleUnfreeze(row) {
+
+    // 点击解冻代理商
+    onClickUnfreeze(row) {
       this.$confirm("是否要解冻该代理商？", "解冻代理商", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认解冻",
@@ -89,7 +84,9 @@ export default {
         });
       })
     },
-    handleFreeze(row) {
+
+    // 点击冻结代理商
+    onClickFreeze(row) {
       this.$confirm("是否要冻结该代理商？冻结后不能添加新设备", "冻结代理商", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认冻结",
@@ -108,13 +105,17 @@ export default {
         });
       })
     },
-    handleDetail($row) {
+
+    // 点击进入第三方的详情页面
+    onClickDetail($row) {
       this.$router.push({
         name: "thirdPartyDetail",
         query: { id: $row.id }
       });
     },
-    onClick_addDocker() {
+
+    // 点击新增对接商跳转至第三方对接商页面
+    clickAddDocker() {
       this.$router.push({
         name: "thirdPartyAdd"
       });
@@ -124,7 +125,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;
@@ -132,18 +133,18 @@ export default {
   background: #fff;
 }
 
-.tabale_title_box {
+.tabale-title-box {
   height: 52px;
   width: 100%;
+
   .title {
+    margin-left: 10px;
     font-size: 16px;
-    font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 500;
     color: rgba(51, 51, 53, 1);
     float: left;
-    margin-left: 10px;
-    // line-height: 52px;
   }
+
   .btn {
     float: right;
   }

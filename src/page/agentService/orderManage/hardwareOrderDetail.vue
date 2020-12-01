@@ -11,13 +11,13 @@
       :closable="false"
       show-icon
     ></el-alert>
-    <div class="bg_box border">
+    <div class="bg-box border">
       <div class="title">{{ configData3.name }}</div>
       <div class="table-box">
         <el-table
           :data="tableData"
           :span-method="arraySpanMethod"
-          style="width: 100%"
+          style="width: 100%;"
           max-height="279"
           show-summary
           :summary-method="getSummaries"
@@ -29,7 +29,7 @@
           <el-table-column prop="name" label="图片">
             <template slot-scope="scope">
               <el-image
-                style="width: 65px; height: 65px"
+                class="device-img"
                 :src="scope.row.deviceImg"
                 :preview-src-list="[scope.row.deviceImg]"
               ></el-image>
@@ -68,9 +68,6 @@ export default {
       currentType: "",
       tableData: [],
       ruleForm: {
-        // buyerName: "1",
-        // buyerMobile: "2",
-        // buyerAddress: "3"
       },
       configData: {
         name: "邮寄信息",
@@ -219,9 +216,16 @@ export default {
   border: 1px solid #ebeef5;
   border-bottom: none;
 }
+
 .border {
   border: 1px solid #ebeef5;
 }
+
+.device-img {
+  width: 65px !important;
+  height: 65px !important;
+}
+
 .detail-alert {
   margin: 24px;
   padding: 9px 24px;
@@ -230,15 +234,17 @@ export default {
   color: #f5222d;
   width: auto;
 }
-.bg_box {
+
+.bg-box {
   margin: 24px;
   background: #fff;
   overflow: hidden;
+
   .title {
     position: relative;
+    padding-left: 24px;
     height: 54px;
     line-height: 54px;
-    padding-left: 24px;
     font-size: 16px;
     font-weight: 500;
     color: rgba(51, 51, 53, 1);
@@ -248,21 +254,25 @@ export default {
   .form {
     position: relative;
     margin: 32px;
+
     .item-value {
       color: rgba(96, 98, 102, 1);
       word-wrap: break-word;
     }
+
     .edit_btn {
-      color: #1989fa;
       margin-left: 15px;
+      color: #1989fa;
       cursor: pointer;
     }
   }
 }
+
 .table-box /deep/ th.gutter {
   background: #fafafa;
 }
-.table-box /deep/.el-table__footer-wrapper tbody td {
+
+.table-box /deep/ .el-table__footer-wrapper tbody td {
   color: #606266;
   height: 48px;
   background: rgb(250, 250, 250);

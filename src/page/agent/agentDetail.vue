@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p_head_detail" :class="[activeClass]">
+    <div class="p-head-detail" :class="[activeClass]">
       <div class="top">
         <span>{{ agentDetail.agentName }}</span>
         <!--TODO 后续版本开发
@@ -49,17 +49,22 @@
       v-if="ruleForm.businessType === 'enterprise'"
       :rule-form="ruleForm"
       :config-data="configData"
-      @edit="itemEdit"
+      @edit="onClickItemEdit"
     ></detailMode>
     <detailMode
       v-if="ruleForm.businessType === 'individual'"
       :rule-form="ruleForm"
       :config-data="configData1"
-      @edit="itemEdit"
+      @edit="onClickItemEdit"
     ></detailMode>
-    <detailMode :rule-form="ruleForm" :config-data="configData2" @edit="rateEdit"></detailMode>
+    <detailMode
+      :rule-form="ruleForm"
+      :config-data="configData2"
+      @edit="rateEdit"
+    >
+    </detailMode>
 
-    <div class="bg_box">
+    <div class="bg-box">
       <div class="title">应用</div>
       <el-row>
         <el-col :span="8" class="app" @click.native="orderEquipment">
@@ -72,7 +77,7 @@
     <!--TODO  后续版本开发
     <el-row :gutter="20">
       <el-col :span="9">
-        <div class="bg_box" style="margin-right:0;margin-top:0;height:314px">
+        <div class="bg-box" style="margin-right:0;margin-top:0;height:314px">
           <div class="title">沟通数据</div>
           <div style="text-align:center;">
             <el-date-picker
@@ -85,23 +90,23 @@
               align="right"
               format="yyyy-MM-dd HH:mm:ss"
               value-format="yyyy-MM-dd HH:mm:ss"
-              class="selectDate"
+              class="select-date"
               @change="dateChange"
             >
             </el-date-picker>
           </div>
-          <div class="talkInfo">
+          <div class="talk-info">
             <el-row>
-              <el-col :span="8" class="data_item" style="height:58px">
-                <div class="data_item_title">{{ summaryInfo.theme1 }}</div>
+              <el-col :span="8" class="data-item">
+                <div class="data-item-title">{{ summaryInfo.theme1 }}</div>
                 <div>{{ summaryInfo.theme1Count }}次</div>
               </el-col>
-              <el-col :span="8" class="data_item" style="height:58px">
-                <div class="data_item_title">{{ summaryInfo.theme2 }}</div>
+              <el-col :span="8" class="data-item">
+                <div class="data-item_title">{{ summaryInfo.theme2 }}</div>
                 <div>{{ summaryInfo.theme2Count }}次</div>
               </el-col>
-              <el-col :span="8" class="data_item border_none" style="height:58px">
-                <div class="data_item_title">沟通类型</div>
+              <el-col :span="8" class="data-item border-none">
+                <div class="data-item-title">沟通类型</div>
                 <div>{{ summaryInfo.otherThemeCount }}次</div>
               </el-col>
             </el-row>
@@ -109,8 +114,8 @@
         </div>
       </el-col>
       <el-col :span="15">
-        <div class="bg_box" style="margin-left:0;margin-top:0;height:314px">
-          <img class="title_img" src="@/assets/img/clock.png" alt />
+        <div class="bg-box" style="margin-left:0;margin-top:0;height:314px">
+          <img class="title-img" src="@/assets/img/clock.png" alt />
           <div class="title">
             待沟通<span style="color: #1989FA; padding: 0 4px;">{{ willConactNum }}</span>次
             <el-button type="primary" style="float: right; margin: 10px 24px;" @click="addContacts">添加沟通计划</el-button>
@@ -133,7 +138,7 @@
         </div>
       </el-col>
     </el-row>
-    <div class="bg_box" style="height:411px;margin-top:0;">
+    <div class="bg-box" style="height:411px;margin-top:0;">
       <div class="title">
         历史沟通记录
         <el-button type="primary" style="float:right;margin:10px 24px" @click="addSubtotal">添加沟通小计</el-button>
@@ -162,52 +167,54 @@
         :is-drawer="true"
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
-        @confirm="handel_confirm"
+        @confirm="onClickcConfirm"
         @cancel="cancel"
       ></Form>
     </el-drawer>
     <el-drawer :visible.sync="financeDrawer" :with-header="false" size="500px">
-      <div class="financeTitle">财务信息</div>
-      <el-form :model="financeModel" :rules="rules">
-        <el-form-item label="结算卡类型" prop="bankAccountType" style="margin: 24px 24px 0 24px;" label-width="110px">
-          <el-radio-group v-model="financeModel.bankAccountType">
-            <el-radio label="public">对公</el-radio>
-            <el-radio label="private">对私</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="银行卡号" prop="bankCardNo" style="margin: 24px 24px 0 24px;" label-width="110px">
-          <el-input v-model="financeModel.bankCardNo" placeholder="请输入银行卡号" style="max-width:294px"></el-input>
-        </el-form-item>
-        <el-form-item label="开户支行" prop="bankContactLine" style="margin: 24px 24px 0 24px;" label-width="110px">
-          <el-select
-            v-model="financeModel.bankContactLine"
-            filterable
-            remote
-            reserve-keyword
-            placeholder="请输入关键词"
-            :remote-method="remoteMethod"
-            :loading="loading"
-            @change="handleSelect"
-          >
-            <el-option
-              v-for="item in bankOptions"
-              :key="item.unionCode"
-              :label="item.bankName"
-              :value="item.unionCode"
+      <div class="finance-title">财务信息</div>
+      <div class="finance-box">
+        <el-form :model="financeModel" :rules="rules">
+          <el-form-item label="结算卡类型" prop="bankAccountType" label-width="110px">
+            <el-radio-group v-model="financeModel.bankAccountType">
+              <el-radio label="public">对公</el-radio>
+              <el-radio label="private">对私</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="银行卡号" prop="bankCardNo" label-width="110px">
+            <el-input v-model="financeModel.bankCardNo" placeholder="请输入银行卡号"></el-input>
+          </el-form-item>
+          <el-form-item label="开户支行" prop="bankContactLine" label-width="110px">
+            <el-select
+              v-model="financeModel.bankContactLine"
+              filterable
+              remote
+              reserve-keyword
+              placeholder="请输入关键词"
+              :remote-method="remoteMethod"
+              :loading="loading"
+              @change="clickChangeSelect"
             >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="开户支行地区" prop="bankArea" style="margin: 24px 24px 0 24px;" label-width="110px">
-          <el-input v-model="area" disabled style="max-width:294px"></el-input>
-        </el-form-item>
-        <el-form-item label="开户名" prop="bankAccountHolder" style="margin: 24px 24px 0 24px;" label-width="110px">
-          <el-input v-model="financeModel.bankAccountHolder" placeholder="请输入开户名" style="max-width:294px"></el-input>
-        </el-form-item>
-      </el-form>
-      <div class="bottom-btn">
-        <el-button type="primary" size="normal" @click="handel_save">保存</el-button>
-        <el-button size="normal" @click="handel_cancel">取消</el-button>
+              <el-option
+                v-for="item in bankOptions"
+                :key="item.unionCode"
+                :label="item.bankName"
+                :value="item.unionCode"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="开户支行地区" prop="bankArea" label-width="110px">
+            <el-input v-model="area" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="开户名" prop="bankAccountHolder" label-width="110px">
+            <el-input v-model="financeModel.bankAccountHolder" placeholder="请输入开户名"></el-input>
+          </el-form-item>
+        </el-form>
+        <div class="bottom-btn">
+          <el-button type="primary" size="normal" @click="clickSave">保存</el-button>
+          <el-button size="normal" @click="clickClose">取消</el-button>
+        </div>
       </div>
     </el-drawer>
     <el-drawer :visible.sync="equipment" :with-header="false" size="500px">
@@ -217,7 +224,7 @@
         :is-drawer="true"
         :form-base-data="equipmentConfigData.formData"
         :show-foot-btn="equipmentConfigData.showFootBtn"
-        @confirm="equipment_confirm"
+        @confirm="onClickEquipmentConfirm"
         @cancel="cancel"
       ></Form>
     </el-drawer>
@@ -234,8 +241,8 @@
       ></Form>
     </el-drawer>
     <el-drawer :visible.sync="findLiaison" :with-header="false" size="500px">
-      <div class="top_title">
-        <span class="the_title">查看联系人</span>
+      <div class="top-title">
+        <span class="the-title">查看联系人</span>
         <el-button type="primary" @click="liaisonAdd">添加联系人</el-button>
       </div>
       <ul class="liaisonList">
@@ -276,7 +283,7 @@
       ></Form>
     </el-drawer>
     <el-dialog title="沟通记录详情" :visible.sync="dialogTableVisible">
-      <ul class="liaison_detail">
+      <ul class="liaison-detail">
         <li>
           <span>联系人：</span>
           <span>{{ talkListDetail.linkmanName }}</span>
@@ -469,6 +476,7 @@ export default {
   mounted() {
   },
   methods: {
+    // 远程搜索开户支行
     remoteMethod(query) {
       if (query !== '') {
         this.loading = true;
@@ -487,7 +495,9 @@ export default {
         this.bankOptions = [];
       }
     },
-    handleSelect(item) {
+
+    // 点击更换开户支行
+    clickChangeSelect(item) {
       api.getBankLineByNo({
         unionCode: item
       }).then(res => {
@@ -511,13 +521,14 @@ export default {
         this.areaCodeNum = res.data.areaCode
       })
     },
-    handel_save() {
-      if (!this.financeModel.bankAccountType || !this.financeModel.bankCardNo || !this.financeModel.bankContactLine || !this.financeModel.bankAccountHolder) {
-        this.$message({
-          message: '请填写完整信息',
-          type: 'warning'
-        })
-        return;
+
+    // 保存修改的财务信息
+    clickSave() {
+      if (!this.financeModel.bankAccountType ||
+        !this.financeModel.bankCardNo ||
+        !this.financeModel.bankContactLine ||
+        !this.financeModel.bankAccountHolder) {
+        this.warnMessage()
       }
       api.updateFinancial({
         agentNo: this.agentNo,
@@ -539,15 +550,18 @@ export default {
         }
       })
     },
-    handel_cancel() {
+
+    // 关闭打开的财务信息编辑弹窗
+    clickClose() {
       this.financeDrawer = false
     },
+
     // 查询服务商详情
     getDetail() {
       api.getAgentDetail({
         agentNo: this.agentNo
       }).then(res => {
-        if (res.data) {
+        if (res.status === 0) {
           const agentDetail = this.$g.utils.deepClone(res.data)
           if (agentDetail.expandSub === 1) {
             agentDetail.expandSubCn = '是'
@@ -593,12 +607,16 @@ export default {
         }
       });
     },
+
+    // 订购设备弹出框
     orderEquipment() {
       this.equipment = true
       this.equipmentConfigData = ORDER_EQUIPMENT
       this.equipmentConfigData.formData[7].initVal = this.agentDetail.postProvinceMsg ? this.agentDetail.postProvinceMsg + this.agentDetail.postCityMsg + this.agentDetail.postAreaMsg + this.agentDetail.postDetailAddress : ''
     },
-    itemEdit($model) {
+
+    // 点击编辑按钮
+    onClickItemEdit($model) {
       if ($model === 'address') {
         this.editAddress();
       } else if ($model === 'basicData') {
@@ -607,6 +625,8 @@ export default {
         this.editFinance();
       }
     },
+
+    // 邮寄地址编辑的数据回显
     editAddress() {
       this.editType = 'editMailAddress'
       this.fromConfigData = {}
@@ -619,6 +639,8 @@ export default {
         this.fromConfigData = newFromConfigData;
       })
     },
+
+    // 基础信息编辑的数据回显
     editBasic() {
       this.fromConfigData = {}
       this.drawer = true;
@@ -631,11 +653,13 @@ export default {
         this.fromConfigData = newFromConfigData;
       })
     },
+
+    // 财务信息编辑的数据回显
     editFinance() {
       this.editType = 'editFincance'
       if (this.ruleForm.bankBranchName) {
         this.remoteMethod(this.ruleForm.bankBranchName)
-        this.handleSelect(this.ruleForm.bankContactLine)
+        this.clickChangeSelect(this.ruleForm.bankContactLine)
       }
       this.areaCodeNum = this.ruleForm.bankArea
       this.bankName = this.ruleForm.bankBranchName
@@ -647,6 +671,8 @@ export default {
       }
       this.financeDrawer = true
     },
+
+    // 编辑的数据回显
     rateEdit($model) {
       if ($model === 'rateInfo') {
         this.editType = 'editRateInfo'
@@ -666,31 +692,44 @@ export default {
         this.fromConfigData = this.$g.utils.deepClone(newFromConfigData);
       }, 200)
     },
+
+    // 取消按钮，隐藏侧边弹出框
     cancel() {
       this.editType = ''
       this.drawer = false;
       this.addContactsDraw = false
     },
-    handel_confirm(row) {
-      if (this.editType === 'editBasicData') {
-        this.editBasicData(row);
-      } else if (this.editType === 'editRateInfo') {
-        this.editRateInfo(row);
-      } else if (this.editType === 'editMailAddress') {
-        this.editMailAddress(row);
-      } else if (this.editType === 'editRenew') {
-        this.editRenew(row);
-      } else if (this.editType === 'editAuthority') {
-        this.editAuthority(row);
+
+    // 点击form表单的确认
+    onClickcConfirm(row) {
+      switch (this.editType) {
+        case "editBasicData":
+          this.editBasicData(row);
+          break
+        case "editRateInfo":
+          this.editRateInfo(row);
+          break
+        case "editMailAddress":
+          this.editMailAddress(row);
+          break
+        case "editRenew":
+          this.editRenew(row);
+          break
+        case "editAuthority":
+          this.editAuthority(row);
+          break
       }
     },
+
+    // 提交保存基础信息
     editBasicData($row) {
-      if (!$row.businessType || !$row.agentName || !$row.personName || !$row.personMobile || !$row.companyAddress || !$row.area) {
-        this.$message({
-          message: '请填写完整信息',
-          type: 'info'
-        })
-        return
+      if (!$row.businessType ||
+        !$row.agentName ||
+        !$row.personName ||
+        !$row.personMobile ||
+        !$row.companyAddress ||
+        !$row.area) {
+        this.warnMessage()
       }
       let businessLicenseImg = ''
       if ($row.businessType === 'enterprise') {
@@ -732,44 +771,45 @@ export default {
         }
       })
     },
+
+    // 提交保存费率信息
     editRateInfo($row) {
-      if (!$row.wechatPayRate || !$row.cloudPayLe1000Rate || !$row.cloudPayGt1000Rate) {
+      if (!$row.wechatPayRate ||
+        !$row.cloudPayLe1000Rate ||
+        !$row.cloudPayGt1000Rate) {
+        this.warnMessage()
+      }
+      const exp = $row.wechatPayRate < 3 || $row.wechatPayRate > 6 ||
+        ($row.cloudPayLe1000Rate || $row.cloudPayGt1000Rate) < 2.3 ||
+        ($row.cloudPayLe1000Rate || $row.cloudPayGt1000Rate) > 10
+      if (exp) {
         this.$message({
-          message: '请填写完整费率信息',
+          message: '请输入正确的费率',
           type: "warning"
         })
         return false
       } else {
-        const exp = $row.wechatPayRate < 3 || $row.wechatPayRate > 6 ||
-          ($row.cloudPayLe1000Rate || $row.cloudPayGt1000Rate) < 2.3 ||
-          ($row.cloudPayLe1000Rate || $row.cloudPayGt1000Rate) > 10
-        if (exp) {
-          this.$message({
-            message: '请输入正确的费率',
-            type: "warning"
-          })
-          return false
-        } else {
-          api.updateAgentRate({
-            agentNo: this.agentNo,
-            wechatPayRate: this.$g.utils.AccDiv($row.wechatPayRate, 1000),
-            alipayRate: this.$g.utils.AccDiv($row.wechatPayRate, 1000),
-            cloudPayLe1000Rate: this.$g.utils.AccDiv($row.cloudPayLe1000Rate, 1000),
-            cloudPayGt1000Rate: this.$g.utils.AccDiv($row.cloudPayGt1000Rate, 1000)
-          }).then(res => {
-            if (res.status === 0) {
-              this.$message({
-                message: '财务资料更新成功',
-                type: 'success'
-              })
-              this.getDetail()
-              this.editType = ''
-              this.drawer = false
-            }
-          })
-        }
+        api.updateAgentRate({
+          agentNo: this.agentNo,
+          wechatPayRate: this.$g.utils.AccDiv($row.wechatPayRate, 1000),
+          alipayRate: this.$g.utils.AccDiv($row.wechatPayRate, 1000),
+          cloudPayLe1000Rate: this.$g.utils.AccDiv($row.cloudPayLe1000Rate, 1000),
+          cloudPayGt1000Rate: this.$g.utils.AccDiv($row.cloudPayGt1000Rate, 1000)
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '财务资料更新成功',
+              type: 'success'
+            })
+            this.getDetail()
+            this.editType = ''
+            this.drawer = false
+          }
+        })
       }
     },
+
+    // 保存邮寄地址
     editMailAddress($row) {
       const apiJudge = this.agentDetail.postId ? 'updatePostAddress' : 'addPostAddress'
       api[apiJudge]({
@@ -793,39 +833,36 @@ export default {
         }
       })
     },
+
+    // 保存续费信息
     editRenew($row) {
       if (!$row.monthCount || !$row.renewValue) {
-        this.$message({
-          message: '请填写必填信息',
-          type: 'warning'
-        })
-        return false
-      } else {
-        api.updateRenewAmount({
-          agentNo: this.agentNo,
-          monthCount: $row.monthCount,
-          renewType: 'fixed',
-          renewValue: $row.renewValue
-        }).then(res => {
-          if (res.status === 0) {
-            this.$message({
-              message: '编辑成功',
-              type: 'success'
-            })
-            this.getDetail()
-            this.editType = ''
-            this.drawer = false
-          }
-        })
+        this.warnMessage()
       }
+      api.updateRenewAmount({
+        agentNo: this.agentNo,
+        monthCount: $row.monthCount,
+        renewType: 'fixed',
+        renewValue: $row.renewValue
+      }).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            message: '编辑成功',
+            type: 'success'
+          })
+          this.getDetail()
+          this.editType = ''
+          this.drawer = false
+        }
+      })
     },
+
+    // 保存编辑权限
     editAuthority($row) {
-      if (!$row.activeMode || !$row.activeScopeCode[0] || !$row.chargeFeePercent || ($row.expandSub === '')) {
-        this.$message({
-          message: "请填写必填信息",
-          type: "warning"
-        })
-        return
+      if (!$row.activeMode ||
+        !$row.activeScopeCode[0] ||
+        !$row.chargeFeePercent || ($row.expandSub === '')) {
+        this.warnMessage()
       }
       if (!$row.addressObj) {
         var arr = []
@@ -864,7 +901,9 @@ export default {
         }
       })
     },
-    equipment_confirm($ruleForm) {
+
+    // 保存设备订购的信息
+    onClickEquipmentConfirm($ruleForm) {
       const params = {
         saleUserId: this.$store.state.admin.userInfo.id,
         saleUserName: this.$store.state.admin.userInfo.name,
@@ -894,7 +933,17 @@ export default {
           });
         }
       })
+    },
+
+    // 提醒填写必填信息
+    warnMessage() {
+      this.$message({
+        message: "请填写必填信息",
+        type: "warning"
+      })
+      return
     }
+
     /* TODO  后续版本开发 沟通小记
     // 查询服务商已关联的标签
     getRelatedLabels() {
@@ -1251,7 +1300,7 @@ export default {
 </script>
 
 <style lang="scss">
-  .p_head_detail {
+  .p-head-detail {
     height: 76px;
     background: rgba(255, 255, 255, 1);
     overflow: hidden;
@@ -1281,12 +1330,12 @@ export default {
     }
 
     .doit {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
       float: left;
       margin-top: 5px;
       margin-right: 5px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
 
       &.red {
         background: #f5222d;
@@ -1324,16 +1373,15 @@ export default {
 
     .button-new-tag {
       margin-left: 10px;
+      padding: 0 0;
       height: 24px;
       line-height: 24px;
-      padding-top: 0;
-      padding-bottom: 0;
     }
 
     .input-new-tag {
-      width: 90px;
       margin-left: 10px;
       vertical-align: top;
+      width: 90px;
       height: 23px;
       line-height: 23px;
     }
@@ -1348,38 +1396,38 @@ export default {
     }
   }
 
-  .bg_box {
+  .bg-box {
     margin: 24px;
     background: #fff;
     overflow: hidden;
 
     .title {
+      padding-left: 24px;
       height: 54px;
       line-height: 54px;
-      padding-left: 24px;
       font-size: 16px;
       font-weight: 500;
       color: rgba(51, 51, 53, 1);
       border-bottom: 1px solid #ebeef5;
     }
 
-    .title_img {
-      width: 20px;
-      height: 20px;
+    .title-img {
       margin: 18px 24px 0;
       float: left;
+      width: 20px;
+      height: 20px;
     }
   }
 
   .app {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     border-right: 1px solid #ebeef5;
     text-align: center;
     font-size: 14px;
     font-weight: 500;
     color: rgba(0, 0, 0, 0.85);
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
     align-content: center;
     align-items: center;
     height: 88px;
@@ -1396,17 +1444,18 @@ export default {
     }
   }
 
-  .data_item {
-    border-right: 1px solid #ccc;
+  .data-item {
     margin-top: 16px;
+    border-right: 1px solid #ccc;
+    height: 58px;
 
-    .data_item_title {
+    .data-item-title {
+      margin: 3px 0 17px;
       font-size: 14px;
       font-weight: 400;
       color: rgba(0, 0, 0, 0.45);
       border: none;
       text-align: center;
-      margin: 3px 0 17px;
     }
 
     div {
@@ -1417,33 +1466,33 @@ export default {
     }
   }
 
-  .border_none {
+  .border-none {
     border: none;
   }
 
-  .top_title {
-    width: 100%;
-    height: 72px;
-    padding: 0 24px 0 32px;
+  .top-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #EBEEF5;
+    padding: 0 24px 0 32px;
+    width: 100%;
+    height: 72px;
+    border-bottom: 1px solid #ebeef5;
 
-    .the_title {
+    .the-title {
       font-size: 20px;
       font-weight: 500;
-      color: #000000;
+      color: #000;
     }
 
     button {
+      padding: 0 0;
       width: 80px;
       height: 28px;
-      color: #ffffff;
+      color: #fff;
       font-size: 12px;
       text-align: center;
       line-height: 28px;
-      padding: 0 0;
     }
   }
 
@@ -1454,41 +1503,41 @@ export default {
     overflow: auto;
 
     .liaison-contant {
+      margin-bottom: 24px;
       width: 100%;
       height: 190px;
-      margin-bottom: 24px;
-      border: 1px solid #E9E9E9;
+      border: 1px solid #e9e9e9;
       border-radius: 4px;
 
       .liaison-top {
-        width: 100%;
-        height: 44px;
-        border-bottom: 1px solid #EBEEF5;
-        background: #EBEEF5;
-        padding: 0 24px 0 32px;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding: 0 24px 0 32px;
+        width: 100%;
+        height: 44px;
+        border-bottom: 1px solid #ebeef5;
+        background: #ebeef5;
 
         span {
           font-size: 14px;
-          color: #000000;
+          color: #000;
           opacity: 85%;
           font-weight: 500;
         }
 
         .liaison-editor {
-          color: #1989FA;
+          color: #1989fa;
           font-size: 14px;
           cursor: pointer;
         }
       }
 
       .liasion-info {
-        padding: 24px 0 0 32px;
         position: relative;
         top: 0;
         left: 0;
+        padding: 24px 0 0 32px;
 
         .info-list {
           margin-bottom: 14px;
@@ -1496,7 +1545,7 @@ export default {
           font-size: 14px;
 
           span:nth-child(1) {
-            color: #000000;
+            color: #000;
           }
 
           span:nth-child(2) {
@@ -1518,18 +1567,18 @@ export default {
     }
   }
 
-  .liaison_detail {
-    width: 100%;
+  .liaison-detail {
     padding-left: 20%;
+    width: 100%;
 
     li {
       display: flex;
-      line-height: 24px;
       margin-bottom: 8px;
+      line-height: 24px;
 
       span:nth-child(1) {
         font-size: 16px;
-        color: #333333;
+        color: #333;
         padding-right: 20px;
       }
 
@@ -1539,39 +1588,41 @@ export default {
     }
   }
 
-  .selectDate {
-    // top: 30px;
-    // left: 50%;
-    // margin-left: -200px;
+  .select-date {
     margin-top: 24px;
     width: 100% !important;
     max-width: 360px;
   }
 
-  .talkInfo {
+  .talk-info {
     margin-top: 50px;
   }
 
-  .financeTitle {
+  .finance-title {
+    margin-bottom: 32px;
+    padding-left: 24px;
     width: 100%;
     height: 84px;
     border-bottom: 1px solid #ececec;
     line-height: 84px;
-    padding-left: 24px;
     font-size: 28px;
-    margin-bottom: 32px;
+  }
+
+  .finance-box {
+    .el-form-item {
+      margin: 24px 60px 0 24px !important;
+
+      .el-select {
+        width: 100%;
+      }
+
+      .el-input {
+        width: 100%;
+      }
+    }
   }
 
   .bottom-btn {
-    // width: 30%;
-    // position: fixed;
-    // bottom: 0;
-    // right: 0;
-    width: 500px;
-    padding: 16px 0px;
-    // height: 96px;
-    background: white;
-    border-top: 1px solid #ebeef5;
     position: fixed;
     right: 0;
     bottom: 0;
@@ -1579,5 +1630,9 @@ export default {
     flex-direction: row;
     justify-content: center;
     align-content: center;
+    padding: 16px 0;
+    width: 500px;
+    background: white;
+    border-top: 1px solid #ebeef5;
   }
 </style>

@@ -1,15 +1,15 @@
 <template>
-  <div class="detail_page">
+  <div class="detail-page">
     <div class="flex-between flex-align-center">
       <div class="p_head">第三方对接信息</div>
     </div>
-    <div style="padding-bottom:40px">
+    <div class="table-box">
       <Form
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
         label-width="130px"
-        @cancel="cancel"
-        @confirm="confirm"
+        @cancel="onClickCancel"
+        @confirm="onClickConfirm"
       ></Form>
     </div>
   </div>
@@ -25,8 +25,7 @@ export default {
   components: { Form },
   data() {
     return {
-      fromConfigData: FORM_CONFIG.detailData,
-      id: ""
+      fromConfigData: FORM_CONFIG.detailData // 表单参数项
     };
   },
   created() {
@@ -35,8 +34,13 @@ export default {
     this.fromConfigData.showFootBtn = true
   },
   methods: {
+    // 点击确认保存添加信息
     confirm($form) {
-      if (!$form.name || !$form.developerId || !$form.phone || !$form.allotCount || !$form.agentNo) {
+      if (!$form.name ||
+        !$form.developerId ||
+        !$form.phone ||
+        !$form.allotCount ||
+        !$form.agentNo) {
         this.$message({
           message: '请填写必填信息',
           type: 'warning'
@@ -77,7 +81,9 @@ export default {
         }
       })
     },
-    cancel(done) {
+
+    // 点击取消返回上一页
+    onClickCancel(done) {
       this.$router.back(-1);
     }
   }
@@ -85,10 +91,13 @@ export default {
 </script>
 
 <style scoped>
-.detail_page {
+.detail-page {
+  margin: 24px 24px 0;
   width: calc(100% - 48px);
   background: #fff;
-  margin: 24px 24px 0;
-  /* height: calc(100% - 24px); */
+}
+
+.table-box {
+  padding-bottom: 40px;
 }
 </style>

@@ -5,7 +5,7 @@
     </div>
     <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
 
-    <div class="table_box">
+    <div class="table-box">
       <BaseCrud
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
@@ -28,7 +28,7 @@
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
         label-width="130px"
-        @cancel="cancel"
+        @cancel="clickCancel"
       ></Form>
     </el-drawer>
   </div>
@@ -47,69 +47,39 @@ export default {
   components: { Search, BaseCrud, Form },
   data() {
     return {
-      fromConfigData: {},
-      searchConfig: SEARCH_CONFIG,
-      configData: TABLE_CONFIG,
-      testData: [],
-      direction: "rtl",
-      searchHeight: "260",
-      drawer: false
+      fromConfigData: {}, // 表单项数据
+      searchConfig: SEARCH_CONFIG, // 搜索项数据
+      configData: TABLE_CONFIG, // 列表展示数据
+      searchHeight: "260", // 搜索项展开高度
+      drawer: false // 控制侧边弹窗的显示与隐藏
     };
   },
   mounted() {
-    this.getTableData();
   },
   methods: {
+    // 点击编辑按钮展示侧边编辑抽屉
     handleEditAuth() {
       this.drawer = true;
       this.fromConfigData = FORM_CONFIG.formData;
     },
-    cancel(done) {
+
+    // 点击取消按钮
+    clickCancel(done) {
       done();
     },
-    search() {},
-    getTableData() {
-      this.testData = [
-        {
-          service: "紫菜网络科技有限公司",
-          merchant: "AA",
-          status: "待签约",
-          time: "2019/9/23 16:23:22",
-          oper: "FFF",
-          showPreApprove: true
-        },
-        {
-          service: "紫菜网络科技有限公司",
-          merchant: "AA",
-          status: "待签约",
-          time: "2019/9/23 16:23:22",
-          oper: "FFF",
-          showDetail: true,
-          showPass: true,
-          showReject: true
-        },
-        {
-          service: "紫菜网络科技有限公司",
-          merchant: "AA",
-          status: "待签约",
-          time: "2019/9/23 16:23:22",
-          oper: "FFF",
-          showDetail: true
-        }
-      ];
-    }
+
+    // 点击搜索
+    search() {}
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;
   overflow: hidden;
   background: #fff;
 }
-</style>
-<style>
 </style>
