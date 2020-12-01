@@ -1,5 +1,5 @@
 <template>
-  <div class="w-box">
+  <div class="g-box">
     <div class="head">{{ configData.name }}</div>
     <div class="box">
       <div v-for="(item,index) in configData.list" :key="index">
@@ -10,7 +10,7 @@
             :key="index2"
             v-has="item2.permission"
             class="item1"
-            @click="onClick_item(item2)"
+            @click="clickItem(item2)"
           >
             <div class="img" :style="{backgroundColor:configData.imgColor}">
 <!--              <div v-if=" item2.dotNum>0 " class="dot">{{ item2.dotNum }}</div>-->
@@ -39,7 +39,7 @@ export default {
   computed: {},
 
   methods: {
-    onClick_item($item) {
+    clickItem($item) {
       if ($item.path) {
         this.$router.push({
           path: $item.path
@@ -51,7 +51,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.w-box {
+.g-box {
   margin: 24px;
   background: rgba(255, 255, 255, 1);
   overflow: hidden;

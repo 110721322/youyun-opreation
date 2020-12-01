@@ -1,6 +1,6 @@
 <template>
   <div :class="{'show':show}" class="header-search">
-    <img src="@/assets/img/search.png" class="search_img" @click.stop="click" />
+    <img src="@/assets/img/search.png" class="search-img" @click.stop="click" />
     <el-select
       ref="headerSearchSelect"
       v-model="search"
@@ -162,7 +162,7 @@ export default {
 
 <style lang="scss" scoped>
 .header-search {
-  .search_img {
+  .search-img {
     margin: 15px;
     width: 22px;
     float: left;

@@ -13,17 +13,18 @@
       :clearable="clearable"
       :default-time="defaultTime"
       :picker-options="pickerOptions"
-      @change="onChage"
+      @change="changeDate"
     />
     <div style="flex-shrink:0">
       <div
         v-for="item of dateList"
         :key="item.label"
         class="date-item"
-        :class="item.value === selectItem.value ? 'select' : ''"
-        @click="onClick_item(item)"
+        :class="item.value == selectItem.value ? 'select' : ''"
+        @click="clickItem(item)"
       >{{ item.label }}</div>
     </div>
+    <!--    <span class="date-item" v-for="item of dateList" :class="item.value == selectItem.value?'select':''"  @click="clickItem(item)">{{item.label}}</span>-->
   </div>
 </template>
 <script type="text/ecmascript-6">

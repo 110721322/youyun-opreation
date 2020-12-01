@@ -230,7 +230,7 @@ export default {
     &:focus {
       outline: none;
     }
-    .search_img {
+    .search-img {
       width: 22px;
 
       cursor: pointer;

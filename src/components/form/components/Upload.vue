@@ -26,7 +26,7 @@
       v-if="dialogImageUrl && !showFileList"
       class="el-icon-plus el-icon-zoom-in"
       style="float: left; position: relative; left: -20px; top: 5px; cursor: pointer;"
-      @click="onClick_preview"
+      @click="clickPreview"
     ></i>
     <el-image-viewer v-if="showViewer" :on-close="closeViewer" :url-list="[dialogImage]" />
   </div>
@@ -206,7 +206,7 @@ export default {
       this.dialogImageList.splice(index, 1);
       this.imageList.splice(index, 1);
     },
-    onClick_preview() {
+    clickPreview() {
       this.showViewer = true;
     },
     closeViewer() {

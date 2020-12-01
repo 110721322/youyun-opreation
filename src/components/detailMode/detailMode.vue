@@ -1,18 +1,16 @@
 <template>
-  <div class="bg_box">
-    <div class="title">
+  <div class="g-bg-box">
+    <div class="s-title">
       {{ configData.name }}
-      <slot name="operatingTop">
-        <!-- <span class="edit" @click="edit(child.modelName)">编辑</span> -->
-      </slot>
+      <slot name="operatingTop"></slot>
     </div>
     <slot name="step"></slot>
-    <div v-for="(child, key) of configData.child" :key="key" class="con_box">
+    <div v-for="(child, key) of configData.child" :key="key" class="g-container-box">
       <template v-if="child.models && child.models.length > 0">
-        <div class="title">
+        <div class="s-title">
           {{ child.name }}
           <slot name="operatingItem">
-            <span v-if="!child.hiddenEdit" class="edit" @click="edit(child.modelName)">编辑</span>
+            <span v-if="!child.hiddenEdit" class="s-edit" @click="clickEdit(child.modelName)">编辑</span>
           </slot>
         </div>
         <el-form
@@ -20,7 +18,7 @@
           :inline="false"
           :model="ruleForm"
           :rules="rules"
-          class="form"
+          class="s-form"
           label-position="left"
         >
           <el-row>
@@ -69,7 +67,7 @@ export default {
   },
 
   methods: {
-    edit($modelName) {
+    clickEdit($modelName) {
       this.$emit("edit", $modelName);
     },
     getDescriptText($item) {
@@ -99,20 +97,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.bg_box {
+.g-bg-box {
   margin: 24px;
   background: #fff;
   overflow: hidden;
-  .title {
+  .s-title {
     height: 54px;
     line-height: 54px;
-    padding-left: 24px;
+    padding-left: 32px;
     font-size: 16px;
     font-weight: 500;
     color: rgba(51, 51, 53, 1);
     border-bottom: 1px solid #ebeef5;
   }
-  .edit {
+  .s-edit {
     float: right;
     font-size: 14px;
     font-weight: 400;
@@ -120,19 +118,19 @@ export default {
     margin-right: 32px;
     cursor: pointer;
   }
-  .con_box {
+  .g-container-box {
     margin: 24px;
     background: #fff;
     overflow: hidden;
     border: 1px solid #e9e9e9;
-    .title {
+    .s-title {
       height: 44px;
       line-height: 44px;
       background: #fafafa;
     }
-    .form {
+    .s-form {
       margin: 32px;
-      .item-value {
+      .s-item-value {
         color: rgba(96, 98, 102, 1);
         word-wrap: break-word;
       }

@@ -9,7 +9,7 @@
       :clearable="clearable"
       :picker-options="pickerOptions"
       :value-format="format"
-      @change="onChage"
+      @change="changeVal"
     >
     </el-date-picker>
   </div>
@@ -58,7 +58,7 @@ export default {
   },
   created() {},
   methods: {
-    onChage($data) {
+    changeVal($data) {
       this.$emit("select", $data);
       this.ruleForm[this.formItem.key] = $data;
       this.$emit("timeSearch", this.ruleForm)
