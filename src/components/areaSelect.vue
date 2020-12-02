@@ -1,5 +1,9 @@
 <template>
-  <el-cascader v-model="value" :options="options" @input="handleChange"></el-cascader>
+  <el-cascader
+    v-model="value"
+    :options="options"
+    @input="handleChange"
+  ></el-cascader>
 </template>
 <script>
 import AREADATA from "@/assets/data/areaData";

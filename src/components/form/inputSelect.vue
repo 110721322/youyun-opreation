@@ -24,14 +24,14 @@
       <el-input
         v-model="inputForm"
         class="input-with-select"
-        @input="onInput"
+        @input="inputVal"
       ></el-input>
       <el-select
         slot="prepend"
         v-model="inputSelect"
         style="width:146px"
         placeholder="请选择"
-        @change="onSelect"
+        @change="changeSelect"
       >
         <el-option label="天" :value="0"></el-option>
         <el-option label="小时" :value="1"></el-option>
@@ -49,7 +49,7 @@
         :clearable="clearable"
         :default-time="defaultTime"
         :picker-options="pickerOptions"
-        @change="onChage"
+        @change="changeDate"
       />
     </div>
   </div>
@@ -140,8 +140,8 @@ export default {
       if ($new) {
         this.inputSelect = this.formItem.options[0].value;
         this.inputForm = "";
-        this.onInput();
-        this.onSelect();
+        this.inputVal();
+        this.changeSelect();
         if (this.formItem.isSelectToday) {
           this.dateList[0].label = "今天";
         }
@@ -149,7 +149,7 @@ export default {
         if (this.dateType === "datetimerange") {
           this.defaultTime = ["00:00:00", "23:59:59"];
         }
-        this.onClick_item(this.dateList[0]);
+        this.clickItem(this.dateList[0]);
       }
     }
   },
@@ -164,7 +164,7 @@ export default {
     if (this.dateType === "datetimerange") {
       this.defaultTime = ["00:00:00", "23:59:59"];
     }
-    this.onClick_item(this.dateList[0]);
+    this.clickItem(this.dateList[0]);
   },
   methods: {
     isArray(value) {
@@ -205,7 +205,7 @@ export default {
           return this.selectOptions
         })
     },
-    onInput() {
+    inputVal() {
       this.ruleForm.inputSelect = this.selectOption.valueKey ? this.selectOption.valueKey : this.inputSelect;
       this.ruleForm.inputForm = this.inputForm;
       if (this.ruleForm.inputSelect === 0) {
@@ -214,14 +214,14 @@ export default {
         this.ruleForm.promoCodeTime = 'H-' + this.ruleForm.inputForm
       }
     },
-    onSelect() {
+    changeSelect() {
       this.inputForm = null;
       this.selectOption = this.formItem.options.filter(ele => ele.value === this.inputSelect)[0];
       this.ruleForm.inputSelect = this.selectOption.valueKey ? this.selectOption.valueKey : this.inputSelect;
     },
-    onChage($data) {
+    changeDate($data) {
       if ($data === null) {
-        this.onClick_item(this.dateList[0]);
+        this.clickItem(this.dateList[0]);
         return;
       }
       this.selectItem = {};
@@ -235,7 +235,7 @@ export default {
       this.$emit("dataSelect", timeArr);
       this.ruleForm[this.formItem.dateKey] = timeArr;
     },
-    onClick_item($item) {
+    clickItem($item) {
       this.selectItem = $item;
       if (this.dateType === "daterange") {
         let start = "";

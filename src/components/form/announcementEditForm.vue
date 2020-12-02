@@ -26,11 +26,21 @@
               <span style="margin-left:8px;">秒</span>
             </template>
           </components>
+
+          <!-- <template v-if="formItem.showDemoImg">
+            <div class="demoImg" @click="clickShowDemoImg">
+              查看示例:
+              <img :src="formItem.demoImgUrl" />
+            </div>
+          </template>
+          <el-dialog title="查看示例" :visible.sync="dialogTableVisible">
+            <img :src="formItem.demoImgUrl" />
+          </el-dialog> -->
         </el-form-item>
       </div>
       <div class="btn-box">
-        <el-button type="primary" size="normal" @click="handleClick">提交</el-button>
-        <el-button plain size="normal" @click="onClick_cannel">取消</el-button>
+        <el-button type="primary" size="normal" @click="clickSubmit">提交</el-button>
+        <el-button plain size="normal" @click="clickCannel">取消</el-button>
       </div>
     </el-form>
   </div>
@@ -127,7 +137,10 @@ export default {
         }
       }
     },
-    handleClick() {
+    clickShowDemoImg() {
+      this.dialogTableVisible = true;
+    },
+    clickSubmit() {
       this.$refs.formTep.validate(valid => {
         // 校验
         if (valid) {
@@ -153,14 +166,16 @@ export default {
         this.$refs.formTep.clearValidate();
       });
     },
-    onClick_cannel() {
+    clickCannel() {
+      // 初始化表单
+      // this.$emit("cancel");
       this.$router.back();
     },
     transType(value) {
       // 获取表单项类型
       return transFormType(value);
     },
-    onClick_showDemo() {}
+    clickShowDemo() {}
   }
 };
 </script>

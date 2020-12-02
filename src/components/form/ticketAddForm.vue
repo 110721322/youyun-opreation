@@ -8,7 +8,7 @@
       :placeholder="placeholder1"
       :remote-method="remoteMethod"
       :style="selectStyle"
-      @change="selectFirst"
+      @change="changeSelectFirst"
     >
       <el-option
         v-for="item in selectOptions1"
@@ -26,7 +26,7 @@
       :remote-method="remoteMethod"
       :disabled="formItem.isDisabled"
       :style="selectStyle"
-      @change="selectSecond"
+      @change="changeSelectSecond"
     >
       <el-option
         v-for="item in selectOptions2"
@@ -82,7 +82,7 @@ export default {
   },
   mounted() {
     if (this.ruleForm[this.formItem.key1]) {
-      this.selectFirst()
+      this.changeSelectFirst()
     }
   },
   methods: {
@@ -102,7 +102,7 @@ export default {
         this.getUrlOptions(urlOptions1.params)
       }
     },
-    selectFirst() {
+    changeSelectFirst() {
       this.$set(this.ruleForm, this.formItem.key2, '')
       this.selectOptions2 = []
       const { options, urlOptions2 } = this.formItem;
@@ -163,7 +163,7 @@ export default {
           return this.selectOptions2;
         })
     },
-    selectSecond() {}
+    changeSelectSecond() {}
   }
 };
 </script>

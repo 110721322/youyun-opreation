@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="['s_box', isShowAll ? 'is_show_all' : '']"
+    :class="['s-box', isShowAll ? 'is-show-all' : '']"
     :style="isOpen ? ('height: auto' + ';overflow:auto') : 'overflow:hidden'"
   >
     <el-row style="width: 100%">
@@ -13,7 +13,7 @@
           :model="ruleForm"
           :rules="rules"
           :label-width="labelWidth"
-          :class="['form-inline', isShowAll ? 'is_show_all' : '']"
+          :class="['form-inline', isShowAll ? 'is-show-all' : '']"
           :style="isOpen ? ('height: auto' + ';overflow:auto') : 'overflow:hidden'"
         >
           <el-row>
@@ -44,10 +44,10 @@
         </el-form>
       </el-col>
       <el-col :span="isShowAll ? 6 : 7">
-        <div class="btn_list" style="margin-bottom:0" :style="btnListStyle">
-          <el-button v-has="permission.search" type="primary" size="large" @click="handleClick">搜索</el-button>
-          <el-button plain size="large" @click="resetForm">重置</el-button>
-          <div v-show="!isShowAll" v-has="permission.condition" class="open_btn" @click="onClick_openOrClose">
+        <div class="btn-list" style="margin-bottom:0" :style="btnListStyle">
+          <el-button v-has="permission.search" type="primary" size="large" @click="clickSearch">搜索</el-button>
+          <el-button plain size="large" @click="clickResetForm">重置</el-button>
+          <div v-show="!isShowAll" v-has="permission.condition" class="open-btn" @click="clickOpenOrClose">
             <span v-show="!isOpen">展开</span>
             <span v-show="isOpen">收起</span>
             <i :class="['el-icon-arrow-down', 'more', isOpen ? 'down' : '']" />
@@ -148,7 +148,7 @@ export default {
         }
       }
     },
-    handleClick() {
+    clickSearch() {
       this.$refs.formTep.validate(valid => {
         // 校验
         if (valid) {
@@ -159,7 +159,7 @@ export default {
       });
       this.$emit("search", this.ruleForm);
     },
-    resetForm() {
+    clickResetForm() {
       // 初始化表单
       this.isRest = true;
       this.$nextTick(() => {
@@ -174,7 +174,7 @@ export default {
       return transFormType(value);
     },
 
-    onClick_openOrClose() {
+    clickOpenOrClose() {
       this.isOpen = !this.isOpen;
     }
   }
@@ -182,29 +182,29 @@ export default {
 </script>
 
 <style scoped>
-.s_box {
+.s-box {
   height: 88px;
   padding: 24px;
   background: rgba(255, 255, 255, 1);
   margin: 24px 24px 0;
   transition: all 0.5s;
 }
-.s_box::-webkit-scrollbar {
+.s-box::-webkit-scrollbar {
   display:none
 }
-.is_show_all {
+.is-show-all {
   /* height: auto !important; */
 }
-.btn_list {
+.btn-list {
   display: flex;
   justify-content: flex-end;
   align-items: flex-start;
   margin-left: 16px;
 }
-.is_show_all .btn_list {
+.is-show-all .btn-list {
   bottom: 25px;
 }
-.open_btn {
+.open-btn {
   /* float: right; */
   margin-left: 12px;
   line-height: 40px;
@@ -246,10 +246,10 @@ export default {
 .max-width {
   width: 100%;
 }
-.form_item {
+.form-item {
   float: left !important;
 }
-.clear_both {
+.clear-both {
   clear: both !important;
 }
 </style>

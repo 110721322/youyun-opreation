@@ -1,9 +1,9 @@
 <template>
   <div class="">
-    <div :class="[isDrawer?'content_drawer':'']">
+    <div :class="[isDrawer?'content-drawer':'']">
       <el-form
         ref="formTep"
-        :class="[isDrawer?'formTemplate_drawer':'formTemplate']"
+        :class="[isDrawer?'formTemplate-drawer':'formTemplate']"
         size=""
         :inline="false"
         :label-position="labelPosition"
@@ -31,11 +31,11 @@
         <slot name="content"></slot>
       </el-form>
     </div>
-    <div v-if="showFootBtn" :class="[isDrawer?'foot_btn_box_drawer':'foot_btn_box']">
-      <el-button size="normal" type="primary" @click="handleClick">{{ footBtnLabel }}</el-button>
-      <el-button v-if="showFootReset" size="normal" @click="resetForm">重置</el-button>
-      <el-button v-if="showFootClear" size="normal" @click="clearForm">清空</el-button>
-      <el-button v-if="showFootCancel" size="normal" @click="cancelForm">取消</el-button>
+    <div v-if="showFootBtn" :class="[isDrawer?'foot-btn-box-drawer':'foot-btn-box']">
+      <el-button size="normal" type="primary" @click="clickFootBtn">{{ footBtnLabel }}</el-button>
+      <el-button v-if="showFootReset" size="normal" @click="clickResetForm">重置</el-button>
+      <el-button v-if="showFootClear" size="normal" @click="clickClearForm">清空</el-button>
+      <el-button v-if="showFootCancel" size="normal" @click="clickCancelForm">取消</el-button>
     </div>
   </div>
 </template>
@@ -179,7 +179,7 @@ export default {
         }
       }
     },
-    handleClick() {
+    clickFootBtn() {
       let validateStatus;
       this.$refs.formTep.validate(valid => {
         // 校验
@@ -201,11 +201,11 @@ export default {
         return false;
       }
     },
-    resetForm() {
+    clickResetForm() {
       // 初始化表单
       this.$refs.formTep.resetFields();
     },
-    clearForm() {
+    clickClearForm() {
       // 清空表单
       const p = () =>
         new Promise(resolve => {
@@ -216,7 +216,7 @@ export default {
         this.$refs.formTep.clearValidate();
       });
     },
-    cancelForm() {
+    clickCancelForm() {
       // 初始化表单
       this.$emit("cancel");
     },
@@ -232,7 +232,7 @@ export default {
 .formTemplate {
   margin: 40px 20px 0;
 }
-.formTemplate_drawer {
+.formTemplate-drawer {
   margin: 0;
   padding: 40px 20px 0;
   width: 100%;
@@ -245,11 +245,11 @@ export default {
 .formTemplate-item {
   margin-right: 20px;
 }
-.content_drawer {
+.content-drawer {
     height: calc(100vh - 172px);
     overflow: hidden;
 }
-.foot_btn_box {
+.foot-btn-box {
   width: 100%;
   // height: 96px;
   border-top: 1px solid #ebeef5;
@@ -268,11 +268,11 @@ export default {
   //   // margin-right: 12px;
   //   padding: 15px;
   // }
-  .form_box {
+  .form-box {
     margin: 0 59px;
   }
 }
-.foot_btn_box_drawer {
+.foot-btn-box-drawer {
   width: 500px;
   // height: 96px;
   border-top: 1px solid #ebeef5;
@@ -292,7 +292,7 @@ export default {
   //   // margin-right: 12px;
   //   padding: 15px;
   // }
-  .form_box {
+  .form-box {
     margin: 0 59px;
   }
 }

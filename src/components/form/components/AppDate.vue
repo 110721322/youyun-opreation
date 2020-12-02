@@ -11,7 +11,7 @@
       :clearable="clearable"
       :default-time="defaultTime"
       :picker-options="pickerOptions"
-      @change="onChage"
+      @change="changeDate"
     />
   </div>
 </template>
@@ -80,7 +80,7 @@ export default {
         if (this.type === "datetimerange") {
           this.defaultTime = ["00:00:00", "23:59:59"];
         }
-        this.onClick_item(this.dateList[0]);
+        this.clickItem(this.dateList[0]);
       }
     }
   },
@@ -95,13 +95,13 @@ export default {
     if (this.formItem.initVal) {
       this.timeInterval = this.formItem.initVal
     } else {
-      this.onClick_item(this.dateList[0]);
+      this.clickItem(this.dateList[0]);
     }
   },
   methods: {
-    onChage($data) {
+    changeDate($data) {
       if ($data === null) {
-        this.onClick_item(this.dateList[0]);
+        this.clickItem(this.dateList[0]);
         return;
       }
       this.selectItem = {};
@@ -115,7 +115,7 @@ export default {
       this.$emit("dataSelect", timeArr);
       this.ruleForm[this.formItem.key] = timeArr;
     },
-    onClick_item($item) {
+    clickItem($item) {
       this.selectItem = $item;
       if (this.type === "daterange") {
         let start = "";

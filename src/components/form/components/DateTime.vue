@@ -10,7 +10,7 @@
       :default-time="defaultTime"
       :picker-options="pickerOptions"
       :value-format="format"
-      @change="onChage"
+      @change="changeDate"
     />
     <!--    <span class="date-item" v-for="item of dateList" :class="item.value == selectItem.value?'select':''"  @click="onClick_item(item)">{{item.label}}</span>-->
   </div>
@@ -49,7 +49,7 @@ export default {
   watch: {},
   created() {},
   methods: {
-    onChage($data) {
+    changeDate($data) {
       this.$emit("select", $data);
       this.ruleForm[this.formItem.key] = $data;
     }

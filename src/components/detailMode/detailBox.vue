@@ -1,13 +1,13 @@
 <template>
-  <div :class="[border?'border bg_box':'bg_box']">
-    <div class="title">
+  <div :class="[border?'m-border g-bg-box':'g-bg-box']">
+    <div class="s-title">
       {{ title }}
       <el-button
         v-show="isShowEditBtn"
         type="primary"
-        class="edit_btn"
+        class="s-edit-btn"
         size="mini"
-        @click="onClick_edit"
+        @click="clickEdit"
       >{{ btnName }}</el-button>
     </div>
 
@@ -41,7 +41,7 @@ export default {
   computed: {},
 
   methods: {
-    onClick_edit() {
+    clickEdit() {
       this.$emit("edit");
     }
   }
@@ -49,17 +49,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.border {
+.m-border {
   border: 1px solid #ebeef5;
-  .title {
+  .s-title {
     background: #ebeef5;
   }
 }
-.bg_box {
+.g-bg-box {
   margin: 24px;
   background: #fff;
   overflow: hidden;
-  .title {
+  .s-title {
     position: relative;
     height: 54px;
     line-height: 54px;
@@ -68,7 +68,7 @@ export default {
     font-weight: 500;
     color: rgba(51, 51, 53, 1);
     border-bottom: 1px solid #ebeef5;
-    .edit_btn {
+    .s-edit-btn {
       float: right;
       margin: 13px;
     }
@@ -80,7 +80,7 @@ export default {
       color: rgba(96, 98, 102, 1);
       word-wrap: break-word;
     }
-    .edit_btn {
+    .s-edit-btn {
       color: #1989fa;
       margin-left: 15px;
       cursor: pointer;

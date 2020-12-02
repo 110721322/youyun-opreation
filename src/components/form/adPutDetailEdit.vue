@@ -30,8 +30,8 @@
       </div>
       <slot :formItem="ruleForm"></slot>
       <div class="btn-box">
-        <el-button type="primary" size="normal" class="btn" @click="handleClick">保存</el-button>
-        <el-button size="normal" plain class="btn" @click="cancelForm">取消</el-button>
+        <el-button type="primary" size="normal" class="btn" @click="clickSave">保存</el-button>
+        <el-button size="normal" plain class="btn" @click="clickCancelForm">取消</el-button>
       </div>
     </el-form>
   </div>
@@ -141,7 +141,7 @@ export default {
         }
       }
     },
-    handleClick() {
+    clickSave() {
       this.$refs.formTep.validate(valid => {
         // 校验
         if (valid) {
@@ -167,7 +167,7 @@ export default {
         this.$refs.formTep.clearValidate();
       });
     },
-    cancelForm() {
+    clickCancelForm() {
       // 初始化表单
       this.$emit("cancel");
     },
