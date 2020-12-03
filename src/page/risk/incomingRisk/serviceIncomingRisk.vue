@@ -5,10 +5,10 @@
     </div>
     <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
 
-    <div class="table_box">
-      <div class="tabale_title_box">
+    <div class="table-box">
+      <div class="tabale-title-box">
         <div class="title">服务商列表</div>
-        <el-button class="btn" type="primary" @click="onClick_addBlackList">新增入件黑名单</el-button>
+        <el-button class="btn" type="primary" @click="clickAddBlackList">新增入件黑名单</el-button>
       </div>
       <BaseCrud
         ref="table"
@@ -26,7 +26,7 @@
         :row-key="'id'"
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
-        @remove="onClick_remove"
+        @remove="onClickRemove"
       ></BaseCrud>
     </div>
 
@@ -35,15 +35,15 @@
       <div class="search-box">
         <span class="label">筛选:</span>
         <el-input v-model="input" placeholder="请输入内容" class="input-with-select" size="40%">
-          <el-select slot="prepend" v-model="select" style="width:130px" placeholder="请选择">
+          <el-select slot="prepend" v-model="select" style="width: 130px;" placeholder="请选择">
             <el-option label="服务商名称" value="1"></el-option>
             <el-option label="服务商ID" value="2"></el-option>
           </el-select>
         </el-input>
       </div>
       <div class="search-btn">
-        <el-button type="primary" size="medium" @click="onClick_search">搜索</el-button>
-        <el-button size="medium" @click="onClick_reset">重置</el-button>
+        <el-button type="primary" size="medium" @click="clickSearch">搜索</el-button>
+        <el-button size="medium" @click="clickReset">重置</el-button>
       </div>
       <div class="form-box">
         <!-- <div class="select_data">
@@ -56,7 +56,7 @@
         </div> -->
         <BaseCrud
           ref="agentTable"
-          :refName="'agent'"
+          :ref-name="'agent'"
           :params="params1"
           :grid-config="configData2.gridConfig"
           :grid-btn-config="configData2.gridBtnConfig"
@@ -72,8 +72,8 @@
         />
       </div>
       <div class="oper-box">
-        <el-button type="primary" size="medium" @click="onClick_confirm">确定</el-button>
-        <el-button size="medium" @click="onClick_cancel">关闭</el-button>
+        <el-button type="primary" size="medium" @click="clickConfirm">确定</el-button>
+        <el-button size="medium" @click="clickCancel">关闭</el-button>
       </div>
     </el-drawer>
   </div>
@@ -124,7 +124,8 @@ export default {
       })
       this.selectData = selectValue
     },
-    onClick_reset() {
+
+    clickReset() {
       this.select = "1"
       this.input = ""
       this.params1 = {
@@ -135,7 +136,8 @@ export default {
         this.$refs['agentTable'].$children[0].clearSelection()
       }
     },
-    onClick_search() {
+
+    clickSearch() {
       if (!this.select) {
         this.params1 = {}
       }
@@ -157,7 +159,8 @@ export default {
         [$ruleForm.search]: $ruleForm.searchVal
       };
     },
-    onClick_remove(row) {
+
+    onClickRemove(row) {
       this.$confirm("确定将该服务商移出黑名单吗?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
@@ -180,7 +183,8 @@ export default {
         });
       })
     },
-    onClick_confirm() {
+
+    clickConfirm() {
       if (this.selectData.length === 0) {
         this.$message({
           message: '请选择服务商',
@@ -204,11 +208,13 @@ export default {
         })
       }
     },
-    onClick_cancel() {
+
+    clickCancel() {
       this.drawer = false;
       this.$refs['agentTable'].$children[0].clearSelection()
     },
-    onClick_addBlackList() {
+
+    clickAddBlackList() {
       this.select = "1"
       this.input = ""
       this.params1 = {
@@ -225,15 +231,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.input-with-select{
+.input-with-select {
   width: auto;
 }
+
 .oper-box {
-  width: 500px;
-  padding: 16px 0px;
-  // height: 96px;
-  background: white;
-  border-top: 1px solid #ebeef5;
   position: fixed;
   right: 0;
   bottom: 0;
@@ -241,19 +243,26 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-content: center;
+  padding: 16px 0;
+  width: 500px;
+  background: white;
+  border-top: 1px solid #ebeef5;
   z-index: 1000;
 }
+
 .form-box {
   padding: 0 24px;
   padding-bottom: 80px;
 }
+
 .select_data {
+  margin: 16px 0;
   width: 100%;
   height: 40px;
   background: rgba(230, 247, 255, 1);
   border: 1px solid rgba(186, 231, 255, 1);
   line-height: 40px;
-  margin: 16px 0;
+
   .icon {
     color: rgba(24, 144, 255, 1);
     margin: 0 8px 0 16px;
@@ -268,54 +277,42 @@ export default {
     font-size: 14px;
   }
 }
+
 .search-box {
   display: flex;
   align-items: center;
   padding: 24px;
+
   .label {
     width: 50px;
   }
 }
+
 .search-btn {
   text-align: right;
   padding: 0 24px;
 }
-.ellipsis {
-  overflow: hidden;
 
-  text-overflow: ellipsis;
-
-  white-space: nowrap;
-}
 .formTemplate {
   margin: 20px 20px 0;
 }
+
 .formTemplate-item {
   margin-right: 20px;
 }
-.table_box {
+
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;
   overflow: hidden;
   background: #fff;
 }
-.form_item {
-  float: left !important;
-}
-.clear_both {
-  clear: both !important;
-}
-.btn_list {
-  /* background: rebeccapurple; */
-  position: absolute;
-  right: 0;
-  bottom: 21px;
-  right: 24px;
-}
-.tabale_title_box {
+
+.tabale-title-box {
   height: 52px;
   width: 100%;
+
   .title {
     font-size: 16px;
     font-family: PingFangSC-Medium, PingFang SC;
@@ -325,6 +322,7 @@ export default {
     margin-left: 10px;
     // line-height: 52px;
   }
+
   .btn {
     float: right;
   }

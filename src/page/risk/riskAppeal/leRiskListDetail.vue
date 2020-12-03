@@ -15,19 +15,19 @@
           <template v-slot="{ currentType }">
             <div class="current-type">
               <template v-if="currentType === 'pass' || currentType === 'channelPass'">
-                <img :src="passImg" alt />
+                <img :src="passImg" alt="已通过图片" />
               </template>
               <template v-if="currentType === 'channelAudit' || currentType === 'platformAudit' || currentType === 'waitChannelAudit'">
-                <img :src="approvalImg" alt />
+                <img :src="approvalImg" alt="审核中图片" />
               </template>
               <template v-if="currentType === 'reject' || currentType === 'channelReject' || currentType === 'platformReject' || currentType === 'preAuditReject'">
-                <img :src="refuseImg" alt />
+                <img :src="refuseImg" alt="已拒绝图片" />
               </template>
             </div>
           </template>
         </detailMode>
         <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.appealData"></detailMode>
-        <div class="table_box">
+        <div class="table-box">
           <div class="title">审核记录</div>
           <div v-for="(item,index) in appealData" :key="index" class="item">
             <div class="time">{{ item.createTime }}</div>
@@ -68,14 +68,14 @@
           </div>
         </div>
         <div v-if="showComponents.showOperBtns" class="btn-box">
-          <div class="btn_download" @click="onClick_download">
+          <div class="btn-download" @click="clickDownload">
             <i class="el-icon-download"></i>打包下载
           </div>
-          <div class="btn_pass" @click="onClick_sign">资料已全部检查并提交申诉</div>
-          <div class="btn-reject" @click="onClick_reject">驳回</div>
+          <div class="btn-pass" @click="clickSign">资料已全部检查并提交申诉</div>
+          <div class="btn-reject" @click="clickReject">驳回</div>
         </div>
         <div v-if="showComponents.showDownload" class="btn-box">
-          <div class="btn_download" @click="onClick_download">
+          <div class="btn-download" @click="clickDownload">
             <i class="el-icon-download"></i>打包下载
           </div>
         </div>
@@ -88,13 +88,14 @@
         :show-foot-btn="fromConfigData.showFootBtn"
         :foot-btn-label="'确定'"
         label-width="130px"
-        @cancel="cancel"
-        @confirm="confirm"
+        @cancel="onClickCancel"
+        @confirm="onClickConfirm"
       ></Form>
     </el-drawer>
   </div>
 </template>
 <script>
+import * as g from '@/libs/global';
 import api from "@/api/api_risk";
 import zipApi from "@/api/api_common";
 import passImg from "@/assets/img/pass.png";
@@ -103,7 +104,6 @@ import approvalImg from "@/assets/img/approval.png";
 import detailMode from "@/components/detailMode/detailMode2.vue";
 import Form from "@/components/form/index.vue";
 import { FORM_CONFIG } from "../formConfig/leRiskListDetailConfig";
-import * as g from '@/libs/global';
 
 export default {
   name: "LeRiskListDetail",
@@ -279,20 +279,17 @@ export default {
       }).then(res => {
         this.ruleForm = res.data;
         this.currentType = res.data.status
-      }).catch(err => {
-        this.$message(err.errorMessage);
-      });
+      })
     },
     getRecord() {
       api.queryByCondition({
         banAppealId: this.id
       }).then(res => {
         this.appealData = res.data;
-      }).catch(err => {
-        this.$message(err);
-      });
+      })
     },
-    confirm($data) {
+
+    onClickConfirm($data) {
       if (!$data.reason) {
         this.$message({
           message: '请填写驳回理由',
@@ -312,25 +309,12 @@ export default {
             this.getDetail()
             this.getRecord()
             this.drawer = false
-          } else {
-            this.$message({
-              message: res.errorMessage,
-              type: 'success'
-            })
           }
-        }).catch(err => {
-          this.$message({
-            message: err.errorMessage,
-            type: 'success'
-          })
         })
       }
     },
-    handleEdit($ruleForm) {
-      this.drawer = true;
-      this.fromConfigData = FORM_CONFIG.detailEdit;
-    },
-    onClick_sign() {
+
+    clickSign() {
       api.updateOfPrePass({
         id: this.id
       }).then(res => {
@@ -341,43 +325,32 @@ export default {
           })
           this.getRecord()
           this.getDetail()
-        } else {
-          this.$message({
-            message: res.errorMessage,
-            type: 'info'
-          })
         }
-      }).catch(err => {
-        this.$message({
-          message: err.errorMessage,
-          type: 'info'
-        })
-      });
+      })
     },
-    onClick_download() {
+
+    clickDownload() {
       api.getDownloadUrl({
         id: this.id
       }).then(res => {
         const key = res.data.taskKey
         this.getZip(key)
-        // window.open(res.data);
-      }).catch();
+      })
     },
+
     getZip(key) {
       zipApi.zipTask({
         key: key
       }).then(res => {
         window.location.href = g.config.server + `/common/v1/progress/result?key=${key}`;
-        // const str = res.data.split('/')
-        // if (str[0] === str[1]) {
-        // window.location.href = zipApi.zipResult({key: key})
-        // }
       })
     },
-    cancel() {
+
+    onClickCancel() {
       this.drawer = false;
     },
-    onClick_reject() {
+
+    clickReject() {
       this.drawer = true;
       this.fromConfigData = FORM_CONFIG.rejectData;
     }
@@ -390,33 +363,39 @@ export default {
   position: absolute;
   top: -25px;
   right: 0;
+
   img {
     width: 75px;
     height: 75px;
   }
 }
+
 .btn-box {
   display: flex;
   justify-content: center;
-  text-align: center;
   margin-bottom: 50px;
-  .btn_download {
+  text-align: center;
+
+  .btn-download {
     font-size: 14px;
     font-weight: 400;
     color: #1989fa;
     line-height: 40px;
     letter-spacing: 1px;
   }
-  .btn_pass {
+
+  .btn-pass {
     margin-left: 60px;
     width: 205px;
     height: 40px;
     background: #1989fa;
     border-radius: 4px;
     line-height: 40px;
-    color: #ffffff;
+    color: #fff;
   }
+
   .btn-reject {
+    margin-left: 24px;
     width: 113px;
     height: 40px;
     background: rgba(255, 255, 255, 1);
@@ -424,46 +403,53 @@ export default {
     border: 1px solid rgba(199, 200, 205, 1);
     line-height: 40px;
     color: #606266;
-    margin-left: 24px;
   }
 }
-.table_box {
+
+.table-box {
   position: relative;
   margin: 24px;
+  padding-bottom: 80px;
   overflow: hidden;
   background: #fff;
-  padding-bottom: 80px;
+
   .title {
-    line-height: 64px;
     padding-left: 24px;
+    line-height: 64px;
     border-bottom: 1px solid #ebeef5;
     font-size: 16px;
     color: #333335;
   }
+
   .item {
     display: flex;
     justify-content: space-between;
-    line-height: 72px;
     padding: 0 24px;
+    line-height: 72px;
     border-bottom: 1px solid #ebeef5;
+
     .time {
       width: 25%;
       color: #606266;
     }
+
     .channel {
       width: 25%;
       color: #606266;
     }
+
     .status {
       width: 25%;
       color: #979797;
     }
+
     .reason {
       width: 25%;
       color: #f5222d;
     }
   }
 }
+
 .dot {
   display: inline-block;
   width: 5px;
@@ -472,19 +458,24 @@ export default {
   background-color: #52c41a;
   vertical-align: middle;
   margin: 0 5px;
+
   &.opened {
     background-color: #52c41a;
   }
+
   &.review {
     background-color: #ffc620;
   }
+
   &.reject {
     background-color: #f5222d;
   }
+
   &.unused {
     background-color: #9c9c9c;
   }
 }
+
 .detail-alert {
   margin: 24px;
   padding: 9px 24px;

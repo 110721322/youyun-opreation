@@ -5,14 +5,13 @@
     </div>
     <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
 
-    <div class="table_box">
+    <div class="table-box">
       <BaseCrud
         ref="table"
         :params="params"
         :api-service="api"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
-        :grid-data="testData"
         :form-config="configData.formConfig"
         :form-data="configData.formModel"
         :grid-edit-width="250"
@@ -29,9 +28,7 @@
 <script>
 import api from "@/api/api_risk";
 import Search from "@/components/search/search.vue";
-
 import BaseCrud from "@/components/table/BaseCrud.vue";
-
 import { SEARCH_CONFIG } from "../formConfig/blackListDetailSearch";
 import { TABLE_CONFIG } from "../tableConfig/blackListDetailConfig";
 
@@ -40,10 +37,8 @@ export default {
   components: { Search, BaseCrud },
   data() {
     return {
-      fromConfigData: {},
       searchConfig: SEARCH_CONFIG,
       configData: TABLE_CONFIG,
-      testData: [],
       searchHeight: "260",
       params: {
         beginTime: this.$g.utils.getToday(-6),
@@ -54,9 +49,6 @@ export default {
   },
   mounted() {},
   methods: {
-    cancel(done) {
-      done();
-    },
     search($ruleForm) {
       this.params = {
         beginTime: $ruleForm.date[0] ? $ruleForm.date[0] : this.$g.utils.getToday(-6),
@@ -71,7 +63,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;

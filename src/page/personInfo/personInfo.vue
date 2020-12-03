@@ -13,7 +13,6 @@
             v-if="!ruleForm.headerImageSrc"
             class="upload-demo"
             action="https://jsonplaceholder.typicode.com/posts/"
-            :on-change="handleChange"
             :file-list="fileList"
             :show-file-list="false"
           >
@@ -21,9 +20,9 @@
               <i class="el-icon-upload el-icon--left"></i>上传图片
             </el-button>
           </el-upload>
-          <div v-if="ruleForm.headerImageSrc" class="avatar-box" style="position: relative">
+          <div v-if="ruleForm.headerImageSrc" class="avatar-box">
             <img :src="ruleForm.headerImageSrc" alt class="avatar" />
-            <i class="el-icon-close avatar-close" @click="onClick_deleteAvater"></i>
+            <i class="el-icon-close avatar-close" @click="clickDeleteAvater"></i>
           </div>
         </el-form-item>
         <el-form-item label="花名" prop="nickName">
@@ -52,7 +51,7 @@
         </el-form-item>
       </el-form>
       <div class="commit-box">
-        <el-button type="primary" class="commit-btn" @click="onClick_submit">提交</el-button>
+        <el-button type="primary" class="commit-btn" @click="clickSubmit">提交</el-button>
       </div>
     </div>
   </div>
@@ -92,34 +91,28 @@ export default {
     };
   },
   methods: {
-    onClick_deleteAvater() {
+    clickDeleteAvater() {
       this.ruleForm.headerImageSrc = "";
     },
-    handleChange($val, $list) {},
-    onClick_submit() {
+
+    clickSubmit() {
       this.$refs.ruleForm.validate(valid => {
         if (valid) {
-          api
-            .perfectUpdate({
-              nickName: this.ruleForm.nickName,
-              sex: this.ruleForm.sex,
-              realName: this.ruleForm.realName,
-              headerImageSrc: this.ruleForm.headerImageSrc,
-              jobNumber: this.ruleForm.jobNumber,
-              email: this.ruleForm.email,
-              id: this.id,
-              password: this.ruleForm.password,
-              birthday: this.ruleForm.birthday
-            })
-            .then(res => {
+          api.perfectUpdate({
+            nickName: this.ruleForm.nickName,
+            sex: this.ruleForm.sex,
+            realName: this.ruleForm.realName,
+            headerImageSrc: this.ruleForm.headerImageSrc,
+            jobNumber: this.ruleForm.jobNumber,
+            email: this.ruleForm.email,
+            id: this.id,
+            password: this.ruleForm.password,
+            birthday: this.ruleForm.birthday
+          }).then(res => {
+            if (res.status === 0) {
               this.$router.push({ path: "/result" });
-            })
-            .catch(err => {
-              this.$message(err);
-            });
-        } else {
-          console.log("error submit!!");
-          return false;
+            }
+          })
         }
       });
     }
@@ -128,9 +121,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .avatar-box {
+  position: relative;
   width: 66px;
   height: 66px;
-  position: relative;
+
   .avatar-close {
     position: absolute;
     top: 0;
@@ -139,17 +133,21 @@ export default {
     font-size: 8px;
   }
 }
+
 .avatar {
   width: 66px;
   height: 66px;
 }
+
 .person-box {
   background: #fbfbfb;
   height: 100%;
+
   .form-box {
     padding: 1rem;
   }
 }
+
 .upload-btn {
   width: 119px;
   height: 36px;
@@ -157,10 +155,12 @@ export default {
   border-radius: 4px;
   border: 1px solid rgba(199, 200, 205, 1);
 }
+
 .commit-box {
   margin-top: 50px;
   text-align: center;
 }
+
 .commit-btn {
   width: 50%;
 }

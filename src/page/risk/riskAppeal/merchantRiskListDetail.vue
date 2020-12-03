@@ -34,12 +34,17 @@
             </div>
           </template>
         </detailMode>
-        <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.appealData"></detailMode>
+        <detailMode
+          :img-width="4"
+          :rule-form="ruleForm"
+          :config-data="configData.appealData"
+        >
+        </detailMode>
         <div v-if="showComponents.showOperBtns" class="btn-box">
-          <!-- <div class="btn_pass" @click="onClick_sign">资料已检查，通过</div>
-          <div class="btn-reject" @click="onClick_reject">驳回</div> -->
-          <el-button type="primary" size="normal" @click="onClick_sign">资料已检查，通过</el-button>
-          <el-button size="normal" @click="onClick_reject">驳回</el-button>
+          <!-- <div class="btn-pass" @click="clickSign">资料已检查，通过</div>
+          <div class="btn-reject" @click="clickReject">驳回</div> -->
+          <el-button type="primary" size="normal" @click="clickSign">资料已检查，通过</el-button>
+          <el-button size="normal" @click="clickReject">驳回</el-button>
         </div>
       </div>
     </transition>
@@ -50,8 +55,8 @@
         :show-foot-btn="fromConfigData.showFootBtn"
         :foot-btn-label="'确定'"
         label-width="130px"
-        @cancel="cancel"
-        @confirm="confirm"
+        @cancel="onClickCancel"
+        @confirm="onClickConfirm"
       ></Form>
     </el-drawer>
   </div>
@@ -63,6 +68,7 @@ import refuseImg from "@/assets/img/refuse.png";
 import approvalImg from "@/assets/img/approval.png";
 import detailMode from "@/components/detailMode/detailMode2.vue";
 import Form from "@/components/form/index.vue";
+import { CONFIG_DATA } from "../tableConfig/merchantRiskListDetail";
 import { FORM_CONFIG } from "../formConfig/leRiskListDetailConfig";
 
 export default {
@@ -81,102 +87,11 @@ export default {
         showRejectTitle: false,
         showOperBtns: false
       },
-      phone: "13123465748",
+      phone: "",
       // pass通过 preApproval预审核 checking审核中 reject驳回
       currentType: "",
       ruleForm: {},
-      configData: {
-        baseData: {
-          name: "基本信息",
-          items: [
-            {
-              name: "商户名称",
-              key: "merchantName"
-            },
-            {
-              name: "营业执照编号",
-              key: "shopLicenseNo"
-            },
-            {
-              name: "法人姓名",
-              key: "lawPerson"
-            },
-
-            {
-              name: "法人手机号",
-              key: "lawMobile"
-            },
-            {
-              name: "法人身份证号",
-              key: "idCardNo"
-            },
-            {
-              name: '银行卡号',
-              key: 'bankCardNo'
-            },
-            {
-              name: '商户地址',
-              key: 'merchantAddress'
-            }
-          ]
-        },
-        appealData: {
-          name: "商户信息",
-          items: [
-            {
-              name: "法人手持营业执照",
-              key: "shopLicenseImg",
-              type: "image"
-            },
-            {
-              name: "法人手持身份证正面",
-              key: "idCardHandImg",
-              type: "image"
-            },
-            {
-              name: "法人身份证原件正面",
-              key: "idCardPortraitImg",
-              type: "image"
-            },
-            {
-              name: "手持银行卡原件正面",
-              key: "bankCardImg",
-              type: "image"
-            },
-            {
-              name: "商户门店照片",
-              key: "shopFaceImg",
-              type: "image"
-            },
-            {
-              name: "其他照片",
-              key: "otherImg",
-              type: "image"
-            },
-            {
-              name: "商户机打指定小票照片1",
-              key: "machineTicketImg1",
-              type: "image"
-            },
-            {
-              name: "商户机打指定小票照片2",
-              key: "machineTicketImg2",
-              type: "image"
-            },
-            {
-              name: "商户机打指定小票照片3",
-              key: "machineTicketImg3",
-              type: "image"
-            },
-            {
-              name: "视频",
-              key: "video",
-              type: "video"
-            }
-          ]
-        }
-      },
-      testData: []
+      configData: CONFIG_DATA
     };
   },
   watch: {
@@ -207,7 +122,7 @@ export default {
     this.getDetail();
   },
   methods: {
-    confirm($data) {
+    onClickConfirm($data) {
       if (!$data.reason) {
         this.$message({
           message: '请填写必填信息',
@@ -225,35 +140,21 @@ export default {
             });
             this.getDetail()
             this.drawer = false
-          } else {
-            this.$message({
-              message: res.errorMessage,
-              type: 'info'
-            });
           }
-        }).catch(err => {
-          this.$message({
-            message: err.errorMessage,
-            type: 'info'
-          });
-        });
+        })
       }
     },
+
     getDetail() {
       api.appealGetData({
         id: this.id
       }).then(res => {
         this.ruleForm = res.data;
         this.currentType = res.data.status
-      }).catch(err => {
-        this.$message(err);
-      });
+      })
     },
-    handleEdit($ruleForm) {
-      this.drawer = true;
-      this.fromConfigData = FORM_CONFIG.detailEdit;
-    },
-    onClick_sign() {
+
+    clickSign() {
       this.$confirm(
         "<strong>确定移出以下黑名单资料吗</strong><br/><strong style='color: #F5222D'>法人手机号：" +
           this.phone +
@@ -274,18 +175,8 @@ export default {
               type: 'success'
             })
             this.getDetail()
-          } else {
-            this.$message({
-              message: res.errorMessage,
-              type: 'success'
-            })
           }
-        }).catch(err => {
-          this.$message({
-            message: err.errorMessage,
-            type: 'info'
-          });
-        });
+        })
       }).catch(() => {
         this.$message({
           type: "info",
@@ -293,10 +184,12 @@ export default {
         });
       });
     },
-    cancel() {
+
+    onClickCancel() {
       this.drawer = false;
     },
-    onClick_reject() {
+
+    clickReject() {
       this.drawer = true;
       this.fromConfigData = FORM_CONFIG.rejectData;
     }
@@ -309,33 +202,31 @@ export default {
   position: absolute;
   top: -25px;
   right: 0;
+
   img {
     width: 75px;
     height: 75px;
   }
 }
+
 .btn-box {
   display: flex;
   justify-content: center;
   text-align: center;
   margin-bottom: 24px;
-  .btn_download {
-    font-size: 14px;
-    font-weight: 400;
-    color: #1989fa;
-    line-height: 40px;
-    letter-spacing: 1px;
-  }
-  .btn_pass {
+
+  .btn-pass {
     margin-left: 60px;
     width: 205px;
     height: 40px;
     background: #1989fa;
     border-radius: 4px;
     line-height: 40px;
-    color: #ffffff;
+    color: #fff;
   }
+
   .btn-reject {
+    margin-left: 24px;
     width: 113px;
     height: 40px;
     background: rgba(255, 255, 255, 1);
@@ -343,9 +234,9 @@ export default {
     border: 1px solid rgba(199, 200, 205, 1);
     line-height: 40px;
     color: #606266;
-    margin-left: 24px;
   }
 }
+
 .detail-alert {
   margin: 24px;
   padding: 9px 24px;

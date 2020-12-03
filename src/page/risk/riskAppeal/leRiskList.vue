@@ -5,14 +5,13 @@
     </div>
     <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
 
-    <div class="table_box">
+    <div class="table-box">
       <BaseCrud
         ref="table"
         :params="params"
         :api-service="api"
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
-        :grid-data="testData"
         :form-config="configData.formConfig"
         :form-data="configData.formModel"
         :grid-edit-width="250"
@@ -22,10 +21,10 @@
         :row-key="'id'"
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
-        @detail="handleDetail"
-        @preApprove="handleDetail"
-        @pass="handlePass"
-        @reject="handleReject"
+        @detail="onClickDetail"
+        @preApprove="onClickDetail"
+        @pass="onClickPass"
+        @reject="onClickReject"
       ></BaseCrud>
     </div>
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
@@ -34,8 +33,8 @@
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
         label-width="130px"
-        @cancel="cancel"
-        @confirm="confirm"
+        @cancel="onClickCancel"
+        @confirm="onClickConfirm"
       ></Form>
     </el-drawer>
   </div>
@@ -45,7 +44,6 @@ import api from "@/api/api_risk";
 import Search from "@/components/search/search.vue";
 import BaseCrud from "@/components/table/BaseCrud.vue";
 import Form from "@/components/form/index.vue";
-
 import { SEARCH_CONFIG } from "../formConfig/leRiskListSearch";
 import { FORM_CONFIG } from "../formConfig/leRiskListConfig";
 import { LERISKLIST_CONFIG } from "../tableConfig/leRiskListConfig";
@@ -59,8 +57,6 @@ export default {
       fromConfigData: {},
       searchConfig: SEARCH_CONFIG,
       configData: LERISKLIST_CONFIG,
-      testData: [],
-      direction: "rtl",
       searchHeight: "260",
       drawer: false,
       params: {},
@@ -71,10 +67,11 @@ export default {
   created() {
   },
   methods: {
-    cancel() {
+    onClickCancel() {
       this.drawer = false;
     },
-    handleDetail(row) {
+
+    onClickDetail(row) {
       this.$router.push({
         name: "leRiskDetail",
         query: {
@@ -82,7 +79,8 @@ export default {
         }
       });
     },
-    confirm($data) {
+
+    onClickConfirm($data) {
       if (!$data.reason) {
         this.$message({
           message: '请填写驳回理由',
@@ -101,21 +99,12 @@ export default {
             })
             this.drawer = false
             this.$refs.table.getData()
-          } else {
-            this.$message({
-              message: res.errorMessage,
-              type: 'info'
-            })
           }
-        }).catch(err => {
-          this.$message({
-            message: err.errorMessage,
-            type: 'info'
-          })
         })
       }
     },
-    handlePass(data) {
+
+    onClickPass(data) {
       this.$confirm("确认通过吗?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
@@ -129,18 +118,8 @@ export default {
               type: 'success'
             })
             this.$refs.table.getData()
-          } else {
-            this.$message({
-              message: res.errorMessage,
-              type: 'success'
-            })
           }
-        }).catch(err => {
-          this.$message({
-            message: err.errorMessage,
-            type: 'success'
-          })
-        });
+        })
       }).catch(() => {
         this.$message({
           type: "info",
@@ -148,13 +127,15 @@ export default {
         });
       });
     },
-    handleReject(row) {
+
+    onClickReject(row) {
       this.drawer = true;
       this.id = row.id
       this.fromConfigData = FORM_CONFIG.rejectData;
     },
+
     search($ruleForm) {
-      const params = {
+      this.params = {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,
         operateUserNo: $ruleForm.operateUserNo ? $ruleForm.operateUserNo : null,
@@ -162,20 +143,17 @@ export default {
         channelMerchantNo: $ruleForm.operateUserNo ? $ruleForm.operateUserNo : null,
         [$ruleForm.search]: $ruleForm.searchVal
       };
-      this.params = params;
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;
   overflow: hidden;
   background: #fff;
 }
-</style>
-<style>
 </style>
