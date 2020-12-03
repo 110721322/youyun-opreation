@@ -123,7 +123,7 @@ export default {
       }).catch(() => {
         this.$message({
           type: "info",
-          message: "已取消"
+          message: "取消操作"
         });
       });
     },

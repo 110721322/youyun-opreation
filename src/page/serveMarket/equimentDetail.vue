@@ -5,10 +5,10 @@
       <div class="goods-introduce">
         <div class="goods-style">
           <div class="main-img">
-            <img :src="imgData[imgIndex]" alt="" />
+            <img :src="imgData[imgIndex]" alt="商品图片" />
           </div>
           <div class="next-img">
-            <img v-for="(item, index) in imgData" :key="index" :src="item" alt="" @click="onClice_changeImg(index)" />
+            <img v-for="(item, index) in imgData" :key="index" :src="item" alt="商品小图" @click="clickChangeImg(index)" />
           </div>
         </div>
         <div class="operation">
@@ -20,8 +20,8 @@
           </div>
           <div class="shop-handle">
             <el-row>
-              <el-button size="medium" type="primary" @click="onClick_gobuy">立即购买</el-button>
-              <el-button size="medium" @click="click_addCart">加入购物车</el-button>
+              <el-button size="medium" type="primary" @click="clickGobuy">立即购买</el-button>
+              <el-button size="medium" @click="clickAddCart">加入购物车</el-button>
             </el-row>
           </div>
         </div>
@@ -68,10 +68,9 @@ export default {
           const imgData = res.data.img.split(',')
           this.imgData = imgData
         }
-      }).catch(err => {
-        this.$message(err.errorMessage)
       })
     },
+
     getAddress() {
       api.queryAddress({
         agentNo: localStorage.getItem('agentNo')
@@ -83,11 +82,10 @@ export default {
             }
           }
         }
-      }).catch(err => {
-        console.log(err)
       })
     },
-    click_addCart() {
+
+    clickAddCart() {
       api.addShopCart({
         deviceId: this.goodsDetail.deviceId,
         count: this.num,
@@ -97,11 +95,9 @@ export default {
           message: '添加购物车成功',
           type: 'success'
         });
-      }).catch(err => {
-        console.log(err)
       })
     },
-    onClick_gobuy() {
+    clickGobuy() {
       if (this.address) {
         const deviceInfos = [
           {
@@ -136,8 +132,6 @@ export default {
               }
             })
           }
-        }).catch(err => {
-          console.log(err)
         })
       } else {
         this.$message({
@@ -146,9 +140,11 @@ export default {
         })
       }
     },
-    onClice_changeImg(index) {
+
+    clickChangeImg(index) {
       this.imgIndex = index
     },
+
     handleChange(currentValue) {
       this.num = currentValue
     }
@@ -159,51 +155,61 @@ export default {
 <style lang="scss" scoped>
   .goods {
     padding: 24px;
+
     .goods-introduce {
       display: flex;
       justify-content: flex-start;
       padding: 33px 43px;
       margin-bottom: 24px;
       background-color: #fff;
+
       .goods-style {
         margin-right: 32px;
+
         .main-img {
           padding: 12px 24px 0 19px;
           margin-bottom: 14px;
+
           img {
             width: 187px;
             height: 187px;
           }
         }
+
         .next-img {
           img {
+            margin-right: 10px;
             width: 32px;
             height: 32px;
             border-radius: 2px;
-            margin-right: 10px;
           }
         }
       }
+
       .operation {
         .name {
           color: #333335;
           font-size: 20px;
           font-weight: 500;
         }
+
         p {
-          color: #606266;
           margin: 8px 0 24px 0;
+          color: #606266;
         }
+
         .shop {
           .money {
-            color: #F64D4C;
+            color: #f64d4c;
             font-size: 20px;
             font-weight: 500;
             margin-right: 40px;
           }
         }
+
         .shop-handle {
           margin-top: 40px;
+
           .el-button {
             &:last-child {
               margin-left: 24px;
@@ -212,18 +218,22 @@ export default {
         }
       }
     }
+
     .goods-detail {
       background-color: #fff;
+
       .goods-title {
         font-size: 16px;
         font-weight: 500;
         padding-left: 24px;
         color: #333335;
-        border-bottom: 1px solid #EBEEF5;
+        border-bottom: 1px solid #ebeef5;
         line-height: 87px;
       }
+
       .goods-img {
         padding: 32px;
+
         img {
           width: 100%;
           height: 306px;
@@ -231,6 +241,7 @@ export default {
       }
     }
   }
+
   .goods-info {
     padding: 24px 24px;
   }

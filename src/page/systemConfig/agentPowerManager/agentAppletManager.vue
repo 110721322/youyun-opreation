@@ -4,7 +4,7 @@
       <span class="title">小程序角色权限</span>
     </div>
 
-    <div class="table_box">
+    <div class="table-box">
       <BaseCrud
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
@@ -19,7 +19,7 @@
         :row-key="'id'"
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
-        @edit="onClick_edit"
+        @edit="onClickEdit"
       ></BaseCrud>
     </div>
 
@@ -73,7 +73,7 @@ export default {
   },
   mounted() {},
   methods: {
-    onClick_edit($row) {
+    onClickEdit($row) {
       const params = {
         roleId: $row.roleId,
         system: 'agent_mini_program'
@@ -84,6 +84,7 @@ export default {
         this.drawer = true;
       })
     },
+
     saveRolePermission($checkedIds) {
       const params = {
         roleId: this.selectRoleId,
@@ -100,6 +101,7 @@ export default {
         }
       })
     },
+
     closeDrawer() {
       this.drawer = false;
       this.templateList = [];
@@ -110,39 +112,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .table_box {
+  .table-box {
     position: relative;
     margin: 24px;
     padding: 24px;
     overflow: hidden;
     background: #fff;
   }
+
   .m-tree-container {
     width: 100%;
     height: 750px;
     overflow-y: scroll;
-  }
-  .foot_btn_box {
-    width: 100%;
-    height: 96px;
-    border-top: 1px solid #ebeef5;
-    // position: absolute;
-    // bottom: 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-content: center;
-
-    .foot_btn {
-      width: 113px;
-      height: 40px;
-      margin-top: 28px;
-      margin-left: 12px;
-      margin-right: 12px;
-    }
-
-    .form_box {
-      margin: 0 59px;
-    }
   }
 </style>

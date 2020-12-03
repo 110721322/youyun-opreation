@@ -1,7 +1,7 @@
 <template>
   <div>
     <ul class="top-table">
-      <li v-for="(item, index) in selectData" :key="index" class="noselect" :class="selectIndex===index? 'isselect': ''" @click="onClick_select(item.value,index)">{{ item.label }}</li>
+      <li v-for="(item, index) in selectData" :key="index" class="noselect" :class="selectIndex===index? 'isselect': ''" @click="clickSelect(item.value,index)">{{ item.label }}</li>
     </ul>
     <div v-if="selectIndex===0" class="tab-list">
       <BaseCrud
@@ -98,7 +98,7 @@ export default {
   mounted() {
   },
   methods: {
-    onClick_select(data, index) {
+    clickSelect(data, index) {
       this.selectIndex = index
       this.params = {
         moduleCode: this.selectData[this.selectIndex].value
@@ -110,13 +110,14 @@ export default {
 
 <style scoped>
   .top-table {
-    width: 100%;
-    background: #ffffff;
-    height: 52px;
-    padding-left: 16px;
     display: flex;
+    padding-left: 16px;
+    width: 100%;
+    background: #fff;
+    height: 52px;
     line-height: 52px;
   }
+
   .top-table .noselect {
     width: 92px;
     font-size: 14px;
@@ -124,10 +125,12 @@ export default {
     cursor: pointer;
     text-align: center;
   }
+
   .top-table .noselect.isselect {
-    color: #1989FA;
-    border-bottom: 2px solid #1989FA;
+    color: #1989fa;
+    border-bottom: 2px solid #1989fa;
   }
+
   .tab-list {
     width: 100%;
     margin-top: 24px;

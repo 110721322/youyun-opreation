@@ -9,30 +9,30 @@
       </el-steps>
     </div>
     <div class="content">
-      <div class="content_title">订单支付</div>
+      <div class="content-title">订单支付</div>
       <ul class="select">
         <li><span>服务类型：</span><span>{{ modelName }}</span></li>
         <li><span>服务时间：</span><span>{{ comboItem.comboName }}</span></li>
-        <li><span>支付金额：</span><span style="color: #F5222D; font-size: 20px; font-weight: 500;">{{ amount }}</span><span>元</span></li>
-        <li><span>支付方式：</span><div v-for="(item, index) in payWay" :key="index" class="pay_way" :class="selectIndex===index? 'pay_select': ''" @click="onClick_select(index)">{{ item.value }}</div></li>
+        <li><span>支付金额：</span><span style="color: #f5222d; font-size: 20px; font-weight: 500;">{{ amount }}</span><span>元</span></li>
+        <li><span>支付方式：</span><div v-for="(item, index) in payWay" :key="index" class="pay-way" :class="selectIndex===index? 'pay-select': ''" @click="clickSelect(index)">{{ item.value }}</div></li>
         <li v-if="selectIndex===0"><img src="../../assets/img/qr_code.jpg" alt=""></li>
         <div v-if="selectIndex===0" class="descript">
           <span>支持</span>
-          <img src="../../assets/img/wx_pay.png" alt="">
-          <img src="../../assets/img/apply_pay.png" alt="">
-          <img src="../../assets/img/yun_pay.png" alt="">
+          <img src="../../assets/img/wx_pay.png" alt="微信图标">
+          <img src="../../assets/img/apply_pay.png" alt="支付宝图标">
+          <img src="../../assets/img/yun_pay.png" alt="云闪付图标">
           <span>扫码支付</span>
         </div>
         <li v-if="selectIndex===1"><span>打款账号：</span><span>3301040160001013187</span></li>
         <li v-if="selectIndex===1"><span>开户银行：</span><span>杭州银行滨江支行</span></li>
         <li v-if="selectIndex===1">
-          <span style="color:red">*</span><span>上传凭证：</span>
+          <span style="color: red;">*</span><span>上传凭证：</span>
           <div class="photo">
             <Upload :form-item="formItem" :rule-form="ruleForm" />
           </div>
         </li>
-        <p v-if="selectIndex===1" style="cursor: pointer" @click="seeExamples">查看示例</p>
-        <button class="option_btn" @click="onClick_tostatus">我已完成</button>
+        <p v-if="selectIndex===1" style="cursor: pointer;" @click="seeExamples">查看示例</p>
+        <button class="option-btn" @click="clickTostatus">我已完成</button>
       </ul>
     </div>
     <el-dialog
@@ -97,14 +97,16 @@ export default {
     seeExamples() {
       this.dialogVisible = true
     },
-    onClick_select(index) {
+
+    clickSelect(index) {
       if (index === 0) {
         this.$message.error('暂不支持扫码支付');
         return;
       }
       this.selectIndex = index
     },
-    onClick_tostatus() {
+
+    clickTostatus() {
       if (!this.ruleForm.imgUrl) {
         this.$message('请上传凭证')
         return
@@ -132,161 +134,182 @@ export default {
 
 <style scoped>
   .container {
-    width: 100%;
     padding: 24px 24px 80px 24px;
+    width: 100%;
     box-sizing: border-box;
   }
+
   .top {
-    width: 100%;
-    background: #ffffff;
-    height: 88px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 32px;
+    width: 100%;
+    background: #fff;
+    height: 88px;
     box-sizing: border-box;
   }
+
   .el-steps--horizontal {
     width: 70%;
   }
+
   .top span {
-    color: #000000;
+    color: #000;
     font-size: 16px;
     font-weight: 500;
   }
+
   .content {
+    margin-top: 24px;
     width: 100%;
     height: 627px;
-    background: #ffffff;
-    margin-top: 24px;
+    background: #fff;
   }
-  .content_title {
+
+  .content-title {
+    padding-left: 24px;
     width: 100%;
     height: 86px;
-    padding-left: 24px;
     line-height: 86px;
-    border-bottom: 1px solid #EBEEF5;
-    color: #000000;
+    border-bottom: 1px solid #ebeef5;
+    color: #000;
     font-size: 16px;
     font-weight: 500;
   }
+
   .select {
-    width: 346px;
     padding-top: 32px;
-    box-sizing: border-box;
     margin: 0 auto;
+    width: 346px;
+    box-sizing: border-box;
   }
+
   .select li {
     display: flex;
     align-items: center;
     margin-bottom: 16px;
   }
+
   .select li span {
     font-size: 14px;
   }
+
   .select li span:nth-child(1) {
-    color: #000000;
     padding-right: 4px;
+    color: #000;
   }
+
   .select li span:nth-child(2) {
     color: #606266;
   }
+
   .select li span:nth-child(3) {
     color: #606266;
   }
+
   .select li img {
     display: block;
+    margin: 0 auto;
     width: 190px;
     height: 190px;
-    margin:0 auto;
   }
-  .pay_way {
+
+  .pay-way {
+    margin-right: 8px;
     width: 126px;
     height: 40px;
-    background: #ffffff;
+    background: #fff;
     border-radius: 4px;
-    border: 1px solid #ECEDEF;
+    border: 1px solid #ecedef;
     text-align: center;
     line-height: 40px;
     color: #606266;
     font-size: 14px;
-    margin-right: 8px;
     cursor: pointer;
   }
-  .pay_way.pay_select {
-    color: #1989FA;
-    border: 1px solid #1890FF;
-    background: #ECF6FF;
+
+  .pay-way.pay-select {
+    color: #1989fa;
+    border: 1px solid #1890ff;
+    background: #ecf6ff;
   }
+
   .descript {
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
   }
+
   .descript span {
     font-size: 14px;
     color: #606266;
   }
+
   .descript span:nth-child(1) {
     padding-right: 4px;
     box-sizing: border-box;
   }
+
   .descript img {
+    margin-right: 4px;
     width: 26px;
     height: 26px;
-    margin-right: 4px;
   }
+
   .select li .el-upload {
-      border: 1px dashed #d9d9d9;
-      border-radius: 6px;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-  }
-  .select li .photo {
-    /* width: 100px;
-    height: 100px;
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px; */
-    cursor: pointer;
     position: relative;
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
     overflow: hidden;
   }
+
+  .select li .photo {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
   .select li .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
+    border-color: #409eff;
   }
+
   .select li .avatar-uploader-icon {
-      font-size: 28px;
-      color: #8c939d;
-      width: 100px;
-      height: 100px;
-      line-height: 100px;
-      text-align: center;
-  }
-  .select li .avatar {
+    font-size: 28px;
+    color: #8c939d;
     width: 100px;
     height: 100px;
+    line-height: 100px;
+    text-align: center;
+  }
+
+  .select li .avatar {
     display: block;
     object-fit: cover;
+    width: 100px;
+    height: 100px;
   }
+
   .select p {
-    color: #1989FA;
-    font-size: 14px;
     padding-left: 98px;
     margin-top: 8px;
+    color: #1989fa;
+    font-size: 14px;
   }
-  .option_btn {
+
+  .option-btn {
+    margin-left: 74px;
+    margin-top: 32px;
     width: 114px;
     height: 40px;
     border-radius: 4px;
-    background: #1989FA;
+    background: #1989fa;
     text-align: center;
     line-height: 40px;
-    color: #ffffff;
+    color: #fff;
     font-size: 14px;
-    margin-left: 74px;
-    margin-top: 32px;
   }
 </style>
 

@@ -2,7 +2,7 @@
 <template>
   <div>
     <div class="p_head">权限设置</div>
-    <div class="content_drawer">
+    <div class="content-drawer">
       <el-form ref="form" label-width="120px" style="padding: 24px;">
         <el-form-item v-if="roleId !== 13" label="复制成员权限:">
           <el-select v-model="bindEmployee" placeholder="请选择成员" @change="changeEmployee">
@@ -14,7 +14,7 @@
             >
             </el-option>
           </el-select>
-          <div style="margin-top:16px">
+          <div style="margin-top: 16px;">
             <el-button type="primary" @click="copyEmployee">复制</el-button>
             <el-button @click="resetEmployee">重置</el-button>
           </div>
@@ -34,8 +34,8 @@
           >
             <span slot-scope="{node,data}" class="custom-tree-node">
               <span>
-                <img v-if="data.type=='menu'" class="trre_icon" src="@/assets/img/page_icon.png" alt />
-                <img v-if="data.type=='button'" class="trre_icon" src="@/assets/img/btn_icon.png" alt />
+                <img v-if="data.type=='menu'" class="trre-icon" src="@/assets/img/page_icon.png" alt />
+                <img v-if="data.type=='button'" class="trre-icon" src="@/assets/img/btn_icon.png" alt />
               </span>
               <span>
                 <i :class="node.icon"></i>
@@ -47,11 +47,11 @@
         <!-- 菜单树结束 -->
       </el-form>
     </div>
-    <div class="foot_btn_box">
+    <div class="foot-btn-box">
       <el-checkbox v-model="checkAll" :indeterminate="indeterminate" @change="checkAllChange">全选</el-checkbox>
       <div class="btn-list">
-        <el-button type="primary" class="foot_btn" @click="confirm">确定</el-button>
-        <el-button class="foot_btn" @click="cancle">取消</el-button>
+        <el-button type="primary" class="foot-btn" @click="confirm">确定</el-button>
+        <el-button class="foot-btn" @click="cancle">取消</el-button>
       </div>
     </div>
   </div>
@@ -148,6 +148,7 @@ export default {
       }
       return that.$g.utils.mapNestedArr(this.templateListClone, 'children', mapCallback)
     },
+
     /**
      * 选择节点发生变化触发
      * @param $data 当前选择节点数据
@@ -171,13 +172,13 @@ export default {
         return this.checkedList.filter(ele => ele.checkedId === item)[0]
       })
       this.$refs.tree.setCheckedKeys(this.checkedIds)
-
       function filterParent($item) {
         if ($item.checkedId === $data.checkedId) {
           return true;
         }
       }
     },
+
     checkAllChange() {
       if (this.indeterminate || this.checkAll) {
         this.checkedList = this.allCheckOption;
@@ -186,6 +187,7 @@ export default {
         this.checkedList = []
       }
     },
+
     confirm() {
       const checkedButtonIds = this.checkedButtons.map($button => {
         return {
@@ -202,9 +204,11 @@ export default {
       };
       this.$emit('confirm', result);
     },
+
     cancle() {
       this.$emit('cancle');
     },
+
     changeEmployee($option) {
       this.queryParams = {
         userId: $option.value,
@@ -212,6 +216,7 @@ export default {
         system: 'operation'
       }
     },
+
     /**
      * 复制权限
      */
@@ -228,6 +233,7 @@ export default {
         })
       }
     },
+
     /**
      * 重置
      */
@@ -246,52 +252,60 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.content_drawer {
+.content-drawer {
   height: calc(100vh - 172px);
-  /*overflow: auto;*/
 }
-.foot_btn_box {
-  width: 100%;
-  padding-left: 32px;
-  border-top: 1px solid #ebeef5;
+
+.foot-btn-box {
   position: absolute;
   bottom: 0;
   display: flex;
   flex-direction: row;
   align-items: center;
+  padding-left: 32px;
+  border-top: 1px solid #ebeef5;
+  width: 100%;
+
   .btn-list {
     display: flex;
-    height: 96px;
     margin-left: 64px;
     flex-direction: row;
     align-content: center;
-    .foot_btn {
-      height: 40px;
+    height: 96px;
+
+    .foot-btn {
       padding: 0 20px;
       margin-top: 28px;
       margin-right: 16px;
       margin-left: 0;
+      height: 40px;
     }
-    .foot_btn:last-child {
+
+    .foot-btn:last-child {
       margin-right: 0;
     }
   }
+
   .el-checkbox {
     display: block;
   }
-  .form_box {
+
+  .form-box {
     margin: 0 59px;
   }
 }
+
 .custom-tree-node {
   font-size: 16px;
 }
-.m-tree-container{
+
+.m-tree-container {
   width: 100%;
   height: calc(100vh - 320px);
   overflow-y: auto;
 }
-.trre_icon {
+
+.trre-icon {
   width: 16px;
   height: 16px;
 }

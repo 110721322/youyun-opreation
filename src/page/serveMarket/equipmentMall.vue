@@ -2,59 +2,59 @@
   <div class="container">
     <div class="equiment">
       <span>刷脸设备</span>
-      <img src="../../assets/img/hot_logo.png" alt="">
+      <img src="../../assets/img/hot_logo.png" alt="刷脸设备">
       <span class="title">离扫脸时代只差一台设备</span>
     </div>
-    <div class="equiment_list">
-      <div v-for="(item, index) in mallList.FACE" :key="index" class="list" @click.stop="onclick_todetail(item.deviceId)">
-        <div class="list_img">
+    <div class="equiment-list">
+      <div v-for="(item, index) in mallList.FACE" :key="index" class="list" @click.stop="clickTodetail(item.deviceId)">
+        <div class="list-img">
           <img src="" alt="">
         </div>
-        <p class="list_name">{{ item.deviceModel }}</p>
-        <p class="list_subtitle">{{ item.viceTitle }}</p>
-        <div class="list_bottom">
+        <p class="list-name">{{ item.deviceModel }}</p>
+        <p class="list-subtitle">{{ item.viceTitle }}</p>
+        <div class="list-bottom">
           <span>¥{{ item.salePrice }}</span>
-          <div class="cart_img" @mouseenter="mouse_cart(index)">
+          <div class="cart-img" @mouseenter="mouseCart(index)">
             <img src="../../assets/img/cart_icon.png" alt="">
           </div>
-          <div class="list_step" style="display: none;"><el-input-number v-model="num[index]" :min="1" :max="10" size="small" @change="handleChange(index)"></el-input-number></div>
+          <div class="list-step"><el-input-number v-model="num[index]" :min="1" :max="10" size="small" @change="cilckChange(index)"></el-input-number></div>
         </div>
       </div>
     </div>
     <div class="equiment">
       <span>收银机具</span>
     </div>
-    <div class="equiment_list">
-      <div v-for="(item, index) in mallList.POSS" :key="index" class="list" @click.stop="onclick_todetail(item.deviceId)">
-        <div class="list_img">
+    <div class="equiment-list">
+      <div v-for="(item, index) in mallList.POSS" :key="index" class="list" @click.stop="clickTodetail(item.deviceId)">
+        <div class="list-img">
           <img :src="item.img" alt="">
         </div>
-        <p class="list_name">{{ item.deviceModel }}</p>
-        <p class="list_subtitle">{{ item.viceTitle }}</p>
-        <div class="list_bottom">
+        <p class="list-name">{{ item.deviceModel }}</p>
+        <p class="list-subtitle">{{ item.viceTitle }}</p>
+        <div class="list-bottom">
           <span>¥{{ item.salePrice }}</span>
-          <div class="cart_img" @mouseenter="mouse_cart(index)">
+          <div class="cart-img" @mouseenter="mouseCart(index)">
             <img src="../../assets/img/cart_icon.png" alt="">
           </div>
-          <div class="list_step" style="display: none;"><el-input-number v-model="num[index]" :min="1" :max="10" size="small" @change="handleChange(index)"></el-input-number></div>
+          <div class="list-step"><el-input-number v-model="num[index]" :min="1" :max="10" size="small" @change="cilckChange(index)"></el-input-number></div>
         </div>
       </div>
     </div>
-    <div class="right_btn">
-      <div class="btn1" @click="onclick_tocart" @mouseover="showText=true" @mouseout="showText=false">
+    <div class="right-btn">
+      <div class="btn1" @click="clickTocart" @mouseover="showText=true" @mouseout="showText=false">
         <div class="modle"></div>
         <el-badge :value="totalNum" :max="99" class="item">
-          <img src="../../assets/img/cart_icon.png" alt="">
+          <img src="../../assets/img/cart_icon.png" alt="购物车图标">
           <transition name="textDisplay">
-            <p v-if="showText" style="text-align: center;font-size:14px;">购<br>物<br>车</p>
+            <p v-if="showText" class="show-text-cart">购<br>物<br>车</p>
           </transition>
         </el-badge>
       </div>
-      <div class="btn2" @click="onClick_torecords" @mouseover="showText2=true" @mouseout="showText2=false">
+      <div class="btn2" @click="clickTorecords" @mouseover="showText2=true" @mouseout="showText2=false">
         <div class="modle"></div>
-        <img src="../../assets/img/order_icon.png" alt="">
+        <img src="../../assets/img/order_icon.png" alt="订单图标">
         <transition name="textDisplay">
-          <p v-if="showText2" style="text-align: center;font-size:14px;line-height: 18px;margin-top:15px">订<br>单</p>
+          <p v-if="showText2" class="show-text-order">订<br>单</p>
         </transition>
       </div>
       <!-- <div class="btn2">
@@ -74,45 +74,7 @@ export default {
       mallList: [],
       totalNum: 0,
       showText: false,
-      showText2: false,
-      equimentData: [
-        {
-          name: '蜻蜓plus',
-          subTitle: '急速收款，安全到账，订单状态，交易明细',
-          id: 1,
-          price: '2388'
-        },
-        {
-          name: '青蛙plus',
-          subTitle: '订单状态，交易明细，急速收款，安全到账',
-          id: 2,
-          price: '1999'
-        },
-        {
-          name: '蜻蜓plus1',
-          subTitle: '急速收款，安全到账，订单状态，交易明细',
-          id: 3,
-          price: '1586'
-        },
-        {
-          name: '青蛙plus22',
-          subTitle: '订单状态，交易明细，急速收款，安全到账',
-          id: 2,
-          price: '2356'
-        },
-        {
-          name: '蜻蜓plus1',
-          subTitle: '急速收款，安全到账，订单状态，交易明细',
-          id: 3,
-          price: '1586'
-        },
-        {
-          name: '青蛙plus22',
-          subTitle: '订单状态，交易明细，急速收款，安全到账',
-          id: 2,
-          price: '2356'
-        }
-      ]
+      showText2: false
     }
   },
   created() {
@@ -127,10 +89,9 @@ export default {
         pageSize: 10
       }).then(res => {
         this.mallList = res.data
-      }).catch(err => {
-        console.log(err)
       })
     },
+
     // 获取购物车的数量
     getCartNum() {
       api.queryShopCartList({
@@ -139,9 +100,12 @@ export default {
         this.totalNum = res.data.FACE.length + res.data.POSS.length + res.data.OTHER.length
       })
     },
-    handleChange(index, value) {},
-    mouse_cart(index) {},
-    onclick_todetail(deviceId) {
+
+    cilckChange(index, value) {},
+
+    mouseCart(index) {},
+
+    clickTodetail(deviceId) {
       this.$router.push({
         name: 'equimentDetail',
         query: {
@@ -149,12 +113,14 @@ export default {
         }
       })
     },
-    onclick_tocart() {
+
+    clickTocart() {
       this.$router.push({
         name: 'shoppingCart'
       })
     },
-    onClick_torecords() {
+
+    clickTorecords() {
       this.$router.push({
         name: 'orderRecords'
       })
@@ -165,14 +131,16 @@ export default {
 
 <style scoped>
   .container {
-    width: 100%;
     padding: 24px 24px 40px 24px;
+    width: 100%;
   }
+
   .equiment {
-    padding-left: 26px;
     display: flex;
+    padding-left: 26px;
     height: 30px;
   }
+
   .equiment span:nth-child(1) {
     display: block;
     padding-top: 5px;
@@ -181,6 +149,7 @@ export default {
     font-size: 20px;
     line-height: 24px;
   }
+
   .equiment img {
     display: block;
     width: 46px;
@@ -188,6 +157,7 @@ export default {
     margin-right: 20px;
     margin-left: 6px;
   }
+
   .equiment .title {
     display: block;
     padding-top: 9px;
@@ -195,31 +165,40 @@ export default {
     color: #909399;
     line-height: 20px;
   }
-  .equiment_list {
+
+  .equiment-list {
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 16px;
     margin-top: 24px;
     cursor: pointer;
   }
+
   .list {
-    width: 256px;
-    background: #ffffff;
     padding: 24px 22px 20px 22px;
-    box-sizing: border-box;
     margin-right: 24px;
     margin-bottom: 16px;
+    width: 256px;
+    box-sizing: border-box;
+    background: #fff;
   }
-  .list_img {
-    width: 180px;
-    height: 180px;
+
+  .list-step {
+    display: none;
+  }
+
+  .list-img {
     margin: 0 auto;
-  }
-  .list_img img {
     width: 180px;
     height: 180px;
   }
-  .list_name {
+
+  .list-img img {
+    width: 180px;
+    height: 180px;
+  }
+
+  .list-name {
     text-align: center;
     font-size: 16px;
     font-weight: 500;
@@ -227,50 +206,57 @@ export default {
     margin-top: 35px;
     line-height: 22px;
   }
-  .list_subtitle {
+
+  .list-subtitle {
+    margin-top: 10px;
+    margin-bottom: 24px;
     max-width: 210px;
     color: #606266;
     font-size: 14px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    margin-top: 10px;
-    margin-bottom: 24px;
   }
-  .list_bottom {
+
+  .list-bottom {
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 32px;
   }
-  .list_bottom span {
-    color: #1989FA;
+
+  .list-bottom span {
+    color: #1989fa;
     font-size: 16px;
     font-weight: 500;
   }
-  .list_bottom .cart_img {
-    width: 50px;
-    height: 32px;
-    background: #1989FA;
-    border-radius: 4px;
+
+  .list-bottom .cart-img {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 50px;
+    height: 32px;
+    background: #1989fa;
+    border-radius: 4px;
   }
-  .cart_img img {
+
+  .cart-img img {
     width: 16px;
     height: 16px;
   }
-  .right_btn {
+
+  .right-btn {
     position: fixed;
     top: 220px;
     right: 50px;
     width: 50px;
     z-index: 100;
   }
+
   .btn1 {
     width: 50px;
-    background: #000000;
+    background: #000;
     border-radius: 25px;
     margin-bottom: 16px;
     font-size: 0;
@@ -278,9 +264,10 @@ export default {
     flex-wrap: wrap;
     justify-content: center;
     cursor: pointer;
-    color: #ffffff;
+    color: #fff;
     position: relative;
   }
+
   .modle {
     position: absolute;
     top: 0;
@@ -288,68 +275,52 @@ export default {
     height: 100%;
     z-index: 1000;
   }
-  .btn1:hover{
-    background: #1989FA;
+
+  .btn1:hover {
+    background: #1989fa;
     padding-bottom: 15px;
   }
+
   .btn1 img {
+    margin: 15px 0;
     width: 20px;
     height: 20px;
-    margin: 15px 0;
   }
-  .textDisplay-enter-active {
-    animation: bounce-in .3s;
-  }
-  .textDisplay-leave-active {
-    animation: bounce-out .1s reverse;
-  }
-  @keyframes bounce-in {
-    0% {
-      height: 0;
-      opacity: 0;
-    }
-    50% {
-      opacity: 0.3;
-    }
-    100% {
-      height: 50px;
-      opacity: 1;
-    }
-  }
-  @keyframes bounce-out {
-    0% {
-      height: 0;
-      opacity: 0;
-    }
-    80% {
-      opacity: 0;
-    }
-    100% {
-      height: 50px;
-      opacity: 1;
-    }
-  }
+
   .btn2 {
+    position: relative;
+    padding: 15px 0;
     background: black;
     width: 50px;
-    padding: 15px 0;
-    color: #ffffff;
-    font-size: 0px;
+    color: #fff;
+    font-size: 0;
     text-align: center;
     border-radius: 25px;
-    /* margin-bottom: 16px; */
     cursor: pointer;
-    position: relative;
   }
-  .btn2:hover{
-    background: #1989FA;
+
+  .btn2:hover {
+    background: #1989fa;
   }
+
   .btn2 img {
     width: 20px;
     height: 20px;
-    /* margin: 15px 0; */
   }
+
   .el-badge__content {
-    background-color: #F64D4C;
+    background-color: #f64d4c;
+  }
+
+  .show-text-cart {
+    text-align: center;
+    font-size: 14px;
+  }
+
+  .show-text-order {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 18px;
   }
 </style>

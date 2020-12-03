@@ -51,7 +51,7 @@
     <div class="bottom-btn">
       <div class="bottom-area">
         <div class="area">
-          <button @click="onClick_topay">提交订单</button>
+          <button @click="clickTopay">提交订单</button>
           <button>取消</button>
         </div>
       </div>
@@ -62,8 +62,8 @@
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
         label-width="130px"
-        @cancel="cancel"
-        @confirm="confirm"
+        @cancel="onClickcancel"
+        @confirm="conClickConfirm"
       ></Form>
     </el-drawer>
   </div>
@@ -108,14 +108,10 @@ export default {
         deviceId: this.enterInfo.deviceId
       }).then(res => {
         this.goodsData.push(res.data)
-      }).catch(err => {
-        console.log(err)
       })
     },
-    getRadioVal() {
-      this.selectIndex = this.addressSelect
-    },
-    onClick_topay() {
+
+    clickTopay() {
       const deviceInfos = this.goodsData.map(v => ({
         deviceId: v.deviceId,
         count: v.shopCartCount,
@@ -147,16 +143,15 @@ export default {
             }
           })
         }
-      }).catch(err => {
-        console.log(err)
       })
     },
+
     modifyAddress() {
       this.fromConfigData = ADVERTISING_MATERIAL_CONFIG.deviceData;
       this.drawer = true
     },
-    cancel() {},
-    confirm() {}
+    onClickcancel() {},
+    conClickConfirm() {}
   }
 }
 </script>
@@ -164,46 +159,53 @@ export default {
 <style scoped>
   .page {
     padding: 24px 32px 40px 24px;
-    background: #ffffff;
+    background: #fff;
   }
+
   .top-area {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-right: 24px;
+    margin-bottom: 20px;
     font-size: 14px;
     line-height: 20px;
-    margin-bottom: 20px;
   }
+
   .top-area span:nth-child(1) {
-    color: #000000;
+    color: #000;
     font-weight: 500;
   }
+
   .top-area span:nth-child(2) {
-    color: #1989FA;
+    color: #1989fa;
   }
+
   .address .noselect {
-    width: 100%;
-    height: 40px;
-    padding: 0 24px 0 24px;
-    background: #FAFAFA;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-radius: 3px;
+    padding: 0 24px 0 24px;
     margin-bottom: 16px;
+    width: 100%;
+    height: 40px;
+    background: #fafafa;
+    border-radius: 3px;
     color: #606266;
     font-size: 14px;
-    border: 1px solid #FAFAFA;
+    border: 1px solid #fafafa;
   }
+
   .address .noselect.isselect {
-    background: #E8F3FE;
-    border: 1px solid #1989FA;
+    background: #e8f3fe;
+    border: 1px solid #1989fa;
   }
+
   .noselect .left {
     display: flex;
     align-items: center;
   }
+
   .noselect .left .desc {
     width: 32px;
     height: 16px;
@@ -211,81 +213,97 @@ export default {
     text-align: center;
     line-height: 16px;
     font-size: 10px;
-    color: #ffffff;
-    background: #F64D4C;
+    color: #fff;
+    background: #f64d4c;
     margin-right: 56px;
   }
+
   .radio {
     margin-right: 18px;
   }
+
   .right {
-    color: #1989FA;
+    color: #1989fa;
   }
+
   .remark {
-    margin-top: 24px;
     display: flex;
     justify-content: space-between;
+    margin-top: 24px;
   }
+
   .remark span {
     display: block;
     padding-top: 13px;
+    margin-right: 16px;
     color: #333335;
     font-size: 14px;
     white-space: nowrap;
-    margin-right: 16px;
   }
+
   .goods-info {
-    width: 100%;
     margin-top: 40px;
+    width: 100%;
   }
+
   .goods-title {
+    margin-bottom: 24px;
     font-size: 14px;
     line-height: 22px;
-    color: #000000;
-    margin-bottom: 24px;
+    color: #000;
   }
+
   .goods-table {
-    width: 100%;
     display: flex;
-    border: 1px solid #EBEEF5;
-    height: 44px;
-    background: #FAFAFA;
-    border-radius: 4px 4px 0 0;
     padding-left: 44px;
+    border: 1px solid #ebeef5;
+    height: 44px;
+    background: #fafafa;
+    width: 100%;
+    border-radius: 4px 4px 0 0;
   }
+
   .goods-table li {
     display: block;
     line-height: 44px;
     color: #909399;
     font-size: 14px;
   }
+
   .goods-table li:nth-child(1) {
     width: 19.3%;
   }
+
   .goods-table li:nth-child(2) {
     width: 16.3%;
   }
+
   .goods-table li:nth-child(3) {
     width: 15.3%;
   }
+
   .goods-table li:nth-child(4) {
     width: 16.3%;
   }
+
   .goods-table li:nth-child(5) {
     width: 14.8%;
   }
+
   .goods-list {
-    width: 100%;
     position: relative;
+    width: 100%;
   }
+
   .left-list {
     display: flex;
-    height: 92px;
-    border-left: 1px solid #E9E9E9;
-    border-right: 1px solid #E9E9E9;
-    border-bottom: 1px solid #E9E9E9;
     padding-left: 44px;
+    height: 92px;
+    border-left: 1px solid #e9e9e9;
+    border-right: 1px solid #e9e9e9;
+    border-bottom: 1px solid #e9e9e9;
   }
+
   .left-list li {
     display: flex;
     justify-content: flex-start;
@@ -293,41 +311,49 @@ export default {
     font-size: 14px;
     color: #606266;
   }
+
   .left-list li img {
     display: block;
     width: 80px;
     height: 80px;
   }
+
   .left-list li:nth-child(1) {
     width: 19.3%;
   }
+
   .left-list li:nth-child(2) {
     width: 16.3%;
   }
+
   .left-list li:nth-child(3) {
     width: 15.3%;
   }
+
   .left-list li:nth-child(4) {
     width: 16.3%;
   }
+
   .left-list li:nth-child(5) {
     width: 14.8%;
   }
+
   .right-amount {
     position: absolute;
     right: 0;
     top: 0;
     z-index: 100;
-    background: #ffffff;
+    background: #fff;
     text-align: center;
-    color: #F64D4C;
+    color: #f64d4c;
     font-size: 20px;
     font-weight: 500;
     width: 20%;
-    border-bottom: 1px solid #E9E9E9;
-    border-right: 1px solid #E9E9E9;
-    border-left: 1px solid #E9E9E9;
+    border-bottom: 1px solid #e9e9e9;
+    border-right: 1px solid #e9e9e9;
+    border-left: 1px solid #e9e9e9;
   }
+
   .bottom-btn {
     position: fixed;
     bottom: 0;
@@ -336,18 +362,21 @@ export default {
     width: 100%;
     height: 120px;
   }
+
   .bottom-area {
     height: 120px;
     padding-top: 40px;
-    background: #ffffff;
+    background: #fff;
   }
+
   .area {
-    width: 260px;
-    height: 40px;
     display: flex;
     justify-content: space-between;
     margin: 0 auto;
+    width: 260px;
+    height: 40px;
   }
+
   .area button {
     width: 114px;
     height: 40px;
@@ -356,12 +385,14 @@ export default {
     font-size: 14px;
     border-radius: 4px;
   }
+
   .area button:nth-child(1) {
-    background: #1989FA;
-    color: #ffffff;
+    background: #1989fa;
+    color: #fff;
   }
+
   .area button:nth-child(2) {
-    border: 1px solid #C7C8CD;
+    border: 1px solid #c7c8cd;
     color: #606266;
   }
 </style>

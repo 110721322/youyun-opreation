@@ -1,58 +1,58 @@
 <template>
   <div class="container">
     <div class="top">
-      <div class="left_img">
+      <div class="left-img">
         <img src="../../assets/img/message_photo.png" alt="">
       </div>
-      <div class="right_info">
-        <div class="right_title">{{ productItem.productName }}</div>
-        <div class="right_subtitle">{{ productItem.productDesc }}</div>
+      <div class="right-info">
+        <div class="right-title">{{ productItem.productName }}</div>
+        <div class="right-subtitle">{{ productItem.productDesc }}</div>
       </div>
     </div>
     <div class="content">
-      <div class="select_btn">
-        <div v-for="(item, index) in menu" :key="index" class="select_title" :class="selectIndex===index? 'title_select' :''" @click="onclick_head(index)">
+      <div class="select-btn">
+        <div v-for="(item, index) in menu" :key="index" class="select-title" :class="selectIndex===index? 'title-select' :''" @click="clickHead(index)">
           <span>{{ item.value }}</span>
         </div>
       </div>
-      <div v-if="selectIndex===0" class="message_recharge">
-        <div class="relize">当前剩余短信：<span style="color: #1989FA; font-size: 20px">{{ codeNum }}</span>条</div>
-        <div class="select_package">
-          <div class="package_label">短信套餐:</div>
-          <div v-for="(item, index) in comboList" :key="index" class="package_select" :class="packageIndex===index?'ispackage': ''" @click="onclick_package(item,index)">
+      <div v-if="selectIndex===0" class="message-recharge">
+        <div class="relize">当前剩余短信：<span style="color: #1989fa; font-size: 20px;">{{ codeNum }}</span>条</div>
+        <div class="select-package">
+          <div class="package-label">短信套餐:</div>
+          <div v-for="(item, index) in comboList" :key="index" class="package-select" :class="packageIndex===index?'ispackage': ''" @click="clickPackage(item,index)">
             <p>{{ item.comboCount }}条</p>
             <p>{{ item.comboAmount }}元</p>
           </div>
         </div>
-        <div class="pay_price"><span>支付金额:</span><span style="color: #F5222D; font-size: 20px;">{{ comboPrice }}</span><span>元</span></div>
-        <div class="pay_way">
-          <div class="pay_label">支付方式:</div>
-          <div v-for="(item, index) in wayData" :key="index" class="way" :class="wayIndex===index?'isway':''" @click="onclick_way(index)">{{ item.value }}</div>
+        <div class="pay-price"><span>支付金额:</span><span style="color: #f5222d; font-size: 20px;">{{ comboPrice }}</span><span>元</span></div>
+        <div class="pay-way">
+          <div class="pay-label">支付方式:</div>
+          <div v-for="(item, index) in wayData" :key="index" class="way" :class="wayIndex===index?'isway':''" @click="clickWay(index)">{{ item.value }}</div>
         </div>
         <div v-if="wayIndex===0" class="qrcode">
           <img src="../../assets/img/qr_code.jpg" alt="">
         </div>
         <div v-if="wayIndex===0" class="bottom-des">
           <span>支持</span>
-          <img src="../../assets/img/apply_pay.png" alt="">
-          <img src="../../assets/img/wx_pay.png" alt="">
-          <img src="../../assets/img/yun_pay.png" alt="">
+          <img src="../../assets/img/apply_pay.png" alt="支付宝图标">
+          <img src="../../assets/img/wx_pay.png" alt="微信图标">
+          <img src="../../assets/img/yun_pay.png" alt="云闪付图标">
           <span>扫码支付</span>
         </div>
         <div v-if="wayIndex===1" class="bank"><span>打款账户:</span><span>3301040160001013187</span></div>
         <div v-if="wayIndex===1" class="bank"><span>开户银行:</span><span>杭州银行滨江支行</span></div>
         <div v-if="wayIndex===1" class="code">
-          <div class="code_label">打款凭证:</div>
+          <div class="code-label">打款凭证:</div>
           <div class="photo">
-            <Upload :formItem="formItem" :ruleForm="ruleForm" />
+            <Upload :form-item="formItem" :rule-form="ruleForm" />
           </div>
         </div>
-        <div v-if="wayIndex===1" class="see_model">查看示例</div>
-        <div v-if="wayIndex===1" class="sub_btn">
-          <button @click="onClick_tostatus">提交</button>
+        <div v-if="wayIndex===1" class="see-model">查看示例</div>
+        <div v-if="wayIndex===1" class="sub-btn">
+          <button @click="clickTostatus">提交</button>
         </div>
       </div>
-      <div v-if="selectIndex===1" class="table_box">
+      <div v-if="selectIndex===1" class="table-box">
         <BaseCrud
           ref="table"
           :grid-config="configData.gridConfig"
@@ -146,20 +146,23 @@ export default {
   mounted() {
   },
   methods: {
-    onclick_head(index) {
+    clickHead(index) {
       this.selectIndex = index
     },
-    onclick_package(data, index) {
+
+    clickPackage(data, index) {
       this.packageIndex = index
       this.comboItem = data
       this.comboPrice = data.comboAmount
     },
-    onclick_way(index) {
+
+    clickWay(index) {
       if (index === 0) {
         return;
       }
       this.wayIndex = index
     },
+
     // 套餐
     getModelDetail() {
       api.selectProductCombo({
@@ -172,6 +175,7 @@ export default {
         }
       })
     },
+
     // 剩余短信
     getLastCode() {
       api.getSmsCount({}).then(res => {
@@ -180,7 +184,8 @@ export default {
         }
       })
     },
-    onClick_tostatus() {
+
+    clickTostatus() {
       const imageUrl = this.ruleForm.imgUrl.dialogImagePath + this.ruleForm.imgUrl.dialogImageUrl
       localStorage.setItem('voucher', imageUrl)
       const params = {
@@ -203,212 +208,246 @@ export default {
 
 <style scoped>
   .container {
-    width: 100%;
     padding: 24px 24px 40px 24px;
+    width: 100%;
     box-sizing: border-box;
   }
+
   .top {
-    width: 100%;
-    height: 128px;
-    padding: 32px 67px 32px 32px;
-    box-sizing: border-box;
-    background: #ffffff;
     display: flex;
     justify-content: space-between;
-  }
-  .left_img {
-    width: 64px;
-    height: 64px;
-    margin-right: 24px;
-  }
-  .left_img img {
-    width: 64px;
-    height: 64px;
-  }
-  .right_info {
+    padding: 32px 67px 32px 32px;
     width: 100%;
-    padding-top: 7px;
+    height: 128px;
+    box-sizing: border-box;
+    background: #fff;
   }
-  .right_title {
+
+  .left-img {
+    margin-right: 24px;
+    width: 64px;
+    height: 64px;
+  }
+
+  .left-img img {
+    width: 64px;
+    height: 64px;
+  }
+
+  .right-info {
+    padding-top: 7px;
+    width: 100%;
+  }
+
+  .right-title {
+    margin-bottom: 8px;
     font-size: 16px;
     line-height: 22px;
     font-weight: 500;
     color: #333335;
-    margin-bottom: 8px;
   }
-  .right_subtitle {
+
+  .right-subtitle {
     font-size: 14px;
     color: #909399;
     line-height: 20px;
   }
+
   .content {
-    width: 100%;
     margin-top: 24px;
     padding: 14px 32px 48px 32px;
-    background: #ffffff;
+    width: 100%;
+    background: #fff;
   }
-  .select_btn {
+
+  .select-btn {
     display: flex;
     height: 42px;
   }
-  .select_title {
+
+  .select-title {
     width: 96px;
     line-height: 42px;
     font-size: 16px;
     color: #606266;
     text-align: center;
-      cursor: pointer;
+    cursor: pointer;
   }
-  .select_title.title_select {
-    color: #1989FA;
-    border-bottom: 2px solid #1989FA;
+
+  .select-title.title-select {
+    color: #1989fa;
+    border-bottom: 2px solid #1989fa;
   }
-  .message_recharge {
+
+  .message-recharge {
     padding-top: 26px;
   }
+
   .relize {
+    padding-left: 24px;
     width: 100%;
     height: 68px;
-    background: #FAFAFA;
+    background: #fafafa;
     line-height: 68px;
-    padding-left: 24px;
     color: #909399;
     font-size: 14px;
   }
-  .select_package {
+
+  .select-package {
     display: flex;
     margin-top: 32px;
   }
-  .package_label {
+
+  .package-label {
     padding-top: 18px;
+    margin-right: 12px;
     color: #333335;
     font-size: 14px;
-    margin-right: 12px;
   }
-  .package_select {
+
+  .package-select {
+    margin-right: 16px;
+    padding-top: 20px;
     width: 136px;
     height: 88px;
-    padding-top: 20px;
     box-sizing: border-box;
-    border: 1px solid #ECEDEF;
+    border: 1px solid #ecedef;
     border-radius: 8px;
     text-align: center;
-    margin-right: 16px;
     color: #606266;
     cursor: pointer;
   }
-  .package_select p:nth-child(1) {
+
+  .package-select p:nth-child(1) {
+    margin-bottom: 6px;
     font-size: 16px;
     line-height: 22px;
-    margin-bottom: 6px;
     font-weight: 500;
   }
-  .package_select p:nth-child(2) {
+
+  .package-select p:nth-child(2) {
     font-size: 14px;
     line-height: 20px;
   }
-  .package_select.ispackage {
-    background: #ECF6FF;
-    border: 1px solid #1890FF;
-    color: #1890FF;
+
+  .package-select.ispackage {
+    background: #ecf6ff;
+    border: 1px solid #1890ff;
+    color: #1890ff;
   }
-  .pay_price {
-    margin-top: 24px;
+
+  .pay-price {
     display: flex;
     align-items: center;
+    margin-top: 24px;
     font-size: 14px;
   }
-  .pay_price span:nth-child(1) {
-    color: #000000;
-      padding-right: 12px;
+
+  .pay-price span:nth-child(1) {
+    padding-right: 12px;
+    color: #000;
   }
-  .pay_price span:nth-child(3) {
+
+  .pay-price span:nth-child(3) {
     color: #606266;
   }
-  .pay_way {
-    margin-top: 16px;
+
+  .pay-way {
     display: flex;
     align-items: center;
+    margin-top: 16px;
     font-size: 14px;
   }
-  .pay_label {
-    color: #000000;
+
+  .pay-label {
     margin-right: 12px;
+    color: #000;
   }
+
   .way {
+    margin-right: 8px;
     width: 126px;
     height: 40px;
     line-height: 40px;
     text-align: center;
     border-radius: 4px;
-    border: 1px solid #ECEDEF;
-    margin-right: 8px;
+    border: 1px solid #ecedef;
     cursor: pointer;
   }
+
   .way.isway {
-    border: 1px solid #1890FF;
-    color: #1890FF;
-    background: #ECF6FF;
+    border: 1px solid #1890ff;
+    color: #1890ff;
+    background: #ecf6ff;
   }
+
   .qrcode {
     padding-left: 60px;
     margin-top: 16px;
   }
+
   .qrcode img {
     display: block;
     width: 196px;
     height: 196px;
   }
+
   .bottom-des {
-    padding-left: 60px;
     display: flex;
+    padding-left: 60px;
+    margin-top: 14px;
     align-items: center;
     color: #606266;
     font-size: 14px;
-    margin-top: 14px;
   }
+
   .bottom-des img {
     display: block;
+    margin-right: 4px;
     width: 26px;
     height: 26px;
-    margin-right: 4px;
   }
+
   .bottom-des span:nth-child(1) {
     padding-right: 7px;
   }
+
   .bank {
     display: flex;
     align-items: center;
     margin-top: 16px;
   }
-  .bank span{
+
+  .bank span {
     font-size: 14px;
   }
+
   .bank span:nth-child(1) {
-    color: #000000;
     padding-right: 12px;
+    color: #000;
   }
+
   .bank span:nth-child(2) {
     color: #606266;
   }
+
   .code {
     display: flex;
     margin-top: 16px;
   }
-  .code_label {
-    font-size: 14px;
-    color: #000000;
+
+  .code-label {
     margin-right: 12px;
+    font-size: 14px;
+    color: #000;
   }
+
   .photo {
-    /* width: 100px;
-    height: 100px;
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px; */
-    cursor: pointer;
     position: relative;
+    cursor: pointer;
     overflow: hidden;
   }
+
   .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
@@ -417,33 +456,38 @@ export default {
     line-height: 100px;
     text-align: center;
   }
+
   .avatar {
+    display: block;
     width: 100px;
     height: 100px;
-    display: block;
   }
-  .see_model {
-    padding-left: 94px;
-    color: #1989FA;
+
+  .see-model {
     margin-top: 8px;
+    padding-left: 94px;
+    color: #1989fa;
     font-size: 14px;
     line-height: 20px;
   }
-  .sub_btn {
+
+  .sub-btn {
     padding-left: 74px;
     margin-top: 32px;
   }
-  .sub_btn button {
+
+  .sub-btn button {
     display: block;
     width: 114px;
     height: 40px;
     line-height: 40px;
     text-align: center;
-    color: #ffffff;
-    background: #1989FA;
+    color: #fff;
+    background: #1989fa;
     border-radius: 4px;
   }
-  .table_box {
+
+  .table-box {
     padding-top: 24px;
   }
 </style>

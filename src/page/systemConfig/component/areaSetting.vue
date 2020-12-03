@@ -1,13 +1,13 @@
 <template>
   <div>
     <DetailBox title="大区" :border="true">
-      <div v-for="(item,key) of areaList" :key="key" class="area_box">
-        <div class="area_box_title">
+      <div v-for="(item,key) of areaList" :key="key" class="area-box">
+        <div class="area-box-title">
           {{ item.regionName }}
           <el-button
             type="primary"
-            style="float:right;margin-top:16px"
-            @click="onClick_editArea(item)"
+            style="float: right; margin-top: 16px;"
+            @click="clickEditArea(item)"
           >编辑</el-button>
         </div>
         <div class="tag-box">
@@ -16,7 +16,7 @@
             :key="tag.value"
             closable
             :disable-transitions="false"
-            @close="handleClose(item.regionCode, tag.value)"
+            @close="clickClose(item.regionCode, tag.value)"
           >{{ tag.label }}</el-tag>
           <el-select
             v-if="item.isShowSelect"
@@ -36,7 +36,7 @@
         </div>
       </div>
 
-      <el-button type="primary" class="add_area" @click="onClick_addArea">添加大区类型</el-button>
+      <el-button type="primary" class="add-area" @click="clickAddArea">添加大区类型</el-button>
     </DetailBox>
 
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
@@ -146,57 +146,57 @@ export default {
         })
       });
     },
-    onClick_editArea($row) {
+
+    clickEditArea($row) {
       this.formStatus = "edit";
       this.activeRow = $row;
       this.fromConfigData = FORM_CONFIG.editData;
       this.fromConfigData.formData[0].initVal = $row.regionName;
       this.drawer = true;
     },
-    onClick_addArea($row) {
+
+    clickAddArea($row) {
       this.formStatus = "add";
       this.activeRow = $row;
       this.fromConfigData = FORM_CONFIG.addData;
       this.drawer = true;
     },
-    handleClose($regionCode, $provinceCode) {
-      api
-        .deleteProvince({
-          regionCode: $regionCode,
-          provinceCode: $provinceCode
+
+    clickClose($regionCode, $provinceCode) {
+      api.deleteProvince({
+        regionCode: $regionCode,
+        provinceCode: $provinceCode
+      }).then(res => {
+        this.$message({
+          type: 'success',
+          message: '已删除'
         })
-        .then(res => {
-          this.$message({
-            type: 'success',
-            message: '已删除'
-          })
-          this.queryAllRegion();
-        })
+        this.queryAllRegion();
+      })
     },
+
     areaSelect($item) {
       this.$set($item, "isShowSelect", true);
       // $item.isShowSelect = true;
     },
+
     areaSelectConfirm($value, $item) {
       const params = {
         provinceCode: $value,
         regionCode: $item.regionCode
       }
-      api
-        .saveRegionProvinceSet(params)
-        .then(res => {
-          if (res.status === 0) {
-            this.$message({
-              type: 'success',
-              message: '添加成功'
-            })
-            this.queryAllRegion()
-          }
-        })
-        .catch(err => {
-          console.log(err)
-          $item.addOption = ''
-        });
+      api.saveRegionProvinceSet(params).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            type: 'success',
+            message: '添加成功'
+          })
+          this.queryAllRegion()
+        }
+      }).catch(err => {
+        console.log(err)
+        $item.addOption = ''
+      });
     },
     cancel() {
       this.drawer = false;
@@ -206,24 +206,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.area_box {
+.area-box {
   border-bottom: 1px solid #ebeef5;
 }
-.add_area {
+
+.add-area {
   margin: 24px;
 }
-.area_box_title {
+
+.area-box-title {
+  padding: 0 32px;
   width: 100%;
   font-size: 16px;
   font-weight: 500;
   color: rgba(51, 51, 53, 1);
-  line-height: 24px;
   height: 64px;
   line-height: 64px;
-  padding: 0 32px;
   border-bottom: 1px solid #ebeef5;
 }
-.table_box {
+
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;
@@ -231,23 +233,11 @@ export default {
   background: #fff;
   height: calc(100% - 48px - 76px);
 }
-.form_item {
-  float: left !important;
-}
-.clear_both {
-  clear: both !important;
-}
-.btn_list {
-  /* background: rebeccapurple; */
-  position: absolute;
-  right: 0;
-  bottom: 21px;
-  right: 24px;
-}
 
 .demo-table-expand {
   font-size: 0;
 }
+
 .demo-table-expand label {
   width: 90px;
   color: #99a9bf;
@@ -255,41 +245,45 @@ export default {
 .demo-table-expand .el-form-item {
   margin-right: 0;
   margin-bottom: 0;
-  /* width: 25%; */
 }
+
 .form-box {
   display: flex;
   justify-content: space-between;
 }
-.left_box {
+
+.left-box {
   width: 290px;
   background: rgba(255, 255, 255, 1);
   border-right: 1px solid #ebeef5;
   float: left;
   height: 100%;
 }
-.right_box {
+
+.right-box {
   float: left;
   width: calc(100% - 290px - 48px);
   height: 100%;
   overflow: scroll;
-  // margin: 24px;
+
   .tag-box {
     margin: 24px;
   }
 
-  .color_item {
+  .color-item {
+    float: left;
     width: 230px;
     margin: 24px;
-    float: left;
-    .color_box {
+
+    .color-box {
+      float: left;
+      margin-right: 16px;
       width: 140px;
       height: 20px;
       background: rgba(245, 34, 45, 1);
-      float: left;
-      margin-right: 16px;
     }
-    .item_text {
+
+    .item-text {
       font-size: 14px;
       font-weight: 400;
       color: rgba(51, 51, 53, 1);
@@ -297,52 +291,59 @@ export default {
     }
   }
 }
-.device_list {
+
+.device-list {
   margin-top: 20px;
   height: 392px;
   overflow: auto;
 }
+
 .select {
   background: rgba(236, 237, 241, 1);
 }
-.device_item {
+
+.device-item {
   width: 100%;
   height: 48px;
   cursor: pointer;
 }
-.device_name {
+
+.device-name {
+  float: left;
+  margin-left: 30px;
   height: 48px;
   font-size: 14px;
   font-weight: 400;
   color: rgba(51, 51, 53, 1);
   line-height: 48px;
-  float: left;
-  margin-left: 30px;
 }
-.device_num {
+
+.device-num {
+  float: right;
+  margin-right: 30px;
   width: 31px;
   height: 22px;
   line-height: 48px;
   font-size: 14px;
   font-weight: 400;
   color: rgba(51, 51, 53, 1);
-  float: right;
-  margin-right: 30px;
 }
 
 .el-tag + .el-tag {
   margin-left: 10px;
 }
+
 .button-new-tag {
   margin-left: 10px;
-  height: 32px;
-  line-height: 30px;
   padding-top: 0;
   padding-bottom: 0;
+  height: 32px;
+  line-height: 30px;
 }
+
 .input-new-tag {
-  width: 90px;
   margin-left: 10px;
+  width: 90px;
   vertical-align: bottom;
 }
 </style>

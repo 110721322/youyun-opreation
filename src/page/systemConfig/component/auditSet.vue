@@ -13,7 +13,7 @@
           >
           </el-option>
         </el-select>
-        <div style="margin-top:16px">
+        <div style="margin-top: 16px;">
           <el-button type="primary" @click="copyEmployee">复制</el-button>
           <el-button @click="resetEmployee">重置</el-button>
         </div>
@@ -29,7 +29,7 @@
           :default-checked-keys="checkedIds"
           :check-strictly="true"
           :expand-on-click-node="false"
-          @check-change="handleCheckChange"
+          @check-change="clickCheckChange"
         >
           <span slot-scope="{node,data}" class="custom-tree-node">
             <span>
@@ -109,13 +109,14 @@ export default {
       }
       return this.templateListClone.map(mapCallback)
     },
+
     /**
      * 选择节点发生变化触发
      * @param $data 当前选择节点数据
      * @param $checked  当前选择节点是否选中
      * @param $hasChild  子节点中是否有选中项,此处节点不做关联无需处理
      */
-    handleCheckChange($data, $checked, $hasChild) {
+    clickCheckChange($data, $checked, $hasChild) {
       const checkedId = $data.checkedId;
       const checkIndex = this.checkedIds.findIndex($checkedId => $checkedId === checkedId);
       if ($checked) {
@@ -124,6 +125,7 @@ export default {
         if (checkIndex !== -1) this.checkedList.splice(checkIndex, 1)
       }
     },
+
     confirm() {
       const checkedButtonIds = this.checkedButtons.map($button => {
         return {
@@ -133,9 +135,11 @@ export default {
       })
       this.$emit('confirm', {approvalButtons: checkedButtonIds});
     },
+
     cancle() {
       this.$emit('cancle');
     },
+
     /**
      * 切换成员
      */
@@ -146,6 +150,7 @@ export default {
         system: 'operation'
       }
     },
+
     /**
      * 复制权限
      */
@@ -158,6 +163,7 @@ export default {
         })
       }
     },
+
     /**
      * 重置
      */
@@ -196,14 +202,16 @@ export default {
     margin: 0 59px;
   }
 }
+
 .custom-tree-node {
   font-size: 16px;
 }
-.m-tree-container{
+
+.m-tree-container {
   width: 100%;
-  // height: 622px;
   overflow-y: scroll;
 }
+
 .trre_icon {
   width: 16px;
   height: 16px;

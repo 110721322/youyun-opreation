@@ -8,9 +8,9 @@
         <el-step title="订购结果"></el-step>
       </el-steps>
     </div>
-    <div class="order_detail">
+    <div class="order-detail">
       <div class="title">订单信息</div>
-      <ul class="tab_list">
+      <ul class="tab-list">
         <li>
           <span>服务类型</span>
           <span>服务时间</span>
@@ -23,7 +23,7 @@
         </li>
         <!-- <li>
           <div class="coupon">
-            <div class="coupon_title">优惠码</div>
+            <div class="coupon-title">优惠码</div>
             <el-select v-model="promoCodeId" placeholder="请选择" @change="promoSelect" :disabled="comboItem.comboAmount<=0">
               <el-option v-for="(item,index) in promoCodeList" :key="index" :label="item.promoCodeNo" :value="item.id"></el-option>
             </el-select>
@@ -32,9 +32,9 @@
       </ul>
     </div>
     <div class="bottom">
-      <div class="bottom_content">
+      <div class="bottom-content">
         <div class="amount">实际付款:<span>{{ amount }}</span></div>
-        <button class="sub_btn" @click="onClick_submit">提交订单</button>
+        <button class="sub-btn" @click="clickSubmit">提交订单</button>
       </div>
     </div>
   </div>
@@ -63,8 +63,15 @@ export default {
     }
     this.getPromoCode()
   },
+  beforeDestroy() {
+    // localStorage.setItem('comboItem', '')
+    // localStorage.setItem('productItem', '')
+    // localStorage.setItem('amount', '')
+    // localStorage.setItem('voucher', '')
+    // localStorage.setItem('promoCodeId', '')
+  },
   methods: {
-    onClick_submit() {
+    clickSubmit() {
       if (this.promoCodeId) {
         localStorage.setItem('promoCodeId', this.promoCodeId)
       }
@@ -73,6 +80,7 @@ export default {
         name: "payAmount"
       })
     },
+
     getPromoCode() {
       api.getPromoCodeListByChannelAgentCode({}).then(res => {
         if (res.data) {
@@ -83,6 +91,7 @@ export default {
         }
       })
     },
+
     promoSelect($val) {
       if (this.promoCodeId) {
         let codeAmount = 0
@@ -95,80 +104,84 @@ export default {
         this.amount = ((!amount) || amount <= 0) ? 0 : amount
       }
     }
-  },
-  beforeDestroy() {
-    // localStorage.setItem('comboItem', '')
-    // localStorage.setItem('productItem', '')
-    // localStorage.setItem('amount', '')
-    // localStorage.setItem('voucher', '')
-    // localStorage.setItem('promoCodeId', '')
   }
 }
 </script>
 
 <style scoped>
   .container {
-    width: 100%;
-    padding: 24px 24px 80px 24px;
-    box-sizing: border-box;
     position: relative;
-  }
-  .top {
+    padding: 24px 24px 80px 24px;
     width: 100%;
-    background: #ffffff;
-    height: 88px;
+    box-sizing: border-box;
+  }
+
+  .top {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 32px;
     box-sizing: border-box;
+    width: 100%;
+    background: #fff;
+    height: 88px;
   }
+
   .el-steps--horizontal {
     width: 70%;
   }
+
   .top span {
-    color: #000000;
+    color: #000;
     font-size: 16px;
     font-weight: 500;
   }
-  .order_detail {
-    width: 100%;
-    height: 600px;
-    background: #ffffff;
+
+  .order-detail {
     margin-top: 24px;
     padding: 32px 32px 0 32px;
+    width: 100%;
+    height: 600px;
+    background: #fff;
     box-sizing: border-box;
   }
+
   .title {
     font-size: 16px;
     line-height: 22px;
     font-weight: 500;
-    color: #000000;
+    color: #000;
   }
-  .tab_list {
-    width: 100%;
+
+  .tab-list {
     margin-top: 32px;
+    width: 100%;
   }
-  .tab_list li {
+
+  .tab-list li {
     display: flex;
     box-sizing: border-box;
     height: 56px;
     line-height: 56px;
-    border-bottom: 1px solid #EBEEF5;
+    border-bottom: 1px solid #ebeef5;
   }
-  .tab_list li span {
+
+  .tab-list li span {
     display: block;
-    width: 33.3%;
     padding-left: 50px;
+    width: 33.3%;
     font-size: 14px;
   }
-  .tab_list li:nth-child(1) {
-    background: #FAFAFA;
+
+  .tab-list li:nth-child(1) {
+    background: #fafafa;
     color: #909399;
   }
-  .tab_list li:nth-child(2) {
+
+  .tab-list li:nth-child(2) {
     color: #606266;
   }
+
   .coupon {
     display: flex;
     flex-wrap: nowrap;
@@ -176,69 +189,77 @@ export default {
     align-items: center;
     height: 56px;
   }
-  .coupon_title {
+
+  .coupon-title {
     margin-right: 10px;
     white-space: nowrap;
     color: #606266;
     font-size: 14px;
   }
-  .coupon_input {
+
+  .coupon-input {
+    padding-left: 15px;
     width: 284px;
     height: 40px;
     border-radius: 4px;
-    padding-left: 15px;
     line-height: 40px;
     color: #606266;
-    border:1px solid #DCDFE6;
+    border: 1px solid #dcdfe6;
   }
-  .coupon_btn {
+
+  .coupon-btn {
+    display: block;
+    margin-left: 16px;
     width: 114px;
     height: 40px;
-    display: block;
-    background: #F5F7FA;
+    background: #f5f7fa;
     color: #909399;
     font-size: 14px;
     text-align: center;
     line-height: 40px;
-    border:1px solid #DCDFE6;
-    margin-left: 16px;
+    border: 1px solid #dcdfe6;
     border-radius: 4px;
   }
+
   .bottom {
     position: absolute;
     left: 0;
     bottom: 0;
-    width: 100%;
-    height: 56px;
     padding: 0 24px;
-  }
-  .bottom_content {
     width: 100%;
     height: 56px;
-    background: #ffffff;
+  }
+
+  .bottom-content {
     display: flex;
     justify-content: flex-end;
+    width: 100%;
+    height: 56px;
+    background: #fff;
   }
+
   .amount {
     color: #606266;
     font-size: 16px;
     line-height: 56px;
   }
+
   .amount span {
-    color: #F64D4C;
-    font-size: 20px;
     padding-left: 4px;
+    color: #f64d4c;
+    font-size: 20px;
   }
-  .sub_btn{
+
+  .sub-btn {
+    margin-left: 57px;
     width: 130px;
     height: 56px;
-    background: #1989FA;
-    color: #ffffff;
+    background: #1989fa;
+    color: #fff;
     line-height: 56px;
     text-align: center;
     font-size: 16px;
     font-weight: 500;
-    margin-left: 57px;
   }
 </style>
 

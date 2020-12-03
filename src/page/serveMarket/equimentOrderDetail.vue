@@ -2,7 +2,7 @@
   <div>
     <div class="p_head">订单详情</div>
     <detailMode :rule-form="ruleFormBasic" :config-data="configData">
-      <div slot="operatinTopCont" class="orderState">
+      <div slot="operatinTopCont" class="order-state">
         <div>订单状态： {{ ruleFormBasic.statusName }}</div>
         <p v-if="ruleFormBasic.status===5">预计两个工作日内给您发货</p>
         <p v-if="ruleFormBasic.status===6">快递单号</p>
@@ -16,7 +16,7 @@
             <span>:</span>
             <div class="times">{{ lefts }}</div>
           </div>
-          <el-button v-if="ruleFormBasic.status===1 && showBuy " class="buy_btn" type="primary" @click="onClick_toPay">立即付款</el-button>
+          <el-button v-if="ruleFormBasic.status===1 && showBuy " class="buy-btn" type="primary" @click="clickTPay">立即付款</el-button>
         </div>
       </div>
       <div slot="operatingBottom" class="orderdetails">
@@ -28,7 +28,7 @@
           <div>小计</div>
         </div>
         <div v-for="(item, index) in infoDTOList" :key="index" class="content flex-between">
-          <div style="padding-top: 6px;"><img :src="item.deviceImg" alt="" style="width: 80px; height: 80px;"></div>
+          <div style="padding-top: 6px;"><img :src="item.deviceImg" alt="商品图片" style="width: 80px; height: 80px;"></div>
           <div>{{ item.deviceModel }}</div>
           <div>{{ item.salePrice }}</div>
           <div>{{ item.count }}</div>
@@ -190,7 +190,8 @@ export default {
         this.lefts = '00'
       }
     },
-    onClick_toPay() {
+
+    clickTPay() {
       const orderInfo = {
         outputNo: this.ruleFormBasic.outputNo,
         actualAmount: this.ruleFormBasic.actualAmount,
@@ -220,71 +221,82 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .orderState {
+  .order-state {
     margin: 24px;
-    border-radius: 3px;
-    border: 1px solid #EBEEF5;
-    background-color: #FAFAFA;
     padding: 24px 32px;
+    border-radius: 3px;
+    border: 1px solid #ebeef5;
+    background-color: #fafafa;
     line-height: 22px;
+
     div {
-      color: #1989FA;
+      color: #1989fa;
       font-size: 16px;
       font-weight: 500;
     }
+
     p {
       color: #606266;
     }
+
     .topay {
-      margin-top: 20px;
       display: flex;
       align-items: center;
+      margin-top: 20px;
+
       .left-title {
-        color: #606266;
         margin-right: 24px;
+        color: #606266;
       }
+
       .step-time {
         display: flex;
         align-items: center;
         margin-right: 40px;
+
         .times {
+          margin: 0 4px;
           width: 28px;
           height: 32px;
-          background: #E8F1FA;
-          color: #1989FA;
+          background: #e8f1fa;
+          color: #1989fa;
           font-weight: 500;
           font-size: 14px;
           text-align: center;
           line-height: 32px;
           border-radius: 2px;
-          margin: 0 4px;
         }
+
         .span {
           display: block;
           width: 12px;
           height: 32px;
-          color: #1989FA;
+          color: #1989fa;
           text-align: center;
           line-height: 32px;
           font-weight: 500;
         }
       }
-      .buy_btn {
+
+      .buy-btn {
         width: 116px;
         height: 32px;
       }
     }
   }
+
   .orderdetails {
-    margin: 0px 24px 33px;
+    margin: 0 24px 33px;
     border: 1px solid #e9e9e9;
+
     .header {
       padding: 15px 43px;
       border-radius: 3px;
       color: #909399;
-      border:1px solid #EBEEF5;
-      background-color: #FAFAFA;
+      border: 1px solid #ebeef5;
+      background-color: #fafafa;
     }
+
     .content {
       padding: 0 43px;
       color: #606266;

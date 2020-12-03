@@ -13,15 +13,15 @@
         <div class="u-form-item">
           <label class="s-required">权限:</label>
           <div class="g-form-content">
-            <span style="margin-right: 16px;">{{ perfectRow.haveJurisdiction ? "已设置" : "未设置" }}</span>
-            <el-button type="text" style="font-size: 14px; padding: 0;" @click="onClick_setPower">设置</el-button>
+            <span class="g-form-title">{{ perfectRow.haveJurisdiction ? "已设置" : "未设置" }}</span>
+            <el-button type="text" class="g-form-button" @click="clickSetPower">设置</el-button>
           </div>
         </div>
       <!-- 延期
         <div class="u-form-item">
           <label>审批:</label>
           <div class="g-form-content">
-            <el-button type="text" style="font-size: 14px; padding: 0;" @click="onClick_setAudit">设置</el-button>
+            <el-button type="text" style="font-size: 14px; padding: 0;" @click="clickSetAudit">设置</el-button>
           </div>
         </div>
         -->
@@ -39,11 +39,9 @@
 <script>
 import PowerSet from "./powerSet.vue";
 import Form from "@/components/form/index.vue";
-
 import api_memberManage from "@/api/api_memberManage.js";
 import api_systemConfig from "@/api/api_systemConfig.js";
 import { FORM_CONFIG } from "../formConfig/perfectPost";
-
 import { mapState } from 'vuex';
 
 export default {
@@ -101,7 +99,7 @@ export default {
   },
   mounted() {},
   methods: {
-    onClick_setPower() {
+    clickSetPower() {
       const params = {
         system: 'operation',
         userId: this.employeeId,
@@ -114,7 +112,8 @@ export default {
         }
       })
     },
-    onClick_setAudit() {
+
+    clickSetAudit() {
       const params = {
         system: 'operation',
         userId: this.employeeId,
@@ -127,6 +126,7 @@ export default {
         }
       })
     },
+
     confirm($ruleForm) {
       const formData = {
         employeeId: this.employeeId,
@@ -143,9 +143,11 @@ export default {
         this.$emit('confirm');
       })
     },
+
     cancel() {
       this.$emit('cancel');
     },
+
     saveUserPermission($result) {
       Object.assign($result, { userId: this.employeeId })
       api_systemConfig.saveUserPermission($result).then(res => {
@@ -159,9 +161,11 @@ export default {
         }
       })
     },
+
     cancelSave() {
       this.innerDrawer = false;
     },
+
     saveUserAudit($result) {
       Object.assign($result, {userId: this.employeeId})
       api_systemConfig.saveUserAudit($result).then(res => {
@@ -203,7 +207,7 @@ export default {
   .s-required::before {
     content: '*';
     font-size: 14px;
-    color: #F5222D;
+    color: #f5222d;
   }
 
   .g-form-content {
@@ -211,22 +215,6 @@ export default {
     padding-left: 15px;
     color: #333335;
   }
-}
-
-.form_item {
-  float: left !important;
-}
-
-.clear_both {
-  clear: both !important;
-}
-
-.btn_list {
-  /* background: rebeccapurple; */
-  position: absolute;
-  right: 0;
-  bottom: 21px;
-  right: 24px;
 }
 
 .demo-table-expand {
@@ -241,7 +229,6 @@ export default {
 .demo-table-expand .el-form-item {
   margin-right: 0;
   margin-bottom: 0;
-  /* width: 25%; */
 }
 
 .form-box {
@@ -249,46 +236,12 @@ export default {
   justify-content: space-between;
 }
 
-.tabale_title_box {
-  height: 52px;
-  width: 100%;
-
-  .title {
-    font-size: 16px;
-    font-family: PingFangSC-Medium, PingFang SC;
-    font-weight: 500;
-    color: rgba(51, 51, 53, 1);
-    float: left;
-    margin-left: 10px;
-    // line-height: 52px;
-  }
-
-  .btn {
-    float: right;
-  }
+.g-form-title {
+  margin-right: 16px;
 }
 
-.foot_btn_box {
-  width: 100%;
-  height: 96px;
-  border-top: 1px solid #ebeef5;
-  position: absolute;
-  bottom: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-content: center;
-
-  .foot_btn {
-    width: 113px;
-    height: 40px;
-    margin-top: 28px;
-    margin-left: 12px;
-    margin-right: 12px;
-  }
-
-  .form_box {
-    margin: 0 59px;
-  }
+.g-form-button {
+  font-size: 14px;
+  padding: 0;
 }
 </style>

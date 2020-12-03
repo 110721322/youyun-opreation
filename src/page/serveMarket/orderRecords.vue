@@ -1,30 +1,28 @@
 <template>
   <div class="container">
-    <div class="p_head" style="margin-bottom: 24px;">订购记录</div>
+    <div class="p_head">订购记录</div>
     <search
-        class="searchForm"
-        :is-show-all="true"
-        :form-base-data="searchConfig.formData"
-        :show-foot-btn="searchConfig.showFootBtn"
-        @search="search"
+      :is-show-all="true"
+      :form-base-data="searchConfig.formData"
+      :show-foot-btn="searchConfig.showFootBtn"
+      @search="search"
     />
-    <!-- <data-mode></data-mode> -->
-    <div class="table_box">
+    <div class="table-box">
       <BaseCrud
-          ref="table"
-          :grid-config="configData.gridConfig"
-          :grid-btn-config="configData.gridBtnConfig"
-          :grid-data="testData"
-          :form-config="configData.formConfig"
-          :form-data="configData.formModel"
-          :grid-edit-width="300"
-          form-title="用户"
-          :is-async="true"
-          :is-expand="true"
-          :is-select="false"
-          :params="params"
-          :api-service="api"
-          @detail="handel_detail"
+        ref="table"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :grid-data="testData"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="300"
+        form-title="用户"
+        :is-async="true"
+        :is-expand="true"
+        :is-select="false"
+        :params="params"
+        :api-service="api"
+        @detail="onClickDetail"
       >
         <template v-slot="{ row }">
           <el-form label-position="left" inline class="demo-table-expand">
@@ -73,7 +71,7 @@ export default {
   mounted() {
   },
   methods: {
-    handel_detail($row) {
+    onClickDetail($row) {
       this.$router.push({
         name: 'equimentOrderDetail',
         query: {
@@ -81,8 +79,9 @@ export default {
         }
       });
     },
+
     search($ruleForm) {
-      const params = {
+      this.params = {
         agentNo: this.$store.state.admin.userInfo.number,
         buyerName: $ruleForm.buyerName,
         buyerPhone: $ruleForm.buyerPhone,
@@ -91,40 +90,24 @@ export default {
         beginTime: $ruleForm.data[0] ? $ruleForm.data[0] : this.$g.utils.getToday(-6),
         endTime: $ruleForm.data[0] ? $ruleForm.data[1] : this.$g.utils.getToday(0)
       };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
-      this.params = params;
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+  .p_head {
+    margin-bottom: 24px;
+  }
+
   .container {
     padding: 0 0;
   }
-  .data-item {
-    // margin: 0;
-    width: 63%;
-    flex-grow: 1;
-  }
-  .data-item2 {
-    // margin: 0;
-    width: 30%;
-    margin-left: 24px;
-    flex-grow: 1;
-  }
-  .s_box {
-    margin: 0 0;
-  }
-  .table_box {
+
+  .table-box {
     margin-top: 24px;
     padding: 24px;
     overflow: hidden;
     background: #fff;
-  }
-  .add_btn {
-    float: right;
-    width: 109px;
-    height: 32px;
   }
 </style>
