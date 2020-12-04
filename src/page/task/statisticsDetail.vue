@@ -1,69 +1,69 @@
 <template>
-    <div>
-      <div class="tab_head">
-        <span class="title">任务统计详情</span>
-        <el-menu
-            :default-active="activeIndex"
-            class="el-menu"
-            mode="horizontal"
-            @select="handleSelect"
-        >
-          <el-menu-item index="1">未完成</el-menu-item>
-          <el-menu-item index="2">已完成</el-menu-item>
-        </el-menu>
-      </div>
-      <transition name="fade">
-        <div>
-          <Search
-              :is-show-all="true"
-              :form-base-data="searchConfig.formData"
-              :permission="searchConfig.permission"
-              :open-height="searchMaxHeight"
-              @search="search"
-          />
-          <data-mode :config-data="modeConfigData" />
-          <div class="table_box">
-            <BaseCrud
-                ref="table"
-                :params="params"
-                :api-service="false"
-                :grid-config="configData.gridConfig"
-                :grid-btn-config="configData.gridBtnConfig"
-                :grid-data="taskList.datas"
-                :form-config="configData.formConfig"
-                :form-data="configData.formModel"
-                :grid-edit-width="300"
-                :is-async="true"
-                :is-select="false"
-                :is-expand="false"
-                :default-expand-all="false"
-                :hide-edit-area="configData.hideEditArea"
-                @remind="handle_remind"
-                @detail="handle_detail"
-            >
-              <template v-slot="{ row }">
-                <el-form label-position="left" inline class="demo-table-expand">
-                  <div v-for="(item,index) in row.childrenData" :key="index" class="form-box">
-                    <el-form-item label="商户ID：">
-                      <span>{{ item.id }}</span>
-                    </el-form-item>
-                    <el-form-item label="商户名称：">
-                      <span>{{ item.name }}</span>
-                    </el-form-item>
-                    <el-form-item label="结算金额：">
-                      <span>{{ item.amount }}</span>
-                    </el-form-item>
-                    <el-form-item label="失败原因：">
-                      <span>{{ item.reason }}</span>
-                    </el-form-item>
-                  </div>
-                </el-form>
-              </template>
-            </BaseCrud>
-          </div>
-        </div>
-      </transition>
+  <div>
+    <div class="tab_head">
+      <span class="title">任务统计详情</span>
+      <el-menu
+        :default-active="activeIndex"
+        class="el-menu"
+        mode="horizontal"
+        @select="cleckSelect"
+      >
+        <el-menu-item index="1">未完成</el-menu-item>
+        <el-menu-item index="2">已完成</el-menu-item>
+      </el-menu>
     </div>
+    <transition name="fade">
+      <div>
+        <Search
+          :is-show-all="true"
+          :form-base-data="searchConfig.formData"
+          :permission="searchConfig.permission"
+          :open-height="searchMaxHeight"
+          @search="search"
+        />
+        <data-mode :config-data="modeConfigData" />
+        <div class="table-box">
+          <BaseCrud
+            ref="table"
+            :params="params"
+            :api-service="false"
+            :grid-config="configData.gridConfig"
+            :grid-btn-config="configData.gridBtnConfig"
+            :grid-data="taskList.datas"
+            :form-config="configData.formConfig"
+            :form-data="configData.formModel"
+            :grid-edit-width="300"
+            :is-async="true"
+            :is-select="false"
+            :is-expand="false"
+            :default-expand-all="false"
+            :hide-edit-area="configData.hideEditArea"
+            @remind="onClickRemind"
+            @detail="onClickDetail"
+          >
+            <template v-slot="{ row }">
+              <el-form label-position="left" inline class="demo-table-expand">
+                <div v-for="(item,index) in row.childrenData" :key="index" class="form-box">
+                  <el-form-item label="商户ID：">
+                    <span>{{ item.id }}</span>
+                  </el-form-item>
+                  <el-form-item label="商户名称：">
+                    <span>{{ item.name }}</span>
+                  </el-form-item>
+                  <el-form-item label="结算金额：">
+                    <span>{{ item.amount }}</span>
+                  </el-form-item>
+                  <el-form-item label="失败原因：">
+                    <span>{{ item.reason }}</span>
+                  </el-form-item>
+                </div>
+              </el-form>
+            </template>
+          </BaseCrud>
+        </div>
+      </div>
+    </transition>
+  </div>
 </template>
 <script>
 import api from "@/api/api_task";
@@ -121,22 +121,8 @@ export default {
         ]
       })
     },
-    // queryOperationAllTaskMenu() {
-    //   api
-    //     .queryOperationAllTaskMenu({
-    //       receiverId: 1,
-    //       undoType: 1,
-    //       taskType: 1,
-    //       status: "undo",
-    //       taskOwner: ""
-    //     })
-    //     .then(res => {
-    //       this.modeConfigData[0].data = res.data.totalCount;
-    //     })
-    //     .catch();
-    // },
-    handleSelect($item) {
-      // eslint-disable-next-line no-console
+
+    cleckSelect($item) {
       this.activeIndex = $item;
       switch ($item) {
         case "1":
@@ -152,8 +138,9 @@ export default {
       }
       this.$refs.table.getData();
     },
+
     search($ruleForm) {
-      const params = {
+      this.params = {
         beginDate: $ruleForm.date ? $ruleForm.date[0] : null,
         endDate: $ruleForm.date ? $ruleForm.date[1] : null,
         provinceCode: $ruleForm.address ? $ruleForm.address[0] : null,
@@ -162,12 +149,12 @@ export default {
         channelStatus: $ruleForm.channelStatus,
         categoryCOde: $ruleForm.categoryCOde,
         operateNo: $ruleForm.operateNo
-      };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
-      this.params = params;
+      }
     },
-    handle_remind(row) {},
-    handle_detail(row) {
+
+    onClickRemind(row) {},
+
+    onClickDetail(row) {
       this.$router.push({
         name: 'statisticsAll',
         query: {
@@ -175,46 +162,30 @@ export default {
         }
       })
     }
+    // queryOperationAllTaskMenu() {
+    //   api
+    //     .queryOperationAllTaskMenu({
+    //       receiverId: 1,
+    //       undoType: 1,
+    //       taskType: 1,
+    //       status: "undo",
+    //       taskOwner: ""
+    //     })
+    //     .then(res => {
+    //       this.modeConfigData[0].data = res.data.totalCount;
+    //     })
+    //     .catch();
+    // },
   }
 };
 </script>
 
 <style scoped>
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;
   overflow: hidden;
   background: #fff;
-}
-.form_item {
-  float: left !important;
-}
-.clear_both {
-  clear: both !important;
-}
-.btn_list {
-  /* background: rebeccapurple; */
-  position: absolute;
-  right: 0;
-  bottom: 21px;
-  right: 24px;
-}
-
-.demo-table-expand {
-  font-size: 0;
-}
-.demo-table-expand label {
-  width: 90px;
-  color: #99a9bf;
-}
-.demo-table-expand .el-form-item {
-  margin-right: 0;
-  margin-bottom: 0;
-  /* width: 25%; */
-}
-.form-box {
-  display: flex;
-  justify-content: space-between;
 }
 </style>

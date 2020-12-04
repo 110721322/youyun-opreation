@@ -78,17 +78,20 @@ export default {
     margin: 24px 24px 0;
   }
 }
+
 .oper-btn {
   background: #fff;
   margin: 0 24px;
   padding: 0 24px 24px;
 }
+
 .task-time {
   display: inline-block;
   position: absolute;
   right: 24px;
   top: 17px;
 }
+
 .status {
   font-size: 14px;
   font-family: PingFangSC-Regular, PingFang SC;

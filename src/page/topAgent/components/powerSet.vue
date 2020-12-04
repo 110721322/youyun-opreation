@@ -2,17 +2,17 @@
 <template>
   <div>
     <div class="p_head">权限设置</div>
-    <div class="content_drawer">
+    <div class="content-drawer">
       <el-form ref="form" label-width="120px" style="padding: 24px;">
         <el-form-item v-if="roleId !== 13" label="复制成员权限:">
           <el-select
             v-model="bindEmployee"
             placeholder="请选择成员"
-            @change="changeEmployee"
             :remote-method="remoteMethod"
             filterable
             remote
             :loading="loading"
+            @change="changeEmployee"
           >
             <el-option
               v-for="(person,index) in employeeList"
@@ -22,7 +22,7 @@
             >
             </el-option>
           </el-select>
-          <div style="margin-top:16px">
+          <div class="button-btn">
             <el-button type="primary" @click="copyEmployee">复制</el-button>
             <el-button @click="resetEmployee">重置</el-button>
           </div>
@@ -55,11 +55,11 @@
         <!-- 菜单树结束 -->
       </el-form>
     </div>
-    <div class="foot_btn_box" v-if="roleId !== 13">
+    <div v-if="roleId !== 13" class="foot-btn-box">
       <el-checkbox v-model="checkAll" :indeterminate="indeterminate" @change="checkAllChange">全选</el-checkbox>
       <div class="btn-list">
-        <el-button type="primary" class="foot_btn" @click="confirm">确定</el-button>
-        <el-button class="foot_btn" @click="cancel">取消</el-button>
+        <el-button type="primary" class="foot-btn" @click="confirm">确定</el-button>
+        <el-button class="foot-btn" @click="cancel">取消</el-button>
       </div>
     </div>
   </div>
@@ -141,6 +141,7 @@ export default {
         this.employeeList = res.data
       })
     },
+
     /**
      * 模糊查询顶级服务商
      **/
@@ -161,6 +162,7 @@ export default {
         this.searchTopAgent()
       }
     },
+
     templateMap() {
       const that = this;
       //  映射模板列表的回调函数,处理逻辑部分，将模板列表映射为elemment-tree规范的数组高维数组
@@ -190,6 +192,7 @@ export default {
       }
       return that.$g.utils.mapNestedArr(this.templateListClone, 'children', mapCallback)
     },
+
     /**
      * 选择节点发生变化触发
      * @param $data 当前选择节点数据
@@ -243,6 +246,7 @@ export default {
         }
       }
     },
+
     checkAllChange() {
       if (this.indeterminate || this.checkAll) {
         this.checkedList = this.allCheckOption;
@@ -251,6 +255,7 @@ export default {
         this.checkedList = []
       }
     },
+
     confirm() {
       const checkedButtonIds = this.checkedButtons.map($button => {
         return {
@@ -267,6 +272,7 @@ export default {
       };
       this.$emit('confirm', result);
     },
+
     cancel() {
       this.$emit('cancel');
     },
@@ -278,6 +284,7 @@ export default {
       }
       console.log(this.queryParams)
     },
+
     /**
      * 复制权限
      */
@@ -294,6 +301,7 @@ export default {
         })
       }
     },
+
     /**
      * 重置
      */
@@ -312,11 +320,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.content_drawer {
+.content-drawer {
   height: calc(100vh - 172px);
-  /*overflow: auto;*/
 }
-.foot_btn_box {
+
+.foot-btn-box {
   width: 100%;
   padding-left: 32px;
   border-top: 1px solid #ebeef5;
@@ -325,40 +333,48 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
+
   .btn-list {
     display: flex;
     height: 96px;
     margin-left: 64px;
     flex-direction: row;
     align-content: center;
-    .foot_btn {
+
+    .foot-btn {
       height: 40px;
       padding: 0 20px;
       margin-top: 28px;
       margin-right: 16px;
       margin-left: 0;
     }
-    .foot_btn:last-child {
+
+    .foot-btn:last-child {
       margin-right: 0;
     }
   }
+
   .el-checkbox {
     display: block;
   }
-  .form_box {
-    margin: 0 59px;
-  }
 }
+
 .custom-tree-node {
   font-size: 16px;
 }
-.m-tree-container{
+
+.m-tree-container {
   width: 100%;
   height: calc(100vh - 320px);
   overflow-y: auto;
 }
+
 .trre_icon {
   width: 16px;
   height: 16px;
+}
+
+.button-btn {
+  margin-top: 16px;
 }
 </style>

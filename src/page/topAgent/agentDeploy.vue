@@ -2,28 +2,27 @@
   <div class="main_page">
     <div class="p_head">服务器部署</div>
     <search
-        :open-height="searchMaxHeight"
-        :form-base-data="searchConfig.formData"
-        :show-foot-btn="searchConfig.showFootBtn"
-        @search="search"
+      :open-height="searchMaxHeight"
+      :form-base-data="searchConfig.formData"
+      :show-foot-btn="searchConfig.showFootBtn"
+      @search="search"
     />
-    <!-- <data-mode></data-mode> -->
-    <div class="table_box">
+    <div class="table-box">
       <BaseCrud
-          ref="child"
-          :grid-config="configData.gridConfig"
-          :grid-btn-config="configData.gridBtnConfig"
-          :form-config="configData.formConfig"
-          :form-data="configData.formModel"
-          :grid-edit-width="300"
-          form-title="用户"
-          :is-async="true"
-          :is-select="false"
-          :params="params"
-          :api-service="api"
-          @deployStart="deployStart"
-          @deployEnd="deployEnd"
-          @detail="detail"
+        ref="child"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="300"
+        form-title="用户"
+        :is-async="true"
+        :is-select="false"
+        :params="params"
+        :api-service="api"
+        @deployStart="onClickDeployStart"
+        @deployEnd="onClickDeployEnd"
+        @detail="onClickDetail"
       />
     </div>
   </div>
@@ -68,19 +67,22 @@ export default {
         status: $ruleForm.status
       }
     },
-    deployStart($row) {
+
+    onClickDeployStart($row) {
       this.updateTopSourceCodeDeployStatus({
         channelAgentCode: $row.channelAgentCode,
         status: 2
       })
     },
-    deployEnd($row) {
+
+    onClickDeployEnd($row) {
       this.updateTopSourceCodeDeployStatus({
         channelAgentCode: $row.channelAgentCode,
         status: 3
       })
     },
-    detail($row) {
+
+    onClickDetail($row) {
       this.$router.push({
         name: "deployDetail",
         query: {
@@ -88,6 +90,7 @@ export default {
         }
       })
     },
+
     updateTopSourceCodeDeployStatus($params) {
       api.updateTopSourceCodeDeployStatus($params).then(res => {
         this.$router.push({
@@ -103,7 +106,7 @@ export default {
 </script>
 
 <style scoped>
-  .table_box {
+  .table-box {
     margin: 24px;
     padding: 24px;
     overflow: hidden;

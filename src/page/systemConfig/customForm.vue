@@ -4,32 +4,32 @@
       <span class="title">自定义表单</span>
     </div>
 
-    <div class="table_box" style="padding:0">
-      <div class="left_box">
+    <div class="table-box">
+      <div class="left-box">
         <div class="tab_head">
           <span class="title">类型</span>
         </div>
-        <div class="device_list">
+        <div class="device-list">
           <div
             v-for="(item,key) of menuList"
             :key="key"
-            class="device_item"
+            class="device-item"
             :class="item.type == selectMenu.type?'select':''"
-            @click="onClick_menuItem(item)"
+            @click="onClickMenuItem(item)"
           >
-            <div class="device_name">{{ item.name }}</div>
-            <div class="device_num"></div>
+            <div class="device-name">{{ item.name }}</div>
+            <div class="device-num"></div>
           </div>
         </div>
       </div>
-      <div class="right_box">
+      <div class="right-box">
         <DetailBox title="自定义表单" :border="true">
           <div class="mod_tips">
             <span>表单位置：{{ selectMenu.formLoaction }}</span>
-            <el-button type="primary" @click="onClick_Edit">编辑</el-button>
+            <el-button type="primary" @click="clickEdit">编辑</el-button>
           </div>
 
-          <el-table :data="tableData" style="width: 100%">
+          <el-table :data="tableData" style="width: 100%;">
             <el-table-column
               v-for="(item,key) of tableConfig"
               :key="key"
@@ -41,7 +41,7 @@
                   <el-checkbox
                     v-model=" scope.row[item.prop]"
                     :disabled="!isEdit"
-                    @input="onInput_checkBox"
+                    @input="onInputCheckBox"
                   ></el-checkbox>
                 </div>
                 <span v-else>{{ scope.row[item.prop] }}</span>
@@ -81,7 +81,6 @@ export default {
       fromConfigData: {},
       testData: [],
       drawer: false,
-      direction: "rtl",
       ruleForm: {
         name1: "2"
       },
@@ -147,12 +146,14 @@ export default {
     this.getTableData();
   },
   methods: {
-    onClick_menuItem($item) {
+    onClickMenuItem($item) {
       this.selectMenu = $item;
       this.type = $item.type;
       this.getTableData();
     },
-    onInput_checkBox() {},
+
+    onInputCheckBox() {},
+
     getTableData(params) {
       api
         .queryAllFormFieldsByType({
@@ -162,8 +163,8 @@ export default {
           this.tableData = res.data;
           this.cloneTableData = this.$g.utils.deepClone(res.data);
         })
-        .catch();
     },
+
     saveTableData() {
       if (this.$g.utils.isArr(this.updateTableItems) && this.updateTableItems.length > 0) {
         api
@@ -178,9 +179,11 @@ export default {
           })
       }
     },
-    onClick_Edit() {
+
+    clickEdit() {
       this.isEdit = true;
     },
+
     cancelEdit() {
       this.isEdit = false;
     },
@@ -196,57 +199,29 @@ export default {
   padding: 30px 24px;
   border-top: 1px solid #ededed;
 }
-.table_box {
+
+.table-box {
   position: relative;
   margin: 24px;
-  padding: 24px;
   overflow: hidden;
   background: #fff;
   height: calc(100% - 48px - 76px);
 }
-.form_item {
-  float: left !important;
-}
-.clear_both {
-  clear: both !important;
-}
-.btn_list {
-  /* background: rebeccapurple; */
-  position: absolute;
-  right: 0;
-  bottom: 21px;
-  right: 24px;
-}
 
-.demo-table-expand {
-  font-size: 0;
-}
-.demo-table-expand label {
-  width: 90px;
-  color: #99a9bf;
-}
-.demo-table-expand .el-form-item {
-  margin-right: 0;
-  margin-bottom: 0;
-  /* width: 25%; */
-}
-.form-box {
-  display: flex;
-  justify-content: space-between;
-}
-.left_box {
+.left-box {
   width: 290px;
   background: rgba(255, 255, 255, 1);
   border-right: 1px solid #ebeef5;
   float: left;
   height: 100%;
 }
-.right_box {
+
+.right-box {
   float: left;
   width: calc(100% - 290px - 48px);
   height: 100%;
   overflow: scroll;
-  // margin: 24px;
+
   .mod_tips {
     display: flex;
     justify-content: space-between;
@@ -257,53 +232,45 @@ export default {
     margin: 16px 32px 16px;
   }
 }
-.device_list {
+
+.device-list {
   margin-top: 20px;
   height: 392px;
   overflow: auto;
 }
+
 .select {
   background: rgba(236, 237, 241, 1);
 }
-.device_item {
+
+.device-item {
   width: 100%;
   height: 48px;
   cursor: pointer;
 }
-.device_name {
-  // width: 101px;
+
+.device-name {
+  float: left;
+  margin-left: 30px;
   height: 48px;
   font-size: 14px;
   font-weight: 400;
   color: rgba(51, 51, 53, 1);
   line-height: 48px;
-  float: left;
-  margin-left: 30px;
 }
-.device_num {
+
+.device-num {
+  float: right;
+  margin-right: 30px;
   width: 31px;
   height: 22px;
   line-height: 48px;
   font-size: 14px;
   font-weight: 400;
   color: rgba(51, 51, 53, 1);
-  float: right;
-  margin-right: 30px;
 }
 
 .el-tag + .el-tag {
   margin-left: 10px;
-}
-.button-new-tag {
-  margin-left: 10px;
-  height: 32px;
-  line-height: 30px;
-  padding-top: 0;
-  padding-bottom: 0;
-}
-.input-new-tag {
-  width: 90px;
-  margin-left: 10px;
-  vertical-align: bottom;
 }
 </style>

@@ -102,10 +102,7 @@ export default {
           taskType: 1,
           status: ""
         })
-        .then(res => {
-
-        })
-        .catch();
+        .then(res => {})
     }
   }
 };
@@ -117,6 +114,7 @@ export default {
   height: 140px;
   background: rgba(255, 255, 255, 1);
   overflow: hidden;
+
   .head {
     margin: 48px 0 0 24px;
     width: 100%;
@@ -127,6 +125,7 @@ export default {
     color: rgba(53, 64, 82, 1);
     line-height: 32px;
   }
+
   .tip {
     margin: 8px 0 0 24px;
     height: 20px;

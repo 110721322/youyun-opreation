@@ -30,17 +30,17 @@
     <DetailBox title="服务商顶部颜色条" btn-name="新增颜色条" :border="true" :is-show-edit-btn="true" @edit="onClick_editColor">
       <div class="s-color-container">
         <p style="font-size: 14px; color: #333335; margin-bottom: 16px;">颜色：含义</p>
-        <div class="color_item_container">
-          <div v-for="(item,index) in formData.moodColor" :key="index" class="color_item">
+        <div class="color-item-container">
+          <div v-for="(item,index) in formData.moodColor" :key="index" class="color-item">
             <div class="color-line">
-              <div class="color_box" :style="{background: item.color}"></div>
+              <div class="color-box" :style="{background: item.color}"></div>
               <div class="color-right">
                 <el-button type="text" @click="editColor(item)">编辑</el-button>
-                <p style="color: #C7C8CD;">|</p>
-                <el-button type="text" style="color: #F5222D;">删除</el-button>
+                <p style="color: #c7c8cd;">|</p>
+                <el-button type="text" style="color: #f5222d;">删除</el-button>
               </div>
             </div>
-            <div class="item_text">{{ item.mean }}</div>
+            <div class="item-text">{{ item.mean }}</div>
           </div>
         </div>
       </div>
@@ -79,7 +79,7 @@
         <el-color-picker v-model="ruleForm.color" class="s-color-picker"></el-color-picker>
       </div>
 
-      <div class="foot_btn_box">
+      <div class="foot-btn-box">
         <el-button size="normal" type="primary" @click="handleClick">保存</el-button>
         <el-button size="normal" @click="cancelForm">取消</el-button>
       </div>
@@ -150,10 +150,8 @@ export default {
         .then(res => {
           this.formData.moodColor = res.data;
         })
-        .catch(err => {
-          this.$message(err);
-        });
     },
+
     // 查询服务商标签
     labelQueryByConditionAgent() {
       api
@@ -161,10 +159,8 @@ export default {
         .then(res => {
           this.formData.agentTags.tags = res.data;
         })
-        .catch(err => {
-          this.$message(err);
-        });
     },
+
     // 查询成员职位标签
     labelQueryByConditionUser() {
       api
@@ -172,10 +168,8 @@ export default {
         .then(res => {
           this.formData.positionTags.tags = res.data;
         })
-        .catch(err => {
-          this.$message(err);
-        });
     },
+
     editColor($item) {
       this.ruleForm = {
         type: 'edit',
@@ -185,6 +179,7 @@ export default {
       }
       this.drawer = true;
     },
+
     handleClick() {
       if (this.ruleForm.type === 'add') {
         api.moodColorAddAgent({
@@ -217,6 +212,7 @@ export default {
           })
       }
     },
+
     cancelForm() {
       this.ruleForm = {
         type: "add",
@@ -226,6 +222,7 @@ export default {
       }
       this.drawer = false;
     },
+
     handleClose(tag, $item) {
       if ($item.type === "user") {
         api
@@ -245,6 +242,7 @@ export default {
     showInput($item) {
       $item.inputVisible = true;
     },
+
     handleInputConfirm($event, $item) {
       if ($event.target.value) {
         if ($item.type === "user") {
@@ -255,9 +253,6 @@ export default {
               $item.inputVisible = false;
               $item.inputValue = "";
             })
-            .catch(err => {
-              this.$message(err);
-            });
         } else if ($item.type === "agent") {
           api
             .labelAddAgent({ name: $event.target.value, sort: 1 })
@@ -266,17 +261,16 @@ export default {
               $item.inputVisible = false;
               $item.inputValue = "";
             })
-            .catch(err => {
-              this.$message(err);
-            });
         }
       } else {
         $item.inputVisible = false;
       }
     },
+
     cancel(done) {
       done();
     },
+
     onClick_editColor() {
       this.ruleForm = {
         type: "add",
@@ -296,90 +290,71 @@ export default {
   align-items: center;
   margin-top: 24px;
   padding: 0 32px;
+
   .el-input {
     width: 243px;
     height: 40px;
     margin-right: 8px;
     font-size: 14px;
+
     /deep/ input {
       height: 100%;
     }
   }
 }
-.area_box {
-  border-bottom: 1px solid #ebeef5;
-}
-.add_area {
-  margin: 24px;
-}
-.table_box {
-  position: relative;
-  margin: 24px;
-  padding: 24px;
-  overflow: hidden;
-  background: #fff;
-  height: calc(100% - 48px - 76px);
-}
-.left_box {
-  width: 290px;
-  background: rgba(255, 255, 255, 1);
-  border-right: 1px solid #ebeef5;
-  float: left;
-  height: 100%;
-}
-.right_box {
-  float: left;
-  width: calc(100% - 290px - 48px);
-  height: 100%;
-  overflow: auto;
-  // margin: 24px;
-  .tag-box {
-    margin: 24px;
-  }
-}
+
 .s-color-picker {
   width: 40px;
   height: 40px;
+
   /deep/ .el-color-picker__trigger {
     padding: 6px;
     width: 40px;
     height: 40px;
   }
 }
+
 .s-color-container {
   margin: 24px 32px;
   font-size: 14px;
-  .color_item_container {
+
+  .color-item-container {
     display: flex;
     flex-wrap: wrap;
-    .color_item {
-      width: 205px;
+
+    .color-item {
       margin-right: 104px;
       margin-bottom: 14px;
+      width: 205px;
+
       .color-line {
-        width: 100%;
         display: flex;
         align-items: center;
         margin-bottom: 14px;
-        .color_box {
+        width: 100%;
+
+        .color-box {
           display: flex;
+          margin-right: 14px;
           width: 119px;
           height: 20px;
-          margin-right: 14px;
-          border: 1px solid #EBEEF5;
+          border: 1px solid #ebeef5;
         }
+
         .color-right {
-          width: 72px;
           display: flex;
           justify-content: space-between;
           align-items: center;
+          width: 72px;
+
           .el-button {
-            border: 0;
             padding: 0;
+            border: 0;
           }
         }
       }
-      .item_text {
+
+      .item-text {
         font-size: 14px;
         font-weight: 400;
         color: rgba(51, 51, 53, 1);
@@ -388,62 +363,30 @@ export default {
     }
   }
 }
-.device_list {
-  margin-top: 20px;
-  height: 392px;
-  overflow: auto;
-}
-.select {
-  background: rgba(236, 237, 241, 1);
-}
-.device_item {
-  width: 100%;
-  height: 48px;
-  cursor: pointer;
-}
-.device_name {
-  height: 48px;
-  font-size: 14px;
-  font-weight: 400;
-  color: rgba(51, 51, 53, 1);
-  line-height: 48px;
-  float: left;
-  margin-left: 30px;
-}
-.device_num {
-  width: 31px;
-  height: 22px;
-  line-height: 48px;
-  font-size: 14px;
-  font-weight: 400;
-  color: rgba(51, 51, 53, 1);
-  float: right;
-  margin-right: 30px;
-}
 
 .el-tag + .el-tag {
   margin-left: 10px;
 }
+
 .button-new-tag {
-  margin-left: 10px;
-  height: 32px;
-  line-height: 32px;
-  padding-top: 0;
-  padding-bottom: 0;
   position: relative;
   top: 1px;
-}
-.input-new-tag {
-  width: 90px;
   margin-left: 10px;
-  vertical-align: bottom;
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 32px;
+  line-height: 32px;
+}
+
+.input-new-tag {
   position: relative;
   top: 3px;
+  margin-left: 10px;
+  width: 90px;
+  vertical-align: bottom;
 }
-.foot_btn_box {
-  width: 100%;
-  height: 96px;
-  border-top: 1px solid #ebeef5;
+
+.foot-btn-box {
   position: absolute;
   bottom: 0;
   display: flex;
@@ -452,8 +395,8 @@ export default {
   align-content: center;
   padding: 16px 0;
   margin-top: 24px;
-  .form_box {
-    margin: 0 59px;
-  }
+  width: 100%;
+  height: 96px;
+  border-top: 1px solid #ebeef5;
 }
 </style>

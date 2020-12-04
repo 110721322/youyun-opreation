@@ -241,7 +241,7 @@ export default {
 }
 
 .g-form-button {
-  font-size: 14px;
   padding: 0;
+  font-size: 14px;
 }
 </style>

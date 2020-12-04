@@ -11,10 +11,10 @@
       @search="search"
     />
 
-    <div class="table_box">
-      <div class="tabale_title_box">
+    <div class="table-box">
+      <div class="tabale-title-box">
         <el-button @click="onClick_showOrganization">组织架构</el-button>
-        <el-button type="primary" @click="add_job">职位管理</el-button>
+        <el-button type="primary" @click="addJob">职位管理</el-button>
       </div>
       <BaseCrud
         ref="customerTable"
@@ -32,9 +32,9 @@
         :row-key="'id'"
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
-        @perfect="onClick_perfect"
-        @editBasics="onClick_editBasics"
-        @editPost="onClick_perfect"
+        @perfect="onClickPerfect"
+        @editBasics="onClickEditBasics"
+        @editPost="onClickPerfect"
       ></BaseCrud>
     </div>
 
@@ -54,10 +54,10 @@
     </el-drawer>
     <el-drawer :visible.sync="jobDrawer" :with-header="false" size="550px">
       <div class="p_head">职位管理</div>
-      <div class="add_content">
+      <div class="add-content">
         <span>添加职位:</span>
         <el-input v-model="nameJob" placeholder="请填写职位名称"></el-input>
-        <el-button type="primary" @click="add_jobName">添加</el-button>
+        <el-button type="primary" @click="addJobName">添加</el-button>
       </div>
       <div style="padding: 0 24px;">
         <BaseCrud
@@ -73,14 +73,14 @@
           :is-select="false"
           :is-expand="false"
           :default-expand-all="false"
-          @rowEdit="edit_job"
-          @deleteJob="delete_job"
-          @okEdit="ok_edit"
+          @rowEdit="onClickEditJob"
+          @deleteJob="onClickDeleteJob"
+          @okEdit="onClickOkEdit"
         ></BaseCrud>
       </div>
     </el-drawer>
     <el-drawer :visible.sync="drawerPersonInfo" :with-header="false" size="500px">
-      <PerfectPost v-if="drawerPersonInfo" :perfect-row="perfectRow" @confirm="confirmPerfectPost" @cancel="cancelPerfectPost" @refreshJobInfo="onClick_perfect"></PerfectPost>
+      <PerfectPost v-if="drawerPersonInfo" :perfect-row="perfectRow" @confirm="confirmPerfectPost" @cancel="cancelPerfectPost" @refreshJobInfo="onClickPerfect"></PerfectPost>
     </el-drawer>
     <el-drawer :visible.sync="drawerOrganization" :with-header="false" size="500px">
       <div class="p_head">组织架构</div>
@@ -96,7 +96,7 @@
         @node-drag-end="handleDragEnd"
         @node-drop="handleDrop"
       ></el-tree>
-      <div class="foot_btn_box">
+      <div class="foot-btn-box">
         <el-button size="normal" @click="cancelForm">关闭</el-button>
       </div>
     </el-drawer>
@@ -198,9 +198,11 @@ export default {
           }
         })
     },
+
     cancelForm() {
       this.drawerOrganization = false;
     },
+
     search($ruleForm) {
       this.params = {
         sex: $ruleForm.inputFormVal ? "" : $ruleForm.sex,
@@ -212,7 +214,9 @@ export default {
         [$ruleForm.inputForm]: $ruleForm.inputFormVal
       };
     },
+
     selectionChange($val) {},
+
     confirm($ruleForm) {
       api
         .fillUserInfo({
@@ -240,10 +244,12 @@ export default {
           });
         })
     },
+
     cancel() {
       this.drawer = false;
     },
-    onClick_perfect($row) {
+
+    onClickPerfect($row) {
       if (!$row) {
         $row = this.activityRow
       }
@@ -259,18 +265,7 @@ export default {
           this.drawerPersonInfo = true;
         })
     },
-    handleClose(done) {
-      this.$confirm("还有未保存的工作哦确定关闭吗？")
-        .then(_ => {
-          done();
-        })
-    },
-    onClick_setPower() {
-      this.innerDrawer = true;
-    },
-    onClick_editPost() {
-      this.drawerPersonInfo = true;
-    },
+
     onClick_showOrganization($row) {
       // this.drawerOrganization = true;
       api
@@ -284,6 +279,7 @@ export default {
           this.drawerOrganization = true;
         })
     },
+
     resolveData(arr) {
       arr.forEach((item, index) => {
         item.label = item.jobName
@@ -293,7 +289,8 @@ export default {
         }
       })
     },
-    onClick_editBasics($row) {
+
+    onClickEditBasics($row) {
       api
         .employeeDetail({
           id: $row.id
@@ -315,11 +312,13 @@ export default {
           }
         })
     },
-    add_job() {
+
+    addJob() {
       this.nameJob = ""
       this.jobDrawer = true
     },
-    add_jobName() {
+
+    addJobName() {
       if (!this.nameJob) {
         this.$message({
           message: "请填写职位名称",
@@ -339,10 +338,12 @@ export default {
         this.$refs.jobTable.getData()
       })
     },
-    edit_job($item) {
+
+    onClickEditJob($item) {
       $item.edit = true;
     },
-    ok_edit($item) {
+
+    onClickOkEdit($item) {
       if (!$item.name) {
         this.$message({
           message: "请填写职位名称",
@@ -363,7 +364,8 @@ export default {
         $item.edit = false;
       })
     },
-    delete_job(row) {
+
+    onClickDeleteJob(row) {
       this.$confirm("确认删除该职位吗", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
@@ -380,28 +382,36 @@ export default {
         })
       })
     },
+
     confirmPerfectPost() {
       this.$refs.customerTable.getData()
       this.drawerPersonInfo = false;
     },
+
     cancelPerfectPost() {
       this.drawerPersonInfo = false;
     },
+
     handleDragStart(node, ev) {
       console.log("drag start", node);
     },
+
     handleDragEnter(draggingNode, dropNode, ev) {
       console.log("tree drag enter: ", dropNode.label);
     },
+
     handleDragLeave(draggingNode, dropNode, ev) {
       console.log("tree drag leave: ", dropNode.label);
     },
+
     handleDragOver(draggingNode, dropNode, ev) {
       console.log("tree drag over: ", dropNode.label);
     },
+
     handleDragEnd(draggingNode, dropNode, dropType, ev) {
       console.log("tree drag end: ", dropNode && dropNode.label, dropType);
     },
+
     handleDrop(draggingNode, dropNode, dropType, ev) {
       console.log("tree drop: ", dropNode.label, dropType);
     }
@@ -410,63 +420,33 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;
   overflow: hidden;
   background: #fff;
 }
-.form_item {
-  float: left !important;
-}
-.clear_both {
-  clear: both !important;
-}
-.btn_list {
-  /* background: rebeccapurple; */
-  position: absolute;
-  right: 0;
-  bottom: 21px;
-  right: 24px;
-}
 
-.demo-table-expand {
-  font-size: 0;
-}
-.demo-table-expand label {
-  width: 90px;
-  color: #99a9bf;
-}
-.demo-table-expand .el-form-item {
-  margin-right: 0;
-  margin-bottom: 0;
-  /* width: 25%; */
-}
-.form-box {
-  display: flex;
-  justify-content: space-between;
-}
-
-.tabale_title_box {
+.tabale-title-box {
   width: 100%;
   display: flex;
   justify-content: flex-end;
   margin-bottom: 24px;
+
   .btn {
     margin-left: 0;
-    height: 32px;
     margin-right: 12px;
     padding: 6px 24px;
+    height: 32px;
   }
+
   .btn:last-child {
     margin-right: 0;
   }
 }
-.foot_btn_box {
-  width: 500px;
-  // height: 96px;
-  border-top: 1px solid #ebeef5;
+
+.foot-btn-box {
   position: fixed;
   bottom: 0;
   right: 0;
@@ -475,22 +455,19 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-content: center;
-  .foot_btn {
-    width: 113px;
-    height: 40px;
+  width: 500px;
+  border-top: 1px solid #ebeef5;
+
+  .foot-btn {
     margin-top: 28px;
     margin-left: 12px;
     margin-right: 12px;
-  }
-  .form_box {
-    margin: 0 59px;
+    width: 113px;
+    height: 40px;
   }
 }
-// /deep/.content_drawer {
-//     height: calc(100vh - 172px);
-//     overflow: hidden;
-// }
-/deep/.formTemplate {
+
+/deep/ .formTemplate {
   margin: 0;
   padding: 40px 20px 0;
   width: 100%;
@@ -500,19 +477,22 @@ export default {
   flex: 1;
   box-sizing: border-box;
 }
-.add_content {
-  width: 550px;
-  padding-left: 30px;
+
+.add-content {
   display: flex;
   align-items: center;
-  padding-top: 24px;
   margin-bottom: 32px;
+  padding-left: 30px;
+  padding-top: 24px;
+  width: 550px;
+
   span {
     white-space: nowrap;
     font-size: 16px;
     font-weight: 400;
     padding-right: 20px;
   }
+
   .el-input {
     width: 300px;
     margin-right: 16px;

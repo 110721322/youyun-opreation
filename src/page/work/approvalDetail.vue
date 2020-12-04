@@ -3,9 +3,9 @@
     <div class="p_head">审批任务详情</div>
     <div class="contents">
       <div class="content">
-        <div class="top_title">佣金结算申请</div>
+        <div class="top-title">佣金结算申请</div>
         <div class="step">
-          <div class="step-box" v-if="configData.approvalDetail.length>0">
+          <div v-if="configData.approvalDetail.length>0" class="step-box">
             <el-steps :active="configData.approvalDetail.length" align-center>
               <el-step v-for="(item,index) in configData.approvalDetail" :key="index">
                 <template slot="icon">
@@ -16,13 +16,13 @@
                 </template>
                 <template slot="title">
                   <div
-                      v-if="item.title"
-                      class="step-title"
-                      :class="[item.isApproval?'step-title_blue':item.isUndo?'step-title_gray':'step-title_normal']"
+                    v-if="item.title"
+                    class="step-title"
+                    :class="[item.isApproval?'step-title-blue':item.isUndo?'step-title-gray':'step-title-normal']"
                   >{{ item.title }}</div>
                 </template>
                 <template slot="description">
-                  <div v-if="item.nodeStatus" class="step-description">{{ item.nodeStatus === 0 ? '发起' : item.nodeStatus === 1 ? '处理中' : item.nodeStatus === 2 ? '待审批' : item.nodeStatus === 3 ? '已通过' : '已驳回'}}</div>
+                  <div v-if="item.nodeStatus" class="step-description">{{ item.nodeStatus === 0 ? '发起' : item.nodeStatus === 1 ? '处理中' : item.nodeStatus === 2 ? '待审批' : item.nodeStatus === 3 ? '已通过' : '已驳回' }}</div>
                   <div v-if="item.nodeName" class="step-time">{{ item.nodeName }}</div>
                   <div v-if="item.createTime" class="step-note">{{ item.createTime }}</div>
                 </template>
@@ -32,27 +32,27 @@
         </div>
         <div class="info">
           <div class="list">
-            <div class="list_title">发起人提交信息</div>
-            <div class="list_content">
-              <li>服务商ID：<span>{{configData.agentSettleRecord.agentNo}}</span></li>
-              <li>服务商名称：<span>{{configData.agentSettleRecord.agentName}}</span></li>
-              <li>建议结算金额：<span>{{configData.agentSettleRecord.adviseCommission}}</span></li>
-              <li>发起备注人：<span>{{configData.approvalPrime.sponsorId}}</span></li>
+            <div class="list-title">发起人提交信息</div>
+            <div class="list-content">
+              <li>服务商ID：<span>{{ configData.agentSettleRecord.agentNo }}</span></li>
+              <li>服务商名称：<span>{{ configData.agentSettleRecord.agentName }}</span></li>
+              <li>建议结算金额：<span>{{ configData.agentSettleRecord.adviseCommission }}</span></li>
+              <li>发起备注人：<span>{{ configData.approvalPrime.sponsorId }}</span></li>
             </div>
           </div>
           <div class="list">
-            <div class="list_title">服务商提交信息</div>
-            <div class="list_content">
+            <div class="list-title">服务商提交信息</div>
+            <div class="list-content">
               <li>发票照片：<img :src="configData.agentSettleRecord.expressImg" alt=""></li>
-              <li>发票快递单号：<span>{{configData.agentSettleRecord.expressNumber}}</span></li>
-              <li>结算账户：<span>{{configData.agentSettleRecord.settleAccount}}</span></li>
-              <li>备用联系方式：<span>{{configData.agentSettleRecord.alternatePhone}}</span></li>
-              <li>服务商备注：<span>{{configData.agentSettleRecord.settleRemark}}</span></li>
-              <li>结算金额：<span>{{configData.agentSettleRecord.actualSettleCommission}}</span></li>
+              <li>发票快递单号：<span>{{ configData.agentSettleRecord.expressNumber }}</span></li>
+              <li>结算账户：<span>{{ configData.agentSettleRecord.settleAccount }}</span></li>
+              <li>备用联系方式：<span>{{ configData.agentSettleRecord.alternatePhone }}</span></li>
+              <li>服务商备注：<span>{{ configData.agentSettleRecord.settleRemark }}</span></li>
+              <li>结算金额：<span>{{ configData.agentSettleRecord.actualSettleCommission }}</span></li>
             </div>
           </div>
         </div>
-        <div class="bottom_btn">
+        <div class="bottom-btn">
           <el-button type="primary" @click="confirm">同意</el-button>
           <el-button @click="reject">拒绝</el-button>
         </div>
@@ -86,7 +86,7 @@ export default {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认",
         cancelButtonText: "取消"
-      }).then(res => {
+      }).then(() => {
         api.passExamine({
           undoType: this.undoType,
           taskType: this.taskType,
@@ -110,6 +110,7 @@ export default {
         })
       })
     },
+
     reject() {
       this.$confirm("确定拒绝佣金结算审核？", "拒绝审核", {
         distinguishCancelAndClose: true,
@@ -154,10 +155,10 @@ export default {
   padding-bottom: 32px;
 }
 
-.top_title {
+.top-title {
   width: 100%;
   padding-left: 24px;
-  border-bottom: 1px solid #EBEEF5;
+  border-bottom: 1px solid #ebeef5;
   line-height: 54px;
   font-weight: 500;
   font-size: 16px;
@@ -175,38 +176,38 @@ export default {
 
 .list {
   width: 100%;
-  border: 1px solid #EBEEF5;
+  border: 1px solid #ebeef5;
   margin-bottom: 24px;
 }
 
-.list_title {
+.list-title {
   width: 100%;
   background: #fafafa;
-  border-bottom: 1px solid #EBEEF5;
+  border-bottom: 1px solid #ebeef5;
   padding-left: 24px;
   font-size: 14px;
   font-weight: 500;
   line-height: 44px;
 }
 
-.list_content {
+.list-content {
   padding: 24px 24px 8px 24px;
   display: flex;
   flex-wrap: wrap;
 }
 
-.list_content li {
+.list-content li {
   width: 33.3%;
   font-size: 14px;
   line-height: 22px;
   margin-bottom: 16px;
 }
 
-.list_content li span {
+.list-content li span {
   color: #606266;
 }
 
-.bottom_btn {
+.bottom-btn {
   width: 100%;
   margin-top: 8px;
   display: flex;
@@ -214,13 +215,14 @@ export default {
   padding: 0 30%;
 }
 
-.bottom_btn button{
+.bottom-btn button {
   width: 113px;
   height: 40px;
 }
 
 .step-box {
   padding: 56px 24px 24px;
+
   .step-title {
     height: 22px;
     font-size: 14px;
@@ -228,15 +230,19 @@ export default {
     color: rgba(51, 51, 53, 1);
     line-height: 22px;
   }
-  .step-title_normal {
+
+  .step-title-normal {
     color: rgba(51, 51, 53, 1);
   }
-  .step-title_blue {
+
+  .step-title-blue {
     color: rgba(25, 137, 250, 1);
   }
-  .step-title_gray {
+
+  .step-title-gray {
     color: rgba(144, 147, 153, 1);
   }
+
   .step-description {
     height: 20px;
     font-size: 12px;
@@ -245,6 +251,7 @@ export default {
     color: rgba(0, 0, 0, 0.45);
     line-height: 20px;
   }
+
   .step-time {
     margin-top: 4px;
     height: 12px;
@@ -252,6 +259,7 @@ export default {
     color: rgba(0, 0, 0, 0.45);
     line-height: 12px;
   }
+
   .step-note {
     margin: 10px auto 0;
     height: 26px;
@@ -261,6 +269,7 @@ export default {
     color: rgba(0, 0, 0, 0.45);
     line-height: 26px;
   }
+
   .step-border {
     position: relative;
     flex-shrink: 0;
@@ -269,6 +278,7 @@ export default {
     height: 44px;
     text-align: center;
   }
+
   .step-check {
     position: absolute;
     right: 17px;
@@ -280,32 +290,37 @@ export default {
     border-radius: 50%;
     line-height: 18px;
   }
+
   .step-img {
     width: 44px;
     height: 44px;
     border-radius: 50%;
   }
+
   .step-imgborder {
     padding: 5px;
     border: 2px solid rgba(25, 137, 250, 1);
     box-sizing: content-box;
     margin-top: -14px;
   }
-  .foot_btn_box {
+
+  .foot-btn-box {
     width: 100%;
     height: 96px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-content: center;
-    .foot_btn {
+
+    .foot-btn {
       width: 113px;
       height: 40px;
       margin-top: 28px;
       margin-left: 12px;
       margin-right: 12px;
     }
-    .form_box {
+
+    .form-box {
       margin: 0 59px;
     }
   }

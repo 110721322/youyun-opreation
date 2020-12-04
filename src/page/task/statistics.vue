@@ -5,27 +5,27 @@
     </div>
     <div>
       <search
-          :open-height="searchMaxHeight"
-          :form-base-data="searchConfig.formData"
-          :show-foot-btn="searchConfig.showFootBtn"
-          @search="search"
+        :open-height="searchMaxHeight"
+        :form-base-data="searchConfig.formData"
+        :show-foot-btn="searchConfig.showFootBtn"
+        @search="search"
       />
-      <div class="table_box">
-        <div class="table_title">统计列表</div>
+      <div class="table-box">
+        <div class="table-title">统计列表</div>
         <BaseCrud
-            ref="table"
-            :params="params"
-            :api-service="api"
-            :grid-config="configData.gridConfig"
-            :grid-btn-config="configData.gridBtnConfig"
-            :grid-data="testData"
-            :form-config="configData.formConfig"
-            :form-data="configData.formModel"
-            :grid-edit-width="300"
-            :is-async="true"
-            :is-select="false"
-            :is-expand="false"
-            @detail="handle_detail"
+          ref="table"
+          :params="params"
+          :api-service="api"
+          :grid-config="configData.gridConfig"
+          :grid-btn-config="configData.gridBtnConfig"
+          :grid-data="testData"
+          :form-config="configData.formConfig"
+          :form-data="configData.formModel"
+          :grid-edit-width="300"
+          :is-async="true"
+          :is-select="false"
+          :is-expand="false"
+          @detail="onClickDetail"
         >
         </BaseCrud>
       </div>
@@ -68,15 +68,14 @@ export default {
   },
   methods: {
     search($ruleForm) {
-      const params = {
+      this.params = {
         startTime: $ruleForm.date ? $ruleForm.date[0] : null,
         endTime: $ruleForm.date ? $ruleForm.date[1] : null,
         recevierId: $ruleForm.recevierId
       };
-      params[$ruleForm.inputSelect] = $ruleForm.inputForm;
-      this.params = params;
     },
-    handle_detail($row) {
+
+    onClickDetail($row) {
       this.$router.push({
         name: 'statisticsDetail',
         query: {
@@ -89,7 +88,7 @@ export default {
 </script>
 
 <style scoped>
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;
@@ -97,9 +96,9 @@ export default {
   background: #fff;
 }
 
-.table_title {
-  width: 100%;
+.table-title {
   margin-bottom: 34px;
+  width: 100%;
   font-size: 16px;
 }
 </style>

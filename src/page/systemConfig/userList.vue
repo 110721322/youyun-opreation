@@ -11,9 +11,9 @@
       @search="search"
     />
 
-    <div class="table_box">
-      <div class="tabale_title_box">
-        <el-button v-has="PERSON_LIST_ADD" class="btn" type="primary" @click="onClick_addUser">添加成员</el-button>
+    <div class="table-box">
+      <div class="tabale-title-box">
+        <el-button v-has="PERSON_LIST_ADD" class="btn" type="primary" @click="clickAddUser">添加成员</el-button>
       </div>
       <BaseCrud
         ref="child"
@@ -30,8 +30,8 @@
         :api-service="api"
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
-        @edit="onClick_edit"
-        @remove="onClick_remove"
+        @edit="onClickEdit"
+        @remove="onClickRemove"
       ></BaseCrud>
     </div>
 
@@ -42,7 +42,7 @@
         ref="memberEdit"
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
-        :isDrawer="true"
+        :is-drawer="true"
         @cancel="cancel"
         @confirm="confirm"
       ></Form>
@@ -60,20 +60,20 @@
               class="add-phone-input"
             ></el-input>
             <div class="operation-icon-box">
-              <div class="add-icon-box" @click="onClick_addPhoneItem">
+              <div class="add-icon-box" @click="clickAddPhoneItem">
                 <i class="el-icon-plus"></i>
               </div>
               <div v-if="isShowDel" class="del-icon-box" @click="handleDeletePhoneItem">
                 <i class="el-icon-minus"></i>
               </div>
             </div>
-<!--            <div class="add-icon-box" v-if="addPhoneList.length>1" @click="onClick_reducePhoneItem" style="right:-80px">-->
-<!--              <i class="el-icon-minus"></i>-->
-<!--            </div>-->
+            <!--            <div class="add-icon-box" v-if="addPhoneList.length>1" @click="onClick_reducePhoneItem" style="right:-80px">-->
+            <!--              <i class="el-icon-minus"></i>-->
+            <!--            </div>-->
           </div>
         </div>
       </div>
-      <div class="foot_btn_box">
+      <div class="foot-btn-box">
         <el-button type="primary" size="normal" @click="handleClick">确定</el-button>
         <el-button size="normal" @click="cancelForm">取消</el-button>
       </div>
@@ -106,14 +106,12 @@ export default {
       testData: [],
       drawer: false,
       drawerAddPhone: false,
-      direction: "rtl",
       params: {
         state: null
       },
       api: api.queryEmployeeList,
       addPhoneList: [""],
       activityRow: {},
-      // 是否展示删减按钮
       isShowDel: false
     };
   },
@@ -138,7 +136,8 @@ export default {
           }
         })
     },
-    onClick_addPhoneItem() {
+
+    clickAddPhoneItem() {
       if (this.addPhoneList.length > 0) {
         this.isShowDel = true;
       }
@@ -148,6 +147,7 @@ export default {
         this.$message("一次最多添加20个");
       }
     },
+
     handleDeletePhoneItem() {
       this.addPhoneList.pop();
       if (this.addPhoneList.length <= 1) {
@@ -155,6 +155,7 @@ export default {
         return;
       }
     },
+
     search($ruleForm) {
       this.params = {
         sex: $ruleForm.sex,
@@ -164,10 +165,12 @@ export default {
         [$ruleForm.inputForm]: $ruleForm.inputFormVal
       };
     },
-    onClick_addUser() {
+
+    clickAddUser() {
       this.addPhoneList = [""]
       this.drawerAddPhone = true
     },
+
     handleClick() {
       let addPhoneList = this.addPhoneList;
       addPhoneList = addPhoneList.filter($phone => $phone !== "")
@@ -200,12 +203,15 @@ export default {
         this.$refs.child.getData()
       })
     },
+
     cancelForm() {
       this.drawerAddPhone = false;
     },
+
     cancel() {
       this.drawer = false;
     },
+
     confirm($ruleForm) {
       api
         .fillUserInfo({
@@ -229,7 +235,8 @@ export default {
           this.$refs.child.getData();
         })
     },
-    onClick_edit($row) {
+
+    onClickEdit($row) {
       api
         .employeeDetail({
           id: $row.id
@@ -247,11 +254,12 @@ export default {
           }
         })
     },
+
     /**
      * 删除
      * @param {Object} $row
      */
-    onClick_remove($row) {
+    onClickRemove($row) {
       this.$confirm("确认删除该成员吗", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
@@ -283,46 +291,52 @@ export default {
   padding-bottom: 114px;
   overflow: auto;
 }
+
 .add-phone-box {
   display: flex;
   padding: 24px;
   justify-content: flex-start;
+
   .phone-label {
     width: 70px;
     line-height: 30px;
   }
+
   .input-box {
     width: 50%;
     position: relative;
+
     .operation-icon-box {
       position: absolute;
       bottom: 20px;
       right: -50px;
-
       display: flex;
       align-items: center;
       justify-content: flex-start;
-
       width: 50px;
     }
-    .add-icon-box, .del-icon-box {
+
+    .add-icon-box,.del-icon-box {
       margin-left: 5px;
       font-size: 20px;
       cursor: pointer;
     }
   }
+
   .add-phone-input {
     margin-bottom: 16px;
   }
 }
-.table_box {
+
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;
   overflow: hidden;
   background: #fff;
 }
-.tabale_title_box {
+
+.tabale-title-box {
   height: 52px;
   width: 100%;
   .title {
@@ -332,33 +346,35 @@ export default {
     color: rgba(51, 51, 53, 1);
     float: left;
     margin-left: 10px;
-    // line-height: 52px;
   }
+
   .btn {
     float: right;
   }
 }
-.foot_btn_box {
-  width: 500px;
-  padding: 16px 24px;
-  // height: 96px;
-  background: white;
-  border-top: 1px solid #ebeef5;
+
+.foot-btn-box {
   position: fixed;
   right: 0;
   bottom: 0;
   display: flex;
   flex-direction: row;
   justify-content: center;
+  padding: 16px 24px;
   align-content: center;
-  .foot_btn {
-    width: 113px;
-    height: 40px;
+  width: 500px;
+  background: white;
+  border-top: 1px solid #ebeef5;
+
+  .foot-btn {
     margin-top: 28px;
     margin-left: 12px;
     margin-right: 12px;
+    width: 113px;
+    height: 40px;
   }
-  .form_box {
+
+  .form-box {
     margin: 0 59px;
   }
 }

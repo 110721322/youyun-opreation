@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="list-box" v-if="openType === '30/1'">
+    <div v-if="openType === '30/1'" class="list-box">
       <div
-          v-for="(item,index) in listData"
-          :key="index"
-          class="item"
-          :style="{height:cssConfig.itemHeight}"
+        v-for="(item,index) in listData"
+        :key="index"
+        class="item"
+        :style="{height:cssConfig.itemHeight}"
       >
         <div class="status">
           {{ item.status+":" }}
@@ -14,36 +14,36 @@
         <div class="title">{{ item.title }}</div>
         <div class="title">服务商ID:  {{ item.agentName }}</div>
         <div class="title">服务商ID:  {{ item.agentName }}</div>
-<!--        <div class="detail" :style="{width:cssConfig.detailWidth}">-->
-<!--          <div v-for="(item1,index1) in item.detail" :key="index1">-->
-<!--            <div-->
-<!--                v-if="item1.label==='失败原因'"-->
-<!--                class="reason ellipsis"-->
-<!--            >{{ item1.label ? item1.label+":"+item1.value :item1.value }}</div>-->
-<!--            <div-->
-<!--                v-else-if="item1.label==='发起人备注'"-->
-<!--                class="note ellipsis3"-->
-<!--            >{{ item1.label ? item1.label+":"+item1.value :item1.value }}</div>-->
-<!--            <div v-else>{{ item1.label ? item1.label+":"+item1.value :item1.value }}</div>-->
-<!--          </div>-->
-<!--        </div>-->
+        <!--        <div class="detail" :style="{width:cssConfig.detailWidth}">-->
+        <!--          <div v-for="(item1,index1) in item.detail" :key="index1">-->
+        <!--            <div-->
+        <!--                v-if="item1.label==='失败原因'"-->
+        <!--                class="reason ellipsis"-->
+        <!--            >{{ item1.label ? item1.label+":"+item1.value :item1.value }}</div>-->
+        <!--            <div-->
+        <!--                v-else-if="item1.label==='发起人备注'"-->
+        <!--                class="note ellipsis3"-->
+        <!--            >{{ item1.label ? item1.label+":"+item1.value :item1.value }}</div>-->
+        <!--            <div v-else>{{ item1.label ? item1.label+":"+item1.value :item1.value }}</div>-->
+        <!--          </div>-->
+        <!--        </div>-->
         <div v-if="status === 'undo'" v-has="TASK_DEALT" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_communication(item)">立即沟通</el-button>
+          <el-button type="primary" class="btn" @click="clickCommunication(item)">立即沟通</el-button>
         </div>
-<!--        <template v-if="isCheck===true">-->
-<!--          <div class="mask"></div>-->
-<!--          <el-checkbox v-model="checkList[index]" class="checkbox-item" @change="changeCheckList"></el-checkbox>-->
-<!--        </template>-->
+        <!--        <template v-if="isCheck===true">-->
+        <!--          <div class="mask"></div>-->
+        <!--          <el-checkbox v-model="checkList[index]" class="checkbox-item" @change="changeCheckList"></el-checkbox>-->
+        <!--        </template>-->
       </div>
     </div>
-    <div class="list-box" v-if="openType === '1/1'">
+    <div v-if="openType === '1/1'" class="list-box">
       <div
-          v-for="(item,index) in listData"
-          :key="index"
-          class="item"
-          :style="{height:cssConfig.itemHeight}"
+        v-for="(item,index) in listData"
+        :key="index"
+        class="item"
+        :style="{height:cssConfig.itemHeight}"
       >
-        <div class="list_status">商户结算失败</div>
+        <div class="list-status">商户结算失败</div>
         <div class="title">商户名称(ID):<span>{{ item.merchantName + '(' + item.merchantNo + ')' }}</span></div>
         <div class="title">所属服务商:<span>{{ item.agentName }}</span></div>
         <div class="title">交易通道:<span>{{ item.channelCode }}</span></div>
@@ -52,168 +52,168 @@
         <div class="title">失败原因:<span>{{ item.failReason }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_settleFail(item)">立即沟通</el-button>
+          <el-button type="primary" class="btn" @click="clickSettleFail(item)">立即沟通</el-button>
         </div>
       </div>
     </div>
-    <div class="list-box" v-if="openType === '2/1'">
+    <div v-if="openType === '2/1'" class="list-box">
       <div
-          v-for="(item,index) in listData"
-          :key="index"
-          class="item"
-          :style="{height:cssConfig.itemHeight}"
+        v-for="(item,index) in listData"
+        :key="index"
+        class="item"
+        :style="{height:cssConfig.itemHeight}"
       >
-        <div class="list_status">商户入件审核</div>
+        <div class="list-status">商户入件审核</div>
         <div class="title">商户ID:<span>{{ item.merchantNo }}</span></div>
         <div class="title">商户名称:<span>{{ item.merchantName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_merchantExamine(item)">去审核</el-button>
+          <el-button type="primary" class="btn" @click="clickMerchantExamine(item)">去审核</el-button>
         </div>
       </div>
     </div>
-    <div class="list-box" v-if="openType === '3/1'">
+    <div v-if="openType === '3/1'" class="list-box">
       <div
-          v-for="(item,index) in listData"
-          :key="index"
-          class="item"
-          :style="{height:cssConfig.itemHeight}"
+        v-for="(item,index) in listData"
+        :key="index"
+        class="item"
+        :style="{height:cssConfig.itemHeight}"
       >
-        <div class="list_status">服务商到期</div>
+        <div class="list-status">服务商到期</div>
         <div class="title">服务商ID:<span>{{ item.agentNo }}</span></div>
         <div class="title">服务商名称:<span>{{ item.agentName }}</span></div>
         <div class="title">到期时间:<span>{{ item.expireDate }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_overTime(item)">立即沟通</el-button>
+          <el-button type="primary" class="btn" @click="clickOverTime(item)">立即沟通</el-button>
         </div>
       </div>
     </div>
-    <div class="list-box" v-if="openType === '4/1'">
+    <div v-if="openType === '4/1'" class="list-box">
       <div
-          v-for="(item,index) in listData"
-          :key="index"
-          class="item"
-          :style="{height:cssConfig.itemHeight}"
+        v-for="(item,index) in listData"
+        :key="index"
+        class="item"
+        :style="{height:cssConfig.itemHeight}"
       >
-        <div class="list_status">佣金结算</div>
+        <div class="list-status">佣金结算</div>
         <div class="title">服务商ID:<span>{{ item.agentNo }}</span></div>
         <div class="title">服务商名称:<span>{{ item.agentName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_settleExamine(item)">去审核</el-button>
+          <el-button type="primary" class="btn" @click="clickSettleExamine(item)">去审核</el-button>
         </div>
       </div>
     </div>
-    <div class="list-box" v-if="openType === '5/1'">
+    <div v-if="openType === '5/1'" class="list-box">
       <div
-          v-for="(item,index) in listData"
-          :key="index"
-          class="item"
-          :style="{height:cssConfig.itemHeight}"
+        v-for="(item,index) in listData"
+        :key="index"
+        class="item"
+        :style="{height:cssConfig.itemHeight}"
       >
-        <div class="list_status">预约沟通</div>
+        <div class="list-status">预约沟通</div>
         <div class="title">服务商ID:<span>{{ item.agentNo }}</span></div>
         <div class="title">服务商名称:<span>{{ item.agentName }}</span></div>
         <div class="title">预约沟通时间:<span>{{ item.remindTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_subscribe(item)">立即沟通</el-button>
+          <el-button type="primary" class="btn" @click="clickSubscribe(item)">立即沟通</el-button>
         </div>
       </div>
     </div>
-    <div class="list-box" v-if="openType === '6/1'">
+    <div v-if="openType === '6/1'" class="list-box">
       <div
-          v-for="(item,index) in listData"
-          :key="index"
-          class="item"
-          :style="{height:cssConfig.itemHeight}"
+        v-for="(item,index) in listData"
+        :key="index"
+        class="item"
+        :style="{height:cssConfig.itemHeight}"
       >
-        <div class="list_status">新服务商沟通</div>
+        <div class="list-status">新服务商沟通</div>
         <div class="title">服务商ID:<span>{{ item.agentNo }}</span></div>
         <div class="title">服务商名称:<span>{{ item.agentName }}</span></div>
         <div class="title">开通时间:<span>{{ item.createTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_newAgent(item)">立即沟通</el-button>
+          <el-button type="primary" class="btn" @click="clickNewAgent(item)">立即沟通</el-button>
         </div>
       </div>
     </div>
-    <div class="list-box" v-if="openType === '7/1'">
+    <div v-if="openType === '7/1'" class="list-box">
       <div
-          v-for="(item,index) in listData"
-          :key="index"
-          class="item"
-          :style="{height:cssConfig.itemHeight}"
+        v-for="(item,index) in listData"
+        :key="index"
+        class="item"
+        :style="{height:cssConfig.itemHeight}"
       >
-        <div class="list_status">客单价异常</div>
+        <div class="list-status">客单价异常</div>
         <div class="title">商户ID:<span>{{ item.merchantNo }}</span></div>
         <div class="title">商户名称:<span>{{ item.merchantName }}</span></div>
         <div class="title">所属服务商:<span>{{ item.agentName }}</span></div>
         <div class="title">客单价:<span>{{ item.perAmount }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_unitPrice(item)">立即沟通</el-button>
+          <el-button type="primary" class="btn" @click="clickUnitPrice(item)">立即沟通</el-button>
         </div>
       </div>
     </div>
-    <div class="list-box" v-if="openType === '8/1'">
+    <div v-if="openType === '8/1'" class="list-box">
       <div
-          v-for="(item,index) in listData"
-          :key="index"
-          class="item"
-          :style="{height:cssConfig.itemHeight}"
+        v-for="(item,index) in listData"
+        :key="index"
+        class="item"
+        :style="{height:cssConfig.itemHeight}"
       >
-        <div class="list_status">交易数据异常</div>
+        <div class="list-status">交易数据异常</div>
         <div class="title">商户ID:<span>{{ item.agentNo }}</span></div>
         <div class="title">商户名称:<span>{{ item.agentName }}</span></div>
         <div class="title">所属服务商:<span>{{ item.agentName }}</span></div>
         <div class="title">交易环比:<span>{{ item.agentName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_transaction(item)">立即沟通</el-button>
+          <el-button type="primary" class="btn" @click="clickTransaction(item)">立即沟通</el-button>
         </div>
       </div>
     </div>
-    <div class="list-box" v-if="openType === '9/1'">
+    <div v-if="openType === '9/1'" class="list-box">
       <div
-          v-for="(item,index) in listData"
-          :key="index"
-          class="item"
-          :style="{height:cssConfig.itemHeight}"
+        v-for="(item,index) in listData"
+        :key="index"
+        class="item"
+        :style="{height:cssConfig.itemHeight}"
       >
-        <div class="list_status">服务商资料补全</div>
+        <div class="list-status">服务商资料补全</div>
         <div class="title">服务商ID:<span>{{ item.agentNo }}</span></div>
         <div class="title">服务商名称:<span>{{ item.agentName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_agentCompletion(item)">去补充</el-button>
+          <el-button type="primary" class="btn" @click="clickAgentCompletion(item)">去补充</el-button>
         </div>
       </div>
     </div>
-    <div class="list-box" v-if="openType === '10/1'">
+    <div v-if="openType === '10/1'" class="list-box">
       <div
-          v-for="(item,index) in listData"
-          :key="index"
-          class="item"
-          :style="{height:cssConfig.itemHeight}"
+        v-for="(item,index) in listData"
+        :key="index"
+        class="item"
+        :style="{height:cssConfig.itemHeight}"
       >
-        <div class="list_status">设备订购出库</div>
+        <div class="list-status">设备订购出库</div>
         <div class="title">订购物品:<span>{{ item.orderGoods }}</span></div>
         <div class="title">订购数量:<span>{{ item.count }}</span></div>
         <div class="title">订购服务商:<span>{{ item.agentName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_stock(item)">去出库</el-button>
+          <el-button type="primary" class="btn" @click="clickStock(item)">去出库</el-button>
         </div>
       </div>
     </div>
-    <div class="list-box" v-if="openType === '11/1'">
+    <div v-if="openType === '11/1'" class="list-box">
       <div
-          v-for="(item,index) in listData"
-          :key="index"
-          class="item"
-          :style="{height:cssConfig.itemHeight}"
+        v-for="(item,index) in listData"
+        :key="index"
+        class="item"
+        :style="{height:cssConfig.itemHeight}"
       >
-        <div class="list_status">工单</div>
+        <div class="list-status">工单</div>
         <div class="title">问题模块:<span>{{ item.questionModule }}</span></div>
         <div class="title">问题类型:<span>{{ item.questionType }}</span></div>
         <div class="title">问题内容:<span>{{ item.questionContent }}</span></div>
@@ -221,121 +221,121 @@
         <div class="title">服务商名称:<span>{{ item.agentName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_distribution(item)">分配</el-button>
-          <el-button type="primary" class="btn" @click="onClick_relpyWork(item)">回复</el-button>
+          <el-button type="primary" class="btn" @click="clickDistribution(item)">分配</el-button>
+          <el-button type="primary" class="btn" @click="clickRelpyWork(item)">回复</el-button>
         </div>
       </div>
     </div>
-    <div class="list-box" v-if="openType === '12/1'">
+    <div v-if="openType === '12/1'" class="list-box">
       <div
-          v-for="(item,index) in listData"
-          :key="index"
-          class="item"
-          :style="{height:cssConfig.itemHeight}"
+        v-for="(item,index) in listData"
+        :key="index"
+        class="item"
+        :style="{height:cssConfig.itemHeight}"
       >
-        <div class="list_status">乐刷申诉审核</div>
+        <div class="list-status">乐刷申诉审核</div>
         <div class="title">服务商ID:<span>{{ item.agentNo }}</span></div>
         <div class="title">服务商名称:<span>{{ item.agentName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_leSuhaExamine(item)">去审核</el-button>
+          <el-button type="primary" class="btn" @click="clickLeSuhaExamine(item)">去审核</el-button>
         </div>
       </div>
     </div>
-    <div class="list-box" v-if="openType === '13/1'">
+    <div v-if="openType === '13/1'" class="list-box">
       <div
-          v-for="(item,index) in listData"
-          :key="index"
-          class="item"
-          :style="{height:cssConfig.itemHeight}"
+        v-for="(item,index) in listData"
+        :key="index"
+        class="item"
+        :style="{height:cssConfig.itemHeight}"
       >
-        <div class="list_status">平台资料申诉审核</div>
+        <div class="list-status">平台资料申诉审核</div>
         <div class="title">服务商ID:<span>{{ item.agentNo }}</span></div>
         <div class="title">服务商名称:<span>{{ item.agentName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_channelExamine(item)">去审核</el-button>
+          <el-button type="primary" class="btn" @click="clickChannelExamine(item)">去审核</el-button>
         </div>
       </div>
     </div>
-    <div class="list-box" v-if="openType === '1/2'">
+    <div v-if="openType === '1/2'" class="list-box">
       <div
-          v-for="(item,index) in listData"
-          :key="index"
-          class="item"
-          :style="{height:cssConfig.itemHeight}"
+        v-for="(item,index) in listData"
+        :key="index"
+        class="item"
+        :style="{height:cssConfig.itemHeight}"
       >
-        <div class="list_status">运营佣金结算</div>
+        <div class="list-status">运营佣金结算</div>
         <div class="title">服务商ID:<span>{{ item.agentSettleRecord.agentNo }}</span></div>
         <div class="title">服务商名称:<span>{{ item.agentSettleRecord.agentName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_commission(item)">去审核</el-button>
+          <el-button type="primary" class="btn" @click="clickCommission(item)">去审核</el-button>
         </div>
       </div>
     </div>
-    <div class="list-box" v-if="openType === '2/2'">
+    <div v-if="openType === '2/2'" class="list-box">
       <div
-          v-for="(item,index) in listData"
-          :key="index"
-          class="item"
-          :style="{height:cssConfig.itemHeight}"
+        v-for="(item,index) in listData"
+        :key="index"
+        class="item"
+        :style="{height:cssConfig.itemHeight}"
       >
-        <div class="list_status">财务佣金结算</div>
+        <div class="list-status">财务佣金结算</div>
         <div class="title">服务商ID:<span>{{ item.agentSettleRecord.agentNo }}</span></div>
         <div class="title">服务商名称:<span>{{ item.agentSettleRecord.agentName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_commission(item)">去审核</el-button>
+          <el-button type="primary" class="btn" @click="clickCommission(item)">去审核</el-button>
         </div>
       </div>
     </div>
-    <div class="list-box" v-if="openType === '3/2'">
+    <div v-if="openType === '3/2'" class="list-box">
       <div
-          v-for="(item,index) in listData"
-          :key="index"
-          class="item"
-          :style="{height:cssConfig.itemHeight}"
+        v-for="(item,index) in listData"
+        :key="index"
+        class="item"
+        :style="{height:cssConfig.itemHeight}"
       >
-        <div class="list_status">开通服务商</div>
+        <div class="list-status">开通服务商</div>
         <div class="title">服务商ID:<span>{{ item.agent.agentNo }}</span></div>
         <div class="title">服务商名称:<span>{{ item.agent.agentName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_openAgent(item)">去审核</el-button>
+          <el-button type="primary" class="btn" @click="clickOpenAgent(item)">去审核</el-button>
         </div>
       </div>
     </div>
-    <div class="list-box" v-if="openType === '4/2'">
+    <div v-if="openType === '4/2'" class="list-box">
       <div
-          v-for="(item,index) in listData"
-          :key="index"
-          class="item"
-          :style="{height:cssConfig.itemHeight}"
+        v-for="(item,index) in listData"
+        :key="index"
+        class="item"
+        :style="{height:cssConfig.itemHeight}"
       >
-        <div class="list_status">冻结服务商</div>
+        <div class="list-status">冻结服务商</div>
         <div class="title">服务商ID:<span>{{ item.agent.agentNo }}</span></div>
         <div class="title">服务商名称:<span>{{ item.agent.agentName }}</span></div>
         <div class="title">冻结原因:<span>{{ item.agent.reason }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_frozenAgent(item)">去审核</el-button>
+          <el-button type="primary" class="btn" @click="clickFrozenAgent(item)">去审核</el-button>
         </div>
       </div>
     </div>
-    <div class="list-box" v-if="openType === '5/2'">
+    <div v-if="openType === '5/2'" class="list-box">
       <div
-          v-for="(item,index) in listData"
-          :key="index"
-          class="item"
-          :style="{height:cssConfig.itemHeight}"
+        v-for="(item,index) in listData"
+        :key="index"
+        class="item"
+        :style="{height:cssConfig.itemHeight}"
       >
-        <div class="list_status">短信群发申请</div>
+        <div class="list-status">短信群发申请</div>
         <div class="title">服务商ID:<span>{{ item.agentNo }}</span></div>
         <div class="title">服务商名称:<span>{{ item.agentName }}</span></div>
         <div class="title">创建时间:<span>{{ item.createTime }}</span></div>
         <div v-if="status === 'undo'" class="oper-box">
-          <el-button type="primary" class="btn" @click="onClick_communication(item)">去审核</el-button>
+          <el-button type="primary" class="btn" @click="clickCommunication(item)">去审核</el-button>
         </div>
       </div>
     </div>
@@ -373,84 +373,100 @@ export default {
   },
   mounted() {},
   methods: {
-    onClick_communication($data) {
+    clickCommunication($data) {
       this.$emit("communication", $data);
     },
-    onClick_pass($data) {
-      this.$emit("pass", $data);
-    },
-    onClick_reject($data) {
+
+    clickReject($data) {
       this.$emit("reject", $data);
     },
+
     changeCheckList() {
       this.$emit("handleCheckList", this.checkList);
     },
+
     // 商户结算失败
-    onClick_settleFail($data) {
+    clickSettleFail($data) {
       this.$emit('settleFail', $data)
     },
+
     // 服务商到期
-    onClick_overTime($data) {
+    clickOverTime($data) {
       this.$emit('overTime', $data)
     },
+
     // 商户入件审核
-    onClick_merchantExamine($data) {
+    clickMerchantExamine($data) {
       this.$emit('merchantExamine', $data)
     },
+
     // 佣金结算
-    onClick_settleExamine($data) {
+    clickSettleExamine($data) {
       this.$emit('settleExamine', $data)
     },
+
     // 预约沟通
-    onClick_subscribe($data) {
+    clickSubscribe($data) {
       this.$emit('subscribe', $data)
     },
+
     // 新服务商沟通
-    onClick_newAgent($data) {
+    clickNewAgent($data) {
       this.$emit('newAgent', $data)
     },
+
     // 客单价异常
-    onClick_unitPrice($data) {
+    clickUnitPrice($data) {
       this.$emit('unitPrice', $data)
     },
+
     // 交易数据异常
-    onClick_transaction($data) {
+    clickTransaction($data) {
       this.$emit('transaction', $data)
     },
+
     // 服务商资料补全
-    onClick_agentCompletion($data) {
+    clickAgentCompletion($data) {
       this.$emit('agentCompletion', $data)
     },
+
     // 设备出库
-    onClick_stock($data) {
+    clickStock($data) {
       this.$emit('stock', $data)
     },
+
     // 工单 -分配
-    onClick_distribution($data) {
+    clickDistribution($data) {
       this.$emit('distribution', $data)
     },
+
     // 工单 - 回复
-    onClick_relpyWork($data) {
+    clickRelpyWork($data) {
       this.$emit('relpyWork', $data)
     },
+
     // 乐刷申诉审核
-    onClick_leSuhaExamine($data) {
+    clickLeSuhaExamine($data) {
       this.$emit('leSuhaExamine', $data)
     },
+
     // 平台资料商户审核
-    onClick_channelExamine($data) {
+    clickChannelExamine($data) {
       this.$emit('channelExamine', $data)
     },
+
     // 财务佣金结算
-    onClick_commission($data) {
+    clickCommission($data) {
       this.$emit('commission', $data)
     },
+
     // 冻结服务商
-    onClick_frozenAgent($data) {
+    clickFrozenAgent($data) {
       this.$emit('frozenAgent', $data)
     },
+
     // 开通服务商
-    onClick_openAgent($data) {
+    clickOpenAgent($data) {
       this.$emit('openAgent', $data)
     }
   }
@@ -464,24 +480,23 @@ export default {
   align-content: flex-start;
   justify-content: space-between;
   overflow: auto;
+
   .item {
     position: relative;
     margin-bottom: 24px;
     padding: 16px 24px;
     width: 48%;
-    // height: 236px;
     background: #fff;
     border-radius: 2px;
-    .list_status {
+
+    .list-status {
       font-size: 14px;
-      color: #000000;
+      color: #000;
       font-weight: 500;
       margin-bottom: 6px;
       line-height: 22px;
     }
-    // &:nth-child(even) {
-    //   margin-left: 24px;
-    // }
+
     .status {
       position: absolute;
       right: 24px;
@@ -490,15 +505,18 @@ export default {
       color: rgba(144, 147, 153, 1);
       line-height: 22px;
     }
+
     .title {
       font-size: 14px;
       color: #909399;
       line-height: 22px;
       margin-bottom: 4px;
+
       span {
         padding-left: 6px;
       }
     }
+
     .detail {
       margin-top: 6px;
       width: 357px;
@@ -508,35 +526,28 @@ export default {
       font-weight: 400;
       color: rgba(144, 147, 153, 1);
       line-height: 22px;
+
       .reason {
         width: 80%;
       }
+
       .note {
         width: 80%;
       }
     }
+
     .oper-box {
-      // position: absolute;
-      // bottom: 16px;
-      // right: 24px;
       img {
         width: 92px;
         height: 92px;
       }
     }
+
     .btn {
       width: 109px;
       height: 32px;
     }
-    .btn_agree {
-      width: 86px;
-      height: 32px;
-    }
 
-    .btn_refuse {
-      width: 86px;
-      height: 32px;
-    }
     .mask {
       position: absolute;
       left: 0;
@@ -546,6 +557,7 @@ export default {
       background-color: #fff;
       opacity: 0.5;
     }
+
     .checkbox-item {
       position: absolute;
       right: 24px;
@@ -569,7 +581,6 @@ export default {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   overflow: hidden;
-  /*! autoprefixer: off */
   -webkit-box-orient: vertical;
 }
 
@@ -579,7 +590,6 @@ export default {
   display: -webkit-box;
   -webkit-line-clamp: 3;
   overflow: hidden;
-  /*! autoprefixer: off */
   -webkit-box-orient: vertical;
 }
 </style>

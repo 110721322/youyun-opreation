@@ -7,8 +7,7 @@
       :show-foot-btn="searchConfig.showFootBtn"
       @search="search"
     />
-    <!-- <data-mode></data-mode> -->
-    <div class="table_box">
+    <div class="table-box">
       <BaseCrud
         ref="table"
         :grid-config="configData.gridConfig"
@@ -22,21 +21,21 @@
         :is-select="false"
         :params="params"
         :api-service="api"
-        @reject="reject"
-        @active="active"
-        @pass="pass"
+        @reject="onClickReject"
+        @active="onClickActive"
+        @pass="onClickPass"
       />
     </div>
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
       <div class="p_head">分配运营</div>
       <Form
-          v-if="drawer"
-          ref="memberEdit"
-          :form-base-data="formConfig.formData"
-          :show-foot-btn="true"
-          :isDrawer="true"
-          @cancel="drawer = false"
-          @confirm="confirm"
+        v-if="drawer"
+        ref="memberEdit"
+        :form-base-data="formConfig.formData"
+        :show-foot-btn="true"
+        :is-drawer="true"
+        @cancel="drawer = false"
+        @confirm="onClickConfirm"
       ></Form>
     </el-drawer>
   </div>
@@ -114,7 +113,8 @@ export default {
         status: $form.status
       }
     },
-    reject(row) {
+
+    onClickReject(row) {
       this.$confirm("是否要驳回该代理商？", "驳回代理商", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认驳回",
@@ -123,16 +123,21 @@ export default {
         api.updateTopAgentStatus({
           operate: 2,
           channelAgentCode: row.channelAgentCode
-        }).then((result) => {
-          this.$message({
-            type: "success",
-            message: "已驳回"
-          });
-          this.$refs.table.getData();
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              type: "success",
+              message: "已驳回"
+            });
+            this.$refs.table.getData();
+          }
         })
-      }).catch(() => {});
+      }).catch(() => {
+        this.$message('取消操作')
+      });
     },
-    active(row) {
+
+    onClickActive(row) {
       this.$confirm("是否要激活该代理商？", "激活代理商", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认激活",
@@ -141,20 +146,26 @@ export default {
         api.updateTopAgentStatus({
           operate: 3,
           channelAgentCode: row.channelAgentCode
-        }).then((result) => {
-          this.$message({
-            type: "success",
-            message: "已激活"
-          });
-          this.$refs.table.getData();
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              type: "success",
+              message: "已激活"
+            });
+            this.$refs.table.getData();
+          }
         })
-      })
+      }).catch(() => {
+        this.$message('取消操作')
+      });
     },
-    pass(row) {
+
+    onClickPass(row) {
       this.selectOption = row;
       this.drawer = true;
     },
-    confirm($ruleForm) {
+
+    onClickConfirm($ruleForm) {
       this.$confirm("是否要通过该代理商？", "通过代理商", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认通过",
@@ -178,6 +189,8 @@ export default {
           })
           this.drawer = false;
         })
+      }).catch(() => {
+        this.$message('取消操作')
       })
     }
   }
@@ -185,11 +198,10 @@ export default {
 </script>
 
 <style scoped>
-  .table_box {
+  .table-box {
     margin: 24px;
     padding: 24px;
     overflow: hidden;
     background: #fff;
-    /* min-width: 1000px; */
   }
 </style>

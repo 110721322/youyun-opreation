@@ -55,5 +55,4 @@ export default {
   rejectTransfer: (params) => API.GET('/operation/v1/corporateTransfer/reject', params),
   // 财务审核-对公转账审核-通过
   passTransfer: (params) => API.GET('/operation/v1/corporateTransfer/pass', params)
-
 }

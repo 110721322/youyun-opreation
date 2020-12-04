@@ -2,7 +2,7 @@
   <div>
     <Search :open-height="searchHeight" :permission="searchConfig.permission" :form-base-data="searchConfig.formData" @search="search" />
 
-    <div class="table_box">
+    <div class="table-box">
       <BaseCrud
         ref="table"
         :params="params"
@@ -70,6 +70,7 @@ export default {
         cityCode: $ruleForm.area ? $ruleForm.area[1] : null
       }
     },
+
     queryInit() {
       api.queryInit().then(res => {
         const labelList = res.data.labelList.map($ele => {
@@ -99,7 +100,7 @@ export default {
 };
 </script>
 <style scoped>
-.table_box {
+.table-box {
   margin: 24px;
   padding: 24px;
   overflow: hidden;

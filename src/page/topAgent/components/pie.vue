@@ -35,26 +35,31 @@ export default {
 </script>
 <style lang="scss" scoped>
 .data-box {
-  padding: 36px 24px 0;
   display: flex;
   justify-content: center;
+  padding: 36px 24px 0;
+
   .data-pie {
     width: 250px;
     height: 300px;
   }
+
   .data-list {
     display: flex;
     flex-direction: column;
     justify-content: center;
+
     .data-item {
       margin-top: 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+
       &:first-child {
         margin-top: 0;
       }
     }
+
     .dot {
       display: inline-block;
       margin-right: 8px;
@@ -62,21 +67,27 @@ export default {
       height: 6px;
       border-radius: 50%;
     }
+
     .dot_d {
       background: #00a1ff;
     }
+
     .dot_z {
       background: #37cbcb;
     }
+
     .dot_b {
       background: #fad337;
     }
+
     .dot_n {
       background: #f2637b;
     }
+
     .dot_x {
       background: #975fe4;
     }
+
     .perc {
       margin-left: 8px;
       font-family: HelveticaNeue;

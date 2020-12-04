@@ -15,11 +15,11 @@
         @check="handleCurrentChange"
       ></el-tree>
     </div>
-    <div class="foot_btn_box">
+    <div class="foot-btn-box">
       <el-checkbox v-model="checkAll" :indeterminate="indeterminate" @change="checkAllChange">全选</el-checkbox>
       <div class="btn-list">
-        <el-button type="primary" class="foot_btn" @click="confirm">确定</el-button>
-        <el-button class="foot_btn" @click="cancel">取消</el-button>
+        <el-button type="primary" class="foot-btn" @click="confirm">确定</el-button>
+        <el-button class="foot-btn" @click="cancel">取消</el-button>
       </div>
     </div>
   </div>
@@ -99,6 +99,7 @@ export default {
       }
       return that.$g.utils.mapNestedArr(this.templateList, 'childrenMenus', mapCallback)
     },
+
     /**
      * 选择节点发生变化触发
      * @param $data 当前选择节点数据
@@ -129,6 +130,7 @@ export default {
         }
       }
     },
+
     checkAllChange() {
       if (this.indeterminate || this.checkAll) {
         this.checkedList = this.allCheckOption;
@@ -137,9 +139,11 @@ export default {
         this.checkedList = []
       }
     },
+
     confirm() {
       this.$emit('confirm', this.checkedIds, this.checkedList)
     },
+
     cancel() {
       this.$emit('cancel')
     }
@@ -155,37 +159,39 @@ export default {
     overflow: auto;
     overflow-y: scroll;
   }
-  .foot_btn_box {
-    width: 100%;
-    padding-left: 32px;
-    border-top: 1px solid #ebeef5;
+
+  .foot-btn-box {
     position: absolute;
     bottom: 0;
     display: flex;
     flex-direction: row;
     align-items: center;
+    padding-left: 32px;
+    width: 100%;
+    border-top: 1px solid #ebeef5;
+
     .btn-list {
       display: flex;
       height: 96px;
       margin-left: 64px;
       flex-direction: row;
       align-content: center;
-      .foot_btn {
+
+      .foot-btn {
         height: 40px;
         padding: 0 20px;
         margin-top: 28px;
         margin-right: 16px;
         margin-left: 0;
       }
-      .foot_btn:last-child {
+
+      .foot-btn:last-child {
         margin-right: 0;
       }
     }
+
     .el-checkbox {
       display: block;
-    }
-    .form_box {
-      margin: 0 59px;
     }
   }
 }

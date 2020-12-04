@@ -1,12 +1,17 @@
 import * as API from '.';
 
 export default {
+  // 财务审核-财务续费审核-查询详情
   getById: (params) => API.GET('/operation/v1/agentRenewAudit/getById', params),
+  // 财务审核-财务续费审核-通过财务续费审核
   updateAuditStatusOfPass: (params) => API.GET('/operation/v1/agentRenewAudit/updateAuditStatusOfPass', params),
+  // 财务审核-财务续费审核-驳回财务续费审核
   updateAuditStatusOfReject: (params) => API.GET('/operation/v1/agentRenewAudit/updateAuditStatusOfReject', params),
-  queryByPage: (params) => API.GET('/operation/v1/agentRenewAudit/queryByPage', params),
+  // 财务审核-财务订购审核-订购审核分页列表
   deviceAuditPage: (params) => API.GET('/operation/v1/financeAudit/deviceAuditPage', params),
+  // 财务审核-财务订购审核-财务订购审核通过
   deviceAuditPass: (params) => API.POST('/operation/v1/financeAudit/deviceAuditPass', params),
+  // 财务审核-财务订购审核-财务订购审核驳回
   deviceAuditReject: (params) => API.POST('/operation/v1/financeAudit/deviceAuditReject', params),
   // 顶级佣金审核-运营审核列表查询
   topListOperationSettle: (params) => API.POST('/operation/v1/topAgentAudit/topListOperationSettle', params),
@@ -39,5 +44,7 @@ export default {
   // 顶级服务商-财务审核列表查询
   topListFinanceSettle: (params) => API.POST('/operation/v1/topAgentAudit/listFinanceSettle', params),
   // 服务商-财务审核列表查询
-  listFinanceSettle: (params) => API.POST('/operation/v1/agentSettle/listFinanceSettle', params)
+  listFinanceSettle: (params) => API.POST('/operation/v1/agentSettle/listFinanceSettle', params),
+
+  queryByPage: (params) => API.GET('/operation/v1/agentRenewAudit/queryByPage', params)
 };

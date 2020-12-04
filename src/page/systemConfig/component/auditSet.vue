@@ -45,7 +45,7 @@
       </div>
       <!-- 菜单树结束 -->
     </el-form>
-    <div class="foot_btn_box">
+    <div class="foot-btn-box">
       <el-button type="primary" size="normal" @click="confirm">确定</el-button>
       <el-button size="normal" @click="cancle">取消</el-button>
     </div>
@@ -178,9 +178,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.foot_btn_box {
-  width: 500px;
-  border-top: 1px solid #ebeef5;
+.foot-btn-box {
   position: fixed;
   bottom: 0;
   right: 0;
@@ -189,18 +187,8 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-content: center;
-
-  .foot_btn {
-    width: 113px;
-    height: 40px;
-    margin-top: 28px;
-    margin-left: 12px;
-    margin-right: 12px;
-  }
-
-  .form_box {
-    margin: 0 59px;
-  }
+  width: 500px;
+  border-top: 1px solid #ebeef5;
 }
 
 .custom-tree-node {

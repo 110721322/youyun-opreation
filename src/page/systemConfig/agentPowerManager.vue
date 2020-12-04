@@ -10,9 +10,9 @@
       @search="search"
     />
 
-    <div class="table_box">
-      <div class="tabale_title_box">
-        <el-button class="btn" type="primary" @click="onClick_addUser">添加成员</el-button>
+    <div class="table-box">
+      <div class="tabale-title-box">
+        <el-button class="btn" type="primary" @click="clickAddUser">添加成员</el-button>
       </div>
       <BaseCrud
         :grid-config="configData.gridConfig"
@@ -27,7 +27,7 @@
         :row-key="'id'"
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
-        @buy="onClick_buy"
+        @buy="onClickBuy"
       ></BaseCrud>
     </div>
 
@@ -99,15 +99,17 @@ export default {
         }
       ];
     },
-    selectionChange($val) {},
-    onClick_addUser() {
+
+    clickAddUser() {
       this.fromConfigData = FORM_CONFIG.deviceData;
       this.drawer = true;
     },
+
     cancel(done) {
       done();
     },
-    onClick_buy() {
+
+    onClickBuy() {
       this.fromConfigData = FORM_CONFIG.buyData;
       this.drawer = true;
     }
@@ -116,56 +118,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;
   overflow: hidden;
   background: #fff;
 }
-.form_item {
-  float: left !important;
-}
-.clear_both {
-  clear: both !important;
-}
-.btn_list {
-  /* background: rebeccapurple; */
-  position: absolute;
-  right: 0;
-  bottom: 21px;
-  right: 24px;
-}
 
-.demo-table-expand {
-  font-size: 0;
-}
-.demo-table-expand label {
-  width: 90px;
-  color: #99a9bf;
-}
-.demo-table-expand .el-form-item {
-  margin-right: 0;
-  margin-bottom: 0;
-  /* width: 25%; */
-}
-.form-box {
-  display: flex;
-  justify-content: space-between;
-}
-
-.tabale_title_box {
+.tabale-title-box {
   height: 52px;
   width: 100%;
+
   .title {
+    float: left;
+    margin-left: 10px;
     font-size: 16px;
     font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 500;
     color: rgba(51, 51, 53, 1);
-    float: left;
-    margin-left: 10px;
-    // line-height: 52px;
   }
+
   .btn {
     float: right;
   }

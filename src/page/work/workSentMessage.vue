@@ -3,7 +3,6 @@
     <div class="p_head">短信群发</div>
     <div class="content-box">
       <div class="title">{{ fromConfigData.title }}</div>
-
       <sendMessage :form-base-data="fromConfigData.formData" :label-width="'auto'"></sendMessage>
     </div>
   </div>
@@ -50,13 +49,14 @@ export default {
 <style scoped>
 .content-box {
   margin: 24px;
-  background-color: #fff;
   padding-bottom: 24px;
+  background-color: #fff;
 }
+
 .title {
+  padding-left: 24px;
   height: 54px;
   line-height: 54px;
-  padding-left: 24px;
   font-size: 16px;
   font-weight: 500;
   color: rgba(51, 51, 53, 1);

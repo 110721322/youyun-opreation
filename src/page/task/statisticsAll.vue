@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="p_head">任务类型: {{statisticsData.taskValue}}</div>
-    <div class="table_box">
+    <div class="table-box">
       <BaseCrud
           v-if="openType === 1"
           ref="table"
@@ -70,48 +70,34 @@ export default {
     const undo = this.statisticsData.undoType
     if (type === 1 && undo === 1) {
       this.configData = WORK_CONFIG.gridConfig
-    }
-    if (type === 2 && undo === 1) {
+    } else if (type === 2 && undo === 1) {
       this.configData = WORK_CONFIG.merchantExamine
-    }
-    if (type === 3 && undo === 1) {
+    } else if (type === 3 && undo === 1) {
       this.configData = WORK_CONFIG.overTime
-    }
-    if (type === 4 && undo === 1) {
+    } else if (type === 4 && undo === 1) {
       this.configData = WORK_CONFIG.commission
-    }
-    if (type === 5 && undo === 1) {
+    } else if (type === 5 && undo === 1) {
       this.configData = WORK_CONFIG.subscribe
-    }
-    if (type === 6 && undo === 1) {
+    } else if (type === 6 && undo === 1) {
       this.configData = WORK_CONFIG.newAgent
-    }
-    if (type === 7 && undo === 1) {
+    } else if (type === 7 && undo === 1) {
       this.configData = WORK_CONFIG.unitPrice
-    }
-    if (type === 8 && undo === 1) {
+    } else if (type === 8 && undo === 1) {
       this.configData = WORK_CONFIG.transaction
-    }
-    if (type === 9 && undo === 1) {
+    } else if (type === 9 && undo === 1) {
       this.configData = WORK_CONFIG.agentCompletion
-    }
-    if (type === 10 && undo === 1) {
+    } else if (type === 10 && undo === 1) {
       this.configData = WORK_CONFIG.stock
-    }
-    if (type === 11 && undo === 1) {
+    } else if (type === 11 && undo === 1) {
       this.configData = WORK_CONFIG.distribution
-    }
-    if (type === 12 && undo === 1) {
+    } else if (type === 12 && undo === 1) {
       this.configData = WORK_CONFIG.leSuhaExamine
-    }
-    if (type === 13 && undo === 1) {
+    } else if (type === 13 && undo === 1) {
       this.configData = WORK_CONFIG.channelExamine
-    }
-    if (undo === 2) {
+    } else if (undo === 2) {
       this.configData = WORK_CONFIG.commissionSettle
       this.getData()
-    }
-    if (undo === 1) {
+    } else if (undo === 1) {
       this.api = api.queryOperationTaskList
     }
   },
@@ -137,7 +123,7 @@ export default {
 </script>
 
 <style>
-  .table_box {
+  .table-box {
     padding: 24px 24px;
   }
 </style>

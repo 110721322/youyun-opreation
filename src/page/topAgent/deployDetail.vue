@@ -10,7 +10,7 @@
         <li><span>法人姓名：</span><span>{{ detail.personName }}</span></li>
         <li><span>联系邮箱：</span><span>{{ detail.email }}</span></li>
       </ul>
-      <ul class="detail" style="margin-bottom: 42px;">
+      <ul class="detail detail-no">
         <div class="top-title">部署信息</div>
         <li><span>阿里云帐号：</span><span>{{ detail.aliyunAccount }}</span></li>
         <li><span>阿里云密码：</span><span>{{ aliSeeFlag ? detail.aliyunPassword : '********' }}</span><img :src="aliSeeFlag ? seePassword : hidePassword" alt="" @click="aliSeeFlag = !aliSeeFlag"></li>
@@ -69,56 +69,67 @@ export default {
 
 <style scoped lang="scss">
   .content {
-    width: 100%;
     padding: 24px 24px 0 24px;
+    width: 100%;
+
     .detail {
-      width: 100%;
       margin-bottom: 19px;
-      background: #ffffff;
       padding-bottom: 8px;
+      width: 100%;
+      background: #fff;
+
       .top-title {
+        margin-bottom: 20px;
+        padding-left: 24px;
         width: 100%;
         height: 62px;
-        border-bottom: 1px solid #EBEEF5;
-        padding-left: 24px;
+        border-bottom: 1px solid #ebeef5;
         line-height: 62px;
         color: #333335;
         font-size: 14px;
         font-weight: 500;
-        margin-bottom: 20px;
       }
+
       li {
         display: flex;
         align-items: center;
         margin-bottom: 16px;
         font-size: 14px;
+
         span:nth-child(1) {
-          display: block;
           width: 108px;
+          display: block;
           text-align: right;
-          color: #000000;
+          color: #000;
         }
+
         span:nth-child(2) {
           color: #606266;
         }
+
         img {
           display: block;
+          margin-left: 4px;
           width: 16px;
           height: 16px;
-          margin-left: 4px;
         }
       }
     }
   }
+
   .btn {
+    margin: 0 auto;
     width: 134px;
     height: 40px;
-    background: #1989FA;
-    color: #ffffff;
+    background: #1989fa;
+    color: #fff;
     font-size: 14px;
     text-align: center;
     line-height: 40px;
     border-radius: 4px;
-    margin: 0 auto;
+  }
+
+  .detail-no {
+    margin-bottom: 42px;
   }
 </style>

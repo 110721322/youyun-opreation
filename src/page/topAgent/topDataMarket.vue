@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="p_head">
+    <div class="p-head">
       <span class="left-title">服务商数据</span>
     </div>
     <div class="title">顶级服务商数量分布</div>
@@ -11,7 +11,7 @@
       <div class="data-box">
         <div class="data-title">
           省份分布排行榜
-          <span class="all-num">共{{totalNum}}个</span>
+          <span class="all-num">共{{ totalNum }}个</span>
         </div>
         <div v-for="(item,index) in mapData" :key="index" class="data-item">
           <div class="data-left">
@@ -26,10 +26,10 @@
       </div>
     </div>
     <search
-        :is-show-all="true"
-        :form-base-data="searchConfig.formData"
-        :show-foot-btn="searchConfig.showFootBtn"
-        @search="search"
+      :is-show-all="true"
+      :form-base-data="searchConfig.formData"
+      :show-foot-btn="searchConfig.showFootBtn"
+      @search="search"
     />
     <div class="title">顶级服务商平均交易额走势</div>
     <div class="trend-box">
@@ -38,27 +38,27 @@
       </div>
       <div class="data-box">
         <dataItem
-            :is-show-table="true"
-            :title="'总交易额排行榜'"
-            :is-show-more="true"
-            :config-data="tableConfigData5"
-            :item-test-data="totalAmountRank"
-            :is-show-line="false"
-            :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
-            @showMore="handleShowMore"
+          :is-show-table="true"
+          :title="'总交易额排行榜'"
+          :is-show-more="true"
+          :config-data="tableConfigData5"
+          :item-test-data="totalAmountRank"
+          :is-show-line="false"
+          :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
+          @showMore="handleShowMore"
         ></dataItem>
       </div>
     </div>
     <div class="pie-box">
       <dataItem
-          class="pie-item"
-          :title="'新增商户数量排行'"
-          :config-data="tableConfigData2"
-          :is-show-more="true"
-          :is-show-table="true"
-          :item-test-data="addMerchantCount"
-          :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
-          @showMore="handleShowMore"
+        class="pie-item"
+        :title="'新增商户数量排行'"
+        :config-data="tableConfigData2"
+        :is-show-more="true"
+        :is-show-table="true"
+        :item-test-data="addMerchantCount"
+        :item-header-cell-style="{ backgroundColor: '#FAFAFA' }"
+        @showMore="handleShowMore"
       />
     </div>
   </div>
@@ -194,12 +194,14 @@ export default {
     this.queryTopAgentNumber();
     this.search();
   },
+
   beforeRouteUpdate(to, from, next) {
     if (from.meta.refreshDom) {
       this.beforeRouterPromise = Promise.resolve(1);
     }
     next()
   },
+
   updated() {
     if (this.$g.utils.isPromise(this.beforeRouterPromise)) {
       this.beforeRouterPromise.then(() => {
@@ -210,11 +212,6 @@ export default {
     }
   },
   methods: {
-    handleCheckAllChange() {},
-    handleChecked() {},
-    showRightbar() {
-      this.drawer = true
-    },
     cancleClose() {
       this.drawer = false
     },
@@ -226,32 +223,33 @@ export default {
         this.$message(err);
       });
     },
+
     // 服务商平均交易额走势
     queryTradeAverageList() {
       api.queryTradeAverageList(this.queryParams).then(res => {
         this.averageList = res.data;
         this.drawLine()
-      }).catch(err => {
-        this.$message(err);
-      });
+      })
     },
+
     // 总交易排行榜
     queryListByTurnover() {
       api.queryListByTurnover(this.queryParams).then(res => {
         this.totalAmountRank = res.data;
-      }).catch(err => {
-        this.$message(err);
-      });
+      })
     },
+
     handleShowMore() {
       this.$router.push({ name: "topAgentData" });
     },
+
     search($ruleForm = {date: [this.$g.utils.getToday(), this.$g.utils.getToday(0)]}) {
       Object.assign(this.queryParams, {beginDate: $ruleForm.date[0], endDate: $ruleForm.date[1]});
       this.queryListByTurnover();
       this.queryTradeAverageList();
       this.queryListByNewMerchantCount();
     },
+
     queryTopAgentNumber() {
       api.queryTopAgentNumber().then(res => {
         if (res.data.length > 0) {
@@ -275,6 +273,7 @@ export default {
         this.initMap()
       })
     },
+
     drawLine() {
       // 基于准备好的dom，初始化echarts实例
       if (!this.$refs.echartsLine) return;
@@ -287,6 +286,7 @@ export default {
         myChartLine.resize();
       });
     },
+
     /**
      * 顶级服务商数量分布地图
      */
@@ -380,72 +380,83 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-  .p_head {
+  .p-head {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 24px;
-    background: #ffffff;
+    background: #fff;
     height: 76px;
+
     .right-area {
       display: flex;
       align-items: center;
       height: 76px;
       line-height: 24px;
-      color: #1989FA;
+      color: #1989fa;
       font-size: 14px;
+
       img {
         display: block;
+        margin-right: 6px;
         width: 24px;
         height: 24px;
-        margin-right: 6px;
       }
     }
   }
+
   .pie-box {
-    overflow: hidden;
-    margin: 24px;
     display: flex;
     justify-content: space-between;
+    overflow: hidden;
+    margin: 24px;
+
     .pie-item {
       width: 50%;
       background: #fff;
+
       &:nth-child(even) {
         margin-left: 24px;
       }
     }
   }
+
   .service-box {
-    margin: 0 24px;
     display: flex;
     justify-content: space-between;
     background: #fff;
     overflow: hidden;
+    margin: 0 24px;
+
     .pie-item2 {
       width: 33%;
     }
   }
+
   .title {
     margin: 24px 24px 0;
+    padding-left: 24px;
     height: 64px;
     line-height: 64px;
-    padding-left: 24px;
     font-size: 16px;
     font-weight: 500;
     color: rgba(51, 51, 53, 1);
     border-bottom: 1px solid #ebeef5;
-    background-color: #ffffff;
+    background-color: #fff;
   }
+
   .trend-box {
     display: flex;
     justify-content: space-between;
-    margin: 0 24px;
     overflow: hidden;
-    background-color: #ffffff;
+    background-color: #fff;
+    margin: 0 24px;
+
     .chart-box {
       width: 70%;
       height: 470px;
       position: relative;
+
       .chart-panel {
         position: absolute;
         top: 0;
@@ -454,20 +465,24 @@ export default {
         left: 0;
       }
     }
+
     .data-box {
       width: 30%;
     }
   }
+
   .map-box {
     margin: 0 24px;
     display: flex;
     justify-content: space-between;
-    background-color: #ffffff;
+    background-color: #fff;
     border-bottom: 1px solid #ebeef5;
+
     .chart-box {
       width: 70%;
       height: 429px;
       position: relative;
+
       .chart-panel {
         position: absolute;
         top: 0;
@@ -476,25 +491,31 @@ export default {
         left: 0;
       }
     }
+
     .data-box {
-      width: 30%;
       padding: 28px 60px 0 0;
+      width: 30%;
+
       .data-title {
+        padding-bottom: 7px;
         color: rgba(0, 0, 0, 0.85);
         line-height: 22px;
-        padding-bottom: 7px;
       }
+
       .all-num {
         color: #1989fa;
       }
+
       .data-item {
-        margin-top: 18px;
         display: flex;
         justify-content: space-between;
+        margin-top: 18px;
       }
+
       .data-left {
         color: rgba(0, 0, 0, 0.65);
         line-height: 22px;
+
         .index {
           display: inline-block;
           margin-right: 24px;
@@ -504,104 +525,119 @@ export default {
           line-height: 20px;
           border-radius: 50%;
         }
+
         .hightlight {
           background: rgba(24, 144, 255, 1);
-          color: #ffffff;
+          color: #fff;
         }
+
         .normal {
           background: #f0f2f5;
           color: rgba(0, 0, 0, 0.65);
         }
       }
+
       .data-right {
         color: rgba(0, 0, 0, 0.65);
         line-height: 22px;
+
         .perc {
           color: rgba(0, 0, 0, 0.45);
         }
       }
     }
   }
+
   .draw-title {
+    padding-left: 24px;
     width: 100%;
     height: 76px;
-    border-bottom: 1px solid #EBEEF5;
-    padding-left: 24px;
+    border-bottom: 1px solid #ebeef5;
     line-height: 76px;
     font-size: 20px;
     font-weight: 500;
     color: #333335;
   }
+
   .draw-content {
-    width: 100%;
-    height: 100%;
-    padding: 118px 32px 0 32px;
     position: relative;
     top: -76px;
     left: 0;
+    padding: 118px 32px 0 32px;
+    width: 100%;
+    height: 100%;
+
     .draw-wran {
-      width: 100%;
-      background: #E6F7FF;
-      border: 1px solid #91D5FF;
-      border-radius: 2px;
-      height: 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 0 9px 0 16px;
       margin-bottom: 45px;
+      width: 100%;
+      background: #e6f7ff;
+      border: 1px solid #91d5ff;
+      border-radius: 2px;
+      height: 40px;
+
       .draw-wranleft {
         display: flex;
-        height: 40px;
         align-items: center;
+        height: 40px;
+
         span:nth-child(1) {
           display: block;
+          margin-right: 8px;
           width: 14px;
           height: 14px;
-          color: #ffffff;
-          background: #1890FF;
+          color: #fff;
+          background: #1890ff;
           border-radius: 50%;
           font-size: 12px;
           text-align: center;
           line-height: 14px;
-          margin-right: 8px;
         }
+
         span:nth-child(2) {
-          color: #000000;
+          color: #000;
           font-size: 14px;
         }
       }
+
       img {
         display: block;
         width: 10px;
         height: 10px;
       }
     }
+
     .bottom-btn {
+      position: absolute;
+      left: 0;
+      bottom: 0;
       display: flex;
       align-items: center;
       padding-left: 36px;
       width: 100%;
       height: 92px;
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      border-top: 1px solid #EBEEF5;
+      border-top: 1px solid #ebeef5;
+
       .btn {
-        width: 300px;
-        margin: 0 auto;
         display: flex;
         justify-content: space-between;
+        margin: 0 auto;
+        width: 300px;
+
         button:nth-child(1) {
           width: 114px;
           height: 40px;
-          color: #ffffff;
-          background: #1989FA;
+          color: #fff;
+          background: #1989fa;
           border-radius: 4px;
           text-align: center;
           line-height: 40px;
           font-size: 14px;
         }
+
         button:nth-child(2) {
           width: 114px;
           height: 40px;
@@ -609,11 +645,12 @@ export default {
           border-radius: 4px;
           text-align: center;
           line-height: 40px;
-          border: 1px solid #C7C8CD;
+          border: 1px solid #c7c8cd;
         }
       }
     }
   }
+
   .draw-checkbox .el-checkbox {
     margin-bottom: 30px;
   }

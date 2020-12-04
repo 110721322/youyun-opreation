@@ -3,19 +3,19 @@
     <div class="tab_head">
       <span class="title">待办事项</span>
       <el-menu
-          :default-active="activeIndex"
-          class="el-menu"
-          mode="horizontal"
-          @select="handleSelect"
-        >
-          <el-menu-item index="1">待处理</el-menu-item>
-          <el-menu-item index="2">已处理</el-menu-item>
-        </el-menu>
-      <div style="padding: 24px 24px;background:white;margin:24px;">
-        <el-row style="width: 100%;display:flex;align-items:center;">
+        :default-active="activeIndex"
+        class="el-menu"
+        mode="horizontal"
+        @select="clickSelect"
+      >
+        <el-menu-item index="1">待处理</el-menu-item>
+        <el-menu-item index="2">已处理</el-menu-item>
+      </el-menu>
+      <div class="content-model">
+        <el-row class="content-model-row">
           <el-col :span="18">
             <el-form class="form">
-              <el-row style="width: 100%">
+              <el-row style="width: 100%;">
                 <el-col :span="11">
                   <el-form-item label="事项类型：" label-width="100px">
                     <el-select v-model="taskValue" placeholder="请选择">
@@ -23,7 +23,8 @@
                         v-for="(item, index) in options"
                         :key="index"
                         :label="item.taskValue"
-                        :value="item.taskType + '/' + item.undoType">
+                        :value="item.taskType + '/' + item.undoType"
+                      >
                       </el-option>
                     </el-select>
                   </el-form-item>
@@ -41,9 +42,9 @@
             </el-form>
           </el-col>
           <el-col :span="6">
-            <div class="btn_list">
-              <el-button type="primary" size="large" @click="onClick_search">搜索</el-button>
-              <el-button plain size="large" @click="onClick_reset">重置</el-button>
+            <div class="btn-list">
+              <el-button type="primary" size="large" @click="clickSearch">搜索</el-button>
+              <el-button plain size="large" @click="clickReset">重置</el-button>
             </div>
           </el-col>
         </el-row>
@@ -112,17 +113,17 @@
               </div>
             </div>
             <!--<div v-if="isCheck" class="check-bottom">-->
-            <!--<span class="confim_text">请选择要批量沟通的任务（已选 {{ checkedListLength }} 个任务）</span>-->
-            <!--  <el-button plain class="confim_btn" @click="onClick_multiCommunacation">确定</el-button>-->
-            <!--  <span class="cancel_btn" @click="onClick_cancelCheckAll">取消</span>-->
-            <!--   <span class="checkall_btn" @click="onClick_doCheckAll">全选</span>-->
+            <!--<span class="confim-text">请选择要批量沟通的任务（已选 {{ checkedListLength }} 个任务）</span>-->
+            <!--  <el-button plain class="confim-btn" @click="onClick_multiCommunacation">确定</el-button>-->
+            <!--  <span class="cancel-btn" @click="clickCancelCheckAll">取消</span>-->
+            <!--   <span class="checkall-btn" @click="clickDoCheckAll">全选</span>-->
             <!--</div>-->
           </div>
           <!--            <div v-if="isCheck" class="check-bottom">-->
-          <!--              <span class="confim_text">请选择要批量沟通的任务（已选 {{ checkedListLength }} 个任务）</span>-->
-          <!--              <el-button plain class="confim_btn" @click="onClick_multiCommunacation">确定</el-button>-->
-          <!--              <span class="cancel_btn" @click="onClick_cancelCheckAll">取消</span>-->
-          <!--              <span class="checkall_btn" @click="onClick_doCheckAll">全选</span>-->
+          <!--              <span class="confim-text">请选择要批量沟通的任务（已选 {{ checkedListLength }} 个任务）</span>-->
+          <!--              <el-button plain class="confim-btn" @click="onClick_multiCommunacation">确定</el-button>-->
+          <!--              <span class="cancel-btn" @click="clickCancelCheckAll">取消</span>-->
+          <!--              <span class="checkall-btn" @click="clickDoCheckAll">全选</span>-->
           <!--            </div>-->
         </div>
       </transition>
@@ -145,11 +146,11 @@
           label-width="110px"
           :foot-btn-label="fromConfigData.footBtnLabel"
           @reject="reject"
-          @confirm="handel_confirm"
+          @confirm="onClickConfirm"
         ></Form>
-        <div style="height: 200px; padding-left: 120px;" v-if="openDataConfig.approvalDetail">
+        <div v-if="openDataConfig.approvalDetail" style="height: 200px; padding-left: 120px;">
           <el-steps direction="vertical" :active="openDataConfig.approvalDetail.length">
-            <el-step :description="item.nodeName" :title="item.nodeStatus === 0 ? '发起' : item.nodeStatus === 1 ? '处理中' : item.nodeStatus === 2 ? '待审批' : item.nodeStatus === 3 ? '已通过' : '已驳回'" :key="index" v-for="(item, index) in openDataConfig.approvalDetail"></el-step>
+            <el-step v-for="(item, index) in openDataConfig.approvalDetail" :key="index" :description="item.nodeName" :title="item.nodeStatus === 0 ? '发起' : item.nodeStatus === 1 ? '处理中' : item.nodeStatus === 2 ? '待审批' : item.nodeStatus === 3 ? '已通过' : '已驳回'"></el-step>
           </el-steps>
         </div>
       </el-drawer>
@@ -284,11 +285,13 @@ export default {
         this.getTask()
       })
     },
+
     queryTaskList() {
       api.queryAllList({}).then(res => {
         this.options = res.data
-      }).catch()
+      })
     },
+
     getTask() {
       api.queryTaskList({
         undoType: this.undoType,
@@ -302,9 +305,11 @@ export default {
         this.listData = res.data.datas;
       })
     },
+
     cancel() {
       this.drawer = false;
     },
+
     reject() {
       this.$confirm("确定拒绝佣金结算审核？", "拒绝审核", {
         distinguishCancelAndClose: true,
@@ -333,7 +338,8 @@ export default {
         })
       })
     },
-    handel_confirm($form) {
+
+    onClickConfirm($form) {
       this.$confirm("确定通过新增服务商审核？", "通过审核", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认",
@@ -361,6 +367,7 @@ export default {
         })
       })
     },
+
     confirm($form) {
       switch (this.taskDes) {
         case "distribu":
@@ -422,6 +429,7 @@ export default {
       }
       this.drawer = false;
     },
+
     // 商户结算失败，点击弹出立即沟通
     settleFail($data) {
       this.drawer = true
@@ -432,6 +440,7 @@ export default {
       commonData.formData[3].initVal = '日常任务 商户结算失败'
       this.fromConfigData = g.utils.deepClone(commonData)
     },
+
     // 服务商到期，点击弹出立即沟通
     overTime($data) {
       this.drawer = true
@@ -442,6 +451,7 @@ export default {
       commonData.formData[3].initVal = '日常任务 服务商到期'
       this.fromConfigData = g.utils.deepClone(commonData)
     },
+
     // 预约沟通，点击弹出立即沟通
     subscribe($data) {
       this.fromConfigData = {};
@@ -453,6 +463,7 @@ export default {
       commonData.formData[3].initVal = '日常任务 预约沟通';
       this.fromConfigData = g.utils.deepClone(commonData);
     },
+
     // 新服务商沟通，点击弹出立即沟通
     newAgent($data) {
       this.drawer = true;
@@ -463,6 +474,7 @@ export default {
       commonData.formData[3].initVal = '日常任务 新服务商沟通';
       this.fromConfigData = g.utils.deepClone(commonData);
     },
+
     // 客单价异常，点击弹出立即沟通
     unitPrice($data) {
       this.drawer = true
@@ -473,6 +485,7 @@ export default {
       commonData.formData[3].initVal = '日常任务 客单价异常'
       this.fromConfigData = g.utils.deepClone(commonData)
     },
+
     // 交易数据异常，点击弹出立即沟通
     transaction($data) {
       this.drawer = true
@@ -483,6 +496,7 @@ export default {
       commonData.formData[3].initVal = '日常任务 交易数据异常'
       this.fromConfigData = commonData
     },
+
     // 商户入件审核，点击跳转到商户审核界面
     merchantExamine($data) {
       this.$router.push({
@@ -492,6 +506,7 @@ export default {
         }
       })
     },
+
     // 佣金结算审核，点击进入运营结算审核，列表中筛选出对应的服务商
     settleExamine($data) {
       this.$router.push({
@@ -501,6 +516,7 @@ export default {
         }
       })
     },
+
     // 服务商资料补全，点击进入服务商列表，筛选出对应的服务商
     agentCompletion($data) {
       this.$router.push({
@@ -510,6 +526,7 @@ export default {
         }
       })
     },
+
     // 设备出库，
     stock($data) {
       this.$router.push({
@@ -519,6 +536,7 @@ export default {
         }
       })
     },
+
     // 工单 - 分配
     distribution($data) {
       this.drawer = true
@@ -526,6 +544,7 @@ export default {
       this.taskDes = 'distribu'
       this.fromConfigData = FORM_CONFIG.distributionData
     },
+
     // 工单 - 回复
     relpyWork($data) {
       this.drawer = true
@@ -533,6 +552,7 @@ export default {
       this.taskDes = 'replay'
       this.fromConfigData = FORM_CONFIG.replyData
     },
+
     // 乐刷申诉审核
     leSuhaExamine($data) {
       this.$router.push({
@@ -542,6 +562,7 @@ export default {
         }
       })
     },
+
     // 平台资料申诉审核
     channelExamine($data) {
       this.$router.push({
@@ -551,6 +572,7 @@ export default {
         }
       })
     },
+
     // 冻结服务商
     frozenAgent($data) {
       this.openDataConfig = $data
@@ -563,6 +585,7 @@ export default {
       commonData.formData[2].initVal = $data.agent.reason
       this.fromConfigData = g.utils.deepClone(commonData)
     },
+
     // 开通服务商
     openAgent($data) {
       this.openDataConfig = $data
@@ -578,6 +601,7 @@ export default {
       commonData.formData[5].initVal = $data.agent.companyAddress
       this.fromConfigData = g.utils.deepClone(commonData)
     },
+
     // 财务佣金结算
     commission($data) {
       this.$router.push({
@@ -589,23 +613,29 @@ export default {
         }
       })
     },
+
     handleCurrentChange(page) {
       this.currentPage = page;
     },
+
     handleSizeChange(size) {
       this.pageSize = size;
     },
+
     handleCommunication($data) {
       this.activityRow = $data;
       this.formStatus = "insertTalkPlan";
       this.drawer = true;
     },
+
     handlePass($data) {
       this.drawer = true;
     },
+
     handleReject($data) {
       this.drawer = true;
     },
+
     queryAllTaskMenu(params, fn) {
       api
         .queryAllTaskMenu({
@@ -613,11 +643,12 @@ export default {
           status: ""
         })
         .then(fn)
-        .catch();
     },
-    onClick_doCheckAll() {
+
+    clickDoCheckAll() {
       this.isCheckAll = true;
     },
+
     handleCheckList($data) {
       this.checkList = $data;
       this.checkedListLength = 0;
@@ -630,20 +661,24 @@ export default {
         this.isCheckAll = false;
       }
     },
-    onClick_reset() {
+
+    clickReset() {
       this.taskValue = ''
       this.taskOwner = ''
     },
-    onClick_cancelCheckAll() {
+
+    clickCancelCheckAll() {
       this.isCheck = false;
     },
-    onClick_search() {
+
+    clickSearch() {
       var type = this.taskValue.split('/');
       this.taskType = type[0];
       this.undoType = type[1];
       this.getTaskMenu();
     },
-    handleSelect($item) {
+
+    clickSelect($item) {
       this.activeIndex = $item;
       switch ($item) {
         case "1":
@@ -673,6 +708,7 @@ export default {
       this.taskType = '';
       this.getTaskMenu();
     },
+
     handleNodeClick($data) {
       this.taskType = $data.taskType;
       this.undoType = $data.undoType;
@@ -704,9 +740,6 @@ export default {
           this.openType = $data.taskType + '/' + $data.undoType;
           this.listData = res.data.datas;
         })
-        .catch(err => {
-          console.error(err);
-        });
     }
   }
 };
@@ -717,17 +750,23 @@ export default {
   margin-left: 170px;
 }
 
+.content-model {
+  padding: 24px 24px;
+  background: #fff;
+  margin: 24px;
+}
+
+.content-model-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
 .crud-pagination {
   background: #fff;
   padding: 16px 24px;
   text-align: right;
   margin-top: 25px;
-}
-
-.btn_list {
-  /* position: absolute;
-  top: 0;
-  right: 0; */
 }
 
 .input-with-select {
@@ -750,13 +789,11 @@ export default {
 }
 
 .form {
-  /* height: 88px; */
-  background: rgba(255, 255, 255, 1);
-  /* padding: 24px; */
-  /* margin-bottom: 24px; */
   display: flex;
+  background: rgba(255, 255, 255, 1);
 }
-/deep/ .el-form-item{
+
+/deep/ .el-form-item {
   margin-bottom: 0;
 }
 
@@ -778,11 +815,11 @@ export default {
   padding: 14px 0;
 }
 
-.btn_checkall {
+.btn-checkall {
   margin-left: 71px;
 }
 
-.confim_text {
+.confim-text {
   margin-left: 236px;
   height: 20px;
   font-size: 14px;
@@ -793,13 +830,13 @@ export default {
   opacity: 0.8;
 }
 
-.confim_btn {
+.confim-btn {
   margin-left: 33px;
   width: 85px;
   height: 32px;
 }
 
-.cancel_btn {
+.cancel-btn {
   margin-left: 32px;
   height: 22px;
   font-size: 14px;
@@ -810,7 +847,7 @@ export default {
   opacity: 0.8;
 }
 
-.checkall_btn {
+.checkall-btn {
   margin-left: 220px;
   height: 22px;
   font-size: 14px;
@@ -820,9 +857,7 @@ export default {
   line-height: 22px;
   opacity: 0.8;
 }
-</style>
 
-<style>
 .el-tree-node__content {
   height: 37px;
 }

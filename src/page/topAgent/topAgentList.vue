@@ -2,45 +2,45 @@
   <div class="container">
     <div class="p_head">顶级服务商列表</div>
     <search
-        :open-height="searchMaxHeight"
-        :form-base-data="searchConfig.formData"
-        :show-foot-btn="searchConfig.showFootBtn"
-        @search="search"
+      :open-height="searchMaxHeight"
+      :form-base-data="searchConfig.formData"
+      :show-foot-btn="searchConfig.showFootBtn"
+      @search="search"
     />
-    <div class="table_box">
+    <div class="table-box">
       <div class="two-btn">
-        <el-button type="primary" class="s-table-btn" @click="updateOperation">转移运营</el-button>
+        <el-button type="primary" class="s-table-btn" @click="clickUpdateOperation">转移运营</el-button>
       </div>
       <BaseCrud
-          ref="table"
-          :grid-config="configData.gridConfig"
-          :grid-btn-config="configData.gridBtnConfig"
-          :grid-data="testData"
-          :form-data="configData.formModel"
-          :grid-edit-width="220"
-          form-title="用户"
-          :is-async="true"
-          :is-select="true"
-          :params="params"
-          :api-service="apiService"
-          @selectionChange="selectionChange"
-          @detail="openDetail"
-          @thaw="thaw"
-          @frozen="frozen"
-          @openAgentManager="openAgentManager"
-          @addInfo="openDetail"
+        ref="table"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :grid-data="testData"
+        :form-data="configData.formModel"
+        :grid-edit-width="220"
+        form-title="用户"
+        :is-async="true"
+        :is-select="true"
+        :params="params"
+        :api-service="apiService"
+        @selectionChange="onClickSelectionChange"
+        @detail="onClickOpenDetail"
+        @thaw="onClickThaw"
+        @frozen="onClickFrozen"
+        @openAgentManager="openAgentManager"
+        @addInfo="onClickOpenDetail"
       />
     </div>
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
       <div class="p_head">分配运营</div>
       <Form
-          v-if="drawer"
-          ref="memberEdit"
-          :form-base-data="formConfig.formData"
-          :show-foot-btn="true"
-          :isDrawer="true"
-          @cancel="drawer = false"
-          @confirm="transfer"
+        v-if="drawer"
+        ref="memberEdit"
+        :form-base-data="formConfig.formData"
+        :show-foot-btn="true"
+        :is-drawer="true"
+        @cancel="drawer = false"
+        @confirm="onClickTransfer"
       ></Form>
     </el-drawer>
   </div>
@@ -112,7 +112,8 @@ export default {
         this.setUserList(userList)
       })
     },
-    updateOperation() {
+
+    clickUpdateOperation() {
       if (this.selectData.length) {
         this.drawer = true;
       } else {
@@ -122,7 +123,8 @@ export default {
         });
       }
     },
-    transfer($ruleForm) {
+
+    onClickTransfer($ruleForm) {
       this.$confirm("是否批量转移运营？", "转移运营", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认",
@@ -142,9 +144,11 @@ export default {
         });
       })
     },
-    selectionChange($val) {
+
+    onClickSelectionChange($val) {
       this.selectData = $val;
     },
+
     search($form) {
       this.params = {
         operationId: $form.operationId,
@@ -157,7 +161,8 @@ export default {
         [$form.search]: $form.searchVal
       }
     },
-    openDetail($row) {
+
+    onClickOpenDetail($row) {
       this.$router.push({
         name: "topAgentDetail",
         query: {
@@ -165,7 +170,8 @@ export default {
         }
       })
     },
-    thaw($row) {
+
+    onClickThaw($row) {
       this.$confirm("是否要解冻该代理商？", "解冻代理商", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认解冻",
@@ -174,16 +180,21 @@ export default {
         api.updateTopAgentStatus({
           operate: 5,
           channelAgentCode: $row.channelAgentCode
-        }).then((result) => {
-          this.$message({
-            type: "success",
-            message: "已解冻"
-          });
-          this.$refs.table.getData();
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              type: "success",
+              message: "已解冻"
+            });
+            this.$refs.table.getData();
+          }
         })
+      }).catch(() => {
+        this.$message('取消操作')
       })
     },
-    frozen($row) {
+
+    onClickFrozen($row) {
       this.$confirm("是否要冻结该代理商？", "冻结代理商", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认冻结",
@@ -192,13 +203,17 @@ export default {
         api.updateTopAgentStatus({
           operate: 4,
           channelAgentCode: $row.channelAgentCode
-        }).then((result) => {
-          this.$message({
-            type: "info",
-            message: "已冻结"
-          });
-          this.$refs.table.getData();
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              type: "info",
+              message: "已冻结"
+            });
+            this.$refs.table.getData();
+          }
         })
+      }).catch(() => {
+        this.$message('取消操作')
       })
     },
     openAgentManager(row) {
@@ -211,45 +226,22 @@ export default {
           window.location.href = process.env.VUE_APP_BASEURL + '#/login?ticket' + '=' + res.data
         }
       })
-    },
-    onClick_addServe() {
-      this.$router.push({
-        name: "addTopAgent"
-      })
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-  .table_box {
+  .table-box {
     margin: 24px;
     padding: 24px;
     overflow: hidden;
     background: #fff;
   }
+
   .two-btn {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 8px;
-  }
-  .select_data {
-    width: 100%;
-    height: 40px;
-    background: rgba(230, 247, 255, 1);
-    border: 1px solid rgba(186, 231, 255, 1);
-    line-height: 40px;
-    margin: 16px 0;
-    .icon {
-      color: rgba(24, 144, 255, 1);
-      margin: 0 8px 0 16px;
-    }
-    .blue {
-       color: rgba(24, 144, 255, 1);
-     }
-    .btn {
-      margin-left: 16px;
-      font-size: 14px;
-    }
   }
 </style>

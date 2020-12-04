@@ -42,11 +42,11 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-        .time {
-            font-size:14px;
-            font-family:PingFangSC-Regular,PingFang SC;
-            font-weight:400;
-            color:#F5222D;
-            line-height:22px;
-        }
+  .time {
+    font-size: 14px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #f5222d;
+    line-height: 22px;
+  }
 </style>

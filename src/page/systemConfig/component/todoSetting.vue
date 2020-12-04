@@ -5,19 +5,19 @@
       :rule-form="ruleForm"
       :config-data="configData"
       :span-width="12"
-      @edit="onClick_edit('params')"
+      @edit="onClickEdit('params')"
     ></DetailMod>
     <DetailMod
       :is-show-edit-btn="true"
       :rule-form="ruleForm"
       :config-data="configData2"
-      @edit="onClick_edit('customerPrice')"
+      @edit="onClickEdit('customerPrice')"
     ></DetailMod>
     <DetailMod
       :is-show-edit-btn="true"
       :rule-form="ruleForm"
       :config-data="configData3"
-      @edit="onClick_edit('payData')"
+      @edit="onClickEdit('payData')"
     ></DetailMod>
 
     <div class="btn-box">
@@ -141,6 +141,7 @@ export default {
     cancel(done) {
       this.drawer = false;
     },
+
     confirm($ruleForm) {
       this.$message({
         type: 'warning',
@@ -149,13 +150,15 @@ export default {
       this.drawer = false;
       Object.assign(this.ruleForm, $ruleForm);
     },
-    onClick_edit($formName) {
+
+    onClickEdit($formName) {
       this.fromConfigData = FORM_CONFIG[$formName];
       this.fromConfigData.formData.forEach($formItem => {
         $formItem.initVal = this.ruleForm[$formItem.key];
       })
       this.drawer = true;
     },
+
     save() {
       api.update({
         isTaskCountdown: this.ruleForm.isTaskCountdown ? 1 : 0,

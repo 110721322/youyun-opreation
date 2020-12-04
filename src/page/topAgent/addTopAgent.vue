@@ -5,7 +5,6 @@
       <Form
         :form-base-data="fromConfigData.formData"
         :label-width="'auto'"
-        @commit="handleCommit"
       ></Form>
     </div>
   </div>
@@ -29,10 +28,11 @@ export default {
   .container {
     padding: 32px 24px 0 24px;
   }
+
   .content-box {
-    width: 100%;
-    background: #ffffff;
     padding: 10px 0 40px 0;
+    width: 100%;
+    background: #fff;
     box-sizing: border-box;
   }
 </style>

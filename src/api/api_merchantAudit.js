@@ -21,8 +21,6 @@ export default {
   passDirectChannelAudit: (params) => API.POST('/operation/v1/merchantAudit/passDirectChannelAudit', params),
   // 直连审核-通道驳回商户审核
   rejectDirectChannelAudit: (params) => API.POST('/operation/v1/merchantAudit/rejectDirectChannelAudit', params),
-  merchantUpdateAuditStatusOfPass: (params) => API.POST('/operation/v1/merchantAudit/updateAuditStatusOfPass', params),
-  merchantUpdateAuditStatusOfReject: (params) => API.POST('/operation/v1/merchantAudit/updateAuditStatusOfReject', params),
   // 预审核列表
   preAuditRecordQueryByPage: (params) => API.GET('/operation/v1/merchantPreAuditRecord/queryByPage/settleCard', params),
   // 入件预审核列表
@@ -59,5 +57,6 @@ export default {
   updateSubAuditStatusOfPass: (params) => API.GET('/operation/v1/agentAudit/updateSubAuditStatusOfPass', params),
   // 下级服务商审核-驳回
   updateSubAuditStatusOfReject: (params) => API.GET('/operation/v1/agentAudit/updateSubAuditStatusOfReject', params),
+
   getDownloadUrl: (params) => API.GET('/operation/v1/merchantAudit/getDownloadUrl', params)
 };

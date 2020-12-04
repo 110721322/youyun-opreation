@@ -1,21 +1,40 @@
 <template>
   <div>
-    <div class="p_head_detail">
+    <div class="p-head-detail">
       <div class="top">
         <span>{{ ruleForm.channelAgentName }}</span>
       </div>
     </div>
 
-    <detailMode v-if="ruleForm.businessType === 'enterprise'" :rule-form="ruleForm" :config-data="configData" @edit="itemEdit"></detailMode>
-    <detailMode v-if="ruleForm.businessType === 'individual'" :rule-form="ruleForm" :config-data="configData1" @edit="itemEdit"></detailMode>
+    <detailMode
+      v-if="ruleForm.businessType === 'enterprise'"
+      :rule-form="ruleForm"
+      :config-data="configData"
+      @edit="onClickItemEdit"
+    >
+    </detailMode>
 
-    <detailMode5 :rule-form="ruleForm" :config-data="configData2" @edit="itemEdit" @handle_seem="itemSeem"></detailMode5>
+    <detailMode
+      v-if="ruleForm.businessType === 'individual'"
+      :rule-form="ruleForm"
+      :config-data="configData1"
+      @edit="onClickItemEdit"
+    >
+    </detailMode>
 
-    <div class="bg_box">
+    <detailMode5
+      :rule-form="ruleForm"
+      :config-data="configData2"
+      @edit="onClickItemEdit"
+      @handle_seem="onClickItemSeem"
+    >
+    </detailMode5>
+
+    <div class="bg-box">
       <div class="title">应用</div>
       <el-row>
         <el-col :span="8" class="app" @click.native="buyDevice('buyDevice')">
-          <img src="../../assets/img/Group.png" alt />
+          <img src="../../assets/img/Group.png" alt="订购图标" />
           <div>订购设备</div>
         </el-col>
       </el-row>
@@ -23,7 +42,7 @@
 
     <!--    <el-row :gutter="20">-->
     <!--      <el-col :span="9">-->
-    <!--        <div class="bg_box" style="margin-right:0;margin-top:0;height:314px">-->
+    <!--        <div class="bg-box" style="margin-right:0;margin-top:0;height:314px">-->
     <!--          <div class="title">沟通数据</div>-->
     <!--          <div style="text-align:center;">-->
     <!--            <el-date-picker-->
@@ -43,24 +62,24 @@
     <!--          </div>-->
 
     <!--          <el-row v-if="summaryInfo">-->
-    <!--            <el-col :span="8" class="data_item" style="height:58px">-->
-    <!--              <div class="data_item_title">{{ summaryInfo.theme1 }}</div>-->
+    <!--            <el-col :span="8" class="data-item" style="height:58px">-->
+    <!--              <div class="data-item-title">{{ summaryInfo.theme1 }}</div>-->
     <!--              <div>{{ summaryInfo.theme1Count }}次</div>-->
     <!--            </el-col>-->
-    <!--            <el-col :span="8" class="data_item" style="height:58px">-->
-    <!--              <div class="data_item_title">{{ summaryInfo.theme2 }}</div>-->
+    <!--            <el-col :span="8" class="data-item" style="height:58px">-->
+    <!--              <div class="data-item-title">{{ summaryInfo.theme2 }}</div>-->
     <!--              <div>{{ summaryInfo.theme2Count }}次</div>-->
     <!--            </el-col>-->
-    <!--            <el-col :span="8" class="data_item border_none" style="height:58px">-->
-    <!--              <div class="data_item_title">沟通类型</div>-->
+    <!--            <el-col :span="8" class="data-item border-none" style="height:58px">-->
+    <!--              <div class="data-item-title">沟通类型</div>-->
     <!--              <div>{{ summaryInfo.otherThemeCount }}次</div>-->
     <!--            </el-col>-->
     <!--          </el-row>-->
     <!--        </div>-->
     <!--      </el-col>-->
     <!--      <el-col :span="15">-->
-    <!--        <div class="bg_box" style="margin-left:0;margin-top:0;height:314px">-->
-    <!--          <img class="title_img" src="@/assets/img/clock.png" alt />-->
+    <!--        <div class="bg-box" style="margin-left:0;margin-top:0;height:314px">-->
+    <!--          <img class="title-img" src="@/assets/img/clock.png" alt />-->
     <!--          <div class="title">-->
     <!--            待沟通{{ willConactNum }}次-->
     <!--            <el-button type="primary" style="float:right;margin:10px 24px" @click="addContacts">添加沟通计划</el-button>-->
@@ -84,7 +103,7 @@
     <!--        </div>-->
     <!--      </el-col>-->
     <!--    </el-row>-->
-    <!--    <div class="bg_box" style="height:411px;margin-top:0;">-->
+    <!--    <div class="bg-box" style="height:411px;margin-top:0;">-->
     <!--      <div class="title">-->
     <!--        历史沟通记录-->
     <!--        <el-button type="primary" style="float:right;margin:10px 24px" @click="addSubtotal">添加沟通小计</el-button>-->
@@ -125,20 +144,20 @@
         :form-base-data="contactConfigData"
         :is-drawer="true"
         :show-foot-btn="contactConfigData.showFootBtn"
-        @confirm="handel_addContacts"
+        @confirm="onClickAddContacts"
         @cancel="cancel"
       ></Form>
     </el-drawer>
     <el-drawer :visible.sync="findLiaison" :with-header="false" size="500px">
-      <div class="top_title">
-        <span class="the_title">查看联系人</span>
-        <el-button type="primary" @click="liaisonAdd">添加联系人</el-button>
+      <div class="top-title">
+        <span class="the-title">查看联系人</span>
+        <el-button type="primary" @click="clickAddLiaison">添加联系人</el-button>
       </div>
       <ul class="liaisonList">
         <li v-for="(item, index) in contactsList" :key="index" class="liaison-contant">
           <div class="liaison-top">
             <span class="liaison-name">{{ item.linkmanName }}</span>
-            <div class="liaison-editor" @click="editLiaison(item)">编辑</div>
+            <div class="liaison-editor" @click="clickEditLiaison(item)">编辑</div>
           </div>
           <div class="liasion-info">
             <div class="info-list">
@@ -169,23 +188,23 @@
         :is-drawer="true"
         :form-base-data="liaisonConfigData.formData"
         :show-foot-btn="liaisonConfigData.showFootBtn"
-        @confirm="handel_addLiaison"
+        @confirm="onClickAddLiaison"
         @cancel="addLiaison = false"
       ></Form>
     </el-drawer>
     <el-drawer :visible.sync="financeDrawer" :with-header="false" size="500px">
       <div class="financeTitle">财务信息</div>
       <el-form ref="financialRef" :model="financeModel" :rules="rules">
-        <el-form-item label="结算卡类型" prop="bankAccountType" style="margin: 24px 20% 0 24px;" label-width="120px">
+        <el-form-item label="结算卡类型" prop="bankAccountType" class="finance-box" label-width="120px">
           <el-radio-group v-model="financeModel.bankAccountType">
             <el-radio label="public">对公</el-radio>
             <el-radio label="private">对私</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="银行卡号" prop="bankCardNo" style="margin: 24px 20% 0 24px;" label-width="120px">
+        <el-form-item label="银行卡号" prop="bankCardNo" class="finance-box" label-width="120px">
           <el-input v-model="financeModel.bankCardNo" placeholder="请输入银行卡号"></el-input>
         </el-form-item>
-        <el-form-item label="开户支行" prop="bankContactLine" style="margin: 24px 20% 0 24px;" label-width="120px">
+        <el-form-item label="开户支行" prop="bankContactLine" class="finance-box" label-width="120px">
           <el-select
             v-model="financeModel.bankContactLine"
             filterable
@@ -194,7 +213,7 @@
             placeholder="请输入关键词"
             :remote-method="remoteMethod"
             :loading="loading"
-            style="width:100%"
+            style="width: 100%;"
             @change="handleSelect"
           >
             <el-option
@@ -206,48 +225,27 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="开户支行地区" prop="bankArea" style="margin: 24px 20% 0 24px;" label-width="120px">
+        <el-form-item label="开户支行地区" prop="bankArea" class="finance-box" label-width="120px">
           <el-input v-model="area" disabled></el-input>
         </el-form-item>
-        <el-form-item label="开户名" prop="bankAccountHolder" style="margin: 24px 20% 0 24px;" label-width="120px">
+        <el-form-item label="开户名" prop="bankAccountHolder" class="finance-box" label-width="120px">
           <el-input v-model="financeModel.bankAccountHolder" placeholder="请输入开户名"></el-input>
         </el-form-item>
       </el-form>
       <div class="bottom-btn">
-        <el-button type="primary" size="normal" @click="handel_save">保存</el-button>
-        <el-button size="normal" @click="handel_cancle">取消</el-button>
+        <el-button type="primary" size="normal" @click="clickSave">保存</el-button>
+        <el-button size="normal" @click="clickCancle">取消</el-button>
       </div>
     </el-drawer>
     <el-dialog title="沟通记录详情" :visible.sync="dialogTableVisible">
-      <ul class="liaison_detail">
-        <li>
-          <span>联系人：</span>
-          <span>{{ talkListDetail.linkmanName }}</span>
-        </li>
-        <li>
-          <span>职位：</span>
-          <span>{{ talkListDetail.jobName }}</span>
-        </li>
-        <li>
-          <span>手机号：</span>
-          <span>{{ talkListDetail.phoneNum }}</span>
-        </li>
-        <li>
-          <span>创建人：</span>
-          <span>{{ talkListDetail.operationName }}</span>
-        </li>
-        <li>
-          <span>创建时间：</span>
-          <span>{{ talkListDetail.createTime }}</span>
-        </li>
-        <li>
-          <span>沟通方式：</span>
-          <span>{{ talkListDetail.way }}</span>
-        </li>
-        <li>
-          <span>沟通主题：</span>
-          <span>{{ talkListDetail.theme }}</span>
-        </li>
+      <ul class="liaison-detail">
+        <li><span>联系人：</span><span>{{ talkListDetail.linkmanName }}</span></li>
+        <li><span>职位：</span><span>{{ talkListDetail.jobName }}</span></li>
+        <li><span>手机号：</span><span>{{ talkListDetail.phoneNum }}</span></li>
+        <li><span>创建人：</span><span>{{ talkListDetail.operationName }}</span></li>
+        <li><span>创建时间：</span><span>{{ talkListDetail.createTime }}</span></li>
+        <li><span>沟通方式：</span><span>{{ talkListDetail.way }}</span></li>
+        <li><span>沟通主题：</span><span>{{ talkListDetail.theme }}</span></li>
         <li v-if="talkListDetail.merchantList && talkListDetail.merchantList.length>0">
           <div>问题商户：</div>
           <div v-for="(item, index) in talkListDetail.merchantList" :key="index">
@@ -262,7 +260,15 @@
       </ul>
     </el-dialog>
     <el-drawer :visible.sync="innerDrawer" :with-header="false" size="550px">
-      <power-set v-if="innerDrawer" :role-id="ruleForm.roleId" :template-list="permissionTemplate" :api-service="permissionApi" @confirm="saveUserPermission" @cancel="innerDrawer = false"></power-set>
+      <power-set
+        v-if="innerDrawer"
+        :role-id="ruleForm.roleId"
+        :template-list="permissionTemplate"
+        :api-service="permissionApi"
+        @confirm="saveUserPermission"
+        @cancel="innerDrawer = false"
+      >
+      </power-set>
     </el-drawer>
   </div>
 </template>
@@ -274,8 +280,6 @@ import api_dataMarket from "@/api/api_dataMarket.js";
 import api_device from "@/api/api_device.js";
 import api_systemConfig from "@/api/api_systemConfig";
 import PowerSet from "./components/powerSet";
-// import api_serve from "@/api/api_serve"
-// import BaseCrud from "@/components/table/BaseCrud.vue";
 import detailMode from "@/components/detailMode/detailMode.vue";
 import detailMode5 from "@/components/detailMode/detailMode5.vue";
 import { USER_CONFIG, USER_CONFIG2 } from "./../agent/tableConfig/config_communicate";
@@ -430,6 +434,7 @@ export default {
         }
       })
     },
+
     remoteMethod(query) {
       if (query !== '') {
         this.loading = true;
@@ -448,6 +453,7 @@ export default {
         this.bankOptions = [];
       }
     },
+
     handleSelect(item) {
       api.getBankLineByNo({
         unionCode: item
@@ -472,10 +478,7 @@ export default {
         this.areaCodeNum = res.data.areaCode
       })
     },
-    onClick_changeClientType($item) {
-      // this.activeClass = $item.colorName;
-      this.activeValue = $item.value;
-    },
+
     // 沟通模块
     initCommunication() {
       this.getSelectSummary();
@@ -551,26 +554,28 @@ export default {
         this.talkListDetail = res.data
       })
     },
+
     // 弹出新增联系人的右边抽屉
-    liaisonAdd() {
+    clickAddLiaison() {
       this.liaisonType = 'add'
       this.liaisonConfigData = LISASION.addData
       this.addLiaison = true
     },
+
     // 编辑联系人的右边抽屉
-    editLiaison(row) {
+    clickEditLiaison(row) {
       this.liaisonId = row.id
       this.addLiaison = true
       const newFromConfigData = LISASION.editData;
-      // 编辑前重赋值
       newFromConfigData.formData.forEach((item, index) => {
         item.initVal = row[item.key];
       });
       this.liaisonConfigData = newFromConfigData;
       this.liaisonType = 'edit'
     },
+
     // 添加沟通计划确定按钮
-    handel_addContacts(row) {
+    onClickAddContacts(row) {
       if (this.addDrewerType === 'contactsType') {
         if (!row.addressBookId || !row.nextContactTime || !row.remark || !row.remindType) {
           this.$message({
@@ -648,8 +653,9 @@ export default {
         }
       }
     },
+
     // 新增联系人
-    handel_addLiaison(row) {
+    onClickAddLiaison(row) {
       if (!row.linkmanName || !row.phoneNum || !row.jobStatus || !row.jobName) {
         this.$message({
           message: '请填写必填信息',
@@ -696,26 +702,8 @@ export default {
         }
       }
     },
-    handleClose(tag) {
-      this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
-    },
 
-    showInput() {
-      this.inputVisible = true;
-      this.$nextTick(() => {
-        this.$refs.saveTagInput.$refs.input.focus();
-      });
-    },
-
-    handleInputConfirm() {
-      const inputValue = this.inputValue;
-      if (inputValue) {
-        this.dynamicTags.push(inputValue);
-      }
-      this.inputVisible = false;
-      this.inputValue = "";
-    },
-    itemEdit($model) {
+    onClickItemEdit($model) {
       this.financeModel.bankAccountType = ''
       if ($model === 'finance') {
         this.financeDrawer = true
@@ -745,6 +733,7 @@ export default {
       }
       this.formType = $model
     },
+
     buyDevice($model) {
       this.drawer = true;
       FORM_CONFIG[$model].formData[5].initVal = this.ruleForm.channelAgentName;
@@ -753,7 +742,8 @@ export default {
       this.formType = $model;
       this.fromConfigData = FORM_CONFIG[$model];
     },
-    itemSeem() {
+
+    onClickItemSeem() {
       const params = {
         system: 'operation',
         userId: this.ruleForm.userId,
@@ -778,22 +768,25 @@ export default {
         }
       })
     },
-    closeDrawer() {
-      this.systemDrawer = false;
-      this.templateList = [];
-    },
+
     cancel() {
       this.editType = ''
       this.drawer = false;
       this.addContactsDraw = false
     },
+
     confirm($ruleForm) {
       switch (this.formType) {
         case "buyDevice":
           this.deviceOutputAdd($ruleForm)
           break;
         case "basicData":
-          if (!$ruleForm.businessType || !$ruleForm.channelAgentName || !$ruleForm.personName || !$ruleForm.personMobile || !$ruleForm.area || !$ruleForm.address) {
+          if (!$ruleForm.businessType ||
+            !$ruleForm.channelAgentName ||
+            !$ruleForm.personName ||
+            !$ruleForm.personMobile ||
+            !$ruleForm.area ||
+            !$ruleForm.address) {
             this.$message({
               message: '请填写必填信息',
               type: 'warning'
@@ -833,7 +826,10 @@ export default {
           this.baseInfo($ruleForm);
           break;
         case "address":
-          if (!$ruleForm.expReceiver || !$ruleForm.expMobile || !$ruleForm.expAreaData || !$ruleForm.expAddress) {
+          if (!$ruleForm.expReceiver ||
+            !$ruleForm.expMobile ||
+            !$ruleForm.expAreaData ||
+            !$ruleForm.expAddress) {
             this.$message({
               message: '请填写必填信息',
               type: 'warning'
@@ -846,7 +842,9 @@ export default {
           this.addressInfo($ruleForm);
           break;
         case "rateInfo":
-          if (!$ruleForm.wechatPayRate || !$ruleForm.cloudPayLe1000Rate || !$ruleForm.cloudPayGt1000Rate) {
+          if (!$ruleForm.wechatPayRate ||
+            !$ruleForm.cloudPayLe1000Rate ||
+            !$ruleForm.cloudPayGt1000Rate) {
             this.$message({
               message: '请填写必填信息',
               type: 'warning'
@@ -864,8 +862,9 @@ export default {
           break;
       }
     },
+
     // 编辑保存财务信息
-    handel_save() {
+    clickSave() {
       let validateStatus;
       this.$refs.financialRef.validate(valid => {
         validateStatus = !!valid
@@ -892,9 +891,11 @@ export default {
         }
       })
     },
-    handel_cancle() {
+
+    clickCancle() {
       this.financeDrawer = false
     },
+
     /**
      * 更新顶级服务商基础信息
      */
@@ -923,6 +924,7 @@ export default {
         }
       })
     },
+
     /**
      * 更新顶级服务商邮寄地址
      */
@@ -954,6 +956,7 @@ export default {
         }
       })
     },
+
     /**
      * 更新服务商信息
      */
@@ -975,6 +978,7 @@ export default {
         }
       })
     },
+
     /**
      * 提交设备订单
      */
@@ -1004,6 +1008,7 @@ export default {
         this.$message("订购成功");
       })
     },
+
     getAgentDetail() {
       api_dataMarket.getTopAgentDetail({
         channelAgentCode: this.channelAgentCode,
@@ -1061,281 +1066,311 @@ export default {
 </script>
 
 <style lang="scss">
-  .p_head_detail {
-    height: 76px;
-    background: rgba(255, 255, 255, 1);
-    overflow: hidden;
-    &.red {
-      border-bottom: 2px solid #f5222d;
-    }
-    &.green {
-      border-bottom: 2px solid #30b08f;
-    }
-    &.yellow {
-      border-bottom: 2px solid #fec171;
-    }
-    .top {
-      padding-left: 24px;
-      line-height: 76px;
-      font-size: 20px;
-      font-weight: 500;
-      color: rgba(0, 0, 0, 0.85);
-      span {
-        margin-right: 24px;
-      }
-    }
-    .doit {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      float: left;
-      margin-top: 5px;
-      margin-right: 5px;
-      &.red {
-        background: #f5222d;
-      }
-      &.green {
-        background: #30b08f;
-      }
-      &.yellow {
-        background: #fec171;
-      }
-    }
+.p-head-detail {
+  height: 76px;
+  background: rgba(255, 255, 255, 1);
+  overflow: hidden;
 
-    .el-dropdown-link {
-      cursor: pointer;
-      color: #333335;
-      width: 100px;
-    }
-    .el-icon-arrow-down {
-      font-size: 14px;
-    }
-    .demonstration {
-      display: block;
-      color: #8492a6;
-      font-size: 14px;
-      margin-bottom: 20px;
-    }
-
-    .el-tag + .el-tag {
-      margin-left: 10px;
-    }
-    .button-new-tag {
-      margin-left: 10px;
-      height: 24px;
-      line-height: 24px;
-      padding-top: 0;
-      padding-bottom: 0;
-    }
-    .input-new-tag {
-      width: 90px;
-      margin-left: 10px;
-      vertical-align: top;
-      height: 23px;
-      line-height: 23px;
-    }
-    .tags {
-      margin-left: 32px;
-    }
-    .el-input--mini .el-input__inner {
-      height: 24px !important;
-      line-height: 24px !important;
-    }
+  &.red {
+    border-bottom: 2px solid #f5222d;
   }
 
-  .bg_box {
-    margin: 24px;
-    background: #fff;
-    overflow: hidden;
-    .title {
-      height: 54px;
-      line-height: 54px;
-      padding-left: 24px;
-      font-size: 16px;
-      font-weight: 500;
-      color: rgba(51, 51, 53, 1);
-      border-bottom: 1px solid #ebeef5;
-    }
-    .title_img {
-      width: 20px;
-      height: 20px;
-      margin: 18px 24px 0;
-      float: left;
-    }
+  &.green {
+    border-bottom: 2px solid #30b08f;
   }
-  .app {
-    border-right: 1px solid #ebeef5;
-    text-align: center;
-    font-size: 14px;
+
+  &.yellow {
+    border-bottom: 2px solid #fec171;
+  }
+
+  .top {
+    padding-left: 24px;
+    line-height: 76px;
+    font-size: 20px;
     font-weight: 500;
     color: rgba(0, 0, 0, 0.85);
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    height: 88px;
+
+    span {
+      margin-right: 24px;
+    }
+  }
+
+  .doit {
+    float: left;
+    margin-top: 5px;
+    margin-right: 5px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+
+    &.red {
+      background: #f5222d;
+    }
+
+    &.green {
+      background: #30b08f;
+    }
+
+    &.yellow {
+      background: #fec171;
+    }
+  }
+
+  .el-dropdown-link {
     cursor: pointer;
-    :hover {
-      color: #1890ff;
-    }
-    img {
-      width: 24px;
-      height: 24px;
-      margin-right: 12px;
-    }
+    color: #333335;
+    width: 100px;
   }
 
-  .data_item {
-    border-right: 1px solid #ccc;
-    margin-top: 16px;
-    .data_item_title {
-      font-size: 14px;
-      font-weight: 400;
-      color: rgba(0, 0, 0, 0.45);
-      border: none;
-      text-align: center;
-      margin: 3px 0 17px;
-    }
-    div {
-      text-align: center;
-      font-size: 20px;
-      font-weight: 400;
-      color: rgba(0, 0, 0, 0.85);
-    }
+  .el-icon-arrow-down {
+    font-size: 14px;
   }
 
-  .top_title {
-    width: 100%;
-    height: 72px;
-    padding: 0 24px 0 32px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #EBEEF5;
-    .the_title {
-      font-size: 20px;
-      font-weight: 500;
-      color: #000000;
-    }
-    button {
-      width: 80px;
-      height: 28px;
-      color: #ffffff;
-      font-size: 12px;
-      text-align: center;
-      line-height: 28px;
-      padding: 0 0;
-    }
+  .demonstration {
+    display: block;
+    margin-bottom: 20px;
+    color: #8492a6;
+    font-size: 14px;
   }
 
-  .liaisonList {
-    padding: 32px 24px 100px 24px;
-    width: 100%;
-    height: 100vh;
-    overflow: auto;
-    .liaison-contant {
-      width: 100%;
-      height: 190px;
-      margin-bottom: 24px;
-      border: 1px solid #E9E9E9;
-      border-radius: 4px;
-      .liaison-top {
-        width: 100%;
-        height: 44px;
-        border-bottom: 1px solid #EBEEF5;
-        background: #EBEEF5;
-        padding: 0 24px 0 32px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        span {
-          font-size: 14px;
-          color: #000000;
-          opacity: 85%;
-          font-weight: 500;
-        }
-        .liaison-editor {
-          color: #1989FA;
-          font-size: 14px;
-          cursor: pointer;
-        }
-      }
-      .liasion-info {
-        padding: 24px 0 0 32px;
-        position: relative;
-        top: 0;
-        left: 0;
-        .info-list {
-          margin-bottom: 14px;
-          line-height: 22px;
-          font-size: 14px;
-          span:nth-child(1) {
-            color: #000000;
-          }
-          span:nth-child(2) {
-            color: #606266;
-          }
-        }
-        .jobStatus {
-          position: absolute;
-          right: 40px;
-          top: 20px;
-          img {
-            width: 104px;
-            height: 104px;
-          }
-        }
-      }
-    }
+  .el-tag + .el-tag {
+    margin-left: 10px;
   }
 
-  .liaison_detail {
-    width: 100%;
-    padding-left: 20%;
-    li{
-      display: flex;
-      line-height: 24px;
-      margin-bottom: 8px;
-      span:nth-child(1) {
-        font-size: 16px;
-        color: #333333;
-        padding-right: 20px;
-      }
-      span:nth-child(2) {
-        font-size: 16px;
-      }
-    }
+  .button-new-tag {
+    margin-left: 10px;
+    padding-top: 0;
+    padding-bottom: 0;
+    height: 24px;
+    line-height: 24px;
   }
-  .selectDate {
-    margin-top: 24px;
-    width: 100%!important;
-    max-width: 360px;
+
+  .input-new-tag {
+    margin-left: 10px;
+    width: 90px;
+    vertical-align: top;
+    height: 23px;
+    line-height: 23px;
   }
-  .border_none {
+
+  .tags {
+    margin-left: 32px;
+  }
+
+  .el-input--mini .el-input__inner {
+    height: 24px !important;
+    line-height: 24px !important;
+  }
+}
+
+.bg-box {
+  margin: 24px;
+  background: #fff;
+  overflow: hidden;
+
+  .title {
+    padding-left: 24px;
+    height: 54px;
+    line-height: 54px;
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(51, 51, 53, 1);
+    border-bottom: 1px solid #ebeef5;
+  }
+
+  .title-img {
+    float: left;
+    margin: 18px 24px 0;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.app {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  border-right: 1px solid #ebeef5;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.85);
+  height: 88px;
+  cursor: pointer;
+
+  :hover {
+    color: #1890ff;
+  }
+
+  img {
+    margin-right: 12px;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.data-item {
+  margin-top: 16px;
+  border-right: 1px solid #ccc;
+
+  .data-item-title {
+    margin: 3px 0 17px;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.45);
     border: none;
+    text-align: center;
   }
+
+  div {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.85);
+  }
+}
+
+.top-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px 0 32px;
+  width: 100%;
+  height: 72px;
+  border-bottom: 1px solid #ebeef5;
+
+  .the-title {
+    font-size: 20px;
+    font-weight: 500;
+    color: #000;
+  }
+
+  button {
+    padding: 0 0;
+    width: 80px;
+    height: 28px;
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+    line-height: 28px;
+  }
+}
+
+.liaisonList {
+  padding: 32px 24px 100px 24px;
+  width: 100%;
+  height: 100vh;
+  overflow: auto;
+
+  .liaison-contant {
+    margin-bottom: 24px;
+    width: 100%;
+    height: 190px;
+    border: 1px solid #e9e9e9;
+    border-radius: 4px;
+
+    .liaison-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 24px 0 32px;
+      width: 100%;
+      height: 44px;
+      border-bottom: 1px solid #ebeef5;
+      background: #ebeef5;
+
+      span {
+        font-size: 14px;
+        color: #000;
+        opacity: 85%;
+        font-weight: 500;
+      }
+
+      .liaison-editor {
+        color: #1989fa;
+        font-size: 14px;
+        cursor: pointer;
+      }
+    }
+
+    .liasion-info {
+      padding: 24px 0 0 32px;
+      position: relative;
+      top: 0;
+      left: 0;
+
+      .info-list {
+        margin-bottom: 14px;
+        line-height: 22px;
+        font-size: 14px;
+
+        span:nth-child(1) {
+          color: #000;
+        }
+
+        span:nth-child(2) {
+          color: #606266;
+        }
+      }
+
+      .jobStatus {
+        position: absolute;
+        right: 40px;
+        top: 20px;
+
+        img {
+          width: 104px;
+          height: 104px;
+        }
+      }
+    }
+  }
+}
+
+.liaison-detail {
+  padding-left: 20%;
+  width: 100%;
+
+  li{
+    display: flex;
+    margin-bottom: 8px;
+    line-height: 24px;
+
+    span:nth-child(1) {
+      font-size: 16px;
+      color: #333;
+      padding-right: 20px;
+    }
+
+    span:nth-child(2) {
+      font-size: 16px;
+    }
+  }
+}
+
+.selectDate {
+  margin-top: 24px;
+  width: 100% !important;
+  max-width: 360px;
+}
+
+.border-none {
+  border: none;
+}
 
 .financeTitle {
+  margin-bottom: 32px;
+  padding-left: 24px;
   width: 100%;
   height: 84px;
   border-bottom: 1px solid #ececec;
   line-height: 84px;
-  padding-left: 24px;
   font-size: 28px;
-  margin-bottom: 32px;
 }
 
 .bottom-btn {
-  // position: fixed;
-  // bottom: 0;
-  // right: 0;
-  // height: 96px;
-  width: 500px;
-  padding: 16px 0px;
-  // height: 96px;
-  background: white;
-  border-top: 1px solid #ebeef5;
   position: fixed;
   right: 0;
   bottom: 0;
@@ -1343,5 +1378,13 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-content: center;
+  width: 500px;
+  padding: 16px 0;
+  background: white;
+  border-top: 1px solid #ebeef5;
+}
+
+.finance-box {
+  margin: 24px 20% 0 24px !important;
 }
 </style>

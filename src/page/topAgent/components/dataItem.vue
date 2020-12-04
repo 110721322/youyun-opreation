@@ -2,10 +2,10 @@
   <div class="data-item">
     <div class="title">
       {{ title }}
-      <span v-if="isShowMore" class="show-more" @click="onClick_showMore">查看更多</span>
+      <span v-if="isShowMore" class="show-more" @click="clickShowMore">查看更多</span>
     </div>
     <div v-if="radio" class="tags">
-      <el-radio-group v-model="radio.radio" @change="handleChange">
+      <el-radio-group v-model="radio.radio" @change="clickChange">
         <el-radio-button
           v-for="(item,index) in radio.namelist"
           :key="index"
@@ -65,10 +65,11 @@ export default {
     return {};
   },
   methods: {
-    handleChange($value) {
+    clickChange($value) {
       this.$emit("radioChange", $value);
     },
-    onClick_showMore() {
+
+    clickShowMore() {
       this.$emit("showMore");
     }
   }
@@ -84,6 +85,7 @@ export default {
     color: #333335;
     line-height: 24px;
     height: 24px;
+
     .show-more {
       float: right;
       padding-right: 24px;
@@ -94,16 +96,19 @@ export default {
       line-height: 20px;
     }
   }
+
   .tags {
     padding-left: 24px;
     margin-top: 16px;
   }
+
   .line {
     margin-top: 16px;
     width: 100%;
     border-bottom: 1px solid #e8e8e8;
   }
 }
+
 .table-box {
   padding: 24px;
 }
