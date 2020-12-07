@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: "",
+  name: "DetailBox",
   props: {
     title: {
       type: String

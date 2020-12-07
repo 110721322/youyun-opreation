@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: "",
+  name: "Cascader",
   props: {
     ruleForm: Object,
     formItem: Object

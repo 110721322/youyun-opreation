@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: "",
+  name: "Switch",
   props: {
     ruleForm: Object,
     formItem: Object

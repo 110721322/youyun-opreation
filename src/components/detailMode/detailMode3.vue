@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  name: "",
+  name: "DetailMode3",
   props: { configData: Object, isShowEditBtn: Boolean },
   data() {
     return {

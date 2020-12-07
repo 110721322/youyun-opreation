@@ -39,7 +39,7 @@
           <i class="el-icon-arrow-down el-icon--right"></i>
         </div>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item divided @click.native="modify">
+          <el-dropdown-item divided @click.native="clickModify">
             <span style="display: block;">修改密码</span>
           </el-dropdown-item>
           <el-dropdown-item divided @click.native="logout">
@@ -149,7 +149,7 @@ export default {
         path: '/work/todo'
       });
     },*/
-    modify() {
+    clickModify() {
       this.passwordDrawer = true
     },
     confirm($ruleForm) {

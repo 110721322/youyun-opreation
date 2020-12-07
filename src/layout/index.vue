@@ -1,12 +1,12 @@
 <template>
   <div class="app-wrapper">
     <div class="sidebar-container">
-      <div style="max-height: 100%;" @mouseleave="leave">
+      <div style="max-height: 100%;" @mouseleave="mouseLeave">
         <sidebar style="background:#001529;" :active-name="activeName" />
         <div
           v-if="showMenu2 && menuHoverData && menuHoverData.children && menuHoverData.children.length > 0"
           class="menu2"
-          @mouseleave="leave"
+          @mouseleave="mouseLeave"
         >
           <menu2 :menu2-data="menuHoverData.children"></menu2>
         </div>
@@ -95,7 +95,7 @@ export default {
         this.activeName = activeMenu.name;
       }
     },
-    leave() {
+    mouseLeave() {
       this.menuHoverData = null;
     }
   }

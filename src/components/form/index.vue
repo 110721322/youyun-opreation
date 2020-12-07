@@ -64,7 +64,7 @@ import InputSelect from "./inputSelect.vue";
 import TicketAddForm from "./ticketAddForm.vue";
 
 export default {
-  name: "",
+  name: "Form",
   components: {
     Input,
     Select,

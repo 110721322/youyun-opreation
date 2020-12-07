@@ -43,7 +43,7 @@ import iSwitch from "./components/Switch.vue";
 import Radio from "./components/Radio.vue";
 
 export default {
-  name: "",
+  name: "SendMessage",
   components: {
     Input,
     Select,

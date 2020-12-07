@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  name: "",
+  name: "Input",
   props: {
     ruleForm: Object,
     formItem: Object,

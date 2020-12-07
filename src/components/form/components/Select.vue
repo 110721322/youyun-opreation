@@ -28,7 +28,7 @@
 import * as g from "@/libs/global";
 
 export default {
-  name: "",
+  name: "Select",
   props: {
     ruleForm: Object,
     formItem: Object

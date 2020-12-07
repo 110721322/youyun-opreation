@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: "",
+  name: "Show",
   props: {
     ruleForm: Object,
     formItem: Object,

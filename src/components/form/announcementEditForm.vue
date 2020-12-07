@@ -62,7 +62,7 @@ import Radio from "./components/Radio.vue";
 import Tinymce from "./components/Tinymce/index.vue";
 
 export default {
-  name: "",
+  name: "AnnouncementEditForm",
   components: {
     Input,
     Select,

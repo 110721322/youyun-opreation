@@ -1,5 +1,5 @@
 <template>
-  <div @click="linkProps">
+  <div @click="clickLinkProps">
     <slot :to="to" />
   </div>
 </template>
@@ -15,7 +15,7 @@ export default {
     }
   },
   methods: {
-    linkProps() {
+    clickLinkProps() {
       if (!isExternal(this.to)) {
         this.$router.push({
           path: this.to
