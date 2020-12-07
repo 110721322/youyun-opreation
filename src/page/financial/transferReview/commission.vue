@@ -67,7 +67,7 @@
         <template v-for="(item,index) in fromConfigData.processData">
           <div :key="index" class="process-item">
             <div>
-              <img class="process-icon" :src="item.icon" />
+              <img class="process-icon" :src="item.icon" alt="图标" />
             </div>
             <div class="label">
               {{ item.desc }}
@@ -79,6 +79,7 @@
             v-if="!(index===fromConfigData.processData.length-1)"
             :key="'img'+index"
             class="arrow-img"
+            alt="图标"
           />
         </template>
       </div>

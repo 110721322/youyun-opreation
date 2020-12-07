@@ -4,7 +4,7 @@
       <div v-if="showTip" class="warn">
         <div class="left-icon">i</div>
         <span>已购买该服务，有效期到：2020-10-10 。再次购买后服务到期时间将累加</span>
-        <img src="../../assets/img/cancle.png" alt="" @click="closeWarn">
+        <img src="../../assets/img/cancle.png" alt="icon" @click="closeWarn" />
       </div>
       <div class="buy-info">
         <img class="buy-img" src="../../assets/img/oem_image.png" alt="icon" />
@@ -12,7 +12,7 @@
           <div class="first-body">
             <div class="buy-title">{{ productItem.productName }}</div>
             <div class="buy-subtitle">{{ productItem.productDesc }}</div>
-            <img class="buy-photo" src="" alt="">
+            <img class="buy-photo" src="" alt="icon" />
           </div>
           <div class="second-body">
             <div class="select-date">

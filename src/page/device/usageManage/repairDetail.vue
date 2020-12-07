@@ -5,7 +5,7 @@
         <el-step v-for="(item,index) in stepData" :key="index">
           <template slot="icon">
             <div class="step-border">
-              <img :src="item.img" class="step-img" :class="[item.isApproval?'step-imgborder':'']" />
+              <img :src="item.img" class="step-img" :class="[item.isApproval?'step-imgborder':'']" alt="图标" />
               <i v-if="item.isCheck" class="el-icon-check step-check"></i>
             </div>
           </template>

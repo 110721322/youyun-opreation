@@ -51,8 +51,8 @@
           :config-data="configData.afterData2"
         ></detailMode>
         <div v-if="showComponents.showOperBtns" class="btn-box">
-          <el-button type="primary" size="normal" @click="onClick_pass">资料已全部检查,通过</el-button>
-          <el-button size="normal" @click="onClick_reject">驳回</el-button>
+          <el-button type="primary" size="normal" @click="clickPass">资料已全部检查,通过</el-button>
+          <el-button size="normal" @click="clickReject">驳回</el-button>
         </div>
       </div>
     </transition>
@@ -177,7 +177,7 @@ export default {
       }
       return $ruleForm;
     },
-    onClick_pass() {
+    clickPass() {
       this.$confirm("是否校验完信息并通过", "提示", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认通过",
@@ -226,7 +226,7 @@ export default {
     cancel() {
       this.drawer = false;
     },
-    onClick_reject() {
+    clickReject() {
       this.drawer = true;
       this.fromConfigData = FORM_CONFIG.rejectReason;
     }

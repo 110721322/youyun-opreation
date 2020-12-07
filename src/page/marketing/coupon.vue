@@ -37,16 +37,16 @@
         :before-close="handleClose"
     >
       <div class="dialog_code">
-        <img :src="couponForm.ossUrl" alt="">
+        <img :src="couponForm.ossUrl" alt="图标" />
       </div>
       <div class="option-btn">
         <div class="copy-btn" @click="copyActiveCode($event,couponForm.shortUrl )">
-          <img src="../../assets/img/copy_icon.png" alt="">
+          <img src="../../assets/img/copy_icon.png" alt="图标" />
           <div>复制链接</div>
         </div>
         <span></span>
         <div class="down-btn" @click="downloadCodeImg">
-          <img src="../../assets/img/down_icon.png" alt="">
+          <img src="../../assets/img/down_icon.png" alt="图标" />
           <div>点击下载</div>
         </div>
       </div>

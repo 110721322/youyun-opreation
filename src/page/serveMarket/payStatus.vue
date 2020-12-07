@@ -20,7 +20,7 @@
         <li><span>开户银行：</span><span>杭州银行滨江支行</span></li>
         <div class="voucher">
           <span>打款凭证：</span>
-          <img :src="voucher" alt="">
+          <img :src="voucher" alt="" />
         </div>
       </ul>
     </div>

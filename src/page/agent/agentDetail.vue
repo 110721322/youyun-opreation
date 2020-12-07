@@ -4,7 +4,7 @@
       <div class="top">
         <span>{{ agentDetail.agentName }}</span>
         <!--TODO 后续版本开发
-        <el-dropdown trigger="click" @command="onClick_changeClientType">
+        <el-dropdown trigger="click" @command="clickChangeClientType">
           <div class="el-dropdown-link">
             <div class="doit" :class="[activeClass]"></div>
             <div>
@@ -236,7 +236,7 @@
         :is-drawer="true"
         :form-base-data="contactConfigData"
         :show-foot-btn="contactConfigData.showFootBtn"
-        @confirm="handel_addContacts"
+        @confirm="onClickAddContacts"
         @cancel="cancel"
       ></Form>
     </el-drawer>
@@ -278,7 +278,7 @@
         :is-drawer="true"
         :form-base-data="liaisonConfigData.formData"
         :show-foot-btn="liaisonConfigData.showFootBtn"
-        @confirm="handel_addLiaison"
+        @confirm="onClickAddLiaison"
         @cancel="liaisonCancel"
       ></Form>
     </el-drawer>
@@ -984,7 +984,7 @@ export default {
       }).catch(() => {})
     },
     // 添加沟通计划确定按钮
-    handel_addContacts(row) {
+    onClickAddContacts(row) {
       if (this.addDrewerType === 'contactsType') {
         if (!row.addressBookId || !row.nextContactTime || !row.remark || !row.remindType) {
           this.$message({
@@ -1076,7 +1076,7 @@ export default {
       this.timeDate = value
       this.getSelectSummary(value)
     },
-    onClick_changeClientType($item) {
+    clickChangeClientType($item) {
       this.activeClass = $item.colorName;
       this.activeValue = $item.value;
     },
@@ -1228,7 +1228,7 @@ export default {
       this.addLiaison = false
     },
     // 新增联系人
-    handel_addLiaison(row) {
+    onClickAddLiaison(row) {
       if (!row.linkmanName || !row.phoneNum || !row.jobStatus || !row.jobName) {
         this.$message({
           message: '请填写必填信息',

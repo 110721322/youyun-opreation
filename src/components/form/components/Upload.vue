@@ -18,7 +18,7 @@
       :on-preview="handlePictureCardPreview"
     >
       <video v-if="dialogImageUrl && !showFileList&&(formItem.key==='video')" :src="dialogImage" class="avatar" />
-      <img v-else-if="dialogImageUrl && !showFileList" :src="dialogImage" class="avatar" />
+      <img v-else-if="dialogImageUrl && !showFileList" :src="dialogImage" class="avatar" alt="图片" />
       <i v-else class="el-icon-plus s-icon"></i>
     </el-upload>
     <!-- <div v-if="maxNum">最多上传{{ maxNum }}张图片</div> -->

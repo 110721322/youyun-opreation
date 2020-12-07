@@ -8,15 +8,15 @@
           <p>{{commission.totalCommission}}</p>
         </li>
         <li>
-          <p><img src="../../assets/img/wx_pay.png" alt="">微信佣金（元）</p>
+          <p><img src="../../assets/img/wx_pay.png" alt="" />微信佣金（元）</p>
           <p>{{commission.wechatCommission}}</p>
         </li>
         <li>
-          <p><img src="../../assets/img/apply_pay.png" alt="">支付宝佣金(元)</p>
+          <p><img src="../../assets/img/apply_pay.png" alt="" />支付宝佣金(元)</p>
           <p>{{commission.alipayCommission}}</p>
         </li>
         <li>
-          <p><img src="../../assets/img/yun_pay.png" alt="">云闪付佣金(元)</p>
+          <p><img src="../../assets/img/yun_pay.png" alt="" />云闪付佣金(元)</p>
           <p>{{commission.cloudPayCommission}}</p>
         </li>
       </ul>

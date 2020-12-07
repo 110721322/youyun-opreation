@@ -2,7 +2,7 @@
   <div class="container">
     <div class="left-box">
       <div class="tab-box">
-        <img src="@/assets/img/logo.png" class="sidebar-logo">
+        <img src="@/assets/img/logo.png" class="sidebar-logo" alt="logo" />
       </div>
     </div>
     <div class="right-box">
@@ -11,7 +11,7 @@
         <div class="content">
           <div class="middle">
             <div class="content-img">
-              <img src="@/assets/img/order_photo.png" alt="">
+              <img src="@/assets/img/order_photo.png" alt="图标" />
             </div>
             <p class="title1">欢迎使用小马哥服务商管理系统</p>
             <p class="title2">平台将在一个工作日内为您进行资料审核请您耐心等待</p>

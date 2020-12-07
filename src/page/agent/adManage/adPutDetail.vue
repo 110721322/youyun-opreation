@@ -11,7 +11,7 @@
     >
       <template v-slot="{ formItem } ">
         <div v-if="formItem.putService === 3">
-          <div class="select_data">
+          <div class="select-data">
             <span class="el-icon-info icon" />
             <span>
               已添加
@@ -72,7 +72,7 @@
         <el-button size="medium" @click="clickReset">重置</el-button>
       </div>
       <div class="form-box">
-        <!--TODONEXT <div class="select_data2">
+        <!--TODONEXT <div class="select-data2">
           <span class="el-icon-info icon" />
           <span>
             已选择
@@ -215,7 +215,7 @@ export default {
     margin: 0 5px;
   }
 }
-.select_data {
+.select-data {
   margin: 16px 0 0 126px;
   width: 50%;
   height: 40px;
@@ -238,7 +238,7 @@ export default {
   }
 }
 
-.select_data2 {
+.select-data2 {
   margin: 16px 0;
   width: 100%;
   height: 40px;

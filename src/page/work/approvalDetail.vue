@@ -10,7 +10,7 @@
               <el-step v-for="(item,index) in configData.approvalDetail" :key="index">
                 <template slot="icon">
                   <div class="step-border">
-                    <img :src="item.img" class="step-img" :class="[item.isApproval?'step-imgborder':'']" />
+                    <img :src="item.img" class="step-img" :class="[item.isApproval?'step-imgborder':'']" alt="icon" />
                     <i v-if="item.isCheck" class="el-icon-check step-check"></i>
                   </div>
                 </template>
@@ -43,7 +43,7 @@
           <div class="list">
             <div class="list-title">服务商提交信息</div>
             <div class="list-content">
-              <li>发票照片：<img :src="configData.agentSettleRecord.expressImg" alt=""></li>
+              <li>发票照片：<img :src="configData.agentSettleRecord.expressImg" alt="icon" /></li>
               <li>发票快递单号：<span>{{ configData.agentSettleRecord.expressNumber }}</span></li>
               <li>结算账户：<span>{{ configData.agentSettleRecord.settleAccount }}</span></li>
               <li>备用联系方式：<span>{{ configData.agentSettleRecord.alternatePhone }}</span></li>

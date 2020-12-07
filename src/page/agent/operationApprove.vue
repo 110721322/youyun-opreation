@@ -36,7 +36,7 @@
         <template v-for="(item,index) in fromConfigData.processData">
           <div :key="index" class="process-item">
             <div>
-              <img class="process-icon" :src="item.icon" />
+              <img class="process-icon" :src="item.icon" alt="图标" />
             </div>
             <div class="label">
               {{ item.label }}
@@ -49,6 +49,7 @@
             :key="'img'+index"
             :src="arrow"
             class="arrow-img"
+            alt="图标"
           />
         </template>
       </div>

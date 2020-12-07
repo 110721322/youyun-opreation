@@ -93,7 +93,7 @@
         </template>
         <template v-if="questions.length===0">
           <div class="no-knowledge">
-            <img class="img" :src="ticketKnowledgeImg" alt />
+            <img class="img" :src="ticketKnowledgeImg" alt="图片" />
             <div class="tip">暂无相关知识</div>
           </div>
         </template>

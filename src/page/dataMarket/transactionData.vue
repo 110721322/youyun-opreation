@@ -3,7 +3,7 @@
     <div class="p-head">
       <span class="left-title">交易设置</span>
       <div class="right-area" @click="showRightbar">
-        <img src="../../assets/img/menu_icon.png" alt="">
+        <img src="../../assets/img/menu_icon.png" alt="图标" />
         <span>自定义设置</span>
       </div>
     </div>
@@ -39,7 +39,7 @@
               </div>
               <el-tooltip class="item" effect="dark" :content="item.tooltip" placement="bottom">
                 <div class="progress-box">
-                  <img :src="smileImg" class="data-img" />
+                  <img :src="smileImg" class="data-img" alt="图标" />
                   <el-progress
                     :percentage="item.ratio"
                     color="rgba(58,189,45,1)"
@@ -51,16 +51,16 @@
               </el-tooltip>
               <div
                 :class="[radio === index ? 'check-radio' : 'uncheck-radio']"
-                @click="onClick_changeRadio(index)"
+                @click="onClickChangeRadio(index)"
               />
             </div>
           </div>
           <div class="right">
             <div class="tip">
-              <span class="dot_blue" />{{ lineOption.series[1].name }}
-              <span class="dot_green" />{{ lineOption.series[0].name }}
-              <div class="change-btn" style="cursor: pointer;" @click="onClick_changeArts">
-                <img :src="toggleImg" class="change-icon" />
+              <span class="dot-blue" />{{ lineOption.series[1].name }}
+              <span class="dot-green" />{{ lineOption.series[0].name }}
+              <div class="change-btn" style="cursor: pointer;" @click="onClickChangeArts">
+                <img :src="toggleImg" class="change-icon" alt="图标" />
                 {{ isLineShow ? '切换柱状图' : '切换折线图' }}
               </div>
             </div>
@@ -110,7 +110,7 @@
             <span>i</span>
             <span>涉及各个平台，可定制为自己品牌的logo强化品牌形象</span>
           </div>
-          <img src="../../assets/img/cancle.png" alt="">
+          <img src="../../assets/img/cancle.png" alt="图标" />
         </div>
         <div class="draw-checkbox">
           <el-checkbox-group v-model="checkedSelect" @change="handleChecked">
@@ -560,11 +560,11 @@ export default {
         this.search2({date: $time})
       })
     },
-    onClick_changeArts() {
+    onClickChangeArts() {
       this.isLineShow = !this.isLineShow;
       this.drawEcharts();
     },
-    onClick_changeRadio($index) {
+    onClickChangeRadio($index) {
       this.radio = $index;
       this.drawEcharts();
     },
@@ -759,7 +759,7 @@ export default {
         }
       }
     }
-    .dot_blue {
+    .dot-blue {
       display: inline-block;
       margin-right: 8px;
       width: 6px;
@@ -768,7 +768,7 @@ export default {
       border-radius: 50%;
       vertical-align: middle;
     }
-    .dot_green {
+    .dot-green {
       display: inline-block;
       margin-left: 30px;
       margin-right: 8px;

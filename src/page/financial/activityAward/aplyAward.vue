@@ -43,7 +43,7 @@
       >
         <div class="top-area">
           <span>导入奖励名单</span>
-          <img src="../../../assets/img/cancle.png" alt="" @click="drawer = false">
+          <img src="../../../assets/img/cancle.png" alt="图标" @click="drawer = false" />
         </div>
         <div class="content">
           <Form

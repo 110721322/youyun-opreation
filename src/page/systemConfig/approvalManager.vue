@@ -45,7 +45,7 @@
             <el-button style="margin-left: 10px;">删除</el-button>
           </el-form-item>
           <div v-if="key<checkListLength-1" style="width: 100%;">
-            <img src="@/assets/img/more.png" style="display: block; margin: 0 auto; width: 20px;" />
+            <img src="@/assets/img/more.png" style="display: block; margin: 0 auto; width: 20px;" alt="icon" />
           </div>
         </div>
 

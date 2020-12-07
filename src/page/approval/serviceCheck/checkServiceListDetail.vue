@@ -34,8 +34,8 @@
           ></detailMode>
         </div>
         <div v-if="showComponents.showOperBtns" class="btn-box">
-          <div class="btn_pass" @click="onClick_sign">资料已检查并提交签约</div>
-          <div class="btn-reject" @click="onClick_reject">驳回</div>
+          <div class="btn-pass" @click="clickSign">资料已检查并提交签约</div>
+          <div class="btn-reject" @click="clickReject">驳回</div>
         </div>
       </div>
     </transition>
@@ -196,7 +196,7 @@ export default {
         })
       }
     },
-    onClick_sign() {
+    clickSign() {
       api.updateSubAuditStatusOfPass({
         agentNo: this.agentNo
       }).then(res => {
@@ -212,7 +212,7 @@ export default {
     cancel() {
       this.drawer = false;
     },
-    onClick_reject() {
+    clickReject() {
       this.drawer = true;
       this.fromConfigData = FORM_CONFIG.rejectReason;
     }
@@ -232,7 +232,7 @@ export default {
     line-height: 40px;
     letter-spacing: 1px;
   }
-  .btn_pass {
+  .btn-pass {
     margin-left: 60px;
     width: 205px;
     height: 40px;

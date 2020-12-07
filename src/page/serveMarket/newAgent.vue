@@ -4,23 +4,23 @@
       <div v-if="productItem.buyStatus === 1" class="warn">
         <div class="left-icon">i</div>
         <span>已购买该服务，有效期到：{{ productItem.expireDate }} 。再次购买后服务到期时间将累加</span>
-        <img src="../../assets/img/cancle.png" alt="">
+        <img src="../../assets/img/cancle.png" alt="icon" />
       </div>
       <div v-if="productItem.buyStatus === 1&&detail.status===2" class="start warn">
         <div class="left-icon">i</div>
         <span>服务器部署中，请耐心等待~ 部署时间2~7个工作日</span>
       </div>
       <div v-if="productItem.buyStatus === 1&&detail.status===3" class="finish warn">
-        <img class="left-photo" src="../../assets/img/order_success.png" alt="">
+        <img class="left-photo" src="../../assets/img/order_success.png" alt="icon" />
         <span>服务器部署成功</span>
       </div>
       <div class="buy-info">
-        <img class="buy-img" src="../../assets/img/new_image.png" alt="">
+        <img class="buy-img" src="../../assets/img/new_image.png" alt="icon" />
         <div class="buy-all">
           <div class="first-body">
             <div class="buy-title">{{ productItem.productName }}</div>
             <div class="buy-subtitle">{{ productItem.productDesc }}</div>
-            <img class="buy-photo" src="" alt="">
+            <img class="buy-photo" src="" alt="icon" />
           </div>
           <div class="second-body">
             <div class="select-date">

@@ -2,7 +2,7 @@
   <div class="container">
     <div class="top">
       <div class="left-img">
-        <img src="../../assets/img/domain_photo.png" alt="">
+        <img src="../../assets/img/domain_photo.png" alt="图标" />
       </div>
       <div class="right-info">
         <div class="right-title">{{ productItem.productName }}</div>

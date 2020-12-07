@@ -4,14 +4,14 @@
       <li class="step" :class="firstStep===1? 'now-step':''">
         <span v-if="firstStep===1 && secondStep===0" :style="{'background': (firstStep===1 && secondStep===0 && thirdStep===0)? '#1989FA' :'#ffffff'}">1</span>
         <span v-if="secondStep===1" style="display: flex; align-items: center; justify-content: center; border: 1px solid #1989FA;">
-          <img src="../../assets/img/step_now.png" style="width: 24px; height: 24px;" />
+          <img src="../../assets/img/step_now.png" style="width: 24px; height: 24px;" alt="图标" />
         </span>
         <span>优惠码信息</span>
         <span></span></li>
       <li class="step" :class="firstStep===1 && secondStep===1? 'now-step':''">
         <span v-if="thirdStep===0" :style="{'background': (firstStep===1 && secondStep===1 && thirdStep===0)? '#1989FA' :'#ffffff'}">2</span>
         <span v-if="thirdStep===1" style="display: flex; align-items: center; justify-content: center; border: 1px solid #1989FA;">
-          <img src="../../assets/img/step_now.png" style="width: 24px; height: 24px;" />
+          <img src="../../assets/img/step_now.png" style="width: 24px; height: 24px;" alt="图标" />
         </span>
         <span>活动页面信息</span>
         <span></span>
@@ -23,7 +23,7 @@
     </ul>
     <div class="couponContent">
       <div class="left-area">
-        <img src="../../assets/img/coupon.jpg" alt="">
+        <img src="../../assets/img/coupon.jpg" alt="图标" />
         <div class="sub-title">扫脸时代感恩回馈</div>
         <div class="title">支付立减优惠码，等你来抢</div>
       </div>
@@ -71,7 +71,7 @@
           <div class="third_title"><span>1</span><span>下载二维码/复制领取链接</span></div>
           <p>优惠码领取二维码</p>
           <div class="qd-code">
-            <img id="img" :src="activityDetail.qrCodeImageUrl" alt="">
+            <img id="img" :src="activityDetail.qrCodeImageUrl" alt="图标" />
           </div>
           <button class="down" @click="clickDownloadCodeImg">下载二维码</button>
         </div>

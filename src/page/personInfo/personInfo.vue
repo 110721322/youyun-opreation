@@ -21,7 +21,7 @@
             </el-button>
           </el-upload>
           <div v-if="ruleForm.headerImageSrc" class="avatar-box">
-            <img :src="ruleForm.headerImageSrc" alt class="avatar" />
+            <img :src="ruleForm.headerImageSrc" alt="图标" class="avatar" />
             <i class="el-icon-close avatar-close" @click="clickDeleteAvater"></i>
           </div>
         </el-form-item>

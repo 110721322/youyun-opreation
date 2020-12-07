@@ -23,13 +23,13 @@
           <template v-slot="{ currentType }">
             <div class="current-type">
               <template v-if="currentType === 'pass'">
-                <img :src="passImg" alt />
+                <img :src="passImg" alt="图标" />
               </template>
               <template v-if="currentType === 'checking'">
-                <img :src="approvalImg" alt />
+                <img :src="approvalImg" alt="图标" />
               </template>
               <template v-if="currentType === 'reject'">
-                <img :src="refuseImg" alt />
+                <img :src="refuseImg" alt="图标" />
               </template>
             </div>
           </template>

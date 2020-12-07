@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-if="channelStatusList.length > 0">
-      <div class="tab_top">
+      <div class="tab-top">
         <span class="title">商户预审核信息</span>
         <el-alert
           v-if="greyListData"
@@ -81,8 +81,8 @@
             ></detailMode>
           </div>
           <div v-if="showComponents.showOperBtns" class="btn-box">
-            <div class="btn_pass" @click="onClick_pass">资料已检查并提交签约</div>
-            <div class="btn-reject" @click="onClick_reject">驳回</div>
+            <div class="btn-pass" @click="clickPass">资料已检查并提交签约</div>
+            <div class="btn-reject" @click="clickReject">驳回</div>
           </div>
         </div>
       </transition>
@@ -227,7 +227,7 @@ export default {
         this.currentType = res.data.status
       })
     },
-    onClick_pass() {
+    clickPass() {
       this.$confirm("确定资料已检查完毕?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
@@ -282,7 +282,7 @@ export default {
     cancel() {
       this.drawer = false;
     },
-    onClick_reject() {
+    clickReject() {
       this.drawer = true;
       this.fromConfigData = FORM_CONFIG.rejectReason;
     },
@@ -305,7 +305,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.tab_top {
+.tab-top {
   width: 100%;
   background: #fff;
   padding-top: 24px;
@@ -323,7 +323,7 @@ export default {
   justify-content: center;
   text-align: center;
   margin-bottom: 40px;
-  .btn_pass {
+  .btn-pass {
     width: 205px;
     height: 40px;
     background: rgba(25, 137, 250, 1);

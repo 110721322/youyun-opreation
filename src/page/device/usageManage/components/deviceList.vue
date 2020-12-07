@@ -11,7 +11,7 @@
             <div>{{item.deviceTypeDesc}}</div>
             <div class="device-list" v-for="(item1, index1) in item.usingList" :key="index1">
               <div class="device-item" @click="onClickSelectItem(item1)">
-                <img class="device-img" :src="item1.deviceImg" />
+                <img class="device-img" :src="item1.deviceImg" alt="设备图" />
                 <div class="nums">{{ item1.usingCount || '0' }}台</div>
                 <div class="name">{{ item1.deviceModel }}</div>
               </div>
@@ -29,7 +29,7 @@
     <template v-if="hasSelectOne">
       <div class="select-item">
         <i class="el-icon-close close-icon" @click="onClickCloseItem"></i>
-        <img class="device-img" :src="selectItem.deviceImg" />
+        <img class="device-img" :src="selectItem.deviceImg" alt="设备图" />
         <div class="nums">{{ selectItem.usingCount || '0' }}台</div>
         <div class="name">{{ selectItem.deviceModel }}</div>
       </div>

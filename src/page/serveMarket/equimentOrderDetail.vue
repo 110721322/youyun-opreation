@@ -28,7 +28,7 @@
           <div>小计</div>
         </div>
         <div v-for="(item, index) in infoDTOList" :key="index" class="content flex-between">
-          <div style="padding-top: 6px;"><img :src="item.deviceImg" alt="商品图片" style="width: 80px; height: 80px;"></div>
+          <div style="padding-top: 6px;"><img :src="item.deviceImg" alt="商品图片" style="width: 80px; height: 80px;" /></div>
           <div>{{ item.deviceModel }}</div>
           <div>{{ item.salePrice }}</div>
           <div>{{ item.count }}</div>

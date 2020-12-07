@@ -4,7 +4,7 @@
       <div v-for="(item,index) in modelList" :key="index" class="card">
         <div class="top">
           <div class="left-img">
-            <img src="../../assets/img/message_photo.png" alt="消息图片">
+            <img src="../../assets/img/message_photo.png" alt="消息图片" />
           </div>
           <div class="right-info">
             <div class="card-title">{{ item.productName }}</div>
@@ -16,7 +16,7 @@
         </div>
       </div>
       <div class="more">
-        <img src="../../assets/img/more_icon.png" alt="查看更多">
+        <img src="../../assets/img/more_icon.png" alt="查看更多" />
         <span>更多通道接入中</span>
       </div>
     </div>

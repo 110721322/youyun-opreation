@@ -39,11 +39,11 @@
           ></detailMode>
         </div>
         <div v-if="showComponents.showOperBtns" class="btn-box">
-          <div class="btn_download" @click="onClick_download">
+          <div class="btn-download" @click="clickDownload">
             <i class="el-icon-download"></i>下载资料
           </div>
-          <el-button type="primary" size="normal" @click="onClick_sign">资料已检查并提交签约</el-button>
-          <el-button size="normal" @click="onClick_reject">驳回</el-button>
+          <el-button type="primary" size="normal" @click="clickSign">资料已检查并提交签约</el-button>
+          <el-button size="normal" @click="clickReject">驳回</el-button>
         </div>
       </div>
     </transition>
@@ -204,7 +204,7 @@ export default {
       this.formStatus = "edit";
       this.fromConfigData = FORM_CONFIG.detailEdit;
     },
-    onClick_sign() {
+    clickSign() {
       if (!this.isAlrealyDownload) {
         this.$confirm("未打包下载资料，确定已提交资料到支付宝开发平台了吗?", "提示", {
           confirmButtonText: "确定",
@@ -245,7 +245,7 @@ export default {
         })
       }
     },
-    onClick_download() {
+    clickDownload() {
       this.isAlrealyDownload = true;
       // 然后下载操作
       api.merchantInfoDownload({
@@ -259,7 +259,7 @@ export default {
     cancel() {
       this.drawer = false;
     },
-    onClick_reject() {
+    clickReject() {
       this.drawer = true;
       this.formStatus = "reject";
       this.fromConfigData = FORM_CONFIG.rejectData;
@@ -274,7 +274,7 @@ export default {
   justify-content: center;
   text-align: center;
   margin-bottom: 24px;
-  .btn_download {
+  .btn-download {
     font-size: 14px;
     font-weight: 400;
     color: #1989fa;

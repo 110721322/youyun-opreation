@@ -173,8 +173,8 @@
               <span>{{ item.remark || '' }}</span>
             </div>
             <div class="jobStatus">
-              <img v-if="item.jobStatus === 'on'" src="../../assets/img/injob.png" alt="">
-              <img v-else src="../../assets/img/outjob.png" alt="">
+              <img v-if="item.jobStatus === 'on'" src="../../assets/img/injob.png" alt="" />
+              <img v-else src="../../assets/img/outjob.png" alt="" />
             </div>
           </div>
         </li>

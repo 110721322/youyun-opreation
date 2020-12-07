@@ -2,27 +2,27 @@
   <div>
     <div class="p-head">结算记录</div>
     <search
-        :open-height="searchMaxHeight"
-        :form-base-data="searchConfig.formData"
-        :show-foot-btn="searchConfig.showFootBtn"
-        @search="search"
+      :open-height="searchMaxHeight"
+      :form-base-data="searchConfig.formData"
+      :show-foot-btn="searchConfig.showFootBtn"
+      @search="search"
     />
-    <div class="table_head">
+    <div class="table-head">
       <BaseCrud
-          :grid-config="configData.gridConfig"
-          :grid-btn-config="configData.gridBtnConfig"
-          :grid-data="testData"
-          :form-config="configData.formConfig"
-          :form-data="configData.formModel"
-          :grid-edit-width="200"
-          :is-async="true"
-          :is-select="false"
-          :is-expand="false"
-          :row-key="'id'"
-          :params="params"
-          :default-expand-all="false"
-          :hide-edit-area="true"
-          :api-service="api"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :grid-data="testData"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="200"
+        :is-async="true"
+        :is-select="false"
+        :is-expand="false"
+        :row-key="'id'"
+        :params="params"
+        :default-expand-all="false"
+        :hide-edit-area="true"
+        :api-service="api"
       ></BaseCrud>
     </div>
 <!--    <el-drawer-->
@@ -78,7 +78,7 @@ export default {
 </script>
 
 <style scoped>
-  .table_head {
+  .table-head {
     padding: 32px 24px 0 24px;
   }
 </style>

@@ -3,7 +3,7 @@
     <div class="login-box">
       <div class="left-box">
         <div class="logo">
-          <img src="../../assets/img/faceOk.png" alt class="logo-img" />
+          <img src="../../assets/img/faceOk.png" alt="图标" class="logo-img" />
         </div>
         <div class="title">智慧办公系统</div>
         <div v-if="isLogin" class="login-content">

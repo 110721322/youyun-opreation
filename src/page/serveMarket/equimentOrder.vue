@@ -38,7 +38,7 @@
       <div class="goods-list">
         <div class="list">
           <ul v-for="(item, index) in goodsData" :key="index" class="left-list">
-            <li><img :src="item.img" alt=""></li>
+            <li><img :src="item.img" alt="商品图片" /></li>
             <li>{{ item.deviceModel }}</li>
             <li>{{ item.salePrice }}</li>
             <li>{{ enterInfo.count || item.shopCartCount }}</li>

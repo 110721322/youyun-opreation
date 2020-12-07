@@ -69,7 +69,8 @@
                 :src="item.imgUrl"
                 :style="item.imgStyle"
                 @click="clickHandleToggle(scope.row,item)"
-              >
+                alt="图片"
+              />
             </template>
           </span>
           <span v-if="(item.prop instanceof Array)">

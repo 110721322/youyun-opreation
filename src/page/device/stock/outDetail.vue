@@ -18,7 +18,7 @@
         <div class="shipping-title">订单信息</div>
         <div class="shipping-content">
           <div class="pay-img">
-            <img :src="orderDetail.voucher" alt="">
+            <img :src="orderDetail.voucher" alt="图标" />
             <p>打款凭证</p>
           </div>
           <ul>

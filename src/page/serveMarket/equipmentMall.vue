@@ -15,7 +15,7 @@
         <div class="list-bottom">
           <span>¥{{ item.salePrice }}</span>
           <div class="cart-img" @mouseenter="mouseCart(index)">
-            <img src="../../assets/img/cart_icon.png" alt="">
+            <img src="../../assets/img/cart_icon.png" alt="icon" />
           </div>
           <div class="list-step"><el-input-number v-model="num[index]" :min="1" :max="10" size="small" @change="cilckChange(index)"></el-input-number></div>
         </div>
@@ -27,7 +27,7 @@
     <div class="equiment-list">
       <div v-for="(item, index) in mallList.POSS" :key="index" class="list" @click.stop="clickTodetail(item.deviceId)">
         <div class="list-img">
-          <img :src="item.img" alt="">
+          <img :src="item.img" alt="icon" />
         </div>
         <p class="list-name">{{ item.deviceModel }}</p>
         <p class="list-subtitle">{{ item.viceTitle }}</p>

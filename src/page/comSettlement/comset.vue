@@ -3,7 +3,7 @@
     <div class="top-head">
       <span>佣金结算</span>
       <span>结算时间为每月28日至下月10日，需快递发票单</span>
-      <span @click="handleLookBill">查看发票信息></span>
+      <span @click="onClickLookBill">查看发票信息></span>
     </div>
     <div class="content">
       <ul class="content-banner">
@@ -13,8 +13,8 @@
           <p>总佣金</p>
           <p style="font-size: 24px; margin-top: 4px; line-height: 24px; font-weight: 500; color: #333333">{{ settleNum.totalCommission }}</p>
           <div class="option-btn">
-            <el-button type="primary" @click="settleDrawer">立即结算</el-button>
-            <el-button type="primary" plain @click="handel_record">结算记录</el-button>
+            <el-button type="primary" @click="onClickSettleDrawer">立即结算</el-button>
+            <el-button type="primary" plain @click="onClickRecord">结算记录</el-button>
           </div>
         </li>
       </ul>
@@ -34,7 +34,7 @@
           :default-expand-all="false"
           :hide-edit-area="configData.hideEditArea"
           :api-service="api"
-          @detail="onClick_detail"
+          @detail="clickDetail"
         ></BaseCrud>
       </div>
       <el-drawer
@@ -142,7 +142,7 @@ export default {
     handleClose() {
       this.drawer = false
     },
-    onClick_detail($row) {
+    clickDetail($row) {
       this.$router.push({
         name: 'comsetDetail',
         query: {
@@ -150,7 +150,7 @@ export default {
         }
       })
     },
-    settleDrawer() {
+    onClickSettleDrawer() {
       this.isCheck = []
       this.settleCommission = 0
       if (this.settleNum.totalCommission === 0) {
@@ -186,7 +186,7 @@ export default {
         }
       })
     },
-    handel_record() {
+    onClickRecord() {
       this.$router.push({
         name: 'comsetRecord'
       })
@@ -236,7 +236,7 @@ export default {
       })
     },
     // 查看发票信息
-    handleLookBill() {
+    onClickLookBill() {
       this.billInfoModalVisible = true;
     }
   }

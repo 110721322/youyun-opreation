@@ -15,6 +15,7 @@
           :key="'img'+index"
           :src="arrow"
           class="arrow-img"
+          alt="图标"
         />
       </template>
     </div>

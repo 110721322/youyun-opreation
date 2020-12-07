@@ -19,10 +19,10 @@
           <detailMode v-if="ruleForm.jobType === '入件操作员'" :img-width="4" :rule-form="ruleForm" :config-data="configData.baseData2"></detailMode>
         </div>
         <div v-if="showComponents.showOperBtns" class="btn-box">
-          <!-- <div class="btn_pass" @click="onClick_sign">通过</div>
-          <div class="btn-reject" @click="onClick_reject">驳回</div> -->
-          <el-button type="primary" size="normal" @click="onClick_sign">通过</el-button>
-          <el-button size="normal" @click="onClick_reject">驳回</el-button>
+          <!-- <div class="btn-pass" @click="clickSign">通过</div>
+          <div class="btn-reject" @click="clickReject">驳回</div> -->
+          <el-button type="primary" size="normal" @click="clickSign">通过</el-button>
+          <el-button size="normal" @click="clickReject">驳回</el-button>
         </div>
       </div>
     </transition>
@@ -148,7 +148,7 @@ export default {
         this.drawer = false;
       })
     },
-    onClick_sign() {
+    clickSign() {
       api.agentPartnerPass({
         agentPartnerNo: this.agentPartnerNo
       }).then(res => {
@@ -166,7 +166,7 @@ export default {
     cancel() {
       this.drawer = false;
     },
-    onClick_reject() {
+    clickReject() {
       this.drawer = true;
       this.fromConfigData = FORM_CONFIG.rejectReason;
     }
@@ -186,7 +186,7 @@ export default {
     line-height: 40px;
     letter-spacing: 1px;
   }
-  .btn_pass {
+  .btn-pass {
     margin-left: 60px;
     width: 113px;
     height: 40px;

@@ -12,9 +12,9 @@
           </div>
         </div>
         <ul class="descript">
-          <li><img src="" alt=""><span>交易更快捷，通道更稳定</span></li>
-          <li><img src="" alt=""><span>通道方直接结算</span></li>
-          <li><img src="" alt=""><span>万千商户选择</span></li>
+          <li><img src="" alt="" /><span>交易更快捷，通道更稳定</span></li>
+          <li><img src="" alt="" /><span>通道方直接结算</span></li>
+          <li><img src="" alt="" /><span>万千商户选择</span></li>
         </ul>
         <button class="btn" @click="clickBuy(item)">{{ item.buyStatus===0 ? '立即购买' : '立即进入' }}</button>
       </div>

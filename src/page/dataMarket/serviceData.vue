@@ -3,7 +3,7 @@
     <div class="p-head">
       <span class="left-title">服务商数据</span>
       <div class="right-area" @click="showRightbar">
-        <img src="../../assets/img/menu_icon.png" alt="">
+        <img src="../../assets/img/menu_icon.png" alt="图标" />
         <span>自定义设置</span>
       </div>
     </div>
@@ -122,7 +122,7 @@
             <span>i</span>
             <span>该功能用于配置服务商数据页面的图表</span>
           </div>
-          <img src="../../assets/img/cancle.png" alt="">
+          <img src="../../assets/img/cancle.png" alt="取消" />
         </div>
         <div class="draw-checkbox">
           <el-checkbox-group v-model="checkedSelect" @change="handleChecked">

@@ -7,7 +7,7 @@
           <!--                        <img class="back-img" src="" alt="">-->
           <div class="card-title">
             <span>{{ item.productName }}</span>
-            <img src="../../assets/img/xmg.png" alt="小马哥图标" class="card-img">
+            <img src="../../assets/img/xmg.png" alt="小马哥图标" class="card-img" />
           </div>
           <div class="card-subtitle">{{ item.productDesc }}</div>
           <div class="card-btn">
