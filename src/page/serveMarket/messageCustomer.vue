@@ -2,7 +2,7 @@
   <div class="container">
     <div class="top">
       <div class="left-img">
-        <img src="../../assets/img/message_photo.png" alt="">
+        <img src="../../assets/img/message_photo.png" al="icon" />
       </div>
       <div class="right-info">
         <div class="right-title">{{ productItem.productName }}</div>
@@ -30,13 +30,13 @@
           <div v-for="(item, index) in wayData" :key="index" class="way" :class="wayIndex===index?'isway':''" @click="clickWay(index)">{{ item.value }}</div>
         </div>
         <div v-if="wayIndex===0" class="qrcode">
-          <img src="../../assets/img/qr_code.jpg" alt="">
+          <img src="../../assets/img/qr_code.jpg" alt="icon" />
         </div>
         <div v-if="wayIndex===0" class="bottom-des">
           <span>支持</span>
-          <img src="../../assets/img/apply_pay.png" alt="支付宝图标">
-          <img src="../../assets/img/wx_pay.png" alt="微信图标">
-          <img src="../../assets/img/yun_pay.png" alt="云闪付图标">
+          <img src="../../assets/img/apply_pay.png" alt="支付宝图标" />
+          <img src="../../assets/img/wx_pay.png" alt="微信图标" />
+          <img src="../../assets/img/yun_pay.png" alt="云闪付图标" />
           <span>扫码支付</span>
         </div>
         <div v-if="wayIndex===1" class="bank"><span>打款账户:</span><span>3301040160001013187</span></div>

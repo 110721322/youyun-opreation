@@ -4,7 +4,7 @@
       <div v-for="(item,index) in tradeList" :key="index" class="card">
         <div class="top">
           <div class="left-img">
-            <img src="../../assets/img/leshua_icon.png" alt="">
+            <img src="../../assets/img/leshua_icon.png" alt="icon" />
           </div>
           <div class="right-info">
             <div class="card-title">{{ item.productName }}</div>
@@ -19,7 +19,7 @@
         <button class="btn" @click="clickBuy(item)">{{ item.buyStatus===0 ? '立即购买' : '立即进入' }}</button>
       </div>
       <div class="more">
-        <img src="../../assets/img/more_icon.png" alt="">
+        <img src="../../assets/img/more_icon.png" alt="icon" />
         <span>更多通道接入中</span>
       </div>
     </div>

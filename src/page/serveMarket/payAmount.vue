@@ -15,12 +15,12 @@
         <li><span>服务时间：</span><span>{{ comboItem.comboName }}</span></li>
         <li><span>支付金额：</span><span style="color: #f5222d; font-size: 20px; font-weight: 500;">{{ amount }}</span><span>元</span></li>
         <li><span>支付方式：</span><div v-for="(item, index) in payWay" :key="index" class="pay-way" :class="selectIndex===index? 'pay-select': ''" @click="clickSelect(index)">{{ item.value }}</div></li>
-        <li v-if="selectIndex===0"><img src="../../assets/img/qr_code.jpg" alt=""></li>
+        <li v-if="selectIndex===0"><img src="../../assets/img/qr_code.jpg" alt="icon" /></li>
         <div v-if="selectIndex===0" class="descript">
           <span>支持</span>
-          <img src="../../assets/img/wx_pay.png" alt="微信图标">
-          <img src="../../assets/img/apply_pay.png" alt="支付宝图标">
-          <img src="../../assets/img/yun_pay.png" alt="云闪付图标">
+          <img src="../../assets/img/wx_pay.png" alt="微信图标" />
+          <img src="../../assets/img/apply_pay.png" alt="支付宝图标" />
+          <img src="../../assets/img/yun_pay.png" alt="云闪付图标" />
           <span>扫码支付</span>
         </div>
         <li v-if="selectIndex===1"><span>打款账号：</span><span>3301040160001013187</span></li>
@@ -40,7 +40,7 @@
       :visible.sync="dialogVisible"
       width="500px"
     >
-      <img style="display: block; width: 270px; height: 406px; margin: 0 auto;" src="../../assets/img/settlePay.png" alt="">
+      <img style="display: block; width: 270px; height: 406px; margin: 0 auto;" src="../../assets/img/settlePay.png" alt="icon" />
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>

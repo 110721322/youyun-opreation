@@ -4,32 +4,32 @@
       <span class="title">维修管理</span>
     </div>
     <search
-        :open-height="searchMaxHeight"
-        :form-base-data="searchConfig.formData"
-        :show-foot-btn="searchConfig.showFootBtn"
-        @search="search"
+      :open-height="searchMaxHeight"
+      :form-base-data="searchConfig.formData"
+      :show-foot-btn="searchConfig.showFootBtn"
+      @search="search"
     />
 
     <div class="table-box">
       <BaseCrud
-          ref="table"
-          :params="params"
-          :api-service="api"
-          :grid-config="configData.gridConfig"
-          :grid-btn-config="configData.gridBtnConfig"
-          :grid-data="testData"
-          :form-config="configData.formConfig"
-          :form-data="configData.formModel"
-          :grid-edit-width="200"
-          :is-async="true"
-          :hide-edit-area="configData.hideEditArea"
-          @detail="onClick_detail"
-          @done="onClick_done"
-          @Receipt="onClick_Receipt"
-          @reject="onClick_reject"
-          @pass="onClick_pass"
-          @send="onClick_send"
-          @distribution="onClick_distribution"
+        ref="table"
+        :params="params"
+        :api-service="api"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :grid-data="testData"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="200"
+        :is-async="true"
+        :hide-edit-area="configData.hideEditArea"
+        @detail="clickDetail"
+        @done="clickDone"
+        @Receipt="clickReceipt"
+        @reject="clickReject"
+        @pass="clickPass"
+        @send="clickSend"
+        @distribution="clickDistribution"
       ></BaseCrud>
     </div>
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
@@ -79,31 +79,31 @@ export default {
     this.api = api.deviceMaintainQueryByPage
   },
   methods: {
-    onClick_reject($row) {
+    clickReject($row) {
       this.formStatus = "reject";
       this.activityRow = $row;
       this.fromConfigData = FORM_CONFIG.rejectData;
       this.drawer = true;
     },
-    onClick_send($row) {
+    clickSend($row) {
       this.formStatus = "send";
       this.activityRow = $row;
       this.fromConfigData = FORM_CONFIG.sendData;
       this.drawer = true;
     },
-    onClick_distribution($row) {
+    clickDistribution($row) {
       this.formStatus = "distribution";
       this.activityRow = $row;
       this.fromConfigData = FORM_CONFIG.distributionData;
       this.drawer = true;
     },
-    onClick_done($row) {
+    clickDone($row) {
       this.formStatus = "done";
       this.activityRow = $row;
       this.fromConfigData = FORM_CONFIG.doneData;
       this.drawer = true;
     },
-    onClick_Receipt($row) {
+    clickReceipt($row) {
       this.$confirm("确定已收货吗", "提示", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认",
@@ -127,7 +127,7 @@ export default {
         });
       });
     },
-    onClick_pass($row) {
+    clickPass($row) {
       this.$confirm("确定通过该维修单吗", "提示", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认",
@@ -218,7 +218,7 @@ export default {
       };
       this.params = params;
     },
-    onClick_detail($row) {
+    clickDetail($row) {
       this.$router.push({
         name: "repairDetail",
         query: { id: $row.id }

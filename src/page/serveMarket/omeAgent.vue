@@ -7,7 +7,7 @@
         <img src="../../assets/img/cancle.png" alt="" @click="closeWarn">
       </div>
       <div class="buy-info">
-        <img class="buy-img" src="../../assets/img/oem_image.png" alt="">
+        <img class="buy-img" src="../../assets/img/oem_image.png" alt="icon" />
         <div class="buy-all">
           <div class="first-body">
             <div class="buy-title">{{ productItem.productName }}</div>

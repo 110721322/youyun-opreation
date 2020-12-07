@@ -9,7 +9,7 @@
     <!-- <data-mode></data-mode> -->
     <div class="table-box">
       <div class="add-btn">
-        <button @click="onClick_add">创建优惠码</button>
+        <button @click="onClickAdd">创建优惠码</button>
       </div>
       <BaseCrud
           ref="child"
@@ -146,7 +146,7 @@ export default {
         .catch(() => {
         });
     },
-    onClick_add() {
+    onClickAdd() {
       this.$router.push({
         name: "addCoupon"
       })

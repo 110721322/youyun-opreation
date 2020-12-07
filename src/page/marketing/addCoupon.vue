@@ -40,7 +40,7 @@
             :show-foot-btn="false"
           ></Form>
           <div class="next-btn">
-            <button @click="onClick_firstbtn">下一步</button>
+            <button @click="onClickFirstbtn">下一步</button>
           </div>
         </div>
       </div>
@@ -57,8 +57,8 @@
             :show-foot-btn="false"
           ></Form>
           <div class="next-btn">
-            <button class="back-btn" @click="onClick_back">上一步</button>
-            <button @click="onClick_secondbtn">下一步</button>
+            <button class="back-btn" @click="onClickBack">上一步</button>
+            <button @click="onClickSecondbtn">下一步</button>
           </div>
         </div>
       </div>
@@ -73,7 +73,7 @@
           <div class="qd-code">
             <img id="img" :src="activityDetail.qrCodeImageUrl" alt="">
           </div>
-          <button class="down" @click="downloadCodeImg">下载二维码</button>
+          <button class="down" @click="clickDownloadCodeImg">下载二维码</button>
         </div>
         <div class="coupon-form" style="padding: 24px 0 32px 32px;">
           <div class="third_title"><span>2</span><span>发给服务商扫码/进入链接进行领取</span></div>
@@ -108,7 +108,7 @@ export default {
     }
   },
   methods: {
-    downloadCodeImg() {
+    clickDownloadCodeImg() {
       var image = new Image();
       image.setAttribute("crossOrigin", "anonymous");
       var _this = this;
@@ -127,11 +127,11 @@ export default {
       };
       image.src = this.activityDetail.qrCodeImageUrl;
     },
-    onClick_firstbtn() {
+    onClickFirstbtn() {
       this.ruleForm = this.$refs.firstForm.ruleForm
       this.secondStep = 1
     },
-    onClick_secondbtn() {
+    onClickSecondbtn() {
       const params = {
         ...this.ruleForm,
         ...this.$refs.secondForm.ruleForm
@@ -156,7 +156,7 @@ export default {
         }
       })
     },
-    onClick_back() {
+    onClickBack() {
       this.secondStep = 0
     },
     copyActiveCode(e, text) {

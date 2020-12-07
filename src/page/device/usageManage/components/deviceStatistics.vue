@@ -35,7 +35,7 @@
         </div>
       </div>
     </div>
-    <div class="data_box">
+    <div class="data-box">
       <dataItem :radio="radioListData[0]" :title="titleList[0]" @radioChange="handleNumRadioChange"></dataItem>
 
       <div class="content-box">
@@ -62,7 +62,7 @@
         </div>
       </div>
     </div>
-    <div class="data_box">
+    <div class="data-box">
       <dataItem
         :radio="radioListData[1]"
         :title="titleList[1]"
@@ -739,7 +739,7 @@ export default {
   background: white;
   border-radius: 4px;
 }
-.data_box {
+.data-box {
   position: relative;
   margin: 24px;
   overflow: hidden;

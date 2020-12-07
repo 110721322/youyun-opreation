@@ -96,7 +96,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .p_head {
+  .p-head {
     margin-bottom: 24px;
   }
 

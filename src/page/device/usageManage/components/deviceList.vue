@@ -10,7 +10,7 @@
           <div class="device-list">
             <div>{{item.deviceTypeDesc}}</div>
             <div class="device-list" v-for="(item1, index1) in item.usingList" :key="index1">
-              <div class="device-item" @click="onClick_selectItem(item1)">
+              <div class="device-item" @click="onClickSelectItem(item1)">
                 <img class="device-img" :src="item1.deviceImg" />
                 <div class="nums">{{ item1.usingCount || '0' }}台</div>
                 <div class="name">{{ item1.deviceModel }}</div>
@@ -19,7 +19,7 @@
           </div>
         </el-form-item>
       </el-form>
-      <div v-if="showExpandBtn" class="expand-btn" @click="onClick_openOrClose">
+      <div v-if="showExpandBtn" class="expand-btn" @click="onClickOpenOrClose">
         <span v-show="!isOpen">展开</span>
         <span v-show="isOpen">收起</span>
 
@@ -28,7 +28,7 @@
     </template>
     <template v-if="hasSelectOne">
       <div class="select-item">
-        <i class="el-icon-close close-icon" @click="onClick_closeItem"></i>
+        <i class="el-icon-close close-icon" @click="onClickCloseItem"></i>
         <img class="device-img" :src="selectItem.deviceImg" />
         <div class="nums">{{ selectItem.usingCount || '0' }}台</div>
         <div class="name">{{ selectItem.deviceModel }}</div>
@@ -49,17 +49,17 @@ export default {
     };
   },
   methods: {
-    onClick_closeItem() {
+    onClickCloseItem() {
       this.hasSelectOne = false;
       this.isOpen = false;
       this.$emit("province");
     },
-    onClick_selectItem($itemData) {
+    onClickSelectItem($itemData) {
       this.selectItem = $itemData;
       this.hasSelectOne = true;
       this.$emit("province", $itemData);
     },
-    onClick_openOrClose() {
+    onClickOpenOrClose() {
       this.isOpen = !this.isOpen;
     }
   }

@@ -6,7 +6,7 @@
     <Search :is-show-all="true" :form-base-data="searchConfig.formData" @search="search" />
 
     <div class="table-box">
-      <div class="tabale_title_box">
+      <div class="tabale-title-box">
         <div class="title">库存列表</div>
       </div>
       <BaseCrud
@@ -25,8 +25,8 @@
         :row-key="'id'"
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
-        @edit="onClick_edit"
-        @remove="onClick_remove"
+        @edit="clickEdit"
+        @remove="clickRemove"
       ></BaseCrud>
     </div>
 
@@ -114,7 +114,7 @@ export default {
     cancel() {
       this.drawer = false;
     },
-    onClick_edit($row) {
+    clickEdit($row) {
       this.rowId = $row.id;
       // 对配置文件进行动态修改
       const newFromConfigData = FORM_CONFIG.formData;
@@ -125,7 +125,7 @@ export default {
       this.fromConfigData = this.$g.utils.deepClone(newFromConfigData);
       this.drawer = true;
     },
-    onClick_remove($row) {
+    clickRemove($row) {
       this.$confirm("确定删除？", "提示", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认",
@@ -192,7 +192,7 @@ export default {
   justify-content: space-between;
 }
 
-.tabale_title_box {
+.tabale-title-box {
   height: 52px;
   width: 100%;
   .title {

@@ -1,6 +1,6 @@
 <template>
   <div class="process-page">
-    <i class="el-icon-arrow-left iconArrow" @click="onClick_scrollLeft"></i>
+    <i class="el-icon-arrow-left iconArrow" @click="onClickScrollLeft"></i>
     <div class="process-content hideScroll">
       <template v-for="(item,index) in row.processList">
         <div :key="index" class="process-item">
@@ -18,7 +18,7 @@
         />
       </template>
     </div>
-    <i class="el-icon-arrow-right iconArrow" @click="onClick_scrollRight"></i>
+    <i class="el-icon-arrow-right iconArrow" @click="onClickScrollRight"></i>
   </div>
 </template>
 <script>
@@ -42,11 +42,11 @@ export default {
     };
   },
   methods: {
-    onClick_scrollLeft($event) {
+    onClickScrollLeft($event) {
       const scrollBox = $event.currentTarget.nextSibling;
       scrollBox.scrollLeft = scrollBox.scrollLeft - 195;
     },
-    onClick_scrollRight($event) {
+    onClickScrollRight($event) {
       const scrollBox = $event.currentTarget.previousSibling;
       scrollBox.scrollLeft = scrollBox.scrollLeft + 195;
     }

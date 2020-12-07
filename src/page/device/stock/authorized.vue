@@ -6,9 +6,9 @@
     <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
 
     <div class="table-box">
-      <div class="tabale_title_box">
+      <div class="tabale-title-box">
         <div class="title">设备授权列表</div>
-        <UploadFile class="btn" :form-item="formItem" :rule-form="ruleForm" type="primary" @click="onClick_addDevice">导入设备信息</UploadFile>
+        <UploadFile class="btn" :form-item="formItem" :rule-form="ruleForm" type="primary" @click="clickAddDevice">导入设备信息</UploadFile>
       </div>
       <BaseCrud
         ref="table"
@@ -27,8 +27,8 @@
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
         :header-cell-style="headerCellStyle"
-        @okEdit="onClick_okEdit"
-        @cancelEdit="onClick_cancelEdit"
+        @okEdit="clickOkEdit"
+        @cancelEdit="clickCancelEdit"
       ></BaseCrud>
     </div>
   </div>
@@ -82,8 +82,8 @@ export default {
       this.params = params;
     },
     selectionChange($val) {},
-    onClick_addDevice($data) {},
-    onClick_okEdit($item) {
+    clickAddDevice($data) {},
+    clickOkEdit($item) {
       api
         .deviceActivationUpdate({
           authorizationCode: $item.authorizationCode,
@@ -95,7 +95,7 @@ export default {
         });
       $item.edit = false;
     },
-    onClick_cancelEdit($item) {
+    clickCancelEdit($item) {
       $item.edit = false;
     }
   }
@@ -190,7 +190,7 @@ export default {
   justify-content: space-between;
 }
 
-.tabale_title_box {
+.tabale-title-box {
   height: 52px;
   width: 100%;
   .title {

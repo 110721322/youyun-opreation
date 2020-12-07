@@ -9,7 +9,7 @@
       </el-steps>
     </div>
     <div class="content">
-      <div class="order-pohto"><img src="../../assets/img/order_photo.png" alt=""></div>
+      <div class="order-pohto"><img src="../../assets/img/order_photo.png" alt="icon" /></div>
       <p class="title">提交成功，等待审核</p>
       <ul class="card">
         <li><span>服务类型：</span><span>{{ modelName }}</span></li>
@@ -26,8 +26,8 @@
     </div>
     <div class="status" style="display: none;">
       <div class="order-pohto">
-        <img src="../../assets/img/order_success.png" alt="">
-        <img src="../../assets/img/order_fail.png" alt="" style="display: none;">
+        <img src="../../assets/img/order_success.png" alt="icon" />
+        <img src="../../assets/img/order_fail.png" alt="icon" style="display: none;" />
       </div>
       <p class="title">恭喜你，成功订购 【小马哥代理】服务</p>
       <p class="title" style="display: none;">订购失败，请重新进行订购</p>

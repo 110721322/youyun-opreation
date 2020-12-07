@@ -10,9 +10,9 @@
       @search="search"
     />
     <div class="table-box">
-      <div class="tabale_title_box">
+      <div class="tabale-title-box">
         <div class="title">入库列表</div>
-        <el-button class="btn" type="primary" @click="onClick_addDevice">新增入库</el-button>
+        <el-button class="btn" type="primary" @click="onClickAddDevice">新增入库</el-button>
       </div>
       <BaseCrud
         ref="table"
@@ -28,12 +28,12 @@
         :is-select="false"
         :is-expand="false"
         :hide-edit-area="configData.hideEditArea"
-        @detail="onClick_detail"
+        @detail="onClickDetail"
       ></BaseCrud>
     </div>
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
-      <div class="head_title">新增入库</div>
-      <div class="drawer_content">
+      <div class="head-title">新增入库</div>
+      <div class="drawer-content">
         <el-form ref="form" :model="formVal" label-width="100px" :rules="rules">
           <el-form-item label="设备型号" prop="deviceId" label-width="120px">
             <el-select v-model="formVal.deviceId" placeholder="请选择设备型号">
@@ -66,25 +66,25 @@
         <div style="padding-left: 120px;">
           <UploadFile v-if="formVal.type === 1"  class="btn" @handel_execl="upExecl" :form-item="formItem" :rule-form="ruleForm" type="primary"></UploadFile>
         </div>
-        <div v-if="formVal.type === 2" class="box_cursor">
+        <div v-if="formVal.type === 2" class="box-cursor">
           <div class="cursorCount">
             <span>入库数量：{{list.length}}台</span>
-            <span @click="handel_clear">清空</span></div>
-          <div class="add_box">
+            <span @click="onClickClear">清空</span></div>
+          <div class="add-box">
             <el-input v-model="device"></el-input>
-            <span @click="handel_add">添加</span>
+            <span @click="onClickAdd">添加</span>
           </div>
           <ul class="cursor" v-if="list.length > 0">
             <li v-for="(item, index) in list" :key="index">
               <el-input :value="item.id" v-model="item.id"></el-input>
-              <span class="delete" @click="handel_delete(index)">删除</span>
+              <span class="delete" @click="onClickDelete(index)">删除</span>
             </li>
           </ul>
         </div>
       </div>
-      <div class="bottom_btn">
-        <el-button type="primary" @click="confirm">保存</el-button>
-        <el-button @click="cancel">取消</el-button>
+      <div class="bottom-btn">
+        <el-button type="primary" @click="onClickConfirm">保存</el-button>
+        <el-button @click="onClickCancel">取消</el-button>
       </div>
     </el-drawer>
   </div>
@@ -157,10 +157,10 @@ export default {
     this.api = api.deviceInputQueryByPage
   },
   methods: {
-    handel_delete(index) {
+    onClickDelete(index) {
       this.list.splice(index, 1)
     },
-    handel_add() {
+    onClickAdd() {
       if (!this.device) {
         return
       }
@@ -169,7 +169,7 @@ export default {
       this.list.push(obj)
       this.device = ""
     },
-    handel_clear() {
+    onClickClear() {
       this.list = []
     },
     search($ruleForm) {
@@ -179,7 +179,7 @@ export default {
         deviceId: $ruleForm.deviceId ? $ruleForm.deviceId : null
       };
     },
-    onClick_addDevice() {
+    onClickAddDevice() {
       this.queryAllDevice()
       this.fromConfigData = FORM_CONFIG.deviceData;
       this.formVal = {
@@ -198,7 +198,7 @@ export default {
     upExecl($data) {
       this.excelData = $data
     },
-    confirm() {
+    onClickConfirm() {
       var $data = this.formVal
       if (!$data.deviceId || !$data.deadline || !$data.inputTime || !$data.type) {
         this.$message({
@@ -287,7 +287,7 @@ export default {
         }
       })
     },
-    onClick_detail($item) {
+    onClickDetail($item) {
       this.$router.push({
         name: "stockDetail",
         query: {
@@ -295,7 +295,7 @@ export default {
         }
       });
     },
-    cancel() {
+    onClickCancel() {
       this.list = []
       this.drawer = false;
     },
@@ -355,7 +355,7 @@ export default {
   justify-content: space-between;
 }
 
-.tabale_title_box {
+.tabale-title-box {
   height: 52px;
   width: 100%;
 
@@ -374,7 +374,7 @@ export default {
   }
 }
 
-.drawer_content {
+.drawer-content {
   width: 100%;
   margin-top: 96px;
   height: calc(100vh - 192px);
@@ -382,7 +382,7 @@ export default {
   padding: 24px 0 0 0;
 }
 
-.bottom_btn {
+.bottom-btn {
   width: 500px;
   height: 96px;
   position: fixed;
@@ -401,7 +401,7 @@ export default {
   }
 }
 
-.box_cursor {
+.box-cursor {
   margin: 24px 24px 150px 24px;
   padding: 24px 0;
   border: 1px solid #ebeef5;
@@ -420,7 +420,7 @@ export default {
     }
   }
 
-    .add_box {
+    .add-box {
     width: 100%;
     height: 60px;
     display: flex;
@@ -440,7 +440,7 @@ export default {
   }
 }
 
-.head_title {
+.head-title {
   width: 500px;
   position: fixed;
   top: 0;

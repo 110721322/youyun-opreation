@@ -13,7 +13,7 @@
 
     <div class="table-box">
       <div class="tabale-title-box">
-        <el-button @click="onClick_showOrganization">组织架构</el-button>
+        <el-button @click="onClickShowOrganization">组织架构</el-button>
         <el-button type="primary" @click="addJob">职位管理</el-button>
       </div>
       <BaseCrud
@@ -266,7 +266,7 @@ export default {
         })
     },
 
-    onClick_showOrganization($row) {
+    onClickShowOrganization($row) {
       // this.drawerOrganization = true;
       api
         .employeeOrganization({

@@ -2,7 +2,7 @@
   <div class="container">
     <div class="equiment">
       <span>刷脸设备</span>
-      <img src="../../assets/img/hot_logo.png" alt="刷脸设备">
+      <img src="../../assets/img/hot_logo.png" alt="刷脸设备" />
       <span class="title">离扫脸时代只差一台设备</span>
     </div>
     <div class="equiment-list">
@@ -34,7 +34,7 @@
         <div class="list-bottom">
           <span>¥{{ item.salePrice }}</span>
           <div class="cart-img" @mouseenter="mouseCart(index)">
-            <img src="../../assets/img/cart_icon.png" alt="">
+            <img src="../../assets/img/cart_icon.png" alt="icon" />
           </div>
           <div class="list-step"><el-input-number v-model="num[index]" :min="1" :max="10" size="small" @change="cilckChange(index)"></el-input-number></div>
         </div>
@@ -44,7 +44,7 @@
       <div class="btn1" @click="clickTocart" @mouseover="showText=true" @mouseout="showText=false">
         <div class="modle"></div>
         <el-badge :value="totalNum" :max="99" class="item">
-          <img src="../../assets/img/cart_icon.png" alt="购物车图标">
+          <img src="../../assets/img/cart_icon.png" alt="购物车图标" />
           <transition name="textDisplay">
             <p v-if="showText" class="show-text-cart">购<br>物<br>车</p>
           </transition>
@@ -52,7 +52,7 @@
       </div>
       <div class="btn2" @click="clickTorecords" @mouseover="showText2=true" @mouseout="showText2=false">
         <div class="modle"></div>
-        <img src="../../assets/img/order_icon.png" alt="订单图标">
+        <img src="../../assets/img/order_icon.png" alt="订单图标" />
         <transition name="textDisplay">
           <p v-if="showText2" class="show-text-order">订<br>单</p>
         </transition>

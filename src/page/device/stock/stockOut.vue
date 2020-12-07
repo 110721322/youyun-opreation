@@ -26,11 +26,11 @@
         :row-key="'id'"
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
-        @reject="onClick_reject"
-        @check="onClick_check"
-        @detail="onClick_detail"
-        @send="onClick_send"
-        @distribution="onClick_distribution"
+        @reject="clickReject"
+        @check="clickCheck"
+        @detail="clickDetail"
+        @send="clickSend"
+        @distribution="clickDistribution"
       >
         <template v-slot="{ row }">
           <el-form label-position="left" inline class="demo-table-expand">
@@ -196,13 +196,13 @@ export default {
         }
       })
     },
-    onClick_reject($data) {
+    clickReject($data) {
       this.tableId = $data.id;
       this.formStatus = "reject";
       this.fromConfigData = FORM_CONFIG.rejectData;
       this.drawer = true;
     },
-    onClick_check($row) {
+    clickCheck($row) {
       const newFromConfigData = FORM_CONFIG.checkData;
       api.deviceOutputQueryById({ id: $row.id }).then(res => {
         newFromConfigData.formData.forEach((item, index) => {
@@ -213,7 +213,7 @@ export default {
         this.drawer = true;
       })
     },
-    onClick_detail($item) {
+    clickDetail($item) {
       this.$router.push({
         name: "outDetail",
         query: {
@@ -221,14 +221,14 @@ export default {
         }
       });
     },
-    onClick_send($data) {
+    clickSend($data) {
       this.tableId = $data.id;
       this.tableDeviceId = $data.infoVOList[0].deviceId;
       this.formStatus = "send";
       this.fromConfigData = FORM_CONFIG.sendData;
       this.drawer = true;
     },
-    onClick_distribution($row) {
+    clickDistribution($row) {
       this.tableId = $row.id;
       this.formStatus = "distribution";
       this.activityRow = $row;

@@ -23,9 +23,9 @@
         :header-cell-style="headerCellStyle"
         :api-service="api"
         :params="params"
-        @detail="onClick_detail"
-        @reject="onClick_reject"
-        @adopt="onClick_adopt"
+        @detail="onClickDetail"
+        @reject="onClickReject"
+        @adopt="onClickAdopt"
       ></BaseCrud>
     </div>
 
@@ -115,11 +115,11 @@ export default {
         [$ruleForm.search]: $ruleForm.searchVal
       };
     },
-    onClick_detail($row) {
+    onClickDetail($row) {
       this.reason = $row.reason
       this.dialogVisible = true
     },
-    onClick_reject($row) {
+    onClickReject($row) {
       this.id = $row.id
       this.formStatus = "reject";
       this.fromConfigData = FORM_CONFIG.rejectData;
@@ -128,7 +128,7 @@ export default {
         this.$refs['rejectForm'].init()
       }
     },
-    onClick_adopt($row) {
+    onClickAdopt($row) {
       this.$confirm("确定打款成功，通过吗", "提示", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认",

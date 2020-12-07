@@ -28,10 +28,10 @@
         :header-cell-style="headerCellStyle"
         :api-service="api"
         :params="params"
-        @detail="onClick_detail"
-        @reject="onClick_reject"
-        @adopt="onClick_adopt"
-        @reviewing="onClick_reviewing"
+        @detail="clickDetail"
+        @reject="clickReject"
+        @adopt="clickAdopt"
+        @reviewing="clickReviewing"
       ></BaseCrud>
       <BaseCrud
         v-else
@@ -51,10 +51,10 @@
         :header-cell-style="headerCellStyle"
         :api-service="apiAgent"
         :params="params"
-        @detail="onClick_detail"
-        @reject="onClick_reject"
-        @adopt="onClick_adopt"
-        @reviewing="onClick_reviewing"
+        @detail="clickDetail"
+        @reject="clickReject"
+        @adopt="clickAdopt"
+        @reviewing="clickReviewing"
       ></BaseCrud>
     </div>
 
@@ -265,7 +265,7 @@ export default {
         endTime: $ruleForm.date[1] ? $ruleForm.date[0] : this.$g.utils.getToday(0)
       };
     },
-    onClick_detail($row) {
+    clickDetail($row) {
       const queryDetailApi = this.activeName === '12' ? 'topQueryDetail' : 'queryDetail'
       api[queryDetailApi]({
         id: $row.id || null
@@ -317,7 +317,7 @@ export default {
     handleClose() {
       this.detailDrawer = false;
     },
-    onClick_reject($row) {
+    clickReject($row) {
       const queryDetailApi = this.activeName === '12' ? 'topQueryDetail' : 'queryDetail'
       api[queryDetailApi]({// 通过/驳回详情
         id: $row.id || null
@@ -336,7 +336,7 @@ export default {
         this.topQueryTypeMonthDetail($row)
       })
     },
-    onClick_adopt($row) {
+    clickAdopt($row) {
       const queryDetailApi = this.activeName === '12' ? 'topQueryDetail' : 'queryDetail'
       api[queryDetailApi]({
         id: $row.id || null
@@ -389,7 +389,7 @@ export default {
         }
       })
     },
-    onClick_reviewing() {
+    clickReviewing() {
       this.$alert("任务已处理，审批中", "提示信息", {
         confirmButtonText: "确定"
       });

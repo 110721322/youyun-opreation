@@ -2,7 +2,7 @@
   <div class="container">
     <div class="top">
       <div class="left-img">
-        <img src="../../assets/img/leshua_icon.png" alt="左边图标">
+        <img src="../../assets/img/leshua_icon.png" alt="左边图标" />
       </div>
       <div class="right-info">
         <div class="right-title">{{ productItem.productName }}</div>
@@ -45,17 +45,17 @@
         <li>
           <span>微信公众号APPID:</span>
           <span>{{ showPassword?detail.weChatOfficialAccountId:'********' }}</span>
-          <img src="../../assets/img/see_password.png" alt="" @click="showPassword=!showPassword">
+          <img src="../../assets/img/see_password.png" alt="icon" @click="showPassword=!showPassword" />
         </li>
         <li>
           <span>支付宝PID:</span>
           <span>{{ showPassword3?detail.sysServiceProviderId:'********' }}</span>
-          <img src="../../assets/img/hide_password.png" alt="" @click="showPassword3=!showPassword3">
+          <img src="../../assets/img/hide_password.png" alt="icon" @click="showPassword3=!showPassword3" />
         </li>
         <li>
           <span>交易加密key:</span>
           <span>{{ showPassword2?detail.requestKey:'********' }}</span>
-          <img src="../../assets/img/see_password.png" alt="" @click="showPassword2=!showPassword2">
+          <img src="../../assets/img/see_password.png" alt="icon" @click="showPassword2=!showPassword2" />
         </li>
         <li>
           <span>支付宝费率:</span>

@@ -27,7 +27,7 @@
       </div>
     </DetailBox>
 
-    <DetailBox title="服务商顶部颜色条" btn-name="新增颜色条" :border="true" :is-show-edit-btn="true" @edit="onClick_editColor">
+    <DetailBox title="服务商顶部颜色条" btn-name="新增颜色条" :border="true" :is-show-edit-btn="true" @edit="onClickEditColor">
       <div class="s-color-container">
         <p style="font-size: 14px; color: #333335; margin-bottom: 16px;">颜色：含义</p>
         <div class="color-item-container">
@@ -271,7 +271,7 @@ export default {
       done();
     },
 
-    onClick_editColor() {
+    onClickEditColor() {
       this.ruleForm = {
         type: "add",
         id: "",

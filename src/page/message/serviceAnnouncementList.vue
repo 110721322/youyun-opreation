@@ -11,7 +11,7 @@
     <!-- <data-mode></data-mode> -->
     <div class="table-box">
       <div>
-        <el-button type="primary" class="add_btn" @click="onClick_addAnnouncement">添加公告</el-button>
+        <el-button type="primary" class="add_btn" @click="onClickAddAnnouncement">添加公告</el-button>
       </div>
       <BaseCrud
           ref="table"
@@ -26,7 +26,7 @@
           form-title="用户"
           :is-async="true"
           :is-select="false"
-          @detail="go_detail"
+          @detail="goDetail"
           @edit="handelEdit"
           @delete="handelDelete"
       ></BaseCrud>
@@ -70,12 +70,12 @@ export default {
         }
       });
     },
-    onClick_addAnnouncement() {
+    onClickAddAnnouncement() {
       this.$router.push({
         name: 'agentAnnounceAdd'
       });
     },
-    go_detail() {
+    goDetail() {
       this.$router.push("/merchant/list/detail");
     },
     handelDelete(row) {

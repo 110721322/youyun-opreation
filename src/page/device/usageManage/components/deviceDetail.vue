@@ -25,7 +25,7 @@
         :hide-edit-area="configData.hideEditArea"
         :ref-name="'deviceDetailTable'"
         :hide-expend-column="true"
-        @showLife="onClick_showLife"
+        @showLife="clickShowLife"
       >
 <!--        <template v-slot="{ row }">-->
 <!--          <deviceDetailProcess :row="row"></deviceDetailProcess>-->
@@ -74,7 +74,7 @@ export default {
         merchantNo: $ruleForm.merchantNo ? $ruleForm.merchantNo : null
       };
     },
-    onClick_showLife($item, $table) {
+    clickShowLife($item, $table) {
       api
         .queryProcessLife({
           deviceIdentifier: $item.deviceIdentifier

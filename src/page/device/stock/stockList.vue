@@ -5,9 +5,9 @@
     </div>
     <Search :is-show-all="true" :form-base-data="searchConfig.formData" @search="search" />
     <div class="table-box">
-      <div class="tabale_title_box">
+      <div class="tabale-title-box">
         <div class="title">库存列表</div>
-        <el-button class="btn" type="primary" @click="onClick_addDevice">新增设备</el-button>
+        <el-button class="btn" type="primary" @click="onClickAddDevice">新增设备</el-button>
       </div>
       <BaseCrud
         ref="table"
@@ -25,9 +25,9 @@
         :row-key="'id'"
         :default-expand-all="false"
         :hide-edit-area="configData.hideEditArea"
-        @buy="onClick_buy"
-        @edit="onClick_edit"
-        @remove="onClick_remove"
+        @buy="clickBuy"
+        @edit="clickEdit"
+        @remove="clickRemove"
       ></BaseCrud>
     </div>
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
@@ -86,12 +86,12 @@ export default {
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     },
-    onClick_addDevice() {
+    onClickAddDevice() {
       this.formStatus = "add";
       this.fromConfigData = FORM_CONFIG.deviceData;
       this.drawer = true;
     },
-    onClick_buy($row) {
+    clickBuy($row) {
       this.deviceId = $row.id;
       this.deviceModel = $row.deviceModel
       this.salePrice = $row.salePrice
@@ -100,7 +100,7 @@ export default {
       this.formStatus = "buy";
       this.drawer = true;
     },
-    onClick_edit($row) {
+    clickEdit($row) {
       this.drawer = true
       this.stockId = $row.id;
       this.fromConfigData = {}
@@ -228,7 +228,7 @@ export default {
     cancel() {
       this.drawer = false;
     },
-    onClick_remove($row) {
+    clickRemove($row) {
       this.$confirm("删除后，该设备将不能再进行订购，请谨慎操作", "提示", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认",
@@ -299,7 +299,7 @@ export default {
   justify-content: space-between;
 }
 
-.tabale_title_box {
+.tabale-title-box {
   height: 52px;
   width: 100%;
 

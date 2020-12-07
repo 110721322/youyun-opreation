@@ -8,7 +8,7 @@
         :default-active="mainIndex"
         class="el-menu"
         mode="horizontal"
-        @select="onClick_main"
+        @select="onSelectMain"
         v-if="roleId === 12"
       >
         <el-menu-item v-for="(item, index) in mainData" :key="index" :index="index.toString()">{{ item.value }}</el-menu-item>
@@ -17,7 +17,7 @@
           :default-active="mainIndex"
           class="el-menu"
           mode="horizontal"
-          @select="onClick_main"
+          @select="onSelectMain"
           v-else
       >
         <el-menu-item v-for="(item, index) in mainData1" :key="index" :index="index.toString()">{{ item.value }}</el-menu-item>
@@ -173,7 +173,7 @@ export default {
     onClick_select(index) {
       this.selectIndex = index
     },
-    onClick_main(index) {
+    onSelectMain(index) {
       this.mainIndex = index
       this.params = {
         tradeMonth: this.selectDate ? this.selectDate + "-01" : this.tradeMonth

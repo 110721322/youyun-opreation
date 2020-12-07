@@ -24,7 +24,7 @@
       </div>
       <div class="right-box">
         <DetailBox title="自定义表单" :border="true">
-          <div class="mod_tips">
+          <div class="mod-tips">
             <span>表单位置：{{ selectMenu.formLoaction }}</span>
             <el-button type="primary" @click="clickEdit">编辑</el-button>
           </div>
@@ -221,7 +221,7 @@ export default {
   height: 100%;
   overflow: scroll;
 
-  .mod_tips {
+  .mod-tips {
     display: flex;
     justify-content: space-between;
     font-size: 14px;

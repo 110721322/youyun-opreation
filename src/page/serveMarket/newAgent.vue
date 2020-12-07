@@ -79,12 +79,12 @@
       <div v-if="detail.status===2||detail.status===3" class="info">
         <ul>
           <li><span>阿里云帐号：</span><span>{{ detail.aliyunAccount }}</span></li>
-          <li><span>阿里云密码：</span><span>{{ showPassword?detail.aliyunPassword:'********' }}</span><img src="../../assets/img/see_password.png" alt="" @click="showPassword=!showPassword"></li>
+          <li><span>阿里云密码：</span><span>{{ showPassword?detail.aliyunPassword:'********' }}</span><img src="../../assets/img/see_password.png" alt="icon" @click="showPassword=!showPassword" /></li>
           <li><span>联系人：</span><span>{{ detail.contactPerson }}</span></li>
         </ul>
         <ul>
           <li><span>乐刷账号：</span><span>{{ detail.leshuaAccount }}</span></li>
-          <li><span>乐刷密码：</span><span>{{ showPassword2?detail.leshuaPassword:'********' }}</span><img src="../../assets/img/hide_password.png" alt="" @click="showPassword2=!showPassword2"></li>
+          <li><span>乐刷密码：</span><span>{{ showPassword2?detail.leshuaPassword:'********' }}</span><img src="../../assets/img/hide_password.png" alt="icon" @click="showPassword2=!showPassword2" /></li>
           <li><span>联系电话：</span><span>{{ detail.contactMobile }}</span></li>
         </ul>
       </div>

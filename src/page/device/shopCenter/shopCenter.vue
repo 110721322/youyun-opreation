@@ -6,30 +6,30 @@
     <Search :is-show-all="true" :form-base-data="searchConfig.formData" @search="search" />
 
     <div class="table-box">
-      <div class="tabale_title_box">
+      <div class="tabale-title-box">
         <el-button class="btn" type="primary" @click="onClick_addDevice">添加出售设备</el-button>
       </div>
       <BaseCrud
-          ref="table"
-          :params="params"
-          :api-service="api"
-          :grid-config="configData.gridConfig"
-          :grid-btn-config="configData.gridBtnConfig"
-          :grid-data="testData"
-          :form-config="configData.formConfig"
-          :form-data="configData.formModel"
-          :grid-edit-width="150"
-          :is-async="true"
-          :is-select="false"
-          :is-expand="false"
-          :row-key="'id'"
-          :default-expand-all="false"
-          :hide-edit-area="configData.hideEditArea"
-          :is-show="false"
-          @edit="onClick_edit"
-          @delete="onClick_delete"
-          @on="onClick_on"
-          @off="onClick_off"
+        ref="table"
+        :params="params"
+        :api-service="api"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :grid-data="testData"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="150"
+        :is-async="true"
+        :is-select="false"
+        :is-expand="false"
+        :row-key="'id'"
+        :default-expand-all="false"
+        :hide-edit-area="configData.hideEditArea"
+        :is-show="false"
+        @edit="clickEdit"
+        @delete="clickDelete"
+        @on="clickOn"
+        @off="clickOff"
       ></BaseCrud>
     </div>
   </div>
@@ -69,7 +69,7 @@ export default {
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     },
-    onClick_delete($row) {
+    clickDelete($row) {
       this.$confirm("是否要删除该设备？", "提示", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认删除",
@@ -93,7 +93,7 @@ export default {
         });
       });
     },
-    onClick_off($row, $item) {
+    clickOff($row, $item) {
       this.$confirm("是否要下架该设备？", "提示", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认下架",
@@ -117,7 +117,7 @@ export default {
         });
       });
     },
-    onClick_on($row) {
+    clickOn($row) {
       this.$confirm("是否要上架该设备？", "提示", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认上架",
@@ -141,7 +141,7 @@ export default {
         });
       });
     },
-    onClick_edit($row) {
+    clickEdit($row) {
       this.$router.push({
         name: "shopCenterDetail",
         query: { id: $row.id }
@@ -199,7 +199,7 @@ export default {
   justify-content: space-between;
 }
 
-.tabale_title_box {
+.tabale-title-box {
   height: 52px;
   width: 100%;
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="page_box">
+  <div class="page-box">
     <div class="errPage-container">
       <el-button class="pan-back-btn" @click="back">返回</el-button>
       <el-row>
@@ -91,7 +91,7 @@ export default {
   }
 }
 
-.page_box {
+.page-box {
   width: 100%;
   height: 100%;
   overflow: hidden;

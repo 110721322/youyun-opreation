@@ -116,7 +116,7 @@ export default {
     },
     resetSelectToday() {
       this.dateList[0].label = "今天";
-      this.onClick_item(this.dateList[0])
+      this.onClickItem(this.dateList[0])
     },
     resetSelectAll() {
       this.timeInterval = [];
@@ -125,11 +125,11 @@ export default {
     },
     resetSelectThird() {
       this.dateList[0].label = "今天";
-      this.onClick_item(this.dateList[2]);
+      this.onClickItem(this.dateList[2]);
     },
-    onChage($data) {
+    changeDate($data) {
       if ($data === null) {
-        this.onClick_item(this.dateList[0]);
+        this.onClickItem(this.dateList[0]);
         return;
       }
       this.selectItem = {};
@@ -144,7 +144,7 @@ export default {
       this.ruleForm[this.formItem.key] = timeInterval;
       this.$emit("timeSearch", this.ruleForm)
     },
-    onClick_item($item) {
+    onClickItem($item) {
       this.selectItem = $item;
       let start = "";
       let end = "";

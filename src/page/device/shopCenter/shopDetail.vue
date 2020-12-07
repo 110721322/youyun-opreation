@@ -1,5 +1,5 @@
 <template>
-  <div class="detail_page">
+  <div class="detail-page">
     <Form
       :form-base-data="fromConfigData.formData"
       :show-foot-btn="fromConfigData.showFootBtn"
@@ -108,7 +108,7 @@ export default {
 </script>
 
 <style scoped>
-.detail_page {
+.detail-page {
   width: calc(100% - 48px);
   background: #fff;
   margin: 0 24px;

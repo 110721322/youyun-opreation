@@ -33,8 +33,8 @@
         >
           <span slot-scope="{node,data}" class="custom-tree-node">
             <span>
-              <img v-if="data.type=='menu'" class="trre_icon" src="@/assets/img/page_icon.png" alt />
-              <img v-if="data.type=='button'" class="trre_icon" src="@/assets/img/btn_icon.png" alt />
+              <img v-if="data.type=='menu'" class="trre_icon" src="@/assets/img/page_icon.png" alt="icon" />
+              <img v-if="data.type=='button'" class="trre_icon" src="@/assets/img/btn_icon.png" alt="icon" />
             </span>
             <span>
               <i :class="node.icon"></i>

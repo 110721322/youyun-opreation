@@ -15,9 +15,9 @@
 
     <transition name="fade">
       <div v-if="activeIndex == '1'" class="shipping">
-        <div class="shipping_title">订单信息</div>
-        <div class="shipping_content">
-          <div class="pay_img">
+        <div class="shipping-title">订单信息</div>
+        <div class="shipping-content">
+          <div class="pay-img">
             <img :src="orderDetail.voucher" alt="">
             <p>打款凭证</p>
           </div>
@@ -37,24 +37,24 @@
       <div v-if="activeIndex == '2'">
         <detailMode :key="2" :rule-form="ruleForm2" :config-data="configData2"></detailMode>
         <div class="table-box" style="padding:0">
-          <div class="left_box">
+          <div class="left-box">
             <div class="tab-head">
               <span class="title">设备型号</span>
             </div>
-            <div class="device_list">
+            <div class="device-list">
               <div
                 v-for="(item, index) in deviceModelList"
                 :key="index"
-                class="device_item"
-                :class="selectIndex===index? 'select_item': ''"
-                @click="onClick_getData(item,index)"
+                class="device-item"
+                :class="selectIndex===index? 'select-item': ''"
+                @click="onClickGetData(item,index)"
               >
-                <div class="device_name">{{ item.deviceModel }}</div>
-                <div class="device_num">{{ item.count }}台</div>
+                <div class="device-name">{{ item.deviceModel }}</div>
+                <div class="device-num">{{ item.count }}台</div>
               </div>
             </div>
           </div>
-          <div class="right_box">
+          <div class="right-box">
             <BaseCrud
               ref="table"
               :params="params"
@@ -69,8 +69,8 @@
               :border="true"
               :header-cell-style="getHeadClass"
               :is-async="true"
-              @okEdit="onClick_okEdit"
-              @cancelEdit="onClick_cancelEdit"
+              @okEdit="clickOkEdit"
+              @cancelEdit="clickCancelEdit"
             />
           </div>
         </div>
@@ -188,7 +188,7 @@ export default {
         this.ruleForm2 = res.data;
       });
     },
-    onClick_getData($item, index) {
+    onClickGetData($item, index) {
       this.deviceInfo = $item.deviceDetailList
       this.selectIndex = index
     },
@@ -201,7 +201,7 @@ export default {
     onClick_edit($item) {
       $item.edit = true;
     },
-    onClick_okEdit($item) {
+    clickOkEdit($item) {
       $item.edit = false;
       api.finishOutputInfoUpdate({
         detailId: $item.detailId,
@@ -212,7 +212,7 @@ export default {
         }
       })
     },
-    onClick_cancelEdit($item) {
+    clickCancelEdit($item) {
       $item.edit = false;
     },
     getHeadClass() {
@@ -266,7 +266,7 @@ export default {
   justify-content: space-between;
 }
 
-.left_box {
+.left-box {
   width: 290px;
   height: 457px;
   background: rgba(255, 255, 255, 1);
@@ -274,28 +274,28 @@ export default {
   float: left;
 }
 
-.right_box {
+.right-box {
   float: left;
   width: calc(100% - 290px - 48px);
   margin: 24px;
 }
 
-.device_list {
+.device-list {
   margin-top: 20px;
   height: 392px;
   overflow: auto;
 }
 
-.device_item {
+.device-item {
   width: 100%;
   height: 48px;
 }
 
-.device_item.select_item {
+.device-item.select-item {
   background: #F1F5F6;
 }
 
-.device_name {
+.device-name {
   width: 101px;
   height: 48px;
   font-size: 14px;
@@ -306,7 +306,7 @@ export default {
   margin-left: 30px;
 }
 
-.device_num {
+.device-num {
   width: 31px;
   height: 22px;
   line-height: 48px;
@@ -322,7 +322,7 @@ export default {
   padding: 24px 24px;
 }
 
-.shipping_title {
+.shipping-title {
   width: 100%;
   height: 64px;
   background: #fff;
@@ -333,18 +333,18 @@ export default {
   border-bottom: 1px solid #EBEEF5;
 }
 
-.shipping_content {
+.shipping-content {
   width: 100%;
   background: #fff;
   padding: 32px 32px;
 }
 
-.shipping_content .pay_img{
+.shipping-content .pay-img{
   width: 100%;
   margin-bottom: 32px;
 }
 
-.pay_img img {
+.pay-img img {
   width: 100px;
   height: 100px;
   border-radius: 4px;
@@ -352,25 +352,25 @@ export default {
   margin-bottom: 8px;
 }
 
-.pay_img p {
+.pay-img p {
   padding-left: 22px;
   font-size: 14px;
   color: #606266;
 }
 
-.shipping_content ul {
+.shipping-content ul {
   display: flex;
   flex-wrap: wrap;
 }
 
-.shipping_content ul li {
+.shipping-content ul li {
   width: 33.3%;
   margin-bottom: 16px;
   line-height: 22px;
   font-size: 14px;
 }
 
-.shipping_content ul li span:nth-child(2) {
+.shipping-content ul li span:nth-child(2) {
   font-size: 14px;
   color: #606266;
 }

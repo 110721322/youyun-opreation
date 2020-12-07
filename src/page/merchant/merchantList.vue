@@ -22,7 +22,7 @@
         :is-select="false"
         :params="params"
         :api-service="api"
-        @detail="go_detail"
+        @detail="goDetail"
         @openAgentManager="openAgentManager"
         @openMerchantManager="openMerchantManager"
       >
@@ -77,7 +77,7 @@ export default {
   mounted() {
   },
   methods: {
-    go_detail(row) {
+    goDetail(row) {
       this.$router.push({
         name: "merchantDetail",
         query: {

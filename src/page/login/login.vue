@@ -1,5 +1,5 @@
 <template>
-  <div class="page_box">
+  <div class="page-box">
     <div class="login-box">
       <div class="left-box">
         <div class="logo">
@@ -9,8 +9,8 @@
         <div v-if="isLogin" class="login-content">
           <template v-if="activeType==='accountLogin'">
             <div class="type-box">
-              <span class="active-type" @click="toAccountLogin">账号密码登录</span>
-              <span class="unactive-type ml" @click="toVerificationLogin">验证码登录</span>
+              <span class="active-type" @click="onClickToAccountLogin">账号密码登录</span>
+              <span class="unactive-type ml" @click="onClickToVerificationLogin">验证码登录</span>
             </div>
             <el-form ref="passwordLoginForm" class="input-box" :rules="loginFormConfig.rules" :model="ruleForm">
               <el-form-item prop="phone">
@@ -19,7 +19,7 @@
                   class="login-input"
                   placeholder="请输入手机号"
                   size="large"
-                  @keyup.native.enter="onClick_passwdLogin"
+                  @keyup.native.enter="onKeyUpPasswdLogin"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-user"></i>
                 </el-input>
@@ -33,25 +33,25 @@
                   class="login-input"
                   placeholder="请输入密码"
                   size="large"
-                  @keyup.native.enter="onClick_passwdLogin"
+                  @keyup.native.enter="onKeyUpPasswdLogin"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-lock"></i>
                 </el-input>
               </el-form-item>
             </el-form>
-            <div class="forget-box" style="cursor: pointer;" @click="toChangePasswd">忘记密码</div>
+            <div class="forget-box" style="cursor: pointer;" @click="onClickToChangePasswd">忘记密码</div>
             <div class="btn-box">
               <el-button
                 type="primary"
                 class="login-btn"
-                @click="onClick_passwdLogin"
+                @click="onKeyUpPasswdLogin"
               >登录</el-button>
             </div>
           </template>
           <template v-if="activeType==='verificationLogin'">
             <div class="type-box">
-              <span class="unactive-type" @click="toAccountLogin">账号密码登录</span>
-              <span class="active-type ml" @click="toVerificationLogin">验证码登录</span>
+              <span class="unactive-type" @click="onClickToAccountLogin">账号密码登录</span>
+              <span class="active-type ml" @click="onClickToVerificationLogin">验证码登录</span>
             </div>
             <el-form ref="codeLoginForm" class="input-box" :model="ruleForm2" :rules="loginFormConfig.rules2">
               <el-form-item prop="phone">
@@ -62,7 +62,7 @@
                   name="codePhone"
                   placeholder="请输入手机号"
                   size="large"
-                  @keyup.native.enter="onClick_codeLogin"
+                  @keyup.native.enter="onKeyUpCodeLogin"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-user"></i>
                 </el-input>
@@ -76,23 +76,23 @@
                   name="code"
                   placeholder="请输入验证码"
                   size="large"
-                  @keyup.native.enter="onClick_codeLogin"
+                  @keyup.native.enter="onKeyUpCodeLogin"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-lock"></i>
                   <template slot="append">
                     <span
                       v-if="countLoginTime<=0"
                       class="verification-btn"
-                      @click="onClick_sendLoginCode"
+                      @click="onClickSendLoginCode"
                     >获取验证码</span>
                     <span v-if="countLoginTime>0" class="verification-btn">{{ countLoginTime + " s" }}</span>
                   </template>
                 </el-input>
               </el-form-item>
             </el-form>
-            <div class="forget-box" @click="toChangePasswd">忘记密码</div>
+            <div class="forget-box" @click="onClickToChangePasswd">忘记密码</div>
             <div class="btn-box">
-              <el-button type="primary" class="login-btn" @click="onClick_codeLogin">登录</el-button>
+              <el-button type="primary" class="login-btn" @click="onKeyUpCodeLogin">登录</el-button>
             </div>
           </template>
           <template v-if="activeType==='changePasswdOneStep'">
@@ -107,7 +107,7 @@
                   class="login-input"
                   placeholder="请输入手机号"
                   size="large"
-                  @keyup.native.enter="onClick_changePasswordOneStep"
+                  @keyup.native.enter="onClickChangePasswordOneStep"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-user"></i>
                 </el-input>
@@ -120,14 +120,14 @@
                   class="login-input"
                   placeholder="请输入验证码"
                   size="large"
-                  @keyup.native.enter="onClick_changePasswordOneStep"
+                  @keyup.native.enter="onClickChangePasswordOneStep"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-lock"></i>
                   <template slot="append">
                     <span
                       v-if="countChangeTime<=0"
                       class="verification-btn"
-                      @click="onClick_sendChangeCode"
+                      @click="onClickSendChangeCode"
                     >获取验证码</span>
                     <span
                       v-if="countChangeTime>0"
@@ -138,9 +138,9 @@
               </el-form-item>
             </el-form>
             <div class="btn-box">
-              <el-button type="primary" class="login-btn" @click="onClick_changePasswordOneStep">下一步</el-button>
+              <el-button type="primary" class="login-btn" @click="onClickChangePasswordOneStep">下一步</el-button>
             </div>
-            <div class="bottom-box">已有账号？<span @click="toAccountLogin">立即登录</span></div>
+            <div class="bottom-box">已有账号？<span @click="onClickToAccountLogin">立即登录</span></div>
           </template>
           <template v-if="activeType==='changePasswdTwoStep'">
             <div class="type-box">
@@ -157,7 +157,7 @@
                   placeholder="请输入新密码"
                   show-password
                   size="large"
-                  @keyup.native.enter="onClick_changePasswordTwoStep"
+                  @keyup.native.enter="onClickChangePasswordTwoStep"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-lock"></i>
                 </el-input>
@@ -172,18 +172,18 @@
                   placeholder="再次输入新密码"
                   show-password
                   size="large"
-                  @keyup.native.enter="onClick_changePasswordTwoStep"
+                  @keyup.native.enter="onClickChangePasswordTwoStep"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-lock"></i>
                 </el-input>
               </el-form-item>
             </el-form>
             <div class="btn-box">
-              <el-button type="primary" class="login-btn" @click="onClick_changePasswordTwoStep">确定</el-button>
+              <el-button type="primary" class="login-btn" @click="onClickChangePasswordTwoStep">确定</el-button>
             </div>
-            <div class="bottom-box">已有账号？<span @click="toAccountLogin">立即登录</span></div>
+            <div class="bottom-box">已有账号？<span @click="onClickToAccountLogin">立即登录</span></div>
           </template>
-          <div class="bottom-box">没有账号？<span @click="onClick_changeregister">立即注册</span></div>
+          <div class="bottom-box">没有账号？<span @click="onClickChangeregister">立即注册</span></div>
         </div>
         <div v-else class="regist-content">
           <template>
@@ -203,7 +203,7 @@
                   autocomplete="off"
                   placeholder="请输入公司名称"
                   size="large"
-                  @keyup.native.enter="onClick_register"
+                  @keyup.native.enter="onKeyUpRegister"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-office-building"></i>
                 </el-input>
@@ -215,7 +215,7 @@
                   class="login-input"
                   placeholder="请输入法人姓名"
                   size="large"
-                  @keyup.native.enter="onClick_register"
+                  @keyup.native.enter="onKeyUpRegister"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-user"></i>
                 </el-input>
@@ -228,7 +228,7 @@
                   class="login-input"
                   placeholder="请输入法人手机号"
                   size="large"
-                  @keyup.native.enter="onClick_register"
+                  @keyup.native.enter="onKeyUpRegister"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-phone"></i>
                 </el-input>
@@ -241,7 +241,7 @@
                   class="login-input"
                   placeholder="请输入登录手机号"
                   size="large"
-                  @keyup.native.enter="onClick_register"
+                  @keyup.native.enter="onKeyUpRegister"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-phone"></i>
                 </el-input>
@@ -257,7 +257,7 @@
                   autocomplete="off"
                   size="large"
                   show-password
-                  @keyup.native.enter="onClick_register"
+                  @keyup.native.enter="onKeyUpRegister"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-lock"></i>
                 </el-input>
@@ -269,7 +269,7 @@
                   class="login-input"
                   placeholder="请输入邮箱"
                   size="large"
-                  @keyup.native.enter="onClick_register"
+                  @keyup.native.enter="onKeyUpRegister"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-message"></i>
                 </el-input>
@@ -291,19 +291,19 @@
                   class="login-input"
                   placeholder="请输入详细地址"
                   size="large"
-                  @keyup.native.enter="onClick_register"
+                  @keyup.native.enter="onKeyUpRegister"
                 >
                   <i slot="prefix" class="el-input__icon el-icon-location-information"></i>
                 </el-input>
               </el-form-item>
             </el-form>
-            <div class="btn-regist" @click="onClick_register">立即注册</div>
+            <div class="btn-regist" @click="onKeyUpRegister">立即注册</div>
           </template>
-          <div class="bottom-box">已有账号？<span @click="onClick_changelogin">立即登录</span></div>
+          <div class="bottom-box">已有账号？<span @click="onClickChangelogin">立即登录</span></div>
         </div>
       </div>
       <div class="right-box">
-        <img src="../../assets/img/loginBg.png" alt class="right-img" />
+        <img src="../../assets/img/loginBg.png" alt="背景图" class="right-img" />
       </div>
     </div>
   </div>
@@ -420,11 +420,11 @@ export default {
       this.registerForm['cityCode'] = $codes[1];
       this.registerForm['areaCode'] = $codes[2];
     },
-    onClick_changePasswordOneStep() {
+    onClickChangePasswordOneStep() {
       if (!this.formValid('changePasswordOneStep')) return;
       this.activeType = "changePasswdTwoStep";
     },
-    onClick_changePasswordTwoStep() {
+    onClickChangePasswordTwoStep() {
       if (!this.formValid('changePasswordTwoStep')) return;
       api
         .changePassword(this.ruleForm3)
@@ -434,10 +434,10 @@ export default {
             type: "success",
             message: "修改成功"
           })
-          this.toAccountLogin();
+          this.onClickToAccountLogin();
         })
     },
-    onClick_sendLoginCode() {
+    onClickSendLoginCode() {
       const that = this;
       if (!this.ruleForm2.phone) {
         this.$alert("请输入手机号");
@@ -465,7 +465,7 @@ export default {
           this.countLoginTime = 0;
         });
     },
-    onClick_sendChangeCode() {
+    onClickSendChangeCode() {
       const that = this;
       if (!this.ruleForm3.phone) {
         this.$alert("请输入手机号");
@@ -497,15 +497,15 @@ export default {
           this.countLoginTime = 0;
         });
     },
-    toChangePasswd() {
+    onClickToChangePasswd() {
       this.activeType = "changePasswdOneStep";
       this.clearValidate();
     },
-    toAccountLogin() {
+    onClickToAccountLogin() {
       this.activeType = "accountLogin";
       this.clearValidate();
     },
-    toVerificationLogin() {
+    onClickToVerificationLogin() {
       this.activeType = "verificationLogin";
       this.clearValidate();
     },
@@ -518,7 +518,7 @@ export default {
         if (this.$refs.registerForm) this.$refs.registerForm.clearValidate();
       })
     },
-    onClick_passwdLogin() {
+    onKeyUpPasswdLogin() {
       if (!this.formValid('passwordLoginForm')) return;
       api
         .login({
@@ -536,7 +536,7 @@ export default {
     loginCallBack(res) {
       if (res.status === 1) {
         if (res.code === 1010) { // 未注册，前往注册
-          this.onClick_changeregister();
+          this.onClickChangeregister();
         } else if (res.code === 1040) { // 审核未通过，前往审核等待页
           this.$router.push({name: "registSuccess"})
         }
@@ -582,7 +582,7 @@ export default {
       this.$router.addRoutes(routerList);
       this.saveRoutersArr(routerList)
     },
-    onClick_codeLogin() {
+    onKeyUpCodeLogin() {
       if (!this.formValid("codeLoginForm")) return;
       api
         .login({
@@ -593,18 +593,18 @@ export default {
         })
         .then(res => this.loginCallBack(res))
     },
-    onClick_changeregister() {
+    onClickChangeregister() {
       this.isRegister = true
       this.isLogin = false
       this.clearValidate()
     },
-    onClick_changelogin() {
+    onClickChangelogin() {
       this.activeType = 'accountLogin';
       this.isRegister = false
       this.isLogin = true
       this.clearValidate();
     },
-    onClick_register() {
+    onKeyUpRegister() {
       if (!this.formValid("registerForm")) return;
       api.registerTopAgent(this.registerForm).then(res => {
         if (res.code) return res;
@@ -632,7 +632,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "@/assets/css/login.scss";
-.page_box {
+.page-box {
   width: 100%;
   height: 100%;
   display: flex;

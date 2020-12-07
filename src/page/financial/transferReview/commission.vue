@@ -33,9 +33,9 @@
         :header-cell-style="headerCellStyle"
         :api-service="api"
         :params="params"
-        @detail="onClick_detail"
-        @reject="onClick_reject"
-        @adopt="onClick_adopt"
+        @detail="onClickDetail"
+        @reject="onClickReject"
+        @adopt="onClickAdopt"
       ></BaseCrud>
       <BaseCrud
         v-else
@@ -55,9 +55,9 @@
         :header-cell-style="headerCellStyle"
         :api-service="apiAgent"
         :params="params"
-        @detail="onClick_detail"
-        @reject="onClick_reject"
-        @adopt="onClick_adopt"
+        @detail="onClickDetail"
+        @reject="onClickReject"
+        @adopt="onClickAdopt"
       ></BaseCrud>
     </div>
 
@@ -266,7 +266,7 @@ export default {
         endTime: $ruleForm.date[1] ? $ruleForm.date[1] : this.$g.utils.getToday(0)
       };
     },
-    onClick_detail($row) {
+    onClickDetail($row) {
       const queryDetailApi = this.activeName === '12' ? 'topQueryDetail' : 'queryDetail'
       api[queryDetailApi]({
         id: $row.id || null
@@ -318,7 +318,7 @@ export default {
     handleClose() {
       this.detailDrawer = false;
     },
-    onClick_reject($row) {
+    onClickReject($row) {
       if (this.activeName === '12') {
         this.channelAgentCode = $row.channelAgentCode
       } else {
@@ -340,7 +340,7 @@ export default {
         this.topQueryTypeMonthDetail($row)
       })
     },
-    onClick_adopt($row) {
+    onClickAdopt($row) {
       if (this.activeName === '12') {
         this.channelAgentCode = $row.channelAgentCode
       } else {
