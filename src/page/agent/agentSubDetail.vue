@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p_head">下级服务商信息</div>
+    <div class="p-head">下级服务商信息</div>
     <div class="content">
       <div class="list_title">基本信息</div>
       <ul class="list_info">

@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="p_head">商户详情</div>
+    <div class="p-head">商户详情</div>
 
     <detailMode :rule-form="businessData" :config-data="configData" :is-show-edit-btn="true" @edit="itemEdit"></detailMode>
     <detailMode :rule-form="commonData" v-if="commonData.merchantType !== 'personal'" :config-data="configData2" @modify="editMask"></detailMode>
     <detailMode :rule-form="commonData" v-if="commonData.merchantType === 'personal'" :config-data="configData3" @modify="editMask"></detailMode>
     <el-drawer :visible.sync="editData" :with-header="false" size="500px">
-      <div class="p_head">{{editDataTitle}}</div>
+      <div class="p-head">{{editDataTitle}}</div>
       <Form
           ref="liaisonRef"
           :form-base-data="contactConfigData"

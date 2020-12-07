@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">广告权限</span>
     </div>
     <Search
@@ -8,7 +8,7 @@
       :form-base-data="searchConfig.formData"
       @search="search"
     />
-    <div class="table_box">
+    <div class="table-box">
       <BaseCrud
         ref="table"
         :grid-config="configData.gridConfig"
@@ -29,7 +29,7 @@
       ></BaseCrud>
     </div>
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
-      <div class="p_head">{{ fromConfigData.title }}</div>
+      <div class="p-head">{{ fromConfigData.title }}</div>
       <Form
         v-if="drawer"
         :form-base-data="fromConfigData.formData"
@@ -115,7 +115,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;

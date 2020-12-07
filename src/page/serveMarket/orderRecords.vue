@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="p_head" style="margin-bottom: 24px;">订购记录</div>
+    <div class="p-head" style="margin-bottom: 24px;">订购记录</div>
     <search
         class="searchForm"
         :is-show-all="true"
@@ -9,7 +9,7 @@
         @search="search"
     />
     <!-- <data-mode></data-mode> -->
-    <div class="table_box">
+    <div class="table-box">
       <BaseCrud
           ref="table"
           :grid-config="configData.gridConfig"
@@ -116,7 +116,7 @@ export default {
   .s_box {
     margin: 0 0;
   }
-  .table_box {
+  .table-box {
     margin-top: 24px;
     padding: 24px;
     overflow: hidden;

@@ -1,7 +1,7 @@
 <template>
   <div>
     <Search :is-show-all="true" :form-base-data="searchConfig.formData" @search="search" />
-    <div class="table_box">
+    <div class="table-box">
       <ul class="table-title">
         <li>间联</li>
         <li>直连</li>
@@ -92,7 +92,7 @@ export default {
 </script>
 
 <style scoped>
-  .table_box {
+  .table-box {
     margin-top: 24px;
     padding: 32px 24px 0 24px;
   }

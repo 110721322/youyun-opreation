@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p_head">分润总览</div>
+    <div class="p-head">分润总览</div>
     <search
         :open-height="searchMaxHeight"
         :form-base-data="searchConfig.formData"
@@ -11,7 +11,7 @@
       <data-mode :config-data="overviewData" class="data-item"></data-mode>
       <data-mode :config-data="overviewData2" class="data-item2"></data-mode>
     </div>
-    <div class="table_box">
+    <div class="table-box">
       <BaseCrud
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
@@ -126,7 +126,7 @@ export default {
 </script>
 
 <style scoped>
-.table_box {
+.table-box {
   margin: 24px;
   padding: 24px;
   overflow: hidden;

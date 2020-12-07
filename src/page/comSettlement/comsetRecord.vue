@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p_head">结算记录</div>
+    <div class="p-head">结算记录</div>
     <search
         :open-height="searchMaxHeight"
         :form-base-data="searchConfig.formData"

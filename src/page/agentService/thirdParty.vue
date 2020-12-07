@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">第三方对接列表</span>
     </div>
     <Search
@@ -9,7 +9,7 @@
       @search="search"
     />
 
-    <div class="table_box">
+    <div class="table-box">
       <div class="tabale_title_box">
         <el-button class="btn" type="primary" @click="onClick_addDocker">新增对接商</el-button>
       </div>
@@ -124,7 +124,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;

@@ -49,7 +49,7 @@
       </el-dropdown>
     </div>
     <el-drawer :visible.sync="passwordDrawer" :with-header="false" size="500px">
-      <div class="p_head">修改密码</div>
+      <div class="p-head">修改密码</div>
       <Form
         v-if="passwordDrawer"
         :form-base-data="formConfig.formData"

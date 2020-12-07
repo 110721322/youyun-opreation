@@ -52,7 +52,7 @@
           <button @click="onClick_tostatus">提交</button>
         </div>
       </div>
-      <div v-if="selectIndex===1" class="table_box">
+      <div v-if="selectIndex===1" class="table-box">
         <BaseCrud
           ref="table"
           :grid-config="configData.gridConfig"
@@ -443,7 +443,7 @@ export default {
     background: #1989FA;
     border-radius: 4px;
   }
-  .table_box {
+  .table-box {
     padding-top: 24px;
   }
 </style>

@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">审批管理</span>
     </div>
 
-    <div class="table_box">
+    <div class="table-box">
       <BaseCrud
         :grid-config="configData.gridConfig"
         :grid-btn-config="configData.gridBtnConfig"
@@ -23,7 +23,7 @@
     </div>
 
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
-      <div class="p_head">编辑按钮</div>
+      <div class="p-head">编辑按钮</div>
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="审批流程:" style="margin:16px 100px;width:280px">
           <el-radio-group v-model="form.resource" @input="onChange_resource">
@@ -113,7 +113,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;

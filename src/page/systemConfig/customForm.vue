@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">自定义表单</span>
     </div>
 
-    <div class="table_box" style="padding:0">
+    <div class="table-box" style="padding:0">
       <div class="left_box">
-        <div class="tab_head">
+        <div class="tab-head">
           <span class="title">类型</span>
         </div>
         <div class="device_list">
@@ -57,7 +57,7 @@
     </div>
 
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
-      <div class="p_head">{{ fromConfigData.title }}</div>
+      <div class="p-head">{{ fromConfigData.title }}</div>
       <Form
         size="medium"
         :form-base-data="fromConfigData.formData"
@@ -196,7 +196,7 @@ export default {
   padding: 30px 24px;
   border-top: 1px solid #ededed;
 }
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;

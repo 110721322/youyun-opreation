@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">商城管理</span>
     </div>
     <Search :is-show-all="true" :form-base-data="searchConfig.formData" @search="search" />
 
-    <div class="table_box">
+    <div class="table-box">
       <div class="tabale_title_box">
         <el-button class="btn" type="primary" @click="onClick_addDevice">添加出售设备</el-button>
       </div>
@@ -157,7 +157,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;

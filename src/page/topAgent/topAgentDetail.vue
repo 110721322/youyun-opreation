@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p_head_detail">
+    <div class="p-head_detail">
       <div class="top">
         <span>{{ ruleForm.channelAgentName }}</span>
       </div>
@@ -108,7 +108,7 @@
     <!--    </div>-->
 
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
-      <div class="p_head">{{ fromConfigData.title }}</div>
+      <div class="p-head">{{ fromConfigData.title }}</div>
       <Form
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
@@ -119,7 +119,7 @@
     </el-drawer>
 
     <el-drawer title="添加沟通计划" :visible.sync="addContactsDraw" :with-header="false" size="500px">
-      <div class="p_head">{{ contactConfigData.title }}</div>
+      <div class="p-head">{{ contactConfigData.title }}</div>
       <Form
         v-if="addContactsDraw"
         :form-base-data="contactConfigData"
@@ -1061,7 +1061,7 @@ export default {
 </script>
 
 <style lang="scss">
-  .p_head_detail {
+  .p-head_detail {
     height: 76px;
     background: rgba(255, 255, 255, 1);
     overflow: hidden;

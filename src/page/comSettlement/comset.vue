@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="top_head">
+    <div class="top-head">
       <span>佣金结算</span>
       <span>结算时间为每月28日至下月10日，需快递发票单</span>
       <span @click="handleLookBill">查看发票信息></span>
@@ -18,7 +18,7 @@
           </div>
         </li>
       </ul>
-      <div class="table_box">
+      <div class="table-box">
         <BaseCrud
           :grid-config="configData.gridConfig"
           :grid-btn-config="configData.gridBtnConfig"
@@ -244,7 +244,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .top_head {
+  .top-head {
     width: 100%;
     height: 76px;
     display: flex;
@@ -252,17 +252,17 @@ export default {
     background: #ffffff;
     padding-left: 24px;
   }
-  .top_head span:nth-child(1) {
+  .top-head span:nth-child(1) {
     display: block;
     font-size: 20px;
     font-weight: 500;
     margin-right: 16px;
   }
-  .top_head span:nth-child(2) {
+  .top-head span:nth-child(2) {
     font-size: 14px;
     color: #909399;
   }
-  .top_head span:nth-child(3) {
+  .top-head span:nth-child(3) {
     font-size: 14px;
     color: #1989FA;
     cursor: pointer;

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="p_head">
+    <div class="p-head">
       <span class="left-title">服务商数据</span>
     </div>
     <div class="title">顶级服务商数量分布</div>
@@ -380,7 +380,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-  .p_head {
+  .p-head {
     display: flex;
     justify-content: space-between;
     align-items: center;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p_head">新增服务商公告</div>
+    <div class="p-head">新增服务商公告</div>
     <div class="content-box">
       <div class="title">{{ fromConfigData.title }}</div>
 

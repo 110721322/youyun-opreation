@@ -1,6 +1,6 @@
 <template>
   <div class="ad-detail-box">
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">编辑广告</span>
     </div>
     <Form
@@ -35,7 +35,7 @@
       </template>
     </Form>
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
-      <div class="p_head">{{ drawerTitle }}</div>
+      <div class="p-head">{{ drawerTitle }}</div>
       <div class="search-box">
         <span class="label">精准筛选:</span>
         <el-input v-model="input" placeholder="请输入内容" class="input-with-select" size="40%">

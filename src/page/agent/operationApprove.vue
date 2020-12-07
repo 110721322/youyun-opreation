@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">运营结算审核</span>
     </div>
     <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
 
-    <div class="table_box">
+    <div class="table-box">
       <div class="tabale_title_box">
         <div class="title">运营结算列表</div>
         <el-button class="btn" type="primary" @click="onClick_addBlackList">新增入件黑名单</el-button>
@@ -32,7 +32,7 @@
     </div>
 
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
-      <div class="p_head">{{ fromConfigData.title }}</div>
+      <div class="p-head">{{ fromConfigData.title }}</div>
       <div v-if="fromConfigData.processData" class="process-box">
         <template v-for="(item,index) in fromConfigData.processData">
           <div :key="index" class="process-item">
@@ -204,7 +204,7 @@ export default {
 .formTemplate-item {
   margin-right: 20px;
 }
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;

@@ -24,8 +24,7 @@
     <!-- <div v-if="maxNum">最多上传{{ maxNum }}张图片</div> -->
     <i
       v-if="dialogImageUrl && !showFileList"
-      class="el-icon-plus el-icon-zoom-in"
-      style="float: left; position: relative; left: -20px; top: 5px; cursor: pointer;"
+      class="el-icon-plus el-icon-zoom-in iconStyle"
       @click="clickPreview"
     ></i>
     <el-image-viewer v-if="showViewer" :on-close="closeViewer" :url-list="[dialogImage]" />
@@ -250,6 +249,13 @@ export default {
     cursor: pointer;
     // border: 1px dashed #ccc;
     border-radius: 6px;
+  }
+  .iconStyle {
+    float: left;
+    position: relative;
+    left: -20px;
+    top: 5px;
+    cursor: pointer;
   }
   .avatar-uploader .el-upload i:hover {
     border-color: #409eff;

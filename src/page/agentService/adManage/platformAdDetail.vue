@@ -1,6 +1,6 @@
 <template>
   <div class="ad-detail-box">
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">{{ id?'编辑广告':'新增广告' }}</span>
     </div>
     <Form

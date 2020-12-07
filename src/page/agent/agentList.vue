@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p_head">服务商列表</div>
+    <div class="p-head">服务商列表</div>
     <search
         :open-height="searchMaxHeight"
         :form-base-data="searchConfig.formData"
@@ -8,7 +8,7 @@
         @search="search"
     />
 
-    <div class="table_box">
+    <div class="table-box">
       <div class="two-btn">
         <el-button type="primary" @click="onClick_addServe">添加服务商</el-button>
       </div>
@@ -242,7 +242,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.table_box {
+.table-box {
   margin: 24px;
   padding: 24px;
   overflow: hidden;

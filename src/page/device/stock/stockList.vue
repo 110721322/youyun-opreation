@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">设备库存</span>
     </div>
     <Search :is-show-all="true" :form-base-data="searchConfig.formData" @search="search" />
-    <div class="table_box">
+    <div class="table-box">
       <div class="tabale_title_box">
         <div class="title">库存列表</div>
         <el-button class="btn" type="primary" @click="onClick_addDevice">新增设备</el-button>
@@ -31,7 +31,7 @@
       ></BaseCrud>
     </div>
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
-      <div class="p_head">{{ fromConfigData.title }}</div>
+      <div class="p-head">{{ fromConfigData.title }}</div>
       <Form
         v-if="drawer"
         :form-base-data="fromConfigData.formData"
@@ -257,7 +257,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;

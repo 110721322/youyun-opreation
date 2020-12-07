@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">服务商续费记录</span>
     </div>
     <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
 
-    <div class="table_box">
+    <div class="table-box">
       <BaseCrud
         ref="table"
         :params="params"
@@ -79,7 +79,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;

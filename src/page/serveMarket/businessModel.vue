@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p_head">业务模式</div>
+    <div class="p-head">业务模式</div>
     <div class="card">
       <div class="card_content">
         <div v-for="(item,index) in modelList" :key="index" class="card_list">

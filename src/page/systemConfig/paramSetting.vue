@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">参数设置</span>
     </div>
 
-    <div class="table_box" style="padding:0">
+    <div class="table-box" style="padding:0">
       <div class="left_box">
-        <div class="tab_head">
+        <div class="tab-head">
           <span class="title">类型</span>
         </div>
         <div class="device_list">
@@ -80,7 +80,7 @@ export default {
   padding: 0 32px;
   border-bottom: 1px solid #ebeef5;
 }
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;

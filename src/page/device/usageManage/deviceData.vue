@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">设备数据</span>
       <el-menu
         :default-active="activeIndex"
@@ -48,7 +48,7 @@ export default {
 /* /deep/ .el-form-item {
   margin-bottom: 0px!important;
 } */
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;

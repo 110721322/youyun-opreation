@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">成员管理</span>
     </div>
     <search
@@ -11,7 +11,7 @@
       @search="search"
     />
 
-    <div class="table_box">
+    <div class="table-box">
       <div class="tabale_title_box">
         <el-button @click="onClick_showOrganization">组织架构</el-button>
         <el-button type="primary" @click="add_job">职位管理</el-button>
@@ -40,7 +40,7 @@
 
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
       <template v-if="drawer">
-        <div class="p_head">{{ fromConfigData.title }}</div>
+        <div class="p-head">{{ fromConfigData.title }}</div>
         <Form
           ref="basicEditor"
           :form-base-data="fromConfigData.formData"
@@ -53,7 +53,7 @@
       </template>
     </el-drawer>
     <el-drawer :visible.sync="jobDrawer" :with-header="false" size="550px">
-      <div class="p_head">职位管理</div>
+      <div class="p-head">职位管理</div>
       <div class="add_content">
         <span>添加职位:</span>
         <el-input v-model="nameJob" placeholder="请填写职位名称"></el-input>
@@ -83,7 +83,7 @@
       <PerfectPost v-if="drawerPersonInfo" :perfect-row="perfectRow" @confirm="confirmPerfectPost" @cancel="cancelPerfectPost" @refreshJobInfo="onClick_perfect"></PerfectPost>
     </el-drawer>
     <el-drawer :visible.sync="drawerOrganization" :with-header="false" size="500px">
-      <div class="p_head">组织架构</div>
+      <div class="p-head">组织架构</div>
       <el-tree
         :data="dataItem"
         node-key="id"
@@ -410,7 +410,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;

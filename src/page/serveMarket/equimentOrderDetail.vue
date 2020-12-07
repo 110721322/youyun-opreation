@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p_head">订单详情</div>
+    <div class="p-head">订单详情</div>
     <detailMode :rule-form="ruleFormBasic" :config-data="configData">
       <div slot="operatinTopCont" class="orderState">
         <div>订单状态： {{ ruleFormBasic.statusName }}</div>

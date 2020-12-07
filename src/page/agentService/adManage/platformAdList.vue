@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">平台广告列表</span>
     </div>
     <Search
@@ -9,7 +9,7 @@
         :form-base-data="searchConfig.formData"
         @search="search"
     />
-    <div class="table_box">
+    <div class="table-box">
       <div class="tabale_title_box">
         <div class="title">广告列表</div>
         <el-button class="btn" type="primary" @click="onClick_addAd">新增广告</el-button>
@@ -109,7 +109,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;

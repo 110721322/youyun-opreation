@@ -1,6 +1,6 @@
 <template>
   <div class="main_page">
-    <div class="p_head">服务器部署</div>
+    <div class="p-head">服务器部署</div>
     <search
         :open-height="searchMaxHeight"
         :form-base-data="searchConfig.formData"
@@ -8,7 +8,7 @@
         @search="search"
     />
     <!-- <data-mode></data-mode> -->
-    <div class="table_box">
+    <div class="table-box">
       <BaseCrud
           ref="child"
           :grid-config="configData.gridConfig"
@@ -103,7 +103,7 @@ export default {
 </script>
 
 <style scoped>
-  .table_box {
+  .table-box {
     margin: 24px;
     padding: 24px;
     overflow: hidden;

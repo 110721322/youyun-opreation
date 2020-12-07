@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p_head">
+    <div class="p-head">
       <span class="left-title">商户数据</span>
       <div class="right-area" @click="showRightbar">
         <img src="../../assets/img/menu_icon.png" alt="">
@@ -539,7 +539,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.p_head {
+.p-head {
   display: flex;
   justify-content: space-between;
   align-items: center;

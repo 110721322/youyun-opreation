@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">任务统计详情</span>
     </div>
     <div>
@@ -10,7 +10,7 @@
           :show-foot-btn="searchConfig.showFootBtn"
           @search="search"
       />
-      <div class="table_box">
+      <div class="table-box">
         <div class="table_title">统计列表</div>
         <BaseCrud
             ref="table"
@@ -89,7 +89,7 @@ export default {
 </script>
 
 <style scoped>
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;

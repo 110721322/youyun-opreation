@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">工单列表</span>
     </div>
     <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
 
-    <div class="table_box">
+    <div class="table-box">
       <BaseCrud
           ref="table"
           :params="params"
@@ -28,7 +28,7 @@
         ></BaseCrud>
       </div>
       <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
-        <div class="p_head">{{ fromConfigData.title }}</div>
+        <div class="p-head">{{ fromConfigData.title }}</div>
         <Form
           :form-base-data="fromConfigData.formData"
           :show-foot-btn="fromConfigData.showFootBtn"
@@ -175,7 +175,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;

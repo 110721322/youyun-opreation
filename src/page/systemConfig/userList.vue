@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">成员列表</span>
     </div>
     <search
@@ -11,7 +11,7 @@
       @search="search"
     />
 
-    <div class="table_box">
+    <div class="table-box">
       <div class="tabale_title_box">
         <el-button v-has="PERSON_LIST_ADD" class="btn" type="primary" @click="onClick_addUser">添加成员</el-button>
       </div>
@@ -36,7 +36,7 @@
     </div>
 
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
-      <div class="p_head">{{ fromConfigData.title }}</div>
+      <div class="p-head">{{ fromConfigData.title }}</div>
       <Form
         v-if="drawer"
         ref="memberEdit"
@@ -48,7 +48,7 @@
       ></Form>
     </el-drawer>
     <el-drawer :visible.sync="drawerAddPhone" :with-header="false" size="500px">
-      <div class="p_head">添加成员</div>
+      <div class="p-head">添加成员</div>
       <div class="scroll-box">
         <div class="add-phone-box">
           <div class="phone-label">手机号：</div>
@@ -315,7 +315,7 @@ export default {
     margin-bottom: 16px;
   }
 }
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="p_head">任务类型: {{statisticsData.taskValue}}</div>
-    <div class="table_box">
+    <div class="p-head">任务类型: {{statisticsData.taskValue}}</div>
+    <div class="table-box">
       <BaseCrud
           v-if="openType === 1"
           ref="table"
@@ -137,7 +137,7 @@ export default {
 </script>
 
 <style>
-  .table_box {
+  .table-box {
     padding: 24px 24px;
   }
 </style>

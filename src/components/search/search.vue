@@ -190,7 +190,7 @@ export default {
   transition: all 0.5s;
 }
 .s-box::-webkit-scrollbar {
-  display:none
+  display: none;
 }
 .is-show-all {
   /* height: auto !important; */
@@ -220,7 +220,7 @@ export default {
   flex-shrink: 1;
 }
 .form-inline::-webkit-scrollbar {
-  display:none
+  display: none;
 }
 .el-select .el-input {
   width: 130px;

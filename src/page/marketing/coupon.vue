@@ -7,7 +7,7 @@
         @search="search"
     />
     <!-- <data-mode></data-mode> -->
-    <div class="table_box">
+    <div class="table-box">
       <div class="add-btn">
         <button @click="onClick_add">创建优惠码</button>
       </div>
@@ -209,7 +209,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .table_box {
+  .table-box {
     margin: 24px;
     padding: 24px;
     overflow: hidden;

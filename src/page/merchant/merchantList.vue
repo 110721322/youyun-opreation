@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p_head">商户列表</div>
+    <div class="p-head">商户列表</div>
     <search
       :open-height="searchMaxHeight"
       :form-base-data="searchConfig.formData"
@@ -8,7 +8,7 @@
       @search="search"
     />
     <!-- <data-mode></data-mode> -->
-    <div class="table_box">
+    <div class="table-box">
       <BaseCrud
         ref="table"
         :grid-config="configData.gridConfig"
@@ -136,7 +136,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.table_box {
+.table-box {
   margin: 24px;
   padding: 24px;
   overflow: hidden;

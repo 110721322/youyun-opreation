@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="p_head">审批任务详情</div>
+    <div class="p-head">审批任务详情</div>
     <div class="contents">
       <div class="content">
         <div class="top_title">佣金结算申请</div>

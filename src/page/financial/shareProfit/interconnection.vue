@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">间连分润对账表</span>
     </div>
     <Search :form-base-data="searchConfig.formData" :is-show-all="true" @search="search" />
-    <div class="table_box">
+    <div class="table-box">
       <BaseCrud
         ref="table"
         :params="params"
@@ -65,12 +65,12 @@ export default {
 </script>
 
 <style scoped>
-  .table_box {
+  .table-box {
     margin: 24px;
     padding: 24px;
     background: white;
   }
-  .tab_head{
+  .tab-head{
     border-bottom: 0px;
   }
 </style>

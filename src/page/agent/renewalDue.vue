@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div class="p_head">到期续费记录</div>
+    <div class="p-head">到期续费记录</div>
     <search
       :open-height="searchMaxHeight"
       :form-base-data="searchConfig.formData"
       :show-foot-btn="searchConfig.showFootBtn"
       @search="search"
     />
-    <div class="table_box">
+    <div class="table-box">
       <BaseCrud
         ref="table"
         :grid-config="configData.gridConfig"
@@ -90,7 +90,7 @@ export default {
 </script>
 
 <style scoped>
-.table_box {
+.table-box {
   margin: 24px;
   padding: 24px;
   overflow: hidden;

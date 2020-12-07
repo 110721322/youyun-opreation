@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">商户明细</span>
     </div>
     <Search open-height="200" :form-base-data="searchConfig.formData" @search="search" />

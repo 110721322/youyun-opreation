@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">乐刷风控详情</span>
     </div>
 
@@ -27,7 +27,7 @@
           </template>
         </detailMode>
         <detailMode :img-width="4" :rule-form="ruleForm" :config-data="configData.appealData"></detailMode>
-        <div class="table_box">
+        <div class="table-box">
           <div class="title">审核记录</div>
           <div v-for="(item,index) in appealData" :key="index" class="item">
             <div class="time">{{ item.createTime }}</div>
@@ -82,7 +82,7 @@
       </div>
     </transition>
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
-      <div class="p_head">{{ fromConfigData.title }}</div>
+      <div class="p-head">{{ fromConfigData.title }}</div>
       <Form
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
@@ -427,7 +427,7 @@ export default {
     margin-left: 24px;
   }
 }
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   overflow: hidden;
