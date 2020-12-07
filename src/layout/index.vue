@@ -2,7 +2,7 @@
   <div class="app-wrapper">
     <div class="sidebar-container">
       <div style="max-height: 100%;" @mouseleave="mouseLeave">
-        <sidebar style="background:#001529;" :active-name="activeName" />
+        <Sidebar style="background:#001529;" :active-name="activeName" />
         <div
           v-if="showMenu2 && menuHoverData && menuHoverData.children && menuHoverData.children.length > 0"
           class="menu2"

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="p_head">服务器部署信息</div>
+    <div class="p-head">服务器部署信息</div>
     <div class="content">
       <ul class="detail">
         <div class="top-title">服务商信息</div>

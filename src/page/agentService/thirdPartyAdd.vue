@@ -1,7 +1,7 @@
 <template>
   <div class="detail-page">
     <div class="flex-between flex-align-center">
-      <div class="p_head">第三方对接信息</div>
+      <div class="p-head">第三方对接信息</div>
     </div>
     <div class="table-box">
       <Form

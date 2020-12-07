@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">设备使用列表</span>
     </div>
     <search
@@ -10,7 +10,7 @@
         @search="search"
     />
 
-    <div class="table_box">
+    <div class="table-box">
       <BaseCrud
           ref="table"
           :params="params"
@@ -110,7 +110,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;

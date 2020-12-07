@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">商户结算记录</span>
       <el-menu
         :default-active="activeIndex"
@@ -23,7 +23,7 @@
           @search="search"
         />
         <data-mode :config-data="modeConfigData" />
-        <div class="table_box">
+        <div class="table-box">
           <BaseCrud
             ref="table"
             :grid-config="configData.gridConfig"
@@ -174,7 +174,7 @@ export default {
 </script>
 
 <style scoped>
-.table_box {
+.table-box {
   margin: 24px;
   padding: 24px;
   overflow: hidden;

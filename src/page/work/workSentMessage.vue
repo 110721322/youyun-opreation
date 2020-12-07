@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="p_head">短信群发</div>
+    <div class="p-head">短信群发</div>
     <div class="content-box">
       <div class="title">{{ fromConfigData.title }}</div>
       <sendMessage :form-base-data="fromConfigData.formData" :label-width="'auto'"></sendMessage>

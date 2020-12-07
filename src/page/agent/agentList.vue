@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p_head">服务商列表</div>
+    <div class="p-head">服务商列表</div>
     <search
       :open-height="searchMaxHeight"
       :form-base-data="searchConfig.formData"

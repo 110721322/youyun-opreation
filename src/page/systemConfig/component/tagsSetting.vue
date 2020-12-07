@@ -73,7 +73,7 @@
     </DetailBox>
 
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
-      <div class="p_head">{{ fromConfigData.title }}</div>
+      <div class="p-head">{{ fromConfigData.title }}</div>
       <div class="color-input">
         <el-input v-model="ruleForm.mean" placeholder="请输入文案"></el-input>
         <el-color-picker v-model="ruleForm.color" class="s-color-picker"></el-color-picker>
@@ -302,7 +302,6 @@ export default {
     }
   }
 }
-
 .s-color-picker {
   width: 40px;
   height: 40px;

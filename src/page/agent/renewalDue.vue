@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p_head">到期续费记录</div>
+    <div class="p-head">到期续费记录</div>
     <search
       :open-height="searchMaxHeight"
       :form-base-data="searchConfig.formData"

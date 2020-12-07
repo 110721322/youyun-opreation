@@ -40,7 +40,7 @@
     </DetailBox>
 
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
-      <div class="p_head">{{ fromConfigData.title }}</div>
+      <div class="p-head">{{ fromConfigData.title }}</div>
       <Form
         v-if="drawer"
         :form-base-data="fromConfigData.formData"
@@ -224,7 +224,6 @@ export default {
   line-height: 64px;
   border-bottom: 1px solid #ebeef5;
 }
-
 .table-box {
   position: relative;
   margin: 24px;

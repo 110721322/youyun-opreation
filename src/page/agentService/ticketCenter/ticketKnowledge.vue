@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">工单知识库</span>
     </div>
 
@@ -100,7 +100,7 @@
       </div>
     </div>
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
-      <div class="p_head">{{ fromConfigData.title }}</div>
+      <div class="p-head">{{ fromConfigData.title }}</div>
       <Form
         size="medium"
         :form-base-data="fromConfigData.formData"
@@ -485,7 +485,6 @@ export default {
   padding: 30px 24px;
   border-top: 1px solid #ededed;
 }
-
 .table-box {
   position: relative;
   display: flex;

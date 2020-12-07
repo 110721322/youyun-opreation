@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">服务商分润统计</span>
     </div>
     <div class="main-top">
@@ -40,7 +40,7 @@
         >
           <el-menu-item v-for="(item, index) in selectData" :key="index" :index="index.toString()">{{ item.value }}</el-menu-item>
         </el-menu>
-        <div class="table_box">
+        <div class="table-box">
           <!-- 支付方式 -->
           <BaseCrud
               v-if="selectIndex==='0'"
@@ -241,7 +241,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .tab_head{
+  .tab-head{
     border-bottom: 0px;
   }
   .main_page {

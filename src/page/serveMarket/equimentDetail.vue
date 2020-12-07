@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p_head">商品详情</div>
+    <div class="p-head">商品详情</div>
     <div class="goods">
       <div class="goods-introduce">
         <div class="goods-style">

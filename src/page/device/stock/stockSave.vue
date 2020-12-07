@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">入库管理</span>
     </div>
     <search
@@ -9,7 +9,7 @@
       :show-foot-btn="searchConfig.showFootBtn"
       @search="search"
     />
-    <div class="table_box">
+    <div class="table-box">
       <div class="tabale_title_box">
         <div class="title">入库列表</div>
         <el-button class="btn" type="primary" @click="onClick_addDevice">新增入库</el-button>
@@ -312,7 +312,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;

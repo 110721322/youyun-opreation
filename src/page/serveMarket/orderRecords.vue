@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="p_head">订购记录</div>
+    <div class="p-head" style="margin-bottom: 24px;">订购记录</div>
     <search
       :is-show-all="true"
       :form-base-data="searchConfig.formData"
@@ -103,7 +103,6 @@ export default {
   .container {
     padding: 0 0;
   }
-
   .table-box {
     margin-top: 24px;
     padding: 24px;

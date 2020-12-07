@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">服务商入件风控</span>
     </div>
     <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
@@ -31,7 +31,7 @@
     </div>
 
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
-      <div class="p_head">{{ fromConfigData.title }}</div>
+      <div class="p-head">{{ fromConfigData.title }}</div>
       <div class="search-box">
         <span class="label">筛选:</span>
         <el-input v-model="input" placeholder="请输入内容" class="input-with-select" size="40%">
@@ -300,7 +300,6 @@ export default {
 .formTemplate-item {
   margin-right: 20px;
 }
-
 .table-box {
   position: relative;
   margin: 24px;

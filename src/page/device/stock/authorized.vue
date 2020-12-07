@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">设备授权激活</span>
     </div>
     <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
 
-    <div class="table_box">
+    <div class="table-box">
       <div class="tabale_title_box">
         <div class="title">设备授权列表</div>
         <UploadFile class="btn" :form-item="formItem" :rule-form="ruleForm" type="primary" @click="onClick_addDevice">导入设备信息</UploadFile>
@@ -152,7 +152,7 @@ export default {
 .formTemplate-item {
   margin-right: 20px;
 }
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;

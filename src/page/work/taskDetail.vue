@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="p_head">日常任务详情</div>
+    <div class="p-head">日常任务详情</div>
 
     <detailMode :rule-form="ruleForm" :config-data="configData" :span-width="24">
       <template v-slot:taskDetail>

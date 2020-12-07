@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p_head">分润总览</div>
+    <div class="p-head">分润总览</div>
     <search
       :open-height="searchMaxHeight"
       :form-base-data="searchConfig.formData"

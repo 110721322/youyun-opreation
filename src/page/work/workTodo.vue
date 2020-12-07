@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">待办事项</span>
       <el-menu
         :default-active="activeIndex"
@@ -128,7 +128,7 @@
         </div>
       </transition>
       <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
-        <div class="p_head">{{ fromConfigData.title }}</div>
+        <div class="p-head">{{ fromConfigData.title }}</div>
         <Form
           :form-base-data="fromConfigData.formData"
           :show-foot-btn="fromConfigData.showFootBtn"
@@ -139,7 +139,7 @@
         ></Form>
       </el-drawer>
       <el-drawer :visible.sync="otherDrawer" :with-header="false" size="500px">
-        <div class="p_head">{{ fromConfigData.title }}</div>
+        <div class="p-head">{{ fromConfigData.title }}</div>
         <Form
           :form-base-data="fromConfigData.formData"
           :show-foot-btn="fromConfigData.showFootBtn"

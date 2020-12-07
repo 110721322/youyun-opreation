@@ -486,7 +486,6 @@ export default {
     background: #1989fa;
     border-radius: 4px;
   }
-
   .table-box {
     padding-top: 24px;
   }

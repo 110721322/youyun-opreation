@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="p_head">顶级服务商审核列表</div>
+    <div class="p-head">顶级服务商审核列表</div>
     <search
       :open-height="searchMaxHeight"
       :form-base-data="searchConfig.formData"
@@ -27,7 +27,7 @@
       />
     </div>
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
-      <div class="p_head">分配运营</div>
+      <div class="p-head">分配运营</div>
       <Form
         v-if="drawer"
         ref="memberEdit"

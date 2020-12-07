@@ -1,6 +1,6 @@
 <template>
   <div class="main_page">
-    <div class="p_head">服务器部署</div>
+    <div class="p-head">服务器部署</div>
     <search
       :open-height="searchMaxHeight"
       :form-base-data="searchConfig.formData"

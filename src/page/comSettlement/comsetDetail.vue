@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p_head">佣金明细</div>
+    <div class="p-head">佣金明细</div>
     <div class="content">
       <ul class="top-content">
         <li>

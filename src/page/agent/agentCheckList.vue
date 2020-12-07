@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p_head">服务商审核列表</div>
+    <div class="p-head">服务商审核列表</div>
     <search
       :open-height="searchMaxHeight"
       :form-base-data="searchConfig.formData"
@@ -26,7 +26,7 @@
       />
     </div>
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
-      <div class="p_head">审核通过</div>
+      <div class="p-head">审核通过</div>
       <Form
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"

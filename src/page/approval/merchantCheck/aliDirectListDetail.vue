@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">商户预审核信息</span>
     </div>
 
@@ -31,7 +31,7 @@
       </div>
     </transition>
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
-      <div class="p_head">{{ fromConfigData.title }}</div>
+      <div class="p-head">{{ fromConfigData.title }}</div>
       <Form
         res="rejectForm"
         :form-base-data="fromConfigData.formData"
@@ -370,7 +370,7 @@ export default {
     margin-left: 24px;
   }
 }
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;

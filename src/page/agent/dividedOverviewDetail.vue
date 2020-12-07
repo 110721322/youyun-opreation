@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p_head">商户分润明细</div>
+    <div class="p-head">商户分润明细</div>
     <search
       :is-show-all="true"
       :open-height="searchMaxHeight"

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p_head">服务商公告</div>
+    <div class="p-head">服务商公告</div>
     <search
         :is-show-all="true"
         :form-base-data="searchConfig.formData"
@@ -9,7 +9,7 @@
         @reset="reset"
     />
     <!-- <data-mode></data-mode> -->
-    <div class="table_box">
+    <div class="table-box">
       <div>
         <el-button type="primary" class="add_btn" @click="onClick_addAnnouncement">添加公告</el-button>
       </div>
@@ -126,7 +126,7 @@ export default {
 </script>
 
 <style scoped>
-.table_box {
+.table-box {
   margin: 24px;
   padding: 24px;
   overflow: hidden;

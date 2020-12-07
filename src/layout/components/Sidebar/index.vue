@@ -3,7 +3,14 @@
     <logo :collapse="isCollapse" />
     <!-- <el-scrollbar> -->
     <div class="slidebar-container">
-      <el-menu :default-active="activeName" :collapse="false" :unique-opened="false" :collapse-transition="false" mode="vertical" background-color="#001529" text-color="#A6ADB4">
+      <el-menu
+        :default-active="activeName"
+        :collapse="false"
+        :unique-opened="false"
+        :collapse-transition="false"
+        mode="vertical"
+        background-color="#001529"
+        text-color="#A6ADB4">
         <sidebar-item v-for="route in menuList" :key="route.path" :item="route" />
       </el-menu>
     </div>

@@ -1,8 +1,8 @@
 <template>
   <div class="detail-page">
     <div class="flex-between flex-align-center">
-      <div class="p_head">第三方对接信息</div>
-      <el-button v-if="(!isEdit) && id" type="primary" class="edit-button" size="mini" @click="clickEditDetail">编辑</el-button>
+      <div class="p-head">第三方对接信息</div>
+      <el-button v-if="(!isEdit)&&id" type="primary" style="margin-right:24px;" size="mini" @click="editDetail">编辑</el-button>
     </div>
     <div v-if="showPage" class="form-box">
       <Form

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">支付宝小蜻蜓</span>
     </div>
     <Search
@@ -147,7 +147,7 @@ export default {
 </script>
 
 <style scoped>
-  .tab_head{
+  .tab-head{
     border-bottom: 0px;
   }
   .form-table {

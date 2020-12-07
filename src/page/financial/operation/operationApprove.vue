@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">佣金结算审核</span>
     </div>
     <Search :open-height="searchHeight" :form-base-data="searchConfig.formData" @search="search" />
 
-    <div class="table_box">
+    <div class="table-box">
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="顶级服务商" v-if="roleId === '12'" name="12"></el-tab-pane>
         <el-tab-pane label="服务商" name="11"></el-tab-pane>
@@ -59,7 +59,7 @@
     </div>
 
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
-      <div class="p_head">{{ fromConfigData.title }}</div>
+      <div class="p-head">{{ fromConfigData.title }}</div>
       <div v-if="fromConfigData.processData" class="process-box">
         <template v-for="(item,index) in fromConfigData.processData">
           <div :key="index" class="process-item">
@@ -452,7 +452,7 @@ export default {
   .formTemplate-item {
     margin-right: 20px;
   }
-  .table_box {
+  .table-box {
     position: relative;
     margin: 24px;
     padding: 24px;

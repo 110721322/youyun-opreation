@@ -127,7 +127,7 @@
     <!--    </div>-->
 
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
-      <div class="p_head">{{ fromConfigData.title }}</div>
+      <div class="p-head">{{ fromConfigData.title }}</div>
       <Form
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
@@ -138,7 +138,7 @@
     </el-drawer>
 
     <el-drawer title="添加沟通计划" :visible.sync="addContactsDraw" :with-header="false" size="500px">
-      <div class="p_head">{{ contactConfigData.title }}</div>
+      <div class="p-head">{{ contactConfigData.title }}</div>
       <Form
         v-if="addContactsDraw"
         :form-base-data="contactConfigData"

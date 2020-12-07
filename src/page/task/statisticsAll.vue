@@ -1,39 +1,39 @@
 <template>
   <div>
-    <div class="p_head">任务类型: {{statisticsData.taskValue}}</div>
+    <div class="p-head">任务类型: {{statisticsData.taskValue}}</div>
     <div class="table-box">
       <BaseCrud
-          v-if="openType === 1"
-          ref="table"
-          :params="params"
-          :api-service="api"
-          :grid-config="configData"
-          :grid-btn-config="configData"
-          :form-config="configData.formConfig"
-          :form-data="configData.formModel"
-          :grid-edit-width="300"
-          :is-async="true"
-          :is-select="false"
-          :is-expand="false"
-          :default-expand-all="false"
-          :hide-edit-area="true"
+        v-if="openType === 1"
+        ref="table"
+        :params="params"
+        :api-service="api"
+        :grid-config="configData"
+        :grid-btn-config="configData"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="300"
+        :is-async="true"
+        :is-select="false"
+        :is-expand="false"
+        :default-expand-all="false"
+        :hide-edit-area="true"
       >
       </BaseCrud>
       <BaseCrud
-          v-if="openType === 2"
-          ref="table"
-          :api-service="null"
-          :grid-config="configData"
-          :grid-btn-config="configData"
-          :grid-data="commissionData"
-          :form-config="configData.formConfig"
-          :form-data="configData.formModel"
-          :grid-edit-width="300"
-          :is-async="true"
-          :is-select="false"
-          :is-expand="false"
-          :default-expand-all="false"
-          :hide-edit-area="true"
+        v-if="openType === 2"
+        ref="table"
+        :api-service="null"
+        :grid-config="configData"
+        :grid-btn-config="configData"
+        :grid-data="commissionData"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="300"
+        :is-async="true"
+        :is-select="false"
+        :is-expand="false"
+        :default-expand-all="false"
+        :hide-edit-area="true"
       >
       </BaseCrud>
     </div>

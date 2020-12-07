@@ -162,7 +162,7 @@
     </div>-->
 
     <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false" size="500px">
-      <div class="p_head">{{ fromConfigData.title }}</div>
+      <div class="p-head">{{ fromConfigData.title }}</div>
       <Form
         :is-drawer="true"
         :form-base-data="fromConfigData.formData"
@@ -218,7 +218,7 @@
       </div>
     </el-drawer>
     <el-drawer :visible.sync="equipment" :with-header="false" size="500px">
-      <div class="p_head">{{ equipmentConfigData.title }}</div>
+      <div class="p-head">{{ equipmentConfigData.title }}</div>
       <Form
         ref="liaisonRef"
         :is-drawer="true"
@@ -230,7 +230,7 @@
     </el-drawer>
     <!--TODO 后续版本开发
     <el-drawer :title="contactConfigData.title" :visible.sync="addContactsDraw" :with-header="false" size="500px">
-      <div class="p_head">{{ contactConfigData.title }}</div>
+      <div class="p-head">{{ contactConfigData.title }}</div>
       <Form
         ref="liaisonRef"
         :is-drawer="true"
@@ -1300,7 +1300,11 @@ export default {
 </script>
 
 <style lang="scss">
+<<<<<<< HEAD
   .p-head-detail {
+=======
+  .p-head_detail {
+>>>>>>> dev-yunshi
     height: 76px;
     background: rgba(255, 255, 255, 1);
     overflow: hidden;

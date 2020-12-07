@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <div class="p_head">权限设置</div>
+    <div class="p-head">权限设置</div>
     <div class="content-drawer">
       <el-form ref="form" label-width="120px" style="padding: 24px;">
         <el-form-item v-if="roleId !== 13" label="复制成员权限:">

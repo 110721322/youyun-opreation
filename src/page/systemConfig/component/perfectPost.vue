@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p_head">{{ formConfigData.title }}</div>
+    <div class="p-head">{{ formConfigData.title }}</div>
     <Form
       ref="jopsForm"
       is-drawer
@@ -183,7 +183,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.table_box {
+.table-box {
   position: relative;
   margin: 24px;
   padding: 24px;

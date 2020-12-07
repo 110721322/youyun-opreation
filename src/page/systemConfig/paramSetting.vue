@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="tab_head">
+    <div class="tab-head">
       <span class="title">参数设置</span>
     </div>
 
     <div class="table-box">
       <div class="left-box">
-        <div class="tab_head">
+        <div class="tab-head">
           <span class="title">类型</span>
         </div>
         <div class="device-list">

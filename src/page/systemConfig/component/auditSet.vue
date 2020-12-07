@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <div class="p_head">审批设置</div>
+    <div class="p-head">审批设置</div>
     <el-form ref="form" label-width="120px" style="margin: 24px;">
       <el-form-item label="复制成员权限:">
         <el-select v-model="bindEmployee" placeholder="请选择成员" @change="changeEmployee">
