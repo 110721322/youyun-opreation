@@ -51,7 +51,7 @@
 
 <script>
 export default {
-  name: "",
+  name: "DetailMode",
   props: { ruleForm: Object, configData: Object },
   data() {
     return {

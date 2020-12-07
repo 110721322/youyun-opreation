@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: "",
+  name: "Count",
   props: {
     ruleForm: Object,
     formItem: Object

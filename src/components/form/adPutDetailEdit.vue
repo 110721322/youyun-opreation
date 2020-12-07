@@ -55,7 +55,7 @@ import Tinymce from "./components/Tinymce/index.vue";
 import Show from "./components/Show";
 
 export default {
-  name: "",
+  name: "AdPutDetailEdit",
   components: {
     Input,
     Select,

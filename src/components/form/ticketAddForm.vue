@@ -42,7 +42,7 @@
 import * as g from "@/libs/global";
 import apiAgent from "@/api/api_ticketCenter.js";
 export default {
-  name: "",
+  name: "TicketAddForm",
   props: {
     ruleForm: Object,
     formItem: Object,

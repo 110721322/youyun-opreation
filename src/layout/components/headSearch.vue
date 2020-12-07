@@ -1,6 +1,6 @@
 <template>
   <div :class="{'show':show}" class="header-search">
-    <img src="@/assets/img/search.png" class="search-img" @click.stop="click" />
+    <img src="@/assets/img/search.png" class="search-img" @click.stop="clickToShow" alt="搜索" />
     <el-select
       ref="headerSearchSelect"
       v-model="search"
@@ -10,7 +10,7 @@
       remote
       placeholder="Search"
       class="header-search-select"
-      @change="change"
+      @change="changeVal"
     >
       <el-option
         v-for="item in options"
@@ -60,7 +60,7 @@ export default {
     this.searchPool = this.generateRoutes(this.routes);
   },
   methods: {
-    click() {
+    clickToShow() {
       this.show = !this.show;
       if (this.show) {
         this.$refs.headerSearchSelect && this.$refs.headerSearchSelect.focus();
@@ -71,7 +71,7 @@ export default {
       this.options = [];
       this.show = false;
     },
-    change(val) {
+    changeVal(val) {
       this.$router.push(val.item.path);
       this.search = "";
       this.options = [];

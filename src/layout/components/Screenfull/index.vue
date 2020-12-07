@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div @click="click">全屏</div>
+    <div @click="clickScreenFull">全屏</div>
   </div>
 </template>
 
@@ -21,7 +21,7 @@ export default {
     this.destroy();
   },
   methods: {
-    click() {
+    clickScreenFull() {
       if (!screenfull.isEnabled) {
         this.$message({
           message: "you browser can not work",

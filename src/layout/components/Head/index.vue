@@ -1,6 +1,6 @@
 <template>
-  <div style="padding: 0 15px;" @click="toggleClick">
-    <img src="@/assets/img/log.png" />
+  <div style="padding: 0 15px;" @click="clickToggle">
+    <img src="@/assets/img/log.png" alt="logo" />
   </div>
 </template>
 
@@ -14,7 +14,7 @@ export default {
     }
   },
   methods: {
-    toggleClick() {
+    clickToggle() {
       this.$emit("toggleClick");
     }
   }
