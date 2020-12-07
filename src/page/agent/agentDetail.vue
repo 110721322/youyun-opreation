@@ -1300,11 +1300,7 @@ export default {
 </script>
 
 <style lang="scss">
-<<<<<<< HEAD
   .p-head-detail {
-=======
-  .p-head_detail {
->>>>>>> dev-yunshi
     height: 76px;
     background: rgba(255, 255, 255, 1);
     overflow: hidden;
