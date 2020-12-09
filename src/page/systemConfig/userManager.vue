@@ -13,8 +13,8 @@
 
     <div class="table-box">
       <div class="tabale-title-box">
-        <el-button @click="onClickShowOrganization">组织架构</el-button>
-        <el-button type="primary" @click="addJob">职位管理</el-button>
+        <el-button @click="clickShowOrganization">组织架构</el-button>
+        <el-button type="primary" @click="clickAddJob">职位管理</el-button>
       </div>
       <BaseCrud
         ref="customerTable"
@@ -57,7 +57,7 @@
       <div class="add-content">
         <span>添加职位:</span>
         <el-input v-model="nameJob" placeholder="请填写职位名称"></el-input>
-        <el-button type="primary" @click="addJobName">添加</el-button>
+        <el-button type="primary" @click="clickAddJobName">添加</el-button>
       </div>
       <div style="padding: 0 24px;">
         <BaseCrud
@@ -97,7 +97,7 @@
         @node-drop="handleDrop"
       ></el-tree>
       <div class="foot-btn-box">
-        <el-button size="normal" @click="cancelForm">关闭</el-button>
+        <el-button size="normal" @click="clickCancelForm">关闭</el-button>
       </div>
     </el-drawer>
   </div>
@@ -199,7 +199,7 @@ export default {
         })
     },
 
-    cancelForm() {
+    clickCancelForm() {
       this.drawerOrganization = false;
     },
 
@@ -266,7 +266,7 @@ export default {
         })
     },
 
-    onClickShowOrganization($row) {
+    clickShowOrganization($row) {
       // this.drawerOrganization = true;
       api
         .employeeOrganization({
@@ -313,12 +313,12 @@ export default {
         })
     },
 
-    addJob() {
+    clickAddJob() {
       this.nameJob = ""
       this.jobDrawer = true
     },
 
-    addJobName() {
+    clickAddJobName() {
       if (!this.nameJob) {
         this.$message({
           message: "请填写职位名称",

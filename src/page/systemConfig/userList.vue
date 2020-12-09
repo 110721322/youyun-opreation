@@ -63,7 +63,7 @@
               <div class="add-icon-box" @click="clickAddPhoneItem">
                 <i class="el-icon-plus"></i>
               </div>
-              <div v-if="isShowDel" class="del-icon-box" @click="handleDeletePhoneItem">
+              <div v-if="isShowDel" class="del-icon-box" @click="clickDeletePhoneItem">
                 <i class="el-icon-minus"></i>
               </div>
             </div>
@@ -74,8 +74,8 @@
         </div>
       </div>
       <div class="foot-btn-box">
-        <el-button type="primary" size="normal" @click="handleClick">确定</el-button>
-        <el-button size="normal" @click="cancelForm">取消</el-button>
+        <el-button type="primary" size="normal" @click="clickSure">确定</el-button>
+        <el-button size="normal" @click="clickCancelForm">取消</el-button>
       </div>
     </el-drawer>
   </div>
@@ -148,7 +148,7 @@ export default {
       }
     },
 
-    handleDeletePhoneItem() {
+    clickDeletePhoneItem() {
       this.addPhoneList.pop();
       if (this.addPhoneList.length <= 1) {
         this.isShowDel = false;
@@ -171,7 +171,7 @@ export default {
       this.drawerAddPhone = true
     },
 
-    handleClick() {
+    clickSure() {
       let addPhoneList = this.addPhoneList;
       addPhoneList = addPhoneList.filter($phone => $phone !== "")
       if (addPhoneList.length === 0) {
@@ -204,7 +204,7 @@ export default {
       })
     },
 
-    cancelForm() {
+    clickCancelForm() {
       this.drawerAddPhone = false;
     },
 

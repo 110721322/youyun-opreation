@@ -17,12 +17,12 @@
           class="input-new-tag"
           size="small"
           @keyup.enter.native="$event.target.blur"
-          @blur="handleInputConfirm($event,formData.agentTags)"
+          @blur="blurInputConfirm($event,formData.agentTags)"
         ></el-input>
         <el-button
           class="button-new-tag"
           size="small"
-          @click="showInput(formData.agentTags)"
+          @click="clickShowInput(formData.agentTags)"
         >+ 新增</el-button>
       </div>
     </DetailBox>
@@ -35,7 +35,7 @@
             <div class="color-line">
               <div class="color-box" :style="{background: item.color}"></div>
               <div class="color-right">
-                <el-button type="text" @click="editColor(item)">编辑</el-button>
+                <el-button type="text" @click="clickEditColor(item)">编辑</el-button>
                 <p style="color: #c7c8cd;">|</p>
                 <el-button type="text" style="color: #f5222d;">删除</el-button>
               </div>
@@ -62,12 +62,12 @@
           class="input-new-tag"
           size="small"
           @keyup.enter.native="$event.target.blur"
-          @blur="handleInputConfirm($event,formData.positionTags)"
+          @blur="blurInputConfirm($event,formData.positionTags)"
         ></el-input>
         <el-button
           class="button-new-tag"
           size="small"
-          @click="showInput(formData.positionTags)"
+          @click="clickShowInput(formData.positionTags)"
         >+ 新增</el-button>
       </div>
     </DetailBox>
@@ -80,8 +80,8 @@
       </div>
 
       <div class="foot-btn-box">
-        <el-button size="normal" type="primary" @click="handleClick">保存</el-button>
-        <el-button size="normal" @click="cancelForm">取消</el-button>
+        <el-button size="normal" type="primary" @click="clickSave">保存</el-button>
+        <el-button size="normal" @click="clickCancelForm">取消</el-button>
       </div>
       <!-- <Form
         :form-base-data="fromConfigData.formData"
@@ -170,7 +170,7 @@ export default {
         })
     },
 
-    editColor($item) {
+    clickEditColor($item) {
       this.ruleForm = {
         type: 'edit',
         color: $item.color,
@@ -180,7 +180,7 @@ export default {
       this.drawer = true;
     },
 
-    handleClick() {
+    clickSave() {
       if (this.ruleForm.type === 'add') {
         api.moodColorAddAgent({
           color: this.ruleForm.color,
@@ -192,7 +192,7 @@ export default {
             message: "已添加"
           })
           this.moodColorQueryByConditionAgent();
-          this.cancelForm();
+          this.clickCancelForm();
         })
       } else {
         api
@@ -208,12 +208,12 @@ export default {
               message: "已保存"
             })
             this.moodColorQueryByConditionAgent();
-            this.cancelForm();
+            this.clickCancelForm();
           })
       }
     },
 
-    cancelForm() {
+    clickCancelForm() {
       this.ruleForm = {
         type: "add",
         id: "",
@@ -239,11 +239,11 @@ export default {
       }
     },
 
-    showInput($item) {
+    clickShowInput($item) {
       $item.inputVisible = true;
     },
 
-    handleInputConfirm($event, $item) {
+    blurInputConfirm($event, $item) {
       if ($event.target.value) {
         if ($item.type === "user") {
           api

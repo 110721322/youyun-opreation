@@ -7,7 +7,7 @@
 
     <div class="table-box">
       <div class="tabale-title-box">
-        <el-button class="btn" type="primary" @click="onClickAddDevice">添加出售设备</el-button>
+        <el-button class="btn" type="primary" @click="clickAddDevice">添加出售设备</el-button>
       </div>
       <BaseCrud
         ref="table"
@@ -147,7 +147,7 @@ export default {
         query: { id: $row.id }
       });
     },
-    onClickAddDevice() {
+    clickAddDevice() {
       this.$router.push({
         name: "shopCenterDetail"
       });

@@ -11,7 +11,7 @@
         <div class="bullshit__oops">页面走丢了!</div>
         <div class="bullshit__headline">{{ message }}</div>
         <div class="bullshit__info">请检查您输入的URL是否正确，或者单击下面的按钮返回主页。</div>
-        <span class="bullshit__return-home" @click="back">返回</span>
+        <span class="bullshit__return-home" @click="clickBack">返回</span>
       </div>
     </div>
   </div>
@@ -27,7 +27,7 @@ export default {
     }
   },
   methods: {
-    back () {
+    clickBack () {
       if (this.$route.query.noGoBack) {
         this.$router.push({path: '/dashboard'});
       } else {

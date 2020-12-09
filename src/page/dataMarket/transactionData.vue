@@ -2,7 +2,7 @@
   <div>
     <div class="p-head">
       <span class="left-title">交易设置</span>
-      <div class="right-area" @click="showRightbar">
+      <div class="right-area" @click="clickShowRightbar">
         <img src="../../assets/img/menu_icon.png" alt="图标" />
         <span>自定义设置</span>
       </div>
@@ -51,7 +51,7 @@
               </el-tooltip>
               <div
                 :class="[radio === index ? 'check-radio' : 'uncheck-radio']"
-                @click="onClickChangeRadio(index)"
+                @click="clickChangeRadio(index)"
               />
             </div>
           </div>
@@ -59,7 +59,7 @@
             <div class="tip">
               <span class="dot-blue" />{{ lineOption.series[1].name }}
               <span class="dot-green" />{{ lineOption.series[0].name }}
-              <div class="change-btn" style="cursor: pointer;" @click="onClickChangeArts">
+              <div class="change-btn" style="cursor: pointer;" @click="clickChangeArts">
                 <img :src="toggleImg" class="change-icon" alt="图标" />
                 {{ isLineShow ? '切换柱状图' : '切换折线图' }}
               </div>
@@ -113,15 +113,15 @@
           <img src="../../assets/img/cancle.png" alt="图标" />
         </div>
         <div class="draw-checkbox">
-          <el-checkbox-group v-model="checkedSelect" @change="handleChecked">
+          <el-checkbox-group v-model="checkedSelect" @change="changeChecked">
             <el-checkbox v-for="(item, index) in checkIndex" :key="index" :label="item.value">{{ item.label }}</el-checkbox>
           </el-checkbox-group>
         </div>
         <div class="bottom-btn">
-          <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" @change="handleCheckAllChange">全选</el-checkbox>
+          <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" @change="changeCheckAll">全选</el-checkbox>
           <div class="btn">
-            <button @click="saveUserDiagrams">确定</button>
-            <button @click="cancleClose">取消</button>
+            <button @click="clickSaveUserDiagrams">确定</button>
+            <button @click="clickCancleClose">取消</button>
           </div>
         </div>
       </div>
@@ -493,7 +493,7 @@ export default {
         that.pieList[1].radio.val = $value;
       }
     },
-    handleCheckAllChange() {
+    changeCheckAll() {
       if (this.checkedSelect.length < 3) {
         this.checkedSelect = this.checkIndex.map(item => {
           return item.value;
@@ -502,7 +502,7 @@ export default {
         this.checkedSelect = [];
       }
     },
-    handleChecked() {},
+    changeChecked() {},
     queryUserDiagram() {
       api.queryUserDiagram('deal').then(res => {
         this.pagePermission = this.$g.utils.isArr(res.data) ? res.data : [];
@@ -510,7 +510,7 @@ export default {
         this.search2();
       })
     },
-    showRightbar() {
+    clickShowRightbar() {
       this.checkedSelect = this.pagePermission;
       this.drawer = true
     },
@@ -518,7 +518,7 @@ export default {
     hasPermission($permission) {
       return this.pagePermission.filter(item => $permission === item).length > 0
     },
-    saveUserDiagrams() {
+    clickSaveUserDiagrams() {
       api.saveUserDiagrams({
         diagramType: 'deal',
         diagrams: this.checkedSelect.join(',')
@@ -527,7 +527,7 @@ export default {
         this.drawer = false;
       })
     },
-    cancleClose() {
+    clickCancleClose() {
       this.drawer = false
     },
     // 各支付方式的总交易额/交易笔数
@@ -560,11 +560,11 @@ export default {
         this.search2({date: $time})
       })
     },
-    onClickChangeArts() {
+    clickChangeArts() {
       this.isLineShow = !this.isLineShow;
       this.drawEcharts();
     },
-    onClickChangeRadio($index) {
+    clickChangeRadio($index) {
       this.radio = $index;
       this.drawEcharts();
     },

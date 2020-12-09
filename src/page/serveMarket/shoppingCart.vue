@@ -40,7 +40,7 @@
     <div class="bottom">
       <div class="bottom-area">
         <div class="left-radio">
-          <el-checkbox v-model="checkAll" @change="clickSelectAll">全选</el-checkbox>
+          <el-checkbox v-model="checkAll" @change="changeSelectAll">全选</el-checkbox>
           <div v-if="deviceIdList.length>0" class="delete" @click="clickDelete">删除</div>
         </div>
         <div class="right-area">
@@ -102,7 +102,7 @@ export default {
       }
     },
 
-    clickSelectAll() {},
+    changeSelectAll() {},
 
     onClickDelete($row) {
       this.$confirm("确定删除该订单么", "提示", {

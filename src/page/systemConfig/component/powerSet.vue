@@ -15,8 +15,8 @@
             </el-option>
           </el-select>
           <div style="margin-top: 16px;">
-            <el-button type="primary" @click="copyEmployee">复制</el-button>
-            <el-button @click="resetEmployee">重置</el-button>
+            <el-button type="primary" @click="clickCopyEmployee">复制</el-button>
+            <el-button @click="clickResetEmployee">重置</el-button>
           </div>
         </el-form-item>
         <!-- 菜单树开始 -->
@@ -48,10 +48,10 @@
       </el-form>
     </div>
     <div class="foot-btn-box">
-      <el-checkbox v-model="checkAll" :indeterminate="indeterminate" @change="checkAllChange">全选</el-checkbox>
+      <el-checkbox v-model="checkAll" :indeterminate="indeterminate" @change="changeAll">全选</el-checkbox>
       <div class="btn-list">
-        <el-button type="primary" class="foot-btn" @click="confirm">确定</el-button>
-        <el-button class="foot-btn" @click="cancle">取消</el-button>
+        <el-button type="primary" class="foot-btn" @click="clickConfirm">确定</el-button>
+        <el-button class="foot-btn" @click="clickCancle">取消</el-button>
       </div>
     </div>
   </div>
@@ -179,7 +179,7 @@ export default {
       }
     },
 
-    checkAllChange() {
+    changeAll() {
       if (this.indeterminate || this.checkAll) {
         this.checkedList = this.allCheckOption;
       } else {
@@ -188,7 +188,7 @@ export default {
       }
     },
 
-    confirm() {
+    clickConfirm() {
       const checkedButtonIds = this.checkedButtons.map($button => {
         return {
           menuId: $button.menuId,
@@ -205,7 +205,7 @@ export default {
       this.$emit('confirm', result);
     },
 
-    cancle() {
+    clickCancle() {
       this.$emit('cancle');
     },
 
@@ -220,7 +220,7 @@ export default {
     /**
      * 复制权限
      */
-    copyEmployee() {
+    clickCopyEmployee() {
       if (this.queryParams) {
         this.apiService(this.queryParams).then(res => {
           this.checkedList = [];
@@ -237,7 +237,7 @@ export default {
     /**
      * 重置
      */
-    resetEmployee() {
+    clickResetEmployee() {
       this.bindEmployee = null;
       this.queryParams = null;
       this.checkedList = [];

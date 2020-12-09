@@ -21,7 +21,7 @@
     ></DetailMod>
 
     <div class="btn-box">
-      <el-button size="medium" type="primary" @click="save">保存</el-button>
+      <el-button size="medium" type="primary" @click="clickSave">保存</el-button>
     </div>
 
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
@@ -159,7 +159,7 @@ export default {
       this.drawer = true;
     },
 
-    save() {
+    clickSave() {
       api.update({
         isTaskCountdown: this.ruleForm.isTaskCountdown ? 1 : 0,
         perCustomerTransaction: this.ruleForm.perCustomerTransaction,

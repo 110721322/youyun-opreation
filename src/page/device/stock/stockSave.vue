@@ -12,7 +12,7 @@
     <div class="table-box">
       <div class="tabale-title-box">
         <div class="title">入库列表</div>
-        <el-button class="btn" type="primary" @click="onClickAddDevice">新增入库</el-button>
+        <el-button class="btn" type="primary" @click="clickAddDevice">新增入库</el-button>
       </div>
       <BaseCrud
         ref="table"
@@ -57,7 +57,7 @@
             </el-date-picker>
           </el-form-item>
           <el-form-item label="入库方式" prop="type" label-width="120px">
-            <el-radio-group v-model="formVal.type" @change="radioChange">
+            <el-radio-group v-model="formVal.type" @change="changeRadio">
               <el-radio :label="1">批量导入</el-radio>
               <el-radio :label="2">手动录入</el-radio>
             </el-radio-group>
@@ -69,22 +69,22 @@
         <div v-if="formVal.type === 2" class="box-cursor">
           <div class="cursorCount">
             <span>入库数量：{{list.length}}台</span>
-            <span @click="onClickClear">清空</span></div>
+            <span @click="clickClear">清空</span></div>
           <div class="add-box">
             <el-input v-model="device"></el-input>
-            <span @click="onClickAdd">添加</span>
+            <span @click="clickAdd">添加</span>
           </div>
           <ul class="cursor" v-if="list.length > 0">
             <li v-for="(item, index) in list" :key="index">
               <el-input :value="item.id" v-model="item.id"></el-input>
-              <span class="delete" @click="onClickDelete(index)">删除</span>
+              <span class="delete" @click="clickDelete(index)">删除</span>
             </li>
           </ul>
         </div>
       </div>
       <div class="bottom-btn">
-        <el-button type="primary" @click="onClickConfirm">保存</el-button>
-        <el-button @click="onClickCancel">取消</el-button>
+        <el-button type="primary" @click="clickConfirm">保存</el-button>
+        <el-button @click="clickCancel">取消</el-button>
       </div>
     </el-drawer>
   </div>
@@ -157,10 +157,10 @@ export default {
     this.api = api.deviceInputQueryByPage
   },
   methods: {
-    onClickDelete(index) {
+    clickDelete(index) {
       this.list.splice(index, 1)
     },
-    onClickAdd() {
+    clickAdd() {
       if (!this.device) {
         return
       }
@@ -169,7 +169,7 @@ export default {
       this.list.push(obj)
       this.device = ""
     },
-    onClickClear() {
+    clickClear() {
       this.list = []
     },
     search($ruleForm) {
@@ -179,7 +179,7 @@ export default {
         deviceId: $ruleForm.deviceId ? $ruleForm.deviceId : null
       };
     },
-    onClickAddDevice() {
+    clickAddDevice() {
       this.queryAllDevice()
       this.fromConfigData = FORM_CONFIG.deviceData;
       this.formVal = {
@@ -198,7 +198,7 @@ export default {
     upExecl($data) {
       this.excelData = $data
     },
-    onClickConfirm() {
+    clickConfirm() {
       var $data = this.formVal
       if (!$data.deviceId || !$data.deadline || !$data.inputTime || !$data.type) {
         this.$message({
@@ -295,11 +295,11 @@ export default {
         }
       });
     },
-    onClickCancel() {
+    clickCancel() {
       this.list = []
       this.drawer = false;
     },
-    radioChange(val) {
+    changeRadio(val) {
       if (val === 2) {
         this.excelData = ""
       }

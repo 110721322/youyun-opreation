@@ -18,7 +18,7 @@
         <div class="shipping-title">订单信息</div>
         <div class="shipping-content">
           <div class="pay-img">
-            <img :src="orderDetail.voucher" alt="图标" />
+            <img :src="orderDetail.voucher" alt="打款凭证" />
             <p>打款凭证</p>
           </div>
           <ul>
@@ -47,7 +47,7 @@
                 :key="index"
                 class="device-item"
                 :class="selectIndex===index? 'select-item': ''"
-                @click="onClickGetData(item,index)"
+                @click="clickGetData(item,index)"
               >
                 <div class="device-name">{{ item.deviceModel }}</div>
                 <div class="device-num">{{ item.count }}台</div>
@@ -188,7 +188,7 @@ export default {
         this.ruleForm2 = res.data;
       });
     },
-    onClickGetData($item, index) {
+    clickGetData($item, index) {
       this.deviceInfo = $item.deviceDetailList
       this.selectIndex = index
     },

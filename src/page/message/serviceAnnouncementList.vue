@@ -11,7 +11,7 @@
     <!-- <data-mode></data-mode> -->
     <div class="table-box">
       <div>
-        <el-button type="primary" class="add_btn" @click="onClickAddAnnouncement">添加公告</el-button>
+        <el-button type="primary" class="add_btn" @click="clickAddAnnouncement">添加公告</el-button>
       </div>
       <BaseCrud
           ref="table"
@@ -70,7 +70,7 @@ export default {
         }
       });
     },
-    onClickAddAnnouncement() {
+    clickAddAnnouncement() {
       this.$router.push({
         name: 'agentAnnounceAdd'
       });

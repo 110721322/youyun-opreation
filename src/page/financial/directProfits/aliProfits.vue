@@ -8,7 +8,7 @@
       <div class="table-content">
         <div class="form-title">
           <ul>
-            <el-button type="primary" @click="openDraw">直连分润导入</el-button>
+            <el-button type="primary" @click="clickOpenDraw">直连分润导入</el-button>
           </ul>
         </div>
         <BaseCrud
@@ -113,7 +113,7 @@ export default {
         [$ruleform.search]: $ruleform.searchVal
       }
     },
-    openDraw() {
+    clickOpenDraw() {
       this.drawer = true
     },
     confirm($filel) {

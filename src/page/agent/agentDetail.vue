@@ -68,7 +68,7 @@
       <div class="title">应用</div>
       <el-row>
         <el-col :span="8" class="app" @click.native="orderEquipment">
-          <img src="../../assets/img/Group.png" alt />
+          <img src="../../assets/img/Group.png" alt="订购设备" />
           <div>订购设备</div>
         </el-col>
       </el-row>
@@ -193,7 +193,7 @@
               placeholder="请输入关键词"
               :remote-method="remoteMethod"
               :loading="loading"
-              @change="clickChangeSelect"
+              @change="changeSelect"
             >
               <el-option
                 v-for="item in bankOptions"
@@ -497,7 +497,7 @@ export default {
     },
 
     // 点击更换开户支行
-    clickChangeSelect(item) {
+    changeSelect(item) {
       api.getBankLineByNo({
         unionCode: item
       }).then(res => {
@@ -659,7 +659,7 @@ export default {
       this.editType = 'editFincance'
       if (this.ruleForm.bankBranchName) {
         this.remoteMethod(this.ruleForm.bankBranchName)
-        this.clickChangeSelect(this.ruleForm.bankContactLine)
+        this.changeSelect(this.ruleForm.bankContactLine)
       }
       this.areaCodeNum = this.ruleForm.bankArea
       this.bankName = this.ruleForm.bankBranchName

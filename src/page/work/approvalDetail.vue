@@ -53,8 +53,8 @@
           </div>
         </div>
         <div class="bottom-btn">
-          <el-button type="primary" @click="confirm">同意</el-button>
-          <el-button @click="reject">拒绝</el-button>
+          <el-button type="primary" @click="clickConfirm">同意</el-button>
+          <el-button @click="clickReject">拒绝</el-button>
         </div>
       </div>
     </div>
@@ -81,7 +81,7 @@ export default {
     this.undoType = this.$route.query.undoType
   },
   methods: {
-    confirm() {
+    clickConfirm() {
       this.$confirm("确定通过佣金结算审核？", "通过审核", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认",
@@ -111,7 +111,7 @@ export default {
       })
     },
 
-    reject() {
+    clickReject() {
       this.$confirm("确定拒绝佣金结算审核？", "拒绝审核", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确认",

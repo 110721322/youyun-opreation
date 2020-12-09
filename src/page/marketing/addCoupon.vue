@@ -40,7 +40,7 @@
             :show-foot-btn="false"
           ></Form>
           <div class="next-btn">
-            <button @click="onClickFirstbtn">下一步</button>
+            <button @click="clickFirstbtn">下一步</button>
           </div>
         </div>
       </div>
@@ -57,8 +57,8 @@
             :show-foot-btn="false"
           ></Form>
           <div class="next-btn">
-            <button class="back-btn" @click="onClickBack">上一步</button>
-            <button @click="onClickSecondbtn">下一步</button>
+            <button class="back-btn" @click="clickBack">上一步</button>
+            <button @click="clickSecondbtn">下一步</button>
           </div>
         </div>
       </div>
@@ -80,7 +80,7 @@
           <p>优惠码领取链接</p>
           <!-- <div class="text-info">http://192.168.2.7/yx/sy/#id=hbdaqk&p=%E7%99%BB%E5%BD%95%E9%A1%B5&g=1</div> -->
           <div class="text-info">{{ activityDetail.shortUrl }}</div>
-          <button class="down" @click="copyActiveCode($event,activityDetail.shortUrl )">复制链接</button>
+          <button class="down" @click="clickCopyActiveCode($event,activityDetail.shortUrl )">复制链接</button>
         </div>
       </div>
     </div>
@@ -127,11 +127,11 @@ export default {
       };
       image.src = this.activityDetail.qrCodeImageUrl;
     },
-    onClickFirstbtn() {
+    clickFirstbtn() {
       this.ruleForm = this.$refs.firstForm.ruleForm
       this.secondStep = 1
     },
-    onClickSecondbtn() {
+    clickSecondbtn() {
       const params = {
         ...this.ruleForm,
         ...this.$refs.secondForm.ruleForm
@@ -156,10 +156,10 @@ export default {
         }
       })
     },
-    onClickBack() {
+    clickBack() {
       this.secondStep = 0
     },
-    copyActiveCode(e, text) {
+    clickCopyActiveCode(e, text) {
       const clipboard = new Clipboard(e.target, { text: () => text })
       clipboard.on('success', e => {
         this.$message({ type: 'success', message: '复制成功' })

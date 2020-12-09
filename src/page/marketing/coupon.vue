@@ -9,7 +9,7 @@
     <!-- <data-mode></data-mode> -->
     <div class="table-box">
       <div class="add-btn">
-        <button @click="onClickAdd">创建优惠码</button>
+        <button @click="clickAdd">创建优惠码</button>
       </div>
       <BaseCrud
           ref="child"
@@ -40,19 +40,19 @@
         <img :src="couponForm.ossUrl" alt="图标" />
       </div>
       <div class="option-btn">
-        <div class="copy-btn" @click="copyActiveCode($event,couponForm.shortUrl )">
+        <div class="copy-btn" @click="clickCopyActiveCode($event,couponForm.shortUrl )">
           <img src="../../assets/img/copy_icon.png" alt="图标" />
           <div>复制链接</div>
         </div>
         <span></span>
-        <div class="down-btn" @click="downloadCodeImg">
+        <div class="down-btn" @click="clickDownloadCodeImg">
           <img src="../../assets/img/down_icon.png" alt="图标" />
           <div>点击下载</div>
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="getsPromoCode">确 定</el-button>
+          <el-button type="primary" @click="clickGetsPromoCode">确 定</el-button>
         </span>
     </el-dialog>
   </div>
@@ -146,12 +146,12 @@ export default {
         .catch(() => {
         });
     },
-    onClickAdd() {
+    clickAdd() {
       this.$router.push({
         name: "addCoupon"
       })
     },
-    getsPromoCode() {
+    clickGetsPromoCode() {
       // api.getsPromoCode({
       //   activityNo: this.couponForm.activityNo,
       //   id: this.couponForm.id
@@ -166,7 +166,7 @@ export default {
       // })
       this.dialogVisible = false
     },
-    copyActiveCode(e, text) {
+    clickCopyActiveCode(e, text) {
       const clipboard = new Clipboard(e.target, { text: () => text })
       clipboard.on('success', e => {
         this.$message({ type: 'success', message: '复制成功' })
@@ -185,7 +185,7 @@ export default {
       })
       clipboard.onClick(e)
     },
-    downloadCodeImg() {
+    clickDownloadCodeImg() {
       var image = new Image();
       image.setAttribute("crossOrigin", "anonymous");
       var _this = this;

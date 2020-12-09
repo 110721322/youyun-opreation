@@ -1,7 +1,7 @@
 <template>
   <div class="page-box">
     <div class="errPage-container">
-      <el-button class="pan-back-btn" @click="back">返回</el-button>
+      <el-button class="pan-back-btn" @click="clickBack">返回</el-button>
       <el-row>
         <el-col :span="12">
           <h1 class="text-jumbo text-ginormous">权限不足!</h1>
@@ -33,7 +33,7 @@ export default {
     };
   },
   methods: {
-    back() {
+    clickBack() {
       if (this.$route.query.noGoBack) {
         this.$router.push({ path: "/dashboard" });
       } else {

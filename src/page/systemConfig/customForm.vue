@@ -15,7 +15,7 @@
             :key="key"
             class="device-item"
             :class="item.type == selectMenu.type?'select':''"
-            @click="onClickMenuItem(item)"
+            @click="clickMenuItem(item)"
           >
             <div class="device-name">{{ item.name }}</div>
             <div class="device-num"></div>
@@ -50,8 +50,8 @@
           </el-table>
         </DetailBox>
         <div v-if="isEdit" class="btn-box">
-          <el-button size="medium" type="primary" @click="saveTableData">保存</el-button>
-          <el-button size="medium" @click="cancelEdit">取消</el-button>
+          <el-button size="medium" type="primary" @click="clickSaveTableData">保存</el-button>
+          <el-button size="medium" @click="clickCancelEdit">取消</el-button>
         </div>
       </div>
     </div>
@@ -146,7 +146,7 @@ export default {
     this.getTableData();
   },
   methods: {
-    onClickMenuItem($item) {
+    clickMenuItem($item) {
       this.selectMenu = $item;
       this.type = $item.type;
       this.getTableData();
@@ -165,7 +165,7 @@ export default {
         })
     },
 
-    saveTableData() {
+    clickSaveTableData() {
       if (this.$g.utils.isArr(this.updateTableItems) && this.updateTableItems.length > 0) {
         api
           .batchSetFormFieldsProperty(this.updateTableItems)
@@ -184,7 +184,7 @@ export default {
       this.isEdit = true;
     },
 
-    cancelEdit() {
+    clickCancelEdit() {
       this.isEdit = false;
     },
     cancel(done) {

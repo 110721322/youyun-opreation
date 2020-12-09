@@ -14,8 +14,8 @@
           </el-option>
         </el-select>
         <div style="margin-top: 16px;">
-          <el-button type="primary" @click="copyEmployee">复制</el-button>
-          <el-button @click="resetEmployee">重置</el-button>
+          <el-button type="primary" @click="clickCopyEmployee">复制</el-button>
+          <el-button @click="clickResetEmployee">重置</el-button>
         </div>
       </el-form-item>
       <!-- 菜单树开始 -->
@@ -46,8 +46,8 @@
       <!-- 菜单树结束 -->
     </el-form>
     <div class="foot-btn-box">
-      <el-button type="primary" size="normal" @click="confirm">确定</el-button>
-      <el-button size="normal" @click="cancle">取消</el-button>
+      <el-button type="primary" size="normal" @click="clickConfirm">确定</el-button>
+      <el-button size="normal" @click="clickCancle">取消</el-button>
     </div>
   </div>
 </template>
@@ -126,7 +126,7 @@ export default {
       }
     },
 
-    confirm() {
+    clickConfirm() {
       const checkedButtonIds = this.checkedButtons.map($button => {
         return {
           menuId: $button.menuId,
@@ -136,7 +136,7 @@ export default {
       this.$emit('confirm', {approvalButtons: checkedButtonIds});
     },
 
-    cancle() {
+    clickCancle() {
       this.$emit('cancle');
     },
 
@@ -154,7 +154,7 @@ export default {
     /**
      * 复制权限
      */
-    copyEmployee() {
+    clickCopyEmployee() {
       if (this.queryParams) {
         this.apiService(this.queryParams).then(res => {
           this.checkedList = [];
@@ -167,7 +167,7 @@ export default {
     /**
      * 重置
      */
-    resetEmployee() {
+    clickResetEmployee() {
       this.bindEmployee = null;
       this.queryParams = null;
       this.checkedList = [];

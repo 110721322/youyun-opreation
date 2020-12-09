@@ -7,7 +7,7 @@
     <div class="table-box">
       <div class="tabale-title-box">
         <div class="title">库存列表</div>
-        <el-button class="btn" type="primary" @click="onClickAddDevice">新增设备</el-button>
+        <el-button class="btn" type="primary" @click="clickAddDevice">新增设备</el-button>
       </div>
       <BaseCrud
         ref="table"
@@ -86,7 +86,7 @@ export default {
       params[$ruleForm.inputSelect] = $ruleForm.inputForm;
       this.params = params;
     },
-    onClickAddDevice() {
+    clickAddDevice() {
       this.formStatus = "add";
       this.fromConfigData = FORM_CONFIG.deviceData;
       this.drawer = true;

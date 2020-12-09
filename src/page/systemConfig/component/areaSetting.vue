@@ -23,7 +23,7 @@
             v-model="item.addOption"
             style="margin-left: 15px;"
             size="small"
-            @change="areaSelectConfirm($event, item)"
+            @change="changeAreaSelectConfirm($event, item)"
           >
             <el-option
               v-for="province in areaData"
@@ -32,7 +32,7 @@
               :value="province.value"
             ></el-option>
           </el-select>
-          <el-button class="button-new-tag" size="small" @click="areaSelect(item)">+ 添加城市</el-button>
+          <el-button class="button-new-tag" size="small" @click="clickAreaSelect(item)">+ 添加城市</el-button>
         </div>
       </div>
 
@@ -175,12 +175,12 @@ export default {
       })
     },
 
-    areaSelect($item) {
+    clickAreaSelect($item) {
       this.$set($item, "isShowSelect", true);
       // $item.isShowSelect = true;
     },
 
-    areaSelectConfirm($value, $item) {
+    changeAreaSelectConfirm($value, $item) {
       const params = {
         provinceCode: $value,
         regionCode: $item.regionCode

@@ -14,7 +14,7 @@
         <div class="form-title">
           <ul style="width:100%">
             <!-- <li>下载导入奖励模板</li> -->
-            <el-button type="primary" @click="openDraw">导入蜻蜓奖励名单</el-button>
+            <el-button type="primary" @click="clickOpenDraw">导入蜻蜓奖励名单</el-button>
           </ul>
         </div>
         <BaseCrud
@@ -123,7 +123,7 @@ export default {
         }
       })
     },
-    openDraw() {
+    clickOpenDraw() {
       this.drawer = true
     },
     confirm($filel) {

@@ -4,7 +4,7 @@
       <div v-if="showTip" class="warn">
         <div class="left-icon">i</div>
         <span>已购买该服务，有效期到：2020-10-10 。再次购买后服务到期时间将累加</span>
-        <img src="../../assets/img/cancle.png" alt="icon" @click="closeWarn" />
+        <img src="../../assets/img/cancle.png" alt="icon" @click="clickCloseWarn" />
       </div>
       <div class="buy-info">
         <img class="buy-img" src="../../assets/img/oem_image.png" alt="icon" />
@@ -153,7 +153,7 @@ export default {
         }
       })
     },
-    closeWarn() {
+    clickCloseWarn() {
       this.showTip = false
     },
 

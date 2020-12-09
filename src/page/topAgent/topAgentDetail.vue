@@ -214,7 +214,7 @@
             :remote-method="remoteMethod"
             :loading="loading"
             style="width: 100%;"
-            @change="handleSelect"
+            @change="changeSelect"
           >
             <el-option
               v-for="item in bankOptions"
@@ -454,7 +454,7 @@ export default {
       }
     },
 
-    handleSelect(item) {
+    changeSelect(item) {
       api.getBankLineByNo({
         unionCode: item
       }).then(res => {
@@ -709,7 +709,7 @@ export default {
         this.financeDrawer = true
         if (this.ruleForm.bankBranchName) {
           this.remoteMethod(this.ruleForm.bankBranchName)
-          this.handleSelect(this.ruleForm.bankContactLine)
+          this.changeSelect(this.ruleForm.bankContactLine)
         }
         this.areaCodeNum = this.ruleForm.bankArea
         this.bankName = this.ruleForm.bankBranchName

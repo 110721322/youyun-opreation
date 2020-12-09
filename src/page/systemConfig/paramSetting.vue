@@ -15,7 +15,7 @@
             :key="key"
             class="device-item"
             :class="item.type == selectMenu.type?'select':''"
-            @click="onClickMenuItem(item)"
+            @click="clickMenuItem(item)"
           >
             <div class="device-name">{{ item.name }}</div>
             <div class="device-num"></div>
@@ -55,7 +55,7 @@ export default {
     this.selectMenu = this.menuList[0];
   },
   methods: {
-    onClickMenuItem($item) {
+    clickMenuItem($item) {
       this.selectMenu = $item;
     }
   }

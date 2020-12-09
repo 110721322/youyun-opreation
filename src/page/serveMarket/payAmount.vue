@@ -31,7 +31,7 @@
             <Upload :form-item="formItem" :rule-form="ruleForm" />
           </div>
         </li>
-        <p v-if="selectIndex===1" style="cursor: pointer;" @click="seeExamples">查看示例</p>
+        <p v-if="selectIndex===1" style="cursor: pointer;" @click="clickSeeExamples">查看示例</p>
         <button class="option-btn" @click="clickTostatus">我已完成</button>
       </ul>
     </div>
@@ -94,7 +94,7 @@ export default {
     // localStorage.setItem('promoCodeId', '')
   },
   methods: {
-    seeExamples() {
+    clickSeeExamples() {
       this.dialogVisible = true
     },
 

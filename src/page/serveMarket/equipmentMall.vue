@@ -8,7 +8,7 @@
     <div class="equiment-list">
       <div v-for="(item, index) in mallList.FACE" :key="index" class="list" @click.stop="clickTodetail(item.deviceId)">
         <div class="list-img">
-          <img src="" alt="">
+          <img src="" alt="" />
         </div>
         <p class="list-name">{{ item.deviceModel }}</p>
         <p class="list-subtitle">{{ item.viceTitle }}</p>
@@ -17,7 +17,7 @@
           <div class="cart-img" @mouseenter="mouseCart(index)">
             <img src="../../assets/img/cart_icon.png" alt="icon" />
           </div>
-          <div class="list-step"><el-input-number v-model="num[index]" :min="1" :max="10" size="small" @change="cilckChange(index)"></el-input-number></div>
+          <div class="list-step"><el-input-number v-model="num[index]" :min="1" :max="10" size="small" @change="changeInput(index)"></el-input-number></div>
         </div>
       </div>
     </div>
@@ -36,7 +36,7 @@
           <div class="cart-img" @mouseenter="mouseCart(index)">
             <img src="../../assets/img/cart_icon.png" alt="icon" />
           </div>
-          <div class="list-step"><el-input-number v-model="num[index]" :min="1" :max="10" size="small" @change="cilckChange(index)"></el-input-number></div>
+          <div class="list-step"><el-input-number v-model="num[index]" :min="1" :max="10" size="small" @change="changeInput(index)"></el-input-number></div>
         </div>
       </div>
     </div>
@@ -101,7 +101,7 @@ export default {
       })
     },
 
-    cilckChange(index, value) {},
+    changeInput(index, value) {},
 
     mouseCart(index) {},
 

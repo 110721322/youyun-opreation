@@ -30,7 +30,7 @@
         <el-button @click="dialogVisible = false">
           取消
         </el-button>
-        <el-button type="primary" @click="handleSubmit">
+        <el-button type="primary" @click="clickSubmit">
           确认
         </el-button>
       </div>
@@ -61,7 +61,7 @@ export default {
     }
   },
   methods: {
-    handleSubmit() {
+    clickSubmit() {
       this.$emit('successCBK', this.fileList)
       this.listObj = {}
       this.fileList = []

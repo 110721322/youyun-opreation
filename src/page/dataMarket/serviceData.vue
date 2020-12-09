@@ -2,7 +2,7 @@
   <div>
     <div class="p-head">
       <span class="left-title">服务商数据</span>
-      <div class="right-area" @click="showRightbar">
+      <div class="right-area" @click="clickShowRightbar">
         <img src="../../assets/img/menu_icon.png" alt="图标" />
         <span>自定义设置</span>
       </div>
@@ -125,15 +125,15 @@
           <img src="../../assets/img/cancle.png" alt="取消" />
         </div>
         <div class="draw-checkbox">
-          <el-checkbox-group v-model="checkedSelect" @change="handleChecked">
+          <el-checkbox-group v-model="checkedSelect" @change="changeChecked">
             <el-checkbox v-for="(item, index) in checkIndex" :key="index" :label="item.value">{{ item.label }}</el-checkbox>
           </el-checkbox-group>
         </div>
         <div class="bottom-btn">
-          <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" @change="handleCheckAllChange">全选</el-checkbox>
+          <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" @change="changeCheckAll">全选</el-checkbox>
           <div class="btn">
-            <button @click="saveUserDiagrams">确定</button>
-            <button @click="cancleClose">取消</button>
+            <button @click="clickSaveUserDiagrams">确定</button>
+            <button @click="clickCancleClose">取消</button>
           </div>
         </div>
       </div>
@@ -309,7 +309,7 @@ export default {
         this.search();
       })
     },
-    handleCheckAllChange() {
+    changeCheckAll() {
       if (this.checkedSelect.length < 5) {
         this.checkedSelect = this.checkIndex.map(item => {
           return item.value;
@@ -318,13 +318,13 @@ export default {
         this.checkedSelect = [];
       }
     },
-    handleChecked() {},
+    changeChecked() {},
     queryUserDiagram() {
       return api.queryUserDiagram('agent').then(res => {
         this.pagePermission = this.$g.utils.isArr(res.data) ? res.data : [];
       })
     },
-    showRightbar() {
+    clickShowRightbar() {
       this.checkedSelect = this.pagePermission;
       this.drawer = true
     },
@@ -332,7 +332,7 @@ export default {
     hasPermission($permission) {
       return this.pagePermission.filter(item => $permission === item).length > 0
     },
-    saveUserDiagrams() {
+    clickSaveUserDiagrams() {
       api.saveUserDiagrams({
         diagramType: 'agent',
         diagrams: this.checkedSelect.join(',')
@@ -341,7 +341,7 @@ export default {
         this.drawer = false;
       })
     },
-    cancleClose() {
+    clickCancleClose() {
       this.drawer = false
     },
     // 交易额涨跌排行切换

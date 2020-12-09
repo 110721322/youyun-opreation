@@ -11,7 +11,7 @@
             <div class="card-subtitle">{{ item.productDesc }}</div>
           </div>
         </div>
-        <button class="buy-btn" @click="ckickBtn(item)">{{ item.buyStatus===0 ? '立即购买' : '立即进入' }}</button>
+        <button class="buy-btn" @click="clickBtn(item)">{{ item.buyStatus===0 ? '立即购买' : '立即进入' }}</button>
       </div>
       <div class="more">
         <img src="../../assets/img/more_icon.png" alt="查看更多" />
@@ -34,7 +34,7 @@ export default {
     this.getModel()
   },
   methods: {
-    ckickBtn($data) {
+    clickBtn($data) {
       localStorage.setItem('productItem', JSON.stringify($data))
       this.$router.push({
         name: "domainCustomer"

@@ -28,7 +28,7 @@
       <el-button @click="dialogVisible = false">
         取消
       </el-button>
-      <el-button type="primary" @click="handleSubmit">
+      <el-button type="primary" @click="clickSubmit">
         确认
       </el-button>
     </el-dialog>
@@ -58,7 +58,7 @@ export default {
         item => this.listObj[item].hasSuccess
       )
     },
-    handleSubmit() {
+    clickSubmit() {
       const arr = Object.keys(this.listObj).map(v => this.listObj[v])
       if (!this.checkAllSuccess()) {
         this.$message(

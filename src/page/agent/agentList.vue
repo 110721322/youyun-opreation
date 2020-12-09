@@ -41,7 +41,7 @@
         @goMerchantList="goMerchantList"
         @completion="clickDetail"
       >
-        <el-button slot="paginationLeft" class="basecard-button" @click="transfer">批量转移运营</el-button>
+        <el-button slot="paginationLeft" class="basecard-button" @click="clickTransfer">批量转移运营</el-button>
       </BaseCrud>
     </div>
     <el-dialog
@@ -100,7 +100,7 @@ export default {
   },
   mounted() {},
   methods: {
-    transfer() {
+    clickTransfer() {
       if (this.selectData.length) {
         this.dialogVisible = true
         commonApi.listOperations().then(res => {

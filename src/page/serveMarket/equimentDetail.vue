@@ -16,7 +16,7 @@
           <p>已售{{ goodsDetail.payCount }}件</p>
           <div class="shop flex-between flex-align-center">
             <div class="money">¥{{ goodsDetail.salePrice }}</div>
-            <el-input-number v-model="num" size="small" label="描述文字" :min="1" @change="handleChange"></el-input-number>
+            <el-input-number v-model="num" size="small" label="描述文字" :min="1" @change="changeInput"></el-input-number>
           </div>
           <div class="shop-handle">
             <el-row>
@@ -145,7 +145,7 @@ export default {
       this.imgIndex = index
     },
 
-    handleChange(currentValue) {
+    changeInput(currentValue) {
       this.num = currentValue
     }
   }
