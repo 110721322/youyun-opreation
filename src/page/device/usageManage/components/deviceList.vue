@@ -8,8 +8,8 @@
           :label-width="item.labelWidth"
         >
           <div class="device-list">
-            <div>{{item.deviceTypeDesc}}</div>
-            <div class="device-list" v-for="(item1, index1) in item.usingList" :key="index1">
+            <div>{{ item.deviceTypeDesc }}</div>
+            <div v-for="(item1, index1) in item.usingList" :key="index1" class="device-list">
               <div class="device-item" @click="clickSelectItem(item1)">
                 <img class="device-img" :src="item1.deviceImg" alt="设备图" />
                 <div class="nums">{{ item1.usingCount || '0' }}台</div>

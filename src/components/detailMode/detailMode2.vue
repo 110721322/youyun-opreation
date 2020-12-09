@@ -26,7 +26,8 @@
           v-for="(item, key) of imageList"
           :key="key"
           :span="imgWidth?imgWidth:8"
-          style="width: 100px;margin-right: 24px;">
+          style="width: 100px;margin-right: 24px;"
+        >
           <el-form-item v-if="ruleForm[item.key]">
             <el-image
               style="width: 100px; height: 100px;display:block;margin: auto;"
@@ -46,7 +47,7 @@
           class="col"
         >
           <i v-if="item.hasIconTime" class="el-icon-time m-icon-time"></i>
-          <el-form-item :label="item.name +(item.hideColon?'':'：') " v-if="!item.hideItem">
+          <el-form-item v-if="!item.hideItem" :label="item.name +(item.hideColon?'':'：') ">
             <span v-if="item.type != 'switch'" class="m-item-value">{{ item.formatter ? item.formatter(ruleForm) : ruleForm[item.key] }}</span>
             <span v-if="item.type == 'edit'" class="f-edit-btn" @click="clickModify">修改</span>
             <el-switch

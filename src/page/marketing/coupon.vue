@@ -1,10 +1,10 @@
 <template>
   <div>
     <search
-        :open-height="searchMaxHeight"
-        :form-base-data="searchConfig.formData"
-        :show-foot-btn="searchConfig.showFootBtn"
-        @search="search"
+      :open-height="searchMaxHeight"
+      :form-base-data="searchConfig.formData"
+      :show-foot-btn="searchConfig.showFootBtn"
+      @search="search"
     />
     <!-- <data-mode></data-mode> -->
     <div class="table-box">
@@ -12,29 +12,29 @@
         <button @click="clickAdd">创建优惠码</button>
       </div>
       <BaseCrud
-          ref="child"
-          :grid-config="configData.gridConfig"
-          :grid-btn-config="configData.gridBtnConfig"
-          :grid-data="testData"
-          :form-config="configData.formConfig"
-          :form-data="configData.formModel"
-          :grid-edit-width="300"
-          form-title="用户"
-          :is-async="true"
-          :is-select="false"
-          :params="params"
-          :api-service="api"
-          @extension="extension"
-          @detail="goDetail"
-          @stopAcitive="stopAcitive"
+        ref="child"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :grid-data="testData"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="300"
+        form-title="用户"
+        :is-async="true"
+        :is-select="false"
+        :params="params"
+        :api-service="api"
+        @extension="extension"
+        @detail="goDetail"
+        @stopAcitive="stopAcitive"
       />
     </div>
     <el-dialog
-        title="领取优惠码"
-        :visible.sync="dialogVisible"
-        width="420px"
-        height="394px"
-        :before-close="handleClose"
+      title="领取优惠码"
+      :visible.sync="dialogVisible"
+      width="420px"
+      height="394px"
+      :before-close="handleClose"
     >
       <div class="dialog_code">
         <img :src="couponForm.ossUrl" alt="图标" />
@@ -51,9 +51,9 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-          <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="clickGetsPromoCode">确 定</el-button>
-        </span>
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="clickGetsPromoCode">确 定</el-button>
+      </span>
     </el-dialog>
   </div>
 </template>

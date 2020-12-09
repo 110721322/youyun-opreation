@@ -33,7 +33,7 @@
     <el-drawer :visible.sync="drawer" :with-header="false" size="500px">
       <div class="p-head">{{ fromConfigData.title }}</div>
       <Form
-        :isDrawer='true'
+        :is-drawer="true"
         :form-base-data="fromConfigData.formData"
         :show-foot-btn="fromConfigData.showFootBtn"
         label-width="130px"

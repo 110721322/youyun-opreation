@@ -5,7 +5,8 @@
         v-if="collapse"
         key="collapse"
         class="sidebar-logo-link"
-        to="/">
+        to="/"
+      >
         <img src="@/assets/img/faceLogo.png" class="sidebar-logo" alt="facelogo" />
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">

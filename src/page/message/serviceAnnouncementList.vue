@@ -2,11 +2,11 @@
   <div>
     <div class="p-head">服务商公告</div>
     <search
-        :is-show-all="true"
-        :form-base-data="searchConfig.formData"
-        :show-foot-btn="searchConfig.showFootBtn"
-        @search="search"
-        @reset="reset"
+      :is-show-all="true"
+      :form-base-data="searchConfig.formData"
+      :show-foot-btn="searchConfig.showFootBtn"
+      @search="search"
+      @reset="reset"
     />
     <!-- <data-mode></data-mode> -->
     <div class="table-box">
@@ -14,21 +14,21 @@
         <el-button type="primary" class="add_btn" @click="clickAddAnnouncement">添加公告</el-button>
       </div>
       <BaseCrud
-          ref="table"
-          :params="params"
-          :api-service="api"
-          :grid-config="configData.gridConfig"
-          :grid-btn-config="configData.gridBtnConfig"
-          :grid-data="testData"
-          :form-config="configData.formConfig"
-          :form-data="configData.formModel"
-          :grid-edit-width="150"
-          form-title="用户"
-          :is-async="true"
-          :is-select="false"
-          @detail="goDetail"
-          @edit="handelEdit"
-          @delete="handelDelete"
+        ref="table"
+        :params="params"
+        :api-service="api"
+        :grid-config="configData.gridConfig"
+        :grid-btn-config="configData.gridBtnConfig"
+        :grid-data="testData"
+        :form-config="configData.formConfig"
+        :form-data="configData.formModel"
+        :grid-edit-width="150"
+        form-title="用户"
+        :is-async="true"
+        :is-select="false"
+        @detail="goDetail"
+        @edit="handelEdit"
+        @delete="handelDelete"
       ></BaseCrud>
     </div>
   </div>

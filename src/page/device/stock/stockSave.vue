@@ -37,23 +37,25 @@
         <el-form ref="form" :model="formVal" label-width="100px" :rules="rules">
           <el-form-item label="设备型号" prop="deviceId" label-width="120px">
             <el-select v-model="formVal.deviceId" placeholder="请选择设备型号">
-              <el-option v-for="(item, index) in decviceList" :label="item.deviceModel" :value="item.deviceId" :key="index"></el-option>
+              <el-option v-for="(item, index) in decviceList" :key="index" :label="item.deviceModel" :value="item.deviceId"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="保修截止日期" prop="deadline" label-width="120px">
             <el-date-picker
-                v-model="formVal.deadline"
-                type="date"
-                value-format="yyyy-MM-dd"
-                placeholder="选择日期">
+              v-model="formVal.deadline"
+              type="date"
+              value-format="yyyy-MM-dd"
+              placeholder="选择日期"
+            >
             </el-date-picker>
           </el-form-item>
           <el-form-item label="入库时间" prop="inputTime" label-width="120px">
             <el-date-picker
-                v-model="formVal.inputTime"
-                type="datetime"
-                value-format="yyyy-MM-dd hh:mm:ss"
-                placeholder="选择日期">
+              v-model="formVal.inputTime"
+              type="datetime"
+              value-format="yyyy-MM-dd hh:mm:ss"
+              placeholder="选择日期"
+            >
             </el-date-picker>
           </el-form-item>
           <el-form-item label="入库方式" prop="type" label-width="120px">
@@ -64,19 +66,19 @@
           </el-form-item>
         </el-form>
         <div style="padding-left: 120px;">
-          <UploadFile v-if="formVal.type === 1"  class="btn" @handel_execl="upExecl" :form-item="formItem" :rule-form="ruleForm" type="primary"></UploadFile>
+          <UploadFile v-if="formVal.type === 1" class="btn" :form-item="formItem" :rule-form="ruleForm" type="primary" @handel_execl="upExecl"></UploadFile>
         </div>
         <div v-if="formVal.type === 2" class="box-cursor">
           <div class="cursorCount">
-            <span>入库数量：{{list.length}}台</span>
+            <span>入库数量：{{ list.length }}台</span>
             <span @click="clickClear">清空</span></div>
           <div class="add-box">
             <el-input v-model="device"></el-input>
             <span @click="clickAdd">添加</span>
           </div>
-          <ul class="cursor" v-if="list.length > 0">
+          <ul v-if="list.length > 0" class="cursor">
             <li v-for="(item, index) in list" :key="index">
-              <el-input :value="item.id" v-model="item.id"></el-input>
+              <el-input v-model="item.id" :value="item.id"></el-input>
               <span class="delete" @click="clickDelete(index)">删除</span>
             </li>
           </ul>

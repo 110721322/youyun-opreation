@@ -16,7 +16,7 @@
           class="el-menu"
           mode="horizontal"
         >
-          <el-menu-item v-for="(item, index) in channelStatusList" :key="index" :index="`${index+1}`">
+          <el-menu-item v-for="(item, menuIndex) in channelStatusList" :key="menuIndex" :index="`${menuIndex+1}`">
             <i :class="auditClassName"></i>
             {{ item.channel }}
           </el-menu-item>

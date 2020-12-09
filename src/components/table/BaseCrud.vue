@@ -68,8 +68,8 @@
               <img
                 :src="item.imgUrl"
                 :style="item.imgStyle"
-                @click="clickHandleToggle(scope.row,item)"
                 alt="图片"
+                @click="clickHandleToggle(scope.row,item)"
               />
             </template>
           </span>

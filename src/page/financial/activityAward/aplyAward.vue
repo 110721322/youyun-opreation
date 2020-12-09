@@ -49,7 +49,7 @@
           <Form
             :show-foot-btn="aplyAwardData.showFootBtn"
             label-width="130px"
-            :isDrawer="true"
+            :is-drawer="true"
             :form-base-data="aplyAwardData.formData"
             @confirm="confirm"
             @cancel="cancel"

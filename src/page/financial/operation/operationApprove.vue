@@ -7,7 +7,7 @@
 
     <div class="table-box">
       <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="顶级服务商" v-if="roleId === '12'" name="12"></el-tab-pane>
+        <el-tab-pane v-if="roleId === '12'" label="顶级服务商" name="12"></el-tab-pane>
         <el-tab-pane label="服务商" name="11"></el-tab-pane>
       </el-tabs>
       <BaseCrud
@@ -99,7 +99,7 @@
       <div slot="title" class="drawer-contenttitle">
         <span>佣金结算详情</span>
       </div>
-      <div class="content-draw" v-if="JSON.stringify(settleDetailData) !== '{}'">
+      <div v-if="JSON.stringify(settleDetailData) !== '{}'" class="content-draw">
         <div class="content-form">
           <div class="form-select">
             <div class="module-title">结算金额</div>

@@ -3,8 +3,8 @@
     <el-cascader
       v-model="ruleForm[formItem.key]"
       :options="formItem.options"
-      @change="changeVal"
       style="max-width:294px;width:294px;"
+      @change="changeVal"
     ></el-cascader>
   </div>
 </template>

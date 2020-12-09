@@ -12,41 +12,41 @@
           </ul>
         </div>
         <BaseCrud
-            ref="table"
-            :params="params"
-            :api-service="api"
-            :grid-config="configData.gridConfig"
-            :grid-btn-config="configData.gridBtnConfig"
-            :grid-data="testData"
-            :form-config="configData.formConfig"
-            :form-data="configData.formModel"
-            :grid-edit-width="100"
-            :is-async="true"
-            :is-select="false"
-            :is-expand="false"
-            :row-key="'id'"
-            :default-expand-all="false"
-            @detail="handleDetail"
+          ref="table"
+          :params="params"
+          :api-service="api"
+          :grid-config="configData.gridConfig"
+          :grid-btn-config="configData.gridBtnConfig"
+          :grid-data="testData"
+          :form-config="configData.formConfig"
+          :form-data="configData.formModel"
+          :grid-edit-width="100"
+          :is-async="true"
+          :is-select="false"
+          :is-expand="false"
+          :row-key="'id'"
+          :default-expand-all="false"
+          @detail="handleDetail"
         ></BaseCrud>
       </div>
     </div>
     <el-drawer
-        title="我是标题"
-        :visible.sync="drawer"
-        :with-header="false"
-        size="500px"
-      >
-        <div class="top-area">
-          <span>导入奖励名单</span>
-          <img src="../../../assets/img/cancle.png" alt="图标" @click="drawer = false" />
-        </div>
-        <Form
-          :show-foot-btn="aplyAwardData.showFootBtn"
-          label-width="130px"
-          :form-base-data="aplyAwardData.formData"
-          @confirm="confirm"
-          @cancel="cancel"
-          :isDrawer="true"
+      title="我是标题"
+      :visible.sync="drawer"
+      :with-header="false"
+      size="500px"
+    >
+      <div class="top-area">
+        <span>导入奖励名单</span>
+        <img src="../../../assets/img/cancle.png" alt="图标" @click="drawer = false" />
+      </div>
+      <Form
+        :show-foot-btn="aplyAwardData.showFootBtn"
+        label-width="130px"
+        :form-base-data="aplyAwardData.formData"
+        :is-drawer="true"
+        @confirm="confirm"
+        @cancel="cancel"
       ></Form>
       <!-- <div class="content">
         <el-form ref="form" :model="form" label-width="160px">

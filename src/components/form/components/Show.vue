@@ -4,7 +4,8 @@
       <el-image
         class="show-image"
         :src="formItem.initVal"
-        :preview-src-list="[formItem.initVal]">
+        :preview-src-list="[formItem.initVal]"
+      >
       </el-image>
     </template>
     <template v-else>{{ formItem.initVal }}</template>

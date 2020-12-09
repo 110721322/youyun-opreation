@@ -27,9 +27,9 @@
         :hide-expend-column="true"
         @showLife="clickShowLife"
       >
-<!--        <template v-slot="{ row }">-->
-<!--          <deviceDetailProcess :row="row"></deviceDetailProcess>-->
-<!--        </template>-->
+      <!--<template v-slot="{ row }">-->
+      <!--<deviceDetailProcess :row="row"></deviceDetailProcess>-->
+      <!--</template>-->
       </BaseCrud>
     </div>
   </div>

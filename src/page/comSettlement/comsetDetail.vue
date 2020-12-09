@@ -5,26 +5,27 @@
       <ul class="top-content">
         <li>
           <p>总佣金(元)</p>
-          <p>{{commission.totalCommission}}</p>
+          <p>{{ commission.totalCommission }}</p>
         </li>
         <li>
           <p><img src="../../assets/img/wx_pay.png" alt="" />微信佣金（元）</p>
-          <p>{{commission.wechatCommission}}</p>
+          <p>{{ commission.wechatCommission }}</p>
         </li>
         <li>
           <p><img src="../../assets/img/apply_pay.png" alt="" />支付宝佣金(元)</p>
-          <p>{{commission.alipayCommission}}</p>
+          <p>{{ commission.alipayCommission }}</p>
         </li>
         <li>
           <p><img src="../../assets/img/yun_pay.png" alt="" />云闪付佣金(元)</p>
-          <p>{{commission.cloudPayCommission}}</p>
+          <p>{{ commission.cloudPayCommission }}</p>
         </li>
       </ul>
       <Search
         :is-show-all="true"
         :form-base-data="searchConfig.formData"
         :show-foot-btn="searchConfig.showFootBtn"
-        @search="search" />
+        @search="search"
+      />
       <div class="tabform">
         <div class="table-title">商户佣金列表</div>
         <BaseCrud

@@ -44,8 +44,8 @@
         :show-foot-btn="aplyAwardData.showFootBtn"
         label-width="130px"
         :form-base-data="aplyAwardData.formData"
+        :is-drawer="true"
         @confirm="confirm"
-        :isDrawer="true"
         @cancel="cancel"
       ></Form>
       <!-- <div class="content">

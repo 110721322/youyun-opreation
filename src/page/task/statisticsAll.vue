@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p-head">任务类型: {{statisticsData.taskValue}}</div>
+    <div class="p-head">任务类型: {{ statisticsData.taskValue }}</div>
     <div class="table-box">
       <BaseCrud
         v-if="openType === 1"

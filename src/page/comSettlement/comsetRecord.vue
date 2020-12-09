@@ -25,14 +25,14 @@
         :api-service="api"
       ></BaseCrud>
     </div>
-<!--    <el-drawer-->
-<!--      :visible.sync="drawer"-->
-<!--      direction="rtl"-->
-<!--      :before-close="handleClose">-->
-<!--      <div slot="title" class="drawer-contenttitle">-->
-<!--        <span>结算明细</span>-->
-<!--      </div>-->
-<!--    </el-drawer>-->
+    <!--<el-drawer-->
+    <!--:visible.sync="drawer"-->
+    <!--direction="rtl"-->
+    <!--:before-close="handleClose">-->
+    <!--<div slot="title" class="drawer-contenttitle">-->
+    <!--<span>结算明细</span>-->
+    <!--</div>-->
+    <!--</el-drawer>-->
   </div>
 </template>
 

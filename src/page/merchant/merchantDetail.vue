@@ -3,17 +3,17 @@
     <div class="p-head">商户详情</div>
 
     <detailMode :rule-form="businessData" :config-data="configData" :is-show-edit-btn="true" @edit="itemEdit"></detailMode>
-    <detailMode :rule-form="commonData" v-if="commonData.merchantType !== 'personal'" :config-data="configData2" @modify="editMask"></detailMode>
-    <detailMode :rule-form="commonData" v-if="commonData.merchantType === 'personal'" :config-data="configData3" @modify="editMask"></detailMode>
+    <detailMode v-if="commonData.merchantType !== 'personal'" :rule-form="commonData" :config-data="configData2" @modify="editMask"></detailMode>
+    <detailMode v-if="commonData.merchantType === 'personal'" :rule-form="commonData" :config-data="configData3" @modify="editMask"></detailMode>
     <el-drawer :visible.sync="editData" :with-header="false" size="500px">
-      <div class="p-head">{{editDataTitle}}</div>
+      <div class="p-head">{{ editDataTitle }}</div>
       <Form
-          ref="liaisonRef"
-          :form-base-data="contactConfigData"
-          :show-foot-btn="contactConfigData.showFootBtn"
-          :isDrawer="true"
-          @confirm="confirm"
-          @cancel="cancel"
+        ref="liaisonRef"
+        :form-base-data="contactConfigData"
+        :show-foot-btn="contactConfigData.showFootBtn"
+        :is-drawer="true"
+        @confirm="confirm"
+        @cancel="cancel"
       ></Form>
     </el-drawer>
   </div>

@@ -10,7 +10,8 @@
         :collapse-transition="false"
         mode="vertical"
         background-color="#001529"
-        text-color="#A6ADB4">
+        text-color="#A6ADB4"
+      >
         <sidebar-item v-for="route in menuList" :key="route.path" :item="route" />
       </el-menu>
     </div>

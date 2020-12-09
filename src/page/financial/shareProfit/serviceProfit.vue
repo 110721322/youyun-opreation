@@ -5,20 +5,20 @@
     </div>
     <div class="main-top">
       <el-menu
+        v-if="roleId === 12"
         :default-active="mainIndex"
         class="el-menu"
         mode="horizontal"
         @select="onSelectMain"
-        v-if="roleId === 12"
       >
         <el-menu-item v-for="(item, index) in mainData" :key="index" :index="index.toString()">{{ item.value }}</el-menu-item>
       </el-menu>
       <el-menu
-          :default-active="mainIndex"
-          class="el-menu"
-          mode="horizontal"
-          @select="onSelectMain"
-          v-else
+        v-else
+        :default-active="mainIndex"
+        class="el-menu"
+        mode="horizontal"
+        @select="onSelectMain"
       >
         <el-menu-item v-for="(item, index) in mainData1" :key="index" :index="index.toString()">{{ item.value }}</el-menu-item>
       </el-menu>
@@ -32,52 +32,52 @@
     <div class="select">
       <div style="background: #fff;padding: 24px 24px;">
         <el-menu
-            style="margin-bottom: 8px"
-            :default-active="selectIndex"
-            class="el-menu"
-            mode="horizontal"
-            @select="onClick_select"
+          style="margin-bottom: 8px"
+          :default-active="selectIndex"
+          class="el-menu"
+          mode="horizontal"
+          @select="onClick_select"
         >
           <el-menu-item v-for="(item, index) in selectData" :key="index" :index="index.toString()">{{ item.value }}</el-menu-item>
         </el-menu>
         <div class="table-box">
           <!-- 支付方式 -->
           <BaseCrud
-              v-if="selectIndex==='0'"
-              ref="table1"
-              :params="params"
-              :api-service="api"
-              :grid-config="configData.gridConfig"
-              :grid-btn-config="configData.gridBtnConfig"
-              :grid-data="testData"
-              :form-config="configData.formConfig"
-              :form-data="configData.formModel"
-              :grid-edit-width="100"
-              :is-async="true"
-              :is-select="false"
-              :is-expand="false"
-              :row-key="'id'"
-              :default-expand-all="false"
-              @detail="handleDetail"
+            v-if="selectIndex==='0'"
+            ref="table1"
+            :params="params"
+            :api-service="api"
+            :grid-config="configData.gridConfig"
+            :grid-btn-config="configData.gridBtnConfig"
+            :grid-data="testData"
+            :form-config="configData.formConfig"
+            :form-data="configData.formModel"
+            :grid-edit-width="100"
+            :is-async="true"
+            :is-select="false"
+            :is-expand="false"
+            :row-key="'id'"
+            :default-expand-all="false"
+            @detail="handleDetail"
           ></BaseCrud>
           <!-- 通道 -->
           <BaseCrud
-              v-if="selectIndex==='1'"
-              ref="table2"
-              :params="params"
-              :api-service="api"
-              :grid-config="configData1.gridConfig"
-              :grid-btn-config="configData1.gridBtnConfig"
-              :grid-data="testData"
-              :form-config="configData1.formConfig"
-              :form-data="configData1.formModel"
-              :grid-edit-width="100"
-              :is-async="true"
-              :is-select="false"
-              :is-expand="false"
-              :row-key="'id'"
-              :default-expand-all="false"
-              @detail="handleDetail"
+            v-if="selectIndex==='1'"
+            ref="table2"
+            :params="params"
+            :api-service="api"
+            :grid-config="configData1.gridConfig"
+            :grid-btn-config="configData1.gridBtnConfig"
+            :grid-data="testData"
+            :form-config="configData1.formConfig"
+            :form-data="configData1.formModel"
+            :grid-edit-width="100"
+            :is-async="true"
+            :is-select="false"
+            :is-expand="false"
+            :row-key="'id'"
+            :default-expand-all="false"
+            @detail="handleDetail"
           ></BaseCrud>
         </div>
       </div>

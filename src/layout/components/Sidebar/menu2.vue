@@ -3,12 +3,14 @@
     <el-menu
       class="el-menu-vertical-demo"
       style="border-right: 0;"
-      :default-openeds="[secondName]">
+      :default-openeds="[secondName]"
+    >
       <div v-for="(item, key) of menu2Data" :key="key">
         <el-submenu
           v-if="item.children && item.children.length>0"
           :index="item.name"
-          class="el-submenu">
+          class="el-submenu"
+        >
           <template slot="title">
             <span>{{ item.text }}</span>
           </template>

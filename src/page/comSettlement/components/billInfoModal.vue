@@ -1,10 +1,10 @@
 <template>
   <div class="bill-info-modal">
     <div class="bill-info">
-      <div class="bill-info__base">
+      <div class="bill-info-base">
         <div class="base">
-          <div class="base__title">开票资料</div>
-          <div v-for="(item, index) in baseInfo" :key="index" class="base__item">
+          <div class="base-title">开票资料</div>
+          <div v-for="(item, index) in baseInfo" :key="index" class="base-item">
             <span class="item-label">{{ item.label }}</span>
             <div class="item-value">
               <span>{{ item.firstVal }}</span>
@@ -14,19 +14,19 @@
         </div>
         <div class="line"></div>
         <div class="base other">
-          <div class="base__title">其他资料<span>（只需寄送发票的第二联、第三联）</span></div>
-          <div class="base__item">
+          <div class="base-title">其他资料<span>（只需寄送发票的第二联、第三联）</span></div>
+          <div class="base-item">
             <div class="item-label">货物或应税劳务、服务名称：</div>
             <div class="item-value">软件服务费/技术服务费</div>
           </div>
         </div>
       </div>
-      <div class="bill-info__img">
+      <div class="bill-info-img">
         <el-image
           style="width: 478px; height: 305px"
           :src="require('@/assets/img/bill-example.png')"
-          :preview-src-list="srcList">
-        </el-image>
+          :preview-src-list="srcList"
+        ></el-image>
         <div class="look-img-tip">点击图片放大查看</div>
       </div>
     </div>
@@ -64,7 +64,7 @@ export default {
   font-size: 14px;
   font-weight: 400;
 
-  .bill-info__base {
+  .bill-info-base {
     width: 386px;
     box-sizing: border-box;
     padding: 13px 23px 0 21px;
@@ -72,7 +72,7 @@ export default {
 
     background: #FAFAFA;
   }
-  .bill-info__img {
+  .bill-info-img {
     width: 478px;
 
     text-align: center;
@@ -85,7 +85,7 @@ export default {
   }
 }
 
-.base__title {
+.base-title {
   margin-bottom: 16px;
 
   font-size: 16px;
@@ -98,7 +98,7 @@ export default {
     color: #909399;
   }
 }
-.base__item {
+.base-item {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
