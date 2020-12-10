@@ -1,8 +1,8 @@
 <template>
-  <div class="container">
+  <div class="main_page">
     <div class="left-box">
       <div class="tab-box">
-        <img src="@/assets/img/logo.png" class="sidebar-logo" alt="logo" />
+        <img src="@/assets/img/logo.png" class="sidebar-logo">
       </div>
     </div>
     <div class="right-box">
@@ -11,11 +11,10 @@
         <div class="content">
           <div class="middle">
             <div class="content-img">
-              <img src="@/assets/img/order_photo.png" alt="图标" />
+<!--              <img src="@/assets/img/order_photo.png" alt="">-->
             </div>
             <p class="title1">欢迎使用小马哥服务商管理系统</p>
             <p class="title2">平台将在一个工作日内为您进行资料审核请您耐心等待</p>
-            <el-button type="primary" @click="clickBack">返回登录</el-button>
           </div>
         </div>
       </div>
@@ -28,17 +27,12 @@ export default {
   name: "RegistSuccess",
   data() {
     return {}
-  },
-  methods: {
-    clickBack() {
-      this.$router.replace(`/login`);
-    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .container {
+  .main_page {
     width: 100%;
     height: 100%;
     display: flex;
@@ -90,12 +84,6 @@ export default {
                 height: 80px;
                 margin:0 auto;
               }
-            }
-            button {
-              display: block;
-              padding: 9px 15px;
-              margin-top: 30px;
-              margin-left: calc(50% - 40px);
             }
           }
           p {

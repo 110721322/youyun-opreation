@@ -7,6 +7,10 @@ $green: #30b08f;
 $tiffany: #4ab7bd;
 $yellow:#fec171;
 $panGreen: #30b08f;
+$btnTheme: #1989FA;
+$color-pending: #EFA911;
+$color-success: #50C514;
+$color-fail: #F52130;
 
 // sidebar
 $menuText:#bfcbd9;
@@ -19,7 +23,7 @@ $menuHover:#263445;
 $subMenuBg:#1f2d3d;
 $subMenuHover:#001528;
 
-$sideBarWidth: 160px;
+$sideBarWidth: 140px;
 
 // the :export directive is the magic sauce for webpack
 // https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
@@ -32,4 +36,5 @@ $sideBarWidth: 160px;
   submenubg: $subMenuBg;
   submenuhover: $subMenuHover;
   sidebarwidth: $sideBarWidth;
+  btnTheme: $btnTheme;
 }

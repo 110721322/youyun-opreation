@@ -1,16 +1,18 @@
 <template>
-  <div class="g-bg-box">
-    <div class="s-title">
+  <div class="bg_box">
+    <div class="title">
       {{ configData.name }}
-      <slot name="operatingTop"></slot>
+      <slot name="operatingTop">
+        <!-- <span class="edit" @click="edit(child.modelName)">编辑</span> -->
+      </slot>
     </div>
     <slot name="step"></slot>
-    <div v-for="(child, key) of configData.child" :key="key" class="g-container-box">
+    <div v-for="(child, key) of configData.child" :key="key" class="con_box">
       <template v-if="child.models && child.models.length > 0">
-        <div class="s-title">
+        <div class="title">
           {{ child.name }}
           <slot name="operatingItem">
-            <span v-if="!child.hiddenEdit" class="s-edit" @click="clickEdit(child.modelName)">编辑</span>
+            <span v-if="!child.hiddenEdit" class="edit" @click="edit(child.modelName)">编辑</span>
           </slot>
         </div>
         <el-form
@@ -18,7 +20,7 @@
           :inline="false"
           :model="ruleForm"
           :rules="rules"
-          class="s-form"
+          class="form"
           label-position="left"
         >
           <el-row>
@@ -30,15 +32,14 @@
                 prop="name"
               >
                 <el-image
-                  v-if="item2.type === 'img' && ruleForm[item2.key]"
-                  lazy
+                  v-if="item2.type === 'img'"
                   style="width: 100px; height: 100px;"
                   :src="ruleForm[item2.key]"
                   :preview-src-list="[ruleForm[item2.key]]"
                 ></el-image>
-                <span v-if="item2.type === 'descript'" class="item-value">{{ getDescriptText(item2) }}</span>
-                <span v-else-if="item2.type === 'area'" class="item-value">{{ areaName }}</span>
-                <span v-else-if="item2.type !== 'img'" class="item-value">{{ ruleForm[item2.key] }}{{ afterChar(item2) }}</span>
+                <span v-if="item2.type === 'descript'" class="item-value">{{ ruleForm[item2.key] === 'all' ? '全国' : ruleForm[item2.key] === 'province' ? '省' : ruleForm[item2.key] === 'city' ? '市' : '' }}</span>
+                <span v-if="item2.type === 'bankType'" class="item-value">{{ ruleForm[item2.key] === 'private' ? '对私' : ruleForm[item2.key] === 'public' ? '对公' : '' }}</span>
+                <span v-if="item2.type !== 'img' && item2.type !== 'bankType' && item2.type !== 'descript' " class="item-value">{{ ruleForm[item2.key] }}{{ item2.type === 'pecent' ? '‰' : '' }}</span>
               </el-form-item>
             </el-col>
           </el-row>
@@ -51,7 +52,7 @@
 
 <script>
 export default {
-  name: "DetailMode",
+  name: "",
   props: { ruleForm: Object, configData: Object },
   data() {
     return {
@@ -60,48 +61,22 @@ export default {
       }
     };
   },
-  computed: {
-    areaName() {
-      return this.ruleForm['provinceName'] + this.ruleForm['cityName'] + this.ruleForm['areaName']
-    }
-  },
+  computed: {},
 
   methods: {
-    clickEdit($modelName) {
+    edit($modelName) {
       this.$emit("edit", $modelName);
-    },
-    getDescriptText($item) {
-      const val = this.ruleForm[$item.key]
-      if (val === 'all') {
-        return '全国'
-      } else if (val === 'province') {
-        return '省'
-      } else if (val === 'city') {
-        return '市'
-      } else {
-        return ''
-      }
-    },
-    afterChar($item) {
-      const type = $item.type;
-      if (type === 'pecent') {
-        return '‰'
-      } else if (type === 'pecent1') {
-        return '%'
-      } else {
-        return ''
-      }
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.g-bg-box {
+.bg_box {
   margin: 24px;
   background: #fff;
   overflow: hidden;
-  .s-title {
+  .title {
     height: 54px;
     line-height: 54px;
     padding-left: 32px;
@@ -110,7 +85,7 @@ export default {
     color: rgba(51, 51, 53, 1);
     border-bottom: 1px solid #ebeef5;
   }
-  .s-edit {
+  .edit {
     float: right;
     font-size: 14px;
     font-weight: 400;
@@ -118,19 +93,19 @@ export default {
     margin-right: 32px;
     cursor: pointer;
   }
-  .g-container-box {
+  .con_box {
     margin: 24px;
     background: #fff;
     overflow: hidden;
     border: 1px solid #e9e9e9;
-    .s-title {
+    .title {
       height: 44px;
       line-height: 44px;
       background: #fafafa;
     }
-    .s-form {
+    .form {
       margin: 32px;
-      .s-item-value {
+      .item-value {
         color: rgba(96, 98, 102, 1);
         word-wrap: break-word;
       }

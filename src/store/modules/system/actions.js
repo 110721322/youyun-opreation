@@ -1,11 +1,26 @@
+import utils from "@/libs/kit/utils";
+
 export default {
-  setPositionList: ({ commit }, info) => {
-    commit('SET_POSITION_LIST', info)
+  /**
+   * 添加一条新的登录记录在头部
+   * @param commit
+   * @param state
+   * @param $phone  添加账号
+   */
+  addLoginHistory: ({ commit, state }, $phone) => {
+    let loginHistory = utils.deepClone(state.loginHistory).filter(phone => phone !== $phone);
+    loginHistory.unshift($phone);
+    commit('SET_LOGIN_HISTORY', loginHistory);
   },
-  setEmployeeList: ({ commit }, info) => {
-    commit('SET_EMPLOYEE_LIST', info)
-  },
-  setSuperiorList: ({ commit }, info) => {
-    commit('SET_SUPERIOR_LIST', info)
+  /**
+   * 移除其中一条记录
+   * @param commit
+   * @param state
+   * @param $index  要移除记录的下标
+   */
+  removeHistory: ({ commit, state }, $index) => {
+    let loginHistory = utils.deepClone(state.loginHistory);
+    loginHistory.splice($index, 1);
+    commit('SET_LOGIN_HISTORY', loginHistory);
   }
 };

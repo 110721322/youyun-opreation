@@ -1,10 +1,10 @@
 <template>
   <div
-    :class="['s-box', isShowAll ? 'is-show-all' : '']"
+    :class="['s_box', isShowAll ? 'is_show_all' : '']"
     :style="isOpen ? ('height: auto' + ';overflow:auto') : 'overflow:hidden'"
   >
     <el-row style="width: 100%">
-      <el-col :span="isShowAll ? 18 : 17">
+      <el-col :span="isShowAll ? 17 : 15">
         <el-form
           ref="formTep"
           size="large"
@@ -13,7 +13,7 @@
           :model="ruleForm"
           :rules="rules"
           :label-width="labelWidth"
-          :class="['form-inline', isShowAll ? 'is-show-all' : '']"
+          :class="['form-inline', isShowAll ? 'is_show_all' : '']"
           :style="isOpen ? ('height: auto' + ';overflow:auto') : 'overflow:hidden'"
         >
           <el-row>
@@ -26,7 +26,6 @@
                 :prop="formItem.key"
                 :label="formItem.label + ':'"
                 :rules="formItem.rules"
-                :class="[formItem.class]"
                 :label-width="formItem.labelWidth"
               >
                 <components
@@ -36,18 +35,18 @@
                   :type="formItem.timeType"
                   :is-rest="isRest"
                   @dataSelect="handleDataSelect"
-                  @timeSearch="timeSearch"
                 />
               </el-form-item>
             </el-col>
           </el-row>
         </el-form>
       </el-col>
-      <el-col :span="isShowAll ? 6 : 7">
-        <div class="btn-list" style="margin-bottom:0" :style="btnListStyle">
-          <el-button v-has="permission.search" type="primary" size="large" @click="clickSearch">搜索</el-button>
-          <el-button plain size="large" @click="clickResetForm">重置</el-button>
-          <div v-show="!isShowAll" v-has="permission.condition" class="open-btn" @click="clickOpenOrClose">
+      <el-col v-if="!isHideBtn" :span="isShowAll ? 7 : 9">
+        <div class="btn_list" style="margin-bottom:0" :style="btnListStyle">
+          <el-button v-if="showBtnRefresh" type="text" class="f-fz-14 iconfont" icon="iconshuaxin" @click="onRefresh">刷新</el-button>
+          <el-button v-has="permission.search" type="primary" size="large" @click="handleClick">搜索</el-button>
+          <el-button plain size="large" @click="resetForm">重置</el-button>
+          <div v-show="!isShowAll" v-has="permission.condition" class="open_btn" @click="onClick_openOrClose">
             <span v-show="!isOpen">展开</span>
             <span v-show="isOpen">收起</span>
             <i :class="['el-icon-arrow-down', 'more', isOpen ? 'down' : '']" />
@@ -71,27 +70,35 @@ import DateSelect from "./components/DateSelect.vue";
 import DatePicker from "./components/DatePicker.vue";
 import SelectInput from "./components/SelectInput.vue";
 import Cascader from "./components/Cascader.vue";
-import TicketAddForm from "./../form/ticketAddForm.vue";
-import AppDate from "../form/components/AppDate";
+import TicketAddForm from "../form/components/ticketAddForm.vue";
+import Date from "../form/components/Date";
+import CascaderMulti from "./components/CascaderMulti";
 
 export default {
   name: "Search",
   components: {
     Input,
     Select,
-    AppDate,
+    Date,
     Tinymce,
     DateSelect,
     SelectInput,
     Cascader,
     DatePicker,
-    TicketAddForm
+    TicketAddForm,
+    CascaderMulti
   },
   props: {
     isShowAll: {
       type: Boolean,
       default() {
         return false;
+      }
+    },
+    isHideBtn: {
+      type: Boolean,
+      default() {
+        return false
       }
     },
     btnListStyle: {
@@ -110,6 +117,18 @@ export default {
       type: String,
       default: "100px"
     },
+    showBtnRefresh: {
+      type: Boolean,
+      default() {
+        return false;
+      }
+    },
+    defaultOpen: {
+      type: Boolean,
+      default() {
+        return false
+      }
+    },
     permission: {
       type: Object,
       default() {
@@ -125,16 +144,14 @@ export default {
       isRest: false
     };
   },
-  watch: {},
   created() {
     this.init();
+    this.isOpen = this.defaultOpen
+    // console.log(this.formBaseData);
   },
   methods: {
     handleDataSelect($time) {
       this.$emit("dataSelect", $time);
-    },
-    timeSearch($item) {
-      this.$emit("search", this.ruleForm);
     },
     init() {
       if (this.formBaseData.length > 0) {
@@ -148,7 +165,7 @@ export default {
         }
       }
     },
-    clickSearch() {
+    handleClick() {
       this.$refs.formTep.validate(valid => {
         // 校验
         if (valid) {
@@ -159,22 +176,25 @@ export default {
       });
       this.$emit("search", this.ruleForm);
     },
-    clickResetForm() {
+    resetForm() {
       // 初始化表单
+      this.$refs.formTep.resetFields();
       this.isRest = true;
       this.$nextTick(() => {
         this.isRest = false;
-        this.$refs.formTep.resetFields();
         this.$emit("reset", this.ruleForm);
         this.$emit("search", this.ruleForm);
       })
+    },
+    onRefresh() {
+      this.$emit('refresh');
     },
     transType(value) {
       // 获取表单项类型
       return transFormType(value);
     },
 
-    clickOpenOrClose() {
+    onClick_openOrClose() {
       this.isOpen = !this.isOpen;
     }
   }
@@ -182,29 +202,28 @@ export default {
 </script>
 
 <style scoped>
-.s-box {
-  height: 88px;
+.s_box {
   padding: 24px;
   background: rgba(255, 255, 255, 1);
   margin: 24px 24px 0;
   transition: all 0.5s;
 }
-.s-box::-webkit-scrollbar {
-  display: none;
+.s_box::-webkit-scrollbar {
+  display:none
 }
-.is-show-all {
-  /* height: auto !important; */
+.is_show_all {
+  height: auto !important;
 }
-.btn-list {
+.btn_list {
   display: flex;
   justify-content: flex-end;
   align-items: flex-start;
   margin-left: 16px;
 }
-.is-show-all .btn-list {
+.is_show_all .btn_list {
   bottom: 25px;
 }
-.open-btn {
+.open_btn {
   /* float: right; */
   margin-left: 12px;
   line-height: 40px;
@@ -220,13 +239,13 @@ export default {
   flex-shrink: 1;
 }
 .form-inline::-webkit-scrollbar {
-  display: none;
+  display:none
 }
 .el-select .el-input {
   width: 130px;
 }
 .input-with-select {
-  /* width: 774px; */
+  width: 774px;
 }
 
 .more {
@@ -246,10 +265,10 @@ export default {
 .max-width {
   width: 100%;
 }
-.form-item {
+.form_item {
   float: left !important;
 }
-.clear-both {
+.clear_both {
   clear: both !important;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div @click="clickLinkProps">
+  <div @click="linkProps">
     <slot :to="to" />
   </div>
 </template>
@@ -15,8 +15,15 @@ export default {
     }
   },
   methods: {
-    clickLinkProps() {
-      if (!isExternal(this.to)) {
+    linkProps() {
+      if (isExternal(this.to)) {
+        console.log({
+          is: "a",
+          href: this.to,
+          target: "_blank",
+          rel: "noopener"
+        });
+      } else {
         this.$router.push({
           path: this.to
         });

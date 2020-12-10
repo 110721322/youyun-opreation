@@ -2,10 +2,10 @@
   <div class="crud">
     <el-table
       :ref="refName ? refName : 'table'"
-      v-loading="listLoading"
       :data="showGridData"
       style="width: 100%;font-size:14px"
       :height="tableHeight"
+      :max-height="tableHeight ? tableHeight : 600"
       :border="border"
       :row-key="rowKey"
       :default-expand-all="defaultExpandAll"
@@ -34,12 +34,21 @@
         :key="index"
         :prop="item.prop instanceof Array ?'': item.prop"
         :label="item.label"
-        show-overflow-tooltip
+        :show-overflow-tooltip="!item.hideToolTip"
         :min-width="item.width ? item.width : ''"
         :width="item.maxWidth ? item.maxWidth : ''"
         :fixed="item.isFixed || false"
         :sortable="item.sortable"
       >
+        <!-- 提示 -->
+        <template v-if="item.hasTooltip" slot="header">
+          <slot name="head" :item="item">
+            <span>{{ item.label }}</span>
+            <el-tooltip class="item" effect="dark" :content="item.tipTxt" placement="top">
+              <i class="el-icon-info"></i>
+            </el-tooltip>
+          </slot>
+        </template>
         <!-- 通道状态 -->
         <template v-if="item.customHead" slot="header">
           <slot name="head" :item="item"></slot>
@@ -60,18 +69,10 @@
                 class="cancel-btn"
                 size="medium"
                 type="text"
-                @click="clickCancelEdit(scope.row)"
+                @click="cancelEdit(scope.row)"
               >取消</el-button>
             </template>
             <span v-else>{{ item.formatter ? item.formatter(scope.row, index) : scope.row[item.prop] }}</span>
-            <template v-if="item.hasImg">
-              <img
-                :src="item.imgUrl"
-                :style="item.imgStyle"
-                alt="图片"
-                @click="clickHandleToggle(scope.row,item)"
-              />
-            </template>
           </span>
           <span v-if="(item.prop instanceof Array)">
             <div
@@ -90,16 +91,17 @@
       >
         <template slot-scope="scope">
           <!--扩展按钮-->
-          <span v-for="(item, index) in gridBtnConfig.expands" :key="index">
-            <span v-if="isShowFun(item, scope)" v-has="item.permission">
+          <span v-for="(item, index) in filterExpendsBtn(gridBtnConfig.expands, scope)" :key="index">
+            <span v-has="item.permission">
               <el-button
                 size="medium"
                 :style="item.style"
                 :type="item.type ? item.type : 'primary'"
-                @click="clickEmit(item.emitName, scope.row)"
+                :disabled="!!item.disabled"
+                @click="handleEmit($event, item.emitName, scope.row)"
               >{{ item.name }}</el-button>
               <span
-                v-if="index !== gridBtnConfig.expands.length - 1"
+                v-if="index !== filterExpendsBtn(gridBtnConfig.expands, scope).length - 1"
                 style="color:#EBEEF5;margin:0 3px"
               >|</span>
             </span>
@@ -110,7 +112,7 @@
     <!--crud的分页组件-->
     <div class="crud-pagination">
       <div>
-        <el-checkbox v-if="isSelect" v-model="checkAll" :indeterminate="isIndeterminate" @change="changeToggleSelection">全选</el-checkbox>
+        <el-checkbox v-if="isSelect" v-model="checkAll" :indeterminate="isIndeterminate" @change="toggleSelection">全选</el-checkbox>
         <slot name="paginationLeft"></slot>
       </div>
       <!--如果不是异步请求展示数据，需要隐藏分页-->
@@ -118,8 +120,8 @@
         v-if="isAsync"
         size="medium"
         :current-page="currentPage"
-        :page-sizes="[10, 20, 30, 40]"
-        :page-size="pageSize"
+        :page-sizes="[10, 20, 30, 40, 100]"
+        :page-size="currentPageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="dataTotal"
         @size-change="handleSizeChange"
@@ -139,6 +141,12 @@ export default {
     Cell
   },
   props: [
+    // 表单标题，例如用户、角色
+    "formTitle",
+    // 表单配置
+    "formConfig",
+    // 表单的model数据
+    "formData",
     // 表格配置
     "gridConfig",
     // 表格按钮配置
@@ -147,6 +155,8 @@ export default {
     "gridData",
     // 数据接口
     "apiService",
+    // 是否在初始化的时候不调用接口
+    "isNotRequest",
     // 判断是否是异步数据
     "isAsync",
     //  表格编辑区域宽度
@@ -180,17 +190,15 @@ export default {
       // 当前页码
       currentPage: 1,
       // 每页显示数量
-      pageSize: 10,
+      currentPageSize: 10,
       // 列表数据总数
       dataTotal: 0,
       // 表单数据
       formModel: {},
-      //  表格加载状态
-      listLoading: false,
       queryParams: {},
+      multipleSelection: [],
       checkAll: false,
-      isIndeterminate: false,
-      multipleSelection: []
+      isIndeterminate: false
     };
   },
   computed: {
@@ -224,32 +232,21 @@ export default {
   },
   mounted() {
     this.copyGridData = this.gridData;
-    if (this.apiService && this.params !== null) {
+    if (this.apiService && this.params !== null && !this.isNotRequest) {
       this.getData();
     }
   },
   methods: {
-    changeToggleSelection() {
-      const refName = this.refName ? this.refName : 'table'
-      if (this.multipleSelection.length === this.showGridData.length) {
-        this.$refs[refName].clearSelection();
-      } else {
-        this.$refs[refName].clearSelection();
-        this.showGridData.forEach(row => {
-          this.$refs[refName].toggleRowSelection(row);
-        });
-      }
-    },
-    clickHandleToggle($row, $item) {
-      if (this.$refs[this.refName]) {
-        this.$emit($item.emitName, $row, this.$refs[this.refName]);
-      }
+    filterExpendsBtn($expands, $scope) {
+      return $expands.filter(item => {
+        return this.isShowFun(item, $scope)
+      })
     },
     sortDate: function(val) {
       if (undefined === this.copyGridData || this.copyGridData.length === 0) {
         return;
       }
-      const list = JSON.parse(JSON.stringify(this.copyGridData));
+      const list = this.$g.utils.deepClone(this.copyGridData);
       const isDesc = val.order === "descending";
       const key = val.prop;
       const pattPerc = /^\d+%$/;
@@ -271,27 +268,30 @@ export default {
         }
       });
     },
+    initData() {
+      this.currentPage = 1;
+      this.getData();
+    },
     // 获取列表数据
     getData() {
-      this.listLoading = true;
-      this.queryParams = {};
       this.queryParams.currentPage = this.currentPage;
-      this.queryParams.pageSize = this.pageSize;
+      this.queryParams.pageSize = this.currentPageSize;
       Object.assign(this.queryParams, this.params);
       this.apiService(this.queryParams)
         .then(res => {
-          this.listLoading = false;
-          if (!g.utils.isArr(res.data)) return res;
-          this.copyGridData = res.data;
+          if (g.utils.isArr(res.data)) {
+            this.copyGridData = res.data;
+          } else {
+            this.copyGridData =
+              res.data === null ? [] : res.data;
+          }
           this.dataTotal = res.totalCount;
+          this.$emit('handleTotalCount', this.dataTotal)
         })
-        .catch(() => {
-          this.listLoading = false;
-        });
     },
 
     // 处理相应父组件的事件方法
-    clickEmit(emitName, row) {
+    handleEmit(e, emitName, row) {
       if (emitName === "rowEdit") {
         for (const item of this.gridConfig) {
           if (item.isEdit) {
@@ -302,14 +302,15 @@ export default {
         this.rowEdit(row);
         return;
       }
-      this.$emit(emitName, row);
+      this.$emit(emitName, row, e);
     },
     handleCurrentChange(page) {
       this.currentPage = page;
       this.getData();
     },
     handleSizeChange(size) {
-      this.pageSize = size;
+      this.currentPage = 1;
+      this.currentPageSize = size;
       this.getData();
     },
     isShowFun($row, $scope) {
@@ -323,7 +324,7 @@ export default {
       this.multipleSelection = val;
       this.$emit("selectionChange", val);
     },
-    clickCancelEdit($row) {
+    cancelEdit($row) {
       $row.edit = false;
       for (const item of this.gridConfig) {
         if (item.isEdit) {
@@ -335,7 +336,7 @@ export default {
     },
     rowEdit($item) {
       this.$nextTick(() => {
-        const data = JSON.parse(JSON.stringify(this.copyGridData));
+        const data = this.$g.utils.deepClone(this.copyGridData);
         for (const item of data) {
           if (item.id === $item.id) {
             item.edit = true;
@@ -343,6 +344,17 @@ export default {
         }
         this.copyGridData = data;
       });
+    },
+    toggleSelection() {
+      const refName = this.refName ? this.refName : 'table'
+      if (this.multipleSelection.length === this.showGridData.length) {
+        this.$refs[refName].clearSelection();
+      } else {
+        this.$refs[refName].clearSelection();
+        this.showGridData.forEach(row => {
+          this.$refs[refName].toggleRowSelection(row);
+        });
+      }
     }
   }
 };
@@ -361,19 +373,8 @@ export default {
     justify-content: space-between;
     text-align: right;
     margin-top: 25px;
-    align-items: center;
-    flex-wrap: wrap;
   }
 }
-
-.el-table td div {
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
 .icon-increase {
   color: #3abd2d;
   margin-right: 8px;

@@ -1,0 +1,121 @@
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.el-tooltip-opacity {
+  font-size: 14px;
+  background: rgba(0, 0, 0, .7) !important;
+  font-size: 14px;
+}
+
+.flex-row-wrap {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex-align-center {
+  display: flex;
+  align-items: center;
+}
+
+.flex-justify-center {
+  display: flex;
+  justify-content: center;
+}
+
+.flex-column-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+}
+
+.font-weight {
+  font-weight: bold;
+}
+
+.f-text-underline {
+  text-decoration: underline;
+}
+
+.f-fz-14 {
+  font-size: 14px;
+}
+
+.f-fz-16 {
+  font-size: 16px;
+}
+
+.f-fz-18 {
+  font-size: 18px;
+}
+
+.f-fz-20 {
+  font-size: 20px;
+}
+
+.f-fz-22 {
+  font-size: 22px;
+}
+
+.f-fz-24 {
+  font-size: 24px;
+}
+
+.f-fz-26 {
+  font-size: 26px;
+}
+
+.f-fz-28 {
+  font-size: 26px;
+}
+
+.f-fz-30 {
+  font-size: 26px;
+}
+
+.f-fz-32 {
+  font-size: 26px;
+}
+
+.f-fc-333335 {
+  color: #333335;
+}
+
+.f-fc-606266 {
+  color: #606266
+}
+
+.f-fc-909399 {
+  color: #909399;
+}
+
+.f-bg-FFFFFF {
+  background: #FFFFFF;
+}
+
+.f-fc-pending {
+  color: $color-pending;
+}
+
+.f-fc-theme {
+  color: $--color-primary;
+}
+
+.f-mb-12 {
+  margin-bottom: 12px;
+}

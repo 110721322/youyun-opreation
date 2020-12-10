@@ -16,7 +16,7 @@ export const transFormType = typeNum => {
       componentName = 'Check'
       break
     case 3:
-      componentName = 'AppDate'
+      componentName = 'Date'
       break
     case 4:
       componentName = 'iSwitch'
@@ -45,10 +45,7 @@ export const transFormType = typeNum => {
     case 12:
       componentName = 'AutoInput'
       break
-    case 'uploadFile':
-      componentName = 'uploadFile'
-      break
-    case 'show':
+    case 13:
       componentName = 'Show'
       break
     case 14:
@@ -60,14 +57,27 @@ export const transFormType = typeNum => {
     case 16:
       componentName = 'TicketAddForm'
       break
+    case 17:
+      componentName = 'UploadFile'
+      break
+    case 18:
+      componentName = 'CascaderMulti'
+      break
+    case 19:
+      componentName = "CheckTransfer"
+      break;
+    case 'SelectPage':
+      componentName = 'SelectPage'
+      break
     default:
-      componentName = ''
+    // throwError("formType \"" + typeNum + "\" does not exist.open fn.js and add it");
   }
   return componentName
 }
 
 /**
  * 链式设置校验规则
+ * IE浏览器Proxy有兼容性问题，如需兼容IE请勿使用
  */
 export const setRules = (function () {
   return function (keyName, keyType) {
@@ -89,7 +99,7 @@ export const setRules = (function () {
         }
       }
     )
-
+    console.log(proxy);
     return proxy
   }
 })()

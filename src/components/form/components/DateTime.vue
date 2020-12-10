@@ -2,15 +2,15 @@
   <div>
     <el-date-picker
       v-model="timeInterval"
-      style="float: left;width:294px;"
-      size="small"
+      style="float: left;"
+      size="large"
       type="datetime"
       :placeholder="placeholder"
       :clearable="clearable"
       :default-time="defaultTime"
       :picker-options="pickerOptions"
       :value-format="format"
-      @change="changeDate"
+      @change="onChage"
     />
     <!--    <span class="date-item" v-for="item of dateList" :class="item.value == selectItem.value?'select':''"  @click="onClick_item(item)">{{item.label}}</span>-->
   </div>
@@ -47,9 +47,11 @@ export default {
     };
   },
   watch: {},
-  created() {},
+  created() {
+    console.log(this.placeholder);
+  },
   methods: {
-    changeDate($data) {
+    onChage($data) {
       this.$emit("select", $data);
       this.ruleForm[this.formItem.key] = $data;
     }

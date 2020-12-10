@@ -3,25 +3,25 @@
     <el-date-picker
       v-model="timeInterval"
       :style="inputStyle"
-      size="large"
+      size="normal"
       :type="datatype"
       :placeholder="placeholder"
       :clearable="clearable"
       :picker-options="pickerOptions"
       :value-format="format"
-      @change="changeVal"
+      @change="onChage"
     >
     </el-date-picker>
   </div>
 </template>
 <script type="text/ecmascript-6">
+// import * as g from "@/libs/global";
 
 export default {
   components: {},
   props: {
     ruleForm: Object,
     formItem: Object,
-    isRest: Boolean,
     pickerOptions: {
       type: Object,
       default() {
@@ -46,22 +46,20 @@ export default {
   computed: {
     inputStyle() {
       const item = this.formItem;
-      return item.style ? item.style : "float: left;width: 100%;max-width: 294px;";
+      return item.style ? item.style : "width:294px;float: left;";
     }
   },
   watch: {
-    isRest: function($new) {
-      if ($new) {
-        this.timeInterval = "";
-      }
-    }
+
   },
-  created() {},
+  created() {
+    console.log(this.placeholder)
+  },
   methods: {
-    changeVal($data) {
+    onChage($data) {
+      console.log($data)
       this.$emit("select", $data);
       this.ruleForm[this.formItem.key] = $data;
-      this.$emit("timeSearch", this.ruleForm)
     }
   }
 };

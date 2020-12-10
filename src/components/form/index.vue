@@ -1,55 +1,79 @@
 <template>
   <div class="">
-    <div :class="[isDrawer?'content-drawer':'']">
-      <el-form
-        ref="formTep"
-        :class="[isDrawer?'formTemplate-drawer':'formTemplate']"
-        size=""
-        :inline="false"
-        :label-position="labelPosition"
-        :model="ruleForm"
-        :rules="rules"
-        :label-width="labelWidth"
-      >
-        <template v-for="formItem in formBaseData">
-          <el-form-item
-            v-if="isShow(formItem)"
-            :key="formItem.key"
-            class="formTemplate-item"
-            :prop="formItem.key"
-            :label="formItem.label+(formItem.hideColon?'':':')"
-            :rules="formItem.rules"
-          >
+    <el-form
+      ref="formTep"
+      class="formTemplate"
+      size=""
+      :inline="false"
+      :label-position="labelPosition"
+      :model="ruleForm"
+      :rules="rules"
+      :label-width="labelWidth"
+    >
+      <slot name="form-item"></slot>
+      <slot name="btn"></slot>
+      <template v-for="formItem in formBaseData">
+        <el-form-item
+          v-if="formItem.isShow?formItem.isShow(ruleForm):true"
+          :key="formItem.key"
+          class="formTemplate-item"
+          :prop="formItem.key"
+          :label-width="formItem.labelWidth ? formItem.labelWidth : '100px'"
+          :rules="formItem.rules"
+        >
+          <Cell
+              v-if="formItem.render"
+              :render="formItem.render"
+              slot="label"
+          />
+          <span slot="label" v-else>{{ formItem.label+(formItem.hideColon?'':':') }}</span>
+          <div class="formItem-container" :style="formItem.contentStyle ? formItem.contentStyle : ''">
             <components :is="transType(formItem.type)" ref="formItem" :rule-form="ruleForm" :form-item="formItem"></components>
-            <span v-if="formItem.tip" style="font-size: 12px;color: #909399;">{{ formItem.tip }}</span>
             <slot :name="formItem.slot"></slot>
-            <el-tooltip v-if="formItem.tooltip" effect="dark" :content="formItem.tooltip" placement="top">
+            <el-tooltip v-if="formItem.tooltip" class="item" effect="dark" placement="top">
+              <div slot="content">
+                {{ formItem.tooltip }}
+              </div>
               <i class="iconfont iconshuoming tooltip"></i>
             </el-tooltip>
-          </el-form-item>
-        </template>
-        <slot name="content"></slot>
-      </el-form>
-    </div>
-    <div v-if="showFootBtn" :class="[isDrawer?'foot-btn-box-drawer':'foot-btn-box']">
-      <el-button size="normal" type="primary" @click="clickFootBtn">{{ footBtnLabel }}</el-button>
-      <el-button v-if="showFootReset" size="normal" @click="clickResetForm">重置</el-button>
-      <el-button v-if="showFootClear" size="normal" @click="clickClearForm">清空</el-button>
-      <el-button v-if="showFootCancel" size="normal" @click="clickCancelForm">取消</el-button>
+            <!-- 自定义银行限制 -->
+            <el-tooltip v-if="formItem.limitTooltip" class="toolItem" :effect="formItem.effect?formItem.effect:'dark'" :offset="5" placement="top-start" style="border:0px">
+              <div slot="content">
+                <div v-for="(item, index) in formItem.tooltipList" :key="index" class="flex-align-center" style="margin: 5px 0;">
+                  <img v-if="item.img" :src="item.img" alt="" style="width:20px;margin-right:5px;">
+                  <div>{{ item.txt }}</div>
+                </div>
+              </div>
+              <div class="flex-align-center">
+                <i class="iconfont iconshuoming tooltip" style="margin-right:5px;"></i>
+                <span v-if="formItem.key === 'bankCard'" style="color: #C2C2C2;">支持的银行</span>
+              </div>
+            </el-tooltip>
+          </div>
+        </el-form-item>
+      </template>
+    </el-form>
+    <div v-if="showFootBtn" class="foot_btn_box">
+      <el-button class="foot_btn" type="primary" @click="handleClick">{{ footBtnLabel }}</el-button>
+      <el-button v-if="showFootReset" class="foot_btn" @click="resetForm">重置</el-button>
+      <el-button v-if="showFootClear" class="foot_btn" @click="clearForm">清空</el-button>
+      <el-button v-if="showFootCancel" class="foot_btn" @click="cancelForm">取消</el-button>
     </div>
   </div>
 </template>
 
 <script>
+import * as g from "@/libs/global";
 import {
   transFormType,
   clearFormData,
   formatFormData
 } from "@/libs/kit/formFns.js";
+import Cell from "./expand"
 import Input from "./components/Input.vue";
 import Select from "./components/Select.vue";
 import Check from "./components/Check.vue";
-import AppDate from "./components/AppDate.vue";
+import Date from "./components/Date.vue";
 import iSwitch from "./components/Switch.vue";
 import Radio from "./components/Radio.vue";
 import Upload from "./components/Upload.vue";
@@ -59,17 +83,24 @@ import UploadFile from "./components/UploadFile";
 import Show from "./components/Show";
 import DatePicker from "./components/DatePicker.vue";
 import SelectInput from "./components/SelectInput.vue";
+import AutoInput from "./components/AutoInput.vue";
 import DateTime from "./components/DateTime.vue"
-import InputSelect from "./inputSelect.vue";
-import TicketAddForm from "./ticketAddForm.vue";
+import InputSelect from "./components/inputSelect.vue";
+import TicketAddForm from "./components/ticketAddForm.vue";
+import CascaderMulti from "./components/CascaderMulti";
+import CheckTransfer from "./components/CheckTransfer";
+import SelectPage from "@/components/Others/SelectPage";
+
+// import { isUndefined, deepClone } from '@/libs/lit/utils'
 
 export default {
-  name: "Form",
+  name: "",
   components: {
+    Cell,
     Input,
     Select,
     Check,
-    AppDate,
+    Date,
     iSwitch,
     Radio,
     Upload,
@@ -79,9 +110,13 @@ export default {
     Show,
     DatePicker,
     SelectInput,
+    AutoInput,
     DateTime,
     InputSelect,
-    TicketAddForm
+    TicketAddForm,
+    CascaderMulti,
+    CheckTransfer,
+    SelectPage
   },
   props: {
     formBaseData: {
@@ -95,12 +130,6 @@ export default {
       type: Boolean,
       default() {
         return true;
-      }
-    },
-    isDrawer: {
-      type: Boolean,
-      default() {
-        return false;
       }
     },
     showFootCancel: {
@@ -119,7 +148,7 @@ export default {
     },
     labelWidth: {
       type: String,
-      default: "120px"
+      default: "100px"
     },
     showFootReset: {
       type: Boolean,
@@ -140,37 +169,23 @@ export default {
       formKeys: []
     };
   },
-  watch: {
-    formBaseData: function($value, $old) {
-      this.init();
-    }
-  },
   created() {
     this.init();
   },
   methods: {
-    isShow($formItem) {
-      if (this.$g.utils.isFunction($formItem.isShow)) {
-        return $formItem.isShow(this.ruleForm)
-      } else if (this.$g.utils.isBoolean($formItem.isShow)) {
-        return $formItem.isShow
-      } else {
-        return true
-      }
-    },
     init() {
       // 初始化 绑定初始值
       this.ruleForm = {}
       if (this.formBaseData.length > 0) {
         for (const iterator of this.formBaseData) {
           let initVal = iterator.initVal;
-          if (this.$g.utils.isUndefined(initVal)) {
+          if (g.utils.isUndefined(initVal)) {
             initVal = null;
           }
           this.formKeys.push(iterator.key);
           this.$set(this.ruleForm, iterator.key, initVal);
         }
-        if (this.$g.utils.isArr(this.$refs.formItem)) {
+        if (this.$refs.formItem && this.$g.utils.isArr(this.$refs.formItem)) {
           for (const componentFormItem of this.$refs.formItem) {
             if (componentFormItem.initVal) {
               componentFormItem.initVal();
@@ -179,16 +194,15 @@ export default {
         }
       }
     },
-    clickFootBtn() {
+    handleClick() {
       let validateStatus;
       this.$refs.formTep.validate(valid => {
         // 校验
         if (valid) {
-          const formInfo = this.$g.utils.deepClone(this.ruleForm);
+          const formInfo = g.utils.deepClone(this.ruleForm);
           // 统一过滤表单
           formatFormData(formInfo, this.formKeys);
           validateStatus = true;
-          return true;
         } else {
           validateStatus = false;
           return false;
@@ -201,22 +215,22 @@ export default {
         return false;
       }
     },
-    clickResetForm() {
+    resetForm() {
       // 初始化表单
       this.$refs.formTep.resetFields();
     },
-    clickClearForm() {
+    clearForm() {
       // 清空表单
-      const p = () =>
-        new Promise(resolve => {
-          clearFormData(this.ruleForm, this.formKeys);
-          resolve();
-        });
-      p().then(() => {
+      const promise = new Promise(resolve => {
+        clearFormData(this.ruleForm, this.formKeys);
+        resolve();
+      });
+
+      promise.then(() => {
         this.$refs.formTep.clearValidate();
       });
     },
-    clickCancelForm() {
+    cancelForm() {
       // 初始化表单
       this.$emit("cancel");
     },
@@ -232,67 +246,36 @@ export default {
 .formTemplate {
   margin: 40px 20px 0;
 }
-.formTemplate-drawer {
-  margin: 0;
-  padding: 40px 20px 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  overflow-y: scroll;
-  flex: 1;
-  box-sizing: border-box;
-}
 .formTemplate-item {
   margin-right: 20px;
-}
-.content-drawer {
-    height: calc(100vh - 172px);
-    overflow: hidden;
-}
-.foot-btn-box {
-  width: 100%;
-  // height: 96px;
-  border-top: 1px solid #ebeef5;
-  // position: absolute;
-  // bottom: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-content: center;
-  padding: 16px 0;
-  // .foot_btn {
-  //   // width: 113px;
-  //   // height: 40px;
-  //   // margin-top: 28px;
-  //   // margin-left: 12px;
-  //   // margin-right: 12px;
-  //   padding: 15px;
-  // }
-  .form-box {
-    margin: 0 59px;
+  .formItem-container {
+    display: flex;
+    .tooltip {
+      font-size: 20px;
+      color: #C2C2C2;
+      margin-left: 4px;
+    }
   }
 }
-.foot-btn-box-drawer {
-  width: 500px;
-  // height: 96px;
+
+.foot_btn_box {
+  width: 100%;
+  height: 96px;
   border-top: 1px solid #ebeef5;
-  position: fixed;
+  position: absolute;
   bottom: 0;
-  right: 0;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-content: center;
-  padding: 16px 0;
-  // .foot_btn {
-  //   // width: 113px;
-  //   // height: 40px;
-  //   // margin-top: 28px;
-  //   // margin-left: 12px;
-  //   // margin-right: 12px;
-  //   padding: 15px;
-  // }
-  .form-box {
+  .foot_btn {
+    width: 113px;
+    height: 40px;
+    margin-top: 28px;
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+  .form_box {
     margin: 0 59px;
   }
 }

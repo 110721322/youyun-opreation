@@ -1,5 +1,5 @@
 <template>
-  <div class="g-bg-box">
+  <div class="bg_box">
     <div class="title">
       {{ configData.name }}
       <slot name="operatingTop">
@@ -8,11 +8,11 @@
     </div>
     <slot name="step"></slot>
     <slot name="operatinTopCont"></slot>
-    <div v-for="(child, key) of configData.child" :key="key" class="con-box">
+    <div v-for="(child, key) of configData.child" :key="key" class="con_box">
       <div class="title">
         {{ child.name }}
         <slot name="operatingItem" :child="child">
-          <span v-if="child.ShowEditBtn" class="edit" @click="clickEdit(child.modelName)">{{ child.ShowEditBtn }}</span>
+          <span v-if="child.ShowEditBtn" class="edit" @click="edit(child.modelName)">{{ child.ShowEditBtn }}</span>
         </slot>
       </div>
       <el-form
@@ -49,7 +49,7 @@
 
 <script>
 export default {
-  name: "DetailMode4",
+  name: "",
   props: { ruleForm: Object, configData: Object },
   data() {
     return {
@@ -61,7 +61,7 @@ export default {
   computed: {},
 
   methods: {
-    clickEdit($modelName) {
+    edit($modelName) {
       this.$emit("edit", $modelName);
     }
   }
@@ -69,14 +69,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.g-bg-box {
+.bg_box {
   margin: 24px;
   background: #fff;
   overflow: hidden;
   .title {
     height: 54px;
     line-height: 54px;
-    padding-left: 24px;
+    padding-left: 32px;
     font-size: 16px;
     font-weight: 500;
     color: rgba(51, 51, 53, 1);
@@ -98,7 +98,7 @@ export default {
     margin-right: 32px;
     cursor: pointer;
   }
-  .con-box {
+  .con_box {
     margin: 24px;
     background: #fff;
     overflow: hidden;

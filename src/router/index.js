@@ -1,3 +1,25 @@
+/**
+                           _ooOoo_
+                          o8888888o
+                          88" . "88
+                          (| -_- |)
+                          O\  =  /O
+                       ____/`---'\____
+                     .'  \\|     |//  `.
+                    /  \\|||  :  |||//  \
+                   /  _||||| -:- |||||-  \
+                   |   | \\\  -  /// |   |
+                   | \_|  ''\---/''  |   |
+                   \  .-\__  `-`  ___/-. /
+                 ___`. .'  /--.--\  `. . __
+              ."" '<  `.___\_<|>_/___.'  >'"".
+             | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+             \  \ `-.   \_ __\ /__ _/   .-` /  /
+        ======`-.____`-.___\_____/___.-`____.-'======
+                           `=---='
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                 佛祖保佑       永无BUG
+ */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '@/store'
@@ -6,63 +28,37 @@ import Layout from '@/layout'
 import utils from "../libs/kit/utils";
 import currRouter from './addRouter.js'
 
-import Login from '../page/login/login.vue'
-import PersonInfo from '../page/personInfo/personInfo.vue'
-import Result from '../page/personInfo/result.vue'
+import Login from '../page/Login/Login.vue'
+import Register from '../page/Login/Register.vue'
 import ErrorPage from '../page/404/404.vue'
 import noJurisdiction from '../page/401/401.vue'
-import RegistSuccess from '../page/login/registSuccess'
-import Doc from "../page/doc"
+const RegistSuccess = () => import("../page/Login/registSuccess")
 
 Vue.use(VueRouter)
 
 const router = new VueRouter({
   routes: [
     {
-      path: '/doc',
-      name: 'doc',
-      component: Doc
-    },
-    {
       path: '/',
       component: Layout,
       children: [
         {
-          path: '/',
-          component: () => import('@/page/work/workBench.vue')
+          path: '/'
         }
       ]
     },
     {
-      path: '/index',
-      component: Layout,
-      children: [
-        {
-          path: '/index',
-          component: () => import('@/page/work/workBench.vue')
-        }
-      ]
-    },
-    {
-      path: '/login',
-      name: '登录页',
+      path: '/Login',
+      name: 'Login',
       component: Login,
       meta: {
         requireLogin: false
       }
     },
     {
-      path: '/personInfo',
-      name: '完善个人信息',
-      component: PersonInfo,
-      meta: {
-        requireLogin: false
-      }
-    },
-    {
-      path: '/result',
-      name: '开通成功',
-      component: Result,
+      path: '/register',
+      name: 'register',
+      component: Register,
       meta: {
         requireLogin: false
       }
@@ -85,7 +81,6 @@ const router = new VueRouter({
     },
     {
       path: '/registSuccess',
-      name: "registSuccess",
       component: RegistSuccess,
       meta: {
         requireLogin: false
@@ -99,17 +94,20 @@ const router = new VueRouter({
 })
 
 // 全局钩子函数,在跳转之前执行
-// import { authRoutes } from "./authRoutes";
-const authRoutes = utils.deepClone(store.state.role.routes);
-// store.dispatch('setRoleRoutes', authRoutes);
+import { authRoutes } from "./authRoutes";
+// const authRoutes = store.state.role.routes;
+store.dispatch('setRoleRoutes', authRoutes);
 const routerList = currRouter.menusToRoutes(authRoutes);
 store.dispatch('saveRoutersArr', utils.deepClone(routerList));
 
 router.addRoutes(routerList);
 
 router.beforeEach((to, from, next) => {
-  const routes = store.state.role.routes;
-  if (to.path === '/login') {
+  const routes = utils.deepClone(store.state.role.routes);
+  if (to.path === '/Login' || to.path === "/LoginStore") {
+    next()
+    return;
+  } else if (to.path === '/register') {
     next()
     return;
   } else if (to.path === "/" && routes.length > 0) {
@@ -128,11 +126,12 @@ router.beforeEach((to, from, next) => {
     next({name: routerName})
   } else if (routes.length === 0) {
     const accessToken = store.state.admin.accessToken;
+    const roleId = store.state.admin.roleId;
     if (accessToken === null || accessToken === '') {
-      if (to.path === '/registSuccess') {
-        next();
+      if (roleId === 2) {
+        next('/LoginStore');
       } else {
-        next('/login');
+        next('/Login');
       }
       return;
     }
@@ -141,10 +140,11 @@ router.beforeEach((to, from, next) => {
   } else {
     const accessToken = store.state.admin.accessToken;
     if (accessToken === null || accessToken === '') {
-      if (to.path === '/registSuccess') {
-        next();
+      const roleId = store.state.admin.roleId;
+      if (roleId === 2) {
+        next('/LoginStore');
       } else {
-        next('/login');
+        next('/Login');
       }
       return;
     }

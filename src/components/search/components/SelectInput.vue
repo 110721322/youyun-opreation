@@ -11,16 +11,17 @@
       :style="selectOption.style"
       size="large"
       :fetch-suggestions="querySearchAsync"
-      @select="selectAuto"
-      @change="changeInput"
+      @select="onAutoSelect"
+      @change="onInput"
     >
 
       <el-select
         v-if="!formItem.hiddenSelect"
         slot="prepend"
         v-model="inputSelect"
+        style="width:294px"
         placeholder="请选择"
-        @change="changeSelect"
+        @change="onSelect"
       >
         <el-option
           v-for="(item, key) in formItem.options"
@@ -36,14 +37,14 @@
       :placeholder="formItem.placeholder?formItem.placeholder:'请输入内容'"
       class="input-with-select"
       size="large"
-      @input="changeInput"
+      @input="onInput"
     >
       <el-select
         slot="prepend"
         v-model="inputSelect"
-        style="min-width: 150px;"
+        style="width:294px"
         placeholder="请选择"
-        @change="changeSelect"
+        @change="onSelect"
       >
         <el-option
           v-for="(item, key) in formItem.options"
@@ -79,8 +80,8 @@ export default {
       if ($new) {
         this.inputSelect = this.formItem.options[0].value;
         this.inputForm = "";
-        this.changeInput();
-        this.changeSelect();
+        this.onInput();
+        this.onSelect();
       }
     }
   },
@@ -90,20 +91,20 @@ export default {
     this.ruleForm[this.formItem.key] = this.inputSelect;
   },
   methods: {
-    changeInput() {
+    onInput() {
       this.ruleForm.inputSelect = this.selectOption.valueKey ? this.selectOption.valueKey : this.inputSelect;
       this.ruleForm.inputForm = this.inputForm;
       this.ruleForm[this.formItem.key] = this.ruleForm.inputSelect;
       this.ruleForm[this.formItem.key + 'Val'] = this.inputForm;
     },
-    changeSelect() {
+    onSelect() {
       this.inputForm = null;
       this.selectOption = this.formItem.options.filter(ele => ele.value === this.inputSelect)[0];
       this.ruleForm.inputSelect = this.selectOption.valueKey ? this.selectOption.valueKey : this.inputSelect;
       this.ruleForm[this.formItem.key] = this.ruleForm.inputSelect;
       this.ruleForm[this.formItem.key + 'Val'] = this.inputForm;
     },
-    selectAuto(e) {
+    onAutoSelect(e) {
       this.ruleForm.inputForm = e[this.selectOption.valueKey]
     },
     querySearchAsync(queryString, callback) {
@@ -112,7 +113,7 @@ export default {
         [this.selectOption.value]: queryString
       }
       api(params).then(res => {
-        this.autoCompleteList = res.data;
+        this.autoCompleteList = res.object;
         callback(this.autoCompleteList);
       })
       return queryString;
@@ -123,14 +124,10 @@ export default {
 
 <style lang="scss" scoped>
 .input-with-select {
-  // width: 774px;
+  width: 774px;
 }
 
 .el-select .el-input {
   width: 130px;
-}
-/deep/.el-input__inner{
-  width: 100%;
-  // max-width: 294px;
 }
 </style>

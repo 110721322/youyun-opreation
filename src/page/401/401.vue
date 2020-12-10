@@ -1,7 +1,7 @@
 <template>
-  <div class="page-box">
+  <div class="page_box">
     <div class="errPage-container">
-      <el-button class="pan-back-btn" @click="clickBack">返回</el-button>
+      <el-button class="pan-back-btn" @click="back">返回</el-button>
       <el-row>
         <el-col :span="12">
           <h1 class="text-jumbo text-ginormous">权限不足!</h1>
@@ -23,7 +23,6 @@
 
 <script>
 import errGif from "@/assets/img/401_images/401.gif";
-
 export default {
   name: "Page401",
 
@@ -33,7 +32,7 @@ export default {
     };
   },
   methods: {
-    clickBack() {
+    back() {
       if (this.$route.query.noGoBack) {
         this.$router.push({ path: "/dashboard" });
       } else {
@@ -91,7 +90,7 @@ export default {
   }
 }
 
-.page-box {
+.page_box {
   width: 100%;
   height: 100%;
   overflow: hidden;

@@ -1,20 +1,25 @@
 <template>
   <div>
     <el-date-picker
-      v-model="ruleForm[formItem.key]"
-      style="float: left;min-width:294px"
+      v-model="timeInterval"
+      style="float: left;"
+      :style="inputStyle"
       size="small"
       :type="datatype"
       :placeholder="placeholder"
       :clearable="clearable"
       :picker-options="pickerOptions"
       :value-format="format"
-      @change="changeDate"
+      :disabled="formItem.checked"
+      @change="onChage"
     >
     </el-date-picker>
+    <el-checkbox v-if="formItem.hasChecked" v-model="formItem.checked" @change="checkChange" style="margin-left:15px">长期有效</el-checkbox>
   </div>
 </template>
 <script type="text/ecmascript-6">
+// import * as g from "@/libs/global";
+
 export default {
   components: {},
   props: {
@@ -35,19 +40,57 @@ export default {
   },
   data() {
     return {
+      timeInterval: null,
       placeholder: this.formItem.placeholder,
       datatype: this.formItem.datatype,
       format: this.formItem.format
     };
   },
   watch: {
-
+    initVal: {
+      handler() {
+        this.setInitVal();
+      },
+      deep: true
+    }
   },
-  created() {},
+  computed: {
+    inputStyle() {
+      const item = this.formItem;
+      return item.style ? item.style : "width:294px;float: left;";
+    },
+    initVal() {
+      if (this.formItem.initVal) {
+        return this.formItem.initVal;
+      } else {
+        return ''
+      }
+    }
+  },
+  created() {
+    this.setInitVal()
+  },
   methods: {
-    changeDate($data) {
+    onChage($data) {
+      console.log($data)
       this.$emit("select", $data);
       this.ruleForm[this.formItem.key] = $data;
+    },
+    setInitVal() {
+      if (this.formItem.initVal) {
+        this.timeInterval = this.formItem.initVal
+      } else {
+        this.timeInterval = ''
+      }
+    },
+    checkChange(val) {
+      if (val) {
+        this.timeInterval = '2199-12-31'
+        this.ruleForm[this.formItem.key] = '2199-12-31'
+      } else {
+        this.timeInterval = ''
+        this.ruleForm[this.formItem.key] = ''
+      }
     }
   }
 };

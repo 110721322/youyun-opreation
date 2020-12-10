@@ -66,16 +66,7 @@
 
     .menu2 .el-menu .el-menu-item.is-active {
       color: #333335 !important;
-      background-color: #FFFFFF !important;
-    }
-
-    .menu2 .el-menu .el-menu-item.active {
-      background: #ECEDF1 !important;
-      color: #606266;
-      &:hover {
-        background: #ECEDF1 !important;
-        color: #333335;
-      }
+      background-color: #ECEDF1 !important;
     }
 
     & .nest-menu .el-submenu > .el-submenu__title,

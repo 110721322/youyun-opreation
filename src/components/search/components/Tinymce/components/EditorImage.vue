@@ -28,7 +28,7 @@
       <el-button @click="dialogVisible = false">
         取消
       </el-button>
-      <el-button type="primary" @click="clickSubmit">
+      <el-button type="primary" @click="handleSubmit">
         确认
       </el-button>
     </el-dialog>
@@ -36,6 +36,7 @@
 </template>
 
 <script>
+// import { getToken } from 'api/qiniu'
 
 export default {
   name: 'EditorSlideUpload',
@@ -58,7 +59,7 @@ export default {
         item => this.listObj[item].hasSuccess
       )
     },
-    clickSubmit() {
+    handleSubmit() {
       const arr = Object.keys(this.listObj).map(v => this.listObj[v])
       if (!this.checkAllSuccess()) {
         this.$message(

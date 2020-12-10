@@ -13,31 +13,29 @@ function setTimeShowMessage () {
   }, 5000)
 }
 
-axios.defaults.timeout = g.config.timeout;
+axios.defaults.timeout = 10000;
 axios.defaults.withCredentials = true;
+axios.defaults.headers["Content-Type"] = "application/json"
 
 // 添加一个请求拦截器
 axios.interceptors.request.use((config) => {
   // 设置全局参数
-  config.timeout = 10000;
   config.headers.common.client = 'WEB';
   config.headers.common.accessToken = store.state.admin.accessToken || ''
   // 参数格式为form data(默认request payload)
-
   for (const field in config.data) {
     if (g.utils.isNull(config.data[field]) || g.utils.isUndefined(config.data[field])) {
       delete config.data[field];
     }
   }
   if (config.method === 'post' && config.needFormData) {
-    config.data.merchantNo = localStorage.getItem('userInfo-merchant') ? JSON.parse(localStorage.getItem('userInfo-merchant')).merchantNo : '';
     config.data = qs.stringify(config.data);
   }
-  if (JSON.stringify(config.data) === "{}") {
+  if (JSON.stringify(config.data) === "{}" && config.headers['Content-Type'] !== 'multipart/form-data' && !config.headers['Data-Can-Empty']) {
     config.data = null;
   }
   if (!config.noLoading) {
-    config.loading = Loading.service({text: '载入中', target: document.querySelector(".main-container"), body: true})
+    config.loading = Loading.service({text: '载入中', target: document.querySelector(".main-container"), customClass: 'g-api-loading'})
     setTimeout(() => {
       config.loading.close();
     }, config.timeout)
@@ -46,17 +44,26 @@ axios.interceptors.request.use((config) => {
 }, (error) => {
   // Do something with request error
   Promise.reject(error);
-});
+})
 
 // 添加一个响应拦截器
 axios.interceptors.response.use((response) => {
   if (!response.config.noLoading) {
     response.config.loading.close();
   }
-  if (response.config.responseType === 'blob') return response;
+  if (response.config.responseType === 'blob') {
+    return response;
+  }
+  if (response.headers['content-type'] === 'application/octet-stream') {
+    return response;
+  }
+  if (response.config.headers['no-interceptors']) {
+    return response;
+  }
   if (response.data && response.data.status === 0) {
     return response;
-  } else if (response.data && response.data.status === 1 && response.data.code !== null && response.data.code === -1) {
+  } else if (response.data && response.data.status === 1 && response.data.code === -1) { // 口令过期
+    const roleId = store.state.admin.roleId;
     if (_isShowMessage) {
       Message({
         message: response.data.message || "登录失效，请重新登录",
@@ -66,7 +73,11 @@ axios.interceptors.response.use((response) => {
     }
     setTimeShowMessage();
     store.dispatch('resetState');
-    router.replace('/login');
+    if (roleId === 2) {
+      router.replace(`/LoginStore`);
+    } else {
+      router.replace('/Login');
+    }
     return Promise.reject(response.data);
   } else {
     if (_isShowMessage) {
@@ -92,9 +103,14 @@ axios.interceptors.response.use((response) => {
         break;
 
       case 401:
+        const roleId = store.state.admin.roleId;
         error.message = '未授权，请登录';
         store.dispatch('resetState');
-        router.replace('/login');
+        if (roleId === 2) {
+          router.replace(`/LoginStore`);
+        } else {
+          router.replace('/Login');
+        }
         break;
 
       case 403:
@@ -154,8 +170,14 @@ axios.interceptors.response.use((response) => {
 // 通用方法
 export const POST = (url, params = {}, config = {}) => axios.post(url, params, config).then((res) => res.data);
 
-export const GET = (url, params = {}) => axios.get(url, {
+export const GET = (url, params = {}, config = {}) => axios.get(url, Object.assign({
   params: params
-}).then((res) => res.data);
+}, config)).then((res) => res.data);
+
+export const GETJSON = (url) => axios.get(url, {
+  headers: {
+    'no-interceptors': true
+  }
+}).then((res) => res.data)
 
 export const ALL = (promiseArr) => axios.all(promiseArr);

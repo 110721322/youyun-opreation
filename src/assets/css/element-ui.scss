@@ -1,14 +1,13 @@
 // cover some element-ui styles
-.el-drawer {
-  height: 100%;
-  overflow: auto;
-}
-.el-image-viewer__close{
-  color: white;
-}
+
 .el-breadcrumb__inner,
 .el-breadcrumb__inner a {
   font-weight: 400 !important;
+}
+
+.el-tooltip__popper {
+  max-width: 400px;
+  line-height: 180%;
 }
 
 .el-upload {
@@ -51,15 +50,45 @@
     }
   }
 }
-
+.el-tabs__item{
+  font-size: 16px!important;
+}
 // to fixed https://github.com/ElemeFE/element/issues/2461
 .el-dialog {
   position: relative;
   left: 0;
   margin: 0 auto;
   transform: none;
+  margin-top: 5%!important;
 }
-
+.el-dialog__body{
+  max-height: 630px;
+  overflow: auto;
+}
+/*滚动条样式*/
+.el-dialog__body::-webkit-scrollbar {
+  width: 8px;
+}
+.el-dialog__body::-webkit-scrollbar-thumb {
+  background: #C3C3C3;
+  border-radius: 4px;
+}
+.el-dialog__body::-webkit-scrollbar-track {
+  background: white;
+  border-radius: 4px;
+}
+/*滚动条样式*/
+.el-table--scrollable-x ::-webkit-scrollbar {
+  width: 8px;
+}
+.el-table--scrollable-x ::-webkit-scrollbar-thumb {
+  background: #C3C3C3;
+  border-radius: 4px;
+}
+.el-table--scrollable-x ::-webkit-scrollbar-track {
+  background: white;
+  border-radius: 4px;
+}
 // refine element ui upload
 .upload-container {
   .el-upload {
@@ -87,4 +116,15 @@
 // to fix el-date-picker css style
 .el-range-separator {
   box-sizing: content-box;
+}
+
+.el-image-viewer__close {
+  color: white;
+}
+.el-loading-mask {
+  z-index: 10000;
+}
+.el-tooltip__popper.is-light{
+  border: 0px;
+  border: 1px solid #E0E0E0;
 }

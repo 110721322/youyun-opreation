@@ -3,19 +3,19 @@
     <el-cascader
       v-model="ruleForm[formItem.key]"
       :style="selectStyle"
-      :options="formItem.options"
-      @change="changeVal"
+      :options="options"
+      :props="formItem.props"
+      @change="handleChange"
     ></el-cascader>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Cascader",
+  name: "",
   props: {
     ruleForm: Object,
-    formItem: Object,
-    remoteMethod: Function
+    formItem: Object
   },
   data() {
     return {};
@@ -24,32 +24,23 @@ export default {
     selectStyle() {
       const item = this.formItem;
       return item.style ? item.style : "width:100%";
+    },
+    options() {
+      if (this.$g.utils.isFunction(this.formItem.options)) {
+        return this.formItem.options();
+      } else {
+        return this.formItem.options
+      }
     }
   },
-  created() {},
-
   methods: {
-    changeVal(val) {
-      const options = JSON.parse(JSON.stringify(this.formItem.options));
-      const obj = [];
-      obj[0] = options.find(item => {
-        return item.value === val[0];
-      });
-
-      if (obj[0].children) {
-        obj[1] = obj[0].children.find(item => {
-          return item.value === val[1];
-        });
+    handleChange() {
+      if (this.$g.utils.isFunction(this.formItem.callback)) {
+        this.formItem.callback(this.ruleForm)
       }
-      if (obj[1].children) {
-        obj[2] = obj[1].children.find(item => {
-          return item.value === val[2];
-        });
+      if (this.$g.utils.isString(this.formItem.emitEventBus)) {
+        this.$EventBus.$emit(this.formItem.emitEventBus, this.ruleForm[this.formItem.key])
       }
-      obj.forEach(item => {
-        delete item.children;
-      });
-      this.ruleForm.addressObj = obj;
     }
   }
 };
