@@ -13,9 +13,9 @@
             @click="clickItem(item2)"
           >
             <div class="img" :style="{backgroundColor:configData.imgColor}">
-<!--              <div v-if=" item2.dotNum>0 " class="dot">{{ item2.dotNum }}</div>-->
+              <!--              <div v-if=" item2.dotNum>0 " class="dot">{{ item2.dotNum }}</div>-->
               <img :src="item2.imgUrl" alt="" />
-<!--              <img src="../../assets/img/agentSer.png" alt="">-->
+              <!--              <img src="../../assets/img/agentSer.png" alt="">-->
             </div>
             <div class="text">{{ item2.text }}</div>
           </div>
@@ -55,6 +55,7 @@ export default {
   margin: 24px;
   background: rgba(255, 255, 255, 1);
   overflow: hidden;
+
   .head {
     padding-left: 24px;
     font-size: 16px;
@@ -64,13 +65,16 @@ export default {
     line-height: 64px;
     border-bottom: 1px solid rgba(235, 238, 245, 1);
   }
+
   .box {
     padding: 8px 24px;
   }
+
   .list {
     width: 100%;
     overflow: hidden;
     display: flex;
+
     .item {
       display: flex;
       align-items: center;
