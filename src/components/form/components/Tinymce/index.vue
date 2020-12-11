@@ -31,6 +31,7 @@ export default {
   props: {
     ruleForm: Object,
     formItem: Object,
+    remoteMethod: Function,
     id: {
       type: String,
       default: function() {
@@ -101,7 +102,6 @@ export default {
     }
   },
   mounted() {
-    this.value = this.formItem.initVal
     this.init();
   },
   activated() {
@@ -132,7 +132,6 @@ export default {
         selector: `#${this.tinymceId}`,
         language: this.languageTypeList["zh"],
         height: this.height,
-        branding: false, // 隐藏tinymce右下角水印
         body_class: "panel-body ",
         object_resizing: false,
         toolbar: this.toolbar.length > 0 ? this.toolbar : toolbar,

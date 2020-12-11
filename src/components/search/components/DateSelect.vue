@@ -3,32 +3,33 @@
     <el-date-picker
       v-show="isOpen"
       v-model="timeInterval"
-      style="float: left;width: 100%;max-width: 480px;"
+      style="float: left;max-width: 480px;"
       :style="inputStyle"
-      size="large"
+      size="normal"
       :type="datatype"
+      :value-format="valueFormat"
       range-separator="至"
-      start-placeholder="开始日期"
-      end-placeholder="结束日期"
+      :start-placeholder="startPlaceholder"
+      :end-placeholder="endPlaceholder"
       :clearable="clearable"
       :default-time="defaultTime"
       :picker-options="pickerOptions"
-      @change="changeDate"
+      @change="onChage"
     />
-    <div style="flex-shrink:0">
+    <div v-if="!hideDateBtn" style="flex-shrink:0">
       <div
         v-for="item of dateList"
         :key="item.label"
         class="date-item"
-        :class="item.value == selectItem.value ? 'select' : ''"
-        @click="clickItem(item)"
+        :class="item.label === selectItem.label ? 'select' : ''"
+        @click="onClick_item(item)"
       >{{ item.label }}</div>
     </div>
-    <!--    <span class="date-item" v-for="item of dateList" :class="item.value == selectItem.value?'select':''"  @click="clickItem(item)">{{item.label}}</span>-->
   </div>
 </template>
 <script type="text/ecmascript-6">
-import { dateSelect } from "@/libs/config/constant.config";
+import * as g from "@/libs/global";
+import { DateSelect } from "@/libs/config/constant.config";
 
 export default {
   components: {},
@@ -56,129 +57,147 @@ export default {
   },
   data() {
     return {
+      datatype: DateSelect.DATE_RANGE,
       defaultTime: [],
       timeInterval: "",
       isOpen: "",
-      dateList: [
-        {
-          label: "昨天",
-          value: 1
-        },
-        {
-          label: "近3天",
-          value: 3
-        },
-        {
-          label: "近7天",
-          value: 7
-        },
-        {
-          label: "近30天",
-          value: 30
-        }
-      ],
-      selectItem: {},
-      datatype: dateSelect.DATE_RANGE
+      selectItem: {
+        label: "近7天",
+        value: 7
+      },
+      valueFormat: "yyyy-MM-dd",
+      hideDateBtn: false
     };
   },
   computed: {
+    dateList() {
+      const date = new Date();
+      const quickPickerType = this.formItem.quickPickerType;
+      switch (quickPickerType) {
+        case 1:
+          return [
+            {label: "昨天", value: 2},
+            {label: "近3天", value: 3},
+            {label: "近7天", value: 7},
+            {label: "近30天", value: 30}
+          ]
+        case 2:
+          return [
+            {label: '今日', value: 1},
+            {label: '本周', value: this.$g.utils.changeCNDay(date.getDay())},
+            {label: '本月', value: date.getDate()}
+          ]
+        case 3:
+          return [
+            {label: '今日', value: 1},
+            {label: '本周', value: this.$g.utils.changeCNDay(date.getDay())},
+            {label: '本月', value: date.getDate()}
+          ]
+        case 4:
+          return [
+            {label: "今日", value: 1},
+            {label: "昨天", value: 2},
+            {label: "近7天", value: 7},
+            {label: "近30天", value: 30}
+          ]
+        default:
+          return [
+            {label: "昨天", value: 2},
+            {label: "近3天", value: 3},
+            {label: "近7天", value: 7},
+            {label: "近30天", value: 30}
+          ]
+      }
+    },
     inputStyle() {
       const item = this.formItem;
-      return item.style ? item.style : "float: left;";
+      return item.style ? item.style : "width:294px;float: left;";
+    },
+    startPlaceholder() {  // 兼容IE
+      if (this.timeInterval && this.timeInterval.length > 0) {
+        return ""
+      } else {
+        return "开始时间"
+      }
+    },
+    endPlaceholder() {  // 兼容IE
+      if (this.timeInterval && this.timeInterval.length > 0) {
+        return ""
+      } else {
+        return "结束时间"
+      }
     }
+
   },
   watch: {
     isRest: function($new) {
       if ($new) {
-        this.resetState();
+        if (this.formItem.isSelectToday) {
+          this.dateList[0].label = "今日";
+        }
+
+        if (this.datatype === DateSelect.DATE_TIME_RANGE) {
+          this.defaultTime = ["00:00:00", "23:59:59"];
+        }
+        this.onClick_item(this.dateList[0]);
       }
     }
   },
   created() {
-    this.datatype = this.formItem.datatype || dateSelect.DATE_RANGE
-    this.resetState();
+    if (this.formItem.isSelectToday) {
+      this.dateList[0].label = "今日";
+    }
+    this.datatype = this.formItem.datatype || DateSelect.DATE_RANGE
+    if (this.datatype === DateSelect.DATE_TIME_RANGE) {
+      this.valueFormat = "yyyy-MM-dd HH:mm:ss"
+      this.defaultTime = ["00:00:00", "23:59:59"];
+    } else {
+      this.valueFormat = "yyyy-MM-dd"
+    }
+    this.onClick_item(this.dateList[0]);
+    this.hideDateBtn = this.formItem.hideDateBtn
   },
   methods: {
-    resetState() {
-      const { defaultDateType } = this.formItem;
-      if (this.datatype === dateSelect.DATE_TIME_RANGE) {
-        this.defaultTime = ["00:00:00", "23:59:59"];
-      }
-      this.getToday()
-      this.selectItem = {};
-      if (defaultDateType === dateSelect.DATE_INTERVAL_FIRST) {
-        this.resetSelectToday();
-      } else if (defaultDateType === dateSelect.DATE_INTERVAL_THIRD) {
-        this.resetSelectThird();
-      } else if (defaultDateType === dateSelect.DATE_INTERVAL_ALL) {
-        this.resetSelectAll();
-      }
-    },
-    resetSelectToday() {
-      this.dateList[0].label = "今天";
-      this.onClick_item(this.dateList[0])
-    },
-    resetSelectAll() {
-      this.timeInterval = [];
-      this.selectItem = {};
-      this.ruleForm[this.formItem.key] = this.timeInterval;
-    },
-    resetSelectThird() {
-      this.dateList[0].label = "今天";
-      this.onClick_item(this.dateList[2]);
-    },
     onChage($data) {
       if ($data === null) {
         this.onClick_item(this.dateList[0]);
         return;
       }
       this.selectItem = {};
-      let timeInterval = [];
-      if (this.datatype === dateSelect.DATE_RANGE) {
-        timeInterval = [this.$g.utils.date($data[0]), this.$g.utils.date($data[1])];
-      } else if (this.datatype === dateSelect.DATE_TIME_RANGE) {
-        timeInterval = [this.$g.utils.time($data[0]), this.$g.utils.time($data[1])];
+      let timeArr = [];
+      if (this.datatype === DateSelect.DATE_RANGE) {
+        timeArr = [g.utils.date($data[0]), g.utils.date($data[1])];
+      } else if (this.datatype === DateSelect.DATE_TIME_RANGE) {
+        timeArr = [g.utils.time($data[0]), g.utils.time($data[1])];
       }
 
-      this.$emit("dataSelect", timeInterval);
-      this.ruleForm[this.formItem.key] = timeInterval;
-      this.$emit("timeSearch", this.ruleForm)
+      this.$emit("dataSelect", timeArr);
+      this.ruleForm[this.formItem.key] = timeArr;
     },
     onClick_item($item) {
       this.selectItem = $item;
-      let start = "";
-      let end = "";
-      if (this.datatype === dateSelect.DATE_RANGE) {
-        if ($item.label === "今天") {
+      let start = "",
+          end = "";
+      switch ($item.label) {
+        case DateSelect.TODAY_LABEL:
+          end = this.getDay(0);
           start = this.getDay(0);
+          break;
+        case DateSelect.YESTERDAY_LABEL:
+          end = this.getDay(-1);
+          start = this.getDay(-1);
+          break;
+        case DateSelect.ALL_LABEL:
           end = this.getDay(0);
-        } else {
+          start = "2000-01-01";
+          break;
+        default:
+          end = this.getDay(0);
           start = this.getDay(-$item.value + 1);
-          end = this.getDay(0);
-        }
-        this.timeInterval = [start, end];
-      } else if (this.datatype === dateSelect.DATE_TIME_RANGE) {
-        if ($item.label === "今天") {
-          start = this.getDay(0) + " 00:00:00";
-          end = this.getDay(0) + " 23:59:59";
-        } else {
-          start = this.getDay(-$item.value + 1) + " 00:00:00";
-          end = this.getDay(0) + " 23:59:59";
-        }
-        this.timeInterval = [start, end];
       }
-      this.$emit("dataSelect", this.timeInterval);
-      this.ruleForm[this.formItem.key] = this.timeInterval;
-      this.$emit("timeSearch", this.ruleForm)
-    },
-    getToday() {
-      let end, start;
-      if (this.datatype === dateSelect.DATE_RANGE) {
-        end = this.getDay(0);
-        start = this.getDay(0);
-      } else if (this.datatype === dateSelect.DATE_TIME_RANGE) {
-        end = this.getDay(0) + " 23:59:59";
-        start = this.getDay(0) + " 00:00:00";
+      if (this.datatype === DateSelect.DATE_TIME_RANGE) {
+        end = end + " 23:59:59";
+        start = start + " 00:00:00";
       }
       this.timeInterval = [start, end];
       this.$emit("dataSelect", this.timeInterval);
@@ -239,7 +258,8 @@ export default {
 .date-item {
   float: left;
   height: 40px;
-  width: 75px;
+  width: 62px;
+  //   padding: 5px;
   margin-left: 15px;
   text-align: center;
   line-height: 40px;
@@ -256,8 +276,8 @@ export default {
 }
 
 .select {
-  color: #409eff;
+  color: #1989FA;
   background: #E6F1FC;
-  border: 1px solid #409eff;
+  border: 1px solid #A3D0FD;
 }
 </style>

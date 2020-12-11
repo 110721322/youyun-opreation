@@ -1,5 +1,5 @@
 <template>
-  <section style="overflow: auto; background-color: #f0f2f5;">
+  <section style="overflow: auto;background-color: #f0f2f5;">
     <div class="main_page">
       <transition name="fade-transform" mode="out-in">
         <keep-alive :include="includeKeepAlive">
@@ -24,32 +24,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.app-main {
+  /* 50= navbar  50  */
+  min-height: calc(100vh - 50px);
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.law {
+  text-align: center;
+  margin: 24px 0;
+  color: #909399;
+}
+
+.fixed-header + .app-main {
+  padding-top: 50px;
+}
+
+.hasTagsView {
   .app-main {
-    /* 50= navbar  50  */
-    min-height: calc(100vh - 50px);
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-  }
-  .law {
-    text-align: center;
-    margin: 24px 0;
-    color: #909399;
+    /* 84 = navbar + tags-view = 50 + 34 */
+    min-height: calc(100vh - 84px);
   }
 
   .fixed-header + .app-main {
-    padding-top: 50px;
+    padding-top: 84px;
   }
-
-  .hasTagsView {
-    .app-main {
-      /* 84 = navbar + tags-view = 50 + 34 */
-      min-height: calc(100vh - 84px);
-    }
-
-    .fixed-header + .app-main {
-      padding-top: 84px;
-    }
-  }
-  //
+}
+//
 </style>

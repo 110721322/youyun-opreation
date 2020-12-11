@@ -1,3 +1,28 @@
+/**
+*          ┌─┐       ┌─┐
+*       ┌──┘ ┴───────┘ ┴──┐
+*       │                 │
+*       │       ───       │
+*       │  ─┬┘       └┬─  │
+*       │                 │
+*       │       ─┴─       │
+*       │                 │
+*       └───┐         ┌───┘
+*           │         │
+*           │         │
+*           │         │
+*           │         └──────────────┐
+*           │                        │
+*           │                        ├─┐
+*           │                        ┌─┘
+*           │                        │
+*           └─┐  ┐  ┌───────┬──┐  ┌──┘
+*             │ ─┤ ─┤       │ ─┤ ─┤
+*             └──┴──┘       └──┴──┘
+*                 神兽保佑
+*                 代码无BUG!
+*/
+
 import Vue from 'vue';
 import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
@@ -6,8 +31,9 @@ import utils from "../libs/kit/utils";
 /* 导入模块 */
 import admin from './modules/admin';
 import role from './modules/role';
-import system from './modules/system';
-import dataMarket from './modules/dataMarket';
+import common from './modules/common'
+import transaction from './modules/transaction'
+import system from './modules/system'
 
 Vue.config.debug = true
 Vue.use(Vuex)
@@ -16,7 +42,7 @@ Vue.config.warnExpressionErrors = false
 /* 使用插件处理页面刷新状态销毁问题 */
 const store = new Vuex.Store({
   modules: {
-    admin, role, system, dataMarket
+    admin, role, common, transaction, system
   },
   mutations: {
     /**
@@ -26,7 +52,7 @@ const store = new Vuex.Store({
      */
     RESET_STATE ($state) {
       for (const module in $state) {
-        if ($state.hasOwnProperty(module)) {
+        if ($state.hasOwnProperty(module) && module !== 'system') {
           for (const state in $state[module]) {
             if ($state[module].hasOwnProperty(state)) {
               if (utils.isArr($state[module][state])) {

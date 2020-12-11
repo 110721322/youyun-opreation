@@ -7,44 +7,46 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="format-detection" content="telephone=no" />
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=8">
-  <meta http-equiv="Expires" content="-1">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Cache-control" content="no-cache">
-  <meta http-equiv="Cache" content="no-cache">
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=11">
+  <meta http-equiv="Cache-Control" content="max-age=600">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>运营后台</title>
-  <!--<script src="./static/fastclick.js"></script>-->
+  <title>云资金</title>
   <link rel="icon" sizes="any" mask href="./yy-icon.png">
-
+  <link rel="stylesheet" href="./static/css/browser.css">
 </head>
-
+<script type="text/javascript" src="./static/js/utils.js"></script>
+<script type="text/javascript" src="./static/js/config.version.js"></script>
+<script type="text/javascript" src="./static/js/brower.compatibility.js"></script>
+<script type="text/javascript">
+  window.onload = function() {
+    lowVersionBrowser();
+  }
+</script>
 <body>
-  <!--<script id="ouer-open-sdk" data-c="hzzhifu" src="//img-cows.kkkd.com/open/sdk-1.2.3.min.js?v=20190701"></script>-->
-  <script>
-    (function () {
-      var html = document.documentElement;
-
-      function onWindowResize() {
-        html.style.fontSize = html.getBoundingClientRect().width / 20 + 'px';
-      }
-
-      window.addEventListener('resize', onWindowResize);
-      onWindowResize();
-
-
-      var handle = function (event) {
-        event.preventDefault(); //阻止元素发生默认的行为
-      }
-      document.body.addEventListener('touchmove', handle, false);//添加监听事件--页面不可滚动
-    })();
-  </script>
   <div id="app"></div>
-  <!-- built files will be auto injected -->
-
+  <!-- 低版本不兼容浏览器兼容推荐 -->
+  <div class="g-version-container" id="lowVersionPage">
+    <img src="./static/img/default_version_low.png" class="g-version-low" alt="版本过低">
+    <p class="g-version-desc">您的浏览器版本过低，为了您有更好的使用体验，建议下载及使用以下浏览器。</p>
+    <p style="text-align: center; color: #909399; font-size: 14px;margin-bottom: 11px;">点击图标即可下载对应浏览器</p>
+    <div class="g-version-browser-list clearFix">
+      <div class="g-version-browser-item" onclick="openWindow('https://www.google.cn/chrome/')">
+        <img src="./static/img/icon_browser_chrome.png" alt="chrome浏览器">
+        <p>chrome</p>
+      </div>
+      <div class="g-version-browser-item" onclick="openWindow('https://www.google.cn/chrome/')">
+        <img src="./static/img/icon_browser_360.png" alt="360浏览器">
+        <p>360浏览器</p>
+      </div>
+      <div class="g-version-browser-item" onclick="openWindow('http://www.firefox.com.cn/')">
+        <img src="./static/img/icon_browser_fireFox.png" alt="火狐浏览器">
+        <p>火狐</p>
+      </div>
+      <div class="g-version-browser-item" style="margin-right: 0" onclick="openWindow('https://browser.qq.com/')">
+        <img src="./static/img/icon_browser_qq.png" alt="qq浏览器">
+        <p>qq浏览器</p>
+      </div>
+    </div>
+  </div>
 </body>
-
 </html>

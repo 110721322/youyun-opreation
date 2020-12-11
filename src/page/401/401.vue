@@ -23,7 +23,6 @@
 
 <script>
 import errGif from "@/assets/img/401_images/401.gif";
-
 export default {
   name: "Page401",
 

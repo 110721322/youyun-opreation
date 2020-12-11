@@ -1,5 +1,5 @@
 <template>
-  <div class="g-box">
+  <div class="w-box">
     <div class="head">{{ configData.name }}</div>
     <div class="box">
       <div v-for="(item,index) in configData.list" :key="index">
@@ -10,12 +10,11 @@
             :key="index2"
             v-has="item2.permission"
             class="item1"
-            @click="clickItem(item2)"
+            @click="onClick_item(item2)"
           >
             <div class="img" :style="{backgroundColor:configData.imgColor}">
-              <!--              <div v-if=" item2.dotNum>0 " class="dot">{{ item2.dotNum }}</div>-->
-              <img :src="item2.imgUrl" alt="" />
-              <!--              <img src="../../assets/img/agentSer.png" alt="">-->
+              <div v-if=" item2.dotNum>0 " class="dot">{{ item2.dotNum }}</div>
+              <img :src="item2.imgUrl" alt />
             </div>
             <div class="text">{{ item2.text }}</div>
           </div>
@@ -27,7 +26,7 @@
 
 <script>
 export default {
-  name: "DetailMode3",
+  name: "",
   props: { configData: Object, isShowEditBtn: Boolean },
   data() {
     return {
@@ -39,7 +38,7 @@ export default {
   computed: {},
 
   methods: {
-    clickItem($item) {
+    onClick_item($item) {
       if ($item.path) {
         this.$router.push({
           path: $item.path
@@ -51,13 +50,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.g-box {
+.w-box {
   margin: 24px;
   background: rgba(255, 255, 255, 1);
   overflow: hidden;
 
   .head {
-    padding-left: 24px;
+    padding-left: 32px;
     font-size: 16px;
     font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 500;
@@ -115,12 +114,6 @@ export default {
         font-weight: 500;
         color: rgba(255, 255, 255, 1);
         line-height: 22px;
-      }
-      img {
-        display: block;
-        width: 32px;
-        height: 32px;
-        margin: 8px auto;
       }
     }
     .text {

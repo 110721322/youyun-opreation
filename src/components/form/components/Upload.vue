@@ -1,33 +1,47 @@
 <template>
-  <div>
-    <el-upload
+  <div class="flex-align-center">
+    <!--<el-upload
       v-loading="loading"
-      action="OSS上传图片"
-      list-type="picture-card"
-      class="avatar-uploader"
+      action="OSSS上传图片"
       :data="urlData"
-      :file-list="fileList"
-      :show-file-list="showFileList"
+      class="avatar-uploader"
+      :show-file-list="false"
       :before-upload="beforeUpload"
-      :before-remove="beforeRemove"
-      :on-remove="onRemove"
       :http-request="upLoad"
-      :limit="showFileList ? maxNum : 0"
-      :accept="formItem.fileAccept ? formItem.fileAccept : 'image/*'"
-      :on-exceed="fileOver"
       :on-preview="handlePictureCardPreview"
     >
-      <video v-if="dialogImageUrl && !showFileList&&(formItem.key==='video')" :src="dialogImage" class="avatar" />
-      <img v-else-if="dialogImageUrl && !showFileList" :src="dialogImage" class="avatar" />
-      <i v-else class="el-icon-plus s-icon"></i>
-    </el-upload>
-    <!-- <div v-if="maxNum">最多上传{{ maxNum }}张图片</div> -->
-    <i
-      v-if="dialogImageUrl && !showFileList"
-      class="el-icon-plus el-icon-zoom-in iconStyle"
-      @click="clickPreview"
-    ></i>
+      &lt;!&ndash;<img v-if="dialogImageUrl" :src="dialogImagePath + dialogImageUrl" class="avatar" />
+      <i v-else class="el-icon-plus avatar-uploader-icon"></i>&ndash;&gt;
+      <i class="el-icon-plus avatar-uploader-icon"></i>
+    </el-upload>-->
+    <div>
+      <el-upload
+        v-loading="loading"
+        action="OSSS上传图片"
+        list-type="picture-card"
+        class="avatar-uploader"
+        :data="urlData"
+        :file-list="fileList"
+        :show-file-list="showFileList"
+        :before-upload="beforeUpload"
+        :on-remove="onRemove"
+        :http-request="upLoad"
+        :accept="uploadAccept"
+        :on-preview="handlePictureCardPreview"
+      >
+        <img v-if="dialogImageUrl && !showFileList" :src="dialogImage" class="avatar" />
+        <i v-else class="el-icon-plus"></i>
+      </el-upload>
+      <i
+        v-if="dialogImageUrl && !showFileList"
+        class="el-icon-plus el-icon-zoom-in"
+        style="float: left; position: relative; left: -20px; top: 5px; cursor: pointer;"
+        @click="onClick_preview"
+      ></i>
+    </div>
+    <div v-if="formItem.showExample" style="font-size: 14px;color: rgb(25, 137, 250);cursor: pointer;margin-left: 12px;" @click="example_preview">查看示例</div>
     <el-image-viewer v-if="showViewer" :on-close="closeViewer" :url-list="[dialogImage]" />
+    <el-image-viewer v-if="showExampleViewer" :on-close="closeExampleViewer" :url-list="[formItem.exampleUrl]" />
   </div>
 </template>
 <script>
@@ -37,26 +51,37 @@ export default {
   components: { ElImageViewer },
   props: {
     ruleForm: Object,
-    formItem: Object
+    formItem: Object,
+    remoteMethod: Function
   },
   data() {
     return {
       loading: false,
       showViewer: false,
+      showExampleViewer: false,
       dialogImageUrl: "",
       dialogImageList: [], // 多图上传存储ARR
       dialogImagePath: "",
       imageList: [], // 多图上传存储ARR完整url地址
       ossData: {}, // 存签名信息
       urlData: {
-        type: 'common'
+        type: 'fund' || 'excel'
       },
-      maxNum: 1
+      uploadAccept: 'image/*'
     };
   },
   computed: {
+    size() {
+      if (this.formItem.size) {
+        return this.formItem.size
+      } else {
+        return 5 * 1024 * 1024
+      }
+    },
     showFileList() {
-      return !!this.formItem.showFileList;
+      let showFileList = true;
+      this.formItem.showFileList ? showFileList = true : showFileList = false;
+      return showFileList
     },
     fileList() {
       return this.imageList.map(item => {
@@ -77,19 +102,11 @@ export default {
     }
   },
   created() {
-    if (this.formItem.maxNum) {
-      this.maxNum = this.formItem.maxNum
-    }
     this.initVal();
   },
 
   mounted() {},
   methods: {
-    fileOver(files, fileList) {
-      if (fileList.length > this.maxNum) {
-        this.$message(`最多上传${this.maxNum}张图片`)
-      }
-    },
     /**
      * 初始化表单项目
      */
@@ -122,6 +139,10 @@ export default {
     },
 
     beforeUpload(file) {
+      if (file.size > this.size) {
+        this.$message.warning("图片大小不能超过" + this.size / 1024 / 1024 + "MB")
+        return Promise.reject("图片太大")
+      }
       return new Promise(resolve => {
         if (this.type === "entry") {
           api
@@ -191,12 +212,6 @@ export default {
       this.imageList.push(this.dialogImagePath + imageUrl);
       this.ruleForm[this.formItem.key] = this.dialogImageList.join(",");
     },
-    beforeRemove() {
-      return this.$confirm("确认删除该广告图片吗", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消"
-      })
-    },
     /** 移除文件 **/
     onRemove(file, fileList) {
       const index = this.fileList.findIndex(ele => {
@@ -205,11 +220,20 @@ export default {
       this.dialogImageList.splice(index, 1);
       this.imageList.splice(index, 1);
     },
-    clickPreview() {
+    onClick_preview() {
+      if (this.dialogImageUrl.indexOf(this.dialogImagePath) === -1) {
+        this.dialogImageUrl = this.dialogImagePath + this.dialogImageUrl
+      }
       this.showViewer = true;
     },
     closeViewer() {
       this.showViewer = false;
+    },
+    example_preview() {
+      this.showExampleViewer = true;
+    },
+    closeExampleViewer() {
+      this.showExampleViewer = false;
     }
   }
 };
@@ -218,19 +242,27 @@ export default {
 <style lang="scss" scoped>
 
   .avatar-uploader {
-    display: flex;
-    flex-wrap: wrap;
     max-width: 294px;
     min-height: 100px;
     float: left;
     .avatar {
       width: 100%;
       margin: 0 auto; /* 水平居中 */
-
+      height: 100%;
+      object-fit: cover;
       /* position: relative; */
 
       /* top: 50%; !*偏移*! */
       //transform: translateY(-50%);
+    }
+    /deep/ .el-upload--picture-card {
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+      overflow: hidden;
+      i{
+        font-size: 12px;
+      }
     }
   }
 
@@ -244,38 +276,14 @@ export default {
   }
   .el-upload i {
     position: relative;
-    top: -15px;
     overflow: hidden;
     cursor: pointer;
     // border: 1px dashed #ccc;
     border-radius: 6px;
   }
-  .iconStyle {
-    float: left;
-    position: relative;
-    left: -20px;
-    top: 5px;
-    cursor: pointer;
-  }
+
   .avatar-uploader .el-upload i:hover {
     border-color: #409eff;
-  }
-  .avatar-uploader {
-    /deep/ .el-upload--picture-card {
-      width: 100px;
-      height: 100px;
-      overflow: hidden;
-    }
-  }
-  .avatar-uploader {
-    /deep/ .el-upload-list--picture-card {
-      display: flex;
-      /deep/ .el-upload-list__item {
-        flex-shrink: 0;
-        width: 100px;
-        height: 100px;
-      }
-    }
   }
 
   .avatar-uploader-icon {
@@ -285,5 +293,39 @@ export default {
     line-height: 178px;
     color: #8c939d;
     text-align: center;
+  }
+
+  .upload {
+    /* width: 178px; */
+
+    /* height: 89px; */
+    .avatar-uploader-icon {
+      width: 178px;
+      height: 89px;
+      font-size: 28px;
+      line-height: 89px;
+      color: #8c939d;
+      text-align: center;
+    }
+
+    .el-icon-plus::before {
+      position: absolute;
+      bottom: 2px;
+      left: 20px;
+    }
+
+    .textspan {
+      position: absolute;
+      top: 24px;
+      left: 60px;
+      color: #909399;
+    }
+
+    .avatar {
+      display: block;
+      height: 100%;
+      margin: 0 auto;
+      object-fit: cover;
+    }
   }
 </style>

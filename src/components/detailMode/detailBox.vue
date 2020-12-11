@@ -1,14 +1,14 @@
 <template>
-  <div :class="[border?'m-border g-bg-box':'g-bg-box']">
-    <div class="s-title">
+  <div :class="[border?'border bg_box':'bg_box']">
+    <div class="title">
       {{ title }}
       <el-button
         v-show="isShowEditBtn"
         type="primary"
-        class="s-edit-btn"
+        class="edit_btn"
         size="mini"
-        @click="clickEdit"
-      >{{ btnName }}</el-button>
+        @click="onClick_edit"
+      >编辑</el-button>
     </div>
 
     <slot></slot>
@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: "DetailBox",
+  name: "",
   props: {
     title: {
       type: String
@@ -27,12 +27,6 @@ export default {
     },
     isShowEditBtn: {
       type: Boolean
-    },
-    btnName: {
-      type: String,
-      default() {
-        return "编辑"
-      }
     }
   },
   data() {
@@ -41,7 +35,7 @@ export default {
   computed: {},
 
   methods: {
-    clickEdit() {
+    onClick_edit() {
       this.$emit("edit");
     }
   }
@@ -49,26 +43,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.m-border {
+.border {
   border: 1px solid #ebeef5;
-  .s-title {
+  .title {
     background: #ebeef5;
   }
 }
-.g-bg-box {
+.bg_box {
   margin: 24px;
   background: #fff;
   overflow: hidden;
-  .s-title {
+  .title {
     position: relative;
     height: 54px;
     line-height: 54px;
-    padding-left: 24px;
+    padding-left: 32px;
     font-size: 16px;
     font-weight: 500;
     color: rgba(51, 51, 53, 1);
     border-bottom: 1px solid #ebeef5;
-    .s-edit-btn {
+    .edit_btn {
       float: right;
       margin: 13px;
     }
@@ -80,7 +74,7 @@ export default {
       color: rgba(96, 98, 102, 1);
       word-wrap: break-word;
     }
-    .s-edit-btn {
+    .edit_btn {
       color: #1989fa;
       margin-left: 15px;
       cursor: pointer;

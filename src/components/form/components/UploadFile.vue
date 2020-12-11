@@ -17,14 +17,14 @@
         <i class="el-icon-upload el-icon--right"></i>
       </el-button>
       <div slot="tip" class="el-upload__tip">只能导入excel文件，点击
-        <el-button type="text" @click="clickDownload">下载模版</el-button>
+        <el-button type="text" @click="download">下载模版</el-button>
       </div>
     </el-upload>
   </div>
 </template>
 <script type="text/ecmascript-6">
 import api from "@/api/api_common";
-import axios from 'axios';
+
 export default {
   name: "UploadFile",
   props: {
@@ -34,8 +34,6 @@ export default {
   },
   data() {
     return {
-      excelPath: "",
-      excelUrl: "",
       dialogImageUrl: "",
       dialogImagePath: "",
       ossData: {},
@@ -45,17 +43,16 @@ export default {
   },
   computed: {},
 
-  cretae() {
-  },
-
   methods: {
-    handleRemove(file, fileList) {},
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
     beforeUpload(file) {
       return new Promise(resolve => {
         api
           .uploadPicExcel({})
           .then(result => {
-            this.ossData = result.data;
+            this.ossData = result.object;
 
             resolve(true);
           })
@@ -79,24 +76,20 @@ export default {
         url: this.ossData.ossHost,
         type: "POST",
         data: formData,
-        accessToken: localStorage.getItem('accessToken'),
         // async: false,
         cache: false,
         processData: false,
         contentType: false,
         success: () => {
-          if (this.ossData.objectKeyPrefix === "excel") {
-            this.excelPath = this.ossData.ossHost + "/";
-            this.excelUrl = this.ossData.objectKeyPrefix + "/" + this.ossData.objectKeys[0];
-            this.ruleForm[this.formItem.key] = this.excelUrl
-            this.$emit('handel_execl', this.excelUrl)
-          } else {
-            this.ruleForm[this.formItem.key] = {
-              dialogImagePath: this.dialogImagePath,
-              dialogImageUrl: this.dialogImageUrl,
-              formDatafile: formData.get("file")
-            };
-          }
+          this.dialogImagePath = this.ossData.ossHost + "/";
+          this.dialogImageUrl =
+          this.ossData.objectKeyPrefix + "/" + this.ossData.objectKeys[0];
+
+          this.ruleForm[this.formItem.key] = {
+            dialogImagePath: this.dialogImagePath,
+            dialogImageUrl: this.dialogImageUrl,
+            formDatafile: formData.get("file")
+          };
           this.loading = false;
         },
         error: () => {
@@ -104,25 +97,12 @@ export default {
         }
       });
     },
-    clickDownload() {
-      axios({
-        method: "GET", // 如果是get方法，则写“GET”
-        url: "/operation/v1/excelTemplate/download?url=" + (this.formItem.dateurl ? this.formItem.dateurl : 'excel/device_input.xlsx'),
-        responseType: "blob",
-        Access_token: localStorage.getItem('userToken')
-      }).then(res => {
-        var blob = new Blob([res.data], {
-          type: "application/vnd.ms-excel" // 这里需要根据不同的文件格式写不同的参数
-        });
-        var eLink = document.createElement("a");
-        eLink.download = "excel模板下载"; // 这里需要自己给下载的文件命名
-        eLink.style.display = "none";
-        eLink.href = URL.createObjectURL(blob);
-        document.body.appendChild(eLink);
-        eLink.click();
-        URL.revokeObjectURL(eLink.href);
-        document.body.removeChild(eLink);
-      }).catch(() => {});
+    download() {
+      if (this.formItem.dateurl === "") {
+        window.location.href = "/operation/v1/excelTemplate/download?url=excel/device_input.xlsx";
+      } else {
+        window.location.href = "/operation/v1/excelTemplate/download?url=" + this.formItem.dateurl;
+      }
     },
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`);

@@ -1,11 +1,7 @@
 <template>
   <div class="show-box">
     <template v-if="formItem.isImage">
-      <el-image
-        class="show-image"
-        :src="formItem.initVal"
-        :preview-src-list="[formItem.initVal]">
-      </el-image>
+      <el-image class="show-image" :src="formItem.initVal" :preview-src-list="[formItem.initVal]"></el-image>
     </template>
     <template v-else>{{ formItem.initVal }}</template>
   </div>
@@ -13,7 +9,7 @@
 
 <script>
 export default {
-  name: "Show",
+  name: "",
   props: {
     ruleForm: Object,
     formItem: Object,

@@ -3,20 +3,22 @@
     <el-switch
       v-model="ruleForm[formItem.key]"
       active-color="#1989FA"
+      :active-value="1"
+      :inactive-value="0"
       :active-text="activeText"
-      :active-value="activeValue"
       :inactive-text="inactive"
-      :inactive-value="inactiveValue"
+      :disabled="formItem.isDisabled"
     ></el-switch>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Switch",
+  name: "",
   props: {
     ruleForm: Object,
-    formItem: Object
+    formItem: Object,
+    remoteMethod: Function
   },
   data() {
     return {};
@@ -35,8 +37,8 @@ export default {
       return this.formItem.inactiveValue ? this.formItem.inactiveValue : "";
     }
   },
-
-  methods: {}
+  methods: {
+  }
 };
 </script>
 

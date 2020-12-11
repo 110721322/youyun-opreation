@@ -1,50 +1,38 @@
+// import * as API from '../../api';
+// import * as g from '../global';
+
 export default {
   //乘法
-  AccMul(arg1 = 0, arg2 = 1) {
-    arg1 = Number(arg1);
-    arg2 = Number(arg2)
+  AccMul(arg1 = 0, arg2 = 1){
+    arg1 = Number(arg1); arg2 = Number(arg2)
     var m = 0, s1 = arg1.toString(), s2 = arg2.toString();
-    try {
-      m += s1.split(".")[1].length
-    } catch (e) { }
-    try {
-      m += s2.split(".")[1].length
-    } catch (e) { }
+    try { m += s1.split(".")[1].length } catch (e) { }
+    try { m += s2.split(".")[1].length } catch (e) { }
     return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m)
   },
   //除法
-  AccDiv(arg1 = 0, arg2 = 1) {
+  AccDiv(arg1 = 0, arg2 = 1){
     arg1 = Number(arg1);
     arg2 = Number(arg2);
     var t1 = 0, t2 = 0, r1, r2;
-    try {
-      t1 = arg1.toString().split(".")[1].length
-    } catch (e) { }
-    try {
-      t2 = arg2.toString().split(".")[1].length
-    } catch (e) { }
+    try { t1 = arg1.toString().split(".")[1].length } catch (e) { }
+    try { t2 = arg2.toString().split(".")[1].length } catch (e) { }
     r1 = Number(arg1.toString().replace(".", ""))
     r2 = Number(arg2.toString().replace(".", ""))
     return this.AccMul((r1 / r2), Math.pow(10, t2 - t1));
   },
   //加法
-  AccAdd(arg1 = 0, arg2 = 0) {
-    arg1 = Number(arg1);
-    arg2 = Number(arg2)
+  AccAdd(arg1 = 0, arg2 = 0){
+    arg1 = Number(arg1); arg2 = Number(arg2)
     var r1, r2, m;
-    try {
-      r1 = arg1.toString().split(".")[1].length
-    } catch (e) { r1 = 0 }
-    try {
-      r2 = arg2.toString().split(".")[1].length
-    } catch (e) { r2 = 0 }
+    try { r1 = arg1.toString().split(".")[1].length } catch (e) { r1 = 0 }
+    try { r2 = arg2.toString().split(".")[1].length } catch (e) { r2 = 0 }
     m = Math.pow(10, Math.max(r1, r2))
     return (arg1 * m + arg2 * m) / m
   },
   //减法
-  Subtr(arg1 = 0, arg2 = 0) {
-    arg1 = Number(arg1);
-    arg2 = Number(arg2)
+  Subtr(arg1 = 0, arg2 = 0){
+    arg1 = Number(arg1); arg2 = Number(arg2)
     var r1, r2, m, n;
     try {
       r1 = arg1.toString().split(".")[1].length
@@ -65,7 +53,7 @@ export default {
     if ($num) {
       return Number($num).toLocaleString();
     } else {
-      return '0'
+      return 0
     }
   },
   // 一下方法已经加入到工具类库中,在此只作为实例.
@@ -116,6 +104,14 @@ export default {
     d = d < 10 ? ('0' + d) : d;
     return y + '-' + m + '-' + d + 'T00:00:00.000Z';
   },
+  // 中国区一周时间转换
+  changeCNDay: (data) => {
+    let CNDay = data + 7;
+    if (CNDay > 7) {
+      CNDay = CNDay - 7
+    }
+    return CNDay;
+  },
   // 身份证校验
   checkPersonId: (str) => {
     // trace(str)
@@ -154,7 +150,11 @@ export default {
       iY = iSs % 11;
       var eChr = str.substr(17, 1);
       var vChr = szVerCode.substr(iY, 1);
-      return eChr === vChr
+      if (eChr === vChr) {
+        return true;
+      } else {
+        return false;
+      }
     } else {
       // 15位 未增加算法验证
       return true;
@@ -187,21 +187,43 @@ export default {
     }
   },
 
-  // 防抖
-  throttle: (callback, time) => {
-    const that = this;
-    this.throttleInstance = this.throttleInstance || null;
-    time = time || 600;
+  /**
+   * 封装一个防抖动方法
+   * debounce: 防抖函数,  它的两个参数=>  func:函数(要进行防抖的函数)    delay: 毫秒(传入一个时间限制,毫秒)
+   * let timer = null;  声明一个timer为null
+   * if(timer) clearTimeout(timer) ===============> 如果timer不为空,那么清空它(干掉他)
+   * 
+   * delay :传入的毫秒,在这也就是延迟时间
+   */
+  debounce:(func, wait, immediate) => {
+    let time
+    let debounced = function() {
+      let context = this
+      if(time) clearTimeout(time)
 
-    if (this.throttleInstance) {
-      window.clearTimeout(this.throttleInstance);
+      if(immediate) {
+        let callNow = !time
+        if(callNow) func.apply(context, arguments)
+        time = setTimeout(
+          ()=>{time = null} //见注解
+          , wait)
+      } else {
+        time = setTimeout(
+          ()=>{func.apply(context, arguments)}
+          , wait)
+      }
     }
 
-    this.throttleInstance = window.setTimeout(function () {
-      callback.call(that);
-    }, time);
+    debounced.cancel = function() {
+      clearTimeout(time)
+      time = null
+    }
+
+    return debounced
   },
-  // 时间转换
+
+
+    // 时间转换
   time: (value) => {
     if (value) {
       let out = '';
@@ -219,8 +241,6 @@ export default {
       second = second < 10 ? ('0' + second) : second;
       out = y + '-' + m + '-' + d + ' ' + hour + ':' + minute + ':' + second;
       return out;
-    } else {
-      return ""
     }
   },
   date: (value) => {
@@ -238,66 +258,69 @@ export default {
         out = y + '-' + m + '-' + d;
         return out;
       }
-    } else {
-      return ""
     }
-  },
-  pad(n, width = 2, z = '0') {
-    n = n + '';
-    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
   },
   // 获取ago当前日期
-  getToday(ago = -1) {
+  getToday: (ago = -1) => {
     var _time = new Date(Date.now() + ago * 24 * 60 * 60 * 1000);
-    return _time.getFullYear() + '-' + this.pad((_time.getMonth() + 1), 2) + '-' + this.pad(_time.getDate(), 2);
-  },
-  // 获取当前日期 yyyy-MM-dd
-  getNowFormatDate() {
-    var date = new Date();
-    var seperator1 = "-";
-    var year = date.getFullYear();
-    var month = date.getMonth() + 1;
-    var strDate = date.getDate();
-    if (month >= 1 && month <= 9) {
-      month = "0" + month;
-    }
-    if (strDate >= 0 && strDate <= 9) {
-      strDate = "0" + strDate;
-    }
-    return year + seperator1 + month + seperator1 + strDate;
+    var pad = function (n, width, z) {
+      z = z || '0';
+      n = n + '';
+      width = width || 2;
+      return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+    };
+    return _time.getFullYear() + '-' + pad((_time.getMonth() + 1), 2) + '-' + pad(_time.getDate(), 2);
   },
   // 获取ago当前日期   年月日
-  getToday2(ago = 0) {
+  getToday2: (ago = 0) => {
     var _time = new Date(Date.now() + ago * 24 * 60 * 60 * 1000);
-    return _time.getFullYear() + '年' + this.pad((_time.getMonth() + 1), 2) + '月' + this.pad(_time.getDate(), 2) + '日';
+    var pad = function (n, width, z) {
+      z = z || '0';
+      n = n + '';
+      width = width || 2;
+      return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+    };
+    return _time.getFullYear() + '年' + pad((_time.getMonth() + 1), 2) + '月' + pad(_time.getDate(), 2) + '日';
   },
-  // 获取ago当前日期
-  getToday1(ago = 0) {
+  // 获取ago当前时间
+  getTime: (ago = -1) => {
     var _time = new Date(Date.now() + ago * 24 * 60 * 60 * 1000);
-    return _time.getFullYear() + '-' + this.pad((_time.getMonth() + 1), 2) + '-' + this.pad(_time.getDate(), 2);
+    var pad = function (n, width, z) {
+      z = z || '0';
+      n = n + '';
+      width = width || 2;
+      return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+    };
+    return _time.getFullYear() + '-' +
+      pad((_time.getMonth() + 1), 2) + '-' +
+      pad(_time.getDate(), 2) + " " +
+      pad(_time.getHours(), 2) + ":" +
+      pad(_time.getMinutes(), 2) + ":" +
+      pad(_time.getSeconds(), 2);
   },
   // 获取前几个月的日期
-  getAMonthAgo(yue) {
+  getAMonthAgo: (yue) => {
     var date = new Date();
     date.setMonth(date.getMonth() - yue * 1);
     var _time = new Date(date.getTime());
-    return _time.getFullYear() + '-' + this.pad((_time.getMonth() + 1), 2) + '-' + this.pad(_time.getDate(), 2);
+    var pad = function (n, width, z) {
+      z = z || '0';
+      n = n + '';
+      width = width || 2;
+      return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+    };
+    return _time.getFullYear() + '-' + pad((_time.getMonth() + 1), 2) + '-' + pad(_time.getDate(), 2);
   },
   // 获取前几天的日期
-  getDayAgo(day) {
+  getDayAgo: (day) => {
     var _time = new Date(Date.now() - (day) * 24 * 60 * 60 * 1000);
-    return _time.getFullYear() + '-' + this.pad((_time.getMonth() + 1), 2) + '-' + this.pad(_time.getDate(), 2);
-  },
-  // 校验邮箱
-  checkEmail(mail) {
-    return (/^[A-Za-z0-9-._]+@[A-Za-z0-9-]+(.[A-Za-z0-9]+)*(.[A-Za-z]{2,6})$/.test(mail))
-  },
-  checkEmailOther(mail) {
-    return (/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(mail))
-  },
-  // 校验手机号
-  checkPhone(phone){
-    return (/^1[3456789]\d{9}$/.test(phone))
+    var pad = function (n, width, z) {
+      z = z || '0';
+      n = n + '';
+      width = width || 2;
+      return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+    };
+    return _time.getFullYear() + '-' + pad((_time.getMonth() + 1), 2) + '-' + pad(_time.getDate(), 2);
   },
 
   jugeType(obj) {
@@ -364,6 +387,31 @@ export default {
   },
 
   /**
+     * 获取深层次的数组
+     * keyName需要为a.b.c 对应data[a][b][c]
+     */
+  getDeepArr(data, keyName) {
+    // debugger;
+    if (isUndefined(keyName) || isNull(keyName)) {
+        // 没有对象数组键名
+        // 直接返回data数组
+        if (this.isArr(data)) return data
+        throwError("the data is not an Array, please provide the keyName to match correct Array");
+    } else {
+        const keyList = keyName.split(',')
+        let value = data
+        for (const iterator of keyList) {
+            if (!value.hasOwnProperty(iterator) || isUndefined(value)) {
+                throwError("please check the keyName's level")
+            }
+            value = value[iterator]
+        }
+        if (this.isArr(value)) return value
+        throwError("the data is not an Array, please provide the keyName to match correct Array");
+    }
+  },
+
+  /**
    * 映射高维数组
    * @param $data { Array }
    * @param $secondArrKey { String }
@@ -406,7 +454,9 @@ export default {
     function loopDeep ($nextData = []) {
       //过滤筛选keyName数组
       $nextData = $nextData.filter(item => {
-        return !that.isNull(item) && !that.isUndefined(item)
+        if (!that.isNull(item) && !that.isUndefined(item)) {
+          return item
+        }
       })
       //递归导入下一级数组
       $nextData.forEach(item => {
@@ -434,9 +484,12 @@ export default {
       $data = $data.filter(item => {
         item[$filterArrKey] = this.filterNestedArr(item[$filterArrKey], $filterArrKey , $isShowKey);
         if ($isShowKey) {
-          return !!item[$isShowKey]
+          if(item[$isShowKey])
+          {
+            return item;
+          }
         } else {
-          return true
+          return item
         }
       })
     }
@@ -472,26 +525,6 @@ export default {
     return result;
   },
 
-  filterNestedArr3($data, $filterArrKey = 'data', $callback) {
-    let that = this,
-      result = []
-    if (!that.isArr($data)) return result;
-    result = $data.filter(ele => {
-      if ($callback(ele)) {
-        return true;
-      } else {
-        if (that.isArr(ele[$filterArrKey]) && ele[$filterArrKey].length > 0) {
-          ele[$filterArrKey] = that.filterNestedArr3(ele[$filterArrKey], $filterArrKey, $callback);
-          if (ele[$filterArrKey].length > 0) {
-            return true;
-          }
-        }
-      }
-    })
-
-    return result
-  },
-
   throwError(msg) {
     throw new ReferenceError(msg);
   },
@@ -516,47 +549,35 @@ export default {
     })
     return newObj
   },
-  cloneLoop(x) {
-    const root = {};
-
-    // 栈
-    const loopList = [
-      {
-        parent: root,
-        key: undefined,
-        data: x
+  /**
+   * 下载流文件
+   * @param $data 文件流
+   * @param $config 文件类型
+   * @param $fileName 文件名称
+   */
+  downloadBlob($data, $config = {}, $fileName = '') {
+    const blob = new Blob([$data], $config);
+    if('msSaveOrOpenBlob' in navigator){
+      //ie使用的下载方式
+      window.navigator.msSaveOrOpenBlob(blob);
+    }else{
+      //其他浏览器下载方式
+      const url = window.URL.createObjectURL(blob);
+      const aTag = document.createElement("a");
+      if ($fileName) {
+        aTag.download = $fileName
       }
-    ];
-
-    while (loopList.length) {
-      // 深度优先
-      const node = loopList.pop();
-      const parent = node.parent;
-      const key = node.key;
-      const data = node.data;
-
-      // 初始化赋值目标，key为undefined则拷贝到父元素，否则拷贝到子元素
-      let res = parent;
-      if (typeof key !== "undefined") {
-        res = parent[key] = {};
-      }
-
-      for (const k in data) {
-        if (data.hasOwnProperty(k)) {
-          if (typeof data[k] === "object") {
-            // 下一次循环
-            loopList.push({
-              parent: res,
-              key: k,
-              data: data[k]
-            });
-          } else {
-            root[k] = data[k];
-          }
-        }
-      }
+      aTag.href = url;
+      aTag.click();
+      URL.revokeObjectURL(aTag.href);
     }
-
-    return root;
+  },
+  /**
+   * 手机号中间四位掩饰为****
+   * @param $phone
+   * @return {string}
+   */
+  phoneProtect($phone) {
+    return $phone.substr(0, 3) + '****' + $phone.substr(7)
   }
 };

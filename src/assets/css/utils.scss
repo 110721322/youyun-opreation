@@ -1,39 +1,11 @@
-.flex-row {
-  display: flex;
-  flex-direction: row;
-}
-
-.flex-row-wrap {
-  display: flex;
-  flex-flow: row wrap;
-}
-
-.flex-between {
-  display: flex;
-  justify-content: space-between;
-}
-
-.flex-align-center {
-  display: flex;
-  align-items: center;
-}
-
-.flex-justify-center {
-  display: flex;
-  justify-content: center;
-}
-
-.text-ellipsis {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  word-break: break-all;
-}
+@import './element-variables.scss';
+@import "./variables";
+@import "./utils-g";
+@import "./utils-f";
 
 .popperNav {
   background: rgba(27, 27, 39, 0.9);
+
   /deep/ .popper__arrow {
     &::after {
       border-bottom-color: rgba(27, 27, 39, 0.9) !important;
@@ -41,8 +13,15 @@
   }
 }
 
-.s-table-btn {
-  height: 32px;
-  font: 14px;
-  padding: 0 23px;
+.popperNav > .popper__arrow::after {
+  border-bottom-color: rgba(27, 27, 39, 0.9) !important;
 }
+
+/*IE placeholder兼容性*/
+.ie-placeholder {
+  position: absolute;
+  font-size: 14px;
+  color: #888;
+  pointer-events: none;
+}
+

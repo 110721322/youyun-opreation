@@ -6,6 +6,34 @@
   "description": "图标分为业务图标（适用于不同业务的特殊化图标），和通用图标（适合所有系统的图标）。",
   "glyphs": [
     {
+      "icon_id": "18444631",
+      "name": "刷新",
+      "font_class": "shuaxin",
+      "unicode": "e65a",
+      "unicode_decimal": 58970
+    },
+    {
+      "icon_id": "18026752",
+      "name": "报表",
+      "font_class": "baobiao",
+      "unicode": "e658",
+      "unicode_decimal": 58968
+    },
+    {
+      "icon_id": "18026753",
+      "name": "补单",
+      "font_class": "budan",
+      "unicode": "e659",
+      "unicode_decimal": 58969
+    },
+    {
+      "icon_id": "17681230",
+      "name": "小程序",
+      "font_class": "xiaochengxu",
+      "unicode": "e657",
+      "unicode_decimal": 58967
+    },
+    {
       "icon_id": "15622688",
       "name": "风控",
       "font_class": "dianfei",
@@ -36,7 +64,7 @@
     {
       "icon_id": "16438531",
       "name": "采购",
-      "font_class": "fuwushichang",
+      "font_class": "caigou",
       "unicode": "e64d",
       "unicode_decimal": 58957
     },

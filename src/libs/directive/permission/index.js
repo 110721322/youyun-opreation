@@ -13,6 +13,11 @@ const has = Vue.directive('has', {
         $el.parentNode.removeChild($el);
       }
     }
+    /*else         // 获取路由按钮权限
+    {
+      console.log(vnode.context.$route);
+      btnPermissions = vnode.context.$route.meta.permissions.split(',');
+    }*/
   }
 });
 
@@ -21,11 +26,14 @@ Vue.prototype.$_has = function ($value) {
   let isExist = false;
   let btnPermissionsArr = store.state.role.permission;
   let result;
-  if (btnPermissionsArr === undefined || btnPermissionsArr === null) {
+  if (btnPermissionsArr == undefined || btnPermissionsArr == null) {
     return false;
   }
   result = btnPermissionsArr.filter(($ele) => {
-    return $ele['buttonId'] === $value && $ele.isShow
+    if ( $ele['buttonId'] == $value && $ele.isShow )
+      return true
+    else
+      return false
   })
   if (result.length > 0) isExist = true;
   return isExist;

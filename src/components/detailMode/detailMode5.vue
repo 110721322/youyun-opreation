@@ -1,5 +1,5 @@
 <template>
-  <div class="g-bg-box">
+  <div class="bg_box">
     <div class="title">
       {{ configData.name }}
       <slot name="operatingTop">
@@ -7,12 +7,12 @@
       </slot>
     </div>
     <slot name="step"></slot>
-    <div v-for="(child, key) of configData.child" :key="key" class="con-box">
+    <div v-for="(child, key) of configData.child" :key="key" class="con_box">
       <template v-if="child.models && child.models.length > 0">
         <div class="title">
           {{ child.name }}
           <slot name="operatingItem">
-            <span v-if="!child.hiddenEdit" class="edit" @click="clickEdit(child.modelName)">编辑</span>
+            <span v-if="!child.hiddenEdit" class="edit" @click="edit(child.modelName)">编辑</span>
           </slot>
         </div>
         <el-form
@@ -35,8 +35,9 @@
                   :src="ruleForm[item2.key]"
                   :preview-src-list="[ruleForm[item2.key]]"
                 ></el-image>
-                <span v-if="item2.type !== 'img'" class="item-value">{{ item2.key ? ruleForm[item2.key] : item2.initVal }}{{ item2.type === 'pecent' ? '‰' : '' }}</span>
-                <span v-if="item2.type === 'seem'" class="item-see" @click="clickSeem(child.modelName)">查看</span>
+                <span v-if="item2.type === 'descript'" class="item-value">{{ ruleForm[item2.key] === 'all' ? '全国' : ruleForm[item2.key] === 'province' ? '省' : ruleForm[item2.key] === 'city' ? '市' : '' }}</span>
+                <span v-if="item2.type === 'bankType'" class="item-value">{{ ruleForm[item2.key] === 'private' ? '对私' : ruleForm[item2.key] === 'public' ? '对公' : '' }}</span>
+                <span v-if="item2.type !== 'img' && item2.type !== 'bankType' && item2.type !== 'descript' " class="item-value">{{ item2.key ? ruleForm[item2.key] : item2.initVal }}{{ item2.type === 'pecent' ? '‰' : '' }}</span>
               </el-form-item>
             </el-col>
           </el-row>
@@ -49,7 +50,7 @@
 
 <script>
 export default {
-  name: "DetailMode5",
+  name: "",
   props: { ruleForm: Object, configData: Object },
   data() {
     return {
@@ -61,25 +62,22 @@ export default {
   computed: {},
 
   methods: {
-    clickEdit($modelName) {
+    edit($modelName) {
       this.$emit("edit", $modelName);
-    },
-    clickSeem($modelName) {
-      this.$emit("handle_seem", $modelName);
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.g-bg-box {
+.bg_box {
   margin: 24px;
   background: #fff;
   overflow: hidden;
   .title {
     height: 54px;
     line-height: 54px;
-    padding-left: 24px;
+    padding-left: 32px;
     font-size: 16px;
     font-weight: 500;
     color: rgba(51, 51, 53, 1);
@@ -93,7 +91,7 @@ export default {
     margin-right: 32px;
     cursor: pointer;
   }
-  .con-box {
+  .con_box {
     margin: 24px;
     background: #fff;
     overflow: hidden;
@@ -111,11 +109,5 @@ export default {
       }
     }
   }
-}
-
-.item-see {
-  font-size: 14px;
-  color: #1989fa;
-  cursor: pointer;
 }
 </style>

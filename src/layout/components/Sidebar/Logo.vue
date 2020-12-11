@@ -1,17 +1,12 @@
 <template>
   <div class="sidebar-logo-container" :class="{'collapse':collapse}">
     <transition name="sidebarLogoFade">
-      <router-link
-        v-if="collapse"
-        key="collapse"
-        class="sidebar-logo-link"
-        to="/">
-        <img src="@/assets/img/faceLogo.png" class="sidebar-logo" alt="facelogo" />
-      </router-link>
-      <router-link v-else key="expand" class="sidebar-logo-link" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo" alt="logo" />
+      <div v-if="collapse" key="collapse" class="sidebar-logo-link">
+        <img src="@/assets/img/logo.png" class="sidebar-logo">
+      </div>
+      <div v-else key="expand" class="sidebar-logo-link">
         <h1 class="sidebar-title">{{ title }} </h1>
-      </router-link>
+      </div>
     </transition>
   </div>
 </template>
@@ -27,7 +22,7 @@ export default {
   },
   data () {
     return {
-      title: 'Vue Element Admin'
+      title: '华莱士工作台'
     };
   }
 };
@@ -57,7 +52,7 @@ export default {
     width: 100%;
 
     & .sidebar-logo {
-      width: 119px;
+      width:119px;
       vertical-align: middle;
       margin-right: 12px;
     }
@@ -67,8 +62,8 @@ export default {
       margin: 0;
       color: #fff;
       font-weight: 600;
+      font-size: 18px;
       line-height: 50px;
-      font-size: 14px;
       font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
       vertical-align: middle;
     }

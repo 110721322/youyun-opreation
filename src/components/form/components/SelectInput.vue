@@ -4,23 +4,21 @@
       v-if="selectOption.isAutocomplete"
       v-model="inputForm"
       :placeholder="formItem.placeholder?formItem.placeholder:'请输入内容'"
-      :value-key="selectOption.value"
-      :value="selectOption.valueKey"
-      label="label"
+      value-key="agentName"
+      label="agentNo"
       class="input-with-select"
-      :style="selectOption.style"
       size="large"
       :fetch-suggestions="querySearchAsync"
-      @select="selectAuto"
-      @change="changeInput"
+      @select="onAutoSelect"
+      @change="onInput"
     >
 
       <el-select
-        v-if="!formItem.hiddenSelect"
         slot="prepend"
         v-model="inputSelect"
+        style="width:294px"
         placeholder="请选择"
-        @change="changeSelect"
+        @change="onSelect"
       >
         <el-option
           v-for="(item, key) in formItem.options"
@@ -36,14 +34,14 @@
       :placeholder="formItem.placeholder?formItem.placeholder:'请输入内容'"
       class="input-with-select"
       size="large"
-      @input="changeInput"
+      @input="onInput"
     >
       <el-select
         slot="prepend"
         v-model="inputSelect"
-        style="min-width: 150px;"
+        style="width:294px"
         placeholder="请选择"
-        @change="changeSelect"
+        @change="onSelect"
       >
         <el-option
           v-for="(item, key) in formItem.options"
@@ -77,41 +75,38 @@ export default {
   watch: {
     isRest: function($new) {
       if ($new) {
+        console.log('this.isRest', $new);
         this.inputSelect = this.formItem.options[0].value;
         this.inputForm = "";
-        this.changeInput();
-        this.changeSelect();
+        this.onInput();
+        this.onSelect();
       }
     }
   },
   created() {
     this.inputSelect = this.formItem.options[0].value;
     this.selectOption = this.formItem.options[0];
-    this.ruleForm[this.formItem.key] = this.inputSelect;
   },
   methods: {
-    changeInput() {
+    onInput() {
       this.ruleForm.inputSelect = this.selectOption.valueKey ? this.selectOption.valueKey : this.inputSelect;
       this.ruleForm.inputForm = this.inputForm;
-      this.ruleForm[this.formItem.key] = this.ruleForm.inputSelect;
-      this.ruleForm[this.formItem.key + 'Val'] = this.inputForm;
     },
-    changeSelect() {
+    onSelect() {
       this.inputForm = null;
       this.selectOption = this.formItem.options.filter(ele => ele.value === this.inputSelect)[0];
       this.ruleForm.inputSelect = this.selectOption.valueKey ? this.selectOption.valueKey : this.inputSelect;
-      this.ruleForm[this.formItem.key] = this.ruleForm.inputSelect;
     },
-    selectAuto(e) {
+    onAutoSelect(e) {
       this.ruleForm.inputForm = e[this.selectOption.valueKey]
     },
     querySearchAsync(queryString, callback) {
       const {api} = this.selectOption;
       const params = {
-        [this.selectOption.value]: queryString
+        agentName: queryString
       }
       api(params).then(res => {
-        this.autoCompleteList = res.data;
+        this.autoCompleteList = res.object;
         callback(this.autoCompleteList);
       })
       return queryString;
@@ -121,15 +116,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .input-with-select {
-    // width: 774px;
-  }
+.input-with-select {
+  width: 774px;
+}
 
-  .el-select .el-input {
-    width: 130px;
-  }
-  /deep/.el-input__inner{
-    width: 100%;
-    // max-width: 294px;
-  }
+.el-select .el-input {
+  width: 130px;
+}
 </style>

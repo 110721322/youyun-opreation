@@ -11,6 +11,8 @@ body {
   height: 100%;
   padding: 0;
   margin: 0;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-size: 16px;
 }
 
 * {
@@ -399,7 +401,7 @@ legend {
 .main_page {
   width: 100%;
   height: calc(100% - 50px);
-  min-width: 856px;
+  min-width: 876px;
 }
 /*滚动条样式*/
 .main_page::-webkit-scrollbar {
@@ -427,27 +429,15 @@ legend {
   background: white;
   border-radius: 4px;
 }
-/*滚动条样式*/
-.el-table--scrollable-x ::-webkit-scrollbar {
-  width: 8px;
-}
-.el-table--scrollable-x ::-webkit-scrollbar-thumb {
-  background: #C3C3C3;
-  border-radius: 4px;
-}
-.el-table--scrollable-x ::-webkit-scrollbar-track {
-  background: white;
-  border-radius: 4px;
-}
 
 .main-container {
   height: 100%;
 }
 
-.p-head {
+.p_head {
   width: 100%;
   height: 76px;
-  padding-left: 24px;
+  padding-left: 32px;
   font-size: 20px;
   font-weight: 500;
   line-height: 76px;
@@ -456,7 +446,7 @@ legend {
   border-bottom: 1px solid #e9e9e9;
 }
 
-.tab-head {
+.tab_head {
   // height: 76px;
   width: 100%;
   overflow: hidden;
@@ -468,32 +458,17 @@ legend {
   border-bottom: 1px solid #e9e9e9;
 
   .title {
-    margin-left: 24px;
+    margin-left: 32px;
   }
 
   .el-menu {
-    margin-left: 24px;
-    /deep/ .is-active{
-      color: #1989FA!important;
-    }
-  }
-  .el-menu--horizontal{
-    /deep/ .is-active{
-      color: #1989FA!important;
-    }
+    margin-left: 12px;
   }
 
   .el-menu-item {
     height: 40px;
-    line-height: 32px;
-    font-size: 16px;
-    padding: 0;
-    margin: 0;
-    margin-right: 40px!important;
+    line-height: 40px;
   }
-}
-/deep/.el-tabs__item{
-  font-size: 16px;
 }
 
 .input-with-select .el-input-group__prepend {

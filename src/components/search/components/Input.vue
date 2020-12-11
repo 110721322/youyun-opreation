@@ -10,7 +10,7 @@
       :show-password="showPsd"
       clearable
       :style="inputStyle"
-      :disabled="formItem.isDisable?formItem.isDisable(ruleForm):false"
+      :disabled="isDisabled"
     >
       <template v-if="formItem.isShowSlot" slot="append">
         <span>{{ formItem.showSlotName }}</span>
@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  name: "Input",
+  name: "",
   props: {
     ruleForm: Object,
     formItem: Object,
@@ -53,6 +53,13 @@ export default {
     inputStyle() {
       const item = this.formItem;
       return item.style ? item.style : "";
+    },
+    isDisabled() {
+      if (this.$g.utils.isFunction(this.formItem.isDisabled)) {
+        return this.formItem.isDisabled(this.ruleForm)
+      } else {
+        return this.formItem.isDisabled
+      }
     }
   },
 
@@ -61,4 +68,11 @@ export default {
 </script>
 
 <style lang='scss'>
+input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+    input[type="number"]{
+        -moz-appearance: textfield;
+    }
 </style>

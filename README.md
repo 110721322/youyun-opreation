@@ -1,4 +1,4 @@
-# operateManager
+# operate-manager
 
 ## Project setup
 ```
