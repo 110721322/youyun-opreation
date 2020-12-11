@@ -1,5 +1,44 @@
 import Layout from '@/layout/index.vue'
 const asyncRoutes = {
+  AgentManage: {
+    path: '/AgentManage',
+    name: 'AgentManage',
+    component: Layout,
+    meta: {
+      title: '服务商管理',
+      icon: 'AgentManage'
+    },
+    children:[
+      {
+        path: '/AgentManage/AgentList/AgentDetail',
+        name: 'AgentDetail',
+        meta: {
+          title: '服务商详情',
+          icon: 'AgentDetail',
+        },
+        component: () => import('@/page/AgentManage/AgentDetail.vue'),
+      }
+    ]
+  },
+  'AgentList': {
+    path: '/AgentList',
+    name: 'AgentList',
+    meta: {
+      title: '服务商列表',
+      icon: 'AgentList'
+    },
+    component: () => import('@/page/AgentManage/AgentList.vue'),
+    children: []
+  },
+  'AddAgent': {
+    path: '/AddAgent',
+    name: 'AddAgent',
+    meta: {
+      title: '添加服务商',
+      icon: 'AddAgent'
+    },
+    component: () => import('@/page/AgentManage/AddAgent.vue')
+  }
 }
 const routers = []
 const menusToRoutes = function (data) {

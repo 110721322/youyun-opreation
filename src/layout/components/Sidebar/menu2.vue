@@ -65,7 +65,7 @@ export default {
   },
   methods: {
     onClick_item($routerName) {
-      this.$router.push({name: $routerName })
+      this.$router.push({name: $routerName }).catch(err => {})
     }
   }
 };
