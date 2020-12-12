@@ -51,12 +51,12 @@
     components: { Search, BaseCrud },
     data() {
       return {
-        searchConfig: SEARCH_FORM_CONFIG,
-        params: {},
         api: '',
+        params: {},
+        testData: [],
+        searchConfig: SEARCH_FORM_CONFIG,
         gridConfig: AGENT_LIST_CONFIG.gridConfig,
-        gridBtnConfig: AGENT_LIST_CONFIG.gridBtnConfig,
-        testData: []
+        gridBtnConfig: AGENT_LIST_CONFIG.gridBtnConfig
       }
     },
     created() {
@@ -73,7 +73,18 @@
       ]
     },
     methods: {
-      onClickSearch() {},
+      onClickSearch($ruleForm) {
+        this.params = {
+          agentId: $ruleForm.agentId ? $ruleForm.agentId : null,
+          agentName: $ruleForm.agentName ? $ruleForm.agentName : null,
+          endTime: $ruleForm.endTime ? $ruleForm.endTime : null,
+          status: $ruleForm.status ? $ruleForm.status : null,
+          phone: $ruleForm.phone ? $ruleForm.phone : null,
+          address: $ruleForm.address ? $ruleForm.address : null,
+          onerAgentId: $ruleForm.onerAgentId ? $ruleForm.onerAgentId : null,
+          manager: $ruleForm.manager ? $ruleForm.manager : null
+        }
+      },
       onClickDetails(row) {
         this.$router.push({
           name: 'AgentDetail',
@@ -85,7 +96,7 @@
       clickToAdd() {
         this.$router.push({
           name: 'AddAgent'
-        })
+        }).catch(err => {})
       },
       onClickGoAgent(row) {
         // api.generateLoginTicket({
@@ -104,7 +115,7 @@
 
 <style lang="scss" scoped>
   .m-page {
-    padding: 32px 32px 0;
+    padding: 24px 24px 0;
     .m-content {
       width: 100%;
       height: 130px;
@@ -112,12 +123,12 @@
     }
   }
   .m-table {
-    padding: 32px 32px 0;
+    padding: 24px 24px 0;
     width: 100%;
     .m-table-head {
       display: flex;
       justify-content: space-between;
-      padding: 32px 32px 0;
+      padding: 24px 24px 0;
       width: 100%;
       background: #fff;
       .m-table-left-title {
@@ -139,11 +150,14 @@
       }
     }
     .m-basecrud {
-      padding: 24px 32px;
+      padding: 24px 24px;
       background: #fff;
     }
   }
   .dot.disabled {
     color: #F5222D !important;
+  }
+  /deep/ .tab-color {
+    color: #1989FA;
   }
 </style>

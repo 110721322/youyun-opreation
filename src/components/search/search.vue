@@ -205,7 +205,7 @@ export default {
 .s_box {
   padding: 24px;
   background: rgba(255, 255, 255, 1);
-  margin: 32px 32px 0;
+  margin: 32px 24px 0;
   transition: all 0.5s;
 }
 .s_box::-webkit-scrollbar {

@@ -47,7 +47,7 @@
           :is-table-expand="false"
           :row-key="'id'"
           :default-expand-all="false"
-          :hide-edit-area="false"
+          :hide-edit-area="true"
           :grid-data="testData"
           :params="params"
           :api-service="api"
@@ -107,6 +107,11 @@
       },
       selectionChange() {},
       clickSubmit() {
+        const type = this.drawerType
+        switch(type) {
+          case "addTalk":
+            console.log(111)
+        }
         console.log(this.$refs.formInfo.ruleForm)
       }
     }

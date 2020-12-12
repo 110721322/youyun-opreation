@@ -24,7 +24,7 @@
         <div class="m-box m-nobord">
           <div class="m-service-title">结算账号</div>
           <Form
-              ref="rateInfo"
+              ref="settleInfo"
               :form-base-data="fromConfigData.settleData.formData"
               :show-foot-btn="fromConfigData.showFootBtn"
               label-width="130px"
@@ -48,11 +48,40 @@
     components: { Form },
     data() {
       return {
-        fromConfigData: ADD_AGENT
+        fromConfigData: ADD_AGENT,
+        serviceInfo: {
+          agentName: '',
+          phone: '',
+          endTime: '',
+          area: [],
+          address: ''
+        }
       }
     },
     methods: {
-      clickSubmit() {},
+      clickSubmit() {
+        this.$refs['serviceInfo'].$children[0].validate((valid) => {
+          if (valid) {} else {
+            return false;
+          }
+        });
+        this.$refs['rateInfo'].$children[0].validate((valid) => {
+          if (valid) {} else {
+            return false;
+          }
+        });
+        this.$refs['settleInfo'].$children[0].validate((valid) => {
+          if (valid) {} else {
+            return false;
+          }
+        });
+        const serviceData = this.$refs['serviceInfo'].ruleForm
+        const rateData = this.$refs['rateInfo'].ruleForm
+        const settleData = this.$refs['settleInfo'].ruleForm
+        let infoData = {}
+        Object.assign(infoData,serviceData, rateData, settleData)
+        console.log(infoData)
+      },
       clickCancel() {
         this.$router.back(-1)
       }

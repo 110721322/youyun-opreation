@@ -38,7 +38,64 @@ const asyncRoutes = {
       icon: 'AddAgent'
     },
     component: () => import('@/page/AgentManage/AddAgent.vue')
-  }
+  },
+  MerchantManage: {
+    path: '/MerchantManage',
+    name: 'MerchantManage',
+    component: Layout,
+    meta: {
+      title: '商户管理',
+      icon: 'MerchantManage'
+    },
+    children:[
+      {
+        path: '/MerchantManage/MerchantList/MerchantDetail',
+        name: 'MerchantDetail',
+        meta: {
+          title: '商户详情',
+          icon: 'MerchantDetail',
+        },
+        component: () => import('@/page/MerchantManage/MerchantDetail.vue'),
+      }
+    ]
+  },
+  'MerchantList': {
+    path: '/MerchantList',
+    name: 'MerchantList',
+    meta: {
+      title: '商户列表',
+      icon: 'MerchantList'
+    },
+    component: () => import('@/page/MerchantManage/MerchantList.vue')
+  },
+  SettleManage: {
+    path: '/SettleManage',
+    name: 'SettleManage',
+    component: Layout,
+    meta: {
+      title: '结算管理',
+      icon: 'SettleManage'
+    },
+    children: []
+  },
+  'SettleRecord': {
+    path: '/SettleRecord',
+    name: 'SettleRecord',
+    meta: {
+      title: '店铺结算记录',
+      icon: 'SettleRecord'
+    },
+    component: () => import('@/page/SettleManage/SettleRecord.vue')
+  },
+  'AgentSettleManage': {
+    path: '/AgentSettleManage',
+    name: 'AgentSettleManage',
+    meta: {
+      title: '代理商结算管理',
+      icon: 'SettleRecord'
+    },
+    component: () => import('@/page/SettleManage/AgentSettleManage.vue')
+  },
 }
 const routers = []
 const menusToRoutes = function (data) {
