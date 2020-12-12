@@ -1,5 +1,53 @@
 import Layout from '@/layout/index.vue'
 const asyncRoutes = {
+  shopManage: {
+    path: '/shopManage',
+    name: 'shopManage',
+    component: Layout,
+    meta: {
+      title: '门店管理',
+      icon: 'shopManage'
+    },
+    children: [
+      {
+        path: '/shopManage/shopList/shopDetail',
+        name: 'shopDetail',
+        meta: {
+          title: '门店详情',
+          fatherName: 'shopList',
+          parentName: 'shopManage',
+          icon: 'shopDetail',
+          keepAlive: 'ShopDetail'
+        },
+        component: () => import('@/page/ShopManage/ShopList/ShopDetail.vue'),
+      },
+      {
+        path: '/shopManage/shopList/shopDetail/editShop',
+        name: 'editShop',
+        meta: {
+          title: '编辑',
+          fatherName: 'shopDetail',
+          parentName: 'shopManage',
+          icon: 'editShop',
+          keepAlive: 'EditShop'
+        },
+        component: () => import('@/page/ShopManage/ShopList/EditShop.vue'),
+        children: []
+      }
+    ]
+  },
+  'shopList': {
+    path: '/shopList',
+    name: 'shopList',
+    meta: {
+      title: '门店列表',
+      icon: 'shopList',
+      keepAlive: "ShopList"
+    },
+    component: () => import('@/page/ShopManage/ShopList/ShopList.vue'),
+    children: [
+    ]
+  }
 }
 const routers = []
 const menusToRoutes = function (data) {

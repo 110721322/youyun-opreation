@@ -47,27 +47,11 @@
               :label="item.name +(item.hideColon?'':'：')"
               :label-width="item.labelWidth ? item.labelWidth : ''">
             <el-tooltip class="item" effect="dark" :content="ruleForm[item.key]" placement="top" v-if="item.showToolTip">
-              <span v-if="item.type != 'switch'&&item.key!=='isMsgVerify'&&item.key !== 'amount'&&item.type !== 'isDisabled'" class="item-value">{{ ruleForm[item.key] }}</span>
+              <span v-if="item.key !== 'amount'&&item.type !== 'isDisabled'" class="item-value">{{ ruleForm[item.key] }}</span>
             </el-tooltip>
-            <div v-else-if="item.type != 'switch'&&item.key!=='isMsgVerify'&&item.key !== 'amount'&&item.type !== 'isDisabled'" class="flex-align-center">
+            <div v-else-if="item.key !== 'amount'&&item.type !== 'isDisabled'" class="flex-align-center">
               <span class="item-value">{{ item.formatter ? item.formatter(ruleForm) : ruleForm[item.key] }}</span>
               <span v-if="item.type == 'edit'" class="edit_btn" @click="toEdit(item)">修改</span>
-            </div>
-            <span v-if="item.type === 'isDisabled'" class="edit_btn" :style="'color:'+(ruleForm[item.key] === 0 ? 'green' : 'red')" @click="changeStatus">{{ ruleForm[item.key] === 0 ? '启用' : '禁用' }}</span>
-            <!-- 交易户授权 -->
-            <div class="flex-align-center">
-              <!-- <el-switch
-                v-if="item.type == 'switch'"
-                v-model="ruleForm[item.key]"
-                :inactive-value="0"
-                :active-value="1"
-                :disabled="true"
-              ></el-switch> -->
-              <span v-if="item.type == 'switch'" class="item-value">{{ ruleForm[item.key]===0?'未授权':'已授权' }}</span>
-              <!-- 交易户模块 -->
-              <el-tooltip popper-class="el-tooltip-opacity" effect="dark" content="（仅限交易户添加人修改）" placement="top">
-                <img v-if="item.key === 'isAuthoriz'" style="width:20px;height:20px;margin-left:16px;" src="@/assets/img/icon_desc.png" alt="">
-              </el-tooltip>
             </div>
             <!-- 特殊渲染item -->
             <slot :name="item.slotName" :item="item"></slot>
@@ -156,15 +140,15 @@
     border: 1px solid #ebeef5;
   }
   .bg_box {
-    margin: 0 24px;
     background: #fff;
     overflow: hidden;
+    border: 1px solid #DCDFE6;
     .title {
       position: relative;
-      height: 54px;
-      line-height: 54px;
-      font-size: 16px;
-      font-weight: 500;
+      padding: 16px 24px;
+      font-size: 14px;
+      font-weight: 400;
+      background: #FAFAFA;
       color: rgba(51, 51, 53, 1);
       border-bottom: 1px solid #ebeef5;
       .edit_btn {
@@ -174,7 +158,7 @@
     }
     .form {
       position: relative;
-      margin: 32px;
+      margin: 24px 24px 6px;
       .item-value {
         color: rgba(96, 98, 102, 1);
         text-overflow: -o-ellipsis-lastline;

@@ -136,7 +136,7 @@ export default {
       type: Boolean,
       default() {
         return true;
-      }
+      } 
     },
     footBtnLabel: {
       type: String,

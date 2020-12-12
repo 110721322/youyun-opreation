@@ -32,7 +32,7 @@ import Login from '../page/Login/Login.vue'
 import Register from '../page/Login/Register.vue'
 import ErrorPage from '../page/404/404.vue'
 import noJurisdiction from '../page/401/401.vue'
-const RegistSuccess = () => import("../page/Login/registSuccess")
+const RegistSuccess = () => import("../page/Login/RegistSuccess")
 
 Vue.use(VueRouter)
 
@@ -124,30 +124,30 @@ router.beforeEach((to, from, next) => {
       routerName = first.name
     }
     next({name: routerName})
-  } else if (routes.length === 0) {
-    const accessToken = store.state.admin.accessToken;
-    const roleId = store.state.admin.roleId;
-    if (accessToken === null || accessToken === '') {
-      if (roleId === 2) {
-        next('/LoginStore');
-      } else {
-        next('/Login');
-      }
-      return;
-    }
-    next();
-    return;
-  } else {
-    const accessToken = store.state.admin.accessToken;
-    if (accessToken === null || accessToken === '') {
-      const roleId = store.state.admin.roleId;
-      if (roleId === 2) {
-        next('/LoginStore');
-      } else {
-        next('/Login');
-      }
-      return;
-    }
+  // } else if (routes.length === 0) {
+  //   const accessToken = store.state.admin.accessToken;
+  //   const roleId = store.state.admin.roleId;
+  //   if (accessToken === null || accessToken === '') {
+  //     if (roleId === 2) {
+  //       next('/LoginStore');
+  //     } else {
+  //       next('/Login');
+  //     }
+  //     return;
+  //   }
+  //   next();
+  //   return;
+  // } else {
+    // const accessToken = store.state.admin.accessToken;
+    // if (accessToken === null || accessToken === '') {
+    //   const roleId = store.state.admin.roleId;
+    //   if (roleId === 2) {
+    //     next('/LoginStore');
+    //   } else {
+    //     next('/Login');
+    //   }
+    //   return;
+    // }
   }
   if (typeof to.query._t !== "undefined") {
     next();
