@@ -1,5 +1,27 @@
 import Layout from '@/layout/index.vue'
 const asyncRoutes = {
+  homeIndex: {
+    path: '/homeIndex',
+    name: 'homeIndex',
+    component: Layout,
+    meta: {
+      title: '首页',
+      icon: 'homeIndex'
+    },
+    children: []
+  },
+  'accountCenter': {
+    path: '/accountCenter',
+    name: 'accountCenter',
+    meta: {
+      title: '账户中心',
+      icon: 'accountCenter',
+      keepAlive: "AccountCenter"
+    },
+    component: () => import('@/page/Home/AccountCenter/AccountCenter.vue'),
+    children: [
+    ]
+  },
   AgentManage: {
     path: '/AgentManage',
     name: 'AgentManage',
@@ -96,6 +118,39 @@ const asyncRoutes = {
     },
     component: () => import('@/page/SettleManage/AgentSettleManage.vue')
   },
+  orderManage: {
+    path: '/orderManage',
+    name: 'orderManage',
+    component: Layout,
+    meta: {
+      title: '订单管理',
+      icon: 'orderManage'
+    },
+    children: [{
+      path: '/orderManage/transactionFlow/flowDetail',
+      name: 'flowDetail',
+      meta: {
+        title: '详情',
+        fatherName: 'transactionFlow',
+        parentName: 'orderManage',
+        icon: 'flowDetail',
+        keepAlive: 'FlowDetail'
+      },
+      component: () => import('@/page/OrderManage/TransactionFlow/FlowDetail.vue'),
+    }]
+  },
+  'transactionFlow': {
+    path: '/transactionFlow',
+    name: 'transactionFlow',
+    meta: {
+      title: '交易流水',
+      icon: 'transactionFlow',
+      keepAlive: "TransactionFlow"
+    },
+    component: () => import('@/page/OrderManage/TransactionFlow/TransactionFlow.vue'),
+    children: [
+    ]
+  }
 }
 const routers = []
 const menusToRoutes = function (data) {

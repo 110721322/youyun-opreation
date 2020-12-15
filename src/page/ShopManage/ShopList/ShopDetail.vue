@@ -95,11 +95,27 @@
       </div>
       <div v-if="activeName==='1'" class="flex-align-center flex-justify-center foot-btn">
         <div>
-          <el-button type="primary" size="normal">驳回</el-button>
+          <el-button type="primary" size="normal" @click="dialogVisible = true">驳回</el-button>
           <el-button size="normal">取消</el-button>
         </div>
       </div>
     </div>
+    <el-dialog
+      title="驳回"
+      :visible.sync="dialogVisible"
+      width="30%"
+      :before-close="handleClose">
+      <Form
+        ref="rejectForm"
+        :form-base-data="rejectDataConfig"
+        :label-width="'150px'"
+        :show-foot-btn="false"
+      ></Form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -107,8 +123,9 @@
   import { FORM_CONFIG } from "../formConfig/shopDetail";
   import InfoMode from "@/components/detailMode/shopDetailMode.vue";
   import DetailMode from "@/components/detailMode/detailMode2.vue";
+  import Form from "@/components/form/index.vue";
   export default {
-    components: { InfoMode, DetailMode },
+    components: { InfoMode, DetailMode, Form },
     data() {
       return {
         basicInfoConfig: FORM_CONFIG.basicInfoData,
@@ -118,9 +135,11 @@
         verityDetailConfig: FORM_CONFIG.verityDetail,
         settleDetailConfig: FORM_CONFIG.settleDetail,
         rateDetailConfig: FORM_CONFIG.rateDetail,
+        rejectDataConfig: FORM_CONFIG.rejectConfig,
         activeName: '1',
         ruleForm: {},
-        radio: 1
+        radio: 1,
+        dialogVisible: false
       }
     },
     created() {
@@ -130,6 +149,9 @@
     methods: {
       clickEdit() {
         this.$router.push('/shopManage/shopList/shopDetail/editShop')
+      },
+      handleClose() {
+        this.dialogVisible = false
       }
     }
   }
@@ -168,5 +190,8 @@
   .foot-btn {
     padding: 16px 0;
     box-shadow: 0px -4px 16px 0px rgba(0, 0, 0, 0.09);
+  }
+  /deep/ .formTemplate {
+    margin: 0;
   }
 </style>

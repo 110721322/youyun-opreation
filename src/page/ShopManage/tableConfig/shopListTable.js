@@ -38,11 +38,44 @@ export const TABLE_CONFIG = {
     },
     {
       label: '门店状态',
-      prop: 'contacter'
+      prop: 'status',
+      render: (h, params) => {
+        if (params.row.status === 0) {
+          return '禁用'
+        }
+        if (params.row.status === 1) {
+          return '启用'
+        }
+      }
     },
     {
       label: '审核状态',
-      prop: 'phone'
+      prop: 'phone',
+      render: (h, params) => {
+        let config = {}
+        switch (params.row.orderStatus) {
+          case 0:
+            config = {color: "#1989FA", text: '平台审核中'};
+            break;
+          case 1:
+            config = {color: "#1989FA", text: '通道审核中'};
+            break;
+          case 2:
+            config = {color: "#50C514", text: '已开通'};
+            break;
+          case 3:
+            config = {color: "#50C514", text: '驳回'};
+            break;
+          case 4:
+            config = {color: "#F52130", text: '微信未认证'};
+            break;
+        }
+        return (
+          <span class="flex-align-center">
+            <i style={{"display": "block", "width": "6px", "height" :"6px", "margin-right": "4px", "background": config.color, "border-radius": "50%"}}></i>{config.text}
+          </span>
+        );
+      }
     }
   ],
 

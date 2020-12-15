@@ -6,7 +6,7 @@ export const FORM_CONFIG = {
     {
       type: 5,
       label: '门店结算类型',
-      key: 'businessCategory',
+      key: 'shopType',
       labelWidth: '120px',
       initVal: "",
       options: [
@@ -17,7 +17,7 @@ export const FORM_CONFIG = {
     {
       type: 0,
       label: "门店名称",
-      key: "shopCode",
+      key: "shopName",
       labelWidth: '120px',
       initVal: "",
       maxlength: 10,
@@ -28,7 +28,7 @@ export const FORM_CONFIG = {
     {
       type: 0,
       label: '门店电话',
-      key: 'relationTel',
+      key: 'phone',
       labelWidth: '120px',
       maxlength: 11,
       placeholder: '请输入门店电话',
@@ -75,7 +75,7 @@ export const FORM_CONFIG = {
     {
       type: 0,
       label: "门店详细地址",
-      key: "shopCode",
+      key: "address",
       labelWidth: '120px',
       initVal: "",
       rules: [
@@ -105,7 +105,7 @@ export const FORM_CONFIG = {
     {
       type: 5,
       label: '门店类型',
-      key: 'businessCategory',
+      key: 'shopType',
       labelWidth: '120px',
       initVal: "",
       options: [
@@ -117,7 +117,7 @@ export const FORM_CONFIG = {
     {
       type: 0,
       label: "营业执照编号",
-      key: "shopCode",
+      key: "shopLicenseNo",
       labelWidth: '120px',
       initVal: "",
       maxlength: 10,
@@ -131,14 +131,14 @@ export const FORM_CONFIG = {
       labelWidth: '120px',
       hasChecked: true,
       checked: false,
-      key: 'idCardEndDate',
+      key: 'shopLicenseDate',
       format: "yyyy-MM-dd",
       showDateBtn: true
     },
     {
       type: 0,
       label: "法人姓名",
-      key: "shopCode",
+      key: "lawPerson",
       labelWidth: '120px',
       initVal: "",
       maxlength: 10,
@@ -152,14 +152,14 @@ export const FORM_CONFIG = {
       labelWidth: '120px',
       hasChecked: true,
       checked: false,
-      key: 'idCardEndDate',
+      key: 'idCardDate',
       format: "yyyy-MM-dd",
       showDateBtn: true
     },
     {
       type: 0,
       label: "法人身份证号",
-      key: "shopCode",
+      key: "lawIdCard",
       labelWidth: '120px',
       initVal: "",
       maxlength: 10,
@@ -190,7 +190,7 @@ export const FORM_CONFIG = {
     {
       type: 5,
       label: '结算类型',
-      key: 'businessCategory',
+      key: 'settleType',
       labelWidth: '120px',
       initVal: "",
       options: [
@@ -202,7 +202,7 @@ export const FORM_CONFIG = {
     {
       type: 0,
       label: "开户名",
-      key: "shopCode",
+      key: "bankAccountName",
       labelWidth: '120px',
       initVal: "",
       maxlength: 10,
@@ -213,7 +213,7 @@ export const FORM_CONFIG = {
     {
       type: 0,
       label: "开户银行账号",
-      key: "shopCode",
+      key: "bankCardNo",
       labelWidth: '120px',
       initVal: "",
       maxlength: 10,
@@ -224,7 +224,7 @@ export const FORM_CONFIG = {
     {
       type: 8,
       label: '开户支行',
-      key: 'areaData',
+      key: 'bankArea',
       labelWidth: '120px',
       rules: [
         { required: true, message: '请选择开户支行', trigger: 'change' }
@@ -234,7 +234,7 @@ export const FORM_CONFIG = {
     {
       type: 1,
       label: '支行名称',
-      key: 'isDisabled',
+      key: 'bankBranchName',
       labelWidth: '120px',
       placeholder: '请选择支行名称',
       options: []
@@ -262,7 +262,7 @@ export const FORM_CONFIG = {
     {
       type: 0,
       label: "支付宝",
-      key: "shopCode",
+      key: "alipayRate",
       initVal: "",
       labelWidth: '120px',
       maxlength: 10,
@@ -273,7 +273,7 @@ export const FORM_CONFIG = {
     {
       type: 0,
       label: "微信",
-      key: "shopCode",
+      key: "wechatPayRate",
       initVal: "",
       labelWidth: '120px',
       maxlength: 10,
@@ -284,7 +284,7 @@ export const FORM_CONFIG = {
     {
       type: 0,
       label: "云闪付",
-      key: "shopCode",
+      key: "cloudPayGt1000Rate",
       initVal: "",
       labelWidth: '120px',
       maxlength: 10,
