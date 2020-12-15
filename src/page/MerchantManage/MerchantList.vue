@@ -45,7 +45,7 @@
     data() {
       return {
         params: {},
-        api: '',
+        api: api.merchantList,
         testData: [],
         searchConfig: SEARCH_FORM_CONFIG,
         gridConfig: MERCHANT_LIST_CONFIG.gridConfig,
@@ -58,31 +58,38 @@
           merchantNo: 225555,
           agentName: 'haha',
           merchantName: '水果店',
-          phone: '11225444',
-          merchantNum: 111,
-          status: 0
+          loginAccount: '11225444',
+          shopCount: 24,
+          disabled: 0
         },
         {
           merchantNo: 225555,
           agentName: 'haha',
           merchantName: '水果店',
-          phone: '11225444',
-          merchantNum: 111,
-          status: 1
+          loginAccount: '11225444',
+          shopCount: 111,
+          disabled: 1
         }
       ]
     },
     methods: {
-      onClickSearch() {},
+      onClickSearch($ruleForm) {
+        this.params = {
+          merchantNo: $ruleForm.merchantNo ? $ruleForm.merchantNo : null,
+          merchantName: $ruleForm.merchantName ? $ruleForm.merchantName : null,
+          agentName: $ruleForm.agentName ? $ruleForm.agentName : null,
+          disabled: $ruleForm.disabled === 1 ? 1 : $ruleForm.disabled === 0 ? 0 : null
+        }
+      },
       onClickDetails(row) {
         this.$router.push({
           name: 'MerchantDetail',
           query: {
-            merchantNo: row.merchantNo
+            merchantNo: row.merchantNo,
+            id: row.id
           }
         })
       },
-      onClickGoAgent(row) {},
       onClickGoMerchant(row) {}
     }
   }

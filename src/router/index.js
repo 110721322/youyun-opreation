@@ -28,11 +28,11 @@ import Layout from '@/layout'
 import utils from "../libs/kit/utils";
 import currRouter from './addRouter.js'
 
-import Login from '../page/login/login.vue'
-import Register from '../page/login/Register.vue'
+import Login from '../page/Login/Login.vue'
+import Register from '../page/Login/Register.vue'
 import ErrorPage from '../page/404/404.vue'
 import noJurisdiction from '../page/401/401.vue'
-const RegistSuccess = () => import("../page/login/registSuccess")
+const RegistSuccess = () => import("../page/Login/registSuccess")
 
 Vue.use(VueRouter)
 

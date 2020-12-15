@@ -2,10 +2,10 @@ export const MERCHANT_DETAIL_CONFIG = {
   gridConfig: [
     {
       label: '门店ID',
-      prop: 'shopId',
+      prop: 'shopNo',
       render: (h, params) => {
         return h(
-          'span', {'class': 'tab-color' }, params.row.shopId
+          'span', {'class': 'tab-color' }, params.row.shopNo
         )
       }
     },
@@ -15,7 +15,7 @@ export const MERCHANT_DETAIL_CONFIG = {
     },
     {
       label: '门店类目',
-      prop: 'merchantCategory',
+      prop: 'mccCodeCN',
     },
     {
       label: '服务电话',
@@ -27,11 +27,11 @@ export const MERCHANT_DETAIL_CONFIG = {
     },
     {
       label: '门店状态',
-      prop: 'shopStatus',
+      prop: 'disabled',
       render: (h, params) => {
-        if (params.row.shopStatus === 0) {
+        if (params.row.disabled === 0) {
           return h('div', {'class': 'tab-reject'},[h('span', {'class': "dot " + "reject"}), '禁用'])
-        } else if (params.row.shopStatus === 1) {
+        } else if (params.row.disabled === 1) {
           return [h('span', {
             'class': "dot " + "opened"
           }), '启用']

@@ -68,7 +68,7 @@ export const ADD_AGENT = {
         label: '支付宝费率',
         labelWidth: '120px',
         isShowSlot: true,
-        showSlotName: '‰',
+        showSlotName: '%',
         key: 'alipayRate',
         rules: [
           { required: true, message: '请输入支付宝费率', trigger: 'blur' }
@@ -79,7 +79,7 @@ export const ADD_AGENT = {
         label: '微信费率',
         labelWidth: '120px',
         isShowSlot: true,
-        showSlotName: '‰',
+        showSlotName: '%',
         key: 'wechatRate',
         rules: [
           { required: true, message: '请输入微信费率', trigger: 'blur' }

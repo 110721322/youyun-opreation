@@ -15,21 +15,16 @@ export const SEARCH_FORM_CONFIG = {
       span: 11
     },
     {
-      type: 1,
+      type: 0,
       label: '所属服务商',
       key: 'agentName',
       labelWidth: '128px',
-      options: [
-        {
-          label: ''
-        }
-      ],
       span: 11
     },
     {
       type: 1,
       label: '商户状态',
-      key: 'status',
+      key: 'disabled',
       labelWidth: '128px',
       options: [
         {

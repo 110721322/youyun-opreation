@@ -70,7 +70,10 @@
         params: {},
         api: '',
         drawer: false,
+        openType: '',
         fromConfigData: {},
+        id: this.$route.query.id,
+        merchantNo: this.$route.query.merchantNo,
         searchConfig: SEARCH_FORM_CONFIG,
         configData: LIST_CONFIG.configData,
         gridConfig: MERCHANT_DETAIL_CONFIG.gridConfig,
@@ -80,38 +83,83 @@
     created() {
       this.testData = [
         {
-          shopId: 146,
+          shopNo: 146,
           shopName: '元芳的奶茶店',
           merchantCategory: '便民类',
           phone: '13214784568',
           address: '浙大森林小马哥',
-          shopStatus: 0,
+          disabled: 0,
           status: 0
         },
         {
-          shopId: 146,
+          shopNo: 146,
           shopName: '元芳的奶茶店',
           merchantCategory: '便民类',
           phone: '13214784568',
           address: '浙大森林小马哥',
-          shopStatus: 1,
+          disabled: 1,
           status: 1
         }
       ]
+      this.getMerchantDetail(this.merchantNo)
     },
     methods: {
+      getMerchantDetail(merchantNo) {
+        api.getDetailByMerchantNo({
+          merchantNo: merchantNo
+        }).then(res => {
+          if (res.status === 0) {
+            if (res.data.disabled === 0) {
+              res.data.disabledSn = '禁用'
+            } else if (res.data.disabled === 1) {
+              res.data.disabledSn = '启用'
+            }
+            this.ruleForm = res.data
+          }
+        })
+      },
       onClickSearch($ruleForm) {
         this.params = {
           shopNo: $ruleForm.shopNo ? $ruleForm.shopNo : null,
           shopName: $ruleForm.shopName ? $ruleForm.shopName : null,
-          auditStatus: $ruleForm.auditStatus ? $ruleForm.auditStatus : null,
+          disabled: $ruleForm.disabled ? $ruleForm.disabled : null,
           status: $ruleForm.status ? $ruleForm.status : null,
           phone: $ruleForm.phone ? $ruleForm.phone : null
         }
       },
       onClickDetails(row) {},
       onClickGoMerchant(row) {},
-      clickSubmit() {}
+      clickSubmit() {
+        const type = this.openType
+        switch(type) {
+          case "resetPassword":
+            api.resetPassword({
+              merchantNo: this.merchantNo,
+              id: this.id
+            }).then(res => {
+              if (res.status === 0) {
+                this.$message({
+                  message: '重置成功',
+                  type: 'success'
+                })
+                this.drawer = false
+              }
+            })
+            break;
+          case "changeName":
+            api.updateMerchantInfo({
+              merchantName: '111'
+            }).then(res => {
+              if (res.status === 0) {
+                this.$message({
+                  message: '修改成功',
+                  type: 'success'
+                })
+                this.drawer = false
+              }
+            })
+        }
+      }
     }
   }
 </script>

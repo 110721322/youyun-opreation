@@ -80,6 +80,7 @@
         params: {
           agentNo: this.$route.query.agentNo
         },
+        agentNo: this.$route.query.agentNo,
         api: api.queryByPage,
         ruleForm: {},
         configData: DETAILCONFIG.configData,
@@ -96,8 +97,19 @@
       }
     },
     created() {
+      this.getAgentDetail(this.agentNo)
     },
     methods: {
+      getAgentDetail(agentNo) {
+        api.getAgentDetail({
+          agentNo: 'haha'
+        }).then(res => {
+          console.log(res.data)
+          if (res.status === 0) {
+            this.ruleForm = res.data
+          }
+        })
+      },
       editInfo($modelName) {
         console.log($modelName)
         if (this.switchStatus) {

@@ -19,19 +19,19 @@ export const MERCHANT_LIST_CONFIG = {
     },
     {
       label: '手机号',
-      prop: 'phone'
+      prop: 'loginAccount'
     },
     {
       label: '门店数量',
-      prop: 'merchantNum'
+      prop: 'shopCount'
     },
     {
       label: '状态',
-      prop: 'status',
+      prop: 'disabled',
       render: (h, params) => {
-        if (params.row.status === 0) {
+        if (params.row.disabled === 0) {
           return h('div', {'class': 'tab-reject'},[h('span', {'class': "dot " + "reject"}), '禁用'])
-        } else if (params.row.status === 1) {
+        } else if (params.row.disabled === 1) {
           return [h('span', {'class': "dot " + "opened"}), '启用']
         }
       }

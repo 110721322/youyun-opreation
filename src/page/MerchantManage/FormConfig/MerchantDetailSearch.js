@@ -17,7 +17,7 @@ export const SEARCH_FORM_CONFIG = {
     {
       type: 1,
       label: '审核状态',
-      key: 'auditStatus',
+      key: 'status',
       labelWidth: '128px',
       options: [
         {
@@ -46,7 +46,7 @@ export const SEARCH_FORM_CONFIG = {
     {
       type: 1,
       label: '门店状态',
-      key: 'status',
+      key: 'disabled',
       labelWidth: '128px',
       options: [
         {

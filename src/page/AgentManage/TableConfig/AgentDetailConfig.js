@@ -9,35 +9,16 @@ export const DETAILCONFIG = {
           {
             items: [
               {
-                name: "所属服务商",
-                key: "agentName"
-              },
-              {
-                name: "到期时间",
-                key: "endTime",
-                type: "editIcon",
-                iconSrc: require('@/assets/img/ding.png')
-              },
-              {
-                name: "手机号码",
-                key: "phone"
-              }
-            ]
-          },
-          {
-            items: [
-              {
                 name: "服务商ID",
                 key: "agentNo"
               },
               {
-                name: "服务商状态",
-                key: "status",
-                type: "switch"
+                name: "到期时间",
+                key: "expireDate"
               },
               {
                 name: "地址",
-                key: "address"
+                key: "companyAddress"
               }
             ]
           },
@@ -46,6 +27,18 @@ export const DETAILCONFIG = {
               {
                 name: "服务商名称",
                 key: "agentName"
+              },
+              {
+                name: "服务商状态",
+                key: "accountStatus",
+              },
+            ]
+          },
+          {
+            items: [
+              {
+                name: "手机号码",
+                key: "personMobile"
               },
               {
                 name: "管理员",
@@ -63,7 +56,7 @@ export const DETAILCONFIG = {
             items: [
               {
                 name: "支付宝费率",
-                key: "alipyRate"
+                key: "alipayRate"
               }
             ]
           },
@@ -71,7 +64,7 @@ export const DETAILCONFIG = {
             items: [
               {
                 name: "微信费率",
-                key: "wechatRate"
+                key: "wechatPayRate"
               }
             ]
           },
@@ -79,7 +72,7 @@ export const DETAILCONFIG = {
             items: [
               {
                 name: "服务商利润分成",
-                key: "moneyRate"
+                key: "chargeFeePercent"
               }
             ]
           }
@@ -95,7 +88,7 @@ export const DETAILCONFIG = {
             items: [
               {
                 name: "开户支行",
-                key: "bankName"
+                key: "bankBranchName"
               }
             ]
           },
@@ -103,7 +96,7 @@ export const DETAILCONFIG = {
             items: [
               {
                 name: "银行卡账号",
-                key: "bankNo"
+                key: "bankCardNo"
               }
             ]
           },
@@ -111,7 +104,7 @@ export const DETAILCONFIG = {
             items: [
               {
                 name: "开户人姓名",
-                key: "personName"
+                key: "bankAccountHolder"
               }
             ]
           }

@@ -26,7 +26,7 @@ export const LIST_CONFIG = {
               },
               {
                 name: "商户状态",
-                key: "status"
+                key: "disabledSn"
               }
             ]
           },
@@ -38,7 +38,7 @@ export const LIST_CONFIG = {
               },
               {
                 name: "手机号码",
-                key: "phone"
+                key: "loginAccount"
               }
             ]
           }
