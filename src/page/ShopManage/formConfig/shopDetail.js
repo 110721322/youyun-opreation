@@ -196,5 +196,17 @@ export const FORM_CONFIG = {
         key: "key"
       }
     ]
-  }
+  },
+  rejectConfig: [
+    {
+      type: 0,
+      inputType: "textarea",
+      label: '备注',
+      key: 'remark',
+      lableWidth: '120px',
+      placeholder: "请输入驳回原因",
+      style: "width: 379px;",
+      maxlength: 200
+    }
+  ]
 }
