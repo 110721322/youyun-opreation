@@ -44,8 +44,8 @@
       <el-col v-if="!isHideBtn" :span="isShowAll ? 7 : 9">
         <div class="btn_list" style="margin-bottom:0" :style="btnListStyle">
           <el-button v-if="showBtnRefresh" type="text" class="f-fz-14 iconfont" icon="iconshuaxin" @click="onRefresh">刷新</el-button>
-          <el-button v-has="permission.search" type="primary" size="large" @click="handleClick">搜索</el-button>
           <el-button plain size="large" @click="resetForm">重置</el-button>
+          <el-button v-has="permission.search" type="primary" size="large" @click="handleClick">查询</el-button>
           <div v-show="!isShowAll" v-has="permission.condition" class="open_btn" @click="onClick_openOrClose">
             <span v-show="!isOpen">展开</span>
             <span v-show="isOpen">收起</span>
@@ -205,7 +205,7 @@ export default {
 .s_box {
   padding: 24px;
   background: rgba(255, 255, 255, 1);
-  margin: 24px 24px 0;
+  margin: 32px 24px 0;
   transition: all 0.5s;
 }
 .s_box::-webkit-scrollbar {

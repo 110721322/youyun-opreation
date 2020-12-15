@@ -1,0 +1,123 @@
+<template>
+  <div class="m-page">
+    <Search
+        :form-base-data="searchConfig.formData"
+        @search="onClickSearch"
+    />
+    <div class="m-basecrud">
+      <div class="m-basecrud-title">
+        <div class="m-left">商户列表</div>
+        <el-button type="primary">导出</el-button>
+      </div>
+      <div class="basecrud-box">
+        <BaseCrud
+            ref="table"
+            :grid-config="gridConfig"
+            :grid-btn-config="gridBtnConfig"
+            :grid-edit-width="200"
+            :is-async="true"
+            :is-select="false"
+            :is-data-select="false"
+            :is-table-expand="false"
+            :row-key="'id'"
+            :default-expand-all="false"
+            :hide-edit-area="false"
+            :grid-data="testData"
+            :params="params"
+            :api-service="api"
+            @details="onClickDetails"
+            @goMerchant="onClickGoMerchant"
+        ></BaseCrud>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  import api from "@/api/api_agentManage.js";
+  import Search from "@/components/search/search.vue";
+  import BaseCrud from "@/components/table/BaseCrud.vue";
+  import { SEARCH_FORM_CONFIG } from "./FormConfig/MerchantListSearch"
+  import { MERCHANT_LIST_CONFIG } from "./TableConfig/ListConfig"
+  export default {
+    name: "MerchantList",
+    components: { Search, BaseCrud },
+    data() {
+      return {
+        params: {},
+        api: api.merchantList,
+        testData: [],
+        searchConfig: SEARCH_FORM_CONFIG,
+        gridConfig: MERCHANT_LIST_CONFIG.gridConfig,
+        gridBtnConfig: MERCHANT_LIST_CONFIG.gridBtnConfig
+      }
+    },
+    created() {
+      this.testData = [
+        {
+          merchantNo: 225555,
+          agentName: 'haha',
+          merchantName: '水果店',
+          loginAccount: '11225444',
+          shopCount: 24,
+          disabled: 0
+        },
+        {
+          merchantNo: 225555,
+          agentName: 'haha',
+          merchantName: '水果店',
+          loginAccount: '11225444',
+          shopCount: 111,
+          disabled: 1
+        }
+      ]
+    },
+    methods: {
+      onClickSearch($ruleForm) {
+        this.params = {
+          merchantNo: $ruleForm.merchantNo ? $ruleForm.merchantNo : null,
+          merchantName: $ruleForm.merchantName ? $ruleForm.merchantName : null,
+          agentName: $ruleForm.agentName ? $ruleForm.agentName : null,
+          disabled: $ruleForm.disabled === 1 ? 1 : $ruleForm.disabled === 0 ? 0 : null
+        }
+      },
+      onClickDetails(row) {
+        this.$router.push({
+          name: 'MerchantDetail',
+          query: {
+            merchantNo: row.merchantNo,
+            id: row.id
+          }
+        })
+      },
+      onClickGoMerchant(row) {}
+    }
+  }
+</script>
+
+<style lang="scss" scoped>
+  .m-page {
+    .m-basecrud {
+      padding: 24px 24px;
+      .m-basecrud-title {
+        display: flex;
+        justify-content: space-between;
+        padding: 24px 24px;
+        background: #fff;
+      }
+      .basecrud-box {
+        padding: 0 24px 24px;
+        background: #fff;
+      }
+    }
+  }
+  /deep/ .tab-color {
+    color: #1989FA;
+  }
+  /deep/ .tab-reject {
+    color: #F5222D;
+  }
+  /deep/ .tab-disabled {
+    color: #F5222D;
+  }
+</style>

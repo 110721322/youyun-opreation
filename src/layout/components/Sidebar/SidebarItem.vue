@@ -61,11 +61,11 @@ export default {
       if ($item.children && $item.children.length > 0) {
         this.$router.push({
           name: $item.children[0].name
-        })
+        }).catch(err => {})
       } else {
         this.$router.push({
           name: $item.name
-        })
+        }).catch(err =>{})
       }
     },
     hasOneShowingChild(children = [], parent) {

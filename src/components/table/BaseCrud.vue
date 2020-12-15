@@ -399,6 +399,9 @@ export default {
   background-color: #52c41a;
   vertical-align: middle;
   margin: 0 5px;
+  &.audit {
+    background-color: #1989FA;
+  }
   &.opened {
     background-color: #52c41a;
   }
