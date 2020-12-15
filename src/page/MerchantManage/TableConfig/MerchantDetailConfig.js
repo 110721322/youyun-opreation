@@ -30,9 +30,7 @@ export const MERCHANT_DETAIL_CONFIG = {
       prop: 'shopStatus',
       render: (h, params) => {
         if (params.row.shopStatus === 0) {
-          return [h('span', {
-            'class': "dot " + "reject"
-          }), '禁用']
+          return h('div', {'class': 'tab-reject'},[h('span', {'class': "dot " + "reject"}), '禁用'])
         } else if (params.row.shopStatus === 1) {
           return [h('span', {
             'class': "dot " + "opened"
@@ -45,9 +43,7 @@ export const MERCHANT_DETAIL_CONFIG = {
       prop: 'status',
       render: (h, params) => {
         if (params.row.status === 0) {
-          return [h('span', {
-            'class': "dot " + "reject"
-          }), '驳回']
+          return h('div', {'class': 'tab-reject'},[h('span', {'class': "dot " + "reject"}), '驳回'])
         } else if (params.row.status === 1) {
           return [h('span', {
             'class': "dot " + "audit"
@@ -78,7 +74,7 @@ export const MERCHANT_DETAIL_CONFIG = {
         type: 'text'
       },
       {
-        name: '商户后台',
+        name: '门店后台',
         emitName: 'goMerchant',
         type: 'text'
       }

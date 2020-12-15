@@ -5,7 +5,7 @@ export const MERCHANT_LIST_CONFIG = {
       prop: 'merchantNo',
       render: (h, params) => {
         return h(
-          'span', {'class': 'tab-color' }, params.row.merchantNo
+          'span', { 'class': 'tab-color' }, params.row.merchantNo
         )
       }
     },
@@ -30,13 +30,9 @@ export const MERCHANT_LIST_CONFIG = {
       prop: 'status',
       render: (h, params) => {
         if (params.row.status === 0) {
-          return [h('span', {
-            'class': "dot " + "reject"
-          }), '禁用']
+          return h('div', {'class': 'tab-reject'},[h('span', {'class': "dot " + "reject"}), '禁用'])
         } else if (params.row.status === 1) {
-          return [h('span', {
-            'class': "dot " + "opened"
-          }), '启用']
+          return [h('span', {'class': "dot " + "opened"}), '启用']
         }
       }
     }

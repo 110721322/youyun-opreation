@@ -2,16 +2,16 @@ export const AGENT_TALK_DATA = {
   gridConfig: [
     {
       label: '记录ID',
-      prop: 'talkId',
+      prop: 'id',
       render: (h, params) => {
         return h(
-          'span', 'color: red', params.row.talkId
+          'span', { 'class': 'tab-color' }, params.row.id
         )
       }
     },
     {
       label: '沟通时间',
-      prop: 'channelTime',
+      prop: 'createTime',
     },
     {
       label: '沟通主题',
@@ -19,11 +19,11 @@ export const AGENT_TALK_DATA = {
     },
     {
       label: '沟通内容',
-      prop: 'themeContent'
+      prop: 'content'
     },
     {
       label: '沟通人',
-      prop: 'channnelMan'
+      prop: 'linkmanName'
     }
   ]
 }

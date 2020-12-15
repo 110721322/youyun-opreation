@@ -1,3 +1,4 @@
+import api from '@/api/api_agentManage';
 import areaData from "@/assets/data/areaData";
 export const ADD_AGENT = {
   serviceData: {
@@ -16,7 +17,7 @@ export const ADD_AGENT = {
         label: '登录手机号码',
         maxlength: 11,
         labelWidth: '120px',
-        key: 'phone',
+        key: 'account',
         rules: [
           { required: true, message: '请输入手机号', trigger: 'blur' },
           {
@@ -33,7 +34,7 @@ export const ADD_AGENT = {
         type: 11,
         label: '到期时间',
         labelWidth: '120px',
-        key: 'endTime',
+        key: 'expireDate',
         format: 'yyyy-MM-dd',
         rules: [
           { required: true, message: '请选择到期时间', trigger: 'change' }
@@ -68,7 +69,7 @@ export const ADD_AGENT = {
         labelWidth: '120px',
         isShowSlot: true,
         showSlotName: '‰',
-        key: 'alipyRate',
+        key: 'alipayRate',
         rules: [
           { required: true, message: '请输入支付宝费率', trigger: 'blur' }
         ]
@@ -90,7 +91,7 @@ export const ADD_AGENT = {
         labelWidth: '120px',
         isShowSlot: true,
         showSlotName: '%',
-        key: 'moneyRate',
+        key: 'chargeFeePercent',
         rules: [
           { required: true, message: '请输入服务商利润分成', trigger: 'blur' }
         ]
@@ -103,7 +104,7 @@ export const ADD_AGENT = {
         type: 0,
         label: '开户行',
         labelWidth: '120px',
-        key: 'bankName',
+        key: 'bankBranchName',
         rules: [
           { required: true, message: '请选择开户行', trigger: 'blur' }
         ]
@@ -112,7 +113,7 @@ export const ADD_AGENT = {
         type: 0,
         label: '银行卡号',
         labelWidth: '120px',
-        key: 'bankCard',
+        key: 'bankCardNo',
         rules: [
           { required: true, message: '请输入银行卡号', trigger: 'blur' }
         ]
@@ -121,9 +122,28 @@ export const ADD_AGENT = {
         type: 0,
         label: '开户人姓名',
         labelWidth: '120px',
-        key: 'name',
+        key: 'bankAccountHolder',
         rules: [
           { required: true, message: '请输入开户人姓名', trigger: 'blur' }
+        ]
+      }
+    ]
+  },
+  operationData: {
+    formData: [
+      {
+        type: 1,
+        label: '管理员昵称',
+        key: 'operationId',
+        urlOptions: {
+          url: api.queryAllOperation,
+          method: 'get',
+          keyName: 'operationId',
+          valueName: 'operationName',
+          params: {}
+        },
+        rules: [
+          { required: true, message: '请输入开户人姓名', trigger: 'change' }
         ]
       }
     ]

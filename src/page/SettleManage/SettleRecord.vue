@@ -1,6 +1,5 @@
 <template>
   <div class="m-page">
-    <div class="m-data"></div>
     <Search
         :form-base-data="searchConfig.formData"
         @search="onClickSearch"

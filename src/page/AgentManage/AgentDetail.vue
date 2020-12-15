@@ -1,7 +1,8 @@
 <template>
   <div class="m-page">
     <DetailMode :rule-form="ruleForm" :config-data="configData" @edit="editInfo" @editIcon="editOther"></DetailMode>
-    <div class="m-box"></div>
+<!-- TODO    数据统计模块-->
+<!--    <div class="m-box"></div>-->
     <div class="m-basecrud">
       <div class="m-basecrud-title">
         <div class="m-basecrud-left">沟通记录</div>
@@ -36,23 +37,23 @@
           :show-foot-btn="fromConfigData.showFootBtn === false"
           label-width="130px"
       ></Form>
-      <BaseCrud
-          v-if="drawerBase"
-          ref="table"
-          :grid-config="agentConfig"
-          :grid-edit-width="200"
-          :is-async="true"
-          :is-select="true"
-          :is-data-select="false"
-          :is-table-expand="false"
-          :row-key="'id'"
-          :default-expand-all="false"
-          :hide-edit-area="true"
-          :grid-data="testData"
-          :params="params"
-          :api-service="api"
-          @selectionChange="selectionChange"
-      ></BaseCrud>
+<!--  TODO    <BaseCrud-->
+<!--          v-if="drawerBase"-->
+<!--          ref="table"-->
+<!--          :grid-config="agentConfig"-->
+<!--          :grid-edit-width="200"-->
+<!--          :is-async="true"-->
+<!--          :is-select="true"-->
+<!--          :is-data-select="false"-->
+<!--          :is-table-expand="false"-->
+<!--          :row-key="'id'"-->
+<!--          :default-expand-all="false"-->
+<!--          :hide-edit-area="true"-->
+<!--          :grid-data="testData"-->
+<!--          :params="params"-->
+<!--          :api-service="api"-->
+<!--          @selectionChange="selectionChange"-->
+<!--      ></BaseCrud>-->
       <span slot="footer" class="dialog-footer">
         <el-button @click="drawer = false">取 消</el-button>
         <el-button type="primary" @click="clickSubmit">确 定</el-button>
@@ -62,6 +63,7 @@
 </template>
 
 <script>
+  import api from "@/api/api_agentManage.js";
   import Form from "@/components/form/index.vue";
   import DetailMode from "@/components/detailMode/detailMode4.vue";
   import BaseCrud from "@/components/table/BaseCrud.vue";
@@ -75,8 +77,10 @@
     components: { DetailMode, BaseCrud, Form },
     data() {
       return {
-        api: '',
-        params: {},
+        params: {
+          agentNo: this.$route.query.agentNo
+        },
+        api: api.queryByPage,
         ruleForm: {},
         configData: DETAILCONFIG.configData,
         gridConfig: AGENT_TALK_DATA.gridConfig,
@@ -87,7 +91,8 @@
         drawerBase: false,
         drawerType: '',
         title: '',
-        testData: []
+        testData: [],
+        switchStatus: false
       }
     },
     created() {
@@ -95,25 +100,103 @@
     methods: {
       editInfo($modelName) {
         console.log($modelName)
+        if (this.switchStatus) {
+          api.updateStatusUnfrozen({
+            agentNo: this.$route.query.agentNo
+          }).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                message: '启用成功',
+                type: 'success'
+              })
+            }
+          })
+        } else if (!this.switchStatus) {
+          api.updateStatusFrozen({
+            agentNo: this.$route.query.agentNo
+          }).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                message: '禁用',
+                type: 'success'
+              })
+            }
+          })
+        }
       },
+      
       editOther($modelName) {
         console.log($modelName)
       },
+      
       clickAddTalk() {
         this.drawer = true
         this.drawerType = 'addTalk'
         this.title = '添加沟通计划'
         this.fromConfigData = FORM_CONFIG.rateSet.formData
       },
-      selectionChange() {},
+      
       clickSubmit() {
+        this.$refs['formInfo'].$children[0].validate((valid) => {
+          if (valid) {} else {
+            return false;
+          }
+        });
         const type = this.drawerType
+        const ruleForm = this.$refs['formInfo'].ruleForm
         switch(type) {
           case "addTalk":
-            console.log(111)
+            api.addTalk(ruleForm).then(res => {
+              this.submitSuccess(res.status, type)
+            })
+            break;
+          case "updateTime":
+            // console.log('更新到期时间')
+            api.addTalk(ruleForm).then(res => {
+              this.submitSuccess(res.status, type)
+            })
+            break;
+          case "changeOperationUser":
+            // console.log('更换管理人员')
+            api.addTalk(ruleForm).then(res => {
+              this.submitSuccess(res.status, type)
+            })
+            break;
+          case "updateRate":
+            console.log('修改费率信息')
+            api.addTalk(ruleForm).then(res => {
+              this.submitSuccess(res.status, type)
+            })
+            break;
+          case "updateBankInfo":
+            console.log('修改银行信息')
+            api.addTalk(ruleForm).then(res => {
+              this.submitSuccess(res.status, type)
+            })
+            break;
+          case "updataLogin":
+            api.resetPassword({
+              agentNo: this.$route.query.agentNo,
+              pwdType: 1
+            }).then(res => {
+              this.submitSuccess(res.status, type)
+            })
         }
-        console.log(this.$refs.formInfo.ruleForm)
+      },
+      
+      submitSuccess(data, type) {
+        if (data === 0) {
+          this.$message({
+            message: type === 'addTalk' ? '添加成功' : type === 'updataLogin' ? '重置成功' : '更新成功',
+            type: 'message'
+          })
+          this.drawer = false
+          if (type === 'addTalk') {
+            this.$refs.table.getData()
+          }
+        }
       }
+      // TODO selectionChange() {},
     }
   }
 </script>
@@ -148,8 +231,12 @@
       }
     }
   }
+  /deep/ .tab-color {
+    color: #1989FA;
+  }
+
   /deep/ .el-dialog__body {
-    padding: 0;
+    padding: 0 0 24px 0;
   }
   
   /deep/ .el-dialog__header {

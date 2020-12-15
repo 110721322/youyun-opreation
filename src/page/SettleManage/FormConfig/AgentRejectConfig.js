@@ -5,7 +5,10 @@ export const REJECT_CONFIG = {
       label: '备注',
       labelWidth: '60px',
       inputType: 'textarea',
-      key: 'remark'
+      key: 'remark',
+      rules: [
+        { required: true, message: '请输入驳回原因', trigger: 'blur' }
+      ]
     }
   ],
   showSubmit: false,

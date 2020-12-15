@@ -1,7 +1,6 @@
 <template>
   <div class="m-page">
     <DetailMode :rule-form="ruleForm" :config-data="configData"></DetailMode>
-    <div class="m-data"></div>
     <Search
         :form-base-data="searchConfig.formData"
         @search="onClickSearch"
@@ -52,6 +51,7 @@
 </template>
 
 <script>
+  import api from "@/api/api_agentManage.js";
   import Search from "@/components/search/search.vue";
   import BaseCrud from "@/components/table/BaseCrud.vue";
   import DetailMode from "@/components/detailMode/detailMode4.vue";
@@ -86,6 +86,15 @@
           phone: '13214784568',
           address: '浙大森林小马哥',
           shopStatus: 0,
+          status: 0
+        },
+        {
+          shopId: 146,
+          shopName: '元芳的奶茶店',
+          merchantCategory: '便民类',
+          phone: '13214784568',
+          address: '浙大森林小马哥',
+          shopStatus: 1,
           status: 1
         }
       ]
@@ -131,5 +140,8 @@
   }
   /deep/ .tab-color {
     color: #1989FA;
+  }
+  /deep/ .tab-reject {
+    color: #F5222D;
   }
 </style>

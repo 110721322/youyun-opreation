@@ -68,7 +68,7 @@ export default {
     overflow: hidden;
   }
   /deep/ .el-dialog__body {
-    padding: 0;
+    padding: 0 0 24px 0;
   }
   /deep/ .el-dialog__header,.el-dialog__footer{
     padding: 16px 24px;

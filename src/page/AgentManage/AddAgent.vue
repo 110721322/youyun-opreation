@@ -40,6 +40,7 @@
 </template>
 
 <script>
+  import api from "@/api/api_agentManage.js";
   import Form from "@/components/form/index.vue";
   import { ADD_AGENT } from "./FormConfig/AddAgent";
 
@@ -79,9 +80,35 @@
         const rateData = this.$refs['rateInfo'].ruleForm
         const settleData = this.$refs['settleInfo'].ruleForm
         let infoData = {}
-        Object.assign(infoData,serviceData, rateData, settleData)
-        console.log(infoData)
+        Object.assign(infoData, serviceData, rateData, settleData)
+        const params = {
+          account: infoData.account,
+          address: infoData.address,
+          agentName: infoData.agentName,
+          areaCode: infoData.area[2],
+          cityCode: infoData.area[1],
+          provinceCode: infoData.area[0],
+          alipayRate: infoData.alipayRate,
+          wechatRate: infoData.wechatRate,
+          chargeFeePercent: infoData.chargeFeePercent,
+          bankBranchName: infoData.bankBranchName,
+          bankCardNo: infoData.bankCardNo,
+          bankAccountHolder: infoData.bankAccountHolder,
+          expireDate: infoData.expireDate
+        }
+        api.addAgent(params).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '添加服务商成功',
+              type: 'success'
+            })
+            this.$router.replace({
+              name: 'AgentList'
+            })
+          }
+        })
       },
+      
       clickCancel() {
         this.$router.back(-1)
       }

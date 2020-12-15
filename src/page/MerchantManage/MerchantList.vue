@@ -1,6 +1,5 @@
 <template>
   <div class="m-page">
-    <div class="m-data"></div>
     <Search
         :form-base-data="searchConfig.formData"
         @search="onClickSearch"
@@ -35,6 +34,7 @@
 </template>
 
 <script>
+  import api from "@/api/api_agentManage.js";
   import Search from "@/components/search/search.vue";
   import BaseCrud from "@/components/table/BaseCrud.vue";
   import { SEARCH_FORM_CONFIG } from "./FormConfig/MerchantListSearch"
@@ -61,6 +61,14 @@
           phone: '11225444',
           merchantNum: 111,
           status: 0
+        },
+        {
+          merchantNo: 225555,
+          agentName: 'haha',
+          merchantName: '水果店',
+          phone: '11225444',
+          merchantNum: 111,
+          status: 1
         }
       ]
     },
@@ -82,11 +90,6 @@
 
 <style lang="scss" scoped>
   .m-page {
-    .m-data {
-      width: 100%;
-      height: 100px;
-      background: #fff;
-    }
     .m-basecrud {
       padding: 24px 24px;
       .m-basecrud-title {
@@ -103,6 +106,9 @@
   }
   /deep/ .tab-color {
     color: #1989FA;
+  }
+  /deep/ .tab-reject {
+    color: #F5222D;
   }
   /deep/ .tab-disabled {
     color: #F5222D;

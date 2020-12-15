@@ -1,6 +1,5 @@
 <template>
   <div class="m-page">
-    <div class="m-data"></div>
     <Search
         :form-base-data="searchConfig.formData"
         @search="onClickSearch"
@@ -142,19 +141,17 @@
         this.drawer = true
       },
       clickSubmit() {
-        const formData = this.$refs.formInfo.ruleForm
-        if (formData.remark === null || formData.remark === '') {
-          this.$message({
-            message: '请填写驳回原因',
-            type: 'warning'
-          })
-          return
-        }
-        this.$message({
-          message: '操作成功',
-          type: 'success'
-        })
-        this.drawer = false
+        this.$refs['formInfo'].$children[0].validate((valid) => {
+          if (valid) {
+            this.$message({
+              message: '操作成功',
+              type: 'success'
+            })
+            this.drawer = false
+          } else {
+            return false;
+          }
+        });
       }
     }
   }
@@ -188,7 +185,7 @@
     color: #F5222D;
   }
   /deep/ .el-dialog__body {
-    padding: 0;
+    padding: 0 0 24px 0;
   }
 
   /deep/ .el-dialog__header {
