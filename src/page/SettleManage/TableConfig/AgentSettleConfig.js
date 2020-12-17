@@ -1,11 +1,11 @@
 export const AGENT_SETTLE_CONFIG = {
   gridConfig: [
     {
-      label: '结算单号',
-      prop: 'settleNo',
+      label: '结算ID',
+      prop: 'id',
       render: (h, params) => {
         return h(
-          'span', {'class': 'tab-color' }, params.row.settleNo
+          'span', {'class': 'tab-color' }, params.row.id
         )
       }
     },
@@ -14,47 +14,26 @@ export const AGENT_SETTLE_CONFIG = {
       prop: 'createTime',
     },
     {
-      label: '所属服务商',
-      prop: 'agentName',
+      label: '结算金额',
+      prop: 'actualAmount',
     },
     {
-      label: '服务商ID',
-      prop: 'agentNo'
+      label: '服务商',
+      prop: 'agentName'
     },
     {
-      label: '结算后金额',
-      prop: 'settleMoney'
-    },
-    {
-      label: '发票图片',
-      prop: 'settleImg',
-      type: 'img'
-    },
-    {
-      label: '开户人姓名',
-      prop: 'name'
-    },
-    {
-      label: '开户银行',
-      prop: 'bankName'
-    },
-    {
-      label: '银行卡号',
-      prop: 'bankNo'
-    },
-    {
-      label: '结算状态',
-      prop: 'status',
+      label: '处理状态',
+      prop: 'settleStatus',
       render: (h, params) => {
-        if (params.row.status === 0) {
+        if (params.row.settleStatus === 0) {
           return [h('span', {
             'class': "dot " + "reject"
           }), '驳回']
-        } else if (params.row.status === 1) {
+        } else if (params.row.settleStatus === 1) {
           return [h('span', {
             'class': "dot " + "opened"
           }), '待处理']
-        } else if (params.row.status === 2) {
+        } else if (params.row.settleStatus === 2) {
           return [h('span', {
             'class': "dot " + "success"
           }), '成功']
@@ -62,8 +41,8 @@ export const AGENT_SETTLE_CONFIG = {
       }
     },
     {
-      label: '结算时间',
-      prop: 'settleTime'
+      label: '处理时间',
+      prop: 'updateTime'
     },
     {
       label: '操作人',
@@ -83,20 +62,9 @@ export const AGENT_SETTLE_CONFIG = {
     view: false,
     expands: [
       {
-        name: '驳回',
-        emitName: 'reject',
-        type: 'text',
-        isShow: ($row) => {
-          return $row.status === 1 ? true : false
-        }
-      },
-      {
-        name: '通过',
-        emitName: 'pass',
-        type: 'text',
-        isShow: ($row) => {
-          return $row.status === 1 ? true : false
-        }
+        name: '详情',
+        emitName: 'details',
+        type: 'text'
       }
     ]
   }
