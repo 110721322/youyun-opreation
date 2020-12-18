@@ -5,30 +5,30 @@
       <div class="m-service">
         <div class="m-box">
           <div class="m-service-title">服务商信息</div>
-          <Form
+          <yun-form
               ref="serviceInfo"
               :form-base-data="fromConfigData.serviceData.formData"
               :show-foot-btn="fromConfigData.showFootBtn"
               label-width="130px"
-          ></Form>
+          ></yun-form>
         </div>
         <div class="m-box">
           <div class="m-service-title">费率信息</div>
-          <Form
+          <yun-form
               ref="rateInfo"
               :form-base-data="fromConfigData.rateData.formData"
               :show-foot-btn="fromConfigData.showFootBtn"
               label-width="130px"
-          ></Form>
+          ></yun-form>
         </div>
         <div class="m-box m-nobord">
           <div class="m-service-title">结算账号</div>
-          <Form
+          <yun-form
               ref="settleInfo"
               :form-base-data="fromConfigData.settleData.formData"
               :show-foot-btn="fromConfigData.showFootBtn"
               label-width="130px"
-          ></Form>
+          ></yun-form>
         </div>
       </div>
     </div>
@@ -117,17 +117,6 @@
 </script>
 
 <style lang="scss" scoped>
-  /deep/ .el-form {
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-  }
-  /deep/ .el-form-item {
-    width: 48%;
-  }
-  /deep/ .el-input {
-    width: 100%;
-  }
   .m-page {
     padding: 32px;
     .m-content {
@@ -145,9 +134,10 @@
       .m-service {
         padding: 24px 24px 16px;
         .m-box {
-          border-bottom: 1px solid #e5e5e5;
           margin-bottom: 24px;
+          border-bottom: 1px solid #e5e5e5;
           .m-service-title {
+            margin-bottom: 24px;
             font-size: 14px;
             font-weight: 500;
           }
