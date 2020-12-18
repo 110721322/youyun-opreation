@@ -69,7 +69,7 @@
 <script type="text/ecmascript-6">
 import api from "@/api/api_login";
 import api_common from "@/api/api_common";
-import { validPhone } from "@/libs/kit/validate";
+import { validPhone } from "youyun-vue-components/global/kit/validate";
 
 export default {
   components: {},
@@ -171,7 +171,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "@/assets/css/login.scss";
+@import "~youyun-vue-components/assets/css/login.scss";
 .page_box {
   position: fixed;
   top: 0;

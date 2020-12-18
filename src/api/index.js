@@ -3,7 +3,7 @@ import qs from 'qs';
 import { Loading, Message } from 'element-ui';
 import store from '@/store';
 import router from "@/router"
-import * as g from '../libs/global';
+import * as g from 'youyun-vue-components/global';
 var _isShowMessage = true;
 
 function setTimeShowMessage () {

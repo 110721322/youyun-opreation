@@ -32,13 +32,10 @@
 </template>
 
 <script>
-  import Search from "@/components/search/search.vue";
-  import BaseCrud from "@/components/table/BaseCrud.vue";
   import { SEARCH_FORM_CONFIG } from "./FormConfig/SettleRecordSearch"
   import { SETTLE_RECORD_CONFIG } from "./TableConfig/SettleRecordConfig"
   export default {
     name: "SettleRecord",
-    components: { Search, BaseCrud },
     data() {
       return {
         params: {},

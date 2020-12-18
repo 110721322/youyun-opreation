@@ -1,5 +1,5 @@
 import axios from "axios";
-import utils from "@/libs/kit/utils";
+import utils from "youyun-vue-components/global/kit/utils";
 import { TaskManage } from "@/libs/config/constant.config";
 
 /**

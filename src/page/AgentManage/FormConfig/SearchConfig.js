@@ -1,5 +1,5 @@
 import api from '@/api/api_agentManage';
-import areaData from "../../../assets/data/areaData";
+import areaData from "youyun-vue-components/assets/data/areaData.ws";
 export const SEARCH_FORM_CONFIG = {
   formData: [
     {

@@ -1,4 +1,4 @@
-import utils from "@/libs/kit/utils";
+import utils from "youyun-vue-components/global/kit/utils";
 
 export default {
   setRoleRoutes: ({ commit }, $routes) => {

@@ -1,5 +1,5 @@
 import store from '@/store'
-import utils from './kit/utils'
+import utils from 'youyun-vue-components/global/kit/utils'
 
 const routeList = [
   {

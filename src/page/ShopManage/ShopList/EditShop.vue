@@ -51,9 +51,7 @@
 
 <script>
   import { FORM_CONFIG } from "../formConfig/shopEditForm";
-  import Form from "@/components/form/index.vue";
   export default {
-    components: { Form },
     data() {
       return {
         shopInfoFormData: FORM_CONFIG.shopInfoConfigData,
@@ -78,7 +76,7 @@
   }
   .form-box {
     padding: 24px;
-    .form-title { 
+    .form-title {
       font-size: 14px;
       font-weight: 500;
       color: #000000;

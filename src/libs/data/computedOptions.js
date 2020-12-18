@@ -1,5 +1,5 @@
-import areaData from "@/assets/data/areaData.ws";
-import utils from "@/libs/kit/utils";
+import areaData from "youyun-vue-components/assets/data/areaData.ws";
+import utils from "youyun-vue-components/global/kit/utils";
 import store from "@/store";
 
 export const AreaOption = () => {
