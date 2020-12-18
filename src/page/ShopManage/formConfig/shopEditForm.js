@@ -1,5 +1,5 @@
-import areaData from "@/assets/data/areaData.ws";
-import { validPhone } from "@/libs/kit/validate";
+import areaData from "youyun-vue-components/assets/data/areaData.ws";
+import { validPhone } from "youyun-vue-components/global/kit/validate";
 
 export const FORM_CONFIG = {
   shopInfoConfigData: [

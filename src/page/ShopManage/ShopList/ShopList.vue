@@ -36,16 +36,10 @@
 </template>
 
 <script>
-import Search from "@/components/search/search.vue";
-import BaseCrud from "@/components/table/BaseCrud.vue";
 import { SEARCH_CONFIG } from "../formConfig/shopListSearch";
 import { TABLE_CONFIG } from "../tableConfig/shopListTable";
 export default {
   name: "ShopList",
-  components: {
-    Search,
-    BaseCrud
-  },
   data() {
     return {
       searchConfig: SEARCH_CONFIG,

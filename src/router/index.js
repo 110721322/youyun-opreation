@@ -25,7 +25,7 @@ import VueRouter from 'vue-router'
 import store from '@/store'
 
 import Layout from '@/layout'
-import utils from "../libs/kit/utils";
+import utils from "youyun-vue-components/global/kit/utils";
 import currRouter from './addRouter.js'
 
 import Login from '../page/Login/Login.vue'

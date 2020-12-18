@@ -40,13 +40,10 @@
 
 <script>
   import api from "@/api/api_settleManage.js";
-  import BaseCrud from "@/components/table/BaseCrud.vue";
-  import DetailMode from "@/components/detailMode/detailMode4.vue";
   import { SETTLE_DETAIL_CONFIG } from "./TableConfig/SettleDetailConfig";
   import { SETTLE_CONFIG } from "./FormConfig/SettleDetailConfig";
   export default {
     name: "SettleDetail",
-    components: { BaseCrud, DetailMode },
     data() {
       return {
         gridConfig: SETTLE_DETAIL_CONFIG.gridConfig,

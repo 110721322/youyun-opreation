@@ -72,7 +72,7 @@ import {computedRoleRouter} from '@/libs/role'
 import currRouter from '@/router/addRouter'
 import { mapActions, mapState } from 'vuex';
 import store from '@/store';
-import { validPhone } from "@/libs/kit/validate";
+import { validPhone } from "youyun-vue-components/global/kit/validate";
 
 export default {
   components: {},
@@ -200,7 +200,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "@/assets/css/login.scss";
+@import "~youyun-vue-components/assets/css/login.scss";
 .page_box {
   position: absolute;
   top: 0;

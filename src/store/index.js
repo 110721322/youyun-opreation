@@ -26,7 +26,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
-import utils from "../libs/kit/utils";
+import utils from "youyun-vue-components/global/kit/utils";
 
 /* 导入模块 */
 import admin from './modules/admin';

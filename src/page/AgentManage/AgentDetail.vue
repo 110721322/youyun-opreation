@@ -64,9 +64,6 @@
 
 <script>
   import api from "@/api/api_agentManage.js";
-  import Form from "@/components/form/index.vue";
-  import DetailMode from "@/components/detailMode/detailMode4.vue";
-  import BaseCrud from "@/components/table/BaseCrud.vue";
   import { AGENT_TALK_DATA } from "./TableConfig/AgentTalkConfig";
   import { DETAILCONFIG } from "./TableConfig/AgentDetailConfig";
   import { FORM_CONFIG } from "./FormConfig/AgentDetailConfig";
@@ -74,7 +71,6 @@
 
   export default {
     name: "AgentDetail",
-    components: { DetailMode, BaseCrud, Form },
     data() {
       return {
         params: {
@@ -136,18 +132,18 @@
           })
         }
       },
-      
+
       editOther($modelName) {
         console.log($modelName)
       },
-      
+
       clickAddTalk() {
         this.drawer = true
         this.drawerType = 'addTalk'
         this.title = '添加沟通计划'
         this.fromConfigData = FORM_CONFIG.rateSet.formData
       },
-      
+
       clickSubmit() {
         this.$refs['formInfo'].$children[0].validate((valid) => {
           if (valid) {} else {
@@ -195,7 +191,7 @@
             })
         }
       },
-      
+
       submitSuccess(data, type) {
         if (data === 0) {
           this.$message({
@@ -250,7 +246,7 @@
   /deep/ .el-dialog__body {
     padding: 0 0 24px 0;
   }
-  
+
   /deep/ .el-dialog__header {
     padding: 16px 24px;
     background: #FAFAFA;
@@ -258,7 +254,7 @@
     color: #606266;
     border-bottom: 1px solid #EBEEF5;
   }
-  
+
   /deep/ .el-dialog__footer {
     padding-top: 20px;
     border-top: 1px solid #EBEEF5;

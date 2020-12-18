@@ -121,11 +121,7 @@
 
 <script>
   import { FORM_CONFIG } from "../formConfig/shopDetail";
-  import InfoMode from "@/components/detailMode/shopDetailMode.vue";
-  import DetailMode from "@/components/detailMode/detailMode2.vue";
-  import Form from "@/components/form/index.vue";
   export default {
-    components: { InfoMode, DetailMode, Form },
     data() {
       return {
         basicInfoConfig: FORM_CONFIG.basicInfoData,

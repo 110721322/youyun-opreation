@@ -33,16 +33,10 @@
 </template>
 
 <script>
-import Search from "@/components/search/search.vue";
-import BaseCrud from "@/components/table/BaseCrud.vue";
 import { SEARCH_CONFIG } from "../formConfig/flowFormConfig";
 import { TABLE_CONFIG } from "../tableConfig/flowTableConfig";
 export default {
   name: "TransactionFlow",
-  components: {
-    Search,
-    BaseCrud
-  },
   data() {
     return {
       searchConfig: SEARCH_CONFIG,

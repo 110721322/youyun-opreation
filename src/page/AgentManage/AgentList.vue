@@ -49,20 +49,16 @@
       </span>
     </el-dialog>
   </div>
- 
+
 </template>
 
 <script>
   import api from "@/api/api_agentManage.js";
-  import Form from "@/components/form/index.vue";
-  import Search from "@/components/search/search.vue";
-  import BaseCrud from "@/components/table/BaseCrud.vue";
   import { ADD_AGENT } from "./FormConfig/AddAgent"
   import { SEARCH_FORM_CONFIG } from "./FormConfig/SearchConfig"
   import { AGENT_LIST_CONFIG } from "./TableConfig/AgentListConfig"
   export default {
     name: "AgentList",
-    components: { Search, BaseCrud, Form },
     data() {
       return {
         drawer: false,

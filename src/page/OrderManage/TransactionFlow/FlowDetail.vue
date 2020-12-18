@@ -57,11 +57,7 @@
 <script>
   import { FORM_CONFIG } from "../formConfig/flowDetailConfig";
   import { TABLE_CONFIG } from "../tableConfig/flowDetailTableConfig";
-  import BaseCrud from "@/components/table/BaseCrud.vue";
-  import InfoMode from "@/components/detailMode/shopDetailMode.vue";
-  import DetailMode from "@/components/detailMode/detailMode2.vue";
   export default {
-    components: { BaseCrud, InfoMode, DetailMode },
     data() {
       return {
         orderInfoConfig: FORM_CONFIG.orderInfoData,

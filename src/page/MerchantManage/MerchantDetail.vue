@@ -52,16 +52,12 @@
 
 <script>
   import api from "@/api/api_agentManage.js";
-  import Search from "@/components/search/search.vue";
-  import BaseCrud from "@/components/table/BaseCrud.vue";
-  import DetailMode from "@/components/detailMode/detailMode4.vue";
   import { LIST_CONFIG } from "./TableConfig/MerchantListConfig"
   import { SEARCH_FORM_CONFIG } from "./FormConfig/MerchantDetailSearch"
   import { FORM_CONFIG } from "./FormConfig/MerchantDetailConfig"
   import { MERCHANT_DETAIL_CONFIG } from "./TableConfig/MerchantDetailConfig"
   export default {
     name: "MerchantDetail",
-    components: { DetailMode, Search, BaseCrud },
     data() {
       return {
         ruleForm: {},

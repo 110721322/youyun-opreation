@@ -34,14 +34,11 @@
 
 <script>
   import api from "@/api/api_settleManage.js";
-  import Search from "@/components/search/search.vue";
-  import BaseCrud from "@/components/table/BaseCrud.vue";
   import { REJECT_CONFIG } from "./FormConfig/AgentRejectConfig"
   import { SEARCH_FORM_CONFIG } from "./FormConfig/AgentSettleSearch"
   import { AGENT_SETTLE_CONFIG } from "./TableConfig/AgentSettleConfig"
   export default {
     name: "AgentSettleManage",
-    components: { Search, BaseCrud },
     data() {
       return {
         params: {},
