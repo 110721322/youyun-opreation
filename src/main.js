@@ -133,23 +133,34 @@
  */
 import 'babel-polyfill';
 import Vue from 'vue';
-import ElementUI, {Message} from 'element-ui';
 import store from './store'
-import 'element-ui/lib/theme-chalk/index.css';
-import './assets/css/element-variables.scss';
+
 
 import router from './router';
-import "./assets/js/rem"
 import App from './App.vue';
-import * as g from './libs/global';
+import * as g from 'youyun-vue-components/global';
 
 // 权限控制
 import './libs/directive';
 // 公共css
-import './assets/css/basic.scss';
-import './assets/css/utils.scss';
-import './assets/css/scrollBar.scss';
-import './assets/img/icon-font/iconfont.css'
+import 'youyun-vue-components/assets/css/basic.scss';
+import 'youyun-vue-components/assets/css/index.scss';
+import 'youyun-vue-components/assets/css/utils.scss';
+import 'youyun-vue-components/assets/css/scrollBar.scss';
+import 'youyun-vue-components/assets/css/icon-font/iconfont.css';
+import 'element-ui/lib/theme-chalk/index.css';
+import 'youyun-vue-components/assets/css/element-variables.scss';
+
+// 加载组件库
+import ElementUI, {Message} from 'element-ui';
+import {
+  Layout, DetailMode, Form, Dialog
+} from 'youyun-vue-components'
+
+Vue.use(Layout)
+Vue.use(DetailMode)
+Vue.use(Form)
+Vue.use(Dialog)
 
 Vue.prototype.$EventBus = new Vue();
 
