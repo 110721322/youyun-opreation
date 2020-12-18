@@ -25,33 +25,15 @@
             :grid-data="testData"
             :params="params"
             :api-service="api"
-            @pass="onClickPass"
-            @reject="onClickReject"
+            @details="onClickDetails"
         ></BaseCrud>
       </div>
     </div>
-    <el-dialog
-        title="结算申请"
-        :visible.sync="drawer"
-        width="488px"
-    >
-      <Form
-          v-if="drawer"
-          ref="formInfo"
-          :form-base-data="fromConfigData"
-          :show-foot-btn="fromConfigData.showFootBtn === false"
-          label-width="130px"
-      ></Form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="drawer = false">取 消</el-button>
-        <el-button type="primary" @click="clickSubmit">确 定</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
 
 <script>
-  import Form from "@/components/form/index.vue";
+  import api from "@/api/api_settleManage.js";
   import Search from "@/components/search/search.vue";
   import BaseCrud from "@/components/table/BaseCrud.vue";
   import { REJECT_CONFIG } from "./FormConfig/AgentRejectConfig"
@@ -59,11 +41,11 @@
   import { AGENT_SETTLE_CONFIG } from "./TableConfig/AgentSettleConfig"
   export default {
     name: "AgentSettleManage",
-    components: { Search, BaseCrud, Form },
+    components: { Search, BaseCrud },
     data() {
       return {
         params: {},
-        api: '',
+        api: api.settleList,
         testData: [],
         drawer: false,
         searchConfig: SEARCH_FORM_CONFIG,
@@ -75,83 +57,46 @@
     created() {
       this.testData = [
         {
-          settleNo: 225555,
+          id: 225555,
           createTime: '2020-12-12',
           agentNo: '2587755',
-          settleMoney: '135',
+          actualAmount: '135',
           agentName: 'haha',
-          merchantName: '水果店',
-          shopName: '先锋水果店',
-          settleChannel: '乐刷',
-          settleAmount: '100',
-          name: '张三',
-          bankName: '杭州银行',
-          bankNo: '22545872595841548',
-          settleTime: '2020-12-12',
+          updateTime: '2020-12-12',
           remark: '图片模糊',
-          status: 0
+          operationer: '知道',
+          settleStatus: 0
         },
         {
-          settleNo: 225555,
+          id: 2255,
           createTime: '2020-12-12',
           agentNo: '2587755',
-          settleMoney: '135',
+          actualAmount: '135',
           agentName: 'haha',
-          merchantName: '水果店',
-          shopName: '先锋水果店',
-          settleChannel: '乐刷',
-          settleAmount: '100',
-          name: '张三',
-          bankName: '杭州银行',
-          bankNo: '22545872595841548',
-          settleTime: '2020-12-12',
+          updateTime: '2020-12-12',
           remark: '图片模糊',
-          status: 1
+          operationer: '知道',
+          settleStatus: 1
         }
       ]
     },
     methods: {
       onClickSearch($ruleForm) {
         this.params = {
-          settleNo: $ruleForm.settleNo ? $ruleForm.settleNo : null,
-          agentNo: $ruleForm.agentNo ? $ruleForm.agentNo : null,
-          shopName: $ruleForm.shopName ? $ruleForm.shopName : null,
-          agentName: $ruleForm.agentName ? $ruleForm.agentName : null,
-          name: $ruleForm.name ? $ruleForm.name : null,
-          bankName: $ruleForm.bankName ? $ruleForm.bankName : null,
-          bankNo: $ruleForm.bankNo ? $ruleForm.bankNo : null,
-          createTime: $ruleForm.createTime ? $ruleForm.createTime : null,
-          settleTime: $ruleForm.settleTime ? $ruleForm.settleTime : null
+          settleNo: $ruleForm.settleNo,
+          agentNo: $ruleForm.agentNo,
+          settleStatus: $ruleForm.settleStatus,
+          beginTime: $ruleForm.date && $ruleForm.date[1]  ? $ruleForm.date[0] : null,
+          endTime: $ruleForm.date && $ruleForm.date[1]  ? $ruleForm.date[1] : null
         }
       },
-      onClickPass(row) {
-        this.$confirm("确定通过该代理商结算申请？", "结算申请", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消"
-        }).then(() => {
-          this.$message({
-            message: '已通过',
-            type: 'success'
-          })
-        }).catch(() => {
-          this.$message('取消操作')
-        })
-      },
-      onClickReject(row) {
-        this.drawer = true
-      },
-      clickSubmit() {
-        this.$refs['formInfo'].$children[0].validate((valid) => {
-          if (valid) {
-            this.$message({
-              message: '操作成功',
-              type: 'success'
-            })
-            this.drawer = false
-          } else {
-            return false;
+      onClickDetails(row) {
+        this.$router.push({
+          name: 'SettleDetail',
+          query: {
+            id: row.id
           }
-        });
+        })
       }
     }
   }

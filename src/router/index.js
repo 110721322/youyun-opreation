@@ -80,7 +80,7 @@ const router = new VueRouter({
       }
     },
     {
-      path: '/registSuccess',
+      path: '/RegistSuccess',
       component: RegistSuccess,
       meta: {
         requireLogin: false

@@ -146,7 +146,17 @@ const asyncRoutes = {
       title: '结算管理',
       icon: 'SettleManage'
     },
-    children: []
+    children: [
+      {
+        path: '/SettleManage/AgentSettleManage/SettleDetail',
+        name: 'SettleDetail',
+        meta: {
+          title: '详情',
+          icon: 'SettleDetail'
+        },
+        component: () => import('@/page/SettleManage/SettleDetail.vue'),
+      }
+    ]
   },
   'SettleRecord': {
     path: '/SettleRecord',

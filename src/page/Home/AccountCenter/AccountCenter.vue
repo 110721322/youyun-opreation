@@ -6,58 +6,55 @@
         <span class="edit-btn" @click="clickModify">修改密码</span>
       </div>
       <div class="info-box">
-        <InfoMode
+        <yun-detail-mode
           :rule-form="ruleForm"
-          :config-data="accountInfoConfig"
+          :filed-config-list="accountInfoConfig"
+          module-title="账户信息"
+          theme="border"
+          @editTel="editTel"
         >
           <template slot-scope="scope" slot="switch">
             <!-- 授权 -->
             <span>启用</span>
           </template>
-        </InfoMode>
+        </yun-detail-mode>
       </div>
     </div>
-    <el-dialog
+    <yun-dialog
       title="修改密码"
-      :visible.sync="modifyPasswordDialog"
-      width="30%"
-      :before-close="handleClose">
-      <Form
-        ref="passwordForm"
-        :form-base-data="passwordFormConfig"
-        :label-width="'150px'"
-        :show-foot-btn="false"
-      ></Form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="modifyPasswordDialog = false">取 消</el-button>
-        <el-button type="primary" @click="clickModifyPassword()">确 定</el-button>
-      </span>
-    </el-dialog>
-    <el-dialog
+      :dialoger="modifyPasswordDialog"
+      width="488px"
+      @confirm="clickModifyPassword"
+      @cancel="handleClose">
+      <yun-form
+          slot="body"
+          ref="passwordForm"
+          :form-base-data="passwordFormConfig"
+          :label-width="'150px'"
+          :show-foot-btn="false"
+      ></yun-form>
+    </yun-dialog>
+    <yun-dialog
       title="修改登录手机号"
-      :visible.sync="modifyPhoneDialog"
-      width="30%"
+      :dialoger="modifyPhoneDialog"
+      width="488px"
+      @confirm="clickModifyPhone"
+      @cancel="handleCloseForm"
       :before-close="handleCloseForm">
-      <Form
-        ref="phoneForm"
-        :form-base-data="phoneFormConfig"
-        :label-width="'150px'"
-        :show-foot-btn="false"
-      ></Form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="modifyPhoneDialog = false">取 消</el-button>
-        <el-button type="primary" @click="clickModifyPhone()">确 定</el-button>
-      </span>
-    </el-dialog>
+      <yun-form
+          slot="body"
+          ref="phoneForm"
+          :form-base-data="phoneFormConfig"
+          :label-width="'150px'"
+          :show-foot-btn="false"
+      ></yun-form>
+    </yun-dialog>
   </div>
 </template>
 
 <script>
   import { FORM_CONFIG } from "../formConfig/accountCenter";
-  import InfoMode from "@/components/detailMode/shopDetailMode.vue";
-  import Form from "@/components/form/index.vue";
   export default {
-    components: { InfoMode, Form },
     data() {
       return {
         accountInfoConfig: FORM_CONFIG.accountInfoData,
@@ -78,6 +75,9 @@
       },
       handleClose() {
         this.modifyPasswordDialog = false
+      },
+      editTel() {
+        this.modifyPhoneDialog = true
       },
       clickModifyPassword() {
         if (!this.$refs.passwordForm.handleClick()) {

@@ -34,7 +34,7 @@
 </template>
 
 <script>
-  import api from "@/api/api_agentManage.js";
+  import api from "@/api/api_merchantManage.js";
   import Search from "@/components/search/search.vue";
   import BaseCrud from "@/components/table/BaseCrud.vue";
   import { SEARCH_FORM_CONFIG } from "./FormConfig/MerchantListSearch"

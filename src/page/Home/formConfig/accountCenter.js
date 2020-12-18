@@ -27,6 +27,7 @@ export const FORM_CONFIG = {
       key: "password",
       initVal: "",
       labelWidth: '120px',
+      span: 24,
       rules: [
         { required: true, message: '请输入新密码', trigger: 'blur' }
       ]
@@ -38,6 +39,7 @@ export const FORM_CONFIG = {
       initVal: "",
       labelWidth: '120px',
       maxlength: 11,
+      span: 24,
       rules: [
         { required: true, message: '请输入登录手机号', trigger: 'blur' }
       ]
@@ -48,6 +50,7 @@ export const FORM_CONFIG = {
       key: "code",
       initVal: "",
       labelWidth: '120px',
+      span: 24,
       rules: [
         { required: true, message: '请输入短信验证码', trigger: 'blur' }
       ]
@@ -61,6 +64,7 @@ export const FORM_CONFIG = {
       initVal: "",
       labelWidth: '120px',
       maxlength: 11,
+      span: 24,
       rules: [
         { required: true, message: '请输入登录手机号', trigger: 'blur' }
       ]
@@ -71,6 +75,7 @@ export const FORM_CONFIG = {
       key: "cloudPayGt1000Rate",
       initVal: "",
       labelWidth: '120px',
+      span: 24,
       rules: [
         { required: true, message: '请输入短信验证码', trigger: 'blur' }
       ]
@@ -82,6 +87,7 @@ export const FORM_CONFIG = {
       initVal: "",
       labelWidth: '120px',
       maxlength: 11,
+      span: 24,
       rules: [
         { required: true, message: '请输入新登录手机号', trigger: 'blur' }
       ]
@@ -92,6 +98,7 @@ export const FORM_CONFIG = {
       key: "cloudPayGt1000Rate",
       initVal: "",
       labelWidth: '120px',
+      span: 24,
       rules: [
         { required: true, message: '请输入短信验证码', trigger: 'blur' }
       ]

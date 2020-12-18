@@ -68,7 +68,7 @@ module.exports = {
       }
     },
     devServer: {
-      port: 8081,
+      port: 8082,
       proxy: {
         '/fund': {
           target: process.env.VUE_APP_BASEURL,

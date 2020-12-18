@@ -158,6 +158,7 @@
                 this.drawer = false
               }
             })
+            break;
         }
       }
     }
