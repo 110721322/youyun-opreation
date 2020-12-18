@@ -1,25 +1,23 @@
 export const FORM_CONFIG = {
-  accountInfoData: {
-    name: "账户信息",
-    items: [
-      {
-        name: "门店信息",
-        key: "merchantNo"
-      },
-      {
-        name: "账户分组",
-        key: "phone"
-      },
-      {
-        name: "账户昵称",
-        key: "shopNo"
-      },
-      {
-        name: "登录手机号",
-        key: "shopName"
-      }
-    ]
-  },
+  accountInfoData: [
+    {
+      label: "门店信息",
+      key: "merchantNo"
+    },
+    {
+      label: "账户分组",
+      key: "phone"
+    },
+    {
+      label: "账户昵称",
+      key: "shopNo"
+    },
+    {
+      label: "登录手机号",
+      key: "shopName",
+      emitEdit: 'editTel'
+    }
+  ],
   passwordFormConfig: [
     {
       type: 0,
@@ -27,6 +25,7 @@ export const FORM_CONFIG = {
       key: "alipayRate",
       initVal: "",
       labelWidth: '120px',
+      span: 24,
       rules: [
         { required: true, message: '请输入', trigger: 'blur' }
       ]
@@ -38,6 +37,7 @@ export const FORM_CONFIG = {
       initVal: "",
       labelWidth: '120px',
       maxlength: 11,
+      span: 24,
       rules: [
         { required: true, message: '请输入登录手机号', trigger: 'blur' }
       ]
@@ -48,6 +48,7 @@ export const FORM_CONFIG = {
       key: "cloudPayGt1000Rate",
       initVal: "",
       labelWidth: '120px',
+      span: 24,
       rules: [
         { required: true, message: '请输入短信验证码', trigger: 'blur' }
       ]
@@ -61,6 +62,7 @@ export const FORM_CONFIG = {
       initVal: "",
       labelWidth: '120px',
       maxlength: 11,
+      span: 24,
       rules: [
         { required: true, message: '请输入登录手机号', trigger: 'blur' }
       ]
@@ -71,6 +73,7 @@ export const FORM_CONFIG = {
       key: "cloudPayGt1000Rate",
       initVal: "",
       labelWidth: '120px',
+      span: 24,
       rules: [
         { required: true, message: '请输入短信验证码', trigger: 'blur' }
       ]
@@ -82,6 +85,7 @@ export const FORM_CONFIG = {
       initVal: "",
       labelWidth: '120px',
       maxlength: 11,
+      span: 24,
       rules: [
         { required: true, message: '请输入新登录手机号', trigger: 'blur' }
       ]
@@ -92,6 +96,7 @@ export const FORM_CONFIG = {
       key: "cloudPayGt1000Rate",
       initVal: "",
       labelWidth: '120px',
+      span: 24,
       rules: [
         { required: true, message: '请输入短信验证码', trigger: 'blur' }
       ]
