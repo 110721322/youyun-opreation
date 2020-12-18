@@ -48,7 +48,7 @@
           :config-data="shopInfoDetailConfig"
         >
           <template slot-scope="scope" slot="settleType">
-            <el-radio-group v-model="radio">
+            <el-radio-group v-model="radio" :disabled="true">
               <el-radio :label="1">独立结算门店（需审核）</el-radio>
               <el-radio :label="2">非独立结算门店（无需审核）</el-radio>
             </el-radio-group>
@@ -62,7 +62,7 @@
           :config-data="verityDetailConfig"
         >
           <template slot-scope="scope" slot="shopType">
-            <el-radio-group v-model="radio">
+            <el-radio-group v-model="radio" :disabled="true">
               <el-radio :label="1">企业</el-radio>
               <el-radio :label="2">个体工商</el-radio>
               <el-radio :label="3">个人</el-radio>
@@ -80,7 +80,7 @@
           :config-data="settleDetailConfig"
         >
           <template slot-scope="scope" slot="settleType">
-            <el-radio-group v-model="radio">
+            <el-radio-group v-model="radio" :disabled="true">
               <el-radio :label="1">对公法人</el-radio>
               <el-radio :label="2">对私法人</el-radio>
               <el-radio :label="3">对私非法人</el-radio>

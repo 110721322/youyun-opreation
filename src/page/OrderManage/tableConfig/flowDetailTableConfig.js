@@ -2,34 +2,68 @@ export const TABLE_CONFIG = {
   gridConfig: [
     {
       label: '订单号',
-      prop: 'shopNo'
+      prop: 'orderNo'
     },
     {
       label: '交易时间',
-      prop: 'shopNo'
+      prop: 'payTime'
     },
     {
       label: '交易类型',
-      prop: 'shopNo'
+      prop: 'tradeType'
     },
     {
       label: '设备类型',
-      prop: 'shopName'
+      prop: 'diviceType'
     },
     {
       label: '设备SN',
-      prop: 'shopName'
+      prop: 'deviceSN'
     },
     {
       label: '实收（退）金额',
-      prop: 'shopName'
+      prop: 'tradeAmount'
     },
     {
-      label: '交易状态'
+      label: '交易状态',
+      prop: 'orderStatus',
+      render: (h, params) => {
+        if (params.row.orderStatus === 0) {
+          return h(
+            'span', '待支付'
+          )
+        }
+        if (params.row.orderStatus === 1) {
+          return h(
+            'span', '支付中'
+          )
+        }
+        if (params.row.orderStatus === 2) {
+          return h(
+            'span', '支付成功'
+          )
+        }
+        if (params.row.orderStatus === 3) {
+          return h(
+            'span', '交易关闭'
+          )
+        }
+        if (params.row.orderStatus === 4) {
+          return h(
+            'span', '部分退款'
+          )
+        }
+        if (params.row.orderStatus === 5) {
+          return h(
+            'span', '全部退款'
+          )
+        }
+      }
+
     },
     {
       label: '操作员',
-      prop: 'shopName'
+      prop: 'cashierName'
     }
   ],
 

@@ -198,7 +198,7 @@ const asyncRoutes = {
     component: () => import('@/page/OrderManage/TransactionFlow/TransactionFlow.vue'),
     children: [
     ]
-  },
+  }
 }
 const routers = []
 const menusToRoutes = function (data) {

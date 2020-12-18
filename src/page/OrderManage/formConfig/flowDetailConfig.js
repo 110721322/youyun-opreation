@@ -4,63 +4,63 @@ export const FORM_CONFIG = {
     items: [
       {
         name: "订单号",
-        key: "agentNo"
+        key: "orderNo"
       },
       {
         name: "交易号",
-        key: "merchantNo"
+        key: "transactionNo"
       },
       {
         name: "创建时间",
-        key: "phone"
+        key: "creatTime"
       },
       {
         name: "交易时间",
-        key: "shopNo"
+        key: "payTime"
       },
       {
         name: "支付通道",
-        key: "shopName"
+        key: "payChannel"
       },
       {
         name: "支付模式",
-        key: "createTime"
+        key: "payWay"
       },
       {
         name: "交易类型",
-        key: "disabled"
+        key: "tradeType"
       },
       {
         name: "交易状态",
-        key: "merchantNo"
+        key: "orderStatus"
       },
       {
         name: "订单金额",
-        key: "status"
+        key: "totalAmount"
       },
       {
         name: "支付方式",
-        key: "shopNo"
+        key: "payWayName"
       },
       {
         name: "实收金额",
-        key: "shopName"
+        key: "actualAmount"
       },
       {
         name: "手续费",
-        key: "createTime"
+        key: "serviceFee"
       },
       {
         name: "退款金额",
-        key: "disabled"
+        key: "refundAmount"
       },
       {
         name: "服务商分润",
-        key: "merchantNo"
+        key: "agentCommission"
       },
       {
         name: "平台分润",
-        key: "status"
+        key: "ourCommission"
       }
     ]
   },
@@ -69,32 +69,32 @@ export const FORM_CONFIG = {
     items: [
       {
         name: "所属服务商",
-        key: "key"
+        key: "agentName"
       },
       {
         name: "所属商户",
-        key: "key"
+        key: "merchantName"
       },
       {
         name: "收款门店",
-        key: "key"
+        key: "shopName"
       },
       {
         name: "收银员",
-        key: "key"
+        key: "cashierName"
       },
       {
         name: "设备类型",
-        key: "key"
+        key: "deviceType"
       },
       {
         name: "设备型号",
-        key: "key"
-      },
-      {
-        name: "设备SN",
-        key: "key"
+        key: "deviceNo"
       }
+      // {
+      //   name: "设备SN",
+      //   key: "key"
+      // }
     ]
   },
   payInfoData: {
@@ -102,11 +102,11 @@ export const FORM_CONFIG = {
     items: [
       {
         name: "支付账号",
-        key: "bankBranchName"
+        key: "payAccount"
       },
       {
         name: "备注",
-        key: "bankCardNo"
+        key: "remark"
       }
     ]
   }

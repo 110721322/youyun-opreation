@@ -3,8 +3,8 @@ export const FORM_CONFIG = {
     name: "账户信息",
     items: [
       {
-        name: "门店信息",
-        key: "merchantNo"
+        name: "账户ID",
+        key: "id"
       },
       {
         name: "账户分组",
@@ -12,11 +12,11 @@ export const FORM_CONFIG = {
       },
       {
         name: "账户昵称",
-        key: "shopNo"
+        key: "name"
       },
       {
         name: "登录手机号",
-        key: "shopName"
+        key: "phone"
       }
     ]
   },
@@ -24,17 +24,17 @@ export const FORM_CONFIG = {
     {
       type: 0,
       label: "新密码",
-      key: "alipayRate",
+      key: "password",
       initVal: "",
       labelWidth: '120px',
       rules: [
-        { required: true, message: '请输入', trigger: 'blur' }
+        { required: true, message: '请输入新密码', trigger: 'blur' }
       ]
     },
     {
       type: 0,
       label: "登录手机号",
-      key: "wechatPayRate",
+      key: "phone",
       initVal: "",
       labelWidth: '120px',
       maxlength: 11,
@@ -45,7 +45,7 @@ export const FORM_CONFIG = {
     {
       type: 0,
       label: "短信验证码",
-      key: "cloudPayGt1000Rate",
+      key: "code",
       initVal: "",
       labelWidth: '120px',
       rules: [
@@ -78,7 +78,7 @@ export const FORM_CONFIG = {
     {
       type: 0,
       label: "新登录手机号",
-      key: "wechatPayRate",
+      key: "phone",
       initVal: "",
       labelWidth: '120px',
       maxlength: 11,

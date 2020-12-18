@@ -206,7 +206,7 @@ export const FORM_CONFIG = {
       lableWidth: '120px',
       placeholder: "请输入驳回原因",
       style: "width: 379px;",
-      maxlength: 200
+      maxlength: 100
     }
   ]
 }
