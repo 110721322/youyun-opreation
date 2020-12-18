@@ -1,25 +1,23 @@
 export const FORM_CONFIG = {
-  accountInfoData: {
-    name: "账户信息",
-    items: [
-      {
-        name: "账户ID",
-        key: "id"
-      },
-      {
-        name: "账户分组",
-        key: "phone"
-      },
-      {
-        name: "账户昵称",
-        key: "name"
-      },
-      {
-        name: "登录手机号",
-        key: "phone"
-      }
-    ]
-  },
+  accountInfoData: [
+    {
+      label: "账户ID",
+      key: "id"
+    },
+    {
+      label: "账户分组",
+      key: "phone"
+    },
+    {
+      label: "账户昵称",
+      key: "name"
+    },
+    {
+      label: "登录手机号",
+      key: "phone",
+      emitEdit: 'editTel'
+    }
+  ],
   passwordFormConfig: [
     {
       type: 0,

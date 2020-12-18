@@ -1,24 +1,19 @@
 export const SEARCH_CONFIG = {
-  formData: [{
-    type: 0,
+  formData: [
+  {
     label: '门店ID',
     key: 'shopNo',
-    labelWidth: '120px',
-    span: 12
+    type: 0
   },
   {
-    type: 0,
     label: '门店名称',
     key: 'shopName',
-    labelWidth: '120px',
-    span: 12
+    type: 0
   },
   {
-    type: 0,
     label: '服务电话',
     key: 'phone',
-    labelWidth: '120px',
-    span: 12
+    type: 0
   },
   {
     type: 1,
@@ -63,5 +58,19 @@ export const SEARCH_CONFIG = {
       {label: "启用", value: 1}
     ]
   }],
-  showFootBtn: true
+  showFootBtn: true,
+  configData: [
+    {
+      title: 'Title1',
+      data: '这是内容1'
+    },
+    {
+      title: 'Title2',
+      data: '这是内容2'
+    },
+    {
+      title: 'Title3',
+      data: '这是内容3'
+    }
+  ]
 }

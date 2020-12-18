@@ -1,10 +1,13 @@
 <template>
   <div>
-    <Search
+    <div class="search-box">
+      <yun-search :form-base-data="searchConfig.formData"></yun-search>
+    </div>
+    <!-- <Search
       :form-base-data="searchConfig.formData"
       :show-foot-btn="searchConfig.showFootBtn"
       @search="onClickSearch"
-    />
+    /> -->
     <div class="table-box">
       <div class="tab-title">
         <span>门店列表</span>
