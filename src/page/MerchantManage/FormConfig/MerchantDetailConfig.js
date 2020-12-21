@@ -11,7 +11,8 @@ export const FORM_CONFIG = {
             label: '登录密码',
             value: 1
           }
-        ]
+        ],
+        span: 24
       }
     ]
   },
@@ -21,7 +22,8 @@ export const FORM_CONFIG = {
         type: 0,
         label: '商户昵称',
         labelWidth: '120px',
-        key: 'shopName'
+        key: 'shopName',
+        span: 24
       }
     ]
   },
@@ -31,13 +33,15 @@ export const FORM_CONFIG = {
         type: 0,
         label: '新登录手机号',
         labelWidth: '120px',
-        key: 'mobile'
+        key: 'mobile',
+        span: 24
       },
       {
         type: 0,
         label: '验证码',
         labelWidth: '120px',
-        key: 'code'
+        key: 'code',
+        span: 24
       }
     ]
   },

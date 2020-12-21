@@ -1,7 +1,29 @@
 <template>
   <div class="m-page">
-    <DetailMode :rule-form="ruleForm" :config-data="configData"></DetailMode>
-    <Search
+    <div class="m-title">
+      <span>商户详情</span>
+      <div class="right" @click="clickResetPassword">密码重置</div>
+    </div>
+    <div class="m-detail">
+      <yun-detail-mode
+          :rule-form="ruleForm"
+          :filed-config-list="configData"
+          theme="border"
+          module-title="商户信息"
+          @editName="onClickEditName"
+          @editPhone="onClickEditPhone"
+      >
+        <template slot="status" slot-scope="scope">
+          <div
+              class="flex-row flex-align-center f-fc-theme"
+              :class="ruleForm[scope.item.key] ? 'f-fc-theme' : 'f-fc-fail'">
+            {{ statusDesc }}
+            <el-switch v-model="ruleForm[scope.item.key]" @change="changeSwitch"></el-switch>
+          </div>
+        </template>
+      </yun-detail-mode>
+    </div>
+    <yun-search
         :form-base-data="searchConfig.formData"
         @search="onClickSearch"
     />
@@ -10,7 +32,7 @@
         <div class="m-left">门店列表</div>
       </div>
       <div class="basecrud-box">
-        <BaseCrud
+        <yun-table
             ref="table"
             :grid-config="gridConfig"
             :grid-btn-config="gridBtnConfig"
@@ -27,26 +49,26 @@
             :api-service="api"
             @details="onClickDetails"
             @goMerchant="onClickGoMerchant"
-        ></BaseCrud>
+        ></yun-table>
       </div>
     </div>
-    <el-dialog
+    <yun-dialog
         :title="title"
-        :visible.sync="drawer"
+        :dialoger="drawer"
         width="488px"
+        @cancle="drawer = false"
+        @confirm="clickSubmit"
     >
-      <Form
-          v-if="drawer"
-          ref="formInfo"
-          :form-base-data="fromConfigData"
-          :show-foot-btn="fromConfigData.showFootBtn === false"
-          label-width="130px"
-      ></Form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="drawer = false">取 消</el-button>
-        <el-button type="primary" @click="clickSubmit">确 定</el-button>
-      </span>
-    </el-dialog>
+      <div class="dialog-form" slot="body">
+        <yun-form
+            v-if="drawer"
+            ref="formInfo"
+            :form-base-data="fromConfigData"
+            :show-foot-btn="fromConfigData.showFootBtn === false"
+            label-width="130px"
+        ></yun-form>
+      </div>
+    </yun-dialog>
   </div>
 </template>
 
@@ -63,6 +85,7 @@
         ruleForm: {},
         testData: [],
         title: '',
+        drawerType: '',
         params: {},
         api: '',
         drawer: false,
@@ -74,6 +97,15 @@
         configData: LIST_CONFIG.configData,
         gridConfig: MERCHANT_DETAIL_CONFIG.gridConfig,
         gridBtnConfig: MERCHANT_DETAIL_CONFIG.gridBtnConfig
+      }
+    },
+    computed: {
+      statusDesc() {
+        if (this.ruleForm.disabledSn) {
+          return '启用'
+        } else {
+          return '禁用'
+        }
       }
     },
     created() {
@@ -123,6 +155,31 @@
           phone: $ruleForm.phone ? $ruleForm.phone : null
         }
       },
+      
+      // 重置登录密码
+      clickResetPassword() {
+        this.title = '重置登录密码'
+        this.drawer = true
+        this.drawerType = 'resetPassword'
+        this.fromConfigData = FORM_CONFIG.resetPassword.formData
+      },
+      
+      // 修改商户名称
+      onClickEditName() {
+        this.title = '修改商户名称'
+        this.drawer = true
+        this.drawerType = 'changeName'
+        this.fromConfigData = FORM_CONFIG.shopInfo.formData
+      },
+      
+      // 修改登录手机号
+      onClickEditPhone() {
+        this.title = '修改登录账号'
+        this.drawer = true
+        this.drawerType = 'updateLogin'
+        this.fromConfigData = FORM_CONFIG.loginSet.formData
+      },
+      
       onClickDetails(row) {},
       onClickGoMerchant(row) {},
       clickSubmit() {
@@ -163,6 +220,29 @@
 
 <style lang="scss" scoped>
   .m-page {
+    .m-title {
+      display: flex;
+      justify-content: space-between;
+      margin: 24px 24px 0 24px;
+      padding: 0 24px;
+      background: #fff;
+      line-height: 54px;
+      border-bottom: 1px solid #DCDFE6;
+      span {
+        font-size: 16px;
+        color: #000;
+      }
+      .right {
+        color: #1989FA;
+        font-size: 14px;
+        cursor: pointer;
+      }
+    }
+    .m-detail {
+      margin: 0 24px;
+      padding: 24px 24px;
+      background: #fff;
+    }
     .m-data {
       width: 100%;
       height: 100px;
@@ -183,10 +263,10 @@
       }
     }
   }
+  .dialog-form {
+    padding-top: 24px;
+  }
   /deep/ .tab-color {
     color: #1989FA;
-  }
-  /deep/ .tab-reject {
-    color: #F5222D;
   }
 </style>

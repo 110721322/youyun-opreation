@@ -1,6 +1,6 @@
 <template>
   <div class="m-page">
-    <Search
+    <yun-search
         :form-base-data="searchConfig.formData"
         @search="onClickSearch"
     />
@@ -10,7 +10,7 @@
         <el-button type="primary">导出</el-button>
       </div>
       <div class="basecrud-box">
-        <BaseCrud
+        <yun-table
             ref="table"
             :grid-config="gridConfig"
             :grid-btn-config="gridBtnConfig"
@@ -25,7 +25,7 @@
             :grid-data="testData"
             :params="params"
             :api-service="api"
-        ></BaseCrud>
+        ></yun-table>
       </div>
     </div>
   </div>
