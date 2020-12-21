@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Search
+    <yun-search
         :form-base-data="searchConfig.formData"
         @search="onClickSearch"
     />
@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="m-basecrud">
-        <BaseCrud
+        <yun-table
             ref="table"
             :grid-config="gridConfig"
             :grid-btn-config="gridBtnConfig"
@@ -31,38 +31,40 @@
             @details="onClickDetails"
             @goAgent="onClickGoAgent"
             @selectionChange="selectionChange"
-        ></BaseCrud>
+        ></yun-table>
       </div>
     </div>
-    <el-dialog title="修改管理员" :visible.sync="drawer" width="488px">
-      <div class="m-select-baseCrud">
-        <Form
+    <yun-dialog
+        title="修改管理员"
+        :dialoger="drawer"
+        width="488px"
+        @confirm="clickSubmit"
+        @cancel="drawer = false"
+    >
+      <div class="m-select-baseCrud" slot="body">
+        <yun-form
             ref="operationInfo"
             :form-base-data="fromConfigData"
             :show-foot-btn="fromConfigData.showFootBtn === false"
             label-width="130px"
-        ></Form>
+        ></yun-form>
       </div>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="drawer = false">取 消</el-button>
-        <el-button type="primary" @click="clickSubmit">确 定</el-button>
-      </span>
-    </el-dialog>
+<!--      <span slot="footer" class="dialog-footer">-->
+<!--        <el-button @click="drawer = false">取 消</el-button>-->
+<!--        <el-button type="primary" @click="clickSubmit">确 定</el-button>-->
+<!--      </span>-->
+    </yun-dialog>
   </div>
  
 </template>
 
 <script>
   import api from "@/api/api_agentManage.js";
-  import Form from "@/components/form/index.vue";
-  import Search from "@/components/search/search.vue";
-  import BaseCrud from "@/components/table/BaseCrud.vue";
   import { ADD_AGENT } from "./FormConfig/AddAgent"
   import { SEARCH_FORM_CONFIG } from "./FormConfig/SearchConfig"
   import { AGENT_LIST_CONFIG } from "./TableConfig/AgentListConfig"
   export default {
     name: "AgentList",
-    components: { Search, BaseCrud, Form },
     data() {
       return {
         drawer: false,
@@ -238,22 +240,5 @@
   }
   /deep/ .tab-color {
     color: #1989FA;
-  }
-  /deep/ .tab-reject {
-    color: #F5222D;
-  }
-  /deep/ .el-dialog__body {
-    padding: 0 0 24px 0;
-  }
-  /deep/ .el-dialog__header {
-    padding: 16px 24px;
-    background: #FAFAFA;
-    font-size: 16px;
-    color: #606266;
-    border-bottom: 1px solid #EBEEF5;
-  }
-  /deep/ .el-dialog__footer {
-    padding-top: 20px;
-    border-top: 1px solid #EBEEF5;
   }
 </style>

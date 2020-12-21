@@ -2,7 +2,7 @@
   <div class="m-page">
     <div class="basecrud-box">
       <div class="basecrud-title">结算总额：<span>{{ ruleForm.settleCommission || 0 }}</span>元</div>
-      <BaseCrud
+      <yun-table
           ref="table"
           :grid-config="gridConfig"
           :grid-btn-config="gridBtnConfig"
@@ -17,9 +17,27 @@
           :grid-data="testData"
           :params="null"
           :api-service="null"
-      ></BaseCrud>
+      ></yun-table>
     </div>
-    <DetailMode :rule-form="ruleForm" :config-data="configData"></DetailMode>
+    <div class="m-title">
+      <span>结算信息</span>
+    </div>
+    <div class="m-detail">
+      <yun-detail-mode
+          :rule-form="ruleForm"
+          :filed-config-list="basicData"
+          theme="border"
+          module-title="发票信息"
+      >
+      </yun-detail-mode>
+      <yun-detail-mode
+          :rule-form="ruleForm"
+          :filed-config-list="bankInfoData"
+          theme="border"
+          module-title="账户信息"
+      >
+      </yun-detail-mode>
+    </div>
     <div class="m-button">
       <div class="m-remark">
         <el-form ref="form" :model="form" label-width="80px">
@@ -53,7 +71,8 @@
         gridBtnConfig: false,
         testData: [],
         id: this.$route.query.id,
-        configData: SETTLE_CONFIG.configData,
+        basicData: SETTLE_CONFIG.basicData,
+        bankInfoData: SETTLE_CONFIG.bankInfoData,
         ruleForm: {},
         form: {
           remark: ''
@@ -93,6 +112,29 @@
         }
       }
     }
+    .m-title {
+      display: flex;
+      justify-content: space-between;
+      margin: 24px 24px 0 24px;
+      padding: 0 24px;
+      background: #fff;
+      line-height: 54px;
+      border-bottom: 1px solid #DCDFE6;
+      span {
+        font-size: 16px;
+        color: #000;
+      }
+      .right {
+        color: #1989FA;
+        font-size: 14px;
+        cursor: pointer;
+      }
+    }
+    .m-detail {
+      margin: 0 24px;
+      padding: 24px 24px;
+      background: #fff;
+    }
     .m-button {
       margin: 0 24px;
       padding: 24px 35%;
@@ -101,5 +143,8 @@
         margin-bottom: 24px;
       }
     }
+  }
+  /deep/ .m-detail-mode.s-detail-border {
+    margin-bottom: 24px;
   }
 </style>

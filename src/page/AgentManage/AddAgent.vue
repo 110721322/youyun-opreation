@@ -41,12 +41,10 @@
 
 <script>
   import api from "@/api/api_agentManage.js";
-  import Form from "@/components/form/index.vue";
   import { ADD_AGENT } from "./FormConfig/AddAgent";
 
   export default {
     name: "AddAgent",
-    components: { Form },
     data() {
       return {
         fromConfigData: ADD_AGENT,

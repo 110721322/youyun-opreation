@@ -1,6 +1,6 @@
 <template>
   <div class="m-page">
-    <Search
+    <yun-search
         :form-base-data="searchConfig.formData"
         @search="onClickSearch"
     />
@@ -10,7 +10,7 @@
         <el-button type="primary">导出</el-button>
       </div>
       <div class="basecrud-box">
-        <BaseCrud
+        <yun-table
             ref="table"
             :grid-config="gridConfig"
             :grid-btn-config="gridBtnConfig"
@@ -26,7 +26,7 @@
             :params="params"
             :api-service="api"
             @details="onClickDetails"
-        ></BaseCrud>
+        ></yun-table>
       </div>
     </div>
   </div>
@@ -34,14 +34,11 @@
 
 <script>
   import api from "@/api/api_settleManage.js";
-  import Search from "@/components/search/search.vue";
-  import BaseCrud from "@/components/table/BaseCrud.vue";
   import { REJECT_CONFIG } from "./FormConfig/AgentRejectConfig"
   import { SEARCH_FORM_CONFIG } from "./FormConfig/AgentSettleSearch"
   import { AGENT_SETTLE_CONFIG } from "./TableConfig/AgentSettleConfig"
   export default {
     name: "AgentSettleManage",
-    components: { Search, BaseCrud },
     data() {
       return {
         params: {},
@@ -103,26 +100,6 @@
 </script>
 
 <style lang="scss" scoped>
-  .m-page {
-    .m-data {
-      width: 100%;
-      height: 100px;
-      background: #fff;
-    }
-    .m-basecrud {
-      padding: 24px 24px;
-      .m-basecrud-title {
-        display: flex;
-        justify-content: space-between;
-        padding: 24px 24px;
-        background: #fff;
-      }
-      .basecrud-box {
-        padding: 0 24px 24px;
-        background: #fff;
-      }
-    }
-  }
   /deep/ .tab-color {
     color: #1989FA;
   }

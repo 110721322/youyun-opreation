@@ -1,6 +1,6 @@
 <template>
   <div class="m-page">
-    <Search
+    <yun-search
         :form-base-data="searchConfig.formData"
         @search="onClickSearch"
     />
@@ -10,7 +10,7 @@
         <el-button type="primary">导出</el-button>
       </div>
       <div class="basecrud-box">
-        <BaseCrud
+        <yun-table
             ref="table"
             :grid-config="gridConfig"
             :grid-btn-config="gridBtnConfig"
@@ -27,7 +27,7 @@
             :api-service="api"
             @details="onClickDetails"
             @goMerchant="onClickGoMerchant"
-        ></BaseCrud>
+        ></yun-table>
       </div>
     </div>
   </div>
@@ -35,13 +35,10 @@
 
 <script>
   import api from "@/api/api_merchantManage.js";
-  import Search from "@/components/search/search.vue";
-  import BaseCrud from "@/components/table/BaseCrud.vue";
   import { SEARCH_FORM_CONFIG } from "./FormConfig/MerchantListSearch"
   import { MERCHANT_LIST_CONFIG } from "./TableConfig/ListConfig"
   export default {
     name: "MerchantList",
-    components: { Search, BaseCrud },
     data() {
       return {
         params: {},
@@ -113,11 +110,5 @@
   }
   /deep/ .tab-color {
     color: #1989FA;
-  }
-  /deep/ .tab-reject {
-    color: #F5222D;
-  }
-  /deep/ .tab-disabled {
-    color: #F5222D;
   }
 </style>

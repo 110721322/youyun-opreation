@@ -22,7 +22,8 @@ export const FORM_CONFIG = {
         ],
         rules: [
           { required: true, message: '请选择沟通主题', trigger: 'change' }
-        ]
+        ],
+        span: 24
       },
       {
         type: 0,
@@ -33,7 +34,8 @@ export const FORM_CONFIG = {
         key: 'content',
         rules: [
           { required: true, message: '请输入沟通内容', trigger: 'blur' }
-        ]
+        ],
+        span: 24
       }
     ]
   },
@@ -43,7 +45,8 @@ export const FORM_CONFIG = {
         type: 13,
         label: '重置登录密码',
         initVal: '重置后密码以短信形式发送服务商',
-        labelWidth: '120px'
+        labelWidth: '120px',
+        span: 24
       }
     ]
   },
@@ -59,7 +62,8 @@ export const FORM_CONFIG = {
         rules: [
           { required: true, message: '请输入支付宝费率', trigger: 'blur' },
           { pattern: /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/, message: '请输入正确费率金额' }
-        ]
+        ],
+        span: 24
       },
       {
         type: 0,
@@ -71,7 +75,8 @@ export const FORM_CONFIG = {
         rules: [
           { required: true, message: '请输入支付宝费率', trigger: 'blur' },
           { pattern: /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/, message: '请输入正确费率金额' }
-        ]
+        ],
+        span: 24
       },
       {
         type: 0,
@@ -83,7 +88,8 @@ export const FORM_CONFIG = {
         rules: [
           { required: true, message: '请输入服务商利润分成', trigger: 'blur' },
           { pattern: /^([1-9][0-9]|[0-9]|100)$/, message: '请输入0-100的正整数' }
-        ]
+        ],
+        span: 24
       },
     ]
   },
@@ -96,7 +102,8 @@ export const FORM_CONFIG = {
         key: 'bankName',
         rules: [
           { required: true, message: '请选择开户行', trigger: 'blur' }
-        ]
+        ],
+        span: 24
       },
       {
         type: 0,
@@ -105,7 +112,8 @@ export const FORM_CONFIG = {
         key: 'bankNo',
         rules: [
           { required: true, message: '请输入银行卡号', trigger: 'blur' }
-        ]
+        ],
+        span: 24
       },
       {
         type: 0,
@@ -114,7 +122,8 @@ export const FORM_CONFIG = {
         key: 'personName',
         rules: [
           { required: true, message: '请输入开户人姓名', trigger: 'blur' }
-        ]
+        ],
+        span: 24
       },
     ]
   },
@@ -127,7 +136,8 @@ export const FORM_CONFIG = {
         key: 'validityDate',
         rules: [
           { required: true, message: '请选择有效期', trigger: 'change' }
-        ]
+        ],
+        span: 24
       }
     ]
   },
@@ -151,7 +161,8 @@ export const FORM_CONFIG = {
             label: '禁止服务号登录（商户支付正常）',
             value: 3
           }
-        ]
+        ],
+        span: 24
       }
     ]
   },

@@ -1,6 +1,6 @@
 <template>
   <div class="m-page">
-    <Search
+    <yun-search
         :form-base-data="searchConfig.formData"
         @search="onClickSearch"
     />
@@ -10,7 +10,7 @@
         <el-button type="primary">导出</el-button>
       </div>
       <div class="basecrud-box">
-        <BaseCrud
+        <yun-table
             ref="table"
             :grid-config="gridConfig"
             :grid-btn-config="gridBtnConfig"
@@ -25,20 +25,17 @@
             :grid-data="testData"
             :params="params"
             :api-service="api"
-        ></BaseCrud>
+        ></yun-table>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import Search from "@/components/search/search.vue";
-  import BaseCrud from "@/components/table/BaseCrud.vue";
   import { SEARCH_FORM_CONFIG } from "./FormConfig/SettleRecordSearch"
   import { SETTLE_RECORD_CONFIG } from "./TableConfig/SettleRecordConfig"
   export default {
     name: "SettleRecord",
-    components: { Search, BaseCrud },
     data() {
       return {
         params: {},
