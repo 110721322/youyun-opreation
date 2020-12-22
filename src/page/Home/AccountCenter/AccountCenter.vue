@@ -26,13 +26,14 @@
       width="488px"
       @confirm="clickModifyPassword"
       @cancel="handleClose">
-      <yun-form
-          slot="body"
+      <div slot="body" class="pass-form-style">
+        <yun-form
           ref="passwordForm"
           :form-base-data="passwordFormConfig"
           :label-width="'150px'"
           :show-foot-btn="false"
-      ></yun-form>
+        ></yun-form>  
+      </div>
     </yun-dialog>
     <yun-dialog
       title="修改登录手机号"
@@ -41,13 +42,14 @@
       @confirm="clickModifyPhone"
       @cancel="handleCloseForm"
       :before-close="handleCloseForm">
-      <yun-form
-          slot="body"
+      <div slot="body" class="pass-form-style">
+        <yun-form
           ref="phoneForm"
           :form-base-data="phoneFormConfig"
           :label-width="'150px'"
           :show-foot-btn="false"
-      ></yun-form>
+        ></yun-form>
+      </div>
     </yun-dialog>
   </div>
 </template>
@@ -90,6 +92,7 @@
         this.modifyPhoneDialog = false
       },
       clickModifyPhone() {
+        console.log(this.$refs.phoneForm)
         if (!this.$refs.phoneForm.handleClick()) {
           this.$message('请完善修改信息');
           return;
@@ -115,6 +118,9 @@
         line-height: 22px;
       }
     }
+  }
+  .pass-form-style {
+    margin-top: 24px;
   }
   .edit-btn {
     flex-shrink: 0;

@@ -2,55 +2,55 @@ export const TABLE_CONFIG = {
   gridConfig: [
     {
       label: '订单号',
-      prop: 'shopNo'
+      prop: 'orderNo'
     },
     {
       label: '创建时间',
-      prop: 'shopNo'
+      prop: 'createTime'
     },
     {
       label: '所属服务商',
-      prop: 'shopNo'
+      prop: 'agentName'
     },
     {
       label: '所属商户',
-      prop: 'shopName'
+      prop: 'merchantName'
     },
     {
       label: '支付门店',
       prop: 'shopName'
     },
-    {
-      label: '设备类型',
-      prop: 'shopName'
-    },
+    // {
+    //   label: '设备类型',
+    //   prop: 'shopName'
+    // },
     {
       label: '支付方式',
-      prop: 'shopName'
+      prop: 'payWayName'
     },
     {
       label: '实收（退）金额',
-      prop: 'shopName'
+      prop: 'actualAmount'
     },
     {
       label: '服务商分润',
-      prop: 'shopName'
+      prop: 'benefitAmount'
     },
     {
       label: '平台分润',
-      prop: 'shopName'
+      prop: 'platformCommission'
     },
     {
       label: '手续费',
-      prop: 'address'
+      prop: 'serviceFee'
     },
     {
       label: '交易类型',
-      prop: 'contacter'
+      prop: 'tradeType'
     },
     {
       label: '交易状态',
-      prop: 'phone'
+      prop: 'orderStatusName'
     }
   ],
 
