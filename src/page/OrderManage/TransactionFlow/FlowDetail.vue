@@ -75,7 +75,7 @@
         moneyInfoConfig: FORM_CONFIG.moneyInfoData,
         payInfoConfig: FORM_CONFIG.payInfoData,
         tableConfig: TABLE_CONFIG,
-        activeName: '1',
+        activeName: '0',
         ruleForm: {},
         api: api.selectOrderWater,
         testData: [{

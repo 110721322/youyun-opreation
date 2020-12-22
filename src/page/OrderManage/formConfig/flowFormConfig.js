@@ -15,9 +15,9 @@ export const SEARCH_CONFIG = {
   },
   {
     label: '交易时间',
-    type: 11,
-    span: 12,
-    key: 'date'
+    key: 'date',
+    type: 9,
+    span: 24
   },
   {
     type: 1,
@@ -58,7 +58,7 @@ export const SEARCH_CONFIG = {
   {
     type: 1,
     label: "交易状态",
-    key: "payWay",
+    key: "orderStatus",
     span: 12,
     options: [
       {label: "待支付", value: 0},

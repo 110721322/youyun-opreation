@@ -52,16 +52,7 @@ export const FORM_CONFIG = {
       key: 'isDisabled',
       labelWidth: "120px",
       placeholder: '请选择到期时间(MCC)',
-      options: [
-        {
-          label: '启用',
-          value: 0
-        },
-        {
-          label: '禁用',
-          value: 1
-        }
-      ]
+      options: []
     },
     {
       type: 8,
@@ -90,7 +81,7 @@ export const FORM_CONFIG = {
       render() {
         return (
           <span>
-            图片信息
+            门店LOGO或门头照
             <el-tooltip effect="dark" content="单个文件大小限制5MB以内" placement="top-start">
               <i class="iconfont iconshuoming" style="margin-left: 4px;"></i>
             </el-tooltip>
@@ -123,20 +114,16 @@ export const FORM_CONFIG = {
       key: "shopLicenseNo",
       labelWidth: "120px",
       initVal: "",
-      maxlength: 10,
       rules: [
         { required: true, message: '请输入营业执照编号', trigger: 'blur' }
       ]
     },
     {
-      type: 11,
       label: '营业执照有效期',
-      hasChecked: true,
-      checked: false,
-      key: 'shopLicenseDate',
-      format: "yyyy-MM-dd",
+      type: 11,
       labelWidth: "120px",
-      showDateBtn: true
+      key: 'shopLicenseEndDate',
+      checkedType: 'long' //长期有效选择
     },
     {
       type: 0,
@@ -144,20 +131,16 @@ export const FORM_CONFIG = {
       key: "lawPerson",
       labelWidth: "120px",
       initVal: "",
-      maxlength: 10,
       rules: [
         { required: true, message: '请输入法人姓名', trigger: 'blur' }
       ]
     },
     {
-      type: 11,
       label: '法人身份证有效期',
-      hasChecked: true,
-      checked: false,
-      key: 'idCardDate',
+      type: 11,
       labelWidth: "120px",
-      format: "yyyy-MM-dd",
-      showDateBtn: true
+      key: 'idCardExpireDate',
+      checkedType: 'long' //长期有效选择
     },
     {
       type: 0,
@@ -165,7 +148,6 @@ export const FORM_CONFIG = {
       key: "lawIdCard",
       initVal: "",
       labelWidth: "120px",
-      maxlength: 10,
       rules: [
         { required: true, message: '请输入法人身份证号', trigger: 'blur' }
       ]
@@ -179,42 +161,42 @@ export const FORM_CONFIG = {
       children: [
         {
           label: '身份证正面',
-          key: 'Upload1',
+          key: 'idCardPortraitImg',
           type: 6,
           initVal: '',
           exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg'
         },
         {
           label: '身份证反面',
-          key: 'Upload2',
+          key: 'idCardEmblemImg',
           type: 6,
           initVal: '',
           exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg'
         },
         {
           label: '营业执照图片',
-          key: 'Upload3',
+          key: 'shopLicenseImg',
           type: 6,
           initVal: '',
           exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg'
         },
         {
           label: '门头照',
-          key: 'Upload4',
+          key: 'shopFaceImg',
           type: 6,
           initVal: '',
           exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg'
         },
         {
           label: '门店环境照',
-          key: 'Upload5',
+          key: 'shopInnerImg',
           type: 6,
           initVal: '',
           exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg'
         },
         {
           label: '收银台照片',
-          key: 'Upload6',
+          key: 'shopCashdeskImg',
           type: 6,
           initVal: '',
           exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg'
@@ -242,7 +224,6 @@ export const FORM_CONFIG = {
       key: "bankAccountName",
       labelWidth: "120px",
       initVal: "",
-      maxlength: 10,
       rules: [
         { required: true, message: '请输入开户名', trigger: 'blur' }
       ]
@@ -283,7 +264,7 @@ export const FORM_CONFIG = {
       render() {
         return (
           <span>
-            图片信息
+            开户许可证
             <el-tooltip effect="dark" content="单个文件大小限制5MB以内" placement="top-start">
               <i class="iconfont iconshuoming" style="margin-left: 4px;"></i>
             </el-tooltip>
@@ -293,7 +274,7 @@ export const FORM_CONFIG = {
       },
       showExample: true,
       exampleUrl: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/fund/template/%E5%BC%80%E6%88%B7%E8%AE%B8%E5%8F%AF%E8%AF%81.png',
-      key: 'bankOpenAccountLicenseImgComplete'
+      key: 'bankOpenAccountLicenseImg'
     }
   ],
   rateInfoConfigData: [
@@ -303,7 +284,6 @@ export const FORM_CONFIG = {
       key: "alipayRate",
       labelWidth: "120px",
       initVal: "",
-      maxlength: 10,
       rules: [
         { required: true, message: '请输入支付宝', trigger: 'blur' }
       ]
@@ -314,18 +294,26 @@ export const FORM_CONFIG = {
       key: "wechatPayRate",
       labelWidth: "120px",
       initVal: "",
-      maxlength: 10,
       rules: [
         { required: true, message: '请输入微信', trigger: 'blur' }
       ]
     },
     {
       type: 0,
-      label: "云闪付",
+      label: "云闪付>1000费率",
       key: "cloudPayGt1000Rate",
       labelWidth: "120px",
       initVal: "",
-      maxlength: 10,
+      rules: [
+        { required: true, message: '请输入云闪付', trigger: 'blur' }
+      ]
+    },
+    {
+      type: 0,
+      label: "云闪付<=1000费率",
+      key: "cloudPayLe1000Rate",
+      labelWidth: "120px",
+      initVal: "",
       rules: [
         { required: true, message: '请输入云闪付', trigger: 'blur' }
       ]

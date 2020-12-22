@@ -2,22 +2,22 @@ export const FORM_CONFIG = {
   basicInfoData: [
     {
       label: "所属服务商",
-      key: "agentNo",
-      formatter($ruleForm) {
-        if ($ruleForm["agentNo"] === "shop") {
-          return "门店"
-        } else if ($ruleForm["agentNo"] === "supplier") {
-          return "供应商"
-        } else if ($ruleForm["agentNo"] === "manager") {
-          return "区域经理"
-        } else {
-          return ""
-        }
-      }
+      key: "agentName"
+      // formatter($ruleForm) {
+      //   if ($ruleForm["agentNo"] === "shop") {
+      //     return "门店"
+      //   } else if ($ruleForm["agentNo"] === "supplier") {
+      //     return "供应商"
+      //   } else if ($ruleForm["agentNo"] === "manager") {
+      //     return "区域经理"
+      //   } else {
+      //     return ""
+      //   }
+      // }
     },
     {
       label: "所属商户",
-      key: "merchantNo"
+      key: "merchantName"
     },
     {
       label: "手机号码",
@@ -36,7 +36,7 @@ export const FORM_CONFIG = {
       key: "createTime"
     },
     {
-      label: "门店状态",
+      label: "门店使用状态",
       key: "isDisabled",
       slotName: 'switch'
     },
@@ -53,7 +53,7 @@ export const FORM_CONFIG = {
   payInfoData: [
     {
       label: "费率信息",
-      key: "key",
+      key: "rate",
       slotName: 'rateInfo'
     }
   ],
@@ -92,6 +92,7 @@ export const FORM_CONFIG = {
     },
     {
       label: "门店区域",
+      key: "area",
       slotName: "area"
     },
     {
@@ -103,12 +104,7 @@ export const FORM_CONFIG = {
       key: "key",
       span: 24,
       children: [
-        {label: '图一', key: 'image0'},
-        {label: '图二', key: 'image1'},
-        {label: '图三', key: 'image2'},
-        {label: '图四', key: 'image3'},
-        {label: '图五', key: 'image4'},
-        {label: '图六', key: 'image5'},
+        {label: '门店LOGO或门头照', key: 'shopFaceImg'}
       ],
       filedType: 'image'
     }
@@ -147,12 +143,12 @@ export const FORM_CONFIG = {
       key: "key",
       span: 24,
       children: [
-        {label: '图一', key: 'image0'},
-        {label: '图二', key: 'image1'},
-        {label: '图三', key: 'image2'},
-        {label: '图四', key: 'image3'},
-        {label: '图五', key: 'image4'},
-        {label: '图六', key: 'image5'},
+        {label: '身份证正面', key: 'idCardPortraitImg'},
+        {label: '身份证反面', key: 'idCardEmblemImg'},
+        {label: '营业执照图片', key: 'shopLicenseImg'},
+        {label: '门头照', key: 'shopFaceImg'},
+        {label: '门店环境照', key: 'shopInnerImg'},
+        {label: '收银台照片', key: 'shopCashdeskImg'},
       ],
       filedType: 'image'
     }
@@ -185,12 +181,7 @@ export const FORM_CONFIG = {
       key: "key",
       span: 24,
       children: [
-        {label: '图一', key: 'image0'},
-        {label: '图二', key: 'image1'},
-        {label: '图三', key: 'image2'},
-        {label: '图四', key: 'image3'},
-        {label: '图五', key: 'image4'},
-        {label: '图六', key: 'image5'},
+        {label: '开户许可证', key: 'bankOpenAccountLicenseImg'}
       ],
       filedType: 'image'
     }
@@ -205,8 +196,12 @@ export const FORM_CONFIG = {
       key: "wechatPayRate"
     },
     {
-      label: "云闪付",
-      key: "key"
+      label: "云闪付>1000费率",
+      key: "cloudPayGt1000Rate"
+    },
+    {
+      label: "云闪付<=1000费率",
+      key: "cloudPayLe1000Rate"
     }
   ],
   rejectConfig: [

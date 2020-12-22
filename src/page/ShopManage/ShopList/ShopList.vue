@@ -42,6 +42,7 @@ export default {
       api: api.shopQueryByPage,
       testData: [{
         shopNo: '1111',
+        isDisabled: 0,
         status: 0
       }]
     };

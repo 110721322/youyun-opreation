@@ -6,11 +6,11 @@ export const TABLE_CONFIG = {
     },
     {
       label: '所属服务商',
-      prop: 'shopNo'
+      prop: 'agentName'
     },
     {
       label: '所属商户',
-      prop: 'shopNo'
+      prop: 'merchantName'
     },
     {
       label: '门店名称',
@@ -18,33 +18,33 @@ export const TABLE_CONFIG = {
     },
     {
       label: '门店类目',
-      prop: 'shopName'
+      prop: 'mccCodeCN'
     },
     {
       label: 'logo或门头照',
-      prop: 'shopName'
+      prop: 'shopImg'
     },
     {
       label: '服务电话',
-      prop: 'shopName'
+      prop: 'phone'
     },
-    {
-      label: '设备数量',
-      prop: 'shopName'
-    },
+    // {
+    //   label: '设备数量',
+    //   prop: 'shopName'
+    // },
     {
       label: '门店地址',
       prop: 'address'
     },
     {
       label: '门店状态',
-      prop: 'status',
+      prop: 'isDisabled',
       render: (h, params) => {
         const actions = new Map([
           [0, {className: 's-status-success', statusDesc: '启用'}],
           [1, {className: 's-status-fail', statusDesc: '禁用'}]
         ])
-        const action = actions.get(params.row.status) || actions.get('default')
+        const action = actions.get(params.row.isDisabled) || actions.get('default')
         return (
           <span class={['flex-align-center', 'g-status-icon', 's-status-radius', action.className]}>{ action.statusDesc }</span>
       )

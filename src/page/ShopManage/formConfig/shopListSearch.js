@@ -20,7 +20,7 @@ export const SEARCH_CONFIG = {
   },
   {
     label: '所属商户',
-    key: 'merchantName',
+    key: 'merchantNo',
     type: 1,
     span: 12,
     options: [
@@ -45,7 +45,7 @@ export const SEARCH_CONFIG = {
   },
   {
     label: '所属服务商',
-    key: 'agentName',
+    key: 'agentNo',
     type: 1,
     span: 12,
     options: [

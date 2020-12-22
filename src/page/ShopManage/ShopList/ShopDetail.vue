@@ -42,7 +42,7 @@
           <yun-detail-mode
             :rule-form="ruleForm"
             :filed-config-list="shopInfoDetailConfig"
-            module-title="认证信息"
+            module-title="门店信息"
             >  
           </yun-detail-mode>
         </div>
@@ -50,7 +50,7 @@
           <yun-detail-mode
             :rule-form="ruleForm"
             :filed-config-list="verityDetailConfig"
-            module-title="结算信息"
+            module-title="认证信息"
             >  
           </yun-detail-mode>
         </div>
@@ -58,7 +58,7 @@
           <yun-detail-mode
             :rule-form="ruleForm"
             :filed-config-list="settleDetailConfig"
-            module-title="费率信息"
+            module-title="结算信息"
             >  
           </yun-detail-mode>
         </div>
@@ -66,7 +66,7 @@
           <yun-detail-mode
             :rule-form="ruleForm"
             :filed-config-list="rateDetailConfig"
-            module-title="门店信息"
+            module-title="费率信息"
             >  
           </yun-detail-mode>
         </div>
@@ -116,7 +116,7 @@
           shopName: '柚子餐饮1号店',
           tel: '1809909899',
           status: true,
-          image0: 'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg',
+          shopFaceImg: 'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg',
           image1: 'https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg',
           image2: 'https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg',
           image3: 'https://fuss10.elemecdn.com/d/e6/c4d93a3805b3ce3f323f7974e6f78jpeg.jpeg',
