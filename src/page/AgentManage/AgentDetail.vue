@@ -360,7 +360,6 @@
   /deep/ .tab-color {
     color: #1989FA;
   }
-<<<<<<< HEAD
 
   /deep/ .el-dialog__body {
     padding: 0 0 24px 0;
@@ -377,9 +376,8 @@
   /deep/ .el-dialog__footer {
     padding-top: 20px;
     border-top: 1px solid #EBEEF5;
-=======
+  }
   .dialog-form {
     padding-top: 24px;
->>>>>>> dev-yuanfang
   }
 </style>
