@@ -180,6 +180,11 @@
         this.fromConfigData = FORM_CONFIG.loginSet.formData
       },
       
+      // 修改商户状态
+      changeSwitch(val) {
+        console.log(val)
+      },
+      
       onClickDetails(row) {},
       onClickGoMerchant(row) {},
       clickSubmit() {

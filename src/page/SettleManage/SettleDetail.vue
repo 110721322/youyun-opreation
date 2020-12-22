@@ -121,11 +121,6 @@
         font-size: 16px;
         color: #000;
       }
-      .right {
-        color: #1989FA;
-        font-size: 14px;
-        cursor: pointer;
-      }
     }
     .m-detail {
       margin: 0 24px;
