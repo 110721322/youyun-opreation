@@ -8,30 +8,40 @@
         </el-tabs>
       </div>
       <div v-if="activeName==='0'" class="info-box">
-        <InfoMode
-          :rule-form="ruleForm"
-          :config-data="orderInfoConfig"
-        >
-        </InfoMode>
-        <InfoMode
-          class="pay-box"
-          :rule-form="ruleForm"
-          :config-data="moneyInfoConfig"
-        >
-        </InfoMode>
-        <InfoMode
-          class="open-box"
-          :rule-form="ruleForm"
-          :config-data="payInfoConfig"
-        >
-        </InfoMode>
+        <div class="detail-mode-box">
+          <yun-detail-mode
+            :rule-form="ruleForm"
+            :filed-config-list="orderInfoConfig"
+            module-title="订单信息"
+            theme="border"
+          >  
+          </yun-detail-mode>
+        </div>
+        <div class="detail-mode-box">
+          <yun-detail-mode
+            :rule-form="ruleForm"
+            :filed-config-list="moneyInfoConfig"
+            module-title="收款信息"
+            theme="border"
+          >  
+          </yun-detail-mode>
+        </div>
+        <div class="detail-mode-box">
+          <yun-detail-mode
+            :rule-form="ruleForm"
+            :filed-config-list="payInfoConfig"
+            module-title="付款信息"
+            theme="border"
+          >  
+          </yun-detail-mode>
+        </div>
       </div>
       <div v-show="activeName==='1'">
         <div class="table-box">
           <div class="tab-title">
             <span>流水记录列表</span>
           </div>
-          <BaseCrud
+          <yun-table
             ref="table"
             :grid-config="tableConfig.gridConfig"
             :grid-btn-config="tableConfig.gridBtnConfig"
@@ -47,7 +57,7 @@
             :default-expand-all="false"
             :hide-edit-area="tableConfig.hideEditArea"
             :api-service="api"
-          ></BaseCrud>
+          ></yun-table>
         </div>
       </div>
     </div>
@@ -57,6 +67,7 @@
 <script>
   import { FORM_CONFIG } from "../formConfig/flowDetailConfig";
   import { TABLE_CONFIG } from "../tableConfig/flowDetailTableConfig";
+  import api from "@/api/api_order";
   export default {
     data() {
       return {
@@ -64,11 +75,12 @@
         moneyInfoConfig: FORM_CONFIG.moneyInfoData,
         payInfoConfig: FORM_CONFIG.payInfoData,
         tableConfig: TABLE_CONFIG,
-        activeName: '0',
+        activeName: '1',
         ruleForm: {},
-        api: '',
+        api: api.selectOrderWater,
         testData: [{
-          shopNo: '1111'
+          tradeType: 0,
+          orderStatus: 1
         }],
         dialogVisible: false
       }
@@ -126,5 +138,8 @@
   .tab-title span {
     font-size: 16px;
     font-weight: 500;
+  }
+  .detail-mode-box {
+    margin-bottom: 24px;
   }
 </style>

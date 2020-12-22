@@ -154,7 +154,7 @@ import 'youyun-vue-components/assets/css/element-variables.scss';
 // 加载组件库
 import ElementUI, {Message} from 'element-ui';
 import {
-  Layout, DetailMode, Form, Dialog, Search, Table
+  Layout, DetailMode, Form, Dialog, Search, Table, DetailBox
 } from 'youyun-vue-components'
 
 Vue.use(Layout)
@@ -163,6 +163,7 @@ Vue.use(Form)
 Vue.use(Dialog)
 Vue.use(Search)
 Vue.use(Table)
+Vue.use(DetailBox)
 
 Vue.prototype.$EventBus = new Vue();
 

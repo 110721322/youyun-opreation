@@ -4,39 +4,38 @@
       <div class="form-box">
         <div class="info-box">
           <div class="form-title">门店信息</div>
-          <Form
+          <yun-form
             ref="shopInfoForm"
-            :form-base-data="shopInfoFormData"
-            :label-width="'150px'"
             :show-foot-btn="false"
-          ></Form>
+            :form-base-data="shopInfoFormData">
+          </yun-form>
         </div>
         <div class="info-box">
           <div class="form-title">认证信息</div>
-          <Form
-            ref="shopInfoForm"
-            :form-base-data="verityInfoFormData"
-            :label-width="'150px'"
+          <yun-form
+            ref="verityInfoFormData"
             :show-foot-btn="false"
-          ></Form>
+            :label-width="'120px'"
+            :form-base-data="verityInfoFormData">
+          </yun-form>
         </div>
         <div class="info-box">
           <div class="form-title">结算信息</div>
-          <Form
-            ref="shopInfoForm"
-            :form-base-data="settleInfoFormData"
-            :label-width="'150px'"
+          <yun-form
+            ref="settleInfoFormData"
             :show-foot-btn="false"
-          ></Form>
+            :label-width="'120px'"
+            :form-base-data="settleInfoFormData">
+          </yun-form>
         </div>
         <div class="info-box">
           <div class="form-title">费率信息</div>
-          <Form
-            ref="shopInfoForm"
-            :form-base-data="rateInfoFormData"
-            :label-width="'150px'"
+          <yun-form
+            ref="rateInfoFormData"
             :show-foot-btn="false"
-          ></Form>
+            :label-width="'120px'"
+            :form-base-data="rateInfoFormData">
+          </yun-form>
         </div>
       </div>
       <div class="flex-align-center flex-justify-center foot-btn">
@@ -77,6 +76,7 @@
   .form-box {
     padding: 24px;
     .form-title {
+      margin-bottom: 24px;
       font-size: 14px;
       font-weight: 500;
       color: #000000;
