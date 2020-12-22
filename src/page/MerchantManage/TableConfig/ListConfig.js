@@ -29,11 +29,15 @@ export const MERCHANT_LIST_CONFIG = {
       label: '状态',
       prop: 'disabled',
       render: (h, params) => {
-        if (params.row.disabled === 0) {
-          return h('div', {'class': 'tab-reject'},[h('span', {'class': "dot " + "reject"}), '禁用'])
-        } else if (params.row.disabled === 1) {
-          return [h('span', {'class': "dot " + "opened"}), '启用']
-        }
+        const actions = new Map([
+          [0, {className: 's-status-success', statusDesc: '启用'}],
+          [1, {className: 's-status-fail', statusDesc: '禁用'}],
+          ['default', {className: 's-status-pending', statusDesc: '等待'}],
+        ])
+        const action = actions.get(params.row.disabled) || actions.get('default')
+        return (
+          <span class={['flex-align-center', 'g-status-icon', 's-status-radius', action.className]}>{ action.statusDesc }</span>
+      )
       }
     }
   ],
