@@ -1,171 +1,143 @@
 export const authRoutes = [
   {
     text: '首页',
-    type: 'ios-paper',
-    path: 'homeIndex',
     name: 'homeIndex',
-    isShow: true,
     meta: {
       title: '首页',
-      icon: '首页'
+      icon: 'icongongzuotai'
     },
     children: [
       {
-        type: 'ios-grid',
-        name: 'accountCenter',
         text: '账户中心',
-        path: 'accountCenter',
-        isShow: true,
+        name: 'accountCenter',
         meta: {
           title: '账户中心',
-          icon: 'merchant-list'
-        },
-        children: []
+          icon: ''
+        }
       }
     ]
   },
   {
     text: '服务商管理',
-    type: 'ios-paper',
-    path: 'AgentManage',
     name: 'AgentManage',
-    isShow: false,
     meta: {
       title: '服务商管理',
-      icon: 'AgentManage'
+      icon: 'iconfuwushang'
     },
     children: [
       {
-        type: 'ios-grid',
-        name: 'AgentList',
         text: '服务商列表',
-        path: 'AgentList',
-        isShow: true,
+        name: 'AgentList',
         meta: {
           title: '服务商列表',
-          icon: 'AgentList'
+          icon: ''
         }
       },
       {
-        type: 'ios-grid',
-        name: 'AddAgent',
         text: '添加服务商',
-        path: 'AddAgent',
-        isShow: true,
+        name: 'AddAgent',
         meta: {
           title: '添加服务商',
-          icon: 'AddAgent'
+          icon: ''
         }
       }
     ]
   },
   {
     text: '商户管理',
-    type: 'ios-paper',
-    path: 'MerchantManage',
     name: 'MerchantManage',
-    isShow: false,
     meta: {
       title: '商户管理',
-      icon: 'MerchantManage'
+      icon: 'icongongyingshangxinxi'
     },
     children: [
       {
-        type: 'ios-grid',
-        name: 'MerchantList',
         text: '商户列表',
-        path: 'MerchantList',
-        isShow: true,
+        name: 'MerchantList',
         meta: {
           title: '商户列表',
-          icon: 'MerchantList'
+          icon: ''
         }
       }
     ]
   },
-  
   {
     text: '门店管理',
-    type: 'ios-paper',
-    path: 'shopManage',
     name: 'shopManage',
-    isShow: true,
     meta: {
       title: '门店管理',
-      icon: '门店管理'
+      icon: 'iconshanghu'
     },
     children: [
       {
-        type: 'ios-grid',
-        name: 'shopList',
         text: '门店列表',
-        path: 'shopList',
-        isShow: true,
+        name: 'shopList',
         meta: {
           title: '门店列表',
-          icon: 'merchant-list'
-        },
-        children: []
+          icon: ''
+        }
       }
     ]
   },
   {
     text: '结算管理',
-    type: 'ios-paper',
-    path: 'SettleManage',
     name: 'SettleManage',
-    isShow: false,
     meta: {
       title: '结算管理',
-      icon: 'SettleManage'
+      icon: 'iconduizhang'
     },
     children: [
       {
-        type: 'ios-grid',
-        name: 'SettleRecord',
-        text: '店铺结算记录',
-        path: 'SettleRecord',
-        isShow: true,
-        meta: {
-          title: '店铺结算记录',
-          icon: 'SettleRecord'
-        }
-      },
-      {
-        type: 'ios-grid',
-        name: 'AgentSettleManage',
         text: '代理商结算管理',
-        path: 'AgentSettleManage',
-        isShow: true,
+        name: 'AgentSettleManage',
         meta: {
           title: '代理商结算管理',
-          icon: 'AgentSettleManage'
+          icon: ''
         }
       }
     ]
   },
   {
     text: '订单管理',
-    type: 'ios-paper',
-    path: 'orderManage',
     name: 'orderManage',
-    isShow: true,
     meta: {
       title: '订单管理',
-      icon: '订单管理'
+      icon: 'iconjiaoyi'
     },
     children: [
       {
-        type: 'ios-grid',
-        name: 'transactionFlow',
         text: '交易流水',
-        path: 'transactionFlow',
-        isShow: true,
+        name: 'transactionFlow',
         meta: {
           title: '交易流水',
-          icon: 'merchant-list'
-        },
-        children: []
+          icon: ''
+        }
+      }
+    ]
+  },
+  {
+    text: '用户管理',
+    name: 'accountManage',
+    meta: {
+      title: '用户管理',
+      icon: 'iconyonghuguanli'
+    },
+    children: [
+      {
+        text: '账户列表',
+        name: 'accountList',
+        meta: {
+          title: '账户列表',
+          icon: ''
+        }
+      },
+      {
+        text: '权限配置',
+        name: 'roleList',
+        meta: {
+          title: '权限配置',
+          icon: ''
+        }
       }
     ]
   }

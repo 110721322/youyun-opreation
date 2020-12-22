@@ -209,6 +209,31 @@ const asyncRoutes = {
     children: [
     ]
   },
+  accountManage: {
+    path: '/accountManage',
+    name: 'accountManage',
+    meta: {
+      title: '用户管理'
+    },
+    component: Layout,
+    children: []
+  },
+  accountList: {
+    path: '/accountList',
+    name: 'accountList',
+    meta: {
+      title: '账户列表'
+    },
+    component: () => import('@/page/AccountManage/AccountList.vue')
+  },
+  roleList: {
+    path: '/roleList',
+    name: 'roleList',
+    meta: {
+      title: '权限配置'
+    },
+    component: () => import('@/page/AccountManage/RoleList.vue')
+  }
 }
 const routers = []
 const menusToRoutes = function (data) {

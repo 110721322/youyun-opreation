@@ -29,10 +29,8 @@ import utils from "youyun-vue-components/global/kit/utils";
 import currRouter from './addRouter.js'
 
 import Login from '../page/Login/Login.vue'
-import Register from '../page/Login/Register.vue'
 import ErrorPage from '../page/404/404.vue'
 import noJurisdiction from '../page/401/401.vue'
-const RegistSuccess = () => import("../page/Login/RegistSuccess")
 
 Vue.use(VueRouter)
 
@@ -56,14 +54,6 @@ const router = new VueRouter({
       }
     },
     {
-      path: '/register',
-      name: 'register',
-      component: Register,
-      meta: {
-        requireLogin: false
-      }
-    },
-    {
       path: '/404',
       name: 'ErrorPage',
       component: ErrorPage,
@@ -75,13 +65,6 @@ const router = new VueRouter({
       path: '/401',
       name: 'noJurisdiction',
       component: noJurisdiction,
-      meta: {
-        requireLogin: false
-      }
-    },
-    {
-      path: '/RegistSuccess',
-      component: RegistSuccess,
       meta: {
         requireLogin: false
       }

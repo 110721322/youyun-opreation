@@ -70,8 +70,12 @@ module.exports = {
     devServer: {
       port: 8082,
       proxy: {
-        '/fund': {
-          target: process.env.VUE_APP_BASEURL,
+        '/common': {
+          target: process.env.COMMON_URL,
+          changeOrigin: true
+        },
+        '/operation': {
+          target: process.env.OPERATION_URL,
           changeOrigin: true
         }
       }

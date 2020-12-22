@@ -1,68 +1,132 @@
 <template>
-  <div class="page_box">
-    <header>
-      <img src="@/assets/img/logo.png" alt="" class="g-logo">
-    </header>
+  <div class="m-login">
     <section style="width: 100%;height: auto">
       <div class="login-box">
-        <div class="left-box">
-          <img src="@/assets/img/loginBg.png" alt="">
-        </div>
-        <div class="right-box">
-          <div class="login-content">
-            <div class="title">{{ title }}</div>
-            <div class="input-box">
-              <el-autocomplete
-                  v-model="ruleForm.mobile"
-                  :fetch-suggestions="queryMobile"
-                  @select="handleSelect"
-                  :maxlength="11"
-                  ref="autocomplete"
-                  class="login-input"
-                  name="codePhone"
-                  placeholder="请输入手机号"
-                  clearable
-                  size="large"
-              >
-                <template slot-scope="{ item }">
-                  <div class="f-fz-14 flex-between flex-align-center">
-                    <p>{{ $g.utils.phoneProtect(item) }}</p>
-                    <el-button style="color: #909399" type="text" class="f-fz-14" icon="el-icon-circle-close" @click.stop="removePhone(item)"></el-button>
-                  </div>
-                </template>
-              </el-autocomplete>
-              <el-input
-                  v-model="ruleForm.code"
-                  maxlength="6"
-                  type="text"
-                  class="login-input"
-                  name="code"
-                  placeholder="请输入验证码"
-                  size="large"
-              >
-                <template slot="append">
-                <span
-                    v-if="countLoginTime<=0"
-                    class="verification-btn"
-                    @click="onClick_sendLoginCode"
-                >获取验证码</span>
-                  <span v-if="countLoginTime>0" class="verification-btn">{{ countLoginTime + " s" }}</span>
-                </template>
-              </el-input>
-            </div>
-            <div class="btn-box">
-              <el-button type="primary" class="login-btn" @click="onClick_codeLogin">登录</el-button>
-            </div>
-          </div>
+        <div class="login-content">
+          <img class="m-logo" src="@/assets/img/logo.png" alt="logo">
+          <div class="title">{{ title }}</div>
+          <el-tabs v-model="activeType" class="m-login-tabs">
+            <el-tab-pane label="账户密码登录" name="username">
+              <div class="input-box clearfix">
+                <el-autocomplete
+                    v-model="ruleForm.phone"
+                    :fetch-suggestions="queryMobile"
+                    @select="handleSelect"
+                    :maxlength="11"
+                    ref="autocomplete"
+                    class="m-login-input"
+                    name="codePhone"
+                    placeholder="账户"
+                    clearable
+                    size="large"
+                >
+                  <i slot="prefix" class="el-input__icon iconfont iconuser m-icon-prefix f-fc-theme"></i>
+                  <template slot-scope="{ item }">
+                    <div class="f-fz-14 flex-between flex-align-center">
+                      <p>{{ $g.utils.phoneProtect(item) }}</p>
+                      <el-button style="color: #909399" type="text" class="f-fz-14" icon="el-icon-circle-close" @click.stop="removePhone(item)"></el-button>
+                    </div>
+                  </template>
+                </el-autocomplete>
+                <el-input
+                    v-model="ruleForm.password"
+                    type="password"
+                    class="m-login-input"
+                    name="code"
+                    placeholder="密码"
+                    size="large"
+                >
+                  <i slot="prefix" class="el-input__icon iconfont iconlock m-icon-prefix f-fc-theme"></i>
+                </el-input>
+                <el-button type="text" class="m-forget-psd clearfix f-fz-14" @click="showForgetPsd">忘记密码</el-button>
+              </div>
+              <div class="btn-box">
+                <el-button type="primary" class="login-btn" @click="clickPsdLogin">登录</el-button>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="手机号登录" name="phone">
+              <div class="input-box">
+                <el-autocomplete
+                    v-model="ruleForm.phone"
+                    :fetch-suggestions="queryMobile"
+                    @select="handleSelect"
+                    :maxlength="11"
+                    ref="autocomplete"
+                    class="m-login-input"
+                    name="codePhone"
+                    placeholder="手机号"
+                    clearable
+                    size="large"
+                >
+                  <i slot="prefix" class="el-input__icon iconfont iconmobile m-icon-prefix f-fc-theme"></i>
+                  <template slot-scope="{ item }">
+                    <div class="f-fz-14 flex-between flex-align-center">
+                      <p>{{ $g.utils.phoneProtect(item) }}</p>
+                      <el-button style="color: #909399" type="text" class="f-fz-14" icon="el-icon-circle-close" @click.stop="removePhone(item)"></el-button>
+                    </div>
+                  </template>
+                </el-autocomplete>
+                <div class="flex-between">
+                  <el-input
+                      v-model="ruleForm.code"
+                      maxlength="6"
+                      type="text"
+                      class="m-login-input s-code-input"
+                      name="code"
+                      placeholder="验证码"
+                      size="large"
+                  >
+                    <i slot="prefix" class="el-input__icon iconfont iconmail m-icon-prefix f-fc-theme"></i>
+                  </el-input>
+                  <el-button
+                      class="m-login-code-btn"
+                      v-show="countLoginTime <= 0"
+                      @click="clickSendLoginCode">获取验证码</el-button>
+                  <el-button class="m-login-code-btn" v-show="countLoginTime > 0">{{ countLoginTime + " s" }}</el-button>
+                </div>
+              </div>
+              <div class="btn-box">
+                <el-button type="primary" class="login-btn" @click="clickCodeLogin">登录</el-button>
+              </div>
+            </el-tab-pane>
+          </el-tabs>
         </div>
       </div>
     </section>
-    <div style="height: 107px;"></div>
+    <div style="height: 48px;"></div>
     <footer>
-      <img class="s-slogan" src="@/assets/img/system_slogan.png" alt="">
-      <p>咨询热线：136-6666-8890</p>
-      <p>杭州火脸科技有限公司 @Copyright 2020.All Rights Reserved.</p>
+      <p>Copyright© 2020杭州火脸科技有限公司</p>
     </footer>
+    <yun-dialog
+        :dialoger="forgetPsdDialoger"
+        title="忘记密码"
+        width="488px"
+        @confirm="updatePassword"
+        @cancel="closeForget"
+    >
+      <main slot="body" class="m-dialog-forget">
+        <yun-form
+            style="margin: 0;padding: 0"
+            ref="forgetPsdForm"
+            :form-base-data="formConfigPsd"
+            :show-foot-btn="false"
+        >
+          <template slot="code">
+            <el-button
+                type="primary"
+                class="f-fz-14"
+                style="margin-left: 17px"
+                v-show="countPsdTime <= 0"
+                @click="clickSendPsdCode">获取验证码</el-button>
+            <el-button
+                type="primary"
+                class="f-fz-14"
+                style="margin-left: 17px"
+                v-show="countPsdTime > 0">{{ countPsdTime + " s" }}</el-button>
+          </template>
+        </yun-form>
+      </main>
+    </yun-dialog>
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -73,20 +137,24 @@ import currRouter from '@/router/addRouter'
 import { mapActions, mapState } from 'vuex';
 import store from '@/store';
 import { validPhone } from "youyun-vue-components/global/kit/validate";
+import { FORM_CONFIG } from "./FormConfig/LoginFormConfig";
 
 export default {
   components: {},
   data() {
     return {
       ruleForm: {
-        mobile: "",
-        code: "",
-        domain: window.location.origin
+        phone: "",
+        password: "",
+        code: ""
       },
-      title: "系统登录",
-      activeType: "verificationLogin",
+      formConfigPsd: null,
+      title: "火脸收银-运营后台",
+      activeType: "username",
+      system: 'operation',
       countLoginTime: 0,
-      source: 'LOGIN'
+      countPsdTime: 0,
+      forgetPsdDialoger: false
     };
   },
   computed: {
@@ -98,20 +166,19 @@ export default {
     ...mapActions([
       'saveAccessToken', 'saveUserInfo', 'saveRoutersArr', 'addLoginHistory', 'removeHistory'
     ]),
-    onClick_sendLoginCode() {
+    clickSendLoginCode() {
       const that = this;
-      if (!this.ruleForm.mobile) {
+      if (!this.ruleForm.phone) {
         this.$message("请输入手机号");
         return;
-      }
-      if (!validPhone(this.ruleForm.mobile)) {
+      } else if (!validPhone(this.ruleForm.phone)) {
         this.$message("请输入规范11位手机号");
         return;
       }
       api_common
         .getSmsCode({
-          mobile: this.ruleForm.mobile,
-          source: this.source
+          phone: this.ruleForm.phone,
+          system: this.system
         })
         .then(res => {
           this.countLoginTime = 60;
@@ -131,6 +198,39 @@ export default {
           this.countLoginTime = 0;
         });
     },
+    clickSendPsdCode() {
+      const that = this;
+      const ruleForm = this.$refs.forgetPsdForm.ruleForm;
+      if (!ruleForm.phone) {
+        this.$message("请输入手机号");
+        return;
+      } else if (!validPhone(ruleForm.phone)) {
+        this.$message("请输入规范11位手机号");
+        return;
+      }
+      api_common
+        .sendForgetPasswordCode({
+          phone: ruleForm.phone,
+          system: this.system
+        })
+        .then(res => {
+          this.countPsdTime = 60;
+          const interval = setInterval(() => {
+            if (that.countPsdTime > 0) {
+              that.countPsdTime--;
+            } else {
+              clearInterval(interval);
+            }
+          }, 1000);
+          this.$message({
+            type: "success",
+            message: "已发送"
+          });
+        })
+        .catch((e) => {
+          this.countPsdTime = 0;
+        });
+    },
     /**
      * 登录成功回调
      * @param res
@@ -142,31 +242,27 @@ export default {
       computedRoleRouter(res.data.menuVOList)
       this.addRoutes();
       this.$nextTick(() => {
-        if (this.$route.query.redirect) {
-          this.$router.push({ path: `${this.$route.query.redirect}` });
-        } else {
-          let routerName;
-          const first = res.data.menuVOList[0];
-          if (first.children && first.children.length > 0) {
-            const second = first.children[0];
-            if (second.children && second.children.length > 0) {
-              routerName = second.children[0].routerName
-            } else {
-              routerName = second.routerName
-            }
+        let routerName;
+        const first = res.data.menuVOList[0];
+        if (first.children && first.children.length > 0) {
+          const second = first.children[0];
+          if (second.children && second.children.length > 0) {
+            routerName = second.children[0].routerName
           } else {
-            routerName = first.routerName
+            routerName = second.routerName
           }
-          this.$router.push({name: routerName});
+        } else {
+          routerName = first.routerName
         }
+        this.$router.push({name: routerName});
       })
     },
-    queryMobile($queryString = this.ruleForm.mobile, $callback) {
+    queryMobile($queryString = this.ruleForm.phone, $callback) {
       const loginHistory = this.loginHistory.filter(phone => phone.indexOf($queryString) > -1)
       $callback(loginHistory)
     },
     handleSelect($phone) {
-      this.ruleForm.mobile = $phone;
+      this.ruleForm.phone = $phone;
     },
     removePhone($phone) {
       const removeIndex = this.loginHistory.findIndex((item) => item === $phone)
@@ -179,106 +275,135 @@ export default {
       this.$router.addRoutes(routerList);
       this.saveRoutersArr(routerList)
     },
-    onClick_codeLogin() {
-      if (!this.ruleForm.mobile) {
+    clickCodeLogin() {
+      if (!this.ruleForm.phone) {
         this.$message("请输入手机号");
         return;
-      }
-      if (!validPhone(this.ruleForm.mobile)) {
+      } else if (!validPhone(this.ruleForm.phone)) {
         this.$message("请输入规范11位手机号");
         return;
-      }
-      if (!this.ruleForm.code) {
+      } else if (!this.ruleForm.code) {
         this.$message("请输入验证码");
         return;
       }
+      const params = {
+        phone: this.ruleForm.phone,
+        code: this.ruleForm.code,
+        type: 'message',
+        system: this.system
+      }
       api
-        .login(this.ruleForm)
+        .login(params)
         .then(res => this.loginCallBack(res))
+    },
+    clickPsdLogin() {
+      if (!this.ruleForm.phone) {
+        this.$message("请输入手机号");
+        return;
+      } else if (!validPhone(this.ruleForm.phone)) {
+        this.$message("请输入规范11位手机号");
+        return;
+      } else if (!this.ruleForm.password) {
+        this.$message("请输入密码")
+        return;
+      }
+      const params = {
+        phone: this.ruleForm.phone,
+        password: this.ruleForm.password,
+        type: 'password',
+        system: this.system
+      }
+      api.login(params).then(res => {
+        this.loginCallBack(res)
+      })
+    },
+    showForgetPsd() {
+      this.formConfigPsd = this.$g.utils.deepClone(FORM_CONFIG);
+      this.forgetPsdDialoger = true
+    },
+    closeForget() {
+      this.forgetPsdDialoger = false;
+    },
+    updatePassword() {
+      const that = this;
+      const ruleForm = this.$refs.forgetPsdForm.clickFootBtn();
+      if (!ruleForm) {
+        this.$message('请完善信息');
+        return
+      }
+      const params = Object.assign({ system: this.system}, ruleForm)
+      api_common.updatePassword(params).then(res => {
+        try {
+          that.$message({
+            type: 'success',
+            message: '修改成功'
+          })
+        } catch (e) {}
+        that.closeForget();
+      })
     }
   }
 };
 </script>
 <style lang="scss" scoped>
-@import "~youyun-vue-components/assets/css/login.scss";
-.page_box {
+.m-login {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   min-width: 1440px;
-  background: #F8F8FC;
+  background: #F0F3F7;
   overflow: auto;
-  header {
-    width: 100%;
-    height: 66px;
-    background: #FFFFFF;
-    padding: 13px 45px;
-    border-bottom: 1px solid #E3E3E3;
-    .g-logo {
-      display: block;
-      width: 119px;
-      height: 40px;
-    }
-  }
   .login-box {
     display: flex;
-    width: 900px;
-    height: 444px;
-    margin: 94px auto;
-    .left-box {
-      float: left;
-      width: 450px;
+    width: 368px;
+    margin: 110px auto;
+    .login-content {
+      width: 100%;
       height: 100%;
-      img {
+      .m-logo {
         display: block;
-        width: 100%;
-        height: 100%;
+        width: 90px;
+        height: 40px;
+        margin: 0 auto 12px;
+      }
+      .title {
+        margin-bottom: 30px;
+        font-size: 33px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #000000;
+        text-align: center;
+      }
+      .m-login-tabs {
+        /deep/ .el-tabs__header {
+          margin-bottom: 24px;
+          /deep/ .el-tabs__nav-wrap {
+            &::after{
+              height: 0;
+            }
+          }
+        }
       }
     }
-    .right-box {
-      float: left;
-      display: flex;
-      flex-direction: column;
-      width: 450px;
-      height: 100%;
-      padding: 61px 45px;
-      border: 1px solid #E0E0E0;
-      background: #FFFFFF;
-      .login-content {
-        width: 100%;
-        height: 100%;
-        padding: 28px 42px 45px;
-        .title {
-          margin-bottom: 30px;
-          font-size: 24px;
-          font-family: PingFangSC-Medium, PingFang SC;
-          font-weight: bold;
-          color: #197BFA;
-          text-align: center;
-        }
-      }
-      .btn-box {
+    .btn-box {
+      width: 100%;
+      height: 40px;
+      .login-btn {
+        padding: 0;
         width: 100%;
         height: 40px;
-        .login-btn {
-          padding: 0;
-          width: 100%;
-          height: 40px;
-          line-height: 40px;
-          background: rgba(25, 137, 250, 1);
-          border-radius: 4px;
-          font-size: 16px;
-          font-weight: bolder;
-          letter-spacing: 5px;
-          font-family: PingFangSC-Medium, PingFang SC;
-        }
+        line-height: 40px;
+        border-radius: 2px;
+        font-size: 16px;
+        letter-spacing: 5px;
+        font-family: PingFangSC-Medium, PingFang SC;
       }
     }
     .input-box {
       width: 100%;
-      .login-input {
+      .m-login-input {
         width: 100%;
         height: 40px;
         margin-bottom: 24px;
@@ -289,47 +414,48 @@ export default {
         }
         /deep/ .el-input__inner {
           height: 40px;
-          padding-left: 9px;
-          font-size: 12px;
+          padding-left: 36px;
+          font-size: 16px;
           color: #000;
+          border-radius: 2px;
           &::placeholder {
-            color: #999;
+            color: #C0C4CC;
           }
         }
+        &.s-code-input {
+          width: 258px;
+        }
       }
-      .verification-btn {
-        display: inline-block;
-        width: 83px;
+      .m-login-code-btn {
+        display: block;
         height: 40px;
-        line-height: 40px;
-        cursor: pointer;
-        text-align: center;
-        background: #1989FA;
-        border-radius: 0px 4px 4px 0px;
-        font-size: 12px;
-        color: #FFFFFF;
+        width: 102px;
+        border-radius: 0;
       }
+      .m-icon-prefix {
+        padding-left: 10px;
+      }
+    }
+    .m-forget-psd {
+      float: right;
+      padding: 0;
+      margin-bottom: 24px;
     }
   }
   footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 100px;
-    padding-top: 19px;
-    background: #282828;
-    .s-slogan {
-      display: block;
-      width: 173px;
-      height: 19px;
-      margin: 0 auto;
-    }
+    height: 48px;
     p {
       margin-top: 10px;
       color: #C0C0C0;
       font-size: 10px;
       text-align: center;
     }
+  }
+  .m-dialog-forget {
+    padding: 22px 40px;
   }
 }
 </style>
