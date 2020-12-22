@@ -5,14 +5,13 @@ export default {
     $routes = utils.mapNestedArr($routes, 'children', mapRoutes);
     function mapRoutes($route) {
       return {
-        text: $route.text ? $route.text : $route.menuName,
-        type: 'ios-paper',
-        path: $route.path ? $route.path : $route.routerPath,
-        name: $route.name ? $route.name : $route.routerName,
+        text: $route.text,
+        path: $route.path,
+        name: $route.name,
         isShow: true,
         meta: {
-          title: $route.text ? $route.text : $route.menuName,
-          icon: $route.icon ? $route.icon : $route.menuIcon
+          title: $route.text,
+          icon: $route.meta.icon ? $route.meta.icon : $route.icon
         },
         children: $route.children
       }
