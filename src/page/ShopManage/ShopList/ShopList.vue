@@ -1,19 +1,14 @@
 <template>
   <div>
     <div class="search-box">
-      <yun-search :form-base-data="searchConfig.formData"></yun-search>
+      <yun-search :form-base-data="searchConfig.formData" @search="onClickSearch"></yun-search>
     </div>
-    <!-- <Search
-      :form-base-data="searchConfig.formData"
-      :show-foot-btn="searchConfig.showFootBtn"
-      @search="onClickSearch"
-    /> -->
     <div class="table-box">
       <div class="tab-title">
         <span>门店列表</span>
         <el-button type="primary" size="small">导出</el-button>
       </div>
-      <BaseCrud
+      <yun-table
         ref="table"
         :grid-config="tableConfig.gridConfig"
         :grid-btn-config="tableConfig.gridBtnConfig"
@@ -29,8 +24,7 @@
         :default-expand-all="false"
         :hide-edit-area="tableConfig.hideEditArea"
         :api-service="api"
-        @detail="onClickDetail"
-      ></BaseCrud>
+        @detail="onClickDetail"></yun-table>
     </div>
   </div>
 </template>
@@ -38,15 +32,17 @@
 <script>
 import { SEARCH_CONFIG } from "../formConfig/shopListSearch";
 import { TABLE_CONFIG } from "../tableConfig/shopListTable";
+import api from "@/api/api_shop";
 export default {
   name: "ShopList",
   data() {
     return {
       searchConfig: SEARCH_CONFIG,
       tableConfig: TABLE_CONFIG,
-      api: '',
+      api: api.shopQueryByPage,
       testData: [{
-        shopNo: '1111'
+        shopNo: '1111',
+        status: 0
       }]
     };
   },
@@ -58,7 +54,7 @@ export default {
   },
   methods: {
     onClickSearch() {
-
+      console.log(111111)
     },
     onClickDetail() {
       this.$router.push('/shopManage/shopList/shopDetail')

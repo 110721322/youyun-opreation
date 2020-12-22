@@ -1,16 +1,14 @@
 <template>
   <div>
-    <Search
-      :form-base-data="searchConfig.formData"
-      :show-foot-btn="searchConfig.showFootBtn"
-      @search="onClickSearch"
-    />
+    <div class="search-box">
+      <yun-search :form-base-data="searchConfig.formData" @search="onClickSearch"></yun-search>
+    </div>
     <div class="table-box">
       <div class="tab-title">
         <span>交易流水列表</span>
         <el-button type="primary" size="small">导出</el-button>
       </div>
-      <BaseCrud
+      <yun-table
         ref="table"
         :grid-config="tableConfig.gridConfig"
         :grid-btn-config="tableConfig.gridBtnConfig"
@@ -27,7 +25,7 @@
         :hide-edit-area="tableConfig.hideEditArea"
         :api-service="api"
         @detail="onClickDetail"
-      ></BaseCrud>
+      ></yun-table>
     </div>
   </div>
 </template>
@@ -35,13 +33,14 @@
 <script>
 import { SEARCH_CONFIG } from "../formConfig/flowFormConfig";
 import { TABLE_CONFIG } from "../tableConfig/flowTableConfig";
+import api from "@/api/api_order";
 export default {
   name: "TransactionFlow",
   data() {
     return {
       searchConfig: SEARCH_CONFIG,
       tableConfig: TABLE_CONFIG,
-      api: '',
+      api: api.orderSelectByPage,
       testData: [{
         shopNo: '1111'
       }]

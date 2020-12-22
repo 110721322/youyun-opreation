@@ -40,41 +40,31 @@ export const TABLE_CONFIG = {
       label: '门店状态',
       prop: 'status',
       render: (h, params) => {
-        if (params.row.status === 0) {
-          return '禁用'
-        }
-        if (params.row.status === 1) {
-          return '启用'
-        }
+        const actions = new Map([
+          [0, {className: 's-status-success', statusDesc: '启用'}],
+          [1, {className: 's-status-fail', statusDesc: '禁用'}]
+        ])
+        const action = actions.get(params.row.status) || actions.get('default')
+        return (
+          <span class={['flex-align-center', 'g-status-icon', 's-status-radius', action.className]}>{ action.statusDesc }</span>
+      )
       }
     },
     {
       label: '审核状态',
-      prop: 'phone',
+      prop: 'status',
       render: (h, params) => {
-        let config = {}
-        switch (params.row.orderStatus) {
-          case 0:
-            config = {color: "#1989FA", text: '平台审核中'};
-            break;
-          case 1:
-            config = {color: "#1989FA", text: '通道审核中'};
-            break;
-          case 2:
-            config = {color: "#50C514", text: '已开通'};
-            break;
-          case 3:
-            config = {color: "#50C514", text: '驳回'};
-            break;
-          case 4:
-            config = {color: "#F52130", text: '微信未认证'};
-            break;
-        }
+        const actions = new Map([
+          [0, {className: 's-status-pending', statusDesc: '平台审核中'}],
+          [1, {className: 's-status-pending', statusDesc: '通道审核中'}],
+          [2, {className: 's-status-success', statusDesc: '已开通'}],
+          [3, {className: 's-status-fail', statusDesc: '驳回'}],
+          [4, {className: 's-status-fail', statusDesc: '微信未认证'}]
+        ])
+        const action = actions.get(params.row.status) || actions.get('default')
         return (
-          <span class="flex-align-center">
-            <i style={{"display": "block", "width": "6px", "height" :"6px", "margin-right": "4px", "background": config.color, "border-radius": "50%"}}></i>{config.text}
-          </span>
-        );
+          <span class={['flex-align-center', 'g-status-icon', 's-status-radius', action.className]}>{ action.statusDesc }</span>
+      )
       }
     }
   ],
