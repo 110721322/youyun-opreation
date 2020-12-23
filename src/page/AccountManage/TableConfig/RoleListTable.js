@@ -17,7 +17,7 @@ export const TABLE_CONFIG = {
     },
     {
       label: '操作人',
-      prop: 'operation',
+      prop: 'editorName',
       width: '180px'
     },
     {
@@ -28,17 +28,6 @@ export const TABLE_CONFIG = {
   ],
   gridBtnConfig: {
     expands: [
-      {
-        name: '启用',
-        emitName: 'enable',
-        type: 'text'
-      },
-      {
-        name: '禁用',
-        emitName: 'disable',
-        type: 'text',
-        style: 'color:#F5222D'
-      },
       {
         name: '编辑',
         emitName: 'edit',

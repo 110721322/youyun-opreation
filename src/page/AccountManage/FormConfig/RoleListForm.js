@@ -4,17 +4,7 @@ export const SEARCH_CONFIG = [
     label: '权限组名称',
     key: 'roleName',
     span: 12
-  },
-  {
-    type: 1,
-    label: '状态',
-    key: 'status',
-    options: [
-      {label: '启用', value: 1},
-      {label: '禁用', value: 0}
-    ],
-    span: 12
-  },
+  }
 ]
 
 export const ADD_ROLE_CONFIG = [
@@ -33,7 +23,7 @@ export const ADD_ROLE_CONFIG = [
   {
     type: 0,
     label: '权限组ID',
-    key: 'roleId',
+    key: 'id',
     initVal: '',
     isShow: false
   }

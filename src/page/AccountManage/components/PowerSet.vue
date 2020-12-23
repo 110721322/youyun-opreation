@@ -93,7 +93,9 @@
     },
     watch: {
       checkedList() {
-        return !(this.indeterminate || this.checkedList.length === 0)
+        if (this.checkedList.length === this.allCheckOption.length) {
+          this.checkAll = true
+        }
       }
     },
     created() {
@@ -192,12 +194,17 @@
         const checkedMenuIds = this.checkedMenus.map($menu => {
           return $menu.id;
         });
+        if (checkedMenuIds.length === 0) {
+          this.$message('请勾选角色权限');
+          return false
+        }
         const result = {
           buttons: checkedButtonIds,
           menuIds: checkedMenuIds,
           ruleForm: ruleForm
         };
         this.$emit('confirm', result);
+        return result
       }
     }
   };

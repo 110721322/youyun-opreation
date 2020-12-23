@@ -10,3 +10,8 @@ export const AccountList = {
   ACCOUNT_LOCK: 'lock',   // 用户冻结状态
   OPERATION_PLATFORM: 1 // 运营后台
 }
+
+export const RoleList = {
+  OPERATION_PLATFORM: 1, // 运营后台
+  OPERATION_SYSTEM: 'operation'
+}

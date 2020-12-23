@@ -4,6 +4,7 @@
         style="margin-bottom: 24px;"
         :form-base-data="searchConfig"
         :is-show-all="true"
+        @search="search"
     ></yun-search>
     <div class="g-table">
       <div class="g-table-top flex-between">
@@ -11,9 +12,15 @@
         <el-button type="primary" class="g-btn" @click="showAddRoleDialog">添加权限组</el-button>
       </div>
       <yun-table
+          ref="refTable"
+          is-async
+          grid-edit-width="120"
+          :api-service="apiService"
+          :params="params"
           :grid-config="tableConfig.gridConfig"
           :grid-btn-config="tableConfig.gridBtnConfig"
-          :grid-data="gridData"
+          @edit="showEditRoleDialog"
+          @del="delRole"
       ></yun-table>
     </div>
     <yun-dialog
@@ -21,23 +28,40 @@
         title="添加权限组"
         width="488px"
         @confirm="confirmAddRole"
-        @cancel="closeAddRoleDialog"
+        @cancel="closeRoleDialog"
     >
       <power-set
           slot="body"
-          ref="powerSet"
+          ref="addPowerSet"
           v-if="addRoleDialoger"
           :form-config="addRoleConfig"
           :template-list="templateList"
+      ></power-set>
+    </yun-dialog>
+    <yun-dialog
+        :dialoger="editRoleDialoger"
+        title="添加权限组"
+        width="488px"
+        @confirm="confirmEditRole"
+        @cancel="closeRoleDialog"
+    >
+      <power-set
+          slot="body"
+          ref="editPowerSet"
+          v-if="editRoleDialoger"
+          :form-config="editRoleConfig"
+          :template-list="editTemplateList"
       ></power-set>
     </yun-dialog>
   </section>
 </template>
 
 <script>
+  import { RoleList } from "@/libs/config/constant.config";
   import { SEARCH_CONFIG, ADD_ROLE_CONFIG } from "./FormConfig/RoleListForm";
   import { TABLE_CONFIG } from "./TableConfig/RoleListTable";
   import PowerSet from "./components/PowerSet";
+  import api_accountManage from "@/api/api_accountManage";
 
   export default {
     name: "RoleList",
@@ -49,124 +73,126 @@
         searchConfig: SEARCH_CONFIG,
         tableConfig: TABLE_CONFIG,
         addRoleConfig: null,
+        editRoleConfig: null,
         gridData: [
           {
             id: 123
           }
         ],
-        templateList: [
-          {
-            menuName: '首页',
-            parentMenuId: 0,
-            id: 1,
-            childrenMenus: [
-              {
-                menuName: '账户中心',
-                parentMenuId: 1,
-                id: 2
-              }
-            ]
-          },
-          {
-            menuName: '服务商管理',
-            parentMenuId: 0,
-            id: 3,
-            childrenMenus: [
-              {
-                menuName: '服务商列表',
-                parentMenuId: 3,
-                id: 4
-              },
-              {
-                menuName: '添加服务商',
-                parentMenuId: 3,
-                id: 5
-              }
-            ]
-          },
-          {
-            menuName: '商户管理',
-            parentMenuId: 0,
-            id: 6,
-            childrenMenus: [
-              {
-                menuName: '商户列表',
-                parentMenuId: 6,
-                id: 7
-              }
-            ]
-          },
-          {
-            menuName: '门店管理',
-            parentMenuId: 0,
-            id: 8,
-            childrenMenus: [
-              {
-                menuName: '门店列表',
-                parentMenuId: 8,
-                id: 9
-              }
-            ]
-          },
-          {
-            menuName: '结算管理',
-            parentMenuId: 0,
-            id: 10,
-            childrenMenus: [
-              {
-                menuName: '代理商结算管理',
-                parentMenuId: 10,
-                id: 11
-              }
-            ]
-          },
-          {
-            menuName: '订单管理',
-            parentMenuId: 0,
-            id: 12,
-            childrenMenus: [
-              {
-                menuName: '交易流水',
-                parentMenuId:12,
-                id: 13
-              }
-            ]
-          },
-          {
-            menuName: '用户管理',
-            parentMenuId: 0,
-            id: 14,
-            childrenMenus: [
-              {
-                menuName: '账户列表',
-                parentMenuId: 14,
-                id: 15
-              },
-              {
-                menuName: '权限配置',
-                parentMenuId: 14,
-                id: 16
-              }
-            ]
-          }
-        ],
-        addRoleDialoger: false
+        templateList: [],
+        editTemplateList: [],
+        addRoleDialoger: false,
+        editRoleDialoger: false,
+        apiService: api_accountManage.queryRoleListByPage,
+        params: {
+          platformType: RoleList.OPERATION_PLATFORM
+        }
       }
     },
+    created() {
+      this.getTemplateList();
+    },
     methods: {
+      getTemplateList() {
+        api_accountManage.selectMenuOfRole({system: RoleList.OPERATION_SYSTEM})
+          .then(res => {
+            this.templateList = res.data.map(item => {
+              return {
+                menuName: item.menuName,
+                parentMenuId: item.parentMenuId,
+                id: item.id,
+                childrenMenus: item.childrenMenus
+              }
+            })
+          })
+      },
+      search($ruleForm) {
+        this.params = {
+          roleName: $ruleForm.roleName,
+          platformType: RoleList.OPERATION_PLATFORM
+        }
+      },
       showAddRoleDialog() {
         this.addRoleConfig = this.$g.utils.deepClone(ADD_ROLE_CONFIG);
         this.addRoleDialoger = true
       },
-      closeAddRoleDialog() {
+      closeRoleDialog() {
         this.addRoleDialoger = false
+        this.editRoleDialoger = false
+      },
+      showEditRoleDialog($row) {
+        const params = {
+          system: RoleList.OPERATION_SYSTEM,
+          roleId: $row.id
+        }
+        this.editRoleConfig = this.$g.utils.deepClone(ADD_ROLE_CONFIG)
+        this.editRoleConfig.forEach(item => {
+          item.initVal = $row[item.key]
+        })
+        api_accountManage.selectMenuOfRole(params).then(res => {
+          this.editTemplateList = res.data;
+          this.editRoleDialoger = true;
+        })
       },
       confirmAddRole() {
-        const result = this.$refs.powerSet.clickConfirm();
+        const result = this.$refs.addPowerSet.clickConfirm();
         if (!result) {
           return false
         }
         const { menuIds, ruleForm } = result;
+        const params = {
+          roleName: ruleForm.roleName,
+          platformType: RoleList.OPERATION_PLATFORM,
+          menuIds: menuIds
+        }
+        api_accountManage.addRole(params).then(() => {
+          this.$refs.refTable.getData();
+          this.closeRoleDialog()
+          this.$message({
+            type: 'success',
+            message: '添加成功'
+          })
+        })
+      },
+      confirmEditRole() {
+        const result = this.$refs.editPowerSet.clickConfirm();
+        if (!result) {
+          return false
+        }
+        const { menuIds, ruleForm } = result;
+        const params = {
+          roleName: ruleForm.roleName,
+          roleId: ruleForm.id,
+          platformType: RoleList.OPERATION_PLATFORM,
+          menuIds: menuIds
+        }
+        api_accountManage.editRoleAndMenu(params).then(() => {
+          this.$refs.refTable.getData();
+          this.closeRoleDialog()
+          this.$message({
+            type: 'success',
+            message: '修改成功'
+          })
+        })
+      },
+      delRole($row) {
+        const that = this;
+        this.$confirm('确定要删除吗？删除后不可恢复。', '确认删除', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          const params = {
+            id: $row.id
+          }
+          api_accountManage.deleteRole(params).then(() => {
+            that.$refs.refTable.getData();
+            that.$message({
+              type: 'success',
+              message: '已删除'
+            })
+          })
+        })
       }
     }
   }

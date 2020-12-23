@@ -1,5 +1,5 @@
 import { validPhone } from 'youyun-vue-components/global/kit/validate'
-import { AccountList } from "@/libs/config/constant.config";
+import { RoleList } from "@/libs/config/constant.config";
 import api_accountManage from "@/api/api_accountManage";
 
 export const SEARCH_CONFIG = [
@@ -23,7 +23,7 @@ export const SEARCH_CONFIG = [
     urlOptions: {
       url: api_accountManage.queryRoleListByPage,
       params: {
-        platformType: AccountList.OPERATION_PLATFORM
+        platformType: RoleList.OPERATION_PLATFORM
       },
       valueName: 'roleName',
       keyName: 'id'
@@ -92,7 +92,7 @@ export const ACCOUNT_FORM = [
     urlOptions: {
       url: api_accountManage.queryRoleListByPage,
       params: {
-        platformType: AccountList.OPERATION_PLATFORM
+        platformType: RoleList.OPERATION_PLATFORM
       },
       valueName: 'roleName',
       keyName: 'id'
