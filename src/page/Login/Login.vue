@@ -97,36 +97,10 @@
     <footer>
       <p>Copyright© 2020杭州火脸科技有限公司</p>
     </footer>
-    <yun-dialog
-        :dialoger="forgetPsdDialoger"
+    <update-psd
+        ref="forgetPsd"
         title="忘记密码"
-        width="488px"
-        @confirm="updatePassword"
-        @cancel="closeForget"
-    >
-      <main slot="body" class="m-dialog-forget">
-        <yun-form
-            style="margin: 0;padding: 0"
-            ref="forgetPsdForm"
-            :form-base-data="formConfigPsd"
-            :show-foot-btn="false"
-        >
-          <template slot="code">
-            <el-button
-                type="primary"
-                class="f-fz-14"
-                style="margin-left: 17px"
-                v-show="countPsdTime <= 0"
-                @click="clickSendPsdCode">获取验证码</el-button>
-            <el-button
-                type="primary"
-                class="f-fz-14"
-                style="margin-left: 17px"
-                v-show="countPsdTime > 0">{{ countPsdTime + " s" }}</el-button>
-          </template>
-        </yun-form>
-      </main>
-    </yun-dialog>
+    ></update-psd>
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -137,10 +111,12 @@ import currRouter from '@/router/addRouter'
 import { mapActions, mapState } from 'vuex';
 import store from '@/store';
 import { validPhone } from "youyun-vue-components/global/kit/validate";
-import { FORM_CONFIG } from "./FormConfig/LoginFormConfig";
+import UpdatePsd from "@/components/UpdatePsd/UpdatePsd";
 
 export default {
-  components: {},
+  components: {
+    UpdatePsd
+  },
   data() {
     return {
       ruleForm: {
@@ -148,13 +124,10 @@ export default {
         password: "",
         code: ""
       },
-      formConfigPsd: null,
       title: "火脸收银-运营后台",
       activeType: "username",
       system: 'operation',
-      countLoginTime: 0,
-      countPsdTime: 0,
-      forgetPsdDialoger: false
+      countLoginTime: 0
     };
   },
   computed: {
@@ -196,39 +169,6 @@ export default {
         })
         .catch((e) => {
           this.countLoginTime = 0;
-        });
-    },
-    clickSendPsdCode() {
-      const that = this;
-      const ruleForm = this.$refs.forgetPsdForm.ruleForm;
-      if (!ruleForm.phone) {
-        this.$message("请输入手机号");
-        return;
-      } else if (!validPhone(ruleForm.phone)) {
-        this.$message("请输入规范11位手机号");
-        return;
-      }
-      api_common
-        .sendForgetPasswordCode({
-          phone: ruleForm.phone,
-          system: this.system
-        })
-        .then(res => {
-          this.countPsdTime = 60;
-          const interval = setInterval(() => {
-            if (that.countPsdTime > 0) {
-              that.countPsdTime--;
-            } else {
-              clearInterval(interval);
-            }
-          }, 1000);
-          this.$message({
-            type: "success",
-            message: "已发送"
-          });
-        })
-        .catch((e) => {
-          this.countPsdTime = 0;
         });
     },
     /**
@@ -318,29 +258,7 @@ export default {
       })
     },
     showForgetPsd() {
-      this.formConfigPsd = this.$g.utils.deepClone(FORM_CONFIG);
-      this.forgetPsdDialoger = true
-    },
-    closeForget() {
-      this.forgetPsdDialoger = false;
-    },
-    updatePassword() {
-      const that = this;
-      const ruleForm = this.$refs.forgetPsdForm.clickFootBtn();
-      if (!ruleForm) {
-        this.$message('请完善信息');
-        return
-      }
-      const params = Object.assign({ system: this.system}, ruleForm)
-      api_common.updatePassword(params).then(res => {
-        try {
-          that.$message({
-            type: 'success',
-            message: '修改成功'
-          })
-        } catch (e) {}
-        that.closeForget();
-      })
+      this.$refs.forgetPsd.showUpdatePsd();
     }
   }
 };
@@ -453,9 +371,6 @@ export default {
       font-size: 10px;
       text-align: center;
     }
-  }
-  .m-dialog-forget {
-    padding: 22px 40px;
   }
 }
 </style>

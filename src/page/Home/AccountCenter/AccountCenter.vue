@@ -11,93 +11,35 @@
           :filed-config-list="accountInfoConfig"
           module-title="账户信息"
           theme="border"
-          @editTel="editTel"
         >
-          <template slot-scope="scope" slot="switch">
-            <!-- 授权 -->
-            <span>启用</span>
-          </template>
         </yun-detail-mode>
       </div>
     </div>
-    <yun-dialog
-      title="修改密码"
-      :dialoger="modifyPasswordDialog"
-      width="488px"
-      @confirm="clickModifyPassword"
-      @cancel="handleClose">
-      <div slot="body" class="pass-form-style">
-        <yun-form
-          ref="passwordForm"
-          :form-base-data="passwordFormConfig"
-          :label-width="'150px'"
-          :show-foot-btn="false"
-        ></yun-form>  
-      </div>
-    </yun-dialog>
-    <yun-dialog
-      title="修改登录手机号"
-      :dialoger="modifyPhoneDialog"
-      width="488px"
-      @confirm="clickModifyPhone"
-      @cancel="handleCloseForm"
-      :before-close="handleCloseForm">
-      <div slot="body" class="pass-form-style">
-        <yun-form
-          ref="phoneForm"
-          :form-base-data="phoneFormConfig"
-          :label-width="'150px'"
-          :show-foot-btn="false"
-        ></yun-form>
-      </div>
-    </yun-dialog>
+    <update-psd
+        ref="updatePsd"
+        title="修改密码"
+    ></update-psd>
   </div>
 </template>
 
 <script>
+  import UpdatePsd from "@/components/UpdatePsd/UpdatePsd";
   import { FORM_CONFIG } from "../formConfig/accountCenter";
+
   export default {
+    name: 'AccountCenter',
+    components: {
+      UpdatePsd
+    },
     data() {
       return {
-        accountInfoConfig: FORM_CONFIG.accountInfoData,
-        ruleForm: {},
-        modifyPasswordDialog: false,
-        modifyPhoneDialog: false,
-        passwordFormConfig: FORM_CONFIG.passwordFormConfig,
-        phoneFormConfig: FORM_CONFIG.phoneFormConfig
+        accountInfoConfig: FORM_CONFIG,
+        ruleForm: {}
       }
-    },
-    created() {
-    },
-    mounted() {
     },
     methods: {
       clickModify() {
-        this.modifyPasswordDialog = true
-      },
-      handleClose() {
-        this.modifyPasswordDialog = false
-      },
-      editTel() {
-        this.modifyPhoneDialog = true
-      },
-      clickModifyPassword() {
-        if (!this.$refs.passwordForm.handleClick()) {
-          this.$message('请完善修改信息');
-          return;
-        }
-        this.modifyPasswordDialog = false
-      },
-      handleCloseForm() {
-        this.modifyPhoneDialog = false
-      },
-      clickModifyPhone() {
-        console.log(this.$refs.phoneForm)
-        if (!this.$refs.phoneForm.handleClick()) {
-          this.$message('请完善修改信息');
-          return;
-        }
-        this.modifyPhoneDialog = false
+        this.$refs.updatePsd.showUpdatePsd();
       }
     }
   }
@@ -117,31 +59,18 @@
         color: #000000;
         line-height: 22px;
       }
+      .edit-btn {
+        flex-shrink: 0;
+        font-size: 14px;
+        font-weight: 400;
+        color: #1989FA;
+        line-height: 20px;
+        cursor: pointer;
+      }
     }
-  }
-  .pass-form-style {
-    margin-top: 24px;
-  }
-  .edit-btn {
-    flex-shrink: 0;
-    font-size: 14px;
-    font-weight: 400;
-    color: #1989FA;
-    line-height: 20px;
-    cursor: pointer;
-  }
-  .info-box {
-    margin: 0 24px;
-    padding-bottom: 24px;
-  }
-  .pay-box, .open-box {
-    margin-top: 24px;
-  }
-  .foot-btn {
-    padding: 16px 0;
-    box-shadow: 0px -4px 16px 0px rgba(0, 0, 0, 0.09);
-  }
-  /deep/ .formTemplate {
-    margin: 0;
+    .info-box {
+      margin: 0 24px;
+      padding-bottom: 24px;
+    }
   }
 </style>
