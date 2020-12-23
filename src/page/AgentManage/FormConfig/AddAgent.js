@@ -6,6 +6,7 @@ export const ADD_AGENT = {
       {
         type: 0,
         label: '服务商名称',
+        maxlength: 40,
         labelWidth: '120px',
         key: 'agentName',
         rules: [
@@ -121,6 +122,7 @@ export const ADD_AGENT = {
       {
         type: 0,
         label: '开户人姓名',
+        maxlength: 40,
         labelWidth: '120px',
         key: 'bankAccountHolder',
         rules: [

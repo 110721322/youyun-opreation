@@ -23,7 +23,7 @@ export const AGENT_LIST_CONFIG = {
     },
     {
       label: '到期时间',
-      prop: 'endDate'
+      prop: 'expireDate'
     },
     {
       label: '管理员',

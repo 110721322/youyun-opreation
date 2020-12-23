@@ -15,8 +15,7 @@ export const DETAILCONFIG = {
     },
     {
       label: "到期时间",
-      key: "expireDate",
-      emitEdit: 'editTime'
+      key: "expireDate"
     },
     {
       label: "服务商状态",

@@ -14,7 +14,7 @@ export const MERCHANT_LIST_CONFIG = {
       prop: 'agentName',
     },
     {
-      label: '商户昵称',
+      label: '商户名称',
       prop: 'merchantName',
     },
     {
@@ -27,14 +27,14 @@ export const MERCHANT_LIST_CONFIG = {
     },
     {
       label: '状态',
-      prop: 'disabled',
+      prop: 'isDisabled',
       render: (h, params) => {
         const actions = new Map([
           [0, {className: 's-status-success', statusDesc: '启用'}],
           [1, {className: 's-status-fail', statusDesc: '禁用'}],
           ['default', {className: 's-status-pending', statusDesc: '等待'}],
         ])
-        const action = actions.get(params.row.disabled) || actions.get('default')
+        const action = actions.get(params.row.isDisabled) || actions.get('default')
         return (
           <span class={['flex-align-center', 'g-status-icon', 's-status-radius', action.className]}>{ action.statusDesc }</span>
       )

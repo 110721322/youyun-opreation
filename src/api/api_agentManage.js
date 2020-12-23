@@ -1,14 +1,14 @@
 import * as API from '.';
-// 1: () => API.GET(''),
+// ss: () => API.GET(''),
 const api = {
   // 服务商数量统计
   totalAgentNum: () => API.GET('/operation/v1/agent/totalAgentNum'),
   // 服务商列表查询
   queryPageByCondition: (params) => API.GET('/operation/v1/agent/queryPageByCondition', params),
   // 批量修改服务商管理员
-  updateOperationId: (params) => API.GET('/operation/v1/agent/updateOperationId', params),
+  updateOperationId: (params) => API.POST('/operation/v1/agent/updateOperationId', params),
   // 查询服务商状态枚举
-  getAgentStatus: () => API.GET('/operation/v1/agent/getAgentStatus'),
+  getAgentStatus: () => API.POST('/operation/v1/agent/getAgentStatus'),
   // 获取所有大区配置
   queryAllRegion: () => API.GET('/operation/v1/region/queryAllRegion'),
   // 查询运营管理人员列表
@@ -26,7 +26,9 @@ const api = {
   // 详情-新增服务商沟通记录
   addTalk: (params) => API.GET('/operation/v1/talkLists/add/agent', params),
   // 新增服务商
-  addAgent: (params) => API.POST('/operation/v1/agent/addAgent', params)
+  addAgent: (params) => API.POST('/operation/v1/agent/addAgent', params),
+  // 详情-更新服务商费率
+  updateAgentRate: (params) => API.POST('/operation/v1/agent/updateAgentRate', params)
 };
 
 export default api

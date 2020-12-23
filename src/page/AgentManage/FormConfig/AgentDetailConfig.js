@@ -1,3 +1,4 @@
+import { validPhone } from "youyun-vue-components/global/kit/validate";
 export const FORM_CONFIG = {
   talkData: {
     formData: [
@@ -50,13 +51,48 @@ export const FORM_CONFIG = {
       }
     ]
   },
+  changeMoblie: {
+    formData: [
+      {
+        type: 0,
+        label: '新登录手机号',
+        labelWidth: '120px',
+        span: 24,
+        rules: [
+          { required: true, message: '请输入新登录手机号', trigger: 'blur' },
+          {
+            validator:function(rule, value, callback){
+              if(!validPhone(value)){
+                callback(new Error("请输入正确的手机号"));
+              }else{
+                callback();
+              }
+            }, trigger: 'blur'}
+        ]
+      },
+      {
+        type: 0,
+        label: '短信验证码',
+        key: 'code',
+        labelWidth: '120px',
+        initVal: '',
+        style: 'width: 184px;',
+        span: 24,
+        maxlength: 6,
+        slot: 'code',
+        rules: [
+          { required: true, message: '请输入短信验证码', trigger: 'blur' }
+        ]
+      }
+    ]
+  },
   rateSet: {
     formData: [
       {
         type: 0,
         label: '支付宝费率',
         labelWidth: '120px',
-        key: 'alipyRate',
+        key: 'alipayRate',
         isShowSlot: true,
         showSlotName: '%',
         rules: [
@@ -69,7 +105,7 @@ export const FORM_CONFIG = {
         type: 0,
         label: '微信费率',
         labelWidth: '120px',
-        key: 'wechatRate',
+        key: 'wechatPayRate',
         isShowSlot: true,
         showSlotName: '%',
         rules: [
@@ -99,7 +135,7 @@ export const FORM_CONFIG = {
         type: 0,
         label: '开户行',
         labelWidth: '120px',
-        key: 'bankName',
+        key: 'bankBranchName',
         rules: [
           { required: true, message: '请选择开户行', trigger: 'blur' }
         ],
@@ -109,7 +145,7 @@ export const FORM_CONFIG = {
         type: 0,
         label: '银行卡号',
         labelWidth: '120px',
-        key: 'bankNo',
+        key: 'bankCardNo',
         rules: [
           { required: true, message: '请输入银行卡号', trigger: 'blur' }
         ],
@@ -119,7 +155,7 @@ export const FORM_CONFIG = {
         type: 0,
         label: '开户人姓名',
         labelWidth: '120px',
-        key: 'personName',
+        key: 'bankAccountHolder',
         rules: [
           { required: true, message: '请输入开户人姓名', trigger: 'blur' }
         ],
@@ -133,7 +169,7 @@ export const FORM_CONFIG = {
         type: 11,
         label: '有效期',
         labelWidth: '120px',
-        key: 'validityDate',
+        key: 'expireDate',
         rules: [
           { required: true, message: '请选择有效期', trigger: 'change' }
         ],
@@ -163,6 +199,20 @@ export const FORM_CONFIG = {
           }
         ],
         span: 24
+      }
+    ]
+  },
+  nameSet: {
+    formData: [
+      {
+        type: 0,
+        label: '服务商名称',
+        labelWidth: '120px',
+        key: 'agentName',
+        initVal: '',
+        rules: [
+          { required: true, message: '请输入服务商名称', trigger: 'blur' }
+        ],
       }
     ]
   },

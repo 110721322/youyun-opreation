@@ -1,8 +1,12 @@
 <template>
   <div class="m-page">
     <div class="m-title">
-      <span>服务商详情</span>
-      <div class="right" @click="clickResetPassword">密码重置</div>
+      <span class="m-left">服务商详情</span>
+      <div class="m-right">
+        <span @click="clickModify">修改</span>
+        <span>|</span>
+        <span @click="clickResetPassword">密码重置</span>
+      </div>
     </div>
     <div class="m-detail">
         <yun-detail-mode
@@ -11,7 +15,6 @@
             theme="border"
             module-title="门店信息"
             @editTel="editTel"
-            @editTime="onClickEditTime"
         >
         <template slot="status" slot-scope="scope">
           <div
@@ -23,20 +26,16 @@
         </template>
       </yun-detail-mode>
       <yun-detail-mode
-          :is-show-edit="showEdit"
           :rule-form="ruleForm"
           :filed-config-list="rateInfoData"
           theme="border"
           module-title="费率信息"
-          @editModule="onClickEditRate"
       ></yun-detail-mode>
       <yun-detail-mode
-          :is-show-edit="showEdit"
           :rule-form="ruleForm"
           :filed-config-list="bankInfoData"
           theme="border"
           module-title="开户信息"
-          @editModule="onClickEditBank"
       ></yun-detail-mode>
     </div>
 <!-- TODO    数据统计模块-->
@@ -57,7 +56,7 @@
             :is-table-expand="false"
             :row-key="'id'"
             :default-expand-all="false"
-            :hide-edit-area="false"
+            :hide-edit-area="true"
             :params="params"
             :api-service="api"
         ></yun-table>
@@ -77,25 +76,68 @@
             :form-base-data="fromConfigData"
             :show-foot-btn="fromConfigData.showFootBtn === false"
             label-width="130px"
-        ></yun-form>
+        >
+          <template slot="code">
+            <el-button
+                type="primary"
+                class="f-fz-14"
+                style="margin-left: 8px"
+                v-show="countPsdTime <= 0"
+                @click="clickSendPsdCode">获取验证码</el-button>
+            <el-button
+                type="primary"
+                class="f-fz-14"
+                style="margin-left: 8px"
+                v-show="countPsdTime > 0">{{ countPsdTime + " s" }}</el-button>
+          </template>
+        </yun-form>
       </div>
-<!--  TODO    <BaseCrud-->
-<!--          v-if="drawerBase"-->
-<!--          ref="table"-->
-<!--          :grid-config="agentConfig"-->
-<!--          :grid-edit-width="200"-->
-<!--          :is-async="true"-->
-<!--          :is-select="true"-->
-<!--          :is-data-select="false"-->
-<!--          :is-table-expand="false"-->
-<!--          :row-key="'id'"-->
-<!--          :default-expand-all="false"-->
-<!--          :hide-edit-area="true"-->
-<!--          :grid-data="testData"-->
-<!--          :params="params"-->
-<!--          :api-service="api"-->
-<!--          @selectionChange="selectionChange"-->
-<!--      ></BaseCrud>-->
+    </yun-dialog>
+  
+    <yun-dialog
+        title="修改资料"
+        :dialoger="materialDrawer"
+        width="488px"
+        @cancel="materialDrawer = false"
+        @confirm="clickSubmitMaterial"
+    >
+      <div class="dialog-form" slot="body">
+        <yun-form
+            v-if="materialDrawer"
+            ref="nameInfo"
+            :form-base-data="nameConfigData"
+            :show-foot-btn="nameConfigData.showFootBtn === false"
+            label-width="130px"
+        >
+        </yun-form>
+        <div class="form-drawer-title">费率设置</div>
+        <yun-form
+            v-if="materialDrawer"
+            ref="rateInfo"
+            :form-base-data="rateConfigData"
+            :show-foot-btn="nameConfigData.showFootBtn === false"
+            label-width="130px"
+        >
+        </yun-form>
+        <div class="form-drawer-title">结算账号</div>
+        <yun-form
+            v-if="materialDrawer"
+            ref="settleInfo"
+            :form-base-data="settleConfigData"
+            :show-foot-btn="nameConfigData.showFootBtn === false"
+            label-width="130px"
+        >
+        </yun-form>
+        <div class="form-drawer-title">有效期</div>
+        <yun-form
+            v-if="materialDrawer"
+            ref="dateInfo"
+            :form-base-data="dateConfigData"
+            :show-foot-btn="nameConfigData.showFootBtn === false"
+            label-width="130px"
+        >
+        </yun-form>
+      </div>
     </yun-dialog>
   </div>
 </template>
@@ -124,13 +166,23 @@
         gridConfig: AGENT_TALK_DATA.gridConfig,
         agentConfig: AGENT_TRANSFER,
         fromConfigData: FORM_CONFIG,
-        gridBtnConfig: false,
+        gridBtnConfig: AGENT_TALK_DATA.gridBtnConfig,
         drawer: false,
         drawerBase: false,
         drawerType: '',
+        materialDrawer: false,
         title: '',
         testData: [],
-        switchStatus: false
+        switchStatus: false,
+        countPsdTime: 0,
+        nameConfigData: FORM_CONFIG.nameSet.formData,
+        rateConfigData: FORM_CONFIG.rateSet.formData,
+        settleConfigData: FORM_CONFIG.bankSet.formData,
+        dateConfigData: FORM_CONFIG.validitySet.formData,
+        nameVal: false,
+        rateVal: false,
+        settleVal: false,
+        dateVal: false
       }
     },
     computed: {
@@ -148,7 +200,7 @@
     methods: {
       getAgentDetail(agentNo) {
         api.getAgentDetail({
-          agentNo: 'haha'
+          agentNo: this.agentNo
         }).then(res => {
           console.log(res.data)
           if (res.status === 0) {
@@ -184,7 +236,7 @@
           }).then(res => {
             if (res.status === 0) {
               this.$message({
-                message: '禁用',
+                message: '禁用成功',
                 type: 'success'
               })
             }
@@ -197,79 +249,49 @@
         this.drawer = true
         this.title = '修改手机号'
         this.drawerType = 'updatePhone'
-        // this.fromConfigData = FORM_CONFIG.rateSet.formData
-      },
-
-      // 修改到期时间
-      onClickEditTime() {
-        this.title = '修改到期时间'
-        this.drawer = true
-        this.drawerType = 'updateTime'
-        this.fromConfigData = FORM_CONFIG.validitySet.formData
+        this.fromConfigData = FORM_CONFIG.changeMoblie.formData
       },
       
-      // 修改费率信息
-      onClickEditRate() {
-        this.title = '修改费率信息'
-        this.drawer = true
-        this.drawerType = 'updateRate'
-        this.fromConfigData = FORM_CONFIG.rateSet.formData
+      // 修改服务商信息
+      clickModify() {
+        this.title = '修改资料'
+        this.materialDrawer = true
+        this.nameConfigData[0].initVal = this.ruleForm.agentName
+        this.rateConfigData[0].initVal = this.ruleForm.alipayRate
+        this.rateConfigData[1].initVal = this.ruleForm.wechatPayRate
+        this.rateConfigData[2].initVal = this.ruleForm.chargeFeePercent
+        this.settleConfigData[0].initVal = this.ruleForm.bankBranchName
+        this.settleConfigData[1].initVal = this.ruleForm.bankCardNo
+        this.settleConfigData[2].initVal = this.ruleForm.bankAccountHolder
+        this.dateConfigData[0].initVal = this.ruleForm.expireDate
       },
       
-      // 修改开户信息
-      onClickEditBank() {
-        this.title = '修改银行信息'
-        this.drawer = true
-        this.drawerType = 'updateBankInfo'
-        this.fromConfigData = FORM_CONFIG.bankSet.formData
-      },
-
+      // 添加沟通计划
       clickAddTalk() {
         this.drawer = true
         this.drawerType = 'addTalk'
         this.title = '添加沟通计划'
         this.fromConfigData = FORM_CONFIG.talkData.formData
       },
+      
+      // 发送短信验证码
+      clickSendPsdCode() {},
 
       clickSubmit() {
         this.$refs['formInfo'].$children[0].validate((valid) => {
           if (valid) {
             const type = this.drawerType
             const ruleForm = this.$refs['formInfo'].ruleForm
+            console.log(ruleForm)
             switch(type) {
               case "addTalk":
                 api.addTalk(ruleForm).then(res => {
                   this.submitSuccess(res.status, type)
                 })
                 break;
-              case "updateTime":
-                // console.log('更新到期时间')
-                api.addTalk(ruleForm).then(res => {
-                  this.submitSuccess(res.status, type)
-                })
-                break;
-              case "changeOperationUser":
-                // console.log('更换管理人员')
-                api.addTalk(ruleForm).then(res => {
-                  this.submitSuccess(res.status, type)
-                })
-                break;
-              case "updateRate":
-                console.log('修改费率信息')
-                api.addTalk(ruleForm).then(res => {
-                  this.submitSuccess(res.status, type)
-                })
-                break;
-              case "updateBankInfo":
-                console.log('修改银行信息')
-                api.addTalk(ruleForm).then(res => {
-                  this.submitSuccess(res.status, type)
-                })
-                break;
               case "updataLogin":
-                console.log('重置登录密码')
                 api.resetPassword({
-                  agentNo: this.$route.query.agentNo,
+                  agentNo: this.agentNo,
                   pwdType: 1
                 }).then(res => {
                   this.submitSuccess(res.status, type)
@@ -284,6 +306,65 @@
         });
       },
 
+      clickSubmitMaterial() {
+        this.$refs['nameInfo'].$children[0].validate((valid) => {
+          if (valid) {
+            this.nameVal = true
+          } else {
+            this.nameVal = false
+            return false;
+          }
+        })
+        this.$refs['rateInfo'].$children[0].validate((valid) => {
+          if (valid) {
+            this.rateVal = true
+          } else {
+            this.nameVal = false
+            return false;
+          }
+        })
+        this.$refs['settleInfo'].$children[0].validate((valid) => {
+          if (valid) {
+            this.settleVal = true
+          } else {
+            this.nameVal = false
+            return false;
+          }
+        })
+        this.$refs['dateInfo'].$children[0].validate((valid) => {
+          if (valid) {
+            this.dateVal = true
+          } else {
+            this.nameVal = false
+            return false;
+          }
+        })
+        if (!this.rateVal || !this.nameVal || !this.settleVal || !this.dateVal) {
+          return
+        }
+        const serviceData = this.$refs['nameInfo'].ruleForm
+        const rateData = this.$refs['rateInfo'].ruleForm
+        const settleData = this.$refs['settleInfo'].ruleForm
+        const dateData = this.$refs['dateInfo'].ruleForm
+        let infoData = {}
+        Object.assign(infoData, serviceData, rateData, settleData, dateData)
+        infoData.agentNo = this.agentNo
+        api.updateAgentRate(infoData).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '修改成功',
+              type: 'success'
+            })
+            this.materialDrawer = false
+            this.getAgentDetail(this.agentNo)
+            this.rateVal = false
+            this.nameVal = false
+            this.settleVal = false
+            this.dateVal = false
+          }
+        })
+      },
+      
       submitSuccess(data, type) {
         if (data === 0) {
           this.$message({
@@ -314,14 +395,20 @@
        background: #fff;
        line-height: 54px;
        border-bottom: 1px solid #DCDFE6;
-       span {
+       .m-left {
          font-size: 16px;
          color: #000;
        }
-       .right {
+       .m-right {
          color: #1989FA;
          font-size: 14px;
          cursor: pointer;
+         span:nth-child(2) {
+           width: 1px;
+           height: 16px;
+           color: #333;
+           padding: 0 24px;
+         }
        }
      }
     .m-detail {
@@ -360,7 +447,18 @@
   /deep/ .tab-color {
     color: #1989FA;
   }
+  /deep/ .m-formTemplate .m-form-template-item {
+    margin-right: 0;
+  }
   .dialog-form {
     padding-top: 24px;
+  }
+  .form-drawer-title {
+    margin: 0 24px 0 24px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    border-top: 1px solid #E9E9E9;
+    font-size: 14px;
+    color: #000;
   }
 </style>

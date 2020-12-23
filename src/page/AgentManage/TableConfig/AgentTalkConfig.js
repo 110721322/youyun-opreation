@@ -25,5 +25,12 @@ export const AGENT_TALK_DATA = {
       label: '沟通人',
       prop: 'linkmanName'
     }
-  ]
+  ],
+  gridBtnConfig: {
+    create: false,
+    update: false,
+    delete: false,
+    view: false,
+    expands: []
+  }
 }

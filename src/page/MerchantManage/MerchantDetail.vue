@@ -1,8 +1,12 @@
 <template>
   <div class="m-page">
     <div class="m-title">
-      <span>商户详情</span>
-      <div class="right" @click="clickResetPassword">密码重置</div>
+      <span class="m-left">商户详情</span>
+      <div class="m-right">
+        <span @click="clickModify">修改</span>
+        <span>|</span>
+        <span @click="clickResetPassword">密码重置</span>
+      </div>
     </div>
     <div class="m-detail">
       <yun-detail-mode
@@ -16,9 +20,9 @@
         <template slot="status" slot-scope="scope">
           <div
               class="flex-row flex-align-center f-fc-theme"
-              :class="ruleForm[scope.item.key] ? 'f-fc-theme' : 'f-fc-fail'">
+              :class="!ruleForm[scope.item.key] ? 'f-fc-theme' : 'f-fc-fail'">
             {{ statusDesc }}
-            <el-switch v-model="ruleForm[scope.item.key]" @change="changeSwitch"></el-switch>
+            <el-switch v-model="!ruleForm[scope.item.key]" @change="changeSwitch"></el-switch>
           </div>
         </template>
       </yun-detail-mode>
@@ -73,7 +77,7 @@
 </template>
 
 <script>
-  import api from "@/api/api_agentManage.js";
+  import api from "@/api/api_merchantManage.js";
   import { LIST_CONFIG } from "./TableConfig/MerchantListConfig"
   import { SEARCH_FORM_CONFIG } from "./FormConfig/MerchantDetailSearch"
   import { FORM_CONFIG } from "./FormConfig/MerchantDetailConfig"
@@ -86,8 +90,10 @@
         testData: [],
         title: '',
         drawerType: '',
-        params: {},
-        api: '',
+        params: {
+          merchantNo: this.$route.query.merchantNo
+        },
+        api: api.shopByPage,
         drawer: false,
         openType: '',
         fromConfigData: {},
@@ -101,34 +107,14 @@
     },
     computed: {
       statusDesc() {
-        if (this.ruleForm.disabledSn) {
-          return '启用'
-        } else {
+        if (this.ruleForm.isDisabled) {
           return '禁用'
+        } else {
+          return '启用'
         }
       }
     },
     created() {
-      this.testData = [
-        {
-          shopNo: 146,
-          shopName: '元芳的奶茶店',
-          merchantCategory: '便民类',
-          phone: '13214784568',
-          address: '浙大森林小马哥',
-          disabled: 0,
-          status: 0
-        },
-        {
-          shopNo: 146,
-          shopName: '元芳的奶茶店',
-          merchantCategory: '便民类',
-          phone: '13214784568',
-          address: '浙大森林小马哥',
-          disabled: 1,
-          status: 1
-        }
-      ]
       this.getMerchantDetail(this.merchantNo)
     },
     methods: {
@@ -137,11 +123,6 @@
           merchantNo: merchantNo
         }).then(res => {
           if (res.status === 0) {
-            if (res.data.disabled === 0) {
-              res.data.disabledSn = '禁用'
-            } else if (res.data.disabled === 1) {
-              res.data.disabledSn = '启用'
-            }
             this.ruleForm = res.data
           }
         })
@@ -164,25 +145,23 @@
         this.fromConfigData = FORM_CONFIG.resetPassword.formData
       },
       
-      // 修改商户名称
-      onClickEditName() {
-        this.title = '修改商户名称'
-        this.drawer = true
-        this.drawerType = 'changeName'
-        this.fromConfigData = FORM_CONFIG.shopInfo.formData
-      },
-      
-      // 修改登录手机号
-      onClickEditPhone() {
-        this.title = '修改登录账号'
-        this.drawer = true
-        this.drawerType = 'updateLogin'
-        this.fromConfigData = FORM_CONFIG.loginSet.formData
-      },
-      
       // 修改商户状态
       changeSwitch(val) {
-        console.log(val)
+        api.disabeldMerchant({
+          merchantNo: this.merchantNo,
+          disabeld: val === true ? 0 : 1
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: val === true ? '启用成功' : '禁用成功',
+              type: 'success'
+            })
+          }
+        })
+      },
+
+      clickModify() {
+      
       },
       
       onClickDetails(row) {},
@@ -233,14 +212,20 @@
       background: #fff;
       line-height: 54px;
       border-bottom: 1px solid #DCDFE6;
-      span {
+      .m-left {
         font-size: 16px;
         color: #000;
       }
-      .right {
+      .m-right {
         color: #1989FA;
         font-size: 14px;
         cursor: pointer;
+        span:nth-child(2) {
+          width: 1px;
+          height: 16px;
+          color: #333;
+          padding: 0 24px;
+        }
       }
     }
     .m-detail {

@@ -22,7 +22,6 @@
             :row-key="'id'"
             :default-expand-all="false"
             :hide-edit-area="false"
-            :grid-data="testData"
             :params="params"
             :api-service="api"
             @details="onClickDetails"
@@ -43,39 +42,19 @@
       return {
         params: {},
         api: api.merchantList,
-        testData: [],
         searchConfig: SEARCH_FORM_CONFIG,
         gridConfig: MERCHANT_LIST_CONFIG.gridConfig,
         gridBtnConfig: MERCHANT_LIST_CONFIG.gridBtnConfig
       }
     },
-    created() {
-      this.testData = [
-        {
-          merchantNo: 225555,
-          agentName: 'haha',
-          merchantName: '水果店',
-          loginAccount: '11225444',
-          shopCount: 24,
-          disabled: 0
-        },
-        {
-          merchantNo: 225555,
-          agentName: 'haha',
-          merchantName: '水果店',
-          loginAccount: '11225444',
-          shopCount: 111,
-          disabled: 1
-        }
-      ]
-    },
+    created() {},
     methods: {
       onClickSearch($ruleForm) {
         this.params = {
           merchantNo: $ruleForm.merchantNo ? $ruleForm.merchantNo : null,
           merchantName: $ruleForm.merchantName ? $ruleForm.merchantName : null,
           agentName: $ruleForm.agentName ? $ruleForm.agentName : null,
-          disabled: $ruleForm.disabled === 1 ? 1 : $ruleForm.disabled === 0 ? 0 : null
+          isDisabled: $ruleForm.isDisabled === 1 ? 1 : $ruleForm.isDisabled === 0 ? 0 : null
         }
       },
       onClickDetails(row) {
