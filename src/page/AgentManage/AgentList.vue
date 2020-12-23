@@ -49,10 +49,6 @@
             label-width="130px"
         ></yun-form>
       </div>
-<!--      <span slot="footer" class="dialog-footer">-->
-<!--        <el-button @click="drawer = false">取 消</el-button>-->
-<!--        <el-button type="primary" @click="clickSubmit">确 定</el-button>-->
-<!--      </span>-->
     </yun-dialog>
   </div>
 

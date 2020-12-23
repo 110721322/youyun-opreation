@@ -4,12 +4,14 @@
         :form-base-data="searchConfig.formData"
         @search="onClickSearch"
     />
-    <div class="m-basecrud">
-      <div class="m-basecrud-title">
-        <div class="m-left">结算记录列表</div>
-        <el-button type="primary">导出</el-button>
+    <div class="m-table">
+      <div class="m-table-head">
+        <div class="m-table-left-title">结算记录列表</div>
+        <div class="m-table-right-btn">
+          <el-button type="primary">导出</el-button>
+        </div>
       </div>
-      <div class="basecrud-box">
+      <div class="m-basecrud">
         <yun-table
             ref="table"
             :grid-config="gridConfig"
@@ -100,6 +102,26 @@
 </script>
 
 <style lang="scss" scoped>
+  .m-table {
+    padding: 24px 24px 0;
+    width: 100%;
+    .m-table-head {
+      display: flex;
+      justify-content: space-between;
+      padding: 24px 24px 0;
+      width: 100%;
+      background: #fff;
+      .m-table-left-title {
+        font-size: 16px;
+        font-weight: 400;
+        color: #000;
+      }
+    }
+    .m-basecrud {
+      padding: 24px 24px;
+      background: #fff;
+    }
+  }
   /deep/ .tab-color {
     color: #1989FA;
   }
