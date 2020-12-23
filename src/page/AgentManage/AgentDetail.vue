@@ -14,8 +14,8 @@
             :filed-config-list="shopInfoData"
             theme="border"
             module-title="门店信息"
-            @editTel="editTel"
         >
+          <!--TODO           @editTel="editTel"-->
         <template slot="status" slot-scope="scope">
           <div
               class="flex-row flex-align-center f-fc-theme"

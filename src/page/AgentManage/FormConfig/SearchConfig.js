@@ -28,7 +28,7 @@ export const SEARCH_FORM_CONFIG = {
       urlOptions: {
         url: api.getAgentStatus,
         keyName: 'status',
-        valueName: 'name'
+        valueName: 'desc'
       },
       span: 11
     },

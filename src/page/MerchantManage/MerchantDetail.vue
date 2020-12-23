@@ -14,8 +14,6 @@
           :filed-config-list="configData"
           theme="border"
           module-title="商户信息"
-          @editName="onClickEditName"
-          @editPhone="onClickEditPhone"
       >
         <template slot="status" slot-scope="scope">
           <div
@@ -161,42 +159,53 @@
       },
 
       clickModify() {
-      
+        this.title = '修改信息'
+        this.openType = 'changeName'
+        this.drawer = true
+        this.fromConfigData = FORM_CONFIG.shopInfo.formData
+        this.fromConfigData[0].initVal = this.ruleForm.merchantName
       },
       
       onClickDetails(row) {},
       onClickGoMerchant(row) {},
       clickSubmit() {
-        const type = this.openType
-        switch(type) {
-          case "resetPassword":
-            api.resetPassword({
-              merchantNo: this.merchantNo,
-              id: this.id
-            }).then(res => {
-              if (res.status === 0) {
-                this.$message({
-                  message: '重置成功',
-                  type: 'success'
+        this.$refs['formInfo'].$children[0].validate((valid) => {
+          if (valid) {
+            const infoData = this.$refs['formInfo'].ruleForm
+            infoData.merchantNo = this.merchantNo
+            const type = this.openType
+            switch(type) {
+              case "resetPassword":
+                api.resetPassword({
+                  merchantNo: this.merchantNo,
+                  id: this.id
+                }).then(res => {
+                  if (res.status === 0) {
+                    this.$message({
+                      message: '重置成功',
+                      type: 'success'
+                    })
+                    this.drawer = false
+                  }
                 })
-                this.drawer = false
-              }
-            })
-            break;
-          case "changeName":
-            api.updateMerchantInfo({
-              merchantName: '111'
-            }).then(res => {
-              if (res.status === 0) {
-                this.$message({
-                  message: '修改成功',
-                  type: 'success'
+                break;
+              case "changeName":
+                api.updateMerchantInfo(infoData).then(res => {
+                  if (res.status === 0) {
+                    this.$message({
+                      message: '修改成功',
+                      type: 'success'
+                    })
+                    this.drawer = false
+                    this.getMerchantDetail(this.merchantNo)
+                  }
                 })
-                this.drawer = false
-              }
-            })
-            break;
-        }
+                break;
+            }
+          } else {
+            return false;
+          }
+        });
       }
     }
   }

@@ -31,14 +31,16 @@ export const AGENT_LIST_CONFIG = {
     },
     {
       label: '状态',
-      prop: 'status',
+      prop: 'blockStatus',
       render: (h, params) => {
         const actions = new Map([
-          [0, {className: 's-status-success', statusDesc: '启用'}],
-          [1, {className: 's-status-fail', statusDesc: '禁用'}],
+          [1, {className: 's-status-success', statusDesc: '启用'}],
+          [2, {className: 's-status-fail', statusDesc: '禁用'}],
+          [3, {className: 's-status-fail', statusDesc: '封禁'}],
+          [4, {className: 's-status-fail', statusDesc: '冻结'}],
           ['default', {className: 's-status-pending', statusDesc: '等待'}],
         ])
-        const action = actions.get(params.row.status) || actions.get('default')
+        const action = actions.get(params.row.blockStatus) || actions.get('default')
         return (
           <span class={['flex-align-center', 'g-status-icon', 's-status-radius', action.className]}>{ action.statusDesc }</span>
       )

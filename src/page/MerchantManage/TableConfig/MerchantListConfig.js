@@ -10,8 +10,7 @@ export const LIST_CONFIG = {
     },
     {
       label: "商户名称",
-      key: "merchantName",
-      emitEdit: 'editName'
+      key: "merchantName"
     },
     {
       label: "添加时间",
@@ -26,8 +25,7 @@ export const LIST_CONFIG = {
     },
     {
       label: "手机号码",
-      key: "loginAccount",
-      emitEdit: "editPhone"
+      key: "loginAccount"
     }
   ]
 }

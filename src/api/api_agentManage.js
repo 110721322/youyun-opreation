@@ -20,7 +20,7 @@ const api = {
   // 详情-禁用服务商
   updateStatusFrozen: (params) => API.GET('/operation/v1/agent/updateAccountStatusOfFrozen', params),
   // 详情-重置服务商密码
-  resetPassword: (params) => API.GET('/operation/v1/agent/resetPassword', params),
+  resetPassword: (params) => API.POST('/operation/v1/agent/resetPassword', params),
   // 详情-沟通记录分页查询
   queryByPage: (params) => API.GET('/operation/v1/talkLists/queryByPage', params),
   // 详情-新增服务商沟通记录

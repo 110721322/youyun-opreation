@@ -10,8 +10,8 @@ export const DETAILCONFIG = {
     },
     {
       label: "手机号码",
-      key: "personMobile",
-      emitEdit: 'editTel'
+      key: "personMobile"
+      // TODO emitEdit: 'editTel'
     },
     {
       label: "到期时间",

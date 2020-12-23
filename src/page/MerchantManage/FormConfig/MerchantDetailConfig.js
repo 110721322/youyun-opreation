@@ -20,10 +20,13 @@ export const FORM_CONFIG = {
     formData: [
       {
         type: 0,
-        label: '商户昵称',
+        label: '商户名称',
         labelWidth: '120px',
-        key: 'shopName',
-        span: 24
+        key: 'merchantName',
+        span: 24,
+        rules: [
+          { required: true, message: '请填写商户名称', trigger: 'blur' }
+        ]
       }
     ]
   },
