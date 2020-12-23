@@ -1,3 +1,4 @@
+import { validPhone } from "youyun-vue-components/global/kit/validate";
 export const FORM_CONFIG = {
   talkData: {
     formData: [
@@ -47,6 +48,41 @@ export const FORM_CONFIG = {
         initVal: '重置后密码以短信形式发送服务商',
         labelWidth: '120px',
         span: 24
+      }
+    ]
+  },
+  changeMoblie: {
+    formData: [
+      {
+        type: 0,
+        label: '新登录手机号',
+        labelWidth: '120px',
+        span: 24,
+        rules: [
+          { required: true, message: '请输入新登录手机号', trigger: 'blur' },
+          {
+            validator:function(rule, value, callback){
+              if(!validPhone(value)){
+                callback(new Error("请输入正确的手机号"));
+              }else{
+                callback();
+              }
+            }, trigger: 'blur'}
+        ]
+      },
+      {
+        type: 0,
+        label: '短信验证码',
+        key: 'code',
+        labelWidth: '120px',
+        initVal: '',
+        style: 'width: 184px;',
+        span: 24,
+        maxlength: 6,
+        slot: 'code',
+        rules: [
+          { required: true, message: '请输入短信验证码', trigger: 'blur' }
+        ]
       }
     ]
   },

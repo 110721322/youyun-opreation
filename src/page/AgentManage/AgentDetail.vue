@@ -77,7 +77,21 @@
             :form-base-data="fromConfigData"
             :show-foot-btn="fromConfigData.showFootBtn === false"
             label-width="130px"
-        ></yun-form>
+        >
+          <template slot="code">
+            <el-button
+                type="primary"
+                class="f-fz-14"
+                style="margin-left: 8px"
+                v-show="countPsdTime <= 0"
+                @click="clickSendPsdCode">获取验证码</el-button>
+            <el-button
+                type="primary"
+                class="f-fz-14"
+                style="margin-left: 8px"
+                v-show="countPsdTime > 0">{{ countPsdTime + " s" }}</el-button>
+          </template>
+        </yun-form>
       </div>
 <!--  TODO    <BaseCrud-->
 <!--          v-if="drawerBase"-->
@@ -130,7 +144,8 @@
         drawerType: '',
         title: '',
         testData: [],
-        switchStatus: false
+        switchStatus: false,
+        countPsdTime: 0
       }
     },
     computed: {
@@ -197,7 +212,7 @@
         this.drawer = true
         this.title = '修改手机号'
         this.drawerType = 'updatePhone'
-        // this.fromConfigData = FORM_CONFIG.rateSet.formData
+        this.fromConfigData = FORM_CONFIG.changeMoblie.formData
       },
 
       // 修改到期时间
@@ -223,13 +238,17 @@
         this.drawerType = 'updateBankInfo'
         this.fromConfigData = FORM_CONFIG.bankSet.formData
       },
-
+      
+      // 添加沟通计划
       clickAddTalk() {
         this.drawer = true
         this.drawerType = 'addTalk'
         this.title = '添加沟通计划'
         this.fromConfigData = FORM_CONFIG.talkData.formData
       },
+      
+      // 发送短信验证码
+      clickSendPsdCode() {},
 
       clickSubmit() {
         this.$refs['formInfo'].$children[0].validate((valid) => {

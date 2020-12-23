@@ -25,7 +25,6 @@
             :row-key="'id'"
             :default-expand-all="false"
             :hide-edit-area="false"
-            :grid-data="testData"
             :params="params"
             :api-service="api"
             @details="onClickDetails"
@@ -66,7 +65,6 @@
         drawer: false,
         params: {},
         api: api.queryPageByCondition,
-        testData: [],
         selectList: [],
         agentNumData: {},
         searchConfig: SEARCH_FORM_CONFIG,
@@ -77,26 +75,6 @@
     },
     created() {
       this.getAgentNo()
-      this.testData = [
-        {
-          agentNo: '2222',
-          agentName: '啦啦啦',
-          loginAccount: '13647854587',
-          merchantCount: 3,
-          endDate: '2020-12-31',
-          status: 0,
-          operationName: '元芳'
-        },
-        {
-          agentNo: '333',
-          agentName: 'ss',
-          loginAccount: '13647854587',
-          merchantCount: 4,
-          endDate: '2020-12-31',
-          status: 1,
-          operationName: '易阳'
-        }
-      ]
     },
     methods: {
       getAgentNo() {
@@ -107,14 +85,16 @@
         })
       },
       onClickSearch($ruleForm) {
+        console.log($ruleForm)
         this.params = {
           agentNo: $ruleForm.agentNo ? $ruleForm.agentNo : null,
           agentName: $ruleForm.agentName ? $ruleForm.agentName : null,
-          endDate: $ruleForm.endDate ? $ruleForm.endDate : null,
+          beginDate: $ruleForm.date && $ruleForm.date[1] ? $ruleForm.date[0] : null,
+          endDate: $ruleForm.date && $ruleForm.date[1] ? $ruleForm.date[1] : null,
           status: $ruleForm.status ? $ruleForm.status : null,
-          provinceCode: $ruleForm.area[2] ? $ruleForm.provinceCode[0] : null,
-          cityCode: $ruleForm.area[2] ? $ruleForm.cityCode[1] : null,
-          areaCode: $ruleForm.area[2] ? $ruleForm.areaCode[2] : null,
+          provinceCode: $ruleForm.area && $ruleForm.area[2] ? $ruleForm.provinceCode[0] : null,
+          cityCode: $ruleForm.area && $ruleForm.area[2] ? $ruleForm.cityCode[1] : null,
+          areaCode: $ruleForm.area && $ruleForm.area[2] ? $ruleForm.areaCode[2] : null,
           loginAccount: $ruleForm.loginAccount ? $ruleForm.loginAccount : null,
           operationId: $ruleForm.operationId ? $ruleForm.operationId : null
           // TODO parentAgentNo: $ruleForm.parentAgentNo ? $ruleForm.parentAgentNo : null,

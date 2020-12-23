@@ -15,25 +15,21 @@ export const SEARCH_FORM_CONFIG = {
       span: 11
     },
     {
-      type: 11,
+      type: 9,
       label: '到期时间',
-      key: 'endDate',
+      key: 'date',
+      isHiddenBtn: true,
       span: 11
     },
     {
       type: 1,
       label: '状态',
       key: 'status',
-      options: [
-        {
-          label: '禁用',
-          value: 0
-        },
-        {
-          label: '启用',
-          value: 1
-        }
-      ],
+      urlOptions: {
+        url: api.getAgentStatus,
+        keyName: 'status',
+        valueName: 'name'
+      },
       span: 11
     },
     {

@@ -47,7 +47,7 @@
     "vue-jest": "^3.0.5",
     "vue-template-compiler": "^2.6.11",
     "webpack-cli": "^4.2.0",
-    "youyun-vue-components": "^0.1.4"
+    "youyun-vue-components": "^0.1.5"
   },
   "browserslist": [
     "> 1%",
