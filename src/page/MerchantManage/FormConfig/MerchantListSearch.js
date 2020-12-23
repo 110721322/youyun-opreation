@@ -24,16 +24,16 @@ export const SEARCH_FORM_CONFIG = {
     {
       type: 1,
       label: '商户状态',
-      key: 'disabled',
+      key: 'isDisabled',
       labelWidth: '128px',
       options: [
         {
           label: '禁用',
-          value: 0
+          value: 1
         },
         {
           label: '启用',
-          value: 1
+          value: 0
         }
       ],
       span: 11

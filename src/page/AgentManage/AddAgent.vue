@@ -48,32 +48,47 @@
     data() {
       return {
         fromConfigData: ADD_AGENT,
+        serviceVal: false,
+        rateVal: false,
+        settleVal: false,
         serviceInfo: {
           agentName: '',
           phone: '',
           endTime: '',
           area: [],
-          address: ''
+          address: '',
         }
       }
     },
     methods: {
       clickSubmit() {
         this.$refs['serviceInfo'].$children[0].validate((valid) => {
-          if (valid) {} else {
+          if (valid) {
+            this.serviceVal = true
+          } else {
+            this.serviceVal = false
             return false;
           }
         });
         this.$refs['rateInfo'].$children[0].validate((valid) => {
-          if (valid) {} else {
+          if (valid) {
+            this.rateVal = true
+          } else {
+            this.rateVal = false
             return false;
           }
         });
         this.$refs['settleInfo'].$children[0].validate((valid) => {
-          if (valid) {} else {
+          if (valid) {
+            this.settleVal = true
+          } else {
+            this.settleVal = false
             return false;
           }
         });
+        if (!this.serviceVal || !this.rateVal || !this.settleVal) {
+          return false
+        }
         const serviceData = this.$refs['serviceInfo'].ruleForm
         const rateData = this.$refs['rateInfo'].ruleForm
         const settleData = this.$refs['settleInfo'].ruleForm

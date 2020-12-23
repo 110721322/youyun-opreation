@@ -176,26 +176,12 @@ export default {
      * @param res
      */
     loginCallBack(res) {
-      this.saveAccessToken(res.data.accessToken)
-      this.saveUserInfo(res.data)
-      this.addLoginHistory(res.data.mobile);
-      computedRoleRouter(res.data.menuVOList)
-      this.addRoutes();
-      this.$nextTick(() => {
-        let routerName;
-        const first = res.data.menuVOList[0];
-        if (first.children && first.children.length > 0) {
-          const second = first.children[0];
-          if (second.children && second.children.length > 0) {
-            routerName = second.children[0].routerName
-          } else {
-            routerName = second.routerName
-          }
-        } else {
-          routerName = first.routerName
-        }
-        this.$router.push({name: routerName});
-      })
+      const { accessToken, user } = res.data;
+      const { id, roleId } = user;
+      this.saveAccessToken(accessToken)
+      this.saveUserInfo(user)
+      this.addLoginHistory(user.phone);
+      this.queryUserVueRouterList(id, roleId);
     },
     queryMobile($queryString = this.ruleForm.phone, $callback) {
       const loginHistory = this.loginHistory.filter(phone => phone.indexOf($queryString) > -1)
@@ -209,12 +195,39 @@ export default {
       this.removeHistory(removeIndex)
       this.$refs.autocomplete.getData()
     },
+    queryUserVueRouterList($userId, $roleId) {
+      const params = {
+        system: this.system,
+        userId: $userId,
+        roleId: $roleId
+      };
+      api.queryUserVueRouterList(params).then(res => {
+        computedRoleRouter(res.data)
+        this.addRoutes();
+        this.$nextTick(() => {
+          let routerName;
+          const first = res.data[0];
+          if (first.children && first.children.length > 0) {
+            const second = first.children[0];
+            if (second.children && second.children.length > 0) {
+              routerName = second.children[0].name
+            } else {
+              routerName = second.name
+            }
+          } else {
+            routerName = first.name
+          }
+          this.$router.push({name: routerName});
+        })
+      })
+    },
     addRoutes() {
       const menuItems = this.$g.utils.deepClone(store.state.role.routes);
       const routerList = currRouter.menusToRoutes(menuItems);
       this.$router.addRoutes(routerList);
       this.saveRoutersArr(routerList)
     },
+
     clickCodeLogin() {
       if (!this.ruleForm.phone) {
         this.$message("请输入手机号");

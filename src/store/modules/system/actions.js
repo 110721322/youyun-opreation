@@ -8,7 +8,9 @@ export default {
    * @param $phone  添加账号
    */
   addLoginHistory: ({ commit, state }, $phone) => {
-    let loginHistory = utils.deepClone(state.loginHistory).filter(phone => phone !== $phone);
+    let loginHistory = utils.deepClone(state.loginHistory).filter(phone => {
+      return  !!phone && phone !== $phone
+    });
     loginHistory.unshift($phone);
     commit('SET_LOGIN_HISTORY', loginHistory);
   },

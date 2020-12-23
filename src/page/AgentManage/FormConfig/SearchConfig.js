@@ -39,7 +39,7 @@ export const SEARCH_FORM_CONFIG = {
       span: 11
     },
     {
-      type: 1,
+      type: 8,
       label: '地址',
       key: 'area',
       options: areaData,

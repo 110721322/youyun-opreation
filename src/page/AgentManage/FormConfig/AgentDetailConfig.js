@@ -92,7 +92,7 @@ export const FORM_CONFIG = {
         type: 0,
         label: '支付宝费率',
         labelWidth: '120px',
-        key: 'alipyRate',
+        key: 'alipayRate',
         isShowSlot: true,
         showSlotName: '%',
         rules: [
@@ -105,7 +105,7 @@ export const FORM_CONFIG = {
         type: 0,
         label: '微信费率',
         labelWidth: '120px',
-        key: 'wechatRate',
+        key: 'wechatPayRate',
         isShowSlot: true,
         showSlotName: '%',
         rules: [
@@ -135,7 +135,7 @@ export const FORM_CONFIG = {
         type: 0,
         label: '开户行',
         labelWidth: '120px',
-        key: 'bankName',
+        key: 'bankBranchName',
         rules: [
           { required: true, message: '请选择开户行', trigger: 'blur' }
         ],
@@ -145,7 +145,7 @@ export const FORM_CONFIG = {
         type: 0,
         label: '银行卡号',
         labelWidth: '120px',
-        key: 'bankNo',
+        key: 'bankCardNo',
         rules: [
           { required: true, message: '请输入银行卡号', trigger: 'blur' }
         ],
@@ -155,7 +155,7 @@ export const FORM_CONFIG = {
         type: 0,
         label: '开户人姓名',
         labelWidth: '120px',
-        key: 'personName',
+        key: 'bankAccountHolder',
         rules: [
           { required: true, message: '请输入开户人姓名', trigger: 'blur' }
         ],
@@ -169,7 +169,7 @@ export const FORM_CONFIG = {
         type: 11,
         label: '有效期',
         labelWidth: '120px',
-        key: 'validityDate',
+        key: 'expireDate',
         rules: [
           { required: true, message: '请选择有效期', trigger: 'change' }
         ],
@@ -199,6 +199,20 @@ export const FORM_CONFIG = {
           }
         ],
         span: 24
+      }
+    ]
+  },
+  nameSet: {
+    formData: [
+      {
+        type: 0,
+        label: '服务商名称',
+        labelWidth: '120px',
+        key: 'agentName',
+        initVal: '',
+        rules: [
+          { required: true, message: '请输入服务商名称', trigger: 'blur' }
+        ],
       }
     ]
   },

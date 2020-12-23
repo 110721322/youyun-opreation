@@ -92,9 +92,9 @@
           beginDate: $ruleForm.date && $ruleForm.date[1] ? $ruleForm.date[0] : null,
           endDate: $ruleForm.date && $ruleForm.date[1] ? $ruleForm.date[1] : null,
           status: $ruleForm.status ? $ruleForm.status : null,
-          provinceCode: $ruleForm.area && $ruleForm.area[2] ? $ruleForm.provinceCode[0] : null,
-          cityCode: $ruleForm.area && $ruleForm.area[2] ? $ruleForm.cityCode[1] : null,
-          areaCode: $ruleForm.area && $ruleForm.area[2] ? $ruleForm.areaCode[2] : null,
+          provinceCode: $ruleForm.area && $ruleForm.area[2] ? $ruleForm.area[0] : null,
+          cityCode: $ruleForm.area && $ruleForm.area[2] ? $ruleForm.area[1] : null,
+          areaCode: $ruleForm.area && $ruleForm.area[2] ? $ruleForm.area[2] : null,
           loginAccount: $ruleForm.loginAccount ? $ruleForm.loginAccount : null,
           operationId: $ruleForm.operationId ? $ruleForm.operationId : null
           // TODO parentAgentNo: $ruleForm.parentAgentNo ? $ruleForm.parentAgentNo : null,
@@ -105,7 +105,7 @@
         this.$router.push({
           name: 'AgentDetail',
           query: {
-            agentId: row.agentId
+            agentNo: row.agentNo
           }
         }).catch(err => {})
       },
@@ -124,7 +124,7 @@
 
       clickToAdd() {
         this.$router.push({
-          name: 'AddAgent'
+          name: 'AddAgent',
         }).catch(err => {})
       },
 
@@ -150,7 +150,7 @@
             const select = []
             const list = this.selectList
             list.map((item) => {
-              select.push(item.agentId)
+              select.push(item.agentNo)
             })
             const agentNos = select.join(',')
             api.updateOperationId({
@@ -162,6 +162,7 @@
                   message: '修改成功',
                   type: 'success'
                 })
+                this.$refs['table'].getData()
                 this.$refs['table'].$children[0].clearSelection()
                 this.drawer = false
               }
