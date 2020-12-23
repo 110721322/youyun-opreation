@@ -8,4 +8,5 @@ export const TaskManage = {
 export const AccountList = {
   ACCOUNT_NORMAL: 'normal',   // 用户启用状态
   ACCOUNT_LOCK: 'lock',   // 用户冻结状态
+  OPERATION_PLATFORM: 1 // 运营后台
 }

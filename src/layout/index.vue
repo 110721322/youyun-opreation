@@ -3,6 +3,8 @@
 </template>
 
 <script>
+  import api from "@/api/api_login";
+  import { mapActions } from 'vuex';
   import logo from "@/assets/img/icon_logo.png"
   export default {
     name: "Layout",
@@ -10,6 +12,23 @@
       return {
         logo: logo,
         isCollapse: true
+      }
+    },
+    mounted() {
+      this.$EventBus.$on('logout', this.logout)
+    },
+    destroyed() {
+      this.$EventBus.$off('logout', this.logout)
+    },
+    methods: {
+      ...mapActions(['resetState']),
+      logout() {
+        api
+          .out()
+          .then(() => {
+            this.resetState();
+            this.$router.replace(`/Login`);
+          })
       }
     }
   };

@@ -15,6 +15,14 @@ export default {
   unfreezeUser: (params) => API.POST('/operation/v1/user/unfreezeUser', params),
   // 账号列表-删除账号
   deleteUser: (params) => API.POST('/operation/v1/user/deleteUser', params),
-  // 权限管理-查询所有权限列表
-  getRoleList: (params) => API.GET('/operation/v1/user/getRoleList', params)
+  // 权限管理-查询权限角色列表
+  queryRoleListByPage: (params) => API.GET('/operation/v1/platformRole/queryRoleListByPage', params),
+  // 权限管理-查询角色菜单配置
+  selectMenuOfRole: (params) => API.GET('/operation/v1/systemMenu/selectMenuOfRole', params),
+  // 权限管理-添加角色
+  addRole: (params) => API.POST('/operation/v1/platformRole/add', params),
+  // 权限管理-修改角色
+  editRoleAndMenu: (params) => API.POST('/operation/v1/platformRole/editRoleAndMenu', params),
+  // 权限管理-删除角色
+  deleteRole: (params) => API.POST('/operation/v1/platformRole/delete', params)
 };
