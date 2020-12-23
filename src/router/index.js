@@ -107,30 +107,20 @@ router.beforeEach((to, from, next) => {
       routerName = first.name
     }
     next({name: routerName})
-  // } else if (routes.length === 0) {
-  //   const accessToken = store.state.admin.accessToken;
-  //   const roleId = store.state.admin.roleId;
-  //   if (accessToken === null || accessToken === '') {
-  //     if (roleId === 2) {
-  //       next('/LoginStore');
-  //     } else {
-  //       next('/Login');
-  //     }
-  //     return;
-  //   }
-  //   next();
-  //   return;
-  // } else {
-    // const accessToken = store.state.admin.accessToken;
-    // if (accessToken === null || accessToken === '') {
-    //   const roleId = store.state.admin.roleId;
-    //   if (roleId === 2) {
-    //     next('/LoginStore');
-    //   } else {
-    //     next('/Login');
-    //   }
-    //   return;
-    // }
+  } else if (routes.length === 0) {
+    const accessToken = store.state.admin.accessToken;
+    if (accessToken === null || accessToken === '') {
+      next('/Login');
+      return;
+    }
+    next();
+    return;
+  } else {
+    const accessToken = store.state.admin.accessToken;
+    if (accessToken === null || accessToken === '') {
+      next('/Login');
+      return;
+    }
   }
   if (typeof to.query._t !== "undefined") {
     next();

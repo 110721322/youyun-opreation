@@ -44,10 +44,10 @@ const computedRoleRouter = ((routes) => {
   let buttonList;
 
   routes = utils.filterNestedArr(routes,'children');
-  buttonList = computedRoleBtn(routes);
+  // buttonList = computedRoleBtn(routes);
 
   store.dispatch('setRoleRoutes',routes);
-  store.dispatch('setRolePermission',buttonList);
+  // store.dispatch('setRolePermission',buttonList);
 
   return routes;
 })
