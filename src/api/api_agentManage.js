@@ -15,6 +15,8 @@ const api = {
   queryAllOperation: () => API.GET('/operation/v1/advertPrivilege/queryAllOperation'),
   // 详情-查询服务商信息
   getAgentDetail: (params) => API.GET('/operation/v1/agent/getAgentDetail', params),
+  // 详情-更新服务商冻结状态
+  updateAgentBlockStatus: (params) => API.GET('/operation/v1/agent/updateAgentBlockStatus', params),
   // 详情-启用服务商
   updateStatusUnfrozen: (params) => API.GET('/operation/v1/agent/updateAccountStatusOfUnfrozen', params),
   // 详情-禁用服务商

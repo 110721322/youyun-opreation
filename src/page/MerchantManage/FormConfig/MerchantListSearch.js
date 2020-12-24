@@ -28,12 +28,12 @@ export const SEARCH_FORM_CONFIG = {
       labelWidth: '128px',
       options: [
         {
-          label: '禁用',
-          value: 1
-        },
-        {
           label: '启用',
           value: 0
+        },
+        {
+          label: '禁用',
+          value: 1
         }
       ],
       span: 11

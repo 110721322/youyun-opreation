@@ -14,14 +14,14 @@
             :filed-config-list="shopInfoData"
             theme="border"
             module-title="门店信息"
+            @editStatus="onClickEditStatus"
         >
           <!--TODO           @editTel="editTel"-->
         <template slot="status" slot-scope="scope">
           <div
               class="flex-row flex-align-center f-fc-theme"
-              :class="ruleForm[scope.item.key] ? 'f-fc-theme' : 'f-fc-fail'">
-            {{ statusDesc }}
-            <el-switch v-model="ruleForm[scope.item.key]" @change="changeSwitch"></el-switch>
+              :class="(ruleForm[scope.item.key] === 2 || ruleForm[scope.item.key] === 3) ? 'f-fc-fail' : 'f-fc-theme'">
+            {{ blockStatusDesc }}
           </div>
         </template>
       </yun-detail-mode>
@@ -186,11 +186,15 @@
       }
     },
     computed: {
-      statusDesc() {
-        if (this.ruleForm.accountStatus) {
+      blockStatusDesc() {
+        if (this.ruleForm.blockStatus === 1) {
           return '启用'
-        } else {
+        } else if (this.ruleForm.blockStatus === 2) {
           return '禁用'
+        } else if (this.ruleForm.blockStatus === 3) {
+          return '封禁'
+        } else if (this.ruleForm.blockStatus === 4) {
+          return '冻结'
         }
       }
     },
@@ -252,6 +256,15 @@
         this.fromConfigData = FORM_CONFIG.changeMoblie.formData
       },
       
+      // 修改服务商状态
+      onClickEditStatus() {
+        this.drawer = true
+        this.title = '修改手机号'
+        this.drawerType = 'updateBlock'
+        this.fromConfigData = FORM_CONFIG.agentStop.formData
+        this.fromConfigData[0].initVal = this.ruleForm.blockStatus
+      },
+      
       // 修改服务商信息
       clickModify() {
         this.title = '修改资料'
@@ -282,7 +295,6 @@
           if (valid) {
             const type = this.drawerType
             const ruleForm = this.$refs['formInfo'].ruleForm
-            console.log(ruleForm)
             switch(type) {
               case "addTalk":
                 api.addTalk(ruleForm).then(res => {
@@ -296,7 +308,21 @@
                 }).then(res => {
                   this.submitSuccess(res.status, type)
                 })
-                break;
+                break
+              case "updateBlock":
+                api.updateAgentBlockStatus({
+                  agentNo: this.agentNo,
+                  blockStatus: ruleForm.blockStatus
+                }).then(res => {
+                  if (res.status === 0) {
+                    this.$message({
+                      message: '状态修改成功',
+                      type: 'success'
+                    })
+                    this.getAgentDetail(this.agentNo)
+                    this.drawer = false
+                  }
+                })
               default:
                 break;
             }

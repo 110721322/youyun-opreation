@@ -180,23 +180,30 @@ export const FORM_CONFIG = {
   agentStop: {
     formData: [
       {
-        type: 1,
-        label: '服务商禁用',
-        labelWidth: '120px',
-        key: 'validityDate',
-        initVal: 1,
+        type: 5,
+        label: '服务商管理',
+        labelWidth: '100px',
+        key: 'blockStatus',
+        initVal: '',
         options: [
           {
-            label: '禁止服务商登录及商户支付服务',
-            value: 1
+            label: '封禁（禁止服务商登录、结算。禁止商户收款）',
+            value: 3
           },{
-            label: '禁止服务商结算（可正常登录和商户支付）',
+            label: '冻结（服务商可登录、禁止结算。商户可收款）',
+            value: 4
+          },
+          {
+            label: '禁用（禁止服务商登录、结算。商户可收款）',
             value: 2
           },
           {
-            label: '禁止服务号登录（商户支付正常）',
-            value: 3
+            label: '启用（服务商可登录、结算。商户可收款）',
+            value: 1
           }
+        ],
+        rules: [
+          { required: true, message: '请选择服务商状态', trigger: 'change' }
         ],
         span: 24
       }

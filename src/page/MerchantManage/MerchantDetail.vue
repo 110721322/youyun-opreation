@@ -18,9 +18,9 @@
         <template slot="status" slot-scope="scope">
           <div
               class="flex-row flex-align-center f-fc-theme"
-              :class="!ruleForm[scope.item.key] ? 'f-fc-theme' : 'f-fc-fail'">
+              :class="ruleForm[scope.item.key] ? 'f-fc-fail' : 'f-fc-theme'">
             {{ statusDesc }}
-            <el-switch v-model="!ruleForm[scope.item.key]" @change="changeSwitch"></el-switch>
+            <el-switch v-model="ruleForm[scope.item.key]" :active-value="0" :inactive-value="1" @change="changeSwitch"></el-switch>
           </div>
         </template>
       </yun-detail-mode>
@@ -58,7 +58,7 @@
         :title="title"
         :dialoger="drawer"
         width="488px"
-        @cancle="drawer = false"
+        @cancel="drawer = false"
         @confirm="clickSubmit"
     >
       <div class="dialog-form" slot="body">
@@ -147,13 +147,14 @@
       changeSwitch(val) {
         api.disabeldMerchant({
           merchantNo: this.merchantNo,
-          disabeld: val === true ? 0 : 1
+          isDisabled: val
         }).then(res => {
           if (res.status === 0) {
             this.$message({
-              message: val === true ? '启用成功' : '禁用成功',
+              message: val === 0? '启用成功' : '禁用成功',
               type: 'success'
             })
+            this.getMerchantDetail(this.merchantNo)
           }
         })
       },
@@ -190,6 +191,7 @@
                 })
                 break;
               case "changeName":
+                infoData.system = 'operation '
                 api.updateMerchantInfo(infoData).then(res => {
                   if (res.status === 0) {
                     this.$message({
