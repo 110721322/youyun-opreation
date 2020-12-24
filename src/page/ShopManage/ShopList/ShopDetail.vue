@@ -15,7 +15,18 @@
             :filed-config-list="basicInfoConfig"
             module-title="基础信息"
             theme="border"
-          >  
+          >
+            <template slot="switch">
+              <div class="flex-align-center">
+                <span :class="['disabledTxt', ruleForm.isDisabled?'inactive':'active']">{{ruleForm.isDisabled ? '禁用' : '启用'}}</span>
+                <el-switch v-model="ruleForm.isDisabled" :active-value="0" :inactive-value="1" @change="changeSwitch"></el-switch>
+              </div>
+            </template>
+            <template slot="status">
+              <div class="flex-align-center">
+                <span :class="['disabledTxt', ruleForm.status?'inactive':'active']">{{ruleForm.status ? '通过' : '驳回'}}</span>
+              </div>
+            </template>
           </yun-detail-mode>
         </div>
         <div class="detail-mode-box">
@@ -25,6 +36,18 @@
             module-title="支付信息"
             theme="border"
           >
+            <template slot="rateInfo">
+              <div class="flex-align-center">
+                <div class="flex-align-center">
+                  <img class="rateImg" src="@/assets/img/aliRate.png" alt="" />
+                  <span class="rateTxt">{{ ruleForm.alipayRate }}%</span>  
+                </div>
+                <div class="flex-align-center">
+                  <img class="rateImg" src="@/assets/img/wechatRate.png" alt="" />
+                  <span class="rateTxt">{{ ruleForm.wechatPayRate }}%</span>  
+                </div>
+              </div>
+            </template>
           </yun-detail-mode>  
         </div>
         <div class="detail-mode-box">
@@ -43,7 +66,10 @@
             :rule-form="ruleForm"
             :filed-config-list="shopInfoDetailConfig"
             module-title="门店信息"
-            >  
+            >
+              <template slot="area">
+                <div class="areaTxt">{{ ruleForm.provinceName + '省' + ruleForm.cityName + '市' + ruleForm.areaName }}</div>
+              </template>
           </yun-detail-mode>
         </div>
         <div class="detail-mode-box">
@@ -51,7 +77,16 @@
             :rule-form="ruleForm"
             :filed-config-list="verityDetailConfig"
             module-title="认证信息"
-            >  
+            >
+              <template slot="shopType">
+                <div class="typeTxt">{{ shopTypeTxt }}</div>
+              </template>
+              <template slot="shopLicenseDate">
+                <div class="typeTxt">{{ ruleForm.shopLicenseBegDate + '至' + ruleForm.shopLicenseEndDate }}</div>
+              </template>
+              <template slot="idCardDate">
+                <div class="typeTxt">{{ ruleForm.idCardBeginDate + '至' + ruleForm.idCardExpireDate }}</div>
+              </template>
           </yun-detail-mode>
         </div>
         <div class="detail-mode-box">
@@ -59,7 +94,10 @@
             :rule-form="ruleForm"
             :filed-config-list="settleDetailConfig"
             module-title="结算信息"
-            >  
+            >
+            <template slot="settleType">
+              <div class="typeTxt">{{ settleTypeTxt }}</div>
+            </template>
           </yun-detail-mode>
         </div>
         <div class="detail-mode-box">
@@ -91,7 +129,7 @@
       ></yun-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="clickRejectIndirectAudit">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -99,6 +137,7 @@
 
 <script>
   import { FORM_CONFIG } from "../formConfig/shopDetail";
+  import api from "@/api/api_shop";
   export default {
     data() {
       return {
@@ -111,29 +150,71 @@
         rateDetailConfig: FORM_CONFIG.rateDetail,
         rejectDataConfig: FORM_CONFIG.rejectConfig,
         activeName: '1',
-        ruleForm: {
-          shopType: '独立结算门店（需审核）',
-          shopName: '柚子餐饮1号店',
-          tel: '1809909899',
-          status: true,
-          shopFaceImg: 'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg',
-          image1: 'https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg',
-          image2: 'https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg',
-          image3: 'https://fuss10.elemecdn.com/d/e6/c4d93a3805b3ce3f323f7974e6f78jpeg.jpeg',
-          image4: 'https://fuss10.elemecdn.com/3/28/bbf893f792f03a54408b3b7a7ebf0jpeg.jpeg',
-          image5: 'https://fuss10.elemecdn.com/2/11/6535bcfb26e4c79b48ddde44f4b6fjpeg.jpeg',
-        },
+        ruleForm: {},
         radio: 1,
-        dialogVisible: false
+        dialogVisible: false,
+        value: 0,
+        shopTypeTxt: '',
+        settleTypeTxt: ''
       }
     },
     created() {
+      this.shopQueryDetail()
     },
     mounted() {
     },
     methods: {
+      shopQueryDetail() {
+        const params = {
+          shopNo: this.$route.query.shopNo
+        }
+        api.shopQueryDetail(params).then(res => {
+          if(res.status === 0) {
+            this.ruleForm = res.data
+            if (this.ruleForm.shopType === '') {
+              this.shopTypeTxt = ''
+            } else if (this.ruleForm.shopType === '') {
+              this.shopTypeTxt = ''
+            } else if (this.ruleForm.shopType === '') {
+              this.shopTypeTxt = ''
+            }
+            if (this.ruleForm.settleType === '') {
+              this.settleTypeTxt = ''
+            } else if (this.ruleForm.settleType === '') {
+              this.settleTypeTxt = ''
+            } else if (this.ruleForm.settleType === '') {
+              this.settleTypeTxt = ''
+            }
+          }
+        })
+      },
+      clickRejectIndirectAudit($ruleForm) {
+        const params = {
+          merchantNo: this.ruleForm.merchantNo,
+          shopNo: this.$route.query.shopNo,
+          reason: $ruleForm.reason
+        }
+        clickRejectIndirectAudit(params).then(res => {
+          if (res.status === 0) {
+            this.dialogVisible = false
+            this.$message.success('已驳回！')
+          }
+        })
+      },
+      changeSwitch() {
+        const params = {
+          id: this.ruleForm.id,
+          isDisabled: this.ruleForm.isDisabled,
+          shopNo: this.ruleForm.shopNo
+        }
+        api.shopUpdate(params).then(res => {
+          if (res.status === 0) {
+            this.$message.success('门店状态已改变！')
+          }
+        })
+      },
       clickEdit() {
-        this.$router.push('/shopManage/shopList/shopDetail/editShop')
+        this.$router.push('/shopManage/shopList/shopDetail/editShop?id=' + this.ruleForm.id + '&shopNo=' + this.ruleForm.shopNo)
       },
       handleClose() {
         this.dialogVisible = false
@@ -188,5 +269,24 @@
   }
   .detail-mode-box {
     margin-bottom: 24px;
+  }
+  .disabledTxt {
+    margin-right: 10px;
+  }
+  .inactive {
+    color: #F5222D;
+  }
+  .active {
+    color: #1989FA;
+  }
+  .rateImg {
+    width: 16px;
+    height: 16px;
+  }
+  .rateTxt {    
+    font-size: 14px;
+    font-weight: 400;
+    color: #333335;
+    line-height: 20px;
   }
 </style>

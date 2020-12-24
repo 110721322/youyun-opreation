@@ -12,7 +12,6 @@
         ref="table"
         :grid-config="tableConfig.gridConfig"
         :grid-btn-config="tableConfig.gridBtnConfig"
-        :grid-data="testData"
         :form-config="tableConfig.formConfig"
         :form-data="tableConfig.formModel"
         :grid-edit-width="250"
@@ -20,7 +19,7 @@
         :is-data-select="false"
         :is-table-expand="false"
         :row-key="'id'"
-        grid-operation-name="添加门店"
+        grid-operation-name="门店列表"
         :default-expand-all="false"
         :hide-edit-area="tableConfig.hideEditArea"
         :api-service="api"
@@ -40,11 +39,7 @@ export default {
       searchConfig: SEARCH_CONFIG,
       tableConfig: TABLE_CONFIG,
       api: api.shopQueryByPage,
-      testData: [{
-        shopNo: '1111',
-        isDisabled: 0,
-        status: 0
-      }]
+      testData: []
     };
   },
   computed: {
@@ -54,11 +49,19 @@ export default {
   mounted() {
   },
   methods: {
-    onClickSearch() {
-      console.log(111111)
+    onClickSearch($ruleForm) {
+      this.params = {
+        shopNo: $ruleForm.shopNo,
+        shopName: $ruleForm.shopName,
+        phone: $ruleForm.phone,
+        merchantNo: $ruleForm.merchantNo,
+        status: $ruleForm.status,
+        agentNo: $ruleForm.agentNo,
+        isDisabled: $ruleForm.isDisabled
+      }
     },
-    onClickDetail() {
-      this.$router.push('/shopManage/shopList/shopDetail')
+    onClickDetail(row) {
+      this.$router.push('/shopManage/shopList/shopDetail?shopNo=' + row.shopNo)
     }
   }
 };

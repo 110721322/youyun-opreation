@@ -234,7 +234,6 @@ export const FORM_CONFIG = {
       key: "bankCardNo",
       labelWidth: "120px",
       initVal: "",
-      maxlength: 10,
       rules: [
         { required: true, message: '请输入开户银行账号', trigger: 'blur' }
       ]
@@ -285,7 +284,7 @@ export const FORM_CONFIG = {
       labelWidth: "120px",
       initVal: "",
       rules: [
-        { required: true, message: '请输入支付宝', trigger: 'blur' }
+        { required: true, message: '请输入支付宝费率', trigger: 'blur' }
       ]
     },
     {
@@ -295,7 +294,7 @@ export const FORM_CONFIG = {
       labelWidth: "120px",
       initVal: "",
       rules: [
-        { required: true, message: '请输入微信', trigger: 'blur' }
+        { required: true, message: '请输入微信费率', trigger: 'blur' }
       ]
     },
     {
@@ -305,7 +304,7 @@ export const FORM_CONFIG = {
       labelWidth: "120px",
       initVal: "",
       rules: [
-        { required: true, message: '请输入云闪付', trigger: 'blur' }
+        { required: true, message: '请输入云闪付费率', trigger: 'blur' }
       ]
     },
     {
@@ -315,7 +314,7 @@ export const FORM_CONFIG = {
       labelWidth: "120px",
       initVal: "",
       rules: [
-        { required: true, message: '请输入云闪付', trigger: 'blur' }
+        { required: true, message: '请输入云闪付费率', trigger: 'blur' }
       ]
     }
   ]

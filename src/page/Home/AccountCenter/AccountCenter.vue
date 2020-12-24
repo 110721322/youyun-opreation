@@ -25,7 +25,7 @@
 <script>
   import UpdatePsd from "@/components/UpdatePsd/UpdatePsd";
   import { FORM_CONFIG } from "../formConfig/accountCenter";
-
+  import api from "@/api/api_account";
   export default {
     name: 'AccountCenter',
     components: {
@@ -37,7 +37,17 @@
         ruleForm: {}
       }
     },
+    created() {
+      this.getLoginUser()
+    },
     methods: {
+      getLoginUser() {
+        api.getLoginUser({}).then(res => {
+          if (res.status === 0) {
+            this.ruleForm = res.data
+          }
+        })
+      },
       clickModify() {
         this.$refs.updatePsd.showUpdatePsd();
       }

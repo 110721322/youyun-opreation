@@ -36,9 +36,10 @@ export const FORM_CONFIG = {
       key: "createTime"
     },
     {
-      label: "门店使用状态",
+      label: "门店状态",
       key: "isDisabled",
-      slotName: 'switch'
+      filedType: 'slot',
+      slot: 'switch'
     },
     {
       label: "微信商户号",
@@ -47,14 +48,16 @@ export const FORM_CONFIG = {
     {
       label: "门店审核状态",
       key: "status",
-      slotName: "status"
+      filedType: 'slot',
+      slot: "status"
     }
   ],
   payInfoData: [
     {
       label: "费率信息",
       key: "rate",
-      slotName: 'rateInfo'
+      filedType: 'slot',
+      slot: 'rateInfo'
     }
   ],
   openInfoData: [
@@ -72,18 +75,22 @@ export const FORM_CONFIG = {
     }
   ],
   shopInfoDetail: [
-    {
-      label: "门店结算类型",
-      key: "settleType",
-      slotName: "settleType",
-      span: 24
-    },
+    // {
+    //   label: "门店结算类型",
+    //   key: "settleType",
+    //   slot: "settleType",
+    //   span: 24
+    // },
     {
       label: "门店名称",
       key: "shopName"
     },
     {
-      label: "门店电话",
+      label: "门店简称",
+      key: "shopName"
+    },
+    {
+      label: "门店服务电话",
       key: "phone"
     },
     {
@@ -93,7 +100,8 @@ export const FORM_CONFIG = {
     {
       label: "门店区域",
       key: "area",
-      slotName: "area"
+      filedType: 'slot',
+      slot: "area"
     },
     {
       label: "门店详细地址",
@@ -113,8 +121,8 @@ export const FORM_CONFIG = {
     {
       label: "门店类型",
       key: "shopType",
-      slotName: "shopType",
-      span: 24
+      filedType: 'slot',
+      slot: "shopType"
     },
     {
       label: "营业执照编号",
@@ -123,7 +131,8 @@ export const FORM_CONFIG = {
     {
       label: "营业执照有效期",
       key: "shopLicenseDate",
-      slotName: "shopLicenseDate"
+      filedType: 'slot',
+      slot: "shopLicenseDate"
     },
     {
       label: "法人姓名",
@@ -136,7 +145,8 @@ export const FORM_CONFIG = {
     {
       label: "法人身份证有效期",
       key: "idCardDate",
-      slotName: "idCardDate"
+      filedType: 'slot',
+      slot: "idCardDate"
     },
     {
       label: "图片信息",
@@ -156,9 +166,9 @@ export const FORM_CONFIG = {
   settleDetail: [
     {
       label: "结算类型",
-      key: "key",
-      slotName: "settleType",
-      span: 24
+      key: "settleType",
+      filedType: 'slot',
+      slot: "settleType"
     },
     {
       label: "开户名",
@@ -175,6 +185,10 @@ export const FORM_CONFIG = {
     {
       label: "支行名称",
       key: "bankBranchName"
+    },
+    {
+      label: "银行预留手机号",
+      key: "bankMobile"
     },
     {
       label: "图片信息",
