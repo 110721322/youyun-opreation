@@ -22,7 +22,16 @@ export const TABLE_CONFIG = {
     },
     {
       label: 'logo或门头照',
-      prop: 'shopImg'
+      prop: 'shopImg',
+      render: (h, params) => {
+        const imgUrl = params.row.shopImg;
+        return h('el-image', {
+          props: {
+            src: imgUrl,
+            'preview-src-list': [imgUrl]
+          }
+        }, '正常');
+      }
     },
     {
       label: '服务电话',
@@ -42,7 +51,8 @@ export const TABLE_CONFIG = {
       render: (h, params) => {
         const actions = new Map([
           [0, {className: 's-status-success', statusDesc: '启用'}],
-          [1, {className: 's-status-fail', statusDesc: '禁用'}]
+          [1, {className: 's-status-fail', statusDesc: '禁用'}],
+          ['default', {className: 's-status-pending', statusDesc: '--'}]
         ])
         const action = actions.get(params.row.isDisabled) || actions.get('default')
         return (
@@ -59,7 +69,8 @@ export const TABLE_CONFIG = {
           [1, {className: 's-status-pending', statusDesc: '通道审核中'}],
           [2, {className: 's-status-success', statusDesc: '已开通'}],
           [3, {className: 's-status-fail', statusDesc: '驳回'}],
-          [4, {className: 's-status-fail', statusDesc: '微信未认证'}]
+          [4, {className: 's-status-fail', statusDesc: '微信未认证'}],
+          ['default', {className: 's-status-pending', statusDesc: '--'}]
         ])
         const action = actions.get(params.row.status) || actions.get('default')
         return (

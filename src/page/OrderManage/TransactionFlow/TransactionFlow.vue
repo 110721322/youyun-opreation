@@ -12,7 +12,6 @@
         ref="table"
         :grid-config="tableConfig.gridConfig"
         :grid-btn-config="tableConfig.gridBtnConfig"
-        :grid-data="testData"
         :form-config="tableConfig.formConfig"
         :form-data="tableConfig.formModel"
         :grid-edit-width="250"
@@ -20,7 +19,8 @@
         :is-data-select="false"
         :is-table-expand="false"
         :row-key="'id'"
-        grid-operation-name="添加门店"
+        :params="params"
+        grid-operation-name="交易流水列表"
         :default-expand-all="false"
         :hide-edit-area="tableConfig.hideEditArea"
         :api-service="api"
@@ -41,9 +41,8 @@ export default {
       searchConfig: SEARCH_CONFIG,
       tableConfig: TABLE_CONFIG,
       api: api.orderSelectByPage,
-      testData: [{
-        shopNo: '1111'
-      }]
+      testData: [],
+      params: {}
     };
   },
   computed: {
@@ -53,11 +52,22 @@ export default {
   mounted() {
   },
   methods: {
-    onClickSearch() {
-
+    onClickSearch($ruleForm) {
+      this.params = {
+        orderNo: $ruleForm.orderNo,
+        shopNo: $ruleForm.shopNo,
+        queryBeginPayTime: $ruleForm.date[0],
+        queryEndPayTime: $ruleForm.date[1],
+        tradeType: $ruleForm.tradeType,
+        payWay: $ruleForm.payWay,
+        agentNo: $ruleForm.agentNo,
+        merchantNo: $ruleForm.merchantNo,
+        orderStatus: $ruleForm.orderStatus,
+        deviceType: $ruleForm.deviceType
+      }
     },
-    onClickDetail() {
-      this.$router.push('/orderManage/transactionFlow/flowDetail')
+    onClickDetail(row) {
+      this.$router.push('/orderManage/transactionFlow/flowDetail?merchantNo=' + row.merchantNo + '&shopNo=' + row.shopNo + '&orderNo=' + row.orderNo)
     }
   }
 };

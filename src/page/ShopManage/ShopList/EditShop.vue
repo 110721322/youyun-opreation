@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="content">
-      <div class="form-box">
+      <div class="form-box" v-if="getInfoShow">
         <div class="info-box">
           <div class="form-title">门店信息</div>
           <yun-form
@@ -13,7 +13,7 @@
         <div class="info-box">
           <div class="form-title">认证信息</div>
           <yun-form
-            ref="verityInfoFormData"
+            ref="verityInfoForm"
             :show-foot-btn="false"
             :label-width="'120px'"
             :form-base-data="verityInfoFormData">
@@ -22,7 +22,7 @@
         <div class="info-box">
           <div class="form-title">结算信息</div>
           <yun-form
-            ref="settleInfoFormData"
+            ref="settleInfoForm"
             :show-foot-btn="false"
             :label-width="'120px'"
             :form-base-data="settleInfoFormData">
@@ -31,7 +31,7 @@
         <div class="info-box">
           <div class="form-title">费率信息</div>
           <yun-form
-            ref="rateInfoFormData"
+            ref="rateInfoForm"
             :show-foot-btn="false"
             :label-width="'120px'"
             :form-base-data="rateInfoFormData">
@@ -40,8 +40,8 @@
       </div>
       <div class="flex-align-center flex-justify-center foot-btn">
         <div>
-          <el-button type="primary" size="normal">提交</el-button>
-          <el-button size="normal">取消</el-button>
+          <el-button type="primary" size="normal" @click="shopEditDetail">提交</el-button>
+          <el-button size="normal" @click="cancleEdit">取消</el-button>
         </div>
       </div>
     </div>
@@ -50,20 +50,69 @@
 
 <script>
   import { FORM_CONFIG } from "../formConfig/shopEditForm";
+  import api from "@/api/api_shop";
   export default {
     data() {
       return {
         shopInfoFormData: FORM_CONFIG.shopInfoConfigData,
         verityInfoFormData: FORM_CONFIG.verityInfoConfigData,
         settleInfoFormData: FORM_CONFIG.settleInfoConfigData,
-        rateInfoFormData: FORM_CONFIG.rateInfoConfigData
+        rateInfoFormData: FORM_CONFIG.rateInfoConfigData,
+        shopDetail: {},
+        getInfoShow: false
       }
     },
     created() {
+      this.shopQueryDetail()
     },
     mounted() {
     },
     methods: {
+      shopQueryDetail() {
+        const params = {
+          shopNo: this.$route.query.shopNo
+        }
+        api.shopQueryDetail(params).then(res => {
+          if(res.status === 0) {
+            this.shopDetail = res.data
+            this.shopInfoFormData.forEach((item,index) => {
+              item.initVal = this.shopDetail[item.key]
+            });
+            this.verityInfoFormData.forEach((item,index) => {
+              item.initVal = this.shopDetail[item.key]
+            });
+            this.settleInfoFormData.forEach((item,index) => {
+              item.initVal = this.shopDetail[item.key]
+            });
+            this.rateInfoFormData.forEach((item,index) => {
+              item.initVal = this.shopDetail[item.key]
+            });
+          }
+          this.getInfoShow = true
+        })
+      },
+      shopEditDetail() {
+        const shopInfoForm = this.$refs.shopInfoForm.ruleForm;
+        const verityInfoForm = this.$refs.verityInfoForm.ruleForm;
+        const settleInfoForm = this.$refs.settleInfoForm.ruleForm;
+        const rateInfoForm = this.$refs.rateInfoForm.ruleForm;
+        const params = {
+          id: this.$router.query.id,
+          ...shopInfoForm,
+          ...verityInfoForm,
+          ...settleInfoForm,
+          ...rateInfoForm
+        }
+        api.shopEditDetail(params).then(res => {
+          if (res.status === 0) {
+            this.$router.back();
+            this.$message.success('编辑成功')
+          }
+        })
+      },
+      cancleEdit() {
+        this.$router.back();
+      }
     }
   }
 </script>

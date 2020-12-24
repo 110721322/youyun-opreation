@@ -45,7 +45,6 @@
             ref="table"
             :grid-config="tableConfig.gridConfig"
             :grid-btn-config="tableConfig.gridBtnConfig"
-            :grid-data="testData"
             :form-config="tableConfig.formConfig"
             :form-data="tableConfig.formModel"
             :grid-edit-width="250"
@@ -53,7 +52,8 @@
             :is-data-select="false"
             :is-table-expand="false"
             :row-key="'id'"
-            grid-operation-name="添加门店"
+            :params="params"
+            grid-operation-name="流水记录列表"
             :default-expand-all="false"
             :hide-edit-area="tableConfig.hideEditArea"
             :api-service="api"
@@ -78,18 +78,32 @@
         activeName: '0',
         ruleForm: {},
         api: api.selectOrderWater,
-        testData: [{
-          tradeType: 0,
-          orderStatus: 1
-        }],
-        dialogVisible: false
+        dialogVisible: false,
+        params: {}
       }
     },
     created() {
+      this.params = {
+        merchantNo: this.$route.query.merchantNo,
+        shopNo: this.$route.query.shopNo,
+        orderNo: this.$route.query.orderNo
+      }
     },
     mounted() {
     },
     methods: {
+      selectOrderDetails() {
+        const params = {
+          merchantNo: this.$route.query.merchantNo,
+          shopNo: this.$route.query.shopNo,
+          orderNo: this.$route.query.orderNo
+        }
+        selectOrderDetails(params).then(res => {
+          if (res.status === 0) {
+            this.ruleForm = res.data
+          }
+        })
+      },
       handleClose() {
         this.dialogVisible = false
       }
