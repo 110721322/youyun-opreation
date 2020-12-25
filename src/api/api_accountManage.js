@@ -10,9 +10,9 @@ export default {
   // 账户列表-编辑账户
   editUser: (params) => API.POST('/operation/v1/user/editUser', params),
   // 账号列表-禁用冻结用户账号
-  freezeUser: (params) => API.POST('/operation/v1/user/freezeUser', params),
+  freezeUser: (params) => API.POST('/operation/v1/user/freezeUser', params, {needFormData: true}),
   // 账号列表-启用账号
-  unfreezeUser: (params) => API.POST('/operation/v1/user/unfreezeUser', params),
+  unfreezeUser: (params) => API.POST('/operation/v1/user/unfreezeUser', params, {needFormData: true}),
   // 账号列表-删除账号
   deleteUser: (params) => API.POST('/operation/v1/user/deleteUser', params),
   // 权限管理-查询权限角色列表
@@ -20,9 +20,9 @@ export default {
   // 权限管理-查询角色菜单配置
   selectMenuOfRole: (params) => API.GET('/operation/v1/systemMenu/selectMenuOfRole', params),
   // 权限管理-添加角色
-  addRole: (params) => API.POST('/operation/v1/platformRole/add', params),
+  addRole: (params) => API.POST('/operation/v1/platformRole/add', params,),
   // 权限管理-修改角色
   editRoleAndMenu: (params) => API.POST('/operation/v1/platformRole/editRoleAndMenu', params),
   // 权限管理-删除角色
-  deleteRole: (params) => API.POST('/operation/v1/platformRole/delete', params)
+  deleteRole: (params) => API.POST('/operation/v1/platformRole/delete', params, {needFormData: true})
 };
