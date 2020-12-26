@@ -22,13 +22,14 @@ axios.interceptors.request.use((config) => {
   // 设置全局参数
   config.headers.common.client = 'WEB';
   config.headers.common.accessToken = store.state.admin.accessToken || ''
-  // 参数格式为form data(默认request payload)
   for (const field in config.data) {
     if (g.utils.isNull(config.data[field]) || g.utils.isUndefined(config.data[field])) {
       delete config.data[field];
     }
   }
+  // 参数格式为form data(默认request payload)
   if (config.method === 'post' && config.needFormData) {
+    config.headers["Content-Type"] = "application/x-www-form-urlencoded"
     config.data = qs.stringify(config.data);
   }
   if (JSON.stringify(config.data) === "{}" && config.headers['Content-Type'] !== 'multipart/form-data' && !config.headers['Data-Can-Empty']) {
@@ -103,14 +104,9 @@ axios.interceptors.response.use((response) => {
         break;
 
       case 401:
-        const roleId = store.state.admin.roleId;
         error.message = '未授权，请登录';
         store.dispatch('resetState');
-        if (roleId === 2) {
-          router.replace(`/LoginStore`);
-        } else {
-          router.replace('/Login');
-        }
+        router.replace('/Login');
         break;
 
       case 403:
