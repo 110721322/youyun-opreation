@@ -4,6 +4,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const { library } = require('./dll.config')
 const productionGzipExtensions = ['js', 'css']
+const packageInfo = require('../package.json')
 
 // dll文件存放的目录
 const dllPath = '../public/vendor'
@@ -15,12 +16,16 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, dllPath),
-    filename: '[name]/[name].dll.js',  // vendor.dll.js中暴露出的全局变量名
+    filename: `[name]/[name].${packageInfo.dllVersion}.dll.js`,  // vendor.dll.js中暴露出的全局变量名
     library: '[name]_[hash]'  // 保持与 webpack.DllPlugin 中名称一致
   },
   plugins: [
     // 清除之前的dll文件
-    new CleanWebpackPlugin(),
+    new CleanWebpackPlugin(
+      {
+        cleanOnceBeforeBuildPatterns: []
+      }
+    ),
 
     // 下面是下载的插件的配置
     new CompressionWebpackPlugin({

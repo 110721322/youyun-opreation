@@ -6,6 +6,7 @@ const { library } = require('./webpack/dll.config')
 const dllPath = './public/vendor'
 const productionGzipExtensions = ['js', 'css']
 const devtool = process.env.NODE_ENV === 'production' ? 'none' : 'eval-source-map'
+const packageInfo = require('./package.json')
 
 const resolve = (dir) => {
   return path.join(__dirname, dir)
@@ -35,7 +36,7 @@ const NODE_PROD_PLUGINS = [
     return new AddAssetHtmlPlugin({
       outputPath: `/vendor/${name}`,
       publicPath: `/vendor/${name}`,
-      filepath: path.resolve(__dirname, `${dllPath}/${name}/${name}.dll.js`)
+      filepath: path.resolve(__dirname, `${dllPath}/${name}/${name}.${packageInfo.dllVersion}.dll.js`)
     });
   })
 ];
@@ -59,8 +60,8 @@ module.exports = {
       app: ["babel-polyfill", resolve('./src/main.js')]
     },
     output: { // 输出重构  打包编译后的 文件名称  【模块名称.版本号.时间戳】
-      filename: `[name].${process.env.VUE_APP_Version}.${Timestamp}.js`,
-      chunkFilename: `[name].${process.env.VUE_APP_Version}.${Timestamp}.js`
+      filename: `[name].${packageInfo.version}.${Timestamp}.js`,
+      chunkFilename: `[name].${packageInfo.version}.${Timestamp}.js`
     },
     resolve: {
       alias: {
