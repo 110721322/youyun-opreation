@@ -1,3 +1,4 @@
+import api from "@/api/api_agentManage"
 import { validPhone } from "youyun-vue-components/global/kit/validate";
 export const FORM_CONFIG = {
   talkData: {
@@ -7,20 +8,11 @@ export const FORM_CONFIG = {
         label: '沟通主题',
         labelWidth: '120px',
         key: 'theme',
-        options: [
-          {
-            label: '你好啊',
-            value: 1
-          },
-          {
-            label: '吃饭了么',
-            value: 2
-          },
-          {
-            label: '真难吃',
-            value: 3
-          }
-        ],
+        urlOptions: {
+          url: api.getThemeList,
+          method: 'get',
+          params: {}
+        },
         rules: [
           { required: true, message: '请选择沟通主题', trigger: 'change' }
         ],
