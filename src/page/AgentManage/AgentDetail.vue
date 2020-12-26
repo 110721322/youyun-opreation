@@ -20,7 +20,7 @@
         <template slot="status" slot-scope="scope">
           <div
               class="flex-row flex-align-center f-fc-theme"
-              :class="(ruleForm[scope.item.key] === 2 || ruleForm[scope.item.key] === 3) ? 'f-fc-fail' : 'f-fc-theme'">
+              :class="ruleForm[scope.item.key] === 1 ? 'f-fc-theme' : 'f-fc-fail'">
             {{ blockStatusDesc }}
           </div>
         </template>
