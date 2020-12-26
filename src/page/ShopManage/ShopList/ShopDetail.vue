@@ -36,18 +36,6 @@
             module-title="支付信息"
             theme="border"
           >
-            <template slot="rateInfo">
-              <div class="flex-align-center">
-                <div class="flex-align-center">
-                  <img class="rateImg" src="@/assets/img/aliRate.png" alt="" />
-                  <span class="rateTxt">{{ ruleForm.alipayRate }}%</span>  
-                </div>
-                <div class="flex-align-center">
-                  <img class="rateImg" src="@/assets/img/wechatRate.png" alt="" />
-                  <span class="rateTxt">{{ ruleForm.wechatPayRate }}%</span>  
-                </div>
-              </div>
-            </template>
           </yun-detail-mode>  
         </div>
         <div class="detail-mode-box">
@@ -68,7 +56,7 @@
             module-title="门店信息"
             >
               <template slot="area">
-                <div class="areaTxt">{{ ruleForm.provinceName + '省' + ruleForm.cityName + '市' + ruleForm.areaName }}</div>
+                <div class="areaTxt">{{ ruleForm.provinceName + '省' + ruleForm.cityName + '市' + ruleForm.areaName + '区' }}</div>
               </template>
           </yun-detail-mode>
         </div>
@@ -171,30 +159,36 @@
         api.shopQueryDetail(params).then(res => {
           if(res.status === 0) {
             this.ruleForm = res.data
-            if (this.ruleForm.shopType === '') {
-              this.shopTypeTxt = ''
-            } else if (this.ruleForm.shopType === '') {
-              this.shopTypeTxt = ''
-            } else if (this.ruleForm.shopType === '') {
-              this.shopTypeTxt = ''
+            
+            if (this.ruleForm.shopType === 'enterprise') {
+              this.shopTypeTxt = '企业'
+            } else if (this.ruleForm.shopType === 'individual') {
+              this.shopTypeTxt = '个体工商'
+            } else if (this.ruleForm.shopType === 'personal') {
+              this.shopTypeTxt = '个人'
             }
-            if (this.ruleForm.settleType === '') {
-              this.settleTypeTxt = ''
-            } else if (this.ruleForm.settleType === '') {
-              this.settleTypeTxt = ''
-            } else if (this.ruleForm.settleType === '') {
-              this.settleTypeTxt = ''
+            if (this.ruleForm.settleType === "0") {
+              this.settleTypeTxt = '对公法人'
+            } else if (this.ruleForm.settleType === "1") {
+              this.settleTypeTxt = '对私法人'
+            } else if (this.ruleForm.settleType === "2") {
+              this.settleTypeTxt = '对私非法人'
             }
           }
         })
       },
       clickRejectIndirectAudit($ruleForm) {
+        const ruleForm = this.$refs.rejectForm.clickFootBtn();
+        if (!ruleForm) {
+          this.$message('请填写驳回原因');
+          return
+        }
         const params = {
           merchantNo: this.ruleForm.merchantNo,
           shopNo: this.$route.query.shopNo,
           reason: $ruleForm.reason
         }
-        clickRejectIndirectAudit(params).then(res => {
+        api.rejectIndirectAudit(params).then(res => {
           if (res.status === 0) {
             this.dialogVisible = false
             this.$message.success('已驳回！')
