@@ -24,7 +24,6 @@
             :row-key="'id'"
             :default-expand-all="false"
             :hide-edit-area="false"
-            :grid-data="testData"
             :params="params"
             :api-service="api"
             @details="onClickDetails"
@@ -45,7 +44,6 @@
       return {
         params: {},
         api: api.settleList,
-        testData: [],
         drawer: false,
         searchConfig: SEARCH_FORM_CONFIG,
         fromConfigData: REJECT_CONFIG.formData,
@@ -54,30 +52,6 @@
       }
     },
     created() {
-      this.testData = [
-        {
-          id: 225555,
-          createTime: '2020-12-12',
-          agentNo: '2587755',
-          actualAmount: '135',
-          agentName: 'haha',
-          updateTime: '2020-12-12',
-          remark: '图片模糊',
-          operationer: '知道',
-          settleStatus: 0
-        },
-        {
-          id: 2255,
-          createTime: '2020-12-12',
-          agentNo: '2587755',
-          actualAmount: '135',
-          agentName: 'haha',
-          updateTime: '2020-12-12',
-          remark: '图片模糊',
-          operationer: '知道',
-          settleStatus: 1
-        }
-      ]
     },
     methods: {
       onClickSearch($ruleForm) {
