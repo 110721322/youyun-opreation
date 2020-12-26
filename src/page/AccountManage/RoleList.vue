@@ -14,7 +14,7 @@
       <yun-table
           ref="refTable"
           is-async
-          grid-edit-width="120"
+          :grid-edit-width="120"
           :api-service="apiService"
           :params="params"
           :grid-config="tableConfig.gridConfig"
@@ -150,7 +150,7 @@
           this.closeRoleDialog()
           this.$message({
             type: 'success',
-            message: '添加成功'
+            message: '新增权限组成功'
           })
         })
       },
@@ -171,7 +171,7 @@
           this.closeRoleDialog()
           this.$message({
             type: 'success',
-            message: '修改成功'
+            message: '编辑权限组成功'
           })
         })
       },
