@@ -40,8 +40,8 @@
       </div>
       <div class="flex-align-center flex-justify-center foot-btn">
         <div>
-          <el-button type="primary" size="normal" @click="shopEditDetail">提交</el-button>
-          <el-button size="normal" @click="cancleEdit">取消</el-button>
+          <el-button type="primary" size="normal" @click="clickShopEditDetail">提交</el-button>
+          <el-button size="normal" @click="clickCancleEdit">取消</el-button>
         </div>
       </div>
     </div>
@@ -77,9 +77,18 @@
             this.shopDetail = res.data
             this.shopInfoFormData.forEach((item,index) => {
               item.initVal = this.shopDetail[item.key]
+              if (item.key === "areaData") {
+                item.initVal = [this.shopDetail.provinceCode, this.shopDetail.cityCode, this.shopDetail.areaCode]
+              }
             });
             this.verityInfoFormData.forEach((item,index) => {
               item.initVal = this.shopDetail[item.key]
+              if (item.key === "shopLicenseDate") {
+                item.initVal = [this.shopDetail.shopLicenseBegDate, this.shopDetail.shopLicenseEndDate]
+              }
+              if (item.key === "idCardDate") {
+                item.initVal = [this.shopDetail.idCardBeginDate, this.shopDetail.idCardExpireDate]
+              }
             });
             this.settleInfoFormData.forEach((item,index) => {
               item.initVal = this.shopDetail[item.key]
@@ -91,13 +100,33 @@
           this.getInfoShow = true
         })
       },
-      shopEditDetail() {
-        const shopInfoForm = this.$refs.shopInfoForm.ruleForm;
-        const verityInfoForm = this.$refs.verityInfoForm.ruleForm;
-        const settleInfoForm = this.$refs.settleInfoForm.ruleForm;
-        const rateInfoForm = this.$refs.rateInfoForm.ruleForm;
+      clickShopEditDetail() {
+        const shopInfoForm = this.$g.utils.deepClone(this.$refs.shopInfoForm.ruleForm);
+        const verityInfoForm = this.$g.utils.deepClone(this.$refs.verityInfoForm.ruleForm);
+        const settleInfoForm = this.$g.utils.deepClone(this.$refs.settleInfoForm.ruleForm);
+        const rateInfoForm = this.$g.utils.deepClone(this.$refs.rateInfoForm.ruleForm);
+        const checkShopForm = this.$refs.shopInfoForm.clickFootBtn();
+        const checkVerityForm = this.$refs.verityInfoForm.clickFootBtn();
+        const checkSettleForm = this.$refs.settleInfoForm.clickFootBtn();
+        const checkRateForm = this.$refs.rateInfoForm.clickFootBtn();
+        if (!checkShopForm) {
+          this.$message('请完善门店信息');
+          return
+        }
+        if (!checkVerityForm) {
+          this.$message('请完善认证信息');
+          return
+        }
+        if (!checkSettleForm) {
+          this.$message('请完善结算信息');
+          return
+        }
+        if (!checkRateForm) {
+          this.$message('请完善费率信息');
+          return
+        }
         const params = {
-          id: this.$router.query.id,
+          id: this.$route.query.id,
           ...shopInfoForm,
           ...verityInfoForm,
           ...settleInfoForm,
@@ -110,7 +139,7 @@
           }
         })
       },
-      cancleEdit() {
+      clickCancleEdit() {
         this.$router.back();
       }
     }

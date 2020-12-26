@@ -1,3 +1,4 @@
+import utils from "youyun-vue-components/global/kit/utils";
 export const FORM_CONFIG = {
   basicInfoData: [
     {
@@ -48,16 +49,36 @@ export const FORM_CONFIG = {
     {
       label: "门店审核状态",
       key: "status",
-      fieldType: 'slot',
-      slot: "status"
+      filedType: 'render',
+      render: (h, ruleForm) => {
+        if (ruleForm.status) {
+          return (
+            <span class="inactive">通过</span>
+          )  
+        } else {
+          return (
+            <span class="active">驳回</span>
+          )  
+        }
+        
+      }
     }
   ],
   payInfoData: [
     {
       label: "费率信息",
       key: "rate",
-      fieldType: 'slot',
-      slot: 'rateInfo'
+      filedType: 'render',
+      render: (h, ruleForm) => {
+        return (
+          <p class="f-fc-606266">
+            <i class="iconfont iconzhifubao f-fc-ali"></i>
+            { utils.AccMul(ruleForm.alipayRate) }%、
+            <i class="iconfont iconweixin f-fc-wx"></i>
+            { utils.AccMul(ruleForm.wechatPayRate) }%
+          </p>
+        )
+      }
     }
   ],
   openInfoData: [
@@ -75,27 +96,21 @@ export const FORM_CONFIG = {
     }
   ],
   shopInfoDetail: [
-    // {
-    //   label: "门店结算类型",
-    //   key: "settleType",
-    //   slot: "settleType",
-    //   span: 24
-    // },
     {
       label: "门店名称",
       key: "shopName"
     },
     {
       label: "门店简称",
-      key: "shopName"
+      key: "shopShortName"
     },
     {
       label: "门店服务电话",
       key: "phone"
     },
     {
-      label: "到期时间（MCC）",
-      key: "key"
+      label: "门店类目（MCC）",
+      key: "mccCodeCN"
     },
     {
       label: "门店区域",
@@ -227,7 +242,10 @@ export const FORM_CONFIG = {
       labelWidth: '120px',
       placeholder: "请输入驳回原因",
       style: "width: 379px;",
-      maxlength: 100
+      maxlength: 100,
+      rules: [
+        { required: true, message: '请输入驳回备注', trigger: 'blur' }
+      ]
     }
   ]
 }
