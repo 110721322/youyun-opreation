@@ -75,23 +75,23 @@ export const FORM_CONFIG = {
       ]
     },
     {
-      type: 6,
+      type: 14,
       span: 24,
-      labelWidth: "120px",
-      render() {
-        return (
-          <span>
-            门店LOGO或门头照
-            <el-tooltip effect="dark" content="单个文件大小限制5MB以内" placement="top-start">
-              <i class="iconfont iconshuoming" style="margin-left: 4px;"></i>
-            </el-tooltip>
-            :
-          </span>
-        )
-      },
-      showExample: true,
-      exampleUrl: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/fund/template/%E5%BC%80%E6%88%B7%E8%AE%B8%E5%8F%AF%E8%AF%81.png',
-      key: 'bankOpenAccountLicenseImgComplete'
+      label: '图片信息',
+      key: 'shopImg',
+      labelWidth: '140px',
+      children: [
+        {
+          label: '门店LOGO或门头照',
+          key: 'shopImg',
+          type: 6,
+          initVal: '',
+          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          rules: [
+            { required: true, message: '请上传门店LOGO或者门店照', trigger: 'change' }
+          ]
+        }
+      ]
     }
   ],
   verityInfoConfigData: [

@@ -48,20 +48,7 @@ export const FORM_CONFIG = {
     },
     {
       label: "门店审核状态",
-      key: "status",
-      filedType: 'render',
-      render: (h, ruleForm) => {
-        if (ruleForm.status) {
-          return (
-            <span class="inactive">通过</span>
-          )  
-        } else {
-          return (
-            <span class="active">驳回</span>
-          )  
-        }
-        
-      }
+      key: "statusTxt"
     }
   ],
   payInfoData: [
@@ -135,9 +122,7 @@ export const FORM_CONFIG = {
   verityDetail: [
     {
       label: "门店类型",
-      key: "shopType",
-      fieldType: 'slot',
-      slot: "shopType"
+      key: "shopTypeTxt"
     },
     {
       label: "营业执照编号",
@@ -181,9 +166,7 @@ export const FORM_CONFIG = {
   settleDetail: [
     {
       label: "结算类型",
-      key: "settleType",
-      fieldType: 'slot',
-      slot: "settleType"
+      key: "settleTypeTxt"
     },
     {
       label: "开户名",

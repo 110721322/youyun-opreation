@@ -22,11 +22,6 @@
                 <el-switch v-model="ruleForm.isDisabled" :active-value="0" :inactive-value="1" @change="changeSwitch"></el-switch>
               </div>
             </template>
-            <template slot="status">
-              <div class="flex-align-center">
-                <span :class="['disabledTxt', ruleForm.status?'inactive':'active']">{{ruleForm.status ? '通过' : '驳回'}}</span>
-              </div>
-            </template>
           </yun-detail-mode>
         </div>
         <div class="detail-mode-box">
@@ -66,9 +61,6 @@
             :filed-config-list="verityDetailConfig"
             module-title="认证信息"
             >
-              <template slot="shopType">
-                <div class="typeTxt">{{ shopTypeTxt }}</div>
-              </template>
               <template slot="shopLicenseDate">
                 <div class="typeTxt">{{ ruleForm.shopLicenseBegDate + '至' + ruleForm.shopLicenseEndDate }}</div>
               </template>
@@ -83,9 +75,6 @@
             :filed-config-list="settleDetailConfig"
             module-title="结算信息"
             >
-            <template slot="settleType">
-              <div class="typeTxt">{{ settleTypeTxt }}</div>
-            </template>
           </yun-detail-mode>
         </div>
         <div class="detail-mode-box">
@@ -141,9 +130,7 @@
         ruleForm: {},
         radio: 1,
         dialogVisible: false,
-        value: 0,
-        shopTypeTxt: '',
-        settleTypeTxt: ''
+        value: 0
       }
     },
     created() {
@@ -159,20 +146,47 @@
         api.shopQueryDetail(params).then(res => {
           if(res.status === 0) {
             this.ruleForm = res.data
-            
+            switch(this.ruleForm.status) {
+              case 0:
+                this.ruleForm.statusTxt = '预审核中'
+                break;
+              case 1:
+                this.ruleForm.statusTxt = '平台驳回'
+                break;
+              case 2:
+                this.ruleForm.statusTxt = '通道审核中'
+                break;
+              case 3:
+                this.ruleForm.statusTxt = '通道驳回'
+                break;
+              case 4:
+                this.ruleForm.statusTxt = '通过'
+                break;
+              case 5:
+                this.ruleForm.statusTxt = '微信认证中'
+                break;
+              case 6:
+                this.ruleForm.statusTxt = '微信认证拒绝'
+                break;
+              case 7:
+                this.ruleForm.statusTxt = '微信认证成功'
+                break;
+              default:
+                this.ruleForm.statusTxt = '--'
+            }
             if (this.ruleForm.shopType === 'enterprise') {
-              this.shopTypeTxt = '企业'
+              this.ruleForm.shopTypeTxt = '企业'
             } else if (this.ruleForm.shopType === 'individual') {
-              this.shopTypeTxt = '个体工商'
+              this.ruleForm.shopTypeTxt = '个体工商'
             } else if (this.ruleForm.shopType === 'personal') {
-              this.shopTypeTxt = '个人'
+              this.ruleForm.shopTypeTxt = '个人'
             }
             if (this.ruleForm.settleType === "0") {
-              this.settleTypeTxt = '对公法人'
+              this.ruleForm.settleTypeTxt = '对公法人'
             } else if (this.ruleForm.settleType === "1") {
-              this.settleTypeTxt = '对私法人'
+              this.ruleForm.settleTypeTxt = '对私法人'
             } else if (this.ruleForm.settleType === "2") {
-              this.settleTypeTxt = '对私非法人'
+              this.ruleForm.settleTypeTxt = '对私非法人'
             }
           }
         })

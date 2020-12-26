@@ -36,11 +36,14 @@ export const SEARCH_CONFIG = {
     type: 1,
     span: 12,
     options: [
-      {label: "平台审核中", value: 0},
-      {label: "通道审核中", value: 1},
-      {label: "已开通", value: 2},
-      {label: "驳回", value: 3},
-      {label: "微信未认证", value: 4}
+      {label: "预审核中", value: 0},
+      {label: "平台驳回", value: 1},
+      {label: "通道审核中", value: 2},
+      {label: "通道驳回", value: 3},
+      {label: "通过", value: 4},
+      {label: "微信认证中", value: 5},
+      {label: "微信认证拒绝", value: 6},
+      {label: "微信认证成功", value: 7}
     ]
   },
   {
