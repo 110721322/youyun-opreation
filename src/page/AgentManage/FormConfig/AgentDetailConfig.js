@@ -124,10 +124,21 @@ export const FORM_CONFIG = {
   bankSet: {
     formData: [
       {
-        type: 0,
+        type: 12,
         label: '开户行',
         labelWidth: '120px',
         key: 'bankBranchName',
+        urlOptions: {
+          url: api.getBank,
+          keyName: 'agentNo',
+          valueName: 'bankName',
+          method: 'get',
+          searchKey: 'agentName',
+          params: {
+            currentPage: 1,
+            pageSize: 10
+          }
+        },
         rules: [
           { required: true, message: '请选择开户行', trigger: 'blur' }
         ],
