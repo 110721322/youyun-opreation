@@ -21,7 +21,7 @@ export const DETAILCONFIG = {
       label: "服务商状态",
       key: "blockStatus",
       emitEdit: 'editStatus',
-      filedType: 'slot',
+      fieldType: 'slot',
       slot: 'status'
     },
     {

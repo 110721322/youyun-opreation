@@ -20,7 +20,7 @@ export const LIST_CONFIG = {
     {
       label: "商户状态",
       key: "isDisabled",
-      filedType: 'slot',
+      fieldType: 'slot',
       slot: 'status'
     },
     {

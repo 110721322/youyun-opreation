@@ -38,7 +38,7 @@ export const FORM_CONFIG = {
     {
       label: "门店状态",
       key: "isDisabled",
-      filedType: 'slot',
+      fieldType: 'slot',
       slot: 'switch'
     },
     {
@@ -48,7 +48,7 @@ export const FORM_CONFIG = {
     {
       label: "门店审核状态",
       key: "status",
-      filedType: 'slot',
+      fieldType: 'slot',
       slot: "status"
     }
   ],
@@ -56,7 +56,7 @@ export const FORM_CONFIG = {
     {
       label: "费率信息",
       key: "rate",
-      filedType: 'slot',
+      fieldType: 'slot',
       slot: 'rateInfo'
     }
   ],
@@ -100,7 +100,7 @@ export const FORM_CONFIG = {
     {
       label: "门店区域",
       key: "area",
-      filedType: 'slot',
+      fieldType: 'slot',
       slot: "area"
     },
     {
@@ -114,14 +114,14 @@ export const FORM_CONFIG = {
       children: [
         {label: '门店LOGO或门头照', key: 'shopFaceImg'}
       ],
-      filedType: 'image'
+      fieldType: 'image'
     }
   ],
   verityDetail: [
     {
       label: "门店类型",
       key: "shopType",
-      filedType: 'slot',
+      fieldType: 'slot',
       slot: "shopType"
     },
     {
@@ -131,7 +131,7 @@ export const FORM_CONFIG = {
     {
       label: "营业执照有效期",
       key: "shopLicenseDate",
-      filedType: 'slot',
+      fieldType: 'slot',
       slot: "shopLicenseDate"
     },
     {
@@ -145,7 +145,7 @@ export const FORM_CONFIG = {
     {
       label: "法人身份证有效期",
       key: "idCardDate",
-      filedType: 'slot',
+      fieldType: 'slot',
       slot: "idCardDate"
     },
     {
@@ -160,14 +160,14 @@ export const FORM_CONFIG = {
         {label: '门店环境照', key: 'shopInnerImg'},
         {label: '收银台照片', key: 'shopCashdeskImg'},
       ],
-      filedType: 'image'
+      fieldType: 'image'
     }
   ],
   settleDetail: [
     {
       label: "结算类型",
       key: "settleType",
-      filedType: 'slot',
+      fieldType: 'slot',
       slot: "settleType"
     },
     {
@@ -197,7 +197,7 @@ export const FORM_CONFIG = {
       children: [
         {label: '开户许可证', key: 'bankOpenAccountLicenseImg'}
       ],
-      filedType: 'image'
+      fieldType: 'image'
     }
   ],
   rateDetail: [
