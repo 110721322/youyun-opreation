@@ -109,6 +109,11 @@
         const checkVerityForm = this.$refs.verityInfoForm.clickFootBtn();
         const checkSettleForm = this.$refs.settleInfoForm.clickFootBtn();
         const checkRateForm = this.$refs.rateInfoForm.clickFootBtn();
+        console.log(shopInfoForm)
+        console.log(verityInfoForm)
+        console.log(settleInfoForm)
+        console.log(rateInfoForm)
+        debugger
         if (!checkShopForm) {
           this.$message('请完善门店信息');
           return
@@ -128,7 +133,14 @@
         const params = {
           id: this.$route.query.id,
           ...shopInfoForm,
+          provinceCode: shopInfoForm.areaData[0],
+          cityCode: shopInfoForm.areaData[1],
+          areaCode: shopInfoForm.areaData[2],
           ...verityInfoForm,
+          shopLicenseBegDate: verityInfoForm.shopLicenseBegDate[0],
+          shopLicenseEndDate: verityInfoForm.shopLicenseBegDate[1],
+          idCardBeginDate: verityInfoForm.idCardDate[0],
+          idCardExpireDate: verityInfoForm.idCardDate[1],
           ...settleInfoForm,
           ...rateInfoForm
         }

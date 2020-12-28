@@ -1,5 +1,5 @@
 import areaData from "youyun-vue-components/assets/data/areaData.ws";
-import { validPhone } from "youyun-vue-components/global/kit/validate";
+import { checkPersonId, validPhone } from "youyun-vue-components/global/kit/validate";
 
 export const FORM_CONFIG = {
   shopInfoConfigData: [
@@ -17,7 +17,7 @@ export const FORM_CONFIG = {
     {
       type: 0,
       label: '门店简称',
-      labelWidth: '140px',
+      labelWidth: '120px',
       key: 'shopShortName',
       rules: [
         { required: true, message: '请输入门店简称', trigger: 'blur' }
@@ -57,7 +57,7 @@ export const FORM_CONFIG = {
     {
       type: 8,
       label: '门店区域',
-      key: 'areaData',
+      key: 'bankArea',
       labelWidth: "120px",
       rules: [
         { required: true, message: '请选择门店区域', trigger: 'change' }
@@ -79,7 +79,7 @@ export const FORM_CONFIG = {
       span: 24,
       label: '图片信息',
       key: 'shopImg',
-      labelWidth: '140px',
+      labelWidth: '120px',
       children: [
         {
           label: '门店LOGO或门头照',
@@ -184,17 +184,16 @@ export const FORM_CONFIG = {
       ]
     },
     {
-      label: '图片信息',
-      key: 'UploadGroup',
       type: 14,
       span: 24,
-      labelWidth: "120px",
+      label: '图片信息',
+      key: 'authImg',
+      labelWidth: '140px',
       children: [
         {
           label: '身份证正面',
           key: 'idCardPortraitImg',
           type: 6,
-          initVal: '',
           exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
           rules: [
             { required: true, message: '请上传身份证人像照', trigger: 'change' }
@@ -204,7 +203,6 @@ export const FORM_CONFIG = {
           label: '身份证反面',
           key: 'idCardEmblemImg',
           type: 6,
-          initVal: '',
           exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
           rules: [
             { required: true, message: '请上传身份证国徽照', trigger: 'change' }
@@ -214,17 +212,15 @@ export const FORM_CONFIG = {
           label: '营业执照图片',
           key: 'shopLicenseImg',
           type: 6,
-          initVal: '',
           exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
           rules: [
             { required: true, message: '请上传营业执照', trigger: 'change' }
-          ]
+          ],
         },
         {
           label: '门头照',
           key: 'shopFaceImg',
           type: 6,
-          initVal: '',
           exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
           rules: [
             { required: true, message: '请上传门头照', trigger: 'change' }
@@ -234,26 +230,81 @@ export const FORM_CONFIG = {
           label: '门店环境照',
           key: 'shopInnerImg',
           type: 6,
-          initVal: '',
           exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
           rules: [
             { required: true, message: '请上传门店环境照', trigger: 'change' }
           ]
         },
         {
-          label: '收银台照片',
+          label: '收银台照',
           key: 'shopCashdeskImg',
           type: 6,
-          initVal: '',
           exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
           rules: [
             { required: true, message: '请上传收银台照', trigger: 'change' }
-          ],
-          isShow: (params) => {
-            return params.shopType === 'person' ? false : true
-          },
+          ]
         }
-      ]
+      ],
+      isShow: (params) => {
+        return params.shopType === 'person' ? false : true
+      },
+    },
+    {
+      type: 14,
+      span: 24,
+      label: '图片信息',
+      key: 'authImg',
+      labelWidth: '140px',
+      children: [
+        {
+          label: '身份证正面',
+          key: 'idCardPortraitImg',
+          type: 6,
+          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          rules: [
+            { required: true, message: '请上传身份证人像照', trigger: 'change' }
+          ]
+        },
+        {
+          label: '身份证反面',
+          key: 'idCardEmblemImg',
+          type: 6,
+          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          rules: [
+            { required: true, message: '请上传身份证国徽照', trigger: 'change' }
+          ]
+        },
+        {
+          label: '门头照',
+          key: 'shopFaceImg',
+          type: 6,
+          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          rules: [
+            { required: true, message: '请上传门头照', trigger: 'change' }
+          ]
+        },
+        {
+          label: '门店环境照',
+          key: 'shopInnerImg',
+          type: 6,
+          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          rules: [
+            { required: true, message: '请上传门店环境照', trigger: 'change' }
+          ]
+        },
+        {
+          label: '收银台照',
+          key: 'shopCashdeskImg',
+          type: 6,
+          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          rules: [
+            {required: true, message: '请上传收银台照', trigger: 'change'}
+          ]
+        }
+      ],
+      isShow: (params) => {
+        return params.shopType === 'person' ? true : false
+      }
     }
   ],
   settleInfoConfigData: [
@@ -338,7 +389,7 @@ export const FORM_CONFIG = {
       span: 24,
       label: '图片信息',
       key: 'settleImg',
-      labelWidth: '140px',
+      labelWidth: '120px',
       isShow: (params) => {
         if (params.settleType === 0 || params.settleType === 1) {
           return true
@@ -376,7 +427,7 @@ export const FORM_CONFIG = {
       type: 0,
       label: "微信费率",
       key: "wechatPayRate",
-      labelWidth: '140px',
+      labelWidth: '120px',
       isShowSlot: true,
       showSlotName: '%',
       rules: [
@@ -388,7 +439,7 @@ export const FORM_CONFIG = {
       type: 0,
       label: "云闪付>1000",
       key: "cloudPayGt1000Rate",
-      labelWidth: '140px',
+      labelWidth: '120px',
       isShowSlot: true,
       showSlotName: '%',
       rules: [
@@ -400,7 +451,7 @@ export const FORM_CONFIG = {
       type: 0,
       label: "云闪付<=1000",
       key: "cloudPayLe1000Rate",
-      labelWidth: '140px',
+      labelWidth: '120px',
       isShowSlot: true,
       showSlotName: '%',
       rules: [

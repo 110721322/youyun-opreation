@@ -19,18 +19,6 @@ export const SEARCH_CONFIG = {
     span: 12
   },
   {
-    label: '所属商户',
-    key: 'merchantNo',
-    type: 1,
-    span: 12,
-    options: [
-      { label: '北京', value: 'beijing' },
-      { label: '上海', value: 'shanghai' },
-      { label: '深圳', value: 'shenzhen' },
-      { label: '香港', value: 'hongkong' }
-    ]
-  },
-  {
     label: '审核状态',
     key: 'status',
     type: 1,
@@ -59,13 +47,25 @@ export const SEARCH_CONFIG = {
     ]
   },
   {
+    label: '所属商户',
+    key: 'merchantNo',
+    type: 1,
+    span: 12,
+    options: [
+      { label: '北京', value: 'beijing' },
+      { label: '上海', value: 'shanghai' },
+      { label: '深圳', value: 'shenzhen' },
+      { label: '香港', value: 'hongkong' }
+    ]
+  },
+  {
     label: '门店状态',
     key: 'isDisabled',
     type: 1,
     span: 12,
     options: [
-      {label: "禁用", value: 0},
-      {label: "启用", value: 1}
+      {label: "禁用", value: 1},
+      {label: "启用", value: 0}
     ]
   }],
   showFootBtn: true

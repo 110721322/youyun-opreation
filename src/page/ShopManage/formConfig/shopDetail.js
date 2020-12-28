@@ -201,19 +201,35 @@ export const FORM_CONFIG = {
   rateDetail: [
     {
       label: "支付宝",
-      key: "alipayRate"
+      key: "alipayRate",
+      filedType: 'render',
+      render: (h, ruleForm) => {
+        return (<span>{ utils.AccMul(ruleForm.alipayRate) }%</span>)
+      }
     },
     {
       label: "微信",
-      key: "wechatPayRate"
+      key: "wechatPayRate",
+      filedType: 'render',
+      render: (h, ruleForm) => {
+        return (<span>{ utils.AccMul(ruleForm.wechatPayRate) }%</span>)
+      }
     },
     {
       label: "云闪付>1000费率",
-      key: "cloudPayGt1000Rate"
+      key: "cloudPayGt1000Rate",
+      filedType: 'render',
+      render: (h, ruleForm) => {
+        return <span>{ utils.AccMul(ruleForm.cloudPayGt1000Rate) }%</span>
+      }
     },
     {
       label: "云闪付<=1000费率",
-      key: "cloudPayLe1000Rate"
+      key: "cloudPayLe1000Rate",
+      filedType: 'render',
+      render: (h, ruleForm) => {
+        return <span>{ utils.AccMul(ruleForm.cloudPayLe1000Rate) }%</span>
+      }
     }
   ],
   rejectConfig: [
@@ -221,7 +237,7 @@ export const FORM_CONFIG = {
       type: 0,
       inputType: "textarea",
       label: '备注',
-      key: 'remark',
+      key: 'reason',
       labelWidth: '120px',
       placeholder: "请输入驳回原因",
       style: "width: 379px;",

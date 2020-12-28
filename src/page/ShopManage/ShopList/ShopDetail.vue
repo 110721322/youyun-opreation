@@ -6,7 +6,7 @@
           <el-tab-pane style="font-size:16px;" label="门店信息" name="0"></el-tab-pane>
           <el-tab-pane style="font-size:16px;" label="门店详情" name="1"></el-tab-pane>
         </el-tabs>
-        <el-button type="primary" class="edit-btn" @click="clickEdit">编辑</el-button>
+        <el-button v-if="ruleForm.status===1" type="primary" class="edit-btn" @click="clickEdit">编辑</el-button>
       </div>
       <div v-if="activeName==='0'" class="info-box">
         <div class="detail-mode-box">
@@ -86,10 +86,10 @@
           </yun-detail-mode>
         </div>
       </div>
-      <div v-if="activeName==='1'" class="flex-align-center flex-justify-center foot-btn">
+      <div v-if="activeName==='1'&&ruleForm.status===0" class="flex-align-center flex-justify-center foot-btn">
         <div>
-          <el-button type="primary" size="normal" @click="dialogVisible = true">驳回</el-button>
-          <el-button size="normal">取消</el-button>
+          <el-button type="primary" size="normal" @click="clickPass">通过</el-button>
+          <el-button size="normal" @click="dialogVisible = true">驳回</el-button>
         </div>
       </div>
     </div>
@@ -126,7 +126,7 @@
         settleDetailConfig: FORM_CONFIG.settleDetail,
         rateDetailConfig: FORM_CONFIG.rateDetail,
         rejectDataConfig: FORM_CONFIG.rejectConfig,
-        activeName: '1',
+        activeName: '0',
         ruleForm: {},
         radio: 1,
         dialogVisible: false,
@@ -191,7 +191,19 @@
           }
         })
       },
-      clickRejectIndirectAudit($ruleForm) {
+      clickPass() {
+        const params = {
+          merchantNo: this.ruleForm.merchantNo,
+          shopNo: this.$route.query.shopNo
+        }
+        api.passIndirectAudit(params).then(res => {
+          if (res.status === 0) {
+            this.$router.back()
+            this.$message.success('已通过！')
+          }
+        })
+      },
+      clickRejectIndirectAudit() {
         const ruleForm = this.$refs.rejectForm.clickFootBtn();
         if (!ruleForm) {
           this.$message('请填写驳回原因');
@@ -200,11 +212,12 @@
         const params = {
           merchantNo: this.ruleForm.merchantNo,
           shopNo: this.$route.query.shopNo,
-          reason: $ruleForm.reason
+          reason: this.$refs.rejectForm.ruleForm.reason
         }
         api.rejectIndirectAudit(params).then(res => {
           if (res.status === 0) {
             this.dialogVisible = false
+            this.$router.back();
             this.$message.success('已驳回！')
           }
         })
