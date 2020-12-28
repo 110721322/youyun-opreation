@@ -1,3 +1,4 @@
+import api from "@/api/api_agentManage"
 import { validPhone } from "youyun-vue-components/global/kit/validate";
 export const FORM_CONFIG = {
   talkData: {
@@ -7,20 +8,13 @@ export const FORM_CONFIG = {
         label: '沟通主题',
         labelWidth: '120px',
         key: 'theme',
-        options: [
-          {
-            label: '你好啊',
-            value: 1
-          },
-          {
-            label: '吃饭了么',
-            value: 2
-          },
-          {
-            label: '真难吃',
-            value: 3
-          }
-        ],
+        urlOptions: {
+          url: api.getThemeList,
+          method: 'get',
+          keyName: '',
+          valueName: '沟通主题1',
+          params: {}
+        },
         rules: [
           { required: true, message: '请选择沟通主题', trigger: 'change' }
         ],
@@ -132,12 +126,20 @@ export const FORM_CONFIG = {
   bankSet: {
     formData: [
       {
-        type: 0,
+        type: 1,
         label: '开户行',
         labelWidth: '120px',
-        key: 'bankBranchName',
+        key: 'unionCode',
+        isSearch: true,
+        urlOptions: {
+          url: api.getBank,
+          keyName: 'unionCode',
+          valueName: 'bankName',
+          method: 'get',
+          searchKey: 'bankName'
+        },
         rules: [
-          { required: true, message: '请选择开户行', trigger: 'blur' }
+          { required: true, message: '请选择开户行', trigger: 'change' }
         ],
         span: 24
       },

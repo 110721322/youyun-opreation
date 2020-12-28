@@ -24,7 +24,7 @@ export const SEARCH_FORM_CONFIG = {
     {
       type: 1,
       label: '状态',
-      key: 'status',
+      key: 'blockStatus',
       urlOptions: {
         url: api.getAgentStatus,
         keyName: 'status',
