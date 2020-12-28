@@ -109,11 +109,6 @@
         const checkVerityForm = this.$refs.verityInfoForm.clickFootBtn();
         const checkSettleForm = this.$refs.settleInfoForm.clickFootBtn();
         const checkRateForm = this.$refs.rateInfoForm.clickFootBtn();
-        console.log(shopInfoForm)
-        console.log(verityInfoForm)
-        console.log(settleInfoForm)
-        console.log(rateInfoForm)
-        debugger
         if (!checkShopForm) {
           this.$message('请完善门店信息');
           return

@@ -88,7 +88,7 @@
       </div>
       <div v-if="activeName==='1'&&ruleForm.status===0" class="flex-align-center flex-justify-center foot-btn">
         <div>
-          <el-button type="primary" size="normal" @click="clickPass">通过</el-button>
+          <el-button type="primary" size="normal" @click="passDialog = true">通过</el-button>
           <el-button size="normal" @click="dialogVisible = true">驳回</el-button>
         </div>
       </div>
@@ -109,6 +109,17 @@
         <el-button type="primary" @click="clickRejectIndirectAudit">确 定</el-button>
       </span>
     </el-dialog>
+    <yun-dialog
+        title="通过"
+        :dialoger="passDialog"
+        width="500px"
+        cancel-text="取消"
+        confirm-text="确定"
+        @confirm="clickPass"
+        @cancel="cancel"
+    >
+      <div slot="body" class="passDialogTxt">确认通过该门店信息吗？通过后信息将不能修改</div>
+    </yun-dialog>
   </div>
 </template>
 
@@ -129,6 +140,7 @@
         activeName: '0',
         ruleForm: {},
         radio: 1,
+        passDialog: false,
         dialogVisible: false,
         value: 0
       }
@@ -198,10 +210,14 @@
         }
         api.passIndirectAudit(params).then(res => {
           if (res.status === 0) {
+            this.passDialog = false
             this.$router.back()
             this.$message.success('已通过！')
           }
         })
+      },
+      cancel() {
+        this.passDialog = false
       },
       clickRejectIndirectAudit() {
         const ruleForm = this.$refs.rejectForm.clickFootBtn();
@@ -309,5 +325,14 @@
     font-weight: 400;
     color: #333335;
     line-height: 20px;
+  }
+  .passDialogTxt {
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: 90px;  
+    font-size: 16px;
+    font-weight: 400;
+    color: #333335;
+    line-height: 22px;
   }
 </style>

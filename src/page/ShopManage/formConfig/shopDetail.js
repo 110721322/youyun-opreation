@@ -214,22 +214,6 @@ export const FORM_CONFIG = {
       render: (h, ruleForm) => {
         return (<span>{ utils.AccMul(ruleForm.wechatPayRate) }%</span>)
       }
-    },
-    {
-      label: "云闪付>1000费率",
-      key: "cloudPayGt1000Rate",
-      filedType: 'render',
-      render: (h, ruleForm) => {
-        return <span>{ utils.AccMul(ruleForm.cloudPayGt1000Rate) }%</span>
-      }
-    },
-    {
-      label: "云闪付<=1000费率",
-      key: "cloudPayLe1000Rate",
-      filedType: 'render',
-      render: (h, ruleForm) => {
-        return <span>{ utils.AccMul(ruleForm.cloudPayLe1000Rate) }%</span>
-      }
     }
   ],
   rejectConfig: [

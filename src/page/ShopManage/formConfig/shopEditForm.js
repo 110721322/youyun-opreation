@@ -57,7 +57,7 @@ export const FORM_CONFIG = {
     {
       type: 8,
       label: '门店区域',
-      key: 'bankArea',
+      key: 'areaData',
       labelWidth: "120px",
       rules: [
         { required: true, message: '请选择门店区域', trigger: 'change' }
@@ -433,30 +433,6 @@ export const FORM_CONFIG = {
       rules: [
         { required: true, message: '请输入微信费率', trigger: 'blur' },
         { pattern: /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/, message: '请输入正确微信费率金额' }
-      ]
-    },
-    {
-      type: 0,
-      label: "云闪付>1000",
-      key: "cloudPayGt1000Rate",
-      labelWidth: '120px',
-      isShowSlot: true,
-      showSlotName: '%',
-      rules: [
-        { required: true, message: '请输入云闪付费率', trigger: 'blur' },
-        { pattern: /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/, message: '请输入正确云闪付费率金额' }
-      ]
-    },
-    {
-      type: 0,
-      label: "云闪付<=1000",
-      key: "cloudPayLe1000Rate",
-      labelWidth: '120px',
-      isShowSlot: true,
-      showSlotName: '%',
-      rules: [
-        { required: true, message: '请输入云闪付费率', trigger: 'blur' },
-        { pattern: /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/, message: '请输入正确云闪付费率金额' }
       ]
     }
   ]
