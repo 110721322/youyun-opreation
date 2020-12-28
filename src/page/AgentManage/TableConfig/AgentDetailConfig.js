@@ -1,3 +1,4 @@
+import utils from "youyun-vue-components/global/kit/utils";
 export const DETAILCONFIG = {
   shopInfoData: [
     {
@@ -35,16 +36,26 @@ export const DETAILCONFIG = {
   ],
   rateInfoData: [
     {
-      label: '支付宝费率',
-      key: 'alipayRate'
-    },
-    {
-      label: '微信费率',
-      key: 'wechatPayRate'
+      label: '费率信息',
+      key: 'payRate',
+      filedType: 'render',
+      render: (h, ruleForm) => {
+        return (
+          <p class="f-fc-606266">
+          <i class="iconfont iconzhifubao f-fc-ali"></i>
+        { utils.AccMul(ruleForm.alipayRate) }%、
+      <i class="iconfont iconweixin f-fc-wx"></i>
+        { utils.AccMul(ruleForm.wechatPayRate) }%
+      </p>
+      )
+      }
     },
     {
       label: '服务商利润分成',
-      key: 'chargeFeePercent'
+      key: 'chargeFeePercent',
+      formatter($ruleForm) {
+        return utils.AccMul($ruleForm.chargeFeePercent) + '%'
+      }
     }
   ],
   bankInfoData: [
