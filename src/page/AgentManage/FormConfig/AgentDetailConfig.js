@@ -11,6 +11,8 @@ export const FORM_CONFIG = {
         urlOptions: {
           url: api.getThemeList,
           method: 'get',
+          keyName: '',
+          valueName: '沟通主题1',
           params: {}
         },
         rules: [
