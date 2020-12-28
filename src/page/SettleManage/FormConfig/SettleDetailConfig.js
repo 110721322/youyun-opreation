@@ -7,7 +7,7 @@ export const SETTLE_CONFIG = {
       children: [
         {label: '发票图片', key: 'expressImg'}
       ],
-      filedType: 'image'
+      fieldType: 'image'
     },
     {
       label: "备注",

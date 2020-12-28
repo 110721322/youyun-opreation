@@ -10,18 +10,10 @@
       </div>
       <yun-table
         ref="table"
+        :is-async="true"
         :grid-config="tableConfig.gridConfig"
         :grid-btn-config="tableConfig.gridBtnConfig"
-        :form-config="tableConfig.formConfig"
-        :form-data="tableConfig.formModel"
-        :grid-edit-width="250"
-        :is-async="true"
-        :is-data-select="false"
-        :is-table-expand="false"
-        :row-key="'id'"
-        grid-operation-name="门店列表"
-        :default-expand-all="false"
-        :hide-edit-area="tableConfig.hideEditArea"
+        :params="params"
         :api-service="api"
         @detail="onClickDetail"></yun-table>
     </div>
@@ -39,6 +31,7 @@ export default {
       searchConfig: SEARCH_CONFIG,
       tableConfig: TABLE_CONFIG,
       api: api.shopQueryByPage,
+      params: {},
       testData: []
     };
   },

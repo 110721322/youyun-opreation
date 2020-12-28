@@ -22,11 +22,6 @@
                 <el-switch v-model="ruleForm.isDisabled" :active-value="0" :inactive-value="1" @change="changeSwitch"></el-switch>
               </div>
             </template>
-            <template slot="status">
-              <div class="flex-align-center">
-                <span :class="['disabledTxt', ruleForm.status?'inactive':'active']">{{ruleForm.status ? '通过' : '驳回'}}</span>
-              </div>
-            </template>
           </yun-detail-mode>
         </div>
         <div class="detail-mode-box">
@@ -36,18 +31,6 @@
             module-title="支付信息"
             theme="border"
           >
-            <template slot="rateInfo">
-              <div class="flex-align-center">
-                <div class="flex-align-center">
-                  <img class="rateImg" src="@/assets/img/aliRate.png" alt="" />
-                  <span class="rateTxt">{{ ruleForm.alipayRate }}%</span>  
-                </div>
-                <div class="flex-align-center">
-                  <img class="rateImg" src="@/assets/img/wechatRate.png" alt="" />
-                  <span class="rateTxt">{{ ruleForm.wechatPayRate }}%</span>  
-                </div>
-              </div>
-            </template>
           </yun-detail-mode>  
         </div>
         <div class="detail-mode-box">
@@ -68,7 +51,7 @@
             module-title="门店信息"
             >
               <template slot="area">
-                <div class="areaTxt">{{ ruleForm.provinceName + '省' + ruleForm.cityName + '市' + ruleForm.areaName }}</div>
+                <div class="areaTxt">{{ ruleForm.provinceName + '省' + ruleForm.cityName + '市' + ruleForm.areaName + '区' }}</div>
               </template>
           </yun-detail-mode>
         </div>
@@ -78,9 +61,6 @@
             :filed-config-list="verityDetailConfig"
             module-title="认证信息"
             >
-              <template slot="shopType">
-                <div class="typeTxt">{{ shopTypeTxt }}</div>
-              </template>
               <template slot="shopLicenseDate">
                 <div class="typeTxt">{{ ruleForm.shopLicenseBegDate + '至' + ruleForm.shopLicenseEndDate }}</div>
               </template>
@@ -95,9 +75,6 @@
             :filed-config-list="settleDetailConfig"
             module-title="结算信息"
             >
-            <template slot="settleType">
-              <div class="typeTxt">{{ settleTypeTxt }}</div>
-            </template>
           </yun-detail-mode>
         </div>
         <div class="detail-mode-box">
@@ -153,9 +130,7 @@
         ruleForm: {},
         radio: 1,
         dialogVisible: false,
-        value: 0,
-        shopTypeTxt: '',
-        settleTypeTxt: ''
+        value: 0
       }
     },
     created() {
@@ -171,30 +146,63 @@
         api.shopQueryDetail(params).then(res => {
           if(res.status === 0) {
             this.ruleForm = res.data
-            if (this.ruleForm.shopType === '') {
-              this.shopTypeTxt = ''
-            } else if (this.ruleForm.shopType === '') {
-              this.shopTypeTxt = ''
-            } else if (this.ruleForm.shopType === '') {
-              this.shopTypeTxt = ''
+            switch(this.ruleForm.status) {
+              case 0:
+                this.ruleForm.statusTxt = '预审核中'
+                break;
+              case 1:
+                this.ruleForm.statusTxt = '平台驳回'
+                break;
+              case 2:
+                this.ruleForm.statusTxt = '通道审核中'
+                break;
+              case 3:
+                this.ruleForm.statusTxt = '通道驳回'
+                break;
+              case 4:
+                this.ruleForm.statusTxt = '通过'
+                break;
+              case 5:
+                this.ruleForm.statusTxt = '微信认证中'
+                break;
+              case 6:
+                this.ruleForm.statusTxt = '微信认证拒绝'
+                break;
+              case 7:
+                this.ruleForm.statusTxt = '微信认证成功'
+                break;
+              default:
+                this.ruleForm.statusTxt = '--'
             }
-            if (this.ruleForm.settleType === '') {
-              this.settleTypeTxt = ''
-            } else if (this.ruleForm.settleType === '') {
-              this.settleTypeTxt = ''
-            } else if (this.ruleForm.settleType === '') {
-              this.settleTypeTxt = ''
+            if (this.ruleForm.shopType === 'enterprise') {
+              this.ruleForm.shopTypeTxt = '企业'
+            } else if (this.ruleForm.shopType === 'individual') {
+              this.ruleForm.shopTypeTxt = '个体工商'
+            } else if (this.ruleForm.shopType === 'personal') {
+              this.ruleForm.shopTypeTxt = '个人'
+            }
+            if (this.ruleForm.settleType === "0") {
+              this.ruleForm.settleTypeTxt = '对公法人'
+            } else if (this.ruleForm.settleType === "1") {
+              this.ruleForm.settleTypeTxt = '对私法人'
+            } else if (this.ruleForm.settleType === "2") {
+              this.ruleForm.settleTypeTxt = '对私非法人'
             }
           }
         })
       },
       clickRejectIndirectAudit($ruleForm) {
+        const ruleForm = this.$refs.rejectForm.clickFootBtn();
+        if (!ruleForm) {
+          this.$message('请填写驳回原因');
+          return
+        }
         const params = {
           merchantNo: this.ruleForm.merchantNo,
           shopNo: this.$route.query.shopNo,
           reason: $ruleForm.reason
         }
-        clickRejectIndirectAudit(params).then(res => {
+        api.rejectIndirectAudit(params).then(res => {
           if (res.status === 0) {
             this.dialogVisible = false
             this.$message.success('已驳回！')

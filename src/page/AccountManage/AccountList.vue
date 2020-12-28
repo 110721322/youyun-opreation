@@ -102,17 +102,12 @@
         this.editAccountDialoger = false;
       },
       editAccount($row) {
-        const params = {
-          id: $row.id
-        }
-        api_accountManage.getUserById(params).then(res => {
-          this.editAccountForm = this.$g.utils.deepClone(ACCOUNT_FORM)
-          this.editAccountForm[3].isShow = true;
-          this.editAccountForm.forEach(formItem => {
-            formItem.initVal = res.data[formItem.key]
-          })
-          this.editAccountDialoger = true;
+        this.editAccountForm = this.$g.utils.deepClone(ACCOUNT_FORM)
+        this.editAccountForm[3].isShow = true;
+        this.editAccountForm.forEach(formItem => {
+          formItem.initVal = $row[formItem.key]
         })
+        this.editAccountDialoger = true;
       },
       /**
        * 添加用户,提交资料
@@ -127,7 +122,7 @@
         api_accountManage.addUser(ruleForm).then(() => {
           that.$message({
             type: 'success',
-            message: '添加成功'
+            message: '新增账户成功'
           })
           that.$refs.refTable.getData();
           that.closeAccountDialog();
@@ -146,7 +141,7 @@
         api_accountManage.editUser(ruleForm).then(() => {
           that.$message({
             type: 'success',
-            message: '已修改'
+            message: '编辑账户成功'
           })
           that.$refs.refTable.getData();
           that.closeAccountDialog();
