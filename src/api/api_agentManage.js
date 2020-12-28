@@ -22,7 +22,7 @@ const api = {
   // 详情-禁用服务商
   updateStatusFrozen: (params) => API.GET('/operation/v1/agent/updateAccountStatusOfFrozen', params),
   // 详情-重置服务商密码
-  resetPassword: (params) => API.POST('/operation/v1/agent/resetPassword', params),
+  resetPassword: (params) => API.POST('/operation/v1/agent/resetPassword', params, { needFormData: true }),
   // 详情-沟通记录分页查询
   queryByPage: (params) => API.GET('/operation/v1/talkLists/queryByPage', params),
   // 详情-新增服务商沟通记录
@@ -34,7 +34,9 @@ const api = {
   // 详情-更新服务商费率
   updateAgentRate: (params) => API.POST('/operation/v1/agent/updateAgentRate', params),
   // 服务商-开户行联行号查询
-  getBank: (params) => API.GET('/operation/v1/bankLineConstSys/queryBankLineConstSysByCondition')
+  getBank: (params) => API.GET('/operation/v1/bankLineConstSys/queryBankLineConstSysByCondition', params),
+  // 联行号-根据联行号编号查询详情
+  getByUnionCode: (params) => API.GET('/operation/v1/bankLineConstSys/getByUnionCode', params, {needFormData: true})
 };
 
 export default api

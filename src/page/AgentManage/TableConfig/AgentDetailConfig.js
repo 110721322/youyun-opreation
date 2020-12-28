@@ -11,7 +11,7 @@ export const DETAILCONFIG = {
     },
     {
       label: "手机号码",
-      key: "personMobile"
+      key: "loginAccount"
       // TODO emitEdit: 'editTel'
     },
     {
@@ -27,7 +27,7 @@ export const DETAILCONFIG = {
     },
     {
       label: "管理员",
-      key: "opreationer"
+      key: "operationName"
     },
     {
       label: "地址",
@@ -36,8 +36,8 @@ export const DETAILCONFIG = {
   ],
   rateInfoData: [
     {
-      label: '费率信息',
-      key: 'payRate',
+      label: "费率信息",
+      key: "rate",
       filedType: 'render',
       render: (h, ruleForm) => {
         return (

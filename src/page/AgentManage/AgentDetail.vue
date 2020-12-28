@@ -374,6 +374,13 @@
         const dateData = this.$refs['dateInfo'].ruleForm
         let infoData = {}
         Object.assign(infoData, serviceData, rateData, settleData, dateData)
+        api.getByUnionCode({
+          unionCode: settleData.unionCode
+        }).then(res => {
+          if (res.status === 0) {
+            infoData.bankName = res.data.bankName
+          }
+        })
         infoData.agentNo = this.agentNo
         api.updateAgentRate(infoData).then(res => {
           if (res.status === 0) {

@@ -50,10 +50,11 @@
     created() {},
     methods: {
       onClickSearch($ruleForm) {
+        console.log($ruleForm);
         this.params = {
           merchantNo: $ruleForm.merchantNo ? $ruleForm.merchantNo : null,
           merchantName: $ruleForm.merchantName ? $ruleForm.merchantName : null,
-          agentName: $ruleForm.agentName ? $ruleForm.agentName : null,
+          agentNo: $ruleForm.agentNo ? $ruleForm.agentNo : null,
           isDisabled: $ruleForm.isDisabled === 1 ? 1 : $ruleForm.isDisabled === 0 ? 0 : null
         }
       },

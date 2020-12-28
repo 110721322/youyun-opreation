@@ -85,13 +85,12 @@
         })
       },
       onClickSearch($ruleForm) {
-        console.log($ruleForm)
         this.params = {
           agentNo: $ruleForm.agentNo ? $ruleForm.agentNo : null,
           agentName: $ruleForm.agentName ? $ruleForm.agentName : null,
           beginDate: $ruleForm.date && $ruleForm.date[1] ? $ruleForm.date[0] : null,
           expireDate: $ruleForm.date && $ruleForm.date[1] ? $ruleForm.date[1] : null,
-          status: $ruleForm.status ? $ruleForm.status : null,
+          blockStatus: $ruleForm.blockStatus ? $ruleForm.blockStatus : null,
           provinceCode: $ruleForm.area && $ruleForm.area[2] ? $ruleForm.area[0] : null,
           cityCode: $ruleForm.area && $ruleForm.area[2] ? $ruleForm.area[1] : null,
           areaCode: $ruleForm.area && $ruleForm.area[2] ? $ruleForm.area[2] : null,
