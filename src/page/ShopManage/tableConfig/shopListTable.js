@@ -72,13 +72,13 @@ export const TABLE_CONFIG = {
           [4, {className: 's-status-fail', statusDesc: '通过'}],
           [5, {className: 's-status-success', statusDesc: '微信认证中'}],
           [6, {className: 's-status-fail', statusDesc: '微信认证拒绝'}],
-          [7, {className: 's-status-fail', statusDesc: '微信认证成功'}]
+          [7, {className: 's-status-fail', statusDesc: '微信认证成功'}],
           ['default', {className: 's-status-pending', statusDesc: '--'}]
         ])
         const action = actions.get(params.row.status) || actions.get('default')
         return (
           <span class={['flex-align-center', 'g-status-icon', 's-status-radius', action.className]}>{ action.statusDesc }</span>
-      )
+        )
       }
     }
   ],
