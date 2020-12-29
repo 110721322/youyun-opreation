@@ -297,6 +297,7 @@
             const ruleForm = this.$refs['formInfo'].ruleForm
             switch(type) {
               case "addTalk":
+                ruleForm.agentNo = this.agentNo
                 api.addTalk(ruleForm).then(res => {
                   this.submitSuccess(res.status, type)
                 })
