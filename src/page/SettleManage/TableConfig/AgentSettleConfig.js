@@ -25,19 +25,17 @@ export const AGENT_SETTLE_CONFIG = {
       label: '处理状态',
       prop: 'settleStatus',
       render: (h, params) => {
-        if (params.row.settleStatus === 0) {
-          return [h('span', {
-            'class': "dot " + "reject"
-          }), '驳回']
-        } else if (params.row.settleStatus === 1) {
-          return [h('span', {
-            'class': "dot " + "opened"
-          }), '待处理']
-        } else if (params.row.settleStatus === 2) {
-          return [h('span', {
-            'class': "dot " + "success"
-          }), '成功']
-        }
+        const actions = new Map([
+          ['1', {className: 's-status-success', statusDesc: '已结算'}],
+          ['2', {className: 's-status-pending', statusDesc: '结算中'}],
+          ['3', {className: 's-status-primary', statusDesc: '未结算'}],
+          ['4', {className: 's-status-fail', statusDesc: '驳回'}],
+          ['default', {className: 's-status-pending', statusDesc: '等待'}],
+        ])
+        const action = actions.get(params.row.settleStatus) || actions.get('default')
+        return (
+          <span class={['flex-align-center', 'g-status-icon', 's-status-radius', action.className]}>{ action.statusDesc }</span>
+      )
       }
     },
     {

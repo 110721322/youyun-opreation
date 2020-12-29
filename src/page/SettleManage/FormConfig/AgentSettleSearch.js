@@ -15,11 +15,10 @@ export const SEARCH_FORM_CONFIG = {
       span: 11
     },
     {
-      type: 11,
+      type: 9,
       label: '结算时间',
       key: 'date',
-      datatype: 'daterange',
-      format: 'yyyy-MM-dd',
+      isHiddenBtn: true,
       labelWidth: '128px',
       span: 11
     },
@@ -30,16 +29,20 @@ export const SEARCH_FORM_CONFIG = {
       labelWidth: '128px',
       options: [
         {
-          label: '待处理',
-          value: 0
-        },
-        {
-          label: '已处理',
+          label: '已结算',
           value: 1
         },
         {
-          label: '驳回',
+          label: '结算中',
           value: 2
+        },
+        {
+          label: '未结算',
+          value: 3
+        },
+        {
+          label: '驳回',
+          value: 4
         }
       ],
       span: 11

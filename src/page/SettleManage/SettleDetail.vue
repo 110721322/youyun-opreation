@@ -42,14 +42,14 @@
       <div class="m-remark">
         <el-form ref="form" :model="form" label-width="80px">
           <el-form-item label="审核备注:">
-            <el-input v-model="form.remark" placeholder="请输入"></el-input>
+            <el-input v-model="form.remark" placeholder="请输入" type="textarea" maxLength="50"></el-input>
           </el-form-item>
         </el-form>
       </div>
       <div class="flex-align-center flex-justify-center foot-btn">
         <div>
-          <el-button type="primary" size="normal">通过</el-button>
-          <el-button size="normal">驳回</el-button>
+          <el-button type="primary" size="normal" @click="clickPass">通过</el-button>
+          <el-button size="normal" @click="clickReject">驳回</el-button>
         </div>
       </div>
     </div>
@@ -89,6 +89,60 @@
             this.ruleForm = res.data
           }
         })
+      },
+      clickPass() {
+        this.$confirm('是否驳回结算申请？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          api.financeSuccess({
+            id: this.id,
+            remark: this.remark
+          }).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                type: 'success',
+                message: '已通过'
+              });
+              this.$router.replace({
+                name: 'AgentSettleManage'
+              })
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消操作'
+          });
+        });
+      },
+      clickReject() {
+        this.$confirm('是否驳回结算申请？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          api.financeReject({
+            id: this.id,
+            remark: this.remark
+          }).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                type: 'success',
+                message: '已驳回!'
+              });
+              this.$router.replace({
+                name: 'AgentSettleManage'
+              })
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消操作'
+          });
+        });
       }
     }
   }
