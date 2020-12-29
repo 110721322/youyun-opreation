@@ -8,8 +8,8 @@
     "release": "vue-cli-service serve --mode release",
     "prod": "vue-cli-service serve --mode production",
     "build": "vue-cli-service build --mode production",
-    "build-test": "vue-cli-service build --mode test",
-    "build-dev": "vue-cli-service build --mode dev",
+    "build-test": "vue-cli-service build --mode development",
+    "build-dev": "vue-cli-service build --mode development",
     "dll:dev": "webpack --progress --config webpack/webpack.dll.conf.js --mode development",
     "dll": "webpack --progress --config webpack/webpack.dll.conf.js --mode production"
   },
