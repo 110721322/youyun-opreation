@@ -39,12 +39,16 @@ export const SEARCH_CONFIG = {
     key: 'agentNo',
     type: 1,
     span: 12,
-    options: [
-      { label: '北京', value: 'beijing' },
-      { label: '上海', value: 'shanghai' },
-      { label: '深圳', value: 'shenzhen' },
-      { label: '香港', value: 'hongkong' }
-    ]
+    emitEventBus: "handleSelectSearch",
+    urlOptions: {
+      url: '',
+      params: {
+
+      },
+      searchKey: '',
+      keyName: '',
+      valueName: ''
+    }
   },
   {
     label: '所属商户',

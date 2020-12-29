@@ -46,7 +46,11 @@
       title: {
         type: String,
         default: '修改密码'
-      }
+      },
+      phone: {
+        type: String,
+        default: ''
+      },
     },
     data() {
       return {
@@ -56,10 +60,14 @@
         forgetPsdDialoger: false
       }
     },
+    mounted() {
+      console.log(this.phone)
+    },
     methods: {
       clickSendPsdCode() {
         const that = this;
         const ruleForm = this.$refs.forgetPsdForm.ruleForm;
+        ruleForm.phone = this.phone
         if (!ruleForm.phone) {
           this.$message("请输入手机号");
           return;

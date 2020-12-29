@@ -5,7 +5,7 @@ export const FORM_CONFIG = [
   },
   {
     label: "账户分组",
-    key: "phone"
+    key: "roleName"
   },
   {
     label: "账户昵称",

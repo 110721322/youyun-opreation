@@ -18,6 +18,7 @@
     <update-psd
         ref="updatePsd"
         title="修改密码"
+        :phone="ruleForm.phone"
     ></update-psd>
   </div>
 </template>
