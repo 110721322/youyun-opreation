@@ -206,7 +206,6 @@
         api.getAgentDetail({
           agentNo: this.agentNo
         }).then(res => {
-          console.log(res.data)
           if (res.status === 0) {
             this.ruleForm = res.data
           }
@@ -283,7 +282,7 @@
       clickAddTalk() {
         this.drawer = true
         this.drawerType = 'addTalk'
-        this.title = '添加沟通计划'
+        this.title = '添加沟通记录'
         this.fromConfigData = FORM_CONFIG.talkData.formData
       },
       
@@ -375,13 +374,6 @@
         const dateData = this.$refs['dateInfo'].ruleForm
         let infoData = {}
         Object.assign(infoData, serviceData, rateData, settleData, dateData)
-        api.getByUnionCode({
-          unionCode: settleData.unionCode
-        }).then(res => {
-          if (res.status === 0) {
-            infoData.bankName = res.data.bankName
-          }
-        })
         infoData.agentNo = this.agentNo
         api.updateAgentRate(infoData).then(res => {
           if (res.status === 0) {

@@ -129,14 +129,18 @@ export const FORM_CONFIG = {
         type: 1,
         label: '开户行',
         labelWidth: '120px',
-        key: 'unionCode',
+        key: 'bankContactLine',
         isSearch: true,
         urlOptions: {
           url: api.getBank,
           keyName: 'unionCode',
           valueName: 'bankName',
           method: 'get',
-          searchKey: 'bankName'
+          searchKey: 'bankName',
+          params: {}
+        },
+        callback: (item, data) => {
+          item.bankBranchName = data.bankName
         },
         rules: [
           { required: true, message: '请选择开户行', trigger: 'change' }

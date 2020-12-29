@@ -102,12 +102,27 @@ export const ADD_AGENT = {
   settleData: {
     formData: [
       {
-        type: 0,
+        type: 1,
         label: '开户行',
         labelWidth: '120px',
-        key: 'bankBranchName',
+        key: 'bankContactLine',
+        isSearch: true,
+        urlOptions: {
+          searchKey: 'bankName',
+          url: api.getBank,
+          keyName: 'unionCode',
+          valueName: 'bankName',
+          methods: 'get',
+          params: {
+            currentPage: 1,
+            pageSize: 20
+          }
+        },
+        callback: (item, data) => {
+          item.bankBranchName = data.bankName
+        },
         rules: [
-          { required: true, message: '请选择开户行', trigger: 'blur' }
+          { required: true, message: '请选择开户行', trigger: 'change' }
         ]
       },
       {
