@@ -38,7 +38,7 @@ export const DETAILCONFIG = {
     {
       label: "费率信息",
       key: "rate",
-      filedType: 'render',
+      fieldType: 'render',
       render: (h, ruleForm) => {
         return (
           <p class="f-fc-606266">

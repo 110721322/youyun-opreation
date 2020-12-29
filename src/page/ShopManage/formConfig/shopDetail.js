@@ -55,7 +55,7 @@ export const FORM_CONFIG = {
     {
       label: "费率信息",
       key: "rate",
-      filedType: 'render',
+      fieldType: 'render',
       render: (h, ruleForm) => {
         return (
           <p class="f-fc-606266">
@@ -202,7 +202,7 @@ export const FORM_CONFIG = {
     {
       label: "支付宝",
       key: "alipayRate",
-      filedType: 'render',
+      fieldType: 'render',
       render: (h, ruleForm) => {
         return (<span>{ utils.AccMul(ruleForm.alipayRate) }%</span>)
       }
@@ -210,7 +210,7 @@ export const FORM_CONFIG = {
     {
       label: "微信",
       key: "wechatPayRate",
-      filedType: 'render',
+      fieldType: 'render',
       render: (h, ruleForm) => {
         return (<span>{ utils.AccMul(ruleForm.wechatPayRate) }%</span>)
       }
