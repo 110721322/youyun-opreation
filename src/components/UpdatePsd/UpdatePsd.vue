@@ -61,13 +61,11 @@
       }
     },
     mounted() {
-      console.log(this.phone)
     },
     methods: {
       clickSendPsdCode() {
         const that = this;
         const ruleForm = this.$refs.forgetPsdForm.ruleForm;
-        ruleForm.phone = this.phone
         if (!ruleForm.phone) {
           this.$message("请输入手机号");
           return;
@@ -100,6 +98,7 @@
       },
       showUpdatePsd() {
         this.formConfigPsd = this.$g.utils.deepClone(FORM_CONFIG);
+        this.formConfigPsd[1].initVal = this.phone
         this.forgetPsdDialoger = true
       },
       closeForget() {

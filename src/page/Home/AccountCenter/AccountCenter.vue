@@ -18,7 +18,7 @@
     <update-psd
         ref="updatePsd"
         title="修改密码"
-        :phone="ruleForm.phone"
+        :phone="phone"
     ></update-psd>
   </div>
 </template>
@@ -35,7 +35,9 @@
     data() {
       return {
         accountInfoConfig: FORM_CONFIG,
-        ruleForm: {}
+        ruleForm: {},
+        showModify: false,
+        phone: ''
       }
     },
     created() {
@@ -46,6 +48,7 @@
         api.getLoginUser({}).then(res => {
           if (res.status === 0) {
             this.ruleForm = res.data
+            this.phone = this.ruleForm.phone
           }
         })
       },
