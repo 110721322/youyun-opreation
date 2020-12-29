@@ -103,7 +103,7 @@
           cityCode: infoData.area[1],
           provinceCode: infoData.area[0],
           alipayRate: utils.AccDiv(infoData.alipayRate, 100),
-          wechatRate: utils.AccDiv(infoData.wechatRate, 100),
+          wechatPayRate : utils.AccDiv(infoData.wechatPayRate, 100),
           chargeFeePercent: utils.AccDiv(infoData.chargeFeePercent, 100),
           bankBranchName: infoData.bankBranchName,
           bankCardNo: infoData.bankCardNo,

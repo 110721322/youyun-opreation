@@ -81,7 +81,7 @@ export const ADD_AGENT = {
         labelWidth: '120px',
         isShowSlot: true,
         showSlotName: '%',
-        key: 'wechatRate',
+        key: 'wechatPayRate',
         rules: [
           { required: true, message: '请输入微信费率', trigger: 'blur' }
         ]

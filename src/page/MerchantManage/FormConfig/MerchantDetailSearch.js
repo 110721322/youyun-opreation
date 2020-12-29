@@ -61,7 +61,7 @@ export const SEARCH_FORM_CONFIG = {
       span: 11
     },
     {
-      type: 1,
+      type: 0,
       label: '服务电话',
       key: 'phone',
       labelWidth: '128px',
