@@ -122,7 +122,7 @@ export const ADD_AGENT = {
           item.bankBranchName = data.bankName
         },
         rules: [
-          { required: true, message: '请选择开户行', trigger: 'change' }
+          { required: true, message: '请选择开户行', trigger: 'blur' }
         ]
       },
       {
