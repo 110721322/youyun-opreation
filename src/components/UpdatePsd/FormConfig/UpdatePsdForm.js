@@ -1,3 +1,5 @@
+import {validPhone} from "youyun-vue-components/global/kit/validate";
+
 export const FORM_CONFIG = [
   {
     type: 0,
@@ -16,10 +18,18 @@ export const FORM_CONFIG = [
     label: '登录手机号',
     key: 'phone',
     initVal: '',
-    isDisabled: true,
     style: 'width: 272px;',
+    maxlength: 11,
     rules: [
-      { required: true, message: '请输入登录手机号', trigger: 'blur' }
+      { required: true, message: '请输入登录手机号', trigger: 'blur' },
+      {
+        validator: (rules, value, callback) => {
+          if (!validPhone(value)) {
+            callback(new Error('请输入规范手机号'))
+          }
+          callback()
+        }
+      }
     ],
     span: 24
   },
