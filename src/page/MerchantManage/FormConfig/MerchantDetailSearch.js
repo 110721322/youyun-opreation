@@ -46,15 +46,15 @@ export const SEARCH_FORM_CONFIG = {
     {
       type: 1,
       label: '门店状态',
-      key: 'disabled',
+      key: 'isDisabled',
       labelWidth: '128px',
       options: [
         {
-          label: '禁用',
+          label: '启用',
           value: 0
         },
         {
-          label: '启用',
+          label: '禁用',
           value: 1
         }
       ],
