@@ -21,11 +21,11 @@ export const SEARCH_FORM_CONFIG = {
       labelWidth: '128px',
       options: [
         {
-          label: '全部',
-          value: ''
+          label: '预审核',
+          value: 0
         },
         {
-          label: '平台审核中',
+          label: '平台驳回',
           value: 1
         },
         {
@@ -33,12 +33,24 @@ export const SEARCH_FORM_CONFIG = {
           value: 2
         },
         {
-          label: '已开通',
+          label: '通道驳回',
           value: 3
         },
         {
-          label: '已驳回',
+          label: '通道通过',
           value: 4
+        },
+        {
+          label: '微信实名认证中',
+          value: 5
+        },
+        {
+          label: '微信认证拒绝',
+          value: 6
+        },
+        {
+          label: '微信认证成功',
+          value: 7
         }
       ],
       span: 11

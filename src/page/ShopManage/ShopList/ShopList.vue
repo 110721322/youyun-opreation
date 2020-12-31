@@ -54,7 +54,7 @@ export default {
       }
     },
     onClickDetail(row) {
-      this.$router.push('/shopManage/shopList/shopDetail?shopNo=' + row.shopNo)
+      this.$router.push('/shopManage/shopList/shopDetail?shopNo=' + row.shopNo).catch(() => {})
     }
   }
 };
