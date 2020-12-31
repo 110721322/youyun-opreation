@@ -102,6 +102,11 @@
               if (item.key === "areaData") {
                 item.initVal = [this.shopDetail.provinceCode, this.shopDetail.cityCode, this.shopDetail.areaCode]
               }
+              if (item.key === "shopImg") {
+                item.children.forEach((imgItem, imgIndex) => {
+                  imgItem.initVal = this.shopDetail[imgItem.key]
+                })
+              }
             });
             this.verityInfoFormData.forEach((item,index) => {
               item.initVal = this.shopDetail[item.key]
@@ -111,9 +116,19 @@
               if (item.key === "idCardDate") {
                 item.initVal = [this.shopDetail.idCardBeginDate, this.shopDetail.idCardExpireDate]
               }
+              if (item.key === "authImg") {
+                item.children.forEach((imgItem, imgIndex) => {
+                  imgItem.initVal = this.shopDetail[imgItem.key]
+                })
+              }
             });
             this.settleInfoFormData.forEach((item,index) => {
               item.initVal = this.shopDetail[item.key]
+              if (item.key === "settleImg") {
+                item.children.forEach((imgItem, imgIndex) => {
+                  imgItem.initVal = this.shopDetail[imgItem.key]
+                })
+              }
             });
             this.rateInfoFormData.forEach((item,index) => {
               item.initVal = this.shopDetail[item.key]

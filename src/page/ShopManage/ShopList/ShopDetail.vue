@@ -61,12 +61,6 @@
             :filed-config-list="verityDetailConfig"
             module-title="认证信息"
             >
-              <template slot="shopLicenseDate">
-                <div class="typeTxt">{{ ruleForm.shopLicenseBegDate + '至' + ruleForm.shopLicenseEndDate }}</div>
-              </template>
-              <template slot="idCardDate">
-                <div class="typeTxt">{{ ruleForm.idCardBeginDate + '至' + ruleForm.idCardExpireDate }}</div>
-              </template>
           </yun-detail-mode>
         </div>
         <div class="detail-mode-box">
@@ -185,20 +179,6 @@
                 break;
               default:
                 this.ruleForm.statusTxt = '--'
-            }
-            if (this.ruleForm.shopType === 'enterprise') {
-              this.ruleForm.shopTypeTxt = '企业'
-            } else if (this.ruleForm.shopType === 'individual') {
-              this.ruleForm.shopTypeTxt = '个体工商'
-            } else if (this.ruleForm.shopType === 'personal') {
-              this.ruleForm.shopTypeTxt = '个人'
-            }
-            if (this.ruleForm.settleType === "0") {
-              this.ruleForm.settleTypeTxt = '对公法人'
-            } else if (this.ruleForm.settleType === "1") {
-              this.ruleForm.settleTypeTxt = '对私法人'
-            } else if (this.ruleForm.settleType === "2") {
-              this.ruleForm.settleTypeTxt = '对私非法人'
             }
           }
         })

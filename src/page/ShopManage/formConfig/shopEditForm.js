@@ -1,4 +1,5 @@
 import areaData from "youyun-vue-components/assets/data/areaData.ws";
+import api from '@/api/api_agentManage';
 import commonApi from "@/api/api_common"
 import { checkPersonId, validPhone } from "youyun-vue-components/global/kit/validate";
 
@@ -359,14 +360,27 @@ export const FORM_CONFIG = {
     },
     {
       type: 1,
-      label: '开户支行名称',
-      key: 'bankBranchName',
-      labelWidth: "120px",
-      placeholder: '请选择支行名称',
+      label: '开户行',
+      labelWidth: '140px',
+      key: 'bankContactLine',
+      isSearch: true,
+      urlOptions: {
+        searchKey: 'bankName',
+        url: api.getBank,
+        keyName: 'unionCode',
+        valueName: 'bankName',
+        methods: 'get',
+        params: {
+          currentPage: 1,
+          pageSize: 20
+        }
+      },
+      callback: (item, data) => {
+        item.bankBranchName = data.bankName
+      },
       rules: [
-        { required: true, message: '请选择支行名称', trigger: 'change' }
-      ],
-      options: []
+        { required: true, message: '请选择开户行', trigger: 'blur' }
+      ]
     },
     {
       type: 0,
@@ -392,14 +406,7 @@ export const FORM_CONFIG = {
       span: 24,
       label: '图片信息',
       key: 'settleImg',
-      labelWidth: '120px',
-      isShow: (params) => {
-        if (params.settleType === 0 || params.settleType === 1) {
-          return true
-        } else {
-          return false
-        }
-      },
+      labelWidth: '140px',
       children: [
         {
           label: '开户许可证',
@@ -411,7 +418,84 @@ export const FORM_CONFIG = {
           ],
           uploadService: commonApi.queryOssImgToken
         },
-      ]
+      ],
+      isShow: (params) => {
+        return params.settleType === '0'
+      }
+    },
+    {
+      type: 14,
+      span: 24,
+      label: '图片信息',
+      key: 'settleImg',
+      labelWidth: '140px',
+      children: [
+        {
+          label: '银行卡正面',
+          key: 'bankCardImg',
+          type: 6,
+          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          rules: [
+            { required: true, message: '请上传银行卡正面', trigger: 'change' }
+          ],
+          uploadService: commonApi.queryOssImgToken
+        },
+      ],
+      isShow: (params) => {
+        return params.settleType === '1'
+      },
+    },
+    {
+      type: 14,
+      span: 24,
+      label: '图片信息',
+      key: 'settleImg',
+      labelWidth: '140px',
+      children: [
+        {
+          label: '结算人身份证正面',
+          key: 'nonLawIdCardPortraitImg',
+          type: 6,
+          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          rules: [
+            { required: true, message: '请上传结算人身份证正面', trigger: 'change' }
+          ],
+          uploadService: commonApi.queryOssImgToken
+        },
+        {
+          label: '结算人身份证反面',
+          key: 'nonLawIdCardEmblemImg',
+          type: 6,
+          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          rules: [
+            { required: true, message: '请上传结算人身份证反面', trigger: 'change' }
+          ],
+          uploadService: commonApi.queryOssImgToken
+        },
+        {
+          label: '结算银行卡正面',
+          key: 'bankCardImg',
+          type: 6,
+          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          rules: [
+            { required: true, message: '请上传结算银行卡正面', trigger: 'change' }
+          ],
+          uploadService: commonApi.queryOssImgToken
+        },
+        {
+          label: '非法人结算授权书',
+          key: 'nonLawSettleAuthImg',
+          type: 6,
+          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          rules: [
+            { required: true, message: '请上传非法人结算授权书', trigger: 'change' }
+          ],
+          uploadService: commonApi.queryOssImgToken
+        }
+      ],
+      isShow: (params) => {
+        return params.settleType === '2'
+      },
     }
   ],
   rateInfoConfigData: [

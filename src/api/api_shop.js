@@ -5,7 +5,7 @@ export default {
   // 门店详情
   shopQueryDetail: (params) => API.GET('/operation/v1/shop/queryDetail', params),
   // 门店启用禁用
-  shopUpdate: (params) => API.POST('/operation/v1/shop/update', params),
+  shopUpdate: (params) => API.POST('/operation/v1/shop/update', params, {needFormData: true}),
   // 门店编辑
   shopEditDetail: (params) => API.POST('/operation/v1/shop/editDetail', params, {needFormData: true}),
   // 门店审核-通过
