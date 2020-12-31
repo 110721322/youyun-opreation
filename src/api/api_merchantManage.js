@@ -14,7 +14,9 @@ const api = {
   // 重置密码
   resetPassword: (params) => API.POST('/operation/v1/merchantNew/resetPassword', params),
   // 商户详情下的门店列表
-  shopByPage: (params) => API.GET('/operation/v1/merchantNew/shopByPage', params)
+  shopByPage: (params) => API.GET('/operation/v1/merchantNew/shopByPage', params),
+  // 按条件查询商户列表
+  selectByCondition: (params) => API.GET('/operation/v1/merchantNew/selectByCondition', params)
 };
 
 export default api

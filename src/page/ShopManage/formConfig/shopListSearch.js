@@ -1,4 +1,5 @@
 import api from '@/api/api_agentManage'
+import api_merchantManage from '@/api/api_merchantManage'
 export const SEARCH_CONFIG = {
   formData: [
   {
@@ -50,19 +51,25 @@ export const SEARCH_CONFIG = {
         pageSize: 20
       }
     },
-    span: 12
+    span: 12,
+    emitEventBus: "handleAgentChange",
   },
   {
     label: '所属商户',
     key: 'merchantNo',
+    eventName: "handleAgentChange",
     type: 1,
     span: 12,
-    options: [
-      { label: '北京', value: 'beijing' },
-      { label: '上海', value: 'shanghai' },
-      { label: '深圳', value: 'shenzhen' },
-      { label: '香港', value: 'hongkong' }
-    ]
+    isSearch: true,
+    urlOptions: {
+      url: api_merchantManage.selectByCondition,
+      params: {
+        agentNo: ''
+      },
+      searchKey: "merchantName",
+      keyName: "merchantNo",
+      valueName: "merchantName"
+    }
   },
   {
     label: '门店状态',

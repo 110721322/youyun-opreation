@@ -107,6 +107,9 @@
                   imgItem.initVal = this.shopDetail[imgItem.key]
                 })
               }
+              if (item.key === "mccCodeData") {
+                item.initVal = [this.shopDetail.grandpaCode, this.shopDetail.fatherCode, this.shopDetail.mccCode]
+              }
             });
             this.verityInfoFormData.forEach((item,index) => {
               item.initVal = this.shopDetail[item.key]
@@ -168,6 +171,7 @@
           provinceCode: shopInfoForm.areaData[0],
           cityCode: shopInfoForm.areaData[1],
           areaCode: shopInfoForm.areaData[2],
+          mccCode: shopInfoForm.mccCodeData[2],
           ...verityInfoForm,
           shopLicenseBegDate: verityInfoForm.shopLicenseBegDate[0],
           shopLicenseEndDate: verityInfoForm.shopLicenseBegDate[1],

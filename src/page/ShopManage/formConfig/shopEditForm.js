@@ -48,7 +48,7 @@ export const FORM_CONFIG = {
     {
       type: 1,
       label: '门店类目(MCC)',
-      key: 'mccCode',
+      key: 'mccCodeData',
       labelWidth: "120px",
       placeholder: '请选择门店类目(MCC)',
       rules: [
@@ -138,7 +138,7 @@ export const FORM_CONFIG = {
       key: 'shopLicenseDate',
       checkedType: 'long', //长期有效选择
       rules: [
-        { required: true, message: '请选择营业执照有效期', trigger: 'change' }
+        { type: 'date', required: true, message: '请选择营业执照有效期', trigger: 'change' }
       ],
       isShow: (params) => {
         if (params.shopType === 'personal') {
@@ -191,7 +191,7 @@ export const FORM_CONFIG = {
       span: 24,
       label: '图片信息',
       key: 'authImg',
-      labelWidth: '140px',
+      labelWidth: '120px',
       children: [
         {
           label: '身份证正面',
@@ -263,7 +263,7 @@ export const FORM_CONFIG = {
       span: 24,
       label: '图片信息',
       key: 'authImg',
-      labelWidth: '140px',
+      labelWidth: '120px',
       children: [
         {
           label: '身份证正面',
@@ -361,7 +361,7 @@ export const FORM_CONFIG = {
     {
       type: 1,
       label: '开户行',
-      labelWidth: '140px',
+      labelWidth: '120px',
       key: 'bankContactLine',
       isSearch: true,
       urlOptions: {
@@ -406,7 +406,7 @@ export const FORM_CONFIG = {
       span: 24,
       label: '图片信息',
       key: 'settleImg',
-      labelWidth: '140px',
+      labelWidth: '120px',
       children: [
         {
           label: '开户许可证',
@@ -428,7 +428,7 @@ export const FORM_CONFIG = {
       span: 24,
       label: '图片信息',
       key: 'settleImg',
-      labelWidth: '140px',
+      labelWidth: '120px',
       children: [
         {
           label: '银行卡正面',
@@ -450,7 +450,7 @@ export const FORM_CONFIG = {
       span: 24,
       label: '图片信息',
       key: 'settleImg',
-      labelWidth: '140px',
+      labelWidth: '120px',
       children: [
         {
           label: '结算人身份证正面',

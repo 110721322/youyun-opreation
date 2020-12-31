@@ -50,8 +50,15 @@ export default {
   created() {
   },
   mounted() {
+    this.$EventBus.$on('handleAgentChange', this.handleAgentChange)
+  },
+  destroyed() { // 销毁EventBus事件
+    this.$EventBus.$off('handleAgentChange', this.handleAgentChange)
   },
   methods: {
+    handleAgentChange($val) {
+      this.searchConfig.formData[6].urlOptions.params["agentNo"] = $val.agentNo;
+    },
     onClickSearch($ruleForm) {
       this.params = {
         orderNo: $ruleForm.orderNo,
