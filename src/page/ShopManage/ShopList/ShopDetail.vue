@@ -50,9 +50,6 @@
             :filed-config-list="shopInfoDetailConfig"
             module-title="门店信息"
             >
-              <template slot="area">
-                <div class="areaTxt">{{( ruleForm.provinceName||'--') + '省' + (ruleForm.cityName||'--') + '市' + (ruleForm.areaName||'--') + '区' }}</div>
-              </template>
           </yun-detail-mode>
         </div>
         <div class="detail-mode-box">
@@ -119,6 +116,7 @@
 
 <script>
   import { FORM_CONFIG } from "../formConfig/shopDetail";
+  import areaData from "youyun-vue-components/assets/data/areaData.ws"
   import api from "@/api/api_shop";
   export default {
     data() {
@@ -151,6 +149,15 @@
         }
         api.shopQueryDetail(params).then(res => {
           if(res.status === 0) {
+            const areasNetedList = this.$g.utils.getNestedArr(areaData, 'children')
+            const areas = [res.data.provinceCode, res.data.cityCode, res.data.areaCode]
+              .filter(item => !!item)
+              .map(item => {
+                return areasNetedList.find(area => item === area.value)
+              })
+              .map(item => item.label)
+            const areasStr = areas.join('')
+            res.data.areasStr = areasStr
             this.ruleForm = res.data
             switch(this.ruleForm.status) {
               case 0:

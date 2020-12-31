@@ -90,9 +90,7 @@ export const FORM_CONFIG = {
     },
     {
       label: "门店区域",
-      key: "area",
-      fieldType: 'slot',
-      slot: "area"
+      key: "areasStr"
     },
     {
       label: "门店详细地址",

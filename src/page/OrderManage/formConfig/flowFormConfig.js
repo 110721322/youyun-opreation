@@ -1,5 +1,6 @@
 import api from '@/api/api_agentManage'
 import api_merchantManage from '@/api/api_merchantManage'
+import api_shop from '@/api/api_shop'
 export const SEARCH_CONFIG = {
   formData: [{
     type: 0,
@@ -12,12 +13,19 @@ export const SEARCH_CONFIG = {
     label: "支付门店",
     key: "shopNo",
     span: 12,
-    options: [
-    ]
+    urlOptions: {
+      url: api_shop.selectShopByConditon,
+      params: {
+      },
+      searchKey: "shopName",
+      keyName: "shopNo",
+      valueName: "shopName"
+    }
   },
   {
     label: '交易时间',
     key: 'date',
+    datatype: 'datetimerange',
     type: 9,
     span: 24
   },

@@ -63,8 +63,8 @@ export default {
       this.params = {
         orderNo: $ruleForm.orderNo,
         shopNo: $ruleForm.shopNo,
-        queryBeginPayTime: $ruleForm.date[0],
-        queryEndPayTime: $ruleForm.date[1],
+        queryBeginPayTime: $ruleForm.date?$ruleForm.date[0]:'',
+        queryEndPayTime: $ruleForm.date?$ruleForm.date[1]:'',
         tradeType: $ruleForm.tradeType,
         payWay: $ruleForm.payWay,
         agentNo: $ruleForm.agentNo,

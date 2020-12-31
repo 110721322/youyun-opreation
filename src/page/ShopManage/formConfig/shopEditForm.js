@@ -46,7 +46,7 @@ export const FORM_CONFIG = {
       ]
     },
     {
-      type: 1,
+      type: 8,
       label: '门店类目(MCC)',
       key: 'mccCodeData',
       labelWidth: "120px",

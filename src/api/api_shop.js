@@ -15,5 +15,7 @@ export default {
   // 查询门店类目
   queryAllCategory: () => API.GET('/agent/v1/shop/queryAllCategory'),
   // 查询服务商下的所有商户
-  selectAllMerchant: () => API.GET('/agent/v1/merchantNew/selectAllMerchant')
+  selectAllMerchant: () => API.GET('/agent/v1/merchantNew/selectAllMerchant'),
+  // 根据条件查询门店列表
+  selectShopByConditon: () => API.GET('/operation/v1/shop/selectShopByConditon')
 }
