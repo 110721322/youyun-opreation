@@ -78,6 +78,10 @@ module.exports = {
         '/operation': {
           target: process.env.OPERATION_URL,
           changeOrigin: true
+        },
+        '/agent': {
+          target: process.env.AGENT_URL,
+          changeOrigin: true
         }
       }
     },
