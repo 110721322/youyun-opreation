@@ -26,7 +26,7 @@ const api = {
   // 详情-沟通记录分页查询
   queryByPage: (params) => API.GET('/operation/v1/talkLists/queryByPage', params),
   // 详情-新增服务商沟通记录
-  addTalk: (params) => API.GET('/operation/v1/talkLists/add/agent', params),
+  addTalk: (params) => API.POST('/operation/v1/talkLists/add/agent', params, { needFormData: true }),
   // 详情-查询沟通主题列表
   getThemeList: () => API.GET('/operation/v1/talkLists/getThemeList'),
   // 新增服务商

@@ -41,6 +41,7 @@
 
 <script>
   import api from "@/api/api_agentManage.js";
+  import utils from "youyun-vue-components/global/kit/utils.js"
   import { ADD_AGENT } from "./FormConfig/AddAgent";
 
   export default {
@@ -101,9 +102,9 @@
           areaCode: infoData.area[2],
           cityCode: infoData.area[1],
           provinceCode: infoData.area[0],
-          alipayRate: infoData.alipayRate,
-          wechatRate: infoData.wechatRate,
-          chargeFeePercent: infoData.chargeFeePercent,
+          alipayRate: utils.AccDiv(infoData.alipayRate, 100),
+          wechatPayRate : utils.AccDiv(infoData.wechatPayRate, 100),
+          chargeFeePercent: utils.AccDiv(infoData.chargeFeePercent, 100),
           bankBranchName: infoData.bankBranchName,
           bankCardNo: infoData.bankCardNo,
           bankAccountHolder: infoData.bankAccountHolder,

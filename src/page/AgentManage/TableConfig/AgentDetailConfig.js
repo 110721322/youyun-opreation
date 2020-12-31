@@ -38,15 +38,15 @@ export const DETAILCONFIG = {
     {
       label: "费率信息",
       key: "rate",
-      filedType: 'render',
+      fieldType: 'render',
       render: (h, ruleForm) => {
         return (
           <p class="f-fc-606266">
-          <i class="iconfont iconzhifubao f-fc-ali"></i>
-        { utils.AccMul(ruleForm.alipayRate) }%、
-      <i class="iconfont iconweixin f-fc-wx"></i>
-        { utils.AccMul(ruleForm.wechatPayRate) }%
-      </p>
+            <i class="iconfont iconzhifubao f-fc-ali"></i>
+            { utils.AccMul(ruleForm.alipayRate) }%、
+            <i class="iconfont iconweixin f-fc-wx"></i>
+            { utils.AccMul(ruleForm.wechatPayRate) }%
+          </p>
       )
       }
     },

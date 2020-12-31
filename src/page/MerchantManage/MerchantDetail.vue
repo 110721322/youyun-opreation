@@ -127,9 +127,10 @@
       },
       onClickSearch($ruleForm) {
         this.params = {
+          merchantNo: this.merchantNo,
           shopNo: $ruleForm.shopNo ? $ruleForm.shopNo : null,
           shopName: $ruleForm.shopName ? $ruleForm.shopName : null,
-          disabled: $ruleForm.disabled ? $ruleForm.disabled : null,
+          isDisabled: $ruleForm.isDisabled,
           status: $ruleForm.status ? $ruleForm.status : null,
           phone: $ruleForm.phone ? $ruleForm.phone : null
         }

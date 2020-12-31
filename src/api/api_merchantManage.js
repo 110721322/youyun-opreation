@@ -8,9 +8,9 @@ const api = {
   // 发送商户信息修改验证码
   sendMerchantUpdateCode: (params) => API.GET('/operation/v1/merchantNew/sendMerchantUpdateCode', params),
   // 修改商户名称和手机号
-  updateMerchantInfo: (params) => API.POST('/operation/v1/merchantNew/updateMerchantInfo', params),
+  updateMerchantInfo: (params) => API.POST('/operation/v1/merchantNew/updateMerchantInfo', params, {needFormData: true}),
   // 商户启用/禁用
-  disabeldMerchant: (params) => API.POST('/operation/v1/merchantNew/disabeldMerchant', params),
+  disabeldMerchant: (params) => API.POST('/operation/v1/merchantNew/disabeldMerchant', params, {needFormData: true}),
   // 重置密码
   resetPassword: (params) => API.POST('/operation/v1/merchantNew/resetPassword', params),
   // 商户详情下的门店列表

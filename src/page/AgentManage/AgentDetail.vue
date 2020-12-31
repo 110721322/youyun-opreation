@@ -144,6 +144,7 @@
 
 <script>
   import api from "@/api/api_agentManage.js";
+  import utils from 'youyun-vue-components/global/kit/utils.js'
   import { AGENT_TALK_DATA } from "./TableConfig/AgentTalkConfig";
   import { DETAILCONFIG } from "./TableConfig/AgentDetailConfig";
   import { FORM_CONFIG } from "./FormConfig/AgentDetailConfig";
@@ -206,8 +207,10 @@
         api.getAgentDetail({
           agentNo: this.agentNo
         }).then(res => {
-          console.log(res.data)
           if (res.status === 0) {
+            res.data.alipayRate = utils.AccMul(res.data.alipayRate, 100)
+            res.data.wechatPayRate = utils.AccMul(res.data.wechatPayRate, 100)
+            res.data.chargeFeePercent = utils.AccMul(res.data.chargeFeePercent, 100)
             this.ruleForm = res.data
           }
         })
@@ -283,7 +286,7 @@
       clickAddTalk() {
         this.drawer = true
         this.drawerType = 'addTalk'
-        this.title = '添加沟通计划'
+        this.title = '添加沟通记录'
         this.fromConfigData = FORM_CONFIG.talkData.formData
       },
       
@@ -297,6 +300,7 @@
             const ruleForm = this.$refs['formInfo'].ruleForm
             switch(type) {
               case "addTalk":
+                ruleForm.agentNo = this.agentNo
                 api.addTalk(ruleForm).then(res => {
                   this.submitSuccess(res.status, type)
                 })
@@ -374,14 +378,10 @@
         const dateData = this.$refs['dateInfo'].ruleForm
         let infoData = {}
         Object.assign(infoData, serviceData, rateData, settleData, dateData)
-        api.getByUnionCode({
-          unionCode: settleData.unionCode
-        }).then(res => {
-          if (res.status === 0) {
-            infoData.bankName = res.data.bankName
-          }
-        })
         infoData.agentNo = this.agentNo
+        infoData.alipayRate = utils.AccDiv(infoData.alipayRate, 100)
+        infoData.wechatPayRate = utils.AccDiv(infoData.wechatPayRate, 100)
+        infoData.chargeFeePercent = utils.AccDiv(infoData.chargeFeePercent, 100)
         api.updateAgentRate(infoData).then(res => {
           if (res.status === 0) {
             this.$message({
