@@ -251,7 +251,7 @@
         })
       },
       clickEdit() {
-        this.$router.push('/shopManage/shopList/shopDetail/editShop?id=' + this.ruleForm.id + '&shopNo=' + this.ruleForm.shopNo)
+        this.$router.push('/shopManage/shopList/shopDetail/editShop?id=' + this.ruleForm.id + '&shopNo=' + this.ruleForm.shopNo).catch(() => {})
       },
       handleClose() {
         this.dialogVisible = false

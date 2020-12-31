@@ -168,7 +168,14 @@
         this.fromConfigData[0].initVal = this.ruleForm.merchantName
       },
       
-      onClickDetails(row) {},
+      onClickDetails(row) {
+        this.$router.push({
+          name: 'shopDetail',
+          query: {
+            shopNo: row.shopNo
+          }
+        }).catch(() => {})
+      },
       onClickGoMerchant(row) {},
       clickSubmit() {
         this.$refs['formInfo'].$children[0].validate((valid) => {
