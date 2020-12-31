@@ -51,7 +51,7 @@
             module-title="门店信息"
             >
               <template slot="area">
-                <div class="areaTxt">{{ ruleForm.provinceName + '省' + ruleForm.cityName + '市' + ruleForm.areaName + '区' }}</div>
+                <div class="areaTxt">{{( ruleForm.provinceName||'--') + '省' + (ruleForm.cityName||'--') + '市' + (ruleForm.areaName||'--') + '区' }}</div>
               </template>
           </yun-detail-mode>
         </div>

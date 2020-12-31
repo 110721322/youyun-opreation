@@ -29,8 +29,8 @@ export const SEARCH_CONFIG = {
       {label: "平台驳回", value: 1},
       {label: "通道审核中", value: 2},
       {label: "通道驳回", value: 3},
-      {label: "通过", value: 4},
-      {label: "微信认证中", value: 5},
+      {label: "通道通过", value: 4},
+      {label: "微信实名认证中", value: 5},
       {label: "微信认证拒绝", value: 6},
       {label: "微信认证成功", value: 7}
     ]

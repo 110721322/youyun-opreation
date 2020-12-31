@@ -4,17 +4,6 @@ export const FORM_CONFIG = {
     {
       label: "所属服务商",
       key: "agentName"
-      // formatter($ruleForm) {
-      //   if ($ruleForm["agentNo"] === "shop") {
-      //     return "门店"
-      //   } else if ($ruleForm["agentNo"] === "supplier") {
-      //     return "供应商"
-      //   } else if ($ruleForm["agentNo"] === "manager") {
-      //     return "区域经理"
-      //   } else {
-      //     return ""
-      //   }
-      // }
     },
     {
       label: "所属商户",
@@ -122,17 +111,50 @@ export const FORM_CONFIG = {
   verityDetail: [
     {
       label: "门店类型",
-      key: "shopTypeTxt"
+      key: "shopType",
+      fieldType: 'render',
+      render: (h, params) => {
+        if (params.shopType === 'personal') {
+          return h(
+            'span', { 'class': 'f-fc-606266' }, '个人'
+          )
+        } else if (params.shopType === 'enterprise') {
+          return h(
+            'span', { 'class': 'f-fc-606266' }, '企业'
+          )
+        }
+        if (params.shopType === 'individual') {
+          return h(
+            'span', { 'class': 'f-fc-606266' }, '个体工商'
+          )
+        }
+      }
     },
     {
       label: "营业执照编号",
-      key: "shopLicenseNo"
+      key: "shopLicenseNo",
+      isShow: (params) => {
+        return params.shopType === 'personal' ? false : true
+      }
     },
     {
       label: "营业执照有效期",
       key: "shopLicenseDate",
-      fieldType: 'slot',
-      slot: "shopLicenseDate"
+      fieldType: 'render',
+      render: (h, params) => {
+        if (params.shopLicenseEndDate === '2199-12-31') {
+          return h(
+            'span', { 'class': 'f-fc-606266' }, '长期有效'
+          )
+        } else {
+          return h(
+            'span', { 'class': 'f-fc-606266' }, params.shopLicenseBegDate + '至' + params.shopLicenseEndDate
+          )
+        }
+      },
+      isShow: (params) => {
+        return params.shopType === 'personal' ? false : true
+      }
     },
     {
       label: "法人姓名",
@@ -145,20 +167,86 @@ export const FORM_CONFIG = {
     {
       label: "法人身份证有效期",
       key: "idCardDate",
-      fieldType: 'slot',
-      slot: "idCardDate"
+      fieldType: 'render',
+      render: (h, params) => {
+        if (params.idCardExpireDate === '2199-12-31') {
+          return h(
+            'span', { 'class': 'f-fc-606266' }, '长期有效'
+          )
+        } else {
+          return h(
+            'span', { 'class': 'f-fc-606266' }, params.idCardBeginDate + '至' + params.idCardExpireDate
+          )
+        }
+      }
     },
     {
       label: "图片信息",
       key: "key",
       span: 24,
+      isShow: (params) => {
+        return params.shopType === 'personal' ? false : true
+      },
       children: [
-        {label: '身份证正面', key: 'idCardPortraitImg'},
-        {label: '身份证反面', key: 'idCardEmblemImg'},
-        {label: '营业执照图片', key: 'shopLicenseImg'},
-        {label: '门头照', key: 'shopFaceImg'},
-        {label: '门店环境照', key: 'shopInnerImg'},
-        {label: '收银台照片', key: 'shopCashdeskImg'},
+        {
+          label: "身份证正面",
+          key: "idCardPortraitImg"
+        },
+        {
+          label: "身份证反面",
+          key: "idCardEmblemImg"
+        },
+        {
+          label: "营业执照图片",
+          key: "shopLicenseImg"
+        },
+        {
+          label: "门头照",
+          key: "shopFaceImg"
+        },
+        {
+          label: "门店环境照",
+          key: "shopInnerImg"
+        },
+        {
+          label: "收银台照片",
+          key: "shopCashdeskImg"
+        }
+      ],
+      fieldType: 'image'
+    },
+    {
+      label: "图片信息",
+      key: "key",
+      span: 24,
+      isShow: (params) => {
+        return params.shopType === 'personal'
+      },
+      children: [
+        {
+          label: "身份证正面",
+          key: "idCardPortraitImg"
+        },
+        {
+          label: "身份证反面",
+          key: "idCardEmblemImg"
+        },
+        {
+          label: "手持身份证照",
+          key: "idCardHandImg"
+        },
+        {
+          label: "门头照",
+          key: "shopFaceImg"
+        },
+        {
+          label: "门店环境照",
+          key: "shopInnerImg"
+        },
+        {
+          label: "收银台照片",
+          key: "shopCashdeskImg"
+        }
       ],
       fieldType: 'image'
     }
@@ -166,7 +254,24 @@ export const FORM_CONFIG = {
   settleDetail: [
     {
       label: "结算类型",
-      key: "settleTypeTxt"
+      key: "settleType",
+      fieldType: 'render',
+      render: (h, params) => {
+        if (params.settleType === '0') {
+          return h(
+            'span', { 'class': 'f-fc-606266' }, '对公法人'
+          )
+        } else if (params.settleType === '1') {
+          return h(
+            'span', { 'class': 'f-fc-606266' }, '对私法人'
+          )
+        }
+        if (params.settleType === '2') {
+          return h(
+            'span', { 'class': 'f-fc-606266' }, '对私非法人'
+          )
+        }
+      }
     },
     {
       label: "开户名",
@@ -189,9 +294,57 @@ export const FORM_CONFIG = {
       key: "key",
       span: 24,
       children: [
-        {label: '开户许可证', key: 'bankOpenAccountLicenseImg'}
+        {
+          label: "开户许可证",
+          key: "bankOpenAccountLicenseImg"
+        }
       ],
-      fieldType: 'image'
+      fieldType: 'image',
+      isShow: (params) => {
+        return params.settleType=== '0'
+      }
+    },
+    {
+      label: "图片信息",
+      key: "key",
+      span: 24,
+      children: [
+        {
+          label: "银行卡正面",
+          key: "bankCardImg"
+        }
+      ],
+      fieldType: 'image',
+      isShow: (params) => {
+        return params.settleType=== '1'
+      }
+    },
+    {
+      label: "图片信息",
+      key: "key",
+      span: 24,
+      children: [
+        {
+          label: "结算人身份证正面",
+          key: "nonLawIdCardPortraitImg"
+        },
+        {
+          label: "结算人身份证反面",
+          key: "nonLawIdCardEmblemImg"
+        },
+        {
+          label: "结算银行卡正面",
+          key: "nonLawIdCardPortraitImg"
+        },
+        {
+          label: "非法人结算授权书",
+          key: "nonLawSettleAuthImg"
+        }
+      ],
+      fieldType: 'image',
+      isShow: (params) => {
+        return params.settleType=== '2'
+      }
     }
   ],
   rateDetail: [
@@ -199,16 +352,26 @@ export const FORM_CONFIG = {
       label: "支付宝",
       key: "alipayRate",
       fieldType: 'render',
-      render: (h, ruleForm) => {
-        return (<span>{ utils.AccMul(ruleForm.alipayRate) }%</span>)
+      render: (h, params) => {
+        return (
+          <p class="f-fc-606266">
+            <i class="iconfont iconzhifubao f-fc-ali"></i>
+            {utils.AccMul(params.alipayRate, 100)}%
+          </p>
+        )
       }
     },
     {
       label: "微信",
       key: "wechatPayRate",
       fieldType: 'render',
-      render: (h, ruleForm) => {
-        return (<span>{ utils.AccMul(ruleForm.wechatPayRate) }%</span>)
+      render: (h, params) => {
+        return (
+          <p class="f-fc-606266">
+          <i class="iconfont iconweixin f-fc-wx"></i>
+        { utils.AccMul(params.wechatPayRate, 100) }%
+      </p>
+      )
       }
     }
   ],
