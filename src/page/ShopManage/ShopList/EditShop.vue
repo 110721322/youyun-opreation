@@ -63,11 +63,33 @@
       }
     },
     created() {
+      this.getCategoryList()
       this.shopQueryDetail()
     },
     mounted() {
     },
     methods: {
+      getCategoryList() {
+        api.queryAllCategory({}).then(res => {
+          if (res.status === 0) {
+            const newArr = []
+            this.dealCateList(res.data, newArr)
+            this.shopInfoFormData[3].options = newArr || []
+          }
+        })
+      },
+      dealCateList(arr, newArr) {
+        arr.forEach((item,index) => {
+          newArr[index] = {}
+          newArr[index].label = item.name;
+          newArr[index].value = item.code;
+          if(item.childrenData) {
+            const arr=[];
+            this.dealCateList(item.childrenData,arr);
+            newArr[index].children=arr;  
+          }
+        });
+      },
       shopQueryDetail() {
         const params = {
           shopNo: this.$route.query.shopNo

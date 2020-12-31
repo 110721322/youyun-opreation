@@ -1,4 +1,5 @@
 import areaData from "youyun-vue-components/assets/data/areaData.ws";
+import commonApi from "@/api/api_common"
 import { checkPersonId, validPhone } from "youyun-vue-components/global/kit/validate";
 
 export const FORM_CONFIG = {
@@ -89,7 +90,8 @@ export const FORM_CONFIG = {
           exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
           rules: [
             { required: true, message: '请上传门店LOGO或者门店照', trigger: 'change' }
-          ]
+          ],
+          uploadService: commonApi.queryOssImgToken
         }
       ]
     }
@@ -105,7 +107,7 @@ export const FORM_CONFIG = {
       options: [
         {label: '企业', value: 'enterprise'},
         {label: '个体工商', value: 'individual'},
-        {label: '个人', value: 'person'}
+        {label: '个人', value: 'personal'}
       ],
       rules: [
         { required: true, message: '请选择门店类型', trigger: 'change' }
@@ -121,7 +123,7 @@ export const FORM_CONFIG = {
         { required: true, message: '请输入营业执照编号', trigger: 'blur' }
       ],
       isShow: (params) => {
-        if (params.shopType === 'person') {
+        if (params.shopType === 'personal') {
           return false
         } else {
           return true
@@ -138,7 +140,7 @@ export const FORM_CONFIG = {
         { required: true, message: '请选择营业执照有效期', trigger: 'change' }
       ],
       isShow: (params) => {
-        if (params.shopType === 'person') {
+        if (params.shopType === 'personal') {
           return false
         } else {
           return true
@@ -197,7 +199,8 @@ export const FORM_CONFIG = {
           exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
           rules: [
             { required: true, message: '请上传身份证人像照', trigger: 'change' }
-          ]
+          ],
+          uploadService: commonApi.queryOssImgToken
         },
         {
           label: '身份证反面',
@@ -206,7 +209,8 @@ export const FORM_CONFIG = {
           exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
           rules: [
             { required: true, message: '请上传身份证国徽照', trigger: 'change' }
-          ]
+          ],
+          uploadService: commonApi.queryOssImgToken
         },
         {
           label: '营业执照图片',
@@ -216,6 +220,7 @@ export const FORM_CONFIG = {
           rules: [
             { required: true, message: '请上传营业执照', trigger: 'change' }
           ],
+          uploadService: commonApi.queryOssImgToken
         },
         {
           label: '门头照',
@@ -224,7 +229,8 @@ export const FORM_CONFIG = {
           exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
           rules: [
             { required: true, message: '请上传门头照', trigger: 'change' }
-          ]
+          ],
+          uploadService: commonApi.queryOssImgToken
         },
         {
           label: '门店环境照',
@@ -233,7 +239,8 @@ export const FORM_CONFIG = {
           exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
           rules: [
             { required: true, message: '请上传门店环境照', trigger: 'change' }
-          ]
+          ],
+          uploadService: commonApi.queryOssImgToken
         },
         {
           label: '收银台照',
@@ -242,11 +249,12 @@ export const FORM_CONFIG = {
           exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
           rules: [
             { required: true, message: '请上传收银台照', trigger: 'change' }
-          ]
+          ],
+          uploadService: commonApi.queryOssImgToken
         }
       ],
       isShow: (params) => {
-        return params.shopType === 'person' ? false : true
+        return params.shopType === 'personal' ? false : true
       },
     },
     {
@@ -263,7 +271,8 @@ export const FORM_CONFIG = {
           exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
           rules: [
             { required: true, message: '请上传身份证人像照', trigger: 'change' }
-          ]
+          ],
+          uploadService: commonApi.queryOssImgToken
         },
         {
           label: '身份证反面',
@@ -272,7 +281,8 @@ export const FORM_CONFIG = {
           exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
           rules: [
             { required: true, message: '请上传身份证国徽照', trigger: 'change' }
-          ]
+          ],
+          uploadService: commonApi.queryOssImgToken
         },
         {
           label: '门头照',
@@ -281,7 +291,8 @@ export const FORM_CONFIG = {
           exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
           rules: [
             { required: true, message: '请上传门头照', trigger: 'change' }
-          ]
+          ],
+          uploadService: commonApi.queryOssImgToken
         },
         {
           label: '门店环境照',
@@ -290,7 +301,8 @@ export const FORM_CONFIG = {
           exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
           rules: [
             { required: true, message: '请上传门店环境照', trigger: 'change' }
-          ]
+          ],
+          uploadService: commonApi.queryOssImgToken
         },
         {
           label: '收银台照',
@@ -299,11 +311,12 @@ export const FORM_CONFIG = {
           exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
           rules: [
             {required: true, message: '请上传收银台照', trigger: 'change'}
-          ]
+          ],
+          uploadService: commonApi.queryOssImgToken
         }
       ],
       isShow: (params) => {
-        return params.shopType === 'person' ? true : false
+        return params.shopType === 'personal' ? true : false
       }
     }
   ],
@@ -345,18 +358,8 @@ export const FORM_CONFIG = {
       ]
     },
     {
-      type: 8,
-      label: '开户支行',
-      key: 'bankArea',
-      labelWidth: "120px",
-      rules: [
-        { required: true, message: '请选择开户支行', trigger: 'change' }
-      ],
-      options: areaData
-    },
-    {
       type: 1,
-      label: '支行名称',
+      label: '开户支行名称',
       key: 'bankBranchName',
       labelWidth: "120px",
       placeholder: '请选择支行名称',
@@ -405,7 +408,8 @@ export const FORM_CONFIG = {
           exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
           rules: [
             { required: true, message: '请上传开户许可证', trigger: 'change' }
-          ]
+          ],
+          uploadService: commonApi.queryOssImgToken
         },
       ]
     }

@@ -1,3 +1,4 @@
+import api from '@/api/api_agentManage'
 export const SEARCH_CONFIG = {
   formData: [{
     type: 0,
@@ -41,11 +42,20 @@ export const SEARCH_CONFIG = {
   },
   {
     type: 1,
-    label: "所属服务商",
-    key: "agentNo",
-    span: 12,
-    options: [
-    ]
+    label: '所属服务商',
+    key: 'agentNo',
+    isSearch: true,
+    urlOptions: {
+      searchKey: 'agentName',
+      url: api.queryPageByCondition,
+      keyName: 'agentNo',
+      valueName: 'agentName',
+      params: {
+        currentPage: 1,
+        pageSize: 20
+      }
+    },
+    span: 12
   },
   {
     type: 1,
@@ -67,14 +77,6 @@ export const SEARCH_CONFIG = {
       {label: "交易关闭", value: 3},
       {label: "部分退款", value: 4},
       {label: "全部退款", value: 5}
-    ]
-  },
-  {
-    type: 1,
-    label: "设备类型",
-    key: "deviceType",
-    span: 12,
-    options: [
     ]
   }],
   showFootBtn: true

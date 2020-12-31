@@ -177,11 +177,7 @@ export const FORM_CONFIG = {
       key: "bankCardNo"
     },
     {
-      label: "开户支行",
-      key: "bankArea"
-    },
-    {
-      label: "支行名称",
+      label: "开户支行名称",
       key: "bankBranchName"
     },
     {
