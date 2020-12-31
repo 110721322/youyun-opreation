@@ -45,11 +45,15 @@ export const MERCHANT_DETAIL_CONFIG = {
       prop: 'status',
       render: (h, params) => {
         const actions = new Map([
-          [1, {className: 's-status-pending', statusDesc: '平台审核中'}],
+          [0, {className: 's-status-pending', statusDesc: '预审核中'}],
+          [1, {className: 's-status-fail', statusDesc: '平台驳回'}],
           [2, {className: 's-status-pending', statusDesc: '通道审核中'}],
-          [3, {className: 's-status-success', statusDesc: '已开通'}],
-          [4, {className: 's-status-fail', statusDesc: '已驳回'}],
-          ['default', {className: 's-status-pending', statusDesc: '等待'}],
+          [3, {className: 's-status-fail', statusDesc: '通道驳回'}],
+          [4, {className: 's-status-success', statusDesc: '通道通过'}],
+          [5, {className: 's-status-pending', statusDesc: '微信实名认证中'}],
+          [6, {className: 's-status-fail', statusDesc: '微信认证拒绝'}],
+          [7, {className: 's-status-success', statusDesc: '微信认证成功'}],
+          ['default', {className: 's-status-pending', statusDesc: '等待'}]
         ])
         const action = actions.get(params.row.status) || actions.get('default')
         return (

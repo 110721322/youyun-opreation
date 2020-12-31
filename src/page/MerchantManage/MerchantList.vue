@@ -65,7 +65,7 @@
             merchantNo: row.merchantNo,
             id: row.id
           }
-        })
+        }).catch(() => {})
       },
       onClickGoMerchant(row) {}
     }

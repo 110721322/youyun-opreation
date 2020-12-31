@@ -67,7 +67,7 @@ export default {
       }
     },
     onClickDetail(row) {
-      this.$router.push('/orderManage/transactionFlow/flowDetail?merchantNo=' + row.merchantNo + '&shopNo=' + row.shopNo + '&orderNo=' + row.orderNo)
+      this.$router.push('/orderManage/transactionFlow/flowDetail?merchantNo=' + row.merchantNo + '&shopNo=' + row.shopNo + '&orderNo=' + row.orderNo).catch(() => {})
     }
   }
 };

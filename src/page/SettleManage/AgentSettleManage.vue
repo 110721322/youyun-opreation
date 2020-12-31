@@ -69,7 +69,7 @@
           query: {
             id: row.id
           }
-        })
+        }).catch(() => {})
       }
     }
   }
