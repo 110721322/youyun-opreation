@@ -11,9 +11,17 @@ export const FORM_CONFIG = {
       key: "shopName",
       labelWidth: "120px",
       initVal: "",
-      maxlength: 10,
+      maxlength: 40,
       rules: [
-        { required: true, message: '请输入门店全称', trigger: 'blur' }
+        { required: true, message: '请输入门店全称', trigger: 'blur' },
+        {
+          validator:function(rule, value, callback){
+            if(value.length < 2){
+              callback(new Error("门店全称长度不得小于2位"));
+            }else{
+              callback();
+            }
+          }, trigger: 'blur'}
       ]
     },
     {
@@ -21,8 +29,17 @@ export const FORM_CONFIG = {
       label: '门店简称',
       labelWidth: '120px',
       key: 'shopShortName',
+      maxlength: 20,
       rules: [
-        { required: true, message: '请输入门店简称', trigger: 'blur' }
+        { required: true, message: '请输入门店简称', trigger: 'blur' },
+        {
+          validator:function(rule, value, callback){
+            if(value.length < 2){
+              callback(new Error("门店简称长度不得小于2位"));
+            } else{
+              callback();
+            }
+          }, trigger: 'blur'}
       ]
     },
     {
@@ -71,9 +88,18 @@ export const FORM_CONFIG = {
       label: "门店详细地址",
       key: "address",
       labelWidth: "120px",
+      maxlength: 40,
       initVal: "",
       rules: [
-        { required: true, message: '请输入门店详细地址', trigger: 'blur' }
+        { required: true, message: '请输入门店详细地址', trigger: 'blur' },
+        {
+          validator:function(rule, value, callback){
+            if(value.length < 5){
+              callback(new Error("门店详细地址长度不得小于5位"));
+            } else{
+              callback();
+            }
+          }, trigger: 'blur'}
       ]
     },
     {
@@ -119,6 +145,7 @@ export const FORM_CONFIG = {
       label: "营业执照编号",
       key: "shopLicenseNo",
       labelWidth: "120px",
+      maxlength: 18,
       initVal: "",
       rules: [
         { required: true, message: '请输入营业执照编号', trigger: 'blur' }
@@ -153,9 +180,18 @@ export const FORM_CONFIG = {
       label: "法人姓名",
       key: "lawPerson",
       labelWidth: "120px",
+      maxlength: 20,
       initVal: "",
       rules: [
-        { required: true, message: '请输入法人姓名', trigger: 'blur' }
+        { required: true, message: '请输入法人姓名', trigger: 'blur' },
+        {
+          validator:function(rule, value, callback){
+            if(value.length < 2){
+              callback(new Error("法人姓名长度不得小于2位"));
+            } else{
+              callback();
+            }
+          }, trigger: 'blur'}
       ]
     },
     {
@@ -343,6 +379,7 @@ export const FORM_CONFIG = {
       label: "开户名",
       key: "bankAccountName",
       labelWidth: "120px",
+      maxlength: 18,
       initVal: "",
       rules: [
         { required: true, message: '请输入开户名', trigger: 'blur' }

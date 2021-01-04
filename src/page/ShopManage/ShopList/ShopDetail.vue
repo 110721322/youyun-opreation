@@ -8,6 +8,13 @@
         </el-tabs>
         <el-button v-if="ruleForm.status===1" type="primary" class="edit-btn" @click="clickEdit">编辑</el-button>
       </div>
+      <div v-if="ruleForm.status===1" class="error-box">
+        <el-alert
+          :title="ruleForm.reason"
+          type="error"
+          show-icon>
+        </el-alert>  
+      </div>
       <div v-if="activeName==='0'" class="info-box">
         <div class="detail-mode-box">
           <yun-detail-mode
@@ -149,16 +156,16 @@
         }
         api.shopQueryDetail(params).then(res => {
           if(res.status === 0) {
+            this.ruleForm = res.data
             const areasNetedList = this.$g.utils.getNestedArr(areaData, 'children')
-            const areas = [res.data.provinceCode, res.data.cityCode, res.data.areaCode]
+            const areas = [this.ruleForm.provinceCode, this.ruleForm.cityCode, this.ruleForm.areaCode]
               .filter(item => !!item)
               .map(item => {
                 return areasNetedList.find(area => item === area.value)
               })
               .map(item => item.label)
             const areasStr = areas.join('')
-            res.data.areasStr = areasStr
-            this.ruleForm = res.data
+            this.ruleForm.areasStr = areasStr
             switch(this.ruleForm.status) {
               case 0:
                 this.ruleForm.statusTxt = '预审核中'
@@ -258,6 +265,10 @@
         margin: 0px;
       }
     }
+  }
+  .error-box {
+    padding: 0 24px;
+    margin-bottom: 24px;
   }
   .tab-out {
     flex-shrink: 1;
