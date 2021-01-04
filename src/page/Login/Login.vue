@@ -284,7 +284,8 @@ export default {
   right: 0;
   bottom: 0;
   min-width: 1440px;
-  background: #F0F3F7;
+  background: url("../../assets/img/login_bg.png") center center no-repeat;
+  background-size: 100% 100%;
   overflow: auto;
   .login-box {
     display: flex;

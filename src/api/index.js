@@ -13,7 +13,7 @@ function setTimeShowMessage () {
   }, 5000)
 }
 
-axios.defaults.timeout = 10000;
+axios.defaults.timeout = 30000;
 axios.defaults.withCredentials = true;
 axios.defaults.headers["Content-Type"] = "application/json"
 
