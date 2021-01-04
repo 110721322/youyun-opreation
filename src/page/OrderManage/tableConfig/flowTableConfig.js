@@ -6,7 +6,7 @@ export const TABLE_CONFIG = {
     },
     {
       label: '创建时间',
-      prop: 'createTime'
+      prop: 'payTime'
     },
     {
       label: '所属服务商',
