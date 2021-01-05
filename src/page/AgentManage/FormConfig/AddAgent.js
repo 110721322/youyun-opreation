@@ -1,5 +1,6 @@
 import api from '@/api/api_agentManage';
 import areaData from "youyun-vue-components/assets/data/areaData.ws";
+import { validPhone } from "youyun-vue-components/global/kit/validate";
 export const ADD_AGENT = {
   serviceData: {
     formData: [
@@ -22,13 +23,14 @@ export const ADD_AGENT = {
         rules: [
           { required: true, message: '请输入手机号', trigger: 'blur' },
           {
-            validator:function(rule, value, callback){
-              if(/^1[34578]\d{9}$/.test(value) == false){
-                callback(new Error("请输入正确的手机号"));
-              }else{
-                callback();
+            validator(rule, value, callback) {
+              if (!validPhone(value)) {
+                return callback(new Error("请输入规范11位手机号"))
               }
-            }, trigger: 'blur'}
+              return callback();
+            },
+            trigger: 'blur'
+          }
         ]
       },
       {
