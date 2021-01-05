@@ -23,7 +23,7 @@ export const AGENT_TALK_DATA = {
     },
     {
       label: '沟通人',
-      prop: 'linkmanName'
+      prop: 'operationName'
     }
   ],
   gridBtnConfig: {
