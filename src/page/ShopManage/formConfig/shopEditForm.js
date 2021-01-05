@@ -114,7 +114,7 @@ export const FORM_CONFIG = {
           key: 'shopImg',
           type: 6,
           initVal: '',
-          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/fund/template/%E9%97%A8%E5%A4%B4%E7%85%A7.png',
           rules: [
             { required: true, message: '请上传门店LOGO或者门店照', trigger: 'change' }
           ],
@@ -233,7 +233,7 @@ export const FORM_CONFIG = {
           label: '身份证正面',
           key: 'idCardPortraitImg',
           type: 6,
-          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/fund/template/%E8%BA%AB%E4%BB%BD%E8%AF%81%E6%AD%A3%E9%9D%A2.jpg',
           rules: [
             { required: true, message: '请上传身份证人像照', trigger: 'change' }
           ],
@@ -243,7 +243,7 @@ export const FORM_CONFIG = {
           label: '身份证反面',
           key: 'idCardEmblemImg',
           type: 6,
-          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/fund/template/%E8%BA%AB%E4%BB%BD%E8%AF%81%E8%83%8C%E9%9D%A2.jpg',
           rules: [
             { required: true, message: '请上传身份证国徽照', trigger: 'change' }
           ],
@@ -263,7 +263,7 @@ export const FORM_CONFIG = {
           label: '门头照',
           key: 'shopFaceImg',
           type: 6,
-          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/fund/template/%E9%97%A8%E5%A4%B4%E7%85%A7.png',
           rules: [
             { required: true, message: '请上传门头照', trigger: 'change' }
           ],
@@ -273,7 +273,7 @@ export const FORM_CONFIG = {
           label: '门店环境照',
           key: 'shopInnerImg',
           type: 6,
-          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/fund/template/%E9%97%A8%E5%BA%97%E5%86%85%E6%99%AF%E7%85%A7.png',
           rules: [
             { required: true, message: '请上传门店环境照', trigger: 'change' }
           ],
@@ -305,7 +305,7 @@ export const FORM_CONFIG = {
           label: '身份证正面',
           key: 'idCardPortraitImg',
           type: 6,
-          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/fund/template/%E8%BA%AB%E4%BB%BD%E8%AF%81%E6%AD%A3%E9%9D%A2.jpg',
           rules: [
             { required: true, message: '请上传身份证人像照', trigger: 'change' }
           ],
@@ -315,7 +315,7 @@ export const FORM_CONFIG = {
           label: '身份证反面',
           key: 'idCardEmblemImg',
           type: 6,
-          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/fund/template/%E8%BA%AB%E4%BB%BD%E8%AF%81%E8%83%8C%E9%9D%A2.jpg',
           rules: [
             { required: true, message: '请上传身份证国徽照', trigger: 'change' }
           ],
@@ -325,7 +325,7 @@ export const FORM_CONFIG = {
           label: '门头照',
           key: 'shopFaceImg',
           type: 6,
-          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/fund/template/%E9%97%A8%E5%A4%B4%E7%85%A7.png',
           rules: [
             { required: true, message: '请上传门头照', trigger: 'change' }
           ],
@@ -335,7 +335,7 @@ export const FORM_CONFIG = {
           label: '门店环境照',
           key: 'shopInnerImg',
           type: 6,
-          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/fund/template/%E9%97%A8%E5%BA%97%E5%86%85%E6%99%AF%E7%85%A7.png',
           rules: [
             { required: true, message: '请上传门店环境照', trigger: 'change' }
           ],
@@ -449,7 +449,7 @@ export const FORM_CONFIG = {
           label: '开户许可证',
           key: 'bankOpenAccountLicenseImg',
           type: 6,
-          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/fund/template/%E5%BC%80%E6%88%B7%E8%AE%B8%E5%8F%AF%E8%AF%81.png',
           rules: [
             { required: true, message: '请上传开户许可证', trigger: 'change' }
           ],
@@ -471,7 +471,7 @@ export const FORM_CONFIG = {
           label: '银行卡正面',
           key: 'bankCardImg',
           type: 6,
-          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/fund/template/%E8%BA%AB%E4%BB%BD%E8%AF%81%E6%AD%A3%E9%9D%A2.jpg',
           rules: [
             { required: true, message: '请上传银行卡正面', trigger: 'change' }
           ],
@@ -493,7 +493,7 @@ export const FORM_CONFIG = {
           label: '结算人身份证正面',
           key: 'nonLawIdCardPortraitImg',
           type: 6,
-          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/fund/template/%E8%BA%AB%E4%BB%BD%E8%AF%81%E6%AD%A3%E9%9D%A2.jpg',
           rules: [
             { required: true, message: '请上传结算人身份证正面', trigger: 'change' }
           ],
@@ -503,7 +503,7 @@ export const FORM_CONFIG = {
           label: '结算人身份证反面',
           key: 'nonLawIdCardEmblemImg',
           type: 6,
-          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/fund/template/%E8%BA%AB%E4%BB%BD%E8%AF%81%E8%83%8C%E9%9D%A2.jpg',
           rules: [
             { required: true, message: '请上传结算人身份证反面', trigger: 'change' }
           ],

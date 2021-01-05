@@ -173,10 +173,10 @@
           areaCode: shopInfoForm.areaData[2],
           mccCode: shopInfoForm.mccCodeData[2],
           ...verityInfoForm,
-          shopLicenseBegDate: verityInfoForm.shopLicenseBegDate[0],
-          shopLicenseEndDate: verityInfoForm.shopLicenseBegDate[1],
-          idCardBeginDate: verityInfoForm.idCardDate[0],
-          idCardExpireDate: verityInfoForm.idCardDate[1],
+          shopLicenseBegDate: verityInfoForm.shopLicenseDate[0]?verityInfoForm.shopLicenseDate[0]:'',
+          shopLicenseEndDate: verityInfoForm.shopLicenseDate[1]?verityInfoForm.shopLicenseDate[1]:'',
+          idCardBeginDate: verityInfoForm.idCardDate[0]?verityInfoForm.idCardDate[0]:'',
+          idCardExpireDate: verityInfoForm.idCardDate[1]?verityInfoForm.idCardDate[1]:'',
           ...settleInfoForm,
           ...rateInfoForm
         }
