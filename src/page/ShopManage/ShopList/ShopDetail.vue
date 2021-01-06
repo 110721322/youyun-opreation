@@ -6,11 +6,11 @@
           <el-tab-pane style="font-size:16px;" label="门店信息" name="0"></el-tab-pane>
           <el-tab-pane style="font-size:16px;" label="门店详情" name="1"></el-tab-pane>
         </el-tabs>
-        <el-button v-if="ruleForm.status===1" type="primary" class="edit-btn" @click="clickEdit">编辑</el-button>
+        <el-button v-if="ruleForm.status===1 || ruleForm.status===3" type="primary" class="edit-btn" @click="clickEdit">编辑</el-button>
       </div>
-      <div v-if="ruleForm.status===1" class="error-box">
+      <div v-if="ruleForm.status===1 || ruleForm.status===3" class="error-box">
         <el-alert
-          :title="ruleForm.reason"
+          :title="ruleForm.rejectReason"
           type="error"
           show-icon>
         </el-alert>  

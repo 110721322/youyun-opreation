@@ -283,7 +283,7 @@ export const FORM_CONFIG = {
           label: '收银台照',
           key: 'shopCashdeskImg',
           type: 6,
-          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          exampleImg: 'http://horse-pay-develop-back.oss-cn-hangzhou.aliyuncs.com/common/20210105165343543_YU6vUfqgNBzb.jpg',
           rules: [
             { required: true, message: '请上传收银台照', trigger: 'change' }
           ],
@@ -345,7 +345,7 @@ export const FORM_CONFIG = {
           label: '收银台照',
           key: 'shopCashdeskImg',
           type: 6,
-          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          exampleImg: 'http://horse-pay-develop-back.oss-cn-hangzhou.aliyuncs.com/common/20210105165343543_YU6vUfqgNBzb.jpg',
           rules: [
             {required: true, message: '请上传收银台照', trigger: 'change'}
           ],
@@ -471,7 +471,7 @@ export const FORM_CONFIG = {
           label: '银行卡正面',
           key: 'bankCardImg',
           type: 6,
-          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/fund/template/%E8%BA%AB%E4%BB%BD%E8%AF%81%E6%AD%A3%E9%9D%A2.jpg',
+          exampleImg: 'http://horse-pay-develop-back.oss-cn-hangzhou.aliyuncs.com/common/20210105165429729_TYxGrNJZbttN.jpg',
           rules: [
             { required: true, message: '请上传银行卡正面', trigger: 'change' }
           ],
@@ -513,7 +513,7 @@ export const FORM_CONFIG = {
           label: '结算银行卡正面',
           key: 'bankCardImg',
           type: 6,
-          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          exampleImg: 'http://horse-pay-develop-back.oss-cn-hangzhou.aliyuncs.com/common/20210105165429729_TYxGrNJZbttN.jpg',
           rules: [
             { required: true, message: '请上传结算银行卡正面', trigger: 'change' }
           ],
@@ -523,7 +523,7 @@ export const FORM_CONFIG = {
           label: '非法人结算授权书',
           key: 'nonLawSettleAuthImg',
           type: 6,
-          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          exampleImg: 'http://horse-pay-develop-back.oss-cn-hangzhou.aliyuncs.com/common/20210105165510901_IFIDb6g2f9aL.jpg',
           rules: [
             { required: true, message: '请上传非法人结算授权书', trigger: 'change' }
           ],
