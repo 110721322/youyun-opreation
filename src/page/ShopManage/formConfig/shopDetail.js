@@ -49,7 +49,7 @@ export const FORM_CONFIG = {
         return (
           <p class="f-fc-606266">
             <i class="iconfont iconzhifubao f-fc-ali"></i>
-            { utils.AccMul(ruleForm.alipayRate) }%、
+            { utils.AccMul(ruleForm.alipayRate) }%
             <i class="iconfont iconweixin f-fc-wx"></i>
             { utils.AccMul(ruleForm.wechatPayRate) }%
           </p>
