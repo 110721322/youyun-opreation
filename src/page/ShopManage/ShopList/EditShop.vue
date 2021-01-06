@@ -127,6 +127,9 @@
             });
             this.settleInfoFormData.forEach((item,index) => {
               item.initVal = this.shopDetail[item.key]
+              if (item.key === "bankContactLine") {
+                item.urlOptions.params.bankName = this.shopDetail['bankBranchName']
+              }
               if (item.key === "settleImg") {
                 item.children.forEach((imgItem, imgIndex) => {
                   imgItem.initVal = this.shopDetail[imgItem.key]
@@ -134,7 +137,7 @@
               }
             });
             this.rateInfoFormData.forEach((item,index) => {
-              item.initVal = this.shopDetail[item.key]
+              item.initVal = this.$g.utils.AccMul(this.shopDetail[item.key], 100)
             });
           }
           this.getInfoShow = true
@@ -167,6 +170,7 @@
         }
         const params = {
           id: this.$route.query.id,
+          shopNo: this.shopDetail.shopNo,
           ...shopInfoForm,
           provinceCode: shopInfoForm.areaData[0],
           cityCode: shopInfoForm.areaData[1],
@@ -178,7 +182,8 @@
           idCardBeginDate: verityInfoForm.idCardDate[0]?verityInfoForm.idCardDate[0]:'',
           idCardExpireDate: verityInfoForm.idCardDate[1]?verityInfoForm.idCardDate[1]:'',
           ...settleInfoForm,
-          ...rateInfoForm
+          wechatPayRate: utils.AccDiv(rateInfoForm.wechatPayRate, 100),
+          alipayRate: utils.AccDiv(rateInfoForm.alipayRate, 100),
         }
         api.shopEditDetail(params).then(res => {
           if (res.status === 0) {

@@ -1,12 +1,14 @@
 <template>
   <div>
     <div class="content">
-      <div class="tab-box flex-align-center">
+      <div class="tab-box m-select-top flex-align-center">
         <el-tabs v-model="activeName" class="tab-out">
           <el-tab-pane style="font-size:16px;" label="门店信息" name="0"></el-tab-pane>
           <el-tab-pane style="font-size:16px;" label="门店详情" name="1"></el-tab-pane>
         </el-tabs>
-        <el-button v-if="ruleForm.status===1 || ruleForm.status===3" type="primary" class="edit-btn" @click="clickEdit">编辑</el-button>
+        <div class="right-btn" v-if="ruleForm.status===1 || ruleForm.status===3">
+          <el-button type="primary" @click="clickEdit">编辑</el-button>
+        </div>
       </div>
       <div v-if="ruleForm.status===1 || ruleForm.status===3" class="error-box">
         <el-alert
@@ -227,7 +229,7 @@
         api.rejectIndirectAudit(params).then(res => {
           if (res.status === 0) {
             this.dialogVisible = false
-            this.$router.back();
+            this.$router.replace('/shopManage/shopList');
             this.$message.success('已驳回！')
           }
         })
@@ -263,6 +265,38 @@
       width: 100%;
       /deep/ .el-tabs__header{
         margin: 0px;
+      }
+    }
+    .m-select-top {
+      justify-content: space-between;
+      .right-btn {
+        padding-right: 24px;
+        padding-top: 14px;
+        height: 60px;
+        background: #fff;
+        border-bottom: 1px solid #DCDFE6;
+        .el-button {
+          padding: 0 20px;
+          margin: 0;
+          height: 32px;
+          line-height: 32px;
+          font-size: 12px;
+        }
+      }
+      .el-tabs {
+        width: 100%;
+        background: #fff;
+        border-bottom: 1px solid #DCDFE6;
+      }
+      /deep/ .el-tabs__header {
+        margin: 0;
+        padding: 16px 0 0 24px;
+      }
+      /deep/ .el-tabs__nav-wrap::after {
+        display: none !important;
+      }
+      /deep/ .el-tabs__item {
+        height: 44px;
       }
     }
   }

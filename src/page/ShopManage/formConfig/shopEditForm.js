@@ -322,6 +322,16 @@ export const FORM_CONFIG = {
           uploadService: commonApi.queryOssImgToken
         },
         {
+          label: '手持身份证照',
+          key: 'idCardHandImg',
+          type: 6,
+          exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/common/20200829155232141_vXrpwr7TxoHG.jpg',
+          rules: [
+            { required: true, message: '请上传手持身份证照', trigger: 'change' }
+          ],
+          uploadService: commonApi.queryOssImgToken
+        },
+        {
           label: '门头照',
           key: 'shopFaceImg',
           type: 6,
@@ -422,7 +432,7 @@ export const FORM_CONFIG = {
     {
       type: 0,
       label: "银行预留手机号",
-      key: "bankCardNo",
+      key: "bankMobile",
       labelWidth: "120px",
       initVal: "",
       rules: [
