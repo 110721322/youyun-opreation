@@ -88,6 +88,7 @@
         shopNo: this.$route.query.shopNo,
         orderNo: this.$route.query.orderNo
       }
+      this.selectOrderDetails()
     },
     mounted() {
     },
@@ -98,7 +99,7 @@
           shopNo: this.$route.query.shopNo,
           orderNo: this.$route.query.orderNo
         }
-        selectOrderDetails(params).then(res => {
+        api.selectOrderDetails(params).then(res => {
           if (res.status === 0) {
             this.ruleForm = res.data
           }
