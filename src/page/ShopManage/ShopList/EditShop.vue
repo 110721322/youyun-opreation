@@ -183,7 +183,7 @@
           idCardExpireDate: verityInfoForm.idCardDate[1]?verityInfoForm.idCardDate[1]:'',
           ...settleInfoForm,
           wechatPayRate: this.$g.utils.AccDiv(rateInfoForm.wechatPayRate, 100),
-          alipayRate: this.$g.utils.AccDiv(rateInfoForm.alipayRate, 100),
+          alipayRate: this.$g.utils.AccDiv(rateInfoForm.alipayRate, 100)
         }
         api.shopEditDetail(params).then(res => {
           if (res.status === 0) {
