@@ -72,7 +72,7 @@ export const TABLE_CONFIG = {
           [4, {className: 's-status-success', statusDesc: '通道通过'}],
           [5, {className: 's-status-pending', statusDesc: '微信实名认证中'}],
           [6, {className: 's-status-fail', statusDesc: '微信认证拒绝'}],
-          [7, {className: 's-status-success', statusDesc: '微信认证成功'}],
+          [7, {className: 's-status-success', statusDesc: '已开通'}],
           ['default', {className: 's-status-pending', statusDesc: '--'}]
         ])
         const action = actions.get(params.row.status) || actions.get('default')

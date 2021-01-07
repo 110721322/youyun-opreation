@@ -191,7 +191,7 @@
                 this.ruleForm.statusTxt = '微信认证拒绝'
                 break;
               case 7:
-                this.ruleForm.statusTxt = '微信认证成功'
+                this.ruleForm.statusTxt = '已开通'
                 break;
               default:
                 this.ruleForm.statusTxt = '--'
@@ -261,7 +261,7 @@
     margin: 24px;
     background: white;
     .tab-box {
-      padding: 24px;
+      padding-bottom: 24px;
       width: 100%;
       /deep/ .el-tabs__header{
         margin: 0px;
@@ -340,7 +340,7 @@
     margin-bottom: 24px;
   }
   .disabledTxt {
-    margin-right: 10px;
+    margin-right: 4px;
   }
   .inactive {
     color: #F5222D;

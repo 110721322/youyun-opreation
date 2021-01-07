@@ -44,21 +44,21 @@ export const TABLE_CONFIG = {
       label: '手续费',
       prop: 'serviceFee'
     },
-    {
-      label: '交易类型',
-      prop: 'tradeType',
-      render: (h, params) => {
-        const actions = new Map([
-          [0, {className: 's-status-fail', statusDesc: '全额退'}],
-          [1, {className: 's-status-fail', statusDesc: '部分退'}],
-          ['default', {className: 's-status-fail', statusDesc: '--'}]
-        ])
-        const action = actions.get(params.row.tradeType) || actions.get('default')
-        return (
-          <span class={['flex-align-center', 'g-status-icon', 's-status-radius', action.className]}>{ action.statusDesc }</span>
-      )
-      }
-    },
+    // {
+    //   label: '交易类型',
+    //   prop: 'tradeType',
+    //   render: (h, params) => {
+    //     const actions = new Map([
+    //       [0, {className: 's-status-fail', statusDesc: '全额退'}],
+    //       [1, {className: 's-status-fail', statusDesc: '部分退'}],
+    //       ['default', {className: 's-status-fail', statusDesc: '--'}]
+    //     ])
+    //     const action = actions.get(params.row.tradeType) || actions.get('default')
+    //     return (
+    //       <span class={['flex-align-center', 'g-status-icon', 's-status-radius', action.className]}>{ action.statusDesc }</span>
+    //   )
+    //   }
+    // },
     {
       label: '交易状态',
       prop: 'orderStatusName',

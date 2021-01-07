@@ -33,7 +33,7 @@ export const SEARCH_CONFIG = {
       {label: "通道通过", value: 4},
       {label: "微信实名认证中", value: 5},
       {label: "微信认证拒绝", value: 6},
-      {label: "微信认证成功", value: 7}
+      {label: "已开通", value: 7}
     ]
   },
   {
