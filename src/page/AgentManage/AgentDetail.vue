@@ -262,7 +262,7 @@
       // 修改服务商状态
       onClickEditStatus() {
         this.drawer = true
-        this.title = '修改手机号'
+        this.title = '服务商状态'
         this.drawerType = 'updateBlock'
         this.fromConfigData = FORM_CONFIG.agentStop.formData
         this.fromConfigData[0].initVal = this.ruleForm.blockStatus
