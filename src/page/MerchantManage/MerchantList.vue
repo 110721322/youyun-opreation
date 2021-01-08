@@ -81,6 +81,9 @@
         justify-content: space-between;
         padding: 24px 24px;
         background: #fff;
+        .m-left {
+          font-size: 16px;
+        }
       }
       .basecrud-box {
         padding: 0 24px 24px;
