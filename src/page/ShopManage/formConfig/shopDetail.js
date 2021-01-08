@@ -48,9 +48,9 @@ export const FORM_CONFIG = {
       render: (h, ruleForm) => {
         return (
           <p class="f-fc-606266">
-            <i class="iconfont iconzhifubao f-fc-ali"></i>
-            { utils.AccMul(ruleForm.alipayRate, 100) }% 
-            <i class="iconfont iconweixin f-fc-wx"></i>
+            <i class="iconfont iconzhifubao f-fc-ali" style="margin-right:4px;"></i>
+            <span style="margin-right:8px;">{ utils.AccMul(ruleForm.alipayRate, 100) }%</span>
+            <i class="iconfont iconweixin f-fc-wx" style="margin-right:4px;"></i>
             { utils.AccMul(ruleForm.wechatPayRate, 100) }%
           </p>
         )

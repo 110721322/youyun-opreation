@@ -195,7 +195,7 @@
         justify-content: space-between;
         button {
           margin: 0;
-          padding: 8px 27px;
+          padding: 9px 15px;
           font-size: 14px;
         }
         button:nth-child(1) {

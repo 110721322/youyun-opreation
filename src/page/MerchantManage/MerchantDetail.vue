@@ -242,8 +242,8 @@
         span:nth-child(2) {
           width: 1px;
           height: 16px;
-          color: #333;
-          padding: 0 24px;
+          color: #d7d8cd;
+          padding: 0 16px;
         }
       }
     }
@@ -274,6 +274,9 @@
   }
   .dialog-form {
     padding-top: 24px;
+  }
+  /deep/ .el-switch {
+    margin-left: 4px;
   }
   /deep/ .tab-color {
     color: #1989FA;

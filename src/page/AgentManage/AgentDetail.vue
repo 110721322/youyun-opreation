@@ -439,8 +439,8 @@
          span:nth-child(2) {
            width: 1px;
            height: 16px;
-           color: #333;
-           padding: 0 24px;
+           color: #d7d8cd;
+           padding: 0 16px;
          }
        }
      }
