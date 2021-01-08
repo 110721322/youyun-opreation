@@ -31,7 +31,7 @@ export const DETAILCONFIG = {
     },
     {
       label: "地址",
-      key: "companyAddress"
+      key: "fullAddress"
     }
   ],
   rateInfoData: [
