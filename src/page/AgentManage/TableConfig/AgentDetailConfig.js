@@ -31,7 +31,8 @@ export const DETAILCONFIG = {
     },
     {
       label: "地址",
-      key: "companyAddress"
+      key: "fullAddress",
+      fieldType: 'tooltip'
     }
   ],
   rateInfoData: [
@@ -61,7 +62,8 @@ export const DETAILCONFIG = {
   bankInfoData: [
     {
       label: "开户支行",
-      key: "bankBranchName"
+      key: "bankBranchName",
+      fieldType: 'tooltip'
     },
     {
       label: '银行卡账号',
