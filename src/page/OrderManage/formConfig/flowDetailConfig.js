@@ -22,15 +22,43 @@ export const FORM_CONFIG = {
     },
     {
       label: "支付模式",
-      key: "payWay"
+      key: "payWayName"
     },
-    {
-      label: "交易类型",
-      key: "tradeType"
-    },
+    // {
+    //   label: "交易类型",
+    //   key: "tradeType"
+    // },
     {
       label: "交易状态",
-      key: "orderStatus"
+      key: "orderStatus",
+      fieldType: 'render',
+      render: (h, params) => {
+        if (params.orderStatus === 0) {
+          return h(
+            'span', { 'class': 'f-fc-606266' }, '待支付'
+          )
+        } else if (params.orderStatus === 1) {
+          return h(
+            'span', { 'class': 'f-fc-606266' }, '支付中'
+          )
+        } else if (params.orderStatus === 2) {
+          return h(
+            'span', { 'class': 'f-fc-606266' }, '支付成功'
+          )
+        } else if (params.orderStatus === 3) {
+          return h(
+            'span', { 'class': 'f-fc-606266' }, '交易关闭'
+          )
+        } else if (params.orderStatus === 4) {
+          return h(
+            'span', { 'class': 'f-fc-606266' }, '部分退款'
+          )
+        } else if (params.orderStatus === 5) {
+          return h(
+            'span', { 'class': 'f-fc-606266' }, '全部退款'
+          )
+        }
+      }
     },
     {
       label: "订单金额",
@@ -77,15 +105,15 @@ export const FORM_CONFIG = {
     {
       label: "收银员",
       key: "cashierName"
-    },
-    {
-      label: "设备类型",
-      key: "deviceType"
-    },
-    {
-      label: "设备型号",
-      key: "deviceNo"
     }
+    // {
+    //   label: "设备类型",
+    //   key: "deviceType"
+    // },
+    // {
+    //   label: "设备型号",
+    //   key: "deviceNo"
+    // },
     // {
     //   label: "设备SN",
     //   key: "key"

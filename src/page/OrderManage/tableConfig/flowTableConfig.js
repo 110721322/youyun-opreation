@@ -34,11 +34,11 @@ export const TABLE_CONFIG = {
     },
     {
       label: '服务商分润',
-      prop: 'benefitAmount'
+      prop: 'agentCommission'
     },
     {
       label: '平台分润',
-      prop: 'platformCommission'
+      prop: 'topAgentCommission'
     },
     {
       label: '手续费',

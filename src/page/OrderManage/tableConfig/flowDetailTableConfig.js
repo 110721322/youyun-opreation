@@ -6,7 +6,7 @@ export const TABLE_CONFIG = {
     },
     {
       label: '交易时间',
-      prop: 'payTime'
+      prop: 'tradeTime'
     },
     // {
     //   label: '交易类型',
@@ -22,14 +22,14 @@ export const TABLE_CONFIG = {
     //   )
     //   }
     // },
-    {
-      label: '设备类型',
-      prop: 'diviceType'
-    },
-    {
-      label: '设备SN',
-      prop: 'deviceSN'
-    },
+    // {
+    //   label: '设备类型',
+    //   prop: 'diviceType'
+    // },
+    // {
+    //   label: '设备SN',
+    //   prop: 'deviceSN'
+    // },
     {
       label: '实收（退）金额',
       prop: 'tradeAmount'
