@@ -217,7 +217,7 @@ export default {
           } else {
             routerName = first.name
           }
-          this.$router.push({name: routerName}).catch(() =>{})
+          this.$router.push({name: routerName})
         })
       })
     },
