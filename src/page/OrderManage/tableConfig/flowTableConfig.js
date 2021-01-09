@@ -30,7 +30,8 @@ export const TABLE_CONFIG = {
     },
     {
       label: '实收（退）金额',
-      prop: 'actualAmount'
+      prop: 'actualAmount',
+      width: '120px'
     },
     {
       label: '服务商分润',
@@ -61,7 +62,7 @@ export const TABLE_CONFIG = {
     // },
     {
       label: '交易状态',
-      prop: 'orderStatusName',
+      prop: 'orderStatus',
       render: (h, params) => {
         const actions = new Map([
           [0, {className: 's-status-pending', statusDesc: '待支付'}],
@@ -110,11 +111,11 @@ export const REFUND_TABLE_CONFIG = {
   gridConfig: [
     {
       label: '退单号',
-      prop: 'orderNo'
+      prop: 'refundNo'
     },
     {
-      label: '交易时间',
-      prop: 'payTime'
+      label: '退款时间',
+      prop: 'refundTime'
     },
     {
       label: '所属服务商',
@@ -130,19 +131,18 @@ export const REFUND_TABLE_CONFIG = {
     },
     {
       label: '退款方式',
-      prop: 'payWayName'
+      prop: 'refundChannelName'
     },
     {
-      label: '交易状态',
-      prop: 'orderStatusName',
+      label: '退单状态',
+      prop: 'refundStatus',
       render: (h, params) => {
         const actions = new Map([
-          [0, {className: 's-status-pending', statusDesc: '待支付'}],
-          [1, {className: 's-status-pending', statusDesc: '支付中'}],
-          [2, {className: 's-status-success', statusDesc: '支付成功'}],
-          [3, {className: 's-status-fail', statusDesc: '交易关闭'}],
-          [4, {className: 's-status-fail', statusDesc: '部分退款'}],
-          [5, {className: 's-status-fail', statusDesc: '全部退款'}],
+          [0, {className: 's-status-pending', statusDesc: '待退款'}],
+          [1, {className: 's-status-pending', statusDesc: '退款中'}],
+          [2, {className: 's-status-success', statusDesc: '退款成功'}],
+          [3, {className: 's-status-fail', statusDesc: '退款失败'}],
+          [4, {className: 's-status-fail', statusDesc: '退款关闭'}],
           ['default', {className: 's-status-pending', statusDesc: '--'}]
         ])
         const action = actions.get(params.row.orderStatus) || actions.get('default')

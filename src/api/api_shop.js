@@ -17,5 +17,7 @@ export default {
   // 查询服务商下的所有商户
   selectAllMerchant: () => API.GET('/agent/v1/merchantNew/selectAllMerchant'),
   // 根据条件查询门店列表
-  selectShopByConditon: () => API.GET('/operation/v1/shop/selectShopByConditon')
+  selectShopByConditon: () => API.GET('/operation/v1/shop/selectShopByConditon'),
+  // 退单分页列表
+  selectPageRefundOrder: () => API.GET('/operation/v1/order/selectPageRefundOrder')
 }
