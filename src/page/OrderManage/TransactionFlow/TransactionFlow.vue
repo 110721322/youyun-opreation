@@ -1,9 +1,16 @@
 <template>
   <div>
     <div class="search-box">
-      <yun-search :form-base-data="searchConfig.formData" @search="onClickSearch"></yun-search>
+      <div class="tab-box">
+        <el-tabs v-model="activeName" class="tab-out"  @tab-click="clickTabs">
+          <el-tab-pane style="font-size:16px;" label="订单流水" name="0"></el-tab-pane>
+          <el-tab-pane style="font-size:16px;" label="退单流水" name="1"></el-tab-pane>
+        </el-tabs>
+      </div>
+      <yun-search v-if="activeName === '0'" ref="searchForm" :form-base-data="searchConfig.formData" @search="onClickSearch"></yun-search>
+      <yun-search v-else ref="refundSearchForm" :form-base-data="refundSearchConfig.formData" @search="onClickSearch"></yun-search>
     </div>
-    <div class="table-box">
+    <div class="table-box" v-if="activeName === '0'">
       <div class="tab-title">
         <span>交易流水列表</span>
         <el-button type="primary" size="small">导出</el-button>
@@ -27,22 +34,50 @@
         @detail="onClickDetail"
       ></yun-table>
     </div>
+    <div class="table-box" v-else>
+      <div class="tab-title">
+        <span>退单流水列表</span>
+        <el-button type="primary" size="small">导出</el-button>
+      </div>
+      <yun-table
+        ref="refundTable"
+        :grid-config="refundTableConfig.gridConfig"
+        :grid-btn-config="refundTableConfig.gridBtnConfig"
+        :form-config="refundTableConfig.formConfig"
+        :form-data="refundTableConfig.formModel"
+        :grid-edit-width="250"
+        :is-async="true"
+        :is-data-select="false"
+        :is-table-expand="false"
+        :row-key="'id'"
+        :params="refundParams"
+        grid-operation-name="交易流水列表"
+        :default-expand-all="false"
+        :hide-edit-area="refundTableConfig.hideEditArea"
+        :api-service="api"
+        @detail="onClickDetail"
+      ></yun-table>
+    </div>
   </div>
 </template>
 
 <script>
-import { SEARCH_CONFIG } from "../formConfig/flowFormConfig";
-import { TABLE_CONFIG } from "../tableConfig/flowTableConfig";
+import { SEARCH_CONFIG, REFUND_SEARCH_CONFIG } from "../formConfig/flowFormConfig";
+import { TABLE_CONFIG, REFUND_TABLE_CONFIG } from "../tableConfig/flowTableConfig";
 import api from "@/api/api_order";
 export default {
   name: "TransactionFlow",
   data() {
     return {
       searchConfig: SEARCH_CONFIG,
+      refundSearchConfig: REFUND_SEARCH_CONFIG,
       tableConfig: TABLE_CONFIG,
+      refundTableConfig: REFUND_TABLE_CONFIG,
       api: api.orderSelectByPage,
-      testData: [],
-      params: {}
+      params: {},
+      refundParams: {},
+      activeName: '0',
+      testData: []
     };
   },
   computed: {
@@ -60,21 +95,28 @@ export default {
       this.searchConfig.formData[6].urlOptions.params["agentNo"] = $val.agentNo;
     },
     onClickSearch($ruleForm) {
-      this.params = {
-        orderNo: $ruleForm.orderNo,
-        shopNo: $ruleForm.shopNo,
-        queryBeginPayTime: $ruleForm.date?$ruleForm.date[0]:'',
-        queryEndPayTime: $ruleForm.date?$ruleForm.date[1]:'',
-        tradeType: $ruleForm.tradeType,
-        payWay: $ruleForm.payWay,
-        agentNo: $ruleForm.agentNo,
-        merchantNo: $ruleForm.merchantNo,
-        orderStatus: $ruleForm.orderStatus,
-        deviceType: $ruleForm.deviceType
+      if (this.activeName === '0') {
+        this.params = {
+          orderNo: $ruleForm.orderNo,
+          shopNo: $ruleForm.shopNo,
+          queryBeginPayTime: $ruleForm.date?$ruleForm.date[0]:'',
+          queryEndPayTime: $ruleForm.date?$ruleForm.date[1]:'',
+          tradeType: $ruleForm.tradeType,
+          payWay: $ruleForm.payWay,
+          agentNo: $ruleForm.agentNo,
+          merchantNo: $ruleForm.merchantNo,
+          orderStatus: $ruleForm.orderStatus,
+          deviceType: $ruleForm.deviceType
+        }  
+      } else {
+        this.params = {
+        }
       }
     },
     onClickDetail(row) {
       this.$router.push('/orderManage/transactionFlow/flowDetail?merchantNo=' + row.merchantNo + '&shopNo=' + row.shopNo + '&orderNo=' + row.orderNo).catch(() => {})
+    },
+    clickTabs(tab) {
     }
   }
 };
@@ -88,7 +130,14 @@ export default {
   overflow: hidden;
   background: #fff;
 }
-
+.tab-box {
+  margin: 24px 24px 0;
+  padding: 24px 24px 0;
+  background: white;
+}
+.g-search-container {
+  margin-top: 0;
+}
 .tab-title {
   display: flex;
   justify-content: space-between;

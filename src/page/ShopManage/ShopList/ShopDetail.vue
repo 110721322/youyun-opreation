@@ -188,9 +188,12 @@
                 this.ruleForm.statusTxt = '微信认证中'
                 break;
               case 6:
-                this.ruleForm.statusTxt = '微信认证拒绝'
+                this.ruleForm.statusTxt = '微信未认证'
                 break;
               case 7:
+                this.ruleForm.statusTxt = '微信认证拒绝'
+                break;
+              case 8:
                 this.ruleForm.statusTxt = '已开通'
                 break;
               default:
