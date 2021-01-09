@@ -164,6 +164,13 @@
     .m-btn {
       display: flex;
       justify-content: center;
+      button {
+        height: 40px;
+        line-height: 20px;
+        font-size: 16px;
+        padding: 10px 20px;
+        margin-left: 16px;
+      }
     }
   }
 </style>

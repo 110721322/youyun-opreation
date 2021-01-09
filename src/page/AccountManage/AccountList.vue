@@ -106,6 +106,9 @@
         this.editAccountForm[3].isShow = true;
         this.editAccountForm.forEach(formItem => {
           formItem.initVal = $row[formItem.key]
+          if (formItem.key === 'password') {
+            formItem.initVal = null
+          }
         })
         this.editAccountDialoger = true;
       },

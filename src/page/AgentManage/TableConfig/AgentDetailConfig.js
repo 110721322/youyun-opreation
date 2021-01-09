@@ -31,7 +31,8 @@ export const DETAILCONFIG = {
     },
     {
       label: "地址",
-      key: "fullAddress"
+      key: "fullAddress",
+      fieldType: 'tooltip'
     }
   ],
   rateInfoData: [
@@ -42,12 +43,12 @@ export const DETAILCONFIG = {
       render: (h, ruleForm) => {
         return (
           <p class="f-fc-606266">
-            <i class="iconfont iconzhifubao f-fc-ali"></i>
-            { utils.AccMul(ruleForm.alipayRate) }%
-            <i class="iconfont iconweixin f-fc-wx"></i>
+            <i class="iconfont iconzhifubao f-fc-ali" style="margin-right:4px;"></i>
+            <span style="margin-right:8px;">{ utils.AccMul(ruleForm.alipayRate) }%</span>
+            <i class="iconfont iconweixin f-fc-wx" style="margin-right:4px;"></i>
             { utils.AccMul(ruleForm.wechatPayRate) }%
           </p>
-      )
+        )
       }
     },
     {
@@ -61,7 +62,8 @@ export const DETAILCONFIG = {
   bankInfoData: [
     {
       label: "开户支行",
-      key: "bankBranchName"
+      key: "bankBranchName",
+      fieldType: 'tooltip'
     },
     {
       label: '银行卡账号',

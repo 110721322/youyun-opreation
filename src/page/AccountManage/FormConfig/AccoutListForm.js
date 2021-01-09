@@ -75,13 +75,22 @@ export const ACCOUNT_FORM = [
   {
     type: 0,
     inputType: 'password',
-    initVal: '',
+    initVal: null,
     label: '修改密码',
     key: 'password',
     span: 24,
     isShow: false,
     rules: [
-      { required: true, message: '请输入密码', trigger: 'blur' }
+      {
+        validator: (rule, value, callback) => {
+          if (/[\u4E00-\u9FA5]/g.test(value)) {
+            callback(new Error('请勿输入汉字'));
+          } else {
+            callback();
+          }
+        },
+        trigger: 'blur'
+      }
     ]
   },
   {
