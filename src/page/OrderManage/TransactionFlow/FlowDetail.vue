@@ -138,7 +138,7 @@
   .table-box {
     position: relative;
     margin: 24px;
-    padding: 24px;
+    margin-top: 0;
     overflow: hidden;
     background: #fff;
   }

@@ -106,3 +106,76 @@ export const TABLE_CONFIG = {
   },
   hideEditArea: false
 };
+export const REFUND_TABLE_CONFIG = {
+  gridConfig: [
+    {
+      label: '退单号',
+      prop: 'orderNo'
+    },
+    {
+      label: '交易时间',
+      prop: 'payTime'
+    },
+    {
+      label: '所属服务商',
+      prop: 'agentName'
+    },
+    {
+      label: '所属商户',
+      prop: 'merchantName'
+    },
+    {
+      label: '支付门店',
+      prop: 'shopName'
+    },
+    {
+      label: '退款方式',
+      prop: 'payWayName'
+    },
+    {
+      label: '交易状态',
+      prop: 'orderStatusName',
+      render: (h, params) => {
+        const actions = new Map([
+          [0, {className: 's-status-pending', statusDesc: '待支付'}],
+          [1, {className: 's-status-pending', statusDesc: '支付中'}],
+          [2, {className: 's-status-success', statusDesc: '支付成功'}],
+          [3, {className: 's-status-fail', statusDesc: '交易关闭'}],
+          [4, {className: 's-status-fail', statusDesc: '部分退款'}],
+          [5, {className: 's-status-fail', statusDesc: '全部退款'}],
+          ['default', {className: 's-status-pending', statusDesc: '--'}]
+        ])
+        const action = actions.get(params.row.orderStatus) || actions.get('default')
+        return (
+          <span class={['flex-align-center', 'g-status-icon', 's-status-radius', action.className]}>{ action.statusDesc }</span>
+      )
+      }
+    }
+  ],
+
+  gridBtnConfig: {
+    create: false,
+    update: false,
+    delete: false,
+    view: false,
+    expands: [
+      {
+        name: '详情',
+        emitName: 'detail',
+        type: 'text'
+      }
+    ]
+  },
+  // 表单基础数据类型，需要预先赋值
+  formModel: {
+    id: '',
+    tel: '',
+    name: '',
+    email: '',
+    status: '',
+    create_time: '',
+    expand: '',
+    roleIdList: []
+  },
+  hideEditArea: false
+};
