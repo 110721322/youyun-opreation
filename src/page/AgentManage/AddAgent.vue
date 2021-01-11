@@ -49,9 +49,6 @@
     data() {
       return {
         fromConfigData: ADD_AGENT,
-        serviceVal: false,
-        rateVal: false,
-        settleVal: false,
         serviceInfo: {
           agentName: '',
           phone: '',
@@ -63,32 +60,20 @@
     },
     methods: {
       clickSubmit() {
-        this.$refs['serviceInfo'].$children[0].validate((valid) => {
-          if (valid) {
-            this.serviceVal = true
-          } else {
-            this.serviceVal = false
-            return false;
-          }
-        });
-        this.$refs['rateInfo'].$children[0].validate((valid) => {
-          if (valid) {
-            this.rateVal = true
-          } else {
-            this.rateVal = false
-            return false;
-          }
-        });
-        this.$refs['settleInfo'].$children[0].validate((valid) => {
-          if (valid) {
-            this.settleVal = true
-          } else {
-            this.settleVal = false
-            return false;
-          }
-        });
-        if (!this.serviceVal || !this.rateVal || !this.settleVal) {
-          return false
+        const checkServiceForm = this.$refs['serviceInfo'].clickFootBtn();
+        const checkRateForm = this.$refs['rateInfo'].clickFootBtn();
+        const checkSettleForm = this.$refs['settleInfo'].clickFootBtn();
+        if (!checkServiceForm) {
+          this.$message('请完善服务商信息');
+          return
+        }
+        if (!checkRateForm) {
+          this.$message('请完善费率信息');
+          return
+        }
+        if (!checkSettleForm) {
+          this.$message('请完善结算信息');
+          return
         }
         const serviceData = this.$refs['serviceInfo'].ruleForm
         const rateData = this.$refs['rateInfo'].ruleForm
