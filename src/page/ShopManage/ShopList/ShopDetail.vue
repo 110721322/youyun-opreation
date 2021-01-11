@@ -92,11 +92,11 @@
           </yun-detail-mode>
         </div>
       </div>
-      <div v-if="activeName==='1'&&ruleForm.status===0" class="flex-align-center flex-justify-center foot-btn">
-        <div>
-          <el-button type="primary" size="normal" @click="passDialog = true">通过</el-button>
-          <el-button size="normal" @click="dialogVisible = true">驳回</el-button>
-        </div>
+    </div>
+    <div v-if="activeName==='1'&&ruleForm.status===0" class="flex-align-center flex-justify-center foot-btn">
+      <div>
+        <el-button type="primary" size="normal" @click="passDialog = true">通过</el-button>
+        <el-button size="normal" @click="dialogVisible = true">驳回</el-button>
       </div>
     </div>
     <el-dialog
@@ -359,7 +359,7 @@
   }
   .foot-btn {
     padding: 16px 0;
-    box-shadow: 0px -4px 16px 0px rgba(0, 0, 0, 0.09);
+    // box-shadow: 0px -4px 16px 0px rgba(0, 0, 0, 0.09);
   }
   /deep/ .formTemplate {
     margin: 0;

@@ -383,8 +383,9 @@ export const FORM_CONFIG = {
       key: 'reason',
       labelWidth: '120px',
       placeholder: "请输入驳回原因",
-      style: "width: 379px;",
+      style: "width: 300px;",
       maxlength: 100,
+      span: 24,
       rules: [
         { required: true, message: '请输入驳回备注', trigger: 'blur' }
       ]

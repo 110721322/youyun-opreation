@@ -95,6 +95,7 @@
     methods: {
       selectOrderDetails() {
         const params = {
+          refundOrderNo: this.$route.query.refundOrderNo,
           merchantNo: this.$route.query.merchantNo,
           shopNo: this.$route.query.shopNo,
           orderNo: this.$route.query.orderNo

@@ -38,11 +38,11 @@
           </yun-form>
         </div>
       </div>
-      <div class="flex-align-center flex-justify-center foot-btn">
-        <div>
-          <el-button type="primary" size="normal" @click="clickShopEditDetail">提交</el-button>
-          <el-button size="normal" @click="clickCancleEdit">取消</el-button>
-        </div>
+    </div>
+    <div class="flex-align-center flex-justify-center foot-btn">
+      <div>
+        <el-button type="primary" size="normal" @click="clickShopEditDetail">提交</el-button>
+        <el-button size="normal" @click="clickCancleEdit">取消</el-button>
       </div>
     </div>
   </div>
@@ -223,6 +223,5 @@
   }
   .foot-btn {
     padding: 16px 0;
-    box-shadow: 0px -4px 16px 0px rgba(0, 0, 0, 0.09);
   }
 </style>
