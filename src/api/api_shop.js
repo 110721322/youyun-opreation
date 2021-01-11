@@ -13,11 +13,9 @@ export default {
   // 门店审核驳回
   rejectIndirectAudit: (params) => API.POST('/operation/v1/shop/rejectIndirectAudit', params, {needFormData: true}),
   // 查询门店类目
-  queryAllCategory: () => API.GET('/agent/v1/shop/queryAllCategory'),
+  queryAllCategory: (params) => API.GET('/agent/v1/shop/queryAllCategory', params),
   // 查询服务商下的所有商户
-  selectAllMerchant: () => API.GET('/agent/v1/merchantNew/selectAllMerchant'),
+  selectAllMerchant: (params) => API.GET('/agent/v1/merchantNew/selectAllMerchant', params),
   // 根据条件查询门店列表
-  selectShopByConditon: () => API.GET('/operation/v1/shop/selectShopByConditon'),
-  // 退单分页列表
-  selectPageRefundOrder: () => API.GET('/operation/v1/order/selectPageRefundOrder')
+  selectShopByConditon: (params) => API.GET('/operation/v1/shop/selectShopByConditon', params)
 }

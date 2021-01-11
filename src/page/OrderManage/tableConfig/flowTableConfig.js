@@ -134,6 +134,10 @@ export const REFUND_TABLE_CONFIG = {
       prop: 'refundChannelName'
     },
     {
+      label: '退款金额',
+      prop: 'actualAmount'
+    },
+    {
       label: '退单状态',
       prop: 'refundStatus',
       render: (h, params) => {
@@ -145,7 +149,7 @@ export const REFUND_TABLE_CONFIG = {
           [4, {className: 's-status-fail', statusDesc: '退款关闭'}],
           ['default', {className: 's-status-pending', statusDesc: '--'}]
         ])
-        const action = actions.get(params.row.orderStatus) || actions.get('default')
+        const action = actions.get(params.row.refundStatus) || actions.get('default')
         return (
           <span class={['flex-align-center', 'g-status-icon', 's-status-radius', action.className]}>{ action.statusDesc }</span>
       )

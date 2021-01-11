@@ -37,7 +37,9 @@ export const FORM_CONFIG = {
     },
     {
       label: "门店审核状态",
-      key: "statusTxt"
+      key: "statusTxt",
+      fieldType: 'slot',
+      slot: 'statusSlot'
     }
   ],
   payInfoData: [

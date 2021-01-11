@@ -7,7 +7,7 @@
           <el-tab-pane style="font-size:16px;" label="门店详情" name="1"></el-tab-pane>
         </el-tabs>
         <div class="right-btn" v-if="ruleForm.status===1 || ruleForm.status===3">
-          <el-button type="primary" @click="clickEdit">编辑</el-button>
+          <el-button v-if="activeName==='1'" type="primary" @click="clickEdit">编辑</el-button>
         </div>
       </div>
       <div v-if="ruleForm.status===1 || ruleForm.status===3" class="error-box">
@@ -29,6 +29,12 @@
               <div class="flex-align-center">
                 <span :class="['disabledTxt', ruleForm.isDisabled?'inactive':'active']">{{ruleForm.isDisabled ? '禁用' : '启用'}}</span>
                 <el-switch v-model="ruleForm.isDisabled" :active-value="0" :inactive-value="1" @change="changeSwitch"></el-switch>
+              </div>
+            </template>
+            <template slot="statusSlot">
+              <div class="flex-align-center">
+                <span>{{ ruleForm.statusTxt }}</span>
+                <span v-if="ruleForm.status === 6" class="statusActTxt" @click="qrCodeDialoger=true">微信未认证</span>
               </div>
             </template>
           </yun-detail-mode>
@@ -120,6 +126,21 @@
     >
       <div slot="body" class="passDialogTxt">确认通过该门店信息吗？通过后信息将不能修改</div>
     </yun-dialog>
+    <yun-dialog
+        title="认证码"
+        :dialoger="qrCodeDialoger"
+        width="500px"
+        cancel-text="取消"
+        confirm-text="确定"
+        @confirm="onClickClose"
+        @cancel="onClickClose"
+    >
+      <div slot="body" class="out-box">
+        <div class="imgPart">
+          <img :src="ruleForm.qrCodeUrl" alt="认证码" />
+        </div>
+      </div>
+    </yun-dialog>
   </div>
 </template>
 
@@ -143,7 +164,8 @@
         radio: 1,
         passDialog: false,
         dialogVisible: false,
-        value: 0
+        value: 0,
+        qrCodeDialoger: false
       }
     },
     created() {
@@ -254,6 +276,9 @@
       },
       handleClose() {
         this.dialogVisible = false
+      },
+      onClickClose() {
+        this.qrCodeDialoger = false
       }
     }
   }
@@ -369,5 +394,28 @@
     font-weight: 400;
     color: #333335;
     line-height: 22px;
+  }
+  .out-box {
+    padding: 24px;
+  }
+  .out-form {
+    margin: 24px 0;
+  }
+  .imgPart {
+    width: 144px;
+    height: 144px;
+    padding: 10px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .statusActTxt {
+    margin-left: 4px;
+    color: #1989FA;
+    text-decoration: underline;
+    cursor: pointer;
   }
 </style>
