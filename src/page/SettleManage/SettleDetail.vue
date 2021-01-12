@@ -65,7 +65,7 @@
     data() {
       return {
         gridConfig: SETTLE_DETAIL_CONFIG.gridConfig,
-        gridBtnConfig: false,
+        gridBtnConfig: SETTLE_DETAIL_CONFIG.gridBtnConfig,
         testData: [],
         id: this.$route.query.id,
         basicData: SETTLE_CONFIG.basicData,
@@ -124,6 +124,13 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
+          if (!this.form.remark) {
+            this.$message({
+              message: '请填写驳回原因',
+              type: 'info'
+            })
+            return
+          }
           api.financeReject({
             id: this.id,
             remark: this.form.remark
