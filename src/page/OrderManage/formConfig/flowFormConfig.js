@@ -103,6 +103,14 @@ export const SEARCH_CONFIG = {
 }
 export const REFUND_SEARCH_CONFIG = {
   formData: [{
+    label: '交易时间',
+    key: 'date',
+    datatype: 'datetimerange',
+    defaultDateType: 'first',
+    type: 9,
+    span: 24
+  },
+  {
     type: 0,
     label: '退单号',
     key: 'refundOrderNo',
@@ -121,13 +129,6 @@ export const REFUND_SEARCH_CONFIG = {
       keyName: "shopNo",
       valueName: "shopName"
     }
-  },
-  {
-    label: '交易时间',
-    key: 'date',
-    datatype: 'datetimerange',
-    type: 9,
-    span: 24
   },
   {
     type: 1,

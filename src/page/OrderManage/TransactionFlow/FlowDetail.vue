@@ -118,7 +118,7 @@
     margin: 24px;
     background: white;
     .tab-box {
-      padding: 24px;
+      padding: 12px 24px 24px;
       width: 100%;
       /deep/ .el-tabs__header{
         margin: 0px;
@@ -140,6 +140,7 @@
     position: relative;
     margin: 24px;
     margin-top: 0;
+    padding-bottom: 24px;
     overflow: hidden;
     background: #fff;
   }

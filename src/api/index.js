@@ -68,7 +68,7 @@ axios.interceptors.response.use((response) => {
     if (_isShowMessage) {
       Message({
         message: response.data.message || "登录失效，请重新登录",
-        duration: 2000,
+        duration: 3000,
         type: 'error'
       })
     }
@@ -84,7 +84,7 @@ axios.interceptors.response.use((response) => {
     if (_isShowMessage) {
       Message({
         message: response.data.message || "出现错误，请稍后再试",
-        duration: 2000,
+        duration: 3000,
         type: 'error'
       })
     }
@@ -153,7 +153,7 @@ axios.interceptors.response.use((response) => {
   if (_isShowMessage) {
     Message({
       message: error.message || "出现错误，请稍后再试",
-      duration: 2000,
+      duration: 3000,
       type: 'error'
     })
   }
