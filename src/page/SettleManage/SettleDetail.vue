@@ -42,11 +42,11 @@
       <div class="m-remark">
         <el-form ref="form" :model="form" label-width="80px">
           <el-form-item label="审核备注:">
-            <el-input v-model="form.remark" placeholder="请输入" type="textarea" maxLength="50"></el-input>
+            <el-input :disabled="ruleForm.settleStatus !== '2'" v-model="form.remark" placeholder="请输入" type="textarea" maxLength="50"></el-input>
           </el-form-item>
         </el-form>
       </div>
-      <div class="flex-align-center flex-justify-center foot-btn">
+      <div class="flex-align-center flex-justify-center foot-btn" v-if="ruleForm.settleStatus === '2'">
         <div>
           <el-button type="primary" size="normal" @click="clickPass">通过</el-button>
           <el-button size="normal" @click="clickReject">驳回</el-button>
@@ -65,7 +65,7 @@
     data() {
       return {
         gridConfig: SETTLE_DETAIL_CONFIG.gridConfig,
-        gridBtnConfig: false,
+        gridBtnConfig: SETTLE_DETAIL_CONFIG.gridBtnConfig,
         testData: [],
         id: this.$route.query.id,
         basicData: SETTLE_CONFIG.basicData,
@@ -98,7 +98,7 @@
         }).then(() => {
           api.financeSuccess({
             id: this.id,
-            remark: this.remark
+            remark: this.form.remark
           }).then(res => {
             if (res.status === 0) {
               this.$message({
@@ -123,9 +123,16 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
+          if (!this.form.remark) {
+            this.$message({
+              message: '请填写驳回原因',
+              type: 'info'
+            })
+            return
+          }
           api.financeReject({
             id: this.id,
-            remark: this.remark
+            remark: this.form.remark
           }).then(res => {
             if (res.status === 0) {
               this.$message({
