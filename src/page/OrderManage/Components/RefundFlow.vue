@@ -9,7 +9,10 @@
     name: "RefundFlow",
     data() {
       return {
-        params: {},
+        params: {
+          queryBeginPayTime: this.$g.utils.getToday(0) + ' 00:00:00',
+          queryEndPayTime: this.$g.utils.getToday(0) + ' 23:59:59'
+        },
         api: api.selectPageRefundOrder,
         searchConfig: REFUND_SEARCH_CONFIG,
         gridConfig: REFUND_TABLE_CONFIG.gridConfig,

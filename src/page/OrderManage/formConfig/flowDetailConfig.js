@@ -10,7 +10,7 @@ export const FORM_CONFIG = {
     },
     {
       label: "创建时间",
-      key: "creatTime"
+      key: "createTime"
     },
     {
       label: "交易时间",
