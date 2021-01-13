@@ -44,7 +44,10 @@
       return {
         searchConfig: SEARCH_CONFIG,
         title: '',
-        params: {},
+        params: {
+          queryBeginPayTime: this.$g.utils.getToday(0) + ' 00:00:00',
+          queryEndPayTime: this.$g.utils.getToday(0) + ' 23:59:59'
+        },
         api: api.orderSelectByPage,
         gridConfig: TABLE_CONFIG.gridConfig,
         gridBtnConfig: TABLE_CONFIG.gridBtnConfig
@@ -67,6 +70,7 @@
           orderStatus: $ruleForm.orderStatus,
           deviceType: $ruleForm.deviceType
         }
+        this.$emit('clickSearch', this.params)
       },
       onClickDetail(row) {
         this.$router.push('/orderManage/transactionFlow/flowDetail?merchantNo=' + row.merchantNo + '&shopNo=' + row.shopNo + '&orderNo=' + row.orderNo).catch(() => {})

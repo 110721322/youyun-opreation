@@ -1,5 +1,85 @@
 <template>
   <div class="m-page">
+    <div class="m-trade">
+      <div class="m-trade-box">
+        <div class="m-trade-line1">
+          <div class="left-trade">
+            <span>订单总额(元)</span>
+            <img src="@/assets/img/allMoney.svg" alt="订单图标" />
+          </div>
+          <div class="right-trade">
+            <img src="@/assets/img/warn.svg" alt="提示图标" />
+          </div>
+        </div>
+        <div class="m-trade-line2">{{ statisticsData.totalAmount || 0 }}</div>
+<!--        <div class="m-trade-line3">今日订单金额(12笔) ¥23669.00</div>-->
+      </div>
+      <div class="m-trade-box">
+        <div class="m-trade-line1">
+          <div class="left-trade">
+            <span>实收总额({{ statisticsData.actualCount || 0 }}笔)</span>
+            <img src="@/assets/img/actionMoney.svg" alt="总额图标" />
+          </div>
+          <div class="right-trade">
+            <img src="@/assets/img/warn.svg" alt="提示图标" />
+          </div>
+        </div>
+        <div class="m-trade-line2">{{ statisticsData.actualAmount || 0 }}</div>
+<!--        <div class="m-trade-line3">今日实际金额(12笔) ¥23669.00</div>-->
+      </div>
+      <div class="m-trade-box">
+        <div class="m-trade-line1">
+          <div class="left-trade">
+            <span>退款总额({{ statisticsData.refundCount || 0 }}笔)</span>
+            <img src="@/assets/img/refundMoney.svg" alt="退款图标" />
+          </div>
+          <div class="right-trade">
+            <img src="@/assets/img/warn.svg" alt="提示图标" />
+          </div>
+        </div>
+        <div class="m-trade-line2">{{ statisticsData.refundAmount || 0 }}</div>
+<!--        <div class="m-trade-line3">今日退款金额(12笔) ¥23669.00</div>-->
+      </div>
+      <div class="m-trade-box">
+        <div class="m-trade-line1">
+          <div class="left-trade">
+            <span>手续费总额（元）</span>
+            <img src="@/assets/img/refundMoney.svg" alt="退款图标" />
+          </div>
+          <div class="right-trade">
+            <img src="@/assets/img/warn.svg" alt="提示图标" />
+          </div>
+        </div>
+        <div class="m-trade-line2">{{ statisticsData.serviceFee || 0 }}</div>
+<!--        <div class="m-trade-line3">今日退款金额(12笔) ¥23669.00</div>-->
+      </div>
+      <div class="m-trade-box">
+        <div class="m-trade-line1">
+          <div class="left-trade">
+            <span>服务商佣金总额（元）</span>
+            <img src="@/assets/img/refundMoney.svg" alt="退款图标" />
+          </div>
+          <div class="right-trade">
+            <img src="@/assets/img/warn.svg" alt="提示图标" />
+          </div>
+        </div>
+        <div class="m-trade-line2">{{ statisticsData.agentCommission || 0 }}</div>
+<!--        <div class="m-trade-line3">今日退款金额(12笔) ¥23669.00</div>-->
+      </div>
+      <div class="m-trade-box">
+        <div class="m-trade-line1">
+          <div class="left-trade">
+            <span>平台佣金总额（元）</span>
+            <img src="@/assets/img/refundMoney.svg" alt="退款图标" />
+          </div>
+          <div class="right-trade">
+            <img src="@/assets/img/warn.svg" alt="提示图标" />
+          </div>
+        </div>
+        <div class="m-trade-line2">{{ statisticsData.platformCommission || 0 }}</div>
+<!--        <div class="m-trade-line3">今日退款金额(12笔) ¥23669.00</div>-->
+      </div>
+    </div>
     <div class="m-select-top">
       <el-tabs v-model="activeName">
         <el-tab-pane label="订单流水" name="OrderFlow"></el-tab-pane>
@@ -7,7 +87,7 @@
       </el-tabs>
     </div>
     <transition name="fade-transform" mode="out-in">
-      <component :is="activeName"></component>
+      <component :is="activeName" @clickSearch="clickSearch"></component>
     </transition>
   </div>
 </template>
@@ -15,6 +95,7 @@
 <script>
   import OrderFlow from "../Components/OrderFlow";
   import RefundFlow from "../Components/RefundFlow";
+  import api_order from '@/api/api_order'
   export default {
     name: "TransactionFlow",
     components: {
@@ -22,12 +103,31 @@
     },
     data() {
       return {
-        activeName: 'OrderFlow'
+        activeName: 'OrderFlow',
+        statisticsData: {}, // 统计数据信息
+        params: {}
       }
     },
     created() {
+      this.params = {
+        beginTime: this.$g.utils.getToday(0) + ' 00:00:00',
+        endTime: this.$g.utils.getToday(0) + ' 23:59:59'
+      }
+      this.getOrderStatistics()
     },
     methods: {
+      clickSearch(params) {
+        this.params = params
+      },
+      getOrderStatistics() {
+        api_order.selectOrderStatic({
+          ...this.params
+        }).then(res => {
+          if (res.status === 0) {
+            this.statisticsData = res.data;
+          }
+        })
+      }
     }
   }
 </script>
@@ -39,14 +139,16 @@
   .m-page {
     padding-top: 24px;
     .m-trade {
-      margin: 24px;
+      margin: 0 24px;
       display: flex;
       justify-content: space-between;
+      flex-wrap: wrap;
       .m-trade-box {
-        width: 24%;
+        width: 30%;
         padding: 16px 24px;
         background: #fff;
         margin-right: 24px;
+        margin-bottom: 24px;
         .m-trade-line1 {
           display: flex;
           justify-content: space-between;

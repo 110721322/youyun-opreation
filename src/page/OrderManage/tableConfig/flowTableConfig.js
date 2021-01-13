@@ -2,7 +2,8 @@ export const TABLE_CONFIG = {
   gridConfig: [
     {
       label: '订单号',
-      prop: 'orderNo'
+      prop: 'orderNo',
+      width: '150px'
     },
     {
       label: '创建时间',
@@ -111,7 +112,8 @@ export const REFUND_TABLE_CONFIG = {
   gridConfig: [
     {
       label: '退单号',
-      prop: 'refundNo'
+      prop: 'refundNo',
+      width: '150px'
     },
     {
       label: '退款时间',
