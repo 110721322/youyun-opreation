@@ -40,7 +40,7 @@
     </yun-dialog>
     <yun-dialog
         :dialoger="editRoleDialoger"
-        title="添加权限组"
+        title="编辑权限组"
         width="488px"
         @confirm="confirmEditRole"
         @cancel="closeRoleDialog"
