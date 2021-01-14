@@ -92,7 +92,7 @@ export const FORM_CONFIG = {
         rules: [
           { required: true, message: '请输入支付宝费率', trigger: 'blur' },
           { validator: function(rule, value, callback){
-              if(value <= 0.2 || value >= 0.6){
+              if(value < 0.2 || value > 0.6){
                 callback(new Error("费率范围为0.2~0.6"));
               }else{
                 callback();
@@ -112,7 +112,7 @@ export const FORM_CONFIG = {
         rules: [
           { required: true, message: '请输入微信费率', trigger: 'blur' },
           { validator: function(rule, value, callback){
-              if(value <= 0.2 || value >= 0.6){
+              if(value < 0.2 || value > 0.6){
                 callback(new Error("费率范围为0.2~0.6"));
               }else{
                 callback();
