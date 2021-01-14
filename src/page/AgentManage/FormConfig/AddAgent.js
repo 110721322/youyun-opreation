@@ -74,7 +74,15 @@ export const ADD_AGENT = {
         showSlotName: '%',
         key: 'alipayRate',
         rules: [
-          { required: true, message: '请输入支付宝费率', trigger: 'blur' }
+          { required: true, message: '请输入支付宝费率', trigger: 'blur' },
+          { validator: function(rule, value, callback){
+              if(value <= 0.2 || value >= 0.6){
+                callback(new Error("费率范围为0.2~0.6"));
+              }else{
+                callback();
+              }
+            }, trigger: 'blur'},
+          { pattern: /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/, message: '请输入正确费率' }
         ]
       },
       {
@@ -85,7 +93,15 @@ export const ADD_AGENT = {
         showSlotName: '%',
         key: 'wechatPayRate',
         rules: [
-          { required: true, message: '请输入微信费率', trigger: 'blur' }
+          { required: true, message: '请输入微信费率', trigger: 'blur' },
+          { validator: function(rule, value, callback){
+              if(value <= 0.2 || value >= 0.6){
+                callback(new Error("费率范围为0.2~0.6"));
+              }else{
+                callback();
+              }
+            }, trigger: 'blur'},
+          { pattern: /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/, message: '请输入正确微信费率' }
         ]
       },
       {
