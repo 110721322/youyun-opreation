@@ -90,10 +90,10 @@ export const FORM_CONFIG = {
     }
   ],
   moneyInfoData: [
-    {
-      label: "所属服务商",
-      key: "agentName"
-    },
+    // {
+    //   label: "所属服务商",
+    //   key: "agentName"
+    // },
     {
       label: "所属商户",
       key: "merchantName"

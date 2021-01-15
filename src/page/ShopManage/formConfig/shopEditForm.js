@@ -165,7 +165,7 @@ export const FORM_CONFIG = {
       key: 'shopLicenseDate',
       checkedType: 'long', //长期有效选择
       rules: [
-        { type: 'date', required: true, message: '请选择营业执照有效期', trigger: 'change' }
+        { required: true, message: '请选择营业执照有效期', trigger: 'change' }
       ],
       isShow: (params) => {
         if (params.shopType === 'personal') {

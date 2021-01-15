@@ -69,8 +69,8 @@ export const TABLE_CONFIG = {
           [0, {className: 's-status-pending', statusDesc: '待支付'}],
           [1, {className: 's-status-pending', statusDesc: '支付中'}],
           [2, {className: 's-status-success', statusDesc: '支付成功'}],
-          [3, {className: 's-status-fail', statusDesc: '交易关闭'}],
-          [4, {className: 's-status-fail', statusDesc: '部分退款'}],
+          [3, {className: 's-status-pending', statusDesc: '交易关闭'}],
+          [4, {className: 's-status-pending', statusDesc: '部分退款'}],
           [5, {className: 's-status-fail', statusDesc: '全部退款'}],
           ['default', {className: 's-status-pending', statusDesc: '--'}]
         ])

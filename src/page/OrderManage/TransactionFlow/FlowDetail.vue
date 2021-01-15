@@ -61,6 +61,9 @@
         </div>
       </div>
     </div>
+    <div class="flex-align-center flex-justify-center">
+      <el-button type="primary" size="normal" @click="clickBack">返回</el-button>
+    </div>
   </div>
 </template>
 
@@ -108,6 +111,9 @@
       },
       handleClose() {
         this.dialogVisible = false
+      },
+      clickBack() {
+        this.$router.back();
       }
     }
   }
