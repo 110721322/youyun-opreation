@@ -1,3 +1,4 @@
+import api from '@/api/api_agentManage'
 export const SEARCH_FORM_CONFIG = {
   formData: [
     {
@@ -8,10 +9,20 @@ export const SEARCH_FORM_CONFIG = {
       span: 11
     },
     {
-      type: 0,
+      type: 1,
       label: '服务商',
-      key: 'agentName',
-      labelWidth: '128px',
+      key: 'agentNo',
+      isSearch: true,
+      urlOptions: {
+        searchKey: 'agentName',
+        url: api.queryPageByCondition,
+        keyName: 'agentNo',
+        valueName: 'agentName',
+        params: {
+          currentPage: 1,
+          pageSize: 20
+        }
+      },
       span: 11
     },
     {
