@@ -8,7 +8,7 @@ const api = {
   // 批量修改服务商管理员
   updateOperationId: (params) => API.POST('/operation/v1/agent/updateOperationId', params),
   // 查询服务商状态枚举
-  getAgentStatus: () => API.POST('/operation/v1/agent/getAgentStatus'),
+  getAgentStatus: () => API.GET('/operation/v1/agent/getAgentStatus'),
   // 获取所有大区配置
   queryAllRegion: () => API.GET('/operation/v1/region/queryAllRegion'),
   // 查询运营管理人员列表
