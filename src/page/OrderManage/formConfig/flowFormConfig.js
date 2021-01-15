@@ -6,7 +6,7 @@ export const SEARCH_CONFIG = {
     label: '交易时间',
     key: 'date',
     defaultDateType: 'first',
-    datatype: 'datetimerange',
+    dateType: 'datetimerange',
     type: 9,
     span: 24
   },
@@ -105,7 +105,7 @@ export const REFUND_SEARCH_CONFIG = {
   formData: [{
     label: '交易时间',
     key: 'date',
-    datatype: 'datetimerange',
+    dateType: 'datetimerange',
     defaultDateType: 'first',
     type: 9,
     span: 24

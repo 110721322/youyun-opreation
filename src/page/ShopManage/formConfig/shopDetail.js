@@ -33,7 +33,7 @@ export const FORM_CONFIG = {
     },
     {
       label: "微信商户号",
-      key: "merchantNo"
+      key: "wechatMerchantNo"
     },
     {
       label: "门店审核状态",
