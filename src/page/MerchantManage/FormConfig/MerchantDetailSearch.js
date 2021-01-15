@@ -41,7 +41,7 @@ export const SEARCH_FORM_CONFIG = {
           value: 4
         },
         {
-          label: '微信实名认证中',
+          label: '微信审核中',
           value: 5
         },
         {
