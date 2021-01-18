@@ -122,7 +122,7 @@ export const FORM_CONFIG = {
   payInfoData: [
     {
       label: "支付账号",
-      key: "payAccount"
+      key: "userId"
     },
     {
       label: "备注",

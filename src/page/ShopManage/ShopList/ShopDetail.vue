@@ -58,7 +58,7 @@
           </yun-detail-mode>  
         </div>
       </div>
-      <div v-show="activeName==='1'" class="detail-box">
+      <div v-if="activeName==='1'" class="detail-box">
         <div class="detail-mode-box">
           <yun-detail-mode
             :rule-form="ruleForm"

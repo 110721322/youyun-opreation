@@ -65,9 +65,9 @@ export const TABLE_CONFIG = {
       prop: 'status',
       render: (h, params) => {
         const actions = new Map([
-          [0, {className: 's-status-pending', statusDesc: '预审核中'}],
+          [0, {className: 's-status-primary', statusDesc: '预审核中'}],
           [1, {className: 's-status-fail', statusDesc: '平台驳回'}],
-          [2, {className: 's-status-pending', statusDesc: '通道审核中'}],
+          [2, {className: 's-status-primary', statusDesc: '通道审核中'}],
           [3, {className: 's-status-fail', statusDesc: '通道驳回'}],
           [4, {className: 's-status-success', statusDesc: '通道通过'}],
           [5, {className: 's-status-pending', statusDesc: '微信审核中'}],
