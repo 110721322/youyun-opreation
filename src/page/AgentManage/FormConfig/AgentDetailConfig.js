@@ -207,7 +207,7 @@ export const FORM_CONFIG = {
         initVal: '',
         options: [
           {
-            label: '封禁（禁止服务商登录、结算。禁止商户收款）',
+            label: '封禁（禁止服务商登录、结算。禁止商户收款、登录）',
             value: 3
           },{
             label: '冻结（服务商可登录、禁止结算。商户可收款）',

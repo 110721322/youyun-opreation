@@ -179,7 +179,7 @@
        */
       disableAccount($row) {
         const that = this;
-        this.$confirm('确定要禁用吗？启用后账户无法登陆后台管理系统。', '确认禁用', {
+        this.$confirm('确定要禁用吗？禁用后账户无法登陆后台管理系统。', '确认禁用', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
