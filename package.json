@@ -1,15 +1,18 @@
 {
   "name": "operate-manager",
   "version": "1.0.0",
+  "dllVersion": "1.0.1",
   "private": true,
   "scripts": {
     "dev": "vue-cli-service serve --mode dev",
     "test": "vue-cli-service serve --mode test",
+    "deploy": "vue-cli-service serve --mode deploy",
     "release": "vue-cli-service serve --mode release",
     "prod": "vue-cli-service serve --mode production",
     "build": "vue-cli-service build --mode production",
-    "build-test": "vue-cli-service build --mode development",
-    "build-dev": "vue-cli-service build --mode development",
+    "build-deploy": "vue-cli-service build --mode deploy",
+    "build-test": "vue-cli-service build --mode test",
+    "build-dev": "vue-cli-service build --mode dev",
     "dll:dev": "webpack --progress --config webpack/webpack.dll.conf.js --mode development",
     "dll": "webpack --progress --config webpack/webpack.dll.conf.js --mode production"
   },
@@ -40,6 +43,7 @@
     "compression-webpack-plugin": "^4.0.0",
     "css-loader": "^3.4.2",
     "element-ui": "^2.14.1",
+    "html-webpack-plugin": "^4.5.1",
     "jest": "^24.9.0",
     "node-sass": "^4.14.1",
     "regenerator-runtime": "^0.13.3",

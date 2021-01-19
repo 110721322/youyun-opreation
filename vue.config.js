@@ -1,10 +1,12 @@
 const webpack = require('webpack')
 const path = require('path')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const { library } = require('./webpack/dll.config')
 const dllPath = './public/vendor'
 const productionGzipExtensions = ['js', 'css']
+const serves = ['production', 'test']
 const devtool = process.env.NODE_ENV === 'production' ? 'none' : 'eval-source-map'
 const packageInfo = require('./package.json')
 
@@ -52,6 +54,24 @@ const NODE_DEV_PLUGINS = [
   })
 ]
 
+const plugins = process.env.NODE_ENV === 'production' ? NODE_PROD_PLUGINS : NODE_DEV_PLUGINS
+
+
+if (serves.indexOf(process.env.SERVE_ENV) !== -1) {
+  plugins.unshift(
+    new HtmlWebpackPlugin({
+      template: 'public/index.html',
+      cdnConfig: 'https://aduerstatic.oss-cn-hangzhou.aliyuncs.com/monitor/operation_provider.js'
+    })
+  )
+} else {
+  plugins.unshift(
+    new HtmlWebpackPlugin({
+      template: 'public/index.html'
+    })
+  )
+}
+
 module.exports = {
   // publicPath: process.env.NODE_ENV === 'development' ? '' : '././',
   transpileDependencies: ['element-ui'],
@@ -86,7 +106,7 @@ module.exports = {
       }
     },
     devtool: devtool,
-    plugins: process.env.NODE_ENV === 'production' ? NODE_PROD_PLUGINS : NODE_DEV_PLUGINS
+    plugins: plugins
   },
   chainWebpack: config => {
     config.plugin('provide').use(webpack.ProvidePlugin, [{
