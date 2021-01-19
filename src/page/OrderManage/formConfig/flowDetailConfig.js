@@ -22,7 +22,7 @@ export const FORM_CONFIG = {
     },
     {
       label: "支付模式",
-      key: "payWayName"
+      key: "payTypeCN"
     },
     // {
     //   label: "交易类型",
