@@ -118,6 +118,7 @@
     methods: {
       clickSearch(params) {
         this.params = params
+        this.getOrderStatistics()
       },
       getOrderStatistics() {
         api_order.selectOrderStatic({
