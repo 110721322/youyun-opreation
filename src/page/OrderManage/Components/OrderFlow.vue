@@ -16,7 +16,7 @@
           ref="table"
           :grid-config="gridConfig"
           :grid-btn-config="gridBtnConfig"
-          :grid-edit-width="200"
+          :grid-edit-width="80"
           :is-async="true"
           :is-select="false"
           :is-data-select="false"

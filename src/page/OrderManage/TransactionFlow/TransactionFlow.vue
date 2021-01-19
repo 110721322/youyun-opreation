@@ -5,7 +5,7 @@
         <div class="m-trade-line1">
           <div class="left-trade">
             <span>订单总额(元)</span>
-            <img src="@/assets/img/allMoney.svg" alt="订单图标" />
+            <img src="@/assets/img/orderAllMoney.svg" alt="订单图标" />
           </div>
           <div class="right-trade">
             <img src="@/assets/img/warn.svg" alt="提示图标" />
@@ -44,7 +44,7 @@
         <div class="m-trade-line1">
           <div class="left-trade">
             <span>手续费总额（元）</span>
-            <img src="@/assets/img/refundMoney.svg" alt="退款图标" />
+            <img src="@/assets/img/fee.svg" alt="手续费图标" />
           </div>
           <div class="right-trade">
             <img src="@/assets/img/warn.svg" alt="提示图标" />
@@ -57,7 +57,7 @@
         <div class="m-trade-line1">
           <div class="left-trade">
             <span>服务商佣金总额（元）</span>
-            <img src="@/assets/img/refundMoney.svg" alt="退款图标" />
+            <img src="@/assets/img/commsion.svg" alt="服务商佣金图标" />
           </div>
           <div class="right-trade">
             <img src="@/assets/img/warn.svg" alt="提示图标" />
@@ -70,7 +70,7 @@
         <div class="m-trade-line1">
           <div class="left-trade">
             <span>平台佣金总额（元）</span>
-            <img src="@/assets/img/refundMoney.svg" alt="退款图标" />
+            <img src="@/assets/img/commsion.svg" alt="平台佣金图标" />
           </div>
           <div class="right-trade">
             <img src="@/assets/img/warn.svg" alt="提示图标" />
