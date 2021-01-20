@@ -13,6 +13,7 @@ export const SEARCH_FORM_CONFIG = {
       label: '服务商',
       key: 'agentNo',
       isSearch: true,
+      labelWidth: '128px',
       urlOptions: {
         searchKey: 'agentName',
         url: api.queryPageByCondition,
