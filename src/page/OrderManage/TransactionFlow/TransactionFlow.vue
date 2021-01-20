@@ -122,7 +122,9 @@
       },
       getOrderStatistics() {
         api_order.selectOrderStatic({
-          ...this.params
+          ...this.params,
+          beginTime: this.params.queryBeginPayTime || (this.$g.utils.getToday(0) + ' 00:00:00'),
+          endTime: this.params.queryEndPayTime || (this.$g.utils.getToday(0) + ' 23:59:59')
         }).then(res => {
           if (res.status === 0) {
             this.statisticsData = res.data;
