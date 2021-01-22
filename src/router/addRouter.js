@@ -138,6 +138,60 @@ const asyncRoutes = {
     children: [
     ]
   },
+  DeviceManage: {
+    path: '/DeviceManage',
+    name: 'DeviceManage',
+    component: Layout,
+    meta: {
+      title: '设备管理',
+      icon: 'shopManage'
+    },
+    children: [
+      {
+        path: '/DeviceManage/DeviceList/DeviceDetail',
+        name: 'DeviceDetail',
+        meta: {
+          title: '设备详情',
+          icon: 'DeviceDetail',
+        },
+        component: () => import('@/page/DeviceManage/DeviceDetail.vue'),
+        children: []
+      }
+    ]
+  },
+  'DeviceList': {
+    path: '/DeviceList',
+    name: 'DeviceList',
+    meta: {
+      title: '设备列表',
+      icon: 'DeviceList',
+      keepAlive: "DeviceList"
+    },
+    component: () => import('@/page/DeviceManage/DeviceList.vue'),
+    children: []
+  },
+  'AddDevice': {
+    path: '/AddDevice',
+    name: 'AddDevice',
+    meta: {
+      title: '新增设备',
+      icon: 'AddDevice',
+      keepAlive: "AddDevice"
+    },
+    component: () => import('@/page/DeviceManage/AddDevice.vue'),
+    children: []
+  },
+  'DeviceModel': {
+    path: '/DeviceModel',
+    name: 'DeviceModel',
+    meta: {
+      title: '设备型号',
+      icon: 'DeviceModel',
+      keepAlive: "DeviceModel"
+    },
+    component: () => import('@/page/DeviceManage/DeviceModel.vue'),
+    children: []
+  },
   SettleManage: {
     path: '/SettleManage',
     name: 'SettleManage',

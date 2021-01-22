@@ -116,6 +116,40 @@ export const authRoutes = [
     ]
   },
   {
+    text: '设备管理',
+    name: 'DeviceManage',
+    meta: {
+      title: '订单管理',
+      icon: 'iconjiaoyi'
+    },
+    children: [
+      {
+        text: '设备列表',
+        name: 'DeviceList',
+        meta: {
+          title: '设备列表',
+          icon: ''
+        }
+      },
+      {
+        text: '新增设备',
+        name: 'AddDevice',
+        meta: {
+          title: '新增设备',
+          icon: ''
+        }
+      },
+      {
+        text: '设备型号',
+        name: 'DeviceModel',
+        meta: {
+          title: '设备型号',
+          icon: ''
+        }
+      }
+    ]
+  },
+  {
     text: '用户管理',
     name: 'accountManage',
     meta: {
