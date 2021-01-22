@@ -11,8 +11,9 @@ export const ADD_DEVICE = {
         urlOptions: {
           url: api.deviceList,
           keyName: 'typeCode',
-          valueName: 'typeName'
+          valueName: 'message'
         },
+        emitEventBus: "handleDeviceType",
         rules: [
           { required: true, message: '请选择设备类型', trigger: 'change' }
         ]
@@ -21,11 +22,15 @@ export const ADD_DEVICE = {
         type: 0,
         label: '设备型号',
         labelWidth: '120px',
+        isSearch: true,
         key: 'deviceModelId',
         urlOptions: {
-          url: api.queryDeviceModelPage,
+          url: api.queryDevicetype,
           keyName: 'deviceType',
-          valueName: 'deviceModel'
+          valueName: 'deviceModel',
+          params: {
+            deviceType: ''
+          }
         },
         rules: [
           { required: true, message: '请选择设备型号', trigger: 'change' }

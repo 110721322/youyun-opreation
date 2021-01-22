@@ -2,23 +2,23 @@ export const RECORD_CONFIG = {
   gridConfig: [
     {
       label: '操作时间',
-      prop: 'deviceNo'
+      prop: 'createTime'
     },
     {
       label: '对象类型',
-      prop: 'deviceType',
+      prop: 'roleName',
     },
     {
       label: '对象名称',
-      prop: 'deviceModel',
+      prop: 'toOperatorName',
     },
     {
       label: '操作类型',
-      prop: 'deviceImg'
+      prop: 'operType'
     },
     {
       label: '操作员',
-      prop: 'deviceNum'
+      prop: 'fromOperName'
     }
   ],
 

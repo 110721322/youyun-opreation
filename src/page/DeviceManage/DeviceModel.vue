@@ -32,7 +32,7 @@
       </div>
     </div>
     <yun-dialog
-      title="新增型号"
+      :title="title"
       :dialoger="drawer"
       width="488px"
       @confirm="clickSubmit"
@@ -40,6 +40,7 @@
     >
       <div class="m-select-baseCrud" slot="body">
         <yun-form
+          v-if="drawer"
           ref="deviceModelInfo"
           :form-base-data="fromConfigData"
           :show-foot-btn="fromConfigData.showFootBtn === false"
@@ -61,6 +62,8 @@
       return {
         searchConfig: SEARCH_FORM_CONFIG,
         params: {},
+        type: '',
+        title: '',
         api: api.queryDeviceModelPage,
         gridConfig: DEVICE_MODEL_CONFIG.gridConfig,
         gridBtnConfig: DEVICE_MODEL_CONFIG.gridBtnConfig,
@@ -77,11 +80,60 @@
         }
       },
       clickModel() {
+        this.type = 'add'
+        this.title = '新增型号'
         this.drawer = true
       },
       clickExport() {},
-      onClickEdit() {},
-      clickSubmit() {}
+      onClickEdit($row) {
+        this.id = $row.id
+        this.type = 'edit'
+        this.title = '编辑型号'
+        this.fromConfigData[0].initVal = $row.deviceType
+        this.fromConfigData[1].initVal = $row.deviceModel
+        console.log(this.fromConfigData[2].children[0].initVal = $row.deviceImg)
+        this.drawer = true
+      },
+      clickSubmit() {
+        const checkDerviceForm = this.$refs['deviceModelInfo'].clickFootBtn();
+        if (!checkDerviceForm) {
+          this.$message('请完善设备信息');
+          return
+        }
+        const deviceData = this.$refs['deviceModelInfo'].ruleForm
+        const params = {
+          deviceType: deviceData.deviceType,
+          deviceModel: deviceData.deviceModel,
+          deviceImg: deviceData.deviceImg
+        }
+        switch(this.type) {
+          case "add":
+            api.addDeviceModel(params).then(res => {
+              if (res.status === 0) {
+                this.$message({
+                  message: '添加成功',
+                  type: 'success'
+                })
+                this.drawer = false
+                this.$refs.table.getData()
+              }
+            })
+            break;
+          case "edit":
+            params.id = this.id
+            api.updateDeviceModel(params).then(res => {
+              if (res.status === 0) {
+                this.$message({
+                  message: '编辑成功',
+                  type: 'success'
+                })
+                this.drawer = false
+                this.$refs.table.getData()
+              }
+            })
+            break;
+        }
+      }
     }
   }
 </script>

@@ -27,32 +27,47 @@ import { ADD_DEVICE } from "./FormConfig/AddDevice";
 export default {
   name: "Device",
   data() {
-      return {
-        fromConfigData: ADD_DEVICE,
+    return {
+      fromConfigData: ADD_DEVICE,
+    }
+  },
+  mounted() {
+    this.$EventBus.$on('handleDeviceType', this.handleDeviceType)
+  },
+  destroyed() { // 销毁EventBus事件
+    this.$EventBus.$off('handleDeviceType', this.handleDeviceType)
+  },
+  methods: {
+    handleDeviceType($val) {
+      this.fromConfigData.deviceData.formData[1].urlOptions.params = {
+        deviceType: $val
       }
+      // this.searchConfig.formData[3].urlOptions.params = {
+      //   shopId: $val.shopNo,
+      //   showAllEmployerFlag: 1
+      // };
     },
-    methods: {
-      clickSubmit() {
-        const checkDerviceForm = this.$refs['deviceInfo'].clickFootBtn();
-        if (!checkDerviceForm) {
-          this.$message('请完善设备信息');
-          return
-        }
-        const deviceData = this.$refs['deviceInfo'].ruleForm
-        const params = {
-          ...deviceData
-        }
-        api.addDevice(params).then(res => {
-          if (res.status === 0) {
-            this.$message({
-              message: '添加设备成功',
-              type: 'success'
-            })
-          }
-        })
+    clickSubmit() {
+      const checkDerviceForm = this.$refs['deviceInfo'].clickFootBtn();
+      if (!checkDerviceForm) {
+        this.$message('请完善设备信息');
+        return
       }
+      const deviceData = this.$refs['deviceInfo'].ruleForm
+      const params = {
+        ...deviceData
+      }
+      api.addDevice(params).then(res => {
+        if (res.status === 0) {
+          this.$message({
+            message: '添加设备成功',
+            type: 'success'
+          })
+        }
+      })
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

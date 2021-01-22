@@ -3,10 +3,8 @@ export const DEVICE_MODEL_CONFIG = {
     {
       label: '序号',
       prop: 'deviceNo',
-      render: (h, params) => {
-        return h(
-          'span', { 'class': 'tab-color' }, params.row.deviceNo
-        )
+      formatter($row, $index) {
+        return $index + 1;
       }
     },
     {
@@ -19,23 +17,28 @@ export const DEVICE_MODEL_CONFIG = {
     },
     {
       label: '设备图片',
-      prop: 'deviceImg'
+      prop: 'deviceImg',
+      render: (h, params) => {
+        const imgUrl = params.row.deviceImg;
+        return h('el-image', {
+          props: {
+            src: imgUrl,
+            'preview-src-list': [imgUrl]
+          }
+        }, '正常');
+      }
     },
     {
       label: '设备数量',
-      prop: 'deviceNum'
+      prop: 'deviceCount'
     },
     {
       label: '添加人',
-      prop: 'currentAgentNo'
+      prop: 'creator'
     },
     {
       label: '添加时间',
-      prop: 'currentStatusDate'
-    },
-    {
-      label: '保修到期时间',
-      prop: 'expireDate'
+      prop: 'createTime'
     }
   ],
 

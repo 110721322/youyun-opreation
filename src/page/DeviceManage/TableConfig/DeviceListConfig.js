@@ -47,7 +47,7 @@ export const DEVICE_LIST_CONFIG = {
     },
     {
       label: '保修到期时间',
-      prop: 'expireDate'
+      prop: 'guaranteeDate'
     }
   ],
 
@@ -61,12 +61,18 @@ export const DEVICE_LIST_CONFIG = {
       {
         name: '解绑',
         emitName: 'unBind',
-        type: 'text'
+        type: 'text',
+        isShow: (params) => {
+          return params.currentStatus === 3
+        }
       },
       {
         name: '回拨',
         emitName: 'callBind',
-        type: 'text'
+        type: 'text',
+        isShow: (params) => {
+          return (params.currentStatus === 2 || params.currentStatus === 3)
+        }
       },
       {
         name: '详情',

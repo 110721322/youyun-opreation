@@ -34,11 +34,29 @@
         ></yun-table>
       </div>
     </div>
+    <yun-dialog
+      title="设备划拨"
+      :dialoger="drawer"
+      width="488px"
+      @confirm="clickSubmit"
+      @cancel="drawer = false"
+    >
+      <div class="m-select-baseCrud" slot="body">
+        <yun-form
+          v-if="drawer"
+          ref="deviceModelInfo"
+          :form-base-data="fromConfigData"
+          :show-foot-btn="fromConfigData.showFootBtn === false"
+          label-width="130px"
+        ></yun-form>
+      </div>
+    </yun-dialog>
   </div>
 </template>
 
 <script>
 import api from '@/api/api_deviceManage'
+import { DEVICE_CALL } from './FormConfig/DeviceCall'
 import { SEARCH_FORM_CONFIG } from './FormConfig/DeviceListSearch'
 import { DEVICE_LIST_CONFIG } from './TableConfig/DeviceListConfig'
 export default {
@@ -49,19 +67,107 @@ export default {
       params: {},
       api: api.queryDeviceList,
       gridConfig: DEVICE_LIST_CONFIG.gridConfig,
-      gridBtnConfig: DEVICE_LIST_CONFIG.gridBtnConfig
+      drawer: false,
+      fromConfigData: DEVICE_CALL.deviceData.formData,
+      gridBtnConfig: DEVICE_LIST_CONFIG.gridBtnConfig,
+      deviceNos: []
     }
   },
   methods: {
     onClickSearch($ruleForm) {
       this.params = {}
     },
-    clickBind() {},
+    clickBind() {
+      if(this.deviceNos.length === 0) {
+        this.$message({
+          message: '请选择设备',
+          type: 'info'
+        })
+        return
+      }
+      this.drawer = true
+    },
+    clickSubmit() {
+      const checkDeviceForm = this.$refs['deviceModelInfo'].clickFootBtn();
+      if (!checkDeviceForm) {
+        this.$message('请选择服务商');
+        return
+      }
+      const deviceData = this.$refs['deviceModelInfo'].ruleForm
+      api.flowService({
+        toOperator: deviceData.toOperator,
+        deviceNos: this.deviceNos
+      }).then(res => {
+        if (res.status === 0) {
+          this.$message({message: '划拨成功', type: 'success'})
+          this.drawer = false
+          this.$refs.table.getData()
+          this.deviceNos = []
+        }
+      })
+    },
     clickExport() {},
-    onClickUnbind() {},
-    onClickCallBind() {},
-    onClickDetails() {},
-    selectionChange() {}
+    
+    // 解绑设备
+    onClickUnbind($row) {
+      this.$confirm('是否确定解绑该设备', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        api.unbindDevice({
+          deviceNo: $row.deviceNo
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '解绑成功',
+              type: 'success'
+            })
+            this.$refs.table.getData()
+          }
+        })
+      }).catch(() => {
+        this.$message('取消操作')
+      })
+    },
+    
+    // 回拨设备
+    onClickCallBind($row) {
+      this.$confirm('是否确定回拨该设备', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        api.recallDevice({
+          deviceNo: $row.deviceNo
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '回拨成功',
+              type: 'success'
+            })
+            this.$refs.table.getData()
+          }
+        })
+      }).catch(() => {
+        this.$message('取消操作')
+      })
+    },
+    onClickDetails($row) {
+      this.$router.push({
+        name: 'DeviceDetail',
+        query: {
+          deviceNo: $row.deviceNo
+        }
+      })
+    },
+    selectionChange($row) {
+      const deviceNos = []
+      $row.forEach((item) => {
+        deviceNos.push(item.deviceNo)
+      })
+      this.deviceNos = deviceNos
+    }
   }
 }
 </script>
@@ -107,5 +213,8 @@ export default {
   }
   /deep/ .tab-color {
     color: #1989FA;
+  }
+  /deep/ .el-form-item__error {
+    white-space: nowrap;
   }
 </style>

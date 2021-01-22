@@ -10,7 +10,7 @@ export const ADD_DEVICE_MODEL = {
         urlOptions: {
           url: api.deviceList,
           keyName: 'typeCode',
-          valueName: 'typeName'
+          valueName: 'message'
         },
         rules: [
           { required: true, message: '请选择设备类型', trigger: 'change' }
@@ -20,14 +20,9 @@ export const ADD_DEVICE_MODEL = {
       {
         type: 0,
         label: '设备型号',
-        key: 'deviceModelId',
-        urlOptions: {
-          url: api.queryDeviceModelPage,
-          keyName: 'deviceType',
-          valueName: 'deviceModel'
-        },
+        key: 'deviceModel',
         rules: [
-          { required: true, message: '请选择设备型号', trigger: 'change' }
+          { required: true, message: '请选择设备型号', trigger: 'blur' }
         ],
         span: 24
       },
@@ -39,7 +34,7 @@ export const ADD_DEVICE_MODEL = {
         children: [
           {
             label: '设备图片',
-            key: 'idCardPortraitImg',
+            key: 'deviceImg',
             type: 6,
             exampleImg: 'https://horse-pay-develop.oss-cn-hangzhou.aliyuncs.com/fund/template/%E8%BA%AB%E4%BB%BD%E8%AF%81%E6%AD%A3%E9%9D%A2.jpg',
             rules: [

@@ -2,35 +2,38 @@ export const DEVICE_FORM_CONFIG = {
   deviceInfoData: [
     {
       label: "设备ID",
-      key: "orderNo"
+      key: "deviceNo"
     },
     {
       label: "设备SN",
-      key: "transactionNo"
+      key: "deviceSn"
     },
     {
       label: "设备类型",
-      key: "createTime"
+      key: "deviceName"
     },
     {
       label: "设备型号",
-      key: "payTime"
+      key: "deviceModel"
     },
     {
       label: "设备状态",
-      key: "payChannel"
+      key: "currentStatus",
+      render: (params) => {
+
+      }
     },
     {
       label: "添加人",
-      key: "payTypeCN"
+      key: "creator"
     },
     {
       label: "添加时间",
-      key: "totalAmount"
+      key: "currentStatusDate"
     },
     {
       label: "保修到期时间",
-      key: "payWayName"
+      key: "guaranteeDate"
     }
   ]
 }

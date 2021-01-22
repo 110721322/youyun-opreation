@@ -63,10 +63,10 @@
       }
     },
     created() {
+      this.getDevice()
       this.params = {
         deviceNo: this.$route.query.deviceNo
       }
-      this.getDevice()
     },
     mounted() {
     },

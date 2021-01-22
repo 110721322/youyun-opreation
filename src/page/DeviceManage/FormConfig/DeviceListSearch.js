@@ -17,7 +17,7 @@ export const SEARCH_FORM_CONFIG = {
       urlOptions: {
         url: api.deviceList,
         keyName: 'typeCode',
-        valueName: 'typeName'
+        valueName: 'message'
       },
       span: 11
     },
@@ -70,7 +70,11 @@ export const SEARCH_FORM_CONFIG = {
         url: merchantApi.selectByCondition,
         searchKey: "merchantName",
         keyName: "merchantNo",
-        valueName: "merchantName"
+        valueName: "merchantName",
+        params: {
+          currentPage: 1,
+          pageSize: 20
+        }
       },
       span: 11,
     },
