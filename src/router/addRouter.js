@@ -15,12 +15,20 @@ const asyncRoutes = {
     name: 'accountCenter',
     meta: {
       title: '账户中心',
-      icon: 'accountCenter',
-      keepAlive: "AccountCenter"
+      icon: 'accountCenter'
     },
     component: () => import('@/page/Home/AccountCenter/AccountCenter.vue'),
-    children: [
-    ]
+    children: []
+  },
+  DataCenter: {
+    path: '/DataCenter',
+    name: 'DataCenter',
+    meta: {
+      title: '数据统计',
+      icon: ''
+    },
+    component: () => import('@/page/Home/DataCenter.vue'),
+    children: []
   },
   AgentManage: {
     path: '/AgentManage',

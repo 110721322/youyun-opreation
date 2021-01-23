@@ -154,7 +154,7 @@ import 'youyun-vue-components/assets/css/element-variables.scss';
 // 加载组件库
 import ElementUI, {Message} from 'element-ui';
 import {
-  Layout, DetailMode, Form, Dialog, Search, Table, DetailBox
+  Layout, DetailMode, Form, Dialog, Search, Table, DetailBox, CardFirst, Ratio, Echarts, Legend, RadioGroup
 } from 'youyun-vue-components'
 
 Vue.use(Layout)
@@ -164,20 +164,13 @@ Vue.use(Dialog)
 Vue.use(Search)
 Vue.use(Table)
 Vue.use(DetailBox)
+Vue.use(CardFirst)
+Vue.use(Ratio)
+Vue.use(Echarts)
+Vue.use(Legend)
+Vue.use(RadioGroup)
 
 Vue.prototype.$EventBus = new Vue();
-
-const echarts = require('echarts/lib/echarts');
-
-// 引入柱状图
-require('echarts/lib/chart/line');
-require('echarts/lib/chart/bar');
-require('echarts/lib/chart/pie');
-// 引入提示框和标题组件
-require('echarts/lib/component/tooltip');
-require('echarts/lib/component/title');
-
-Vue.prototype.$echarts = echarts;
 
 Vue.prototype.$store = store;
 
