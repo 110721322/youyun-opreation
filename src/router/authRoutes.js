@@ -98,6 +98,24 @@ export const authRoutes = [
     ]
   },
   {
+    text: '分润管理',
+    name: 'profitAdmin',
+    meta: {
+      title: '分润管理',
+      icon: 'iconjiaoyi'
+    },
+    children: [
+      {
+        text: '分润统计',
+        name: 'profitStatistics',
+        meta: {
+          title: '分润统计',
+          icon: ''
+        }
+      }
+    ]
+  },
+  {
     text: '订单管理',
     name: 'orderManage',
     meta: {

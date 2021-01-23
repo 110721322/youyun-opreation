@@ -176,6 +176,27 @@ const asyncRoutes = {
     },
     component: () => import('@/page/SettleManage/AgentSettleManage.vue')
   },
+  
+  profitAdmin: {
+    path: '/profitAdmin',
+    name: 'profitAdmin',
+    component: Layout,
+    meta: {
+      title: '分润管理',
+      icon: 'profitAdmin'
+    },
+    children: [
+    ]
+  },
+  'profitStatistics': {
+    path: '/profitStatistics',
+    name: 'profitStatistics',
+    meta: {
+      title: '分润统计',
+      icon: 'profitStatistics'
+    },
+    component: () => import('@/page/ProfitAdmin/ProfitStatistics.vue')
+  },
   orderManage: {
     path: '/orderManage',
     name: 'orderManage',
