@@ -15,3 +15,11 @@ export const RoleList = {
   OPERATION_PLATFORM: 1, // 运营后台
   OPERATION_SYSTEM: 'operation'
 }
+
+export const DataCenter = {
+  PAY_AMOUNT: 'payAmount',
+  PAY_COUNT: 'payCount',
+  ACTIVE_RADIO: 'active',
+  NEW_RADIO: 'new',
+  WARN_RADIO: 'warn'
+}

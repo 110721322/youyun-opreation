@@ -14,6 +14,14 @@ export const authRoutes = [
           title: '账户中心',
           icon: ''
         }
+      },
+      {
+        text: '数据统计',
+        name: 'DataCenter',
+        meta: {
+          title: '数据统计',
+          icon: ''
+        }
       }
     ]
   },
