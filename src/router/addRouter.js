@@ -15,12 +15,20 @@ const asyncRoutes = {
     name: 'accountCenter',
     meta: {
       title: '账户中心',
-      icon: 'accountCenter',
-      keepAlive: "AccountCenter"
+      icon: 'accountCenter'
     },
     component: () => import('@/page/Home/AccountCenter/AccountCenter.vue'),
-    children: [
-    ]
+    children: []
+  },
+  DataCenter: {
+    path: '/DataCenter',
+    name: 'DataCenter',
+    meta: {
+      title: '数据统计',
+      icon: ''
+    },
+    component: () => import('@/page/Home/DataCenter.vue'),
+    children: []
   },
   AgentManage: {
     path: '/AgentManage',
@@ -137,6 +145,60 @@ const asyncRoutes = {
     component: () => import('@/page/ShopManage/ShopList/ShopList.vue'),
     children: [
     ]
+  },
+  DeviceManage: {
+    path: '/DeviceManage',
+    name: 'DeviceManage',
+    component: Layout,
+    meta: {
+      title: '设备管理',
+      icon: 'shopManage'
+    },
+    children: [
+      {
+        path: '/DeviceManage/DeviceList/DeviceDetail',
+        name: 'DeviceDetail',
+        meta: {
+          title: '设备详情',
+          icon: 'DeviceDetail',
+        },
+        component: () => import('@/page/DeviceManage/DeviceDetail.vue'),
+        children: []
+      }
+    ]
+  },
+  'DeviceList': {
+    path: '/DeviceList',
+    name: 'DeviceList',
+    meta: {
+      title: '设备列表',
+      icon: 'DeviceList',
+      keepAlive: "DeviceList"
+    },
+    component: () => import('@/page/DeviceManage/DeviceList.vue'),
+    children: []
+  },
+  'AddDevice': {
+    path: '/AddDevice',
+    name: 'AddDevice',
+    meta: {
+      title: '新增设备',
+      icon: 'AddDevice',
+      keepAlive: "AddDevice"
+    },
+    component: () => import('@/page/DeviceManage/AddDevice.vue'),
+    children: []
+  },
+  'DeviceModel': {
+    path: '/DeviceModel',
+    name: 'DeviceModel',
+    meta: {
+      title: '设备型号',
+      icon: 'DeviceModel',
+      keepAlive: "DeviceModel"
+    },
+    component: () => import('@/page/DeviceManage/DeviceModel.vue'),
+    children: []
   },
   SettleManage: {
     path: '/SettleManage',

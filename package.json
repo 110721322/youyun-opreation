@@ -20,7 +20,7 @@
     "axios": "^0.21.1",
     "clipboard": "^2.0.6",
     "core-js": "^3.6.5",
-    "echarts": "^4.6.0",
+    "echarts": "^4.9.0",
     "jquery": "^3.5.1",
     "qrcodejs2": "0.0.2",
     "qs": "^6.9.1",
@@ -50,7 +50,7 @@
     "vue-jest": "^3.0.5",
     "vue-template-compiler": "^2.6.11",
     "webpack-cli": "^4.2.0",
-    "youyun-vue-components": "^0.1.14"
+    "youyun-vue-components": "^0.1.15"
   },
   "browserslist": [
     "> 1%",

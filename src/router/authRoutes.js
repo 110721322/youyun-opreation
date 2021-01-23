@@ -14,6 +14,14 @@ export const authRoutes = [
           title: '账户中心',
           icon: ''
         }
+      },
+      {
+        text: '数据统计',
+        name: 'DataCenter',
+        meta: {
+          title: '数据统计',
+          icon: ''
+        }
       }
     ]
   },
@@ -128,6 +136,40 @@ export const authRoutes = [
         name: 'transactionFlow',
         meta: {
           title: '交易流水',
+          icon: ''
+        }
+      }
+    ]
+  },
+  {
+    text: '设备管理',
+    name: 'DeviceManage',
+    meta: {
+      title: '订单管理',
+      icon: 'iconjiaoyi'
+    },
+    children: [
+      {
+        text: '设备列表',
+        name: 'DeviceList',
+        meta: {
+          title: '设备列表',
+          icon: ''
+        }
+      },
+      {
+        text: '新增设备',
+        name: 'AddDevice',
+        meta: {
+          title: '新增设备',
+          icon: ''
+        }
+      },
+      {
+        text: '设备型号',
+        name: 'DeviceModel',
+        meta: {
+          title: '设备型号',
           icon: ''
         }
       }
