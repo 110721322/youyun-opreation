@@ -7,8 +7,8 @@
         <div class="m-box">
           <yun-form
             ref="deviceInfo"
-            :form-base-data="fromConfigData.deviceData.formData"
-            :show-foot-btn="fromConfigData.showFootBtn"
+            :form-base-data="formConfigData.deviceData.formData"
+            :show-foot-btn="formConfigData.showFootBtn"
             label-width="130px"
           ></yun-form>
         </div>
@@ -28,8 +28,11 @@ export default {
   name: "Device",
   data() {
     return {
-      fromConfigData: ADD_DEVICE,
+      formConfigData: null,
     }
+  },
+  created() {
+    this.initImport()
   },
   mounted() {
     this.$EventBus.$on('handleDeviceType', this.handleDeviceType)
@@ -38,14 +41,13 @@ export default {
     this.$EventBus.$off('handleDeviceType', this.handleDeviceType)
   },
   methods: {
-    handleDeviceType($val) {
-      this.fromConfigData.deviceData.formData[1].urlOptions.params = {
-        deviceType: $val
+    initImport() {
+      this.formConfigData = this.$g.utils.deepClone(ADD_DEVICE)
+    },
+    handleDeviceType($ruleForm) {
+      this.formConfigData.deviceData.formData[1].urlOptions.params = {
+        deviceType: $ruleForm.deviceType
       }
-      // this.searchConfig.formData[3].urlOptions.params = {
-      //   shopId: $val.shopNo,
-      //   showAllEmployerFlag: 1
-      // };
     },
     clickSubmit() {
       const checkDerviceForm = this.$refs['deviceInfo'].clickFootBtn();
@@ -64,6 +66,9 @@ export default {
             type: 'success'
           })
         }
+        this.$router.replace({
+          name: 'DeviceList'
+        })
       })
     }
   }

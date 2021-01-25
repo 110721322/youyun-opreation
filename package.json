@@ -50,7 +50,7 @@
     "vue-jest": "^3.0.5",
     "vue-template-compiler": "^2.6.11",
     "webpack-cli": "^4.2.0",
-    "youyun-vue-components": "^0.1.14"
+    "youyun-vue-components": "^0.1.15"
   },
   "browserslist": [
     "> 1%",
