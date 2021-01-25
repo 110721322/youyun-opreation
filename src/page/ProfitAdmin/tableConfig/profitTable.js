@@ -109,3 +109,48 @@ export const AGENT_PROFIT = {
   },
   hideEditArea: true
 };
+
+export const INFO_LIST = [
+  {
+    span: 8,
+    style: 'height: 168px;',
+    label: '本月佣金金额（元）',
+    icon: 'iconyue',
+    iconStyle: 'color: #1989FA;',
+    tooltip: '',
+    value: '126,560.00',
+    children: [
+      {
+        label: '上月分润金额',
+        value: '¥12,423.00'
+      }
+    ],
+    slotName: 'monthComission'
+  },
+  {
+    span: 8,
+    style: 'height: 168px;',
+    label: '今日分润金额（元）',
+    icon: 'iconshuliang',
+    iconStyle: 'color: #1989FA;',
+    tooltip: '',
+    value: '126,560.00',
+    children: [
+      {
+        label: '昨日分润金额',
+        value: '¥12,423.00'
+      }
+    ],
+    slotName: 'todayComission'
+  },
+  {
+    span: 8,
+    style: 'height: 168px;margin-right: 0;',
+    label: '佣金总额（元）',
+    icon: 'iconfenzhang',
+    iconStyle: 'color: #EFA911;',
+    tooltip: '',
+    value: '126,560.00',
+    children: []
+  }
+]

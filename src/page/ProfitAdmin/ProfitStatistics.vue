@@ -1,6 +1,35 @@
 <template>
   <div>
     <div class="content">
+      <div class="profit-data">
+        <!--数据统计开始-->
+        <el-row>
+          <el-col :span="item.span" v-for="(item, index) in infoList" :key="index">
+            <yun-card-first
+              :style="item.style"
+              :label="item.label"
+              :icon="item.icon"
+              :icon-style="item.iconStyle"
+              :tooltip="item.tooltip"
+              :value="item.value"
+              :children="item.children"
+            >
+              <div v-if="item.slotName" :slot="item.slotName" class="flex-row" style="margin-bottom: 12px">
+                <p class="f-fz-14 f-fc-333335 flex-align-center" style="margin-right: 40px">
+                  <span class="f-fc-909399">同比</span>
+                  <i class="el-icon-caret-bottom f-fc-fail"></i>
+                  <span>11%</span>
+                </p>
+                <p class="f-fz-14 f-fc-333335 flex-align-center">
+                  <span class="f-fc-909399">环比</span>
+                  <i class="el-icon-caret-top f-fc-success"></i>
+                  <span>11%</span>
+                </p>
+              </div>
+            </yun-card-first>
+          </el-col>
+        </el-row>
+      </div>
       <div class="profit-echarts">
         <div class="echarts-head flex-align-center flex-between">
           <div class="head-title">分润趋势</div>
@@ -45,7 +74,7 @@
 </template>
 
 <script>
-  import { SHOP_PROFIT, MERCHANT_PROFIT, AGENT_PROFIT } from "./tableConfig/profitTable";
+  import { SHOP_PROFIT, MERCHANT_PROFIT, AGENT_PROFIT, INFO_LIST } from "./tableConfig/profitTable";
   const echarts = require('echarts');
   export default {
     name: 'ProfitStatistics',
@@ -62,10 +91,12 @@
         tableList: [{name: '门店分润排名', api: '', params: {}, tableConfig: SHOP_PROFIT}, 
           {name: '商户分润排名', api: '', params: {}, tableConfig: MERCHANT_PROFIT}, 
           {name: '服务商分润排名', api: '', params: {}, tableConfig: AGENT_PROFIT}
-        ]
+        ],
+        infoList: [],
       }
     },
     created() {
+      this.infoList = this.$g.utils.deepClone(INFO_LIST)
       this.echartDate=[this.getDay(0), this.getDay(0)]
     },
     mounted() {
