@@ -96,10 +96,10 @@ export const authRoutes = [
     },
     children: [
       {
-        text: '代理商结算管理',
+        text: '服务商结算管理',
         name: 'AgentSettleManage',
         meta: {
-          title: '代理商结算管理',
+          title: '服务商结算管理',
           icon: ''
         }
       }

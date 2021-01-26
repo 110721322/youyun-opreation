@@ -2,7 +2,14 @@ export const SHOP_PROFIT = {
   gridConfig: [
     {
       label: '排名',
-      prop: 'shopNo'
+      prop: 'rank',
+      render: (h, params) => {
+        const rank = params.index + 1;
+        return (
+          <span class={[rank <= 3 ? "m-rank m-top" : 'm-rank']}>{ rank }</span>
+        )
+      },
+      width: '60px'
     },
     {
       label: '所属服务商',
@@ -43,7 +50,14 @@ export const MERCHANT_PROFIT = {
   gridConfig: [
     {
       label: '排名',
-      prop: 'shopNo'
+      prop: 'rank',
+      render: (h, params) => {
+        const rank = params.index + 1;
+        return (
+          <span class={[rank <= 3 ? "m-rank m-top" : 'm-rank']}>{ rank }</span>
+        )
+      },
+      width: '60px'
     },
     {
       label: '所属服务商',
@@ -80,7 +94,14 @@ export const AGENT_PROFIT = {
   gridConfig: [
     {
       label: '排名',
-      prop: 'shopNo'
+      prop: 'rank',
+      render: (h, params) => {
+        const rank = params.index + 1;
+        return (
+          <span class={[rank <= 3 ? "m-rank m-top" : 'm-rank']}>{ rank }</span>
+        )
+      },
+      width: '60px'
     },
     {
       label: '所属服务商',
@@ -121,18 +142,24 @@ export const INFO_LIST = [
     value: '126,560.00',
     children: [
       {
-        label: '上月分润金额',
+        label: '上月佣金金额',
         value: '¥12,423.00'
       }
     ],
-    slotName: 'monthComission'
+    slot: true,
+    slotItem: {
+      MoMDownOrUp: true,
+      MoMData: 11,
+      YoYDownOrUp: true,
+      YoYData: 12
+    }
   },
   {
     span: 8,
     style: 'height: 168px;',
     label: '今日分润金额（元）',
-    icon: 'iconshuliang',
-    iconStyle: 'color: #1989FA;',
+    icon: 'iconjin',
+    iconStyle: 'color: #65CC30;',
     tooltip: '',
     value: '126,560.00',
     children: [
@@ -141,7 +168,13 @@ export const INFO_LIST = [
         value: '¥12,423.00'
       }
     ],
-    slotName: 'todayComission'
+    slot: true,
+    slotItem: {
+      MoMDownOrUp: false,
+      MoMData: 13,
+      YoYDownOrUp: false,
+      YoYData: 14
+    }
   },
   {
     span: 8,
@@ -154,3 +187,49 @@ export const INFO_LIST = [
     children: []
   }
 ]
+
+export const ECHARTS_BAR_CONFIG = {
+  title: {
+    text: '订单佣金',
+    textStyle: {
+      fontSize: 14,
+      color: '#333335',
+      fontWeight: 400
+    }
+  },
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+      type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+    }
+  },
+  grid: {
+    left: '3%',
+    right: '4%',
+    bottom: '3%',
+    containLabel: true
+  },
+  xAxis: [
+    {
+      type: 'category',
+      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      axisTick: {
+        alignWithLabel: true
+      }
+    }
+  ],
+  yAxis: [
+    {
+      type: 'value'
+    }
+  ],
+  color : '#1890FF',
+  series: [
+    {
+      name: '订单佣金',
+      type: 'bar',
+      barWidth: '30',
+      data: [10, 52, 200, 334, 390, 330, 220]
+    }
+  ]
+}

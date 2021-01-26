@@ -233,7 +233,7 @@ const asyncRoutes = {
     path: '/AgentSettleManage',
     name: 'AgentSettleManage',
     meta: {
-      title: '代理商结算管理',
+      title: '服务商结算管理',
       icon: 'SettleRecord'
     },
     component: () => import('@/page/SettleManage/AgentSettleManage.vue')
