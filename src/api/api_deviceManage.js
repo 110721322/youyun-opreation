@@ -14,7 +14,7 @@ export default {
   // 分页查询设备型号列表
   queryDeviceModelPage: (params) => API.GET('operation/v1/deviceModel/page/query', params),
   // 新增设备
-  addDevice: (params) => API.GET('/operation/v1/deviceinfo/add', params),
+  addDevice: (params) => API.POST('/operation/v1/deviceinfo/add', params, { needFormData: true }),
   // 分页查询设备列表
   queryDeviceList: (params) => API.GET('/operation/v1/deviceinfo/page/query', params),
   // 运营后台批量划拨至服务商

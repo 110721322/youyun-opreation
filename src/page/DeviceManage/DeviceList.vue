@@ -75,7 +75,17 @@ export default {
   },
   methods: {
     onClickSearch($ruleForm) {
-      this.params = {}
+      this.params = {
+        deviceNo: $ruleForm.deviceNo ? $ruleForm.deviceNo : null,
+        deviceType: $ruleForm.deviceType ? $ruleForm.deviceType : null,
+        deviceModel: $ruleForm.deviceModel ? $ruleForm.deviceModel : null,
+        deviceSn: $ruleForm.deviceSn ? $ruleForm.deviceSn : null,
+        bindDate: $ruleForm.bindDate ? $ruleForm.bindDate : null,
+        merchantNo: $ruleForm.merchantNo ? $ruleForm.merchantNo : null,
+        shopNo: $ruleForm.shopNo ? $ruleForm.shopNo: null,
+        agentNo: $ruleForm.agentNo ? $ruleForm.agentNo : null,
+        currentStatus: $ruleForm.currentStatus ? $ruleForm.currentStatus : null
+      }
     },
     clickBind() {
       if(this.deviceNos.length === 0) {
