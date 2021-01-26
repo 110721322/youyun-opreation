@@ -8,7 +8,7 @@ export const SEARCH_FORM_CONFIG = {
       type: 0,
       label: '设备ID',
       key: 'deviceNo',
-      span: 11
+      span: 12
     },
     {
       type: 1,
@@ -19,7 +19,7 @@ export const SEARCH_FORM_CONFIG = {
         keyName: 'typeCode',
         valueName: 'message'
       },
-      span: 11
+      span: 12
     },
     {
       type: 1,
@@ -27,22 +27,22 @@ export const SEARCH_FORM_CONFIG = {
       key: 'deviceModel',
       urlOptions: {
         url: api.queryDeviceModelPage,
-        keyName: 'deviceType',
+        keyName: 'deviceModel',
         valueName: 'deviceModel'
       },
-      span: 11
+      span: 12
     },
     {
       type: 0,
       label: '设备SN码',
       key: 'deviceSn',
-      span: 11
+      span: 12
     },
     {
       type: 11,
       label: '绑定时间',
       key: 'bindDate',
-      span: 11
+      span: 12
     },
     {
       type: 1,
@@ -59,7 +59,7 @@ export const SEARCH_FORM_CONFIG = {
           pageSize: 20
         }
       },
-      span: 11
+      span: 12
     },
     {
       type: 1,
@@ -76,7 +76,7 @@ export const SEARCH_FORM_CONFIG = {
           pageSize: 20
         }
       },
-      span: 11,
+      span: 12,
     },
     {
       type: 1,
@@ -96,7 +96,7 @@ export const SEARCH_FORM_CONFIG = {
           value: 3
         }
       ],
-      span: 11
+      span: 12
     },
     {
       type: 1,
@@ -113,7 +113,7 @@ export const SEARCH_FORM_CONFIG = {
           pageSize: 20
         }
       },
-      span: 11
+      span: 12
     }
   ]
 }
