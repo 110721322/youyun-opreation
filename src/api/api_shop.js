@@ -17,5 +17,7 @@ export default {
   // 查询服务商下的所有商户
   selectAllMerchant: (params) => API.GET('/agent/v1/merchantNew/selectAllMerchant', params),
   // 根据条件查询门店列表
-  selectShopByConditon: (params) => API.GET('/operation/v1/shop/selectShopByConditon', params)
+  selectShopByConditon: (params) => API.GET('/operation/v1/shop/selectShopByConditon', params),
+  // 统计商户对应的门店详情信息
+  merchantShopInfo: (params) => API.GET('/operation/v1/statistic/merchant/shop/info', params)
 }

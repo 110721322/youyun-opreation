@@ -1,5 +1,22 @@
 <template>
   <div class="m-page">
+    <div class="settle-data">
+      <!--数据统计开始-->
+      <el-row>
+        <el-col :span="item.span" v-for="(item, index) in infoList" :key="index">
+          <yun-card-first
+            :style="item.style"
+            :label="item.label"
+            :icon="item.icon"
+            :icon-style="item.iconStyle"
+            :tooltip="item.tooltip"
+            :value="item.value"
+            :children="item.children"
+          >
+          </yun-card-first>
+        </el-col>
+      </el-row>
+    </div>
     <yun-search
         :form-base-data="searchConfig.formData"
         @search="onClickSearch"
@@ -32,21 +49,24 @@
 </template>
 
 <script>
+  import api from "@/api/api_settleManage.js";
   import { SEARCH_FORM_CONFIG } from "./FormConfig/SettleRecordSearch"
-  import { SETTLE_RECORD_CONFIG } from "./TableConfig/SettleRecordConfig"
+  import { SETTLE_RECORD_CONFIG, INFO_LIST } from "./TableConfig/SettleRecordConfig"
   export default {
     name: "SettleRecord",
     data() {
       return {
         params: {},
-        api: '',
+        api: api.queryShopSettle,
         testData: [],
+        infoList: [],
         searchConfig: SEARCH_FORM_CONFIG,
         gridConfig: SETTLE_RECORD_CONFIG.gridConfig,
         gridBtnConfig: SETTLE_RECORD_CONFIG.gridBtnConfig
       }
     },
     created() {
+      this.infoList = this.$g.utils.deepClone(INFO_LIST)
       this.testData = [
         {
           settleNo: 225555,
@@ -65,7 +85,17 @@
         }
       ]
     },
+    mounted() {
+      this.$EventBus.$on('handleAgentChange', this.handleAgentChange)
+      this.shopSettleTotalData()
+    },
+    destroyed() { // 销毁EventBus事件
+      this.$EventBus.$off('handleAgentChange', this.handleAgentChange)
+    },
     methods: {
+      handleAgentChange($val) {
+        this.searchConfig.formData[7].urlOptions.params["agentNo"] = $val.agentNo;
+      },
       onClickSearch($ruleForm) {
         this.params = {
           settleNo: $ruleForm.settleNo ? $ruleForm.settleNo : null,
@@ -78,6 +108,20 @@
           agent: $ruleForm.agent ? $ruleForm.agent : null,
           merchant: $ruleForm.merchant ? $ruleForm.merchant : null
         }
+      },
+      shopSettleTotalData() {
+        const params = {}
+        api.shopSettleTotalData(params).then(res => {
+          if (res.status === 0) {
+            this.infoList.forEach((item,index) => {
+              if (item.key === 'totalSettleAmount') {
+                item.value = res.data['unSettleAmount'] + res.data['settledAmount']
+              } else {
+                item.value = res.data[item.key]
+              }
+            })
+          }
+        })
       }
     }
   }
@@ -85,6 +129,12 @@
 
 <style lang="scss" scoped>
   .m-page {
+    .settle-data {
+      margin: 24px 24px 0;
+      /deep/ .m-card .m-top {
+        border: 0;
+      }
+    }
     .m-data {
       width: 100%;
       height: 100px;

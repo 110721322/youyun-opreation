@@ -1,5 +1,22 @@
 <template>
   <div class="m-page">
+    <div class="settle-data">
+      <!--数据统计开始-->
+      <el-row>
+        <el-col :span="item.span" v-for="(item, index) in infoList" :key="index">
+          <yun-card-first
+            :style="item.style"
+            :label="item.label"
+            :icon="item.icon"
+            :icon-style="item.iconStyle"
+            :tooltip="item.tooltip"
+            :value="item.value"
+            :children="item.children"
+          >
+          </yun-card-first>
+        </el-col>
+      </el-row>
+    </div>
     <yun-search
         :form-base-data="searchConfig.formData"
         @search="onClickSearch"
@@ -37,7 +54,7 @@
   import api from "@/api/api_settleManage.js";
   import { REJECT_CONFIG } from "./FormConfig/AgentRejectConfig"
   import { SEARCH_FORM_CONFIG } from "./FormConfig/AgentSettleSearch"
-  import { AGENT_SETTLE_CONFIG } from "./TableConfig/AgentSettleConfig"
+  import { AGENT_SETTLE_CONFIG, INFO_LIST } from "./TableConfig/AgentSettleConfig"
   export default {
     name: "AgentSettleManage",
     data() {
@@ -48,10 +65,13 @@
         searchConfig: SEARCH_FORM_CONFIG,
         fromConfigData: REJECT_CONFIG.formData,
         gridConfig: AGENT_SETTLE_CONFIG.gridConfig,
-        gridBtnConfig: AGENT_SETTLE_CONFIG.gridBtnConfig
+        gridBtnConfig: AGENT_SETTLE_CONFIG.gridBtnConfig,
+        infoList: []
       }
     },
     created() {
+      this.infoList = this.$g.utils.deepClone(INFO_LIST)
+      this.queryAgentSettleStatistic()
     },
     methods: {
       onClickSearch($ruleForm) {
@@ -62,6 +82,16 @@
           beginTime: $ruleForm.date && $ruleForm.date[1]  ? $ruleForm.date[0] : null,
           endTime: $ruleForm.date && $ruleForm.date[1]  ? $ruleForm.date[1] : null
         }
+      },
+      queryAgentSettleStatistic() {
+        const params = {}
+        api.queryAgentSettleStatistic(params).then(res => {
+          if (res.status === 0) {
+            this.infoList.forEach((item,index) => {
+              item.value = res.data[item.key]
+            })
+          }
+        })
       },
       onClickDetails(row) {
         this.$router.push({
@@ -76,6 +106,12 @@
 </script>
 
 <style lang="scss" scoped>
+  .settle-data {
+    margin: 24px 24px 0;
+    /deep/ .m-card .m-top {
+      border: 0;
+    }
+  }
   .m-table {
     padding: 24px 24px 0;
     width: 100%;

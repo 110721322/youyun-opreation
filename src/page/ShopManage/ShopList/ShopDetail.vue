@@ -99,6 +99,46 @@
         <el-button size="normal" @click="dialogVisible = true">驳回</el-button>
       </div>
     </div>
+    <!-- 数据统计 -->
+    <div v-if="activeName==='0'" class="m-trade">
+      <div class="m-trade-box">
+        <div class="m-trade-line1">
+          <div class="left-trade">
+            <span>实收金额({{ statisticsData.totalActualCount || 0 }}笔)</span>
+          </div>
+          <div class="right-trade">
+            <img src="@/assets/img/warn.svg" alt="提示图标" />
+          </div>
+        </div>
+        <div class="m-trade-line2">{{ statisticsData.totalActualAmount || 0 }}</div>
+        <div class="m-trade-line3">昨日日订单金额({{ statisticsData.yesterdayActualCount || 0 }}笔) ¥{{ statisticsData.yesterdayActualAmount || 0 }}</div>
+      </div>
+      <div class="m-trade-box">
+        <div class="m-trade-line1">
+          <div class="left-trade">
+            <span>退款总额({{ statisticsData.totalRefundCount || 0 }}笔)</span>
+          </div>
+          <div class="right-trade">
+            <img src="@/assets/img/warn.svg" alt="提示图标" />
+          </div>
+        </div>
+        <div class="m-trade-line2">{{ statisticsData.totalRefundAmount || 0 }}</div>
+        <div class="m-trade-line3">昨日日退款金额({{ statisticsData.yesterdayRefundCount || 0 }}笔) ¥{{ statisticsData.yesterdayRefundAmount || 0 }}</div>
+      </div>
+      <div class="m-trade-box">
+        <div class="m-trade-line1">
+          <div class="left-trade">
+            <span>设备总数（台）</span>
+          </div>
+          <div class="right-trade">
+            <img src="@/assets/img/warn.svg" alt="提示图标" />
+          </div>
+        </div>
+        <div class="m-trade-line2">{{ statisticsData.totalDeviceCount || 0 }}</div>
+        <div class="m-trade-line3">今日活跃设备数（台）{{ statisticsData.yesterdayActiveDeviceCount || 0 }}</div>
+      </div>
+    </div>
+
     <el-dialog
       title="驳回"
       :visible.sync="dialogVisible"
@@ -165,7 +205,8 @@
         passDialog: false,
         dialogVisible: false,
         value: 0,
-        qrCodeDialoger: false
+        qrCodeDialoger: false,
+        statisticsData: {}
       }
     },
     created() {
@@ -181,6 +222,7 @@
         api.shopQueryDetail(params).then(res => {
           if(res.status === 0) {
             this.ruleForm = res.data
+            this.merchantShopInfo()
             const areasNetedList = this.$g.utils.getNestedArr(areaData, 'children')
             const areas = [this.ruleForm.provinceCode, this.ruleForm.cityCode, this.ruleForm.areaCode]
               .filter(item => !!item)
@@ -221,6 +263,17 @@
               default:
                 this.ruleForm.statusTxt = '--'
             }
+          }
+        })
+      },
+      merchantShopInfo() {
+        const params = {
+          merchantNo: this.ruleForm.merchantNo,
+          shopNo: this.$route.query.shopNo
+        }
+        api.merchantShopInfo(params).then(res => {
+          if (res.status === 0) {
+            this.statisticsData = res.data
           }
         })
       },
@@ -325,6 +378,63 @@
       }
       /deep/ .el-tabs__item {
         height: 44px;
+      }
+    }
+  }
+  .m-trade {
+    margin: 0 24px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    .m-trade-box {
+      width: 30%;
+      padding: 16px 24px;
+      background: #fff;
+      margin-right: 24px;
+      margin-bottom: 24px;
+      .m-trade-line1 {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+        height: 20px;
+        .left-trade {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          span {
+            font-size: 14px;
+            color: #606266;
+          }
+          img {
+            display: block;
+            width: 16px;
+            height: 16px;
+            margin-left: 8px;
+          }
+        }
+        .right-trade {
+          width: 16px;
+          height: 16px;
+          img {
+            display: block;
+            width: 16px;
+            height: 16px;
+          }
+        }
+      }
+      .m-trade-line2 {
+        margin-bottom: 16px;
+        line-height: 34px;
+        font-size: 24px;
+        color: #333335;
+      }
+      .m-trade-line3 {
+        padding-top: 8px;
+        border-top: 1px solid #EBEEF5;
+        font-size: 14px;
+        line-height: 20px;
+        color: #333335;
       }
     }
   }
