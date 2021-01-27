@@ -62,6 +62,7 @@
         params: {},
         api: api.settleList,
         drawer: false,
+        infoList: [],
         searchConfig: SEARCH_FORM_CONFIG,
         fromConfigData: REJECT_CONFIG.formData,
         gridConfig: AGENT_SETTLE_CONFIG.gridConfig,
@@ -141,7 +142,9 @@
   /deep/ .el-dialog__body {
     padding: 0 0 24px 0;
   }
-
+  /deep/ .g-search-container {
+    margin: 0 24px;
+  }
   /deep/ .el-dialog__header {
     padding: 16px 24px;
     background: #FAFAFA;

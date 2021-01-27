@@ -84,3 +84,78 @@ export const MERCHANT_DETAIL_CONFIG = {
     ]
   }
 };
+
+export const MERCHANT_DETAIL_STATIC = [
+  {
+    span: 6,
+    style: 'height: 170px;',
+    label: '实收总额（0笔）',
+    icon: '',
+    iconStyle: 'color: #50C514;',
+    tooltip: '',
+    value: '0',
+    children: [
+      {
+        label: '今日订单金额（0笔）',
+        value: '¥0'
+      }
+    ]
+  },
+  {
+    span: 6,
+    style: 'height: 170px;',
+    label: '退款总额（0笔）',
+    icon: '',
+    iconStyle: 'color: #1989FA;',
+    tooltip: '',
+    value: '0',
+    children: [
+      {
+        label: '今日退款金额（0笔）',
+        value: '¥0'
+      }
+    ]
+  },
+  {
+    span: 6,
+    style: 'height: 170px;',
+    label: '门店数量（个）',
+    icon: '',
+    iconStyle: 'color: #FA6577;',
+    tooltip: '',
+    value: '0',
+    children: [
+      {
+        label: '今日活跃门店（个）',
+        value: '0',
+        span: 12
+      },
+      {
+        label: '审核中门店数（个）',
+        value: '0',
+        span: 12
+      }
+    ]
+  },
+  {
+    span: 6,
+    style: 'height: 170px;',
+    label: '设备总数（个）',
+    icon: '',
+    iconStyle: 'color: #FA6577;',
+    tooltip: '',
+    value: '0',
+    children: [
+      {
+        label: '今日活跃设备（台）',
+        value: '0',
+        span: 12
+      },
+      {
+        label: '待绑定设备（台）',
+        value: '0',
+        span: 12
+      }
+    ]
+  }
+]

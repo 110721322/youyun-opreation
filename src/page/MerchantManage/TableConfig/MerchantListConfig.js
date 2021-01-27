@@ -29,3 +29,33 @@ export const LIST_CONFIG = {
     }
   ]
 }
+
+export const STATISTICS_LIST =[
+  {
+    span: 8,
+    style: 'height: 98px;',
+    label: '商户数量（个）',
+    icon: 'iconshuliang',
+    iconStyle: 'color: #50C514;',
+    tooltip: '',
+    value: '0'
+  },
+  {
+    span: 8,
+    style: 'height: 98px;',
+    label: '活跃商户（个）',
+    icon: 'iconshuliang',
+    iconStyle: 'color: #1989FA;',
+    tooltip: '',
+    value: '0'
+  },
+  {
+    span: 8,
+    style: 'height: 98px;',
+    label: '异常商户（个）',
+    icon: '',
+    iconStyle: 'color: #FA6577;',
+    tooltip: '',
+    value: '0'
+  }
+]

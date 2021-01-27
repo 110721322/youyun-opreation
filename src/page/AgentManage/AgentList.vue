@@ -1,5 +1,22 @@
 <template>
   <div>
+    <div class="profit-data">
+      <!--数据统计开始-->
+      <el-row>
+        <el-col :span="item.span" v-for="(item, index) in infoList" :key="index">
+          <yun-card-first
+            :style="item.style"
+            :label="item.label"
+            :icon="item.icon"
+            :icon-style="item.iconStyle"
+            :tooltip="item.tooltip"
+            :value="item.value"
+            :children="item.children"
+          >
+          </yun-card-first>
+        </el-col>
+      </el-row>
+    </div>
     <yun-search
         :form-base-data="searchConfig.formData"
         @search="onClickSearch"
@@ -57,7 +74,7 @@
   import api from "@/api/api_agentManage.js";
   import { ADD_AGENT } from "./FormConfig/AddAgent"
   import { SEARCH_FORM_CONFIG } from "./FormConfig/SearchConfig"
-  import { AGENT_LIST_CONFIG } from "./TableConfig/AgentListConfig"
+  import { AGENT_LIST_CONFIG, AGENT_LIST_COUNT } from "./TableConfig/AgentListConfig"
   export default {
     name: "AgentList",
     data() {
@@ -70,17 +87,23 @@
         searchConfig: SEARCH_FORM_CONFIG,
         fromConfigData: {},
         gridConfig: AGENT_LIST_CONFIG.gridConfig,
-        gridBtnConfig: AGENT_LIST_CONFIG.gridBtnConfig
+        gridBtnConfig: AGENT_LIST_CONFIG.gridBtnConfig,
+        infoList: []
       }
     },
     created() {
+      this.infoList = this.$g.utils.deepClone(AGENT_LIST_COUNT)
       this.getAgentNo()
     },
     methods: {
       getAgentNo() {
         api.totalAgentNum().then(res => {
           if (res.status === 0) {
-            this.agentNumData = res.data
+            if (res.status === 0) {
+              this.infoList[0].value = res.data.totalAgentNum
+              this.infoList[1].value = res.data.activeAgentNum
+              this.infoList[2].value = res.data.abnormalAgentNum
+            }
           }
         })
       },
@@ -176,6 +199,9 @@
 </script>
 
 <style lang="scss" scoped>
+  .profit-data {
+    margin: 24px 0 0 24px;
+  }
   .m-table {
     padding: 24px 24px 0;
     width: 100%;
@@ -213,6 +239,9 @@
   }
   .m-select-baseCrud {
     padding: 24px;
+  }
+  /deep/ .g-search-container {
+    margin: 0 24px;
   }
   /deep/ .tab-color {
     color: #1989FA;

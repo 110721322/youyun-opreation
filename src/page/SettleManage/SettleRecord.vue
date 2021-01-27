@@ -62,7 +62,8 @@
         infoList: [],
         searchConfig: SEARCH_FORM_CONFIG,
         gridConfig: SETTLE_RECORD_CONFIG.gridConfig,
-        gridBtnConfig: SETTLE_RECORD_CONFIG.gridBtnConfig
+        gridBtnConfig: SETTLE_RECORD_CONFIG.gridBtnConfig,
+        infoList: []
       }
     },
     created() {
@@ -84,6 +85,8 @@
           status: 0
         }
       ]
+      this.infoList = this.$g.utils.deepClone(SETTLE_CONT)
+      this.getCunt(this.params)
     },
     mounted() {
       this.$EventBus.$on('handleAgentChange', this.handleAgentChange)

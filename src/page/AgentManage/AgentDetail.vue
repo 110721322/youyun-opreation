@@ -38,8 +38,23 @@
           module-title="开户信息"
       ></yun-detail-mode>
     </div>
-<!-- TODO    数据统计模块-->
-<!--    <div class="m-box"></div>-->
+    <div class="profit-data">
+      <!--数据统计开始-->
+      <el-row>
+        <el-col :span="item.span" v-for="(item, index) in infoList" :key="index">
+          <yun-card-first
+            :style="item.style"
+            :label="item.label"
+            :icon="item.icon"
+            :icon-style="item.iconStyle"
+            :tooltip="item.tooltip"
+            :value="item.value"
+            :children="item.children"
+          >
+          </yun-card-first>
+        </el-col>
+      </el-row>
+    </div>
     <div class="m-basecrud">
       <div class="m-basecrud-title">
         <div class="m-basecrud-left">沟通记录</div>
@@ -146,7 +161,7 @@
   import api from "@/api/api_agentManage.js";
   import utils from 'youyun-vue-components/global/kit/utils.js'
   import { AGENT_TALK_DATA } from "./TableConfig/AgentTalkConfig";
-  import { DETAILCONFIG } from "./TableConfig/AgentDetailConfig";
+  import { DETAILCONFIG, AGENT_DETAIL_STATIC } from "./TableConfig/AgentDetailConfig";
   import { FORM_CONFIG } from "./FormConfig/AgentDetailConfig";
   import { AGENT_TRANSFER } from "./TableConfig/AgebtTransferConfig"
 
@@ -183,7 +198,8 @@
         nameVal: false,
         rateVal: false,
         settleVal: false,
-        dateVal: false
+        dateVal: false,
+        infoList: []
       }
     },
     computed: {
@@ -200,6 +216,7 @@
       }
     },
     created() {
+      this.infoList = this.$g.utils.deepClone(AGENT_DETAIL_STATIC)
       this.getAgentDetail(this.agentNo)
     },
     methods: {
@@ -455,8 +472,7 @@
       background: #fff;
     }
     .m-basecrud {
-      margin-top: 24px;
-      padding: 24px;
+      padding:  0 24px;
       .m-basecrud-title {
         display: flex;
         justify-content: space-between;
@@ -482,6 +498,12 @@
   }
   /deep/ .m-formTemplate .m-form-template-item {
     margin-right: 0;
+  }
+  /deep/ .m-card .m-multi-item {
+    display: inline-block;
+  }
+  .profit-data {
+    margin: 24px 0 0 24px;
   }
   .dialog-form {
     padding-top: 24px;
