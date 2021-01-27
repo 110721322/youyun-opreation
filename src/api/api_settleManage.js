@@ -8,7 +8,11 @@ const api = {
   // 结算管理-审核通过
   financeSuccess: (params) => API.POST('/operation/v1/agentSettle/financeSuccess', params),
   // 结算管理-审核驳回
-  financeReject: (params) => API.POST('/operation/v1/agentSettle/financeReject', params)
+  financeReject: (params) => API.POST('/operation/v1/agentSettle/financeReject', params),
+  // 门店结算-门店结算记录查询
+  queryShopSettle: (params) => API.GET('/operation/v1/shopSettle/queryShopSettle', params),
+  // 门店结算-查询汇总数据
+  shopSettleTotalData: (params) => API.GET('/operation/v1/shopSettle/shopSettleTotalData', params)
 };
 
 export default api

@@ -1,5 +1,22 @@
 <template>
   <div class="m-page">
+    <div class="profit-data">
+      <!--数据统计开始-->
+      <el-row>
+        <el-col :span="item.span" v-for="(item, index) in infoList" :key="index">
+          <yun-card-first
+            :style="item.style"
+            :label="item.label"
+            :icon="item.icon"
+            :icon-style="item.iconStyle"
+            :tooltip="item.tooltip"
+            :value="item.value"
+            :children="item.children"
+          >
+          </yun-card-first>
+        </el-col>
+      </el-row>
+    </div>
     <yun-search
         :form-base-data="searchConfig.formData"
         @search="onClickSearch"
@@ -37,7 +54,7 @@
   import api from "@/api/api_settleManage.js";
   import { REJECT_CONFIG } from "./FormConfig/AgentRejectConfig"
   import { SEARCH_FORM_CONFIG } from "./FormConfig/AgentSettleSearch"
-  import { AGENT_SETTLE_CONFIG } from "./TableConfig/AgentSettleConfig"
+  import { AGENT_SETTLE_CONFIG, SETTLE_STATIC } from "./TableConfig/AgentSettleConfig"
   export default {
     name: "AgentSettleManage",
     data() {
@@ -45,6 +62,7 @@
         params: {},
         api: api.settleList,
         drawer: false,
+        infoList: [],
         searchConfig: SEARCH_FORM_CONFIG,
         fromConfigData: REJECT_CONFIG.formData,
         gridConfig: AGENT_SETTLE_CONFIG.gridConfig,
@@ -52,6 +70,7 @@
       }
     },
     created() {
+      this.infoList = this.$g.utils.deepClone(SETTLE_STATIC)
     },
     methods: {
       onClickSearch($ruleForm) {
@@ -76,6 +95,9 @@
 </script>
 
 <style lang="scss" scoped>
+  .profit-data {
+    margin: 24px 0 0 24px;
+  }
   .m-table {
     padding: 24px 24px 0;
     width: 100%;
@@ -105,7 +127,9 @@
   /deep/ .el-dialog__body {
     padding: 0 0 24px 0;
   }
-
+  /deep/ .g-search-container {
+    margin: 0 24px;
+  }
   /deep/ .el-dialog__header {
     padding: 16px 24px;
     background: #FAFAFA;

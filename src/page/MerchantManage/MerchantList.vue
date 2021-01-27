@@ -1,5 +1,22 @@
 <template>
   <div class="m-page">
+    <div class="profit-data">
+      <!--数据统计开始-->
+      <el-row>
+        <el-col :span="item.span" v-for="(item, index) in infoList" :key="index">
+          <yun-card-first
+            :style="item.style"
+            :label="item.label"
+            :icon="item.icon"
+            :icon-style="item.iconStyle"
+            :tooltip="item.tooltip"
+            :value="item.value"
+            :children="item.children"
+          >
+          </yun-card-first>
+        </el-col>
+      </el-row>
+    </div>
     <yun-search
         :form-base-data="searchConfig.formData"
         @search="onClickSearch"
@@ -36,6 +53,8 @@
   import api from "@/api/api_merchantManage.js";
   import { SEARCH_FORM_CONFIG } from "./FormConfig/MerchantListSearch"
   import { MERCHANT_LIST_CONFIG } from "./TableConfig/ListConfig"
+  import { STATISTICS_LIST } from "./TableConfig/MerchantListConfig"
+
   export default {
     name: "MerchantList",
     data() {
@@ -44,13 +63,26 @@
         api: api.merchantList,
         searchConfig: SEARCH_FORM_CONFIG,
         gridConfig: MERCHANT_LIST_CONFIG.gridConfig,
-        gridBtnConfig: MERCHANT_LIST_CONFIG.gridBtnConfig
+        gridBtnConfig: MERCHANT_LIST_CONFIG.gridBtnConfig,
+        infoList: []
       }
     },
-    created() {},
+    created() {
+      this.infoList = this.$g.utils.deepClone(STATISTICS_LIST)
+      this.getMerchantNum()
+    },
     methods: {
+      getMerchantNum() {
+        api.merchantCount().then(res => {
+          console.log(res)
+          if (res.status === 0) {
+            this.infoList[0].value = res.data.merchantCount
+            this.infoList[1].value = res.data.activeMerchantCount
+            this.infoList[2].value = res.data.inactiveMerchantCount
+          }
+        })
+      },
       onClickSearch($ruleForm) {
-        console.log($ruleForm);
         this.params = {
           merchantNo: $ruleForm.merchantNo ? $ruleForm.merchantNo : null,
           merchantName: $ruleForm.merchantName ? $ruleForm.merchantName : null,
@@ -74,6 +106,9 @@
 
 <style lang="scss" scoped>
   .m-page {
+    .profit-data {
+      margin: 24px 0 0 24px;
+    }
     .m-basecrud {
       padding: 24px 24px;
       .m-basecrud-title {
@@ -90,6 +125,9 @@
         background: #fff;
       }
     }
+  }
+  /deep/ .m-card {
+    margin-bottom: 0;
   }
   /deep/ .tab-color {
     color: #1989FA;

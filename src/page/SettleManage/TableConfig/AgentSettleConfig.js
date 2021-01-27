@@ -67,3 +67,42 @@ export const AGENT_SETTLE_CONFIG = {
     ]
   }
 };
+
+export const SETTLE_STATIC = [
+  {
+    span: 6,
+    style: 'height: 98px;',
+    label: '结算总额（元）',
+    icon: 'iconjine',
+    iconStyle: 'color: #EFA911;',
+    tooltip: '',
+    value: '0'
+  },
+  {
+    span: 6,
+    style: 'height: 98px;',
+    label: '结算笔数（笔）',
+    icon: 'iconshuliang',
+    iconStyle: 'color: #50C514;',
+    tooltip: '',
+    value: '0'
+  },
+  {
+    span: 6,
+    style: 'height: 98px;',
+    label: '可结算金额（元）',
+    icon: 'iconshenhe',
+    iconStyle: 'color: #1989FA;',
+    tooltip: '',
+    value: '0'
+  },
+  {
+    span: 6,
+    style: 'height: 98px;',
+    label: '已结算金额（元）',
+    icon: 'iconshenhechenggong',
+    iconStyle: 'color: #50C514;',
+    tooltip: '',
+    value: '0'
+  }
+]

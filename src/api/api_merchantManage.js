@@ -1,5 +1,5 @@
 import * as API from '.';
-// 1: () => API.GET(''),
+// ss: (params) => API.GET('', params),
 const api = {
   // 商户列表
   merchantList: (params) => API.GET('/operation/v1/merchantNew/selectPageByCondition', params),
@@ -16,7 +16,13 @@ const api = {
   // 商户详情下的门店列表
   shopByPage: (params) => API.GET('/operation/v1/merchantNew/shopByPage', params),
   // 按条件查询商户列表
-  selectByCondition: (params) => API.GET('/operation/v1/merchantNew/selectByCondition', params)
+  selectByCondition: (params) => API.GET('/operation/v1/merchantNew/selectByCondition', params),
+  // 统计商户数量/活跃/异常商户
+  merchantCount: () => API.GET('/operation/v1/statistic/merchant/count'),
+  // 统计商户下详情信息
+  merchantDetailStatic: (params) => API.GET('/operation/v1/statistic/merchant/detail/info', params),
+  // 统计商户对应的门店详情信息
+  sss: (params) => API.GET('/operation/v1/statistic/merchant/shop/info', params)
 };
 
 export default api

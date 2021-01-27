@@ -82,3 +82,33 @@ export const SETTLE_RECORD_CONFIG = {
     view: false
   }
 };
+
+export const SETTLE_CONT = [
+  {
+    span: 8,
+    style: 'height: 98px;',
+    label: '结算笔数（笔）',
+    icon: 'iconjine',
+    iconStyle: 'color: #EFA911;',
+    tooltip: '',
+    value: '0'
+  },
+  {
+    span: 8,
+    style: 'height: 98px;',
+    label: '可结算金额（元）',
+    icon: 'iconshuliang',
+    iconStyle: 'color: #50C514;',
+    tooltip: '',
+    value: '0'
+  },
+  {
+    span: 8,
+    style: 'height: 98px;',
+    label: '已结算金额（元）',
+    icon: 'iconshenhe',
+    iconStyle: 'color: #1989FA;',
+    tooltip: '',
+    value: '0'
+  }
+]

@@ -75,3 +75,154 @@ export const DETAILCONFIG = {
     }
   ]
 }
+
+export const AGENT_DETAIL_STATIC = [
+  {
+    span: 6,
+    style: 'height: 134px;',
+    label: '实收总额（0笔）',
+    icon: '',
+    iconStyle: 'color: #50C514;',
+    tooltip: '',
+    value: '0',
+    children: [
+      {
+        label: '今日订单金额（0笔）',
+        value: '¥0'
+      }
+    ]
+  },
+  {
+    span: 6,
+    style: 'height: 134px;',
+    label: '平台佣金总计（元）',
+    icon: '',
+    iconStyle: 'color: #50C514;',
+    tooltip: '',
+    value: '0',
+    children: [
+      {
+        label: '今日订单分润',
+        value: '¥0'
+      }
+    ]
+  },
+  {
+    span: 6,
+    style: 'height: 134px;',
+    label: '订单分润总计（元）',
+    icon: '',
+    iconStyle: 'color: #50C514;',
+    tooltip: '',
+    value: '0',
+    children: [
+      {
+        label: '今日订单分润',
+        value: '¥0'
+      }
+    ]
+  },
+  {
+    span: 6,
+    style: 'height: 134px;',
+    label: '可结算分润（元）',
+    icon: '',
+    iconStyle: 'color: #50C514;',
+    tooltip: '',
+    value: '0',
+    children: [
+      {
+        label: '已结算分润',
+        value: '¥0'
+      }
+    ]
+  },
+  {
+    span: 6,
+    style: 'height: 204px;',
+    label: '退款总额（0笔）',
+    icon: '',
+    iconStyle: 'color: #1989FA;',
+    tooltip: '',
+    value: '0',
+    children: [
+      {
+        label: '今日退款金额（0笔）',
+        value: '¥0'
+      }
+    ]
+  },
+  {
+    span: 6,
+    style: 'height: 204px;',
+    label: '商户数量（个）',
+    icon: '',
+    iconStyle: 'color: #FA6577;',
+    tooltip: '',
+    value: '0',
+    children: [
+      {
+        label: '今日新增商户（个）',
+        value: '0',
+        span: 24
+      },
+      {
+        label: '今日活跃商户（个）',
+        value: '0',
+        span: 24
+      }
+    ]
+  },
+  {
+    span: 6,
+    style: 'height: 204px;',
+    label: '门店数量（个）',
+    icon: '',
+    iconStyle: 'color: #FA6577;',
+    tooltip: '',
+    value: '0',
+    children: [
+      {
+        label: '今日新增门店（个）',
+        value: '0',
+        span: 24
+      },
+      {
+        label: '今日活跃门店（个）',
+        value: '0',
+        span: 24
+      },
+      {
+        label: '待审核门店（个）',
+        value: '0',
+        span: 24
+      }
+    ]
+  },
+  {
+    span: 6,
+    style: 'height: 204px;',
+    label: '设备总数（个）',
+    icon: '',
+    iconStyle: 'color: #FA6577;',
+    tooltip: '',
+    value: '0',
+    children: [
+      {
+        label: '今日新增设备（台）',
+        value: '0',
+        span: 24
+      },
+      {
+        label: '今日活跃设备（台）',
+        value: '0',
+        span: 24
+      },
+      {
+        label: '带绑定设备数（台）',
+        value: '0',
+        span: 24
+      }
+    ]
+  }
+]

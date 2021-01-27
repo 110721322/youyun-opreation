@@ -68,3 +68,33 @@ export const AGENT_LIST_CONFIG = {
     ]
   }
 };
+
+export const AGENT_LIST_COUNT = [
+  {
+    span: 8,
+    style: 'height: 98px;',
+    label: '服务商数量（个）',
+    icon: 'iconshuliang',
+    iconStyle: 'color: #50C514;',
+    tooltip: '',
+    value: '0'
+  },
+  {
+    span: 8,
+    style: 'height: 98px;',
+    label: '活跃服务商（个）',
+    icon: 'iconshuliang',
+    iconStyle: 'color: #1989FA;',
+    tooltip: '',
+    value: '0'
+  },
+  {
+    span: 8,
+    style: 'height: 98px;',
+    label: '异常服务商（个）',
+    icon: 'iconyichang',
+    iconStyle: 'color: #EFA911;',
+    tooltip: '',
+    value: '0'
+  }
+]

@@ -1,5 +1,22 @@
 <template>
   <div class="m-page">
+    <div class="profit-data">
+      <!--数据统计开始-->
+      <el-row>
+        <el-col :span="item.span" v-for="(item, index) in infoList" :key="index">
+          <yun-card-first
+            :style="item.style"
+            :label="item.label"
+            :icon="item.icon"
+            :icon-style="item.iconStyle"
+            :tooltip="item.tooltip"
+            :value="item.value"
+            :children="item.children"
+          >
+          </yun-card-first>
+        </el-col>
+      </el-row>
+    </div>
     <yun-search
         :form-base-data="searchConfig.formData"
         @search="onClickSearch"
@@ -32,18 +49,21 @@
 </template>
 
 <script>
+  import api from "@/api/api_settleManage"
   import { SEARCH_FORM_CONFIG } from "./FormConfig/SettleRecordSearch"
-  import { SETTLE_RECORD_CONFIG } from "./TableConfig/SettleRecordConfig"
+  import { SETTLE_RECORD_CONFIG, SETTLE_CONT } from "./TableConfig/SettleRecordConfig"
+
   export default {
     name: "SettleRecord",
     data() {
       return {
         params: {},
-        api: '',
+        api: api.queryShopSettle,
         testData: [],
         searchConfig: SEARCH_FORM_CONFIG,
         gridConfig: SETTLE_RECORD_CONFIG.gridConfig,
-        gridBtnConfig: SETTLE_RECORD_CONFIG.gridBtnConfig
+        gridBtnConfig: SETTLE_RECORD_CONFIG.gridBtnConfig,
+        infoList: []
       }
     },
     created() {
@@ -64,6 +84,8 @@
           status: 0
         }
       ]
+      this.infoList = this.$g.utils.deepClone(SETTLE_CONT)
+      this.getCunt(this.params)
     },
     methods: {
       onClickSearch($ruleForm) {
@@ -78,6 +100,13 @@
           agent: $ruleForm.agent ? $ruleForm.agent : null,
           merchant: $ruleForm.merchant ? $ruleForm.merchant : null
         }
+      },
+      getCunt(params) {
+        api.shopSettleTotalData(params).then(res => {
+          if (res.status === 0) {
+            console.log(res.data)
+          }
+        })
       }
     }
   }

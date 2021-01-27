@@ -25,6 +25,23 @@
         </template>
       </yun-detail-mode>
     </div>
+    <div class="profit-data">
+      <!--数据统计开始-->
+      <el-row>
+        <el-col :span="item.span" v-for="(item, index) in infoList" :key="index">
+          <yun-card-first
+            :style="item.style"
+            :label="item.label"
+            :icon="item.icon"
+            :icon-style="item.iconStyle"
+            :tooltip="item.tooltip"
+            :value="item.value"
+            :children="item.children"
+          >
+          </yun-card-first>
+        </el-col>
+      </el-row>
+    </div>
     <yun-search
         :form-base-data="searchConfig.formData"
         @search="onClickSearch"
@@ -79,7 +96,7 @@
   import { LIST_CONFIG } from "./TableConfig/MerchantListConfig"
   import { SEARCH_FORM_CONFIG } from "./FormConfig/MerchantDetailSearch"
   import { FORM_CONFIG } from "./FormConfig/MerchantDetailConfig"
-  import { MERCHANT_DETAIL_CONFIG } from "./TableConfig/MerchantDetailConfig"
+  import { MERCHANT_DETAIL_CONFIG, MERCHANT_DETAIL_STATIC } from "./TableConfig/MerchantDetailConfig"
   export default {
     name: "MerchantDetail",
     data() {
@@ -100,7 +117,8 @@
         searchConfig: SEARCH_FORM_CONFIG,
         configData: LIST_CONFIG.configData,
         gridConfig: MERCHANT_DETAIL_CONFIG.gridConfig,
-        gridBtnConfig: MERCHANT_DETAIL_CONFIG.gridBtnConfig
+        gridBtnConfig: MERCHANT_DETAIL_CONFIG.gridBtnConfig,
+        infoList: []
       }
     },
     computed: {
@@ -113,7 +131,9 @@
       }
     },
     created() {
+      this.infoList = this.$g.utils.deepClone(MERCHANT_DETAIL_STATIC)
       this.getMerchantDetail(this.merchantNo)
+      this.getMerchantStatic(this.merchantNo)
     },
     methods: {
       getMerchantDetail(merchantNo) {
@@ -122,6 +142,29 @@
         }).then(res => {
           if (res.status === 0) {
             this.ruleForm = res.data
+          }
+        })
+      },
+      getMerchantStatic(merchantNo) {
+        api.merchantDetailStatic({
+          merchantNo: merchantNo
+        }).then(res => {
+          console.log(res)
+          if (res.status === 0) {
+            this.infoList[0].label = '实收总额（' + res.data.realTotalCount + '）笔'
+            this.infoList[0].value = '¥' + res.data.realTotalAmount
+            this.infoList[0].children[0].label = '今日订单金额（' + res.data.yesterdayRealAmount + '）笔'
+            this.infoList[0].children[0].value = '¥' + res.data.yesterdayRealAmount
+            this.infoList[1].label = '退款总额（' + res.data.refundTotalAmount + '）笔'
+            this.infoList[1].value = '¥' + res.data.realTotalAmoun
+            this.infoList[1].children[0].label = '今日订单金额（' + res.data.refundTotalCount + '）笔'
+            this.infoList[1].children[0].value = '¥' + res.data.refundTotalAmount
+            this.infoList[2].value = res.data.shopCount
+            this.infoList[2].children[0].value = res.data.yesterdayActiveShopCount
+            this.infoList[2].children[1].value = res.data.auditShopCount
+            this.infoList[3].value = res.data.deviceNum
+            this.infoList[3].children[0].value = res.data.yesterdayActiveDeviceNum
+            this.infoList[3].children[1].value = res.data.unBindDeviceNum
           }
         })
       },
@@ -252,6 +295,9 @@
       padding: 24px 24px;
       background: #fff;
     }
+    .profit-data {
+      margin: 24px 0 0 24px;
+    }
     .m-data {
       width: 100%;
       height: 100px;
@@ -274,6 +320,9 @@
   }
   .dialog-form {
     padding-top: 24px;
+  }
+  /deep/ .g-search-container {
+    margin: 0 24px;
   }
   /deep/ .el-switch {
     margin-left: 4px;

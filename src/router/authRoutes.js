@@ -96,6 +96,14 @@ export const authRoutes = [
     },
     children: [
       {
+        text: '门店结算记录',
+        name: 'SettleRecord',
+        meta: {
+          title: '门店结算记录',
+          icon: ''
+        }
+      },
+      {
         text: '服务商结算管理',
         name: 'AgentSettleManage',
         meta: {
