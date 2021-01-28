@@ -158,7 +158,7 @@
           password: row.password
         }).then(res => {
           if (res.status === 0) {
-            window.open('http://service.intranet.aduer.com/'+ '#/login?ticket' + '=' + res.data)
+            window.open('http://service.intranet.aduer.com/'+ '#/Login?ticket' + '=' + res.data)
             // window.open(process.env.AGENT_URL + '#/login?ticket' + '=' + res.data)
           }
         })
