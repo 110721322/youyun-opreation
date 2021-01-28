@@ -18,7 +18,6 @@ export const FORM_CONFIG = [
     label: '登录手机号',
     key: 'phone',
     initVal: '',
-    isDisabled: true,
     style: 'width: 272px;',
     maxlength: 11,
     rules: [

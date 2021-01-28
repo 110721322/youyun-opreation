@@ -6,7 +6,7 @@ const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const { library } = require('./webpack/dll.config')
 const dllPath = './public/vendor'
 const productionGzipExtensions = ['js', 'css']
-const serves = ['production', 'test']
+const serves = ['production']
 const devtool = process.env.NODE_ENV === 'production' ? 'none' : 'eval-source-map'
 const packageInfo = require('./package.json')
 

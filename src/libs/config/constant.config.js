@@ -17,9 +17,12 @@ export const RoleList = {
 }
 
 export const DataCenter = {
-  PAY_AMOUNT: 'payAmount',
-  PAY_COUNT: 'payCount',
+  PAY_AMOUNT: 'tradeAmount',
+  PAY_COUNT: 'tradeCount',
+  WX_PAY_AMOUNT: 'wechatTradeAmount',
+  ALI_PAY_AMOUNT: 'alipayTradeAmount',
   ACTIVE_RADIO: 'active',
   NEW_RADIO: 'new',
-  WARN_RADIO: 'warn'
+  WARN_RADIO: 'warn',
+  ALL_YEAR: 1
 }

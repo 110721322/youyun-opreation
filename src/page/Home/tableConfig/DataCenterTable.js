@@ -1,4 +1,5 @@
 import { DataCenter} from "@/libs/config/constant.config";
+import utils from "youyun-vue-components/global/kit/utils";
 
 export const AGENT_TABLE_CONFIG = {
   gridConfig: [
@@ -6,7 +7,7 @@ export const AGENT_TABLE_CONFIG = {
       label: '排名',
       prop: 'rank',
       render: (h, params) => {
-        const rank = params.index + 1;
+        const rank = params.row.rank;
         return (
           <span class={[rank <= 3 ? "m-rank m-top" : 'm-rank']}>{ rank }</span>
         )
@@ -15,8 +16,8 @@ export const AGENT_TABLE_CONFIG = {
     },
     {
       label: '服务商名称',
-      prop: 'agnentName',
-      width: '80px'
+      prop: 'agentName',
+      width: '90px'
     },
     {
       label: '商户数量',
@@ -25,13 +26,19 @@ export const AGENT_TABLE_CONFIG = {
     },
     {
       label: '支付笔数',
-      prop: 'payCount',
-      width: '90px'
+      prop: 'tradeCount',
+      width: '90px',
+      formatter($row) {
+        return utils.toLocaleString($row.tradeCount)
+      }
     },
     {
       label: '支付总额',
-      prop: 'amount',
-      width: '80px'
+      prop: 'actualAmount',
+      width: '80px',
+      formatter($row) {
+        return utils.toLocaleString($row.actualAmount)
+      }
     }
   ]
 }
@@ -42,7 +49,7 @@ export const MERCHANT_TABLE_CONFIG = {
       label: '排名',
       prop: 'rank',
       render: (h, params) => {
-        const rank = params.index + 1;
+        const rank = params.row.rank;
         return (
           <span class={[rank <= 3 ? "m-rank m-top" : 'm-rank']}>{ rank }</span>
         )
@@ -61,13 +68,19 @@ export const MERCHANT_TABLE_CONFIG = {
     },
     {
       label: '支付笔数',
-      prop: 'payCount',
-      width: '90px'
+      prop: 'tradeCount',
+      width: '90px',
+      formatter($row) {
+        return utils.toLocaleString($row.tradeCount)
+      }
     },
     {
       label: '支付总额',
-      prop: 'amount',
-      width: '80px'
+      prop: 'actualAmount',
+      width: '80px',
+      formatter($row) {
+        return utils.toLocaleString($row.actualAmount)
+      }
     }
   ]
 }
@@ -78,7 +91,7 @@ export const SHOP_TABLE_CONFIG = {
       label: '排名',
       prop: 'rank',
       render: (h, params) => {
-        const rank = params.index + 1;
+        const rank = params.row.rank;
         return (
           <span class={[rank <= 3 ? "m-rank m-top" : 'm-rank']}>{ rank }</span>
         )
@@ -102,13 +115,19 @@ export const SHOP_TABLE_CONFIG = {
     },
     {
       label: '支付笔数',
-      prop: 'count',
-      width: '80px'
+      prop: 'tradeCount',
+      width: '80px',
+      formatter($row) {
+        return utils.toLocaleString($row.tradeCount)
+      }
     },
     {
       label: '支付总额',
-      prop: 'amount',
-      width: '80px'
+      prop: 'actualAmount',
+      width: '80px',
+      formatter($row) {
+        return utils.toLocaleString($row.actualAmount)
+      }
     }
   ]
 }
