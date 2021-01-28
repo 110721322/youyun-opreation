@@ -155,16 +155,16 @@
             this.infoList[0].value = '¥' + res.data.realTotalAmount
             this.infoList[0].children[0].label = '今日订单金额（' + res.data.yesterdayRealAmount + '）笔'
             this.infoList[0].children[0].value = '¥' + res.data.yesterdayRealAmount
-            this.infoList[1].label = '退款总额（' + res.data.refundTotalAmount + '）笔'
-            this.infoList[1].value = '¥' + res.data.realTotalAmoun
+            this.infoList[1].label = '退款总额（' + res.data.refundTotalCount + '）笔'
+            this.infoList[1].value = '¥' + res.data.refundTotalAmount
             this.infoList[1].children[0].label = '今日订单金额（' + res.data.refundTotalCount + '）笔'
             this.infoList[1].children[0].value = '¥' + res.data.refundTotalAmount
-            this.infoList[2].value = res.data.shopCount
-            this.infoList[2].children[0].value = res.data.yesterdayActiveShopCount
-            this.infoList[2].children[1].value = res.data.auditShopCount
-            this.infoList[3].value = res.data.deviceNum
-            this.infoList[3].children[0].value = res.data.yesterdayActiveDeviceNum
-            this.infoList[3].children[1].value = res.data.unBindDeviceNum
+            this.infoList[2].value = String(res.data.shopCount)
+            this.infoList[2].children[0].value = String(res.data.yesterdayActiveShopCount)
+            this.infoList[2].children[1].value = String(res.data.auditShopCount)
+            this.infoList[3].value = String(res.data.deviceNum)
+            this.infoList[3].children[0].value = String(res.data.yesterdayActiveDeviceNum)
+            this.infoList[3].children[1].value = String(res.data.unBindDeviceNum)
           }
         })
       },

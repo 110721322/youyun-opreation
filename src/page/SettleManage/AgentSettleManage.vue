@@ -89,7 +89,7 @@
         api.queryAgentSettleStatistic(params).then(res => {
           if (res.status === 0) {
             this.infoList.forEach((item,index) => {
-              item.value = res.data[item.key]
+              item.value = String(res.data[item.key])
             })
           }
         })
@@ -108,7 +108,7 @@
 
 <style lang="scss" scoped>
   .settle-data {
-    margin: 24px 24px 0;
+    margin: 24px 24px;
     /deep/ .m-card .m-top {
       border: 0;
     }

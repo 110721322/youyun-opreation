@@ -130,7 +130,7 @@
           query: {
             agentNo: row.agentNo
           }
-        }).catch(err => {})
+        })
       },
 
       clickChangeOperation() {
@@ -148,7 +148,7 @@
       clickToAdd() {
         this.$router.push({
           name: 'AddAgent',
-        }).catch(err => {})
+        })
       },
 
       onClickGoAgent(row) {

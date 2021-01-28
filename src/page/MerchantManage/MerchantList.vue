@@ -75,11 +75,10 @@
     methods: {
       getMerchantNum() {
         api.merchantCount().then(res => {
-          console.log(res)
           if (res.status === 0) {
-            this.infoList[0].value = res.data.merchantCount
-            this.infoList[1].value = res.data.activeMerchantCount
-            this.infoList[2].value = res.data.inactiveMerchantCount
+            this.infoList[0].value = String(res.data.merchantCount)
+            this.infoList[1].value = String(res.data.activeMerchantCount)
+            this.infoList[2].value = String(res.data.inactiveMerchantCount)
           }
         })
       },
@@ -98,7 +97,7 @@
             merchantNo: row.merchantNo,
             id: row.id
           }
-        }).catch(() => {})
+        })
       },
       onClickGoMerchant(row) {
         commonApi.generateLoginTicket({

@@ -59,7 +59,6 @@
         params: {},
         api: api.queryShopSettle,
         testData: [],
-        infoList: [],
         searchConfig: SEARCH_FORM_CONFIG,
         gridConfig: SETTLE_RECORD_CONFIG.gridConfig,
         gridBtnConfig: SETTLE_RECORD_CONFIG.gridBtnConfig,
@@ -68,29 +67,10 @@
     },
     created() {
       this.infoList = this.$g.utils.deepClone(INFO_LIST)
-      this.testData = [
-        {
-          settleNo: 225555,
-          createTime: '2020-12-12',
-          agentName: 'haha',
-          merchantName: '水果店',
-          shopName: '先锋水果店',
-          settleChannel: '乐刷',
-          settleAmount: '100',
-          name: '张三',
-          bankName: '杭州银行',
-          bankNo: '22545872595841548',
-          settleTime: '2020-12-12',
-          remark: '图片模糊',
-          status: 0
-        }
-      ]
-      this.infoList = this.$g.utils.deepClone(SETTLE_CONT)
       this.getCunt(this.params)
     },
     mounted() {
       this.$EventBus.$on('handleAgentChange', this.handleAgentChange)
-      this.shopSettleTotalData()
     },
     destroyed() { // 销毁EventBus事件
       this.$EventBus.$off('handleAgentChange', this.handleAgentChange)
@@ -111,16 +91,16 @@
           agent: $ruleForm.agent ? $ruleForm.agent : null,
           merchant: $ruleForm.merchant ? $ruleForm.merchant : null
         }
+        this.getCunt(this.params)
       },
-      shopSettleTotalData() {
-        const params = {}
+      getCunt(params) {
         api.shopSettleTotalData(params).then(res => {
           if (res.status === 0) {
             this.infoList.forEach((item,index) => {
               if (item.key === 'totalSettleAmount') {
                 item.value = res.data['unSettleAmount'] + res.data['settledAmount']
               } else {
-                item.value = res.data[item.key]
+                item.value = String(res.data[item.key])
               }
             })
           }

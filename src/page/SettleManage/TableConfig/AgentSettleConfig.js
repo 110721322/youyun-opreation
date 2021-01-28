@@ -76,7 +76,7 @@ export const INFO_LIST = [
     iconStyle: 'color: #EFA911;',
     tooltip: '',
     key: 'totalSettleAmount',
-    value: '126,560.00',
+    value: '0',
     children: []
   },
   {
@@ -87,7 +87,7 @@ export const INFO_LIST = [
     iconStyle: 'color: #65CC30;',
     tooltip: '',
     key: 'settleCount',
-    value: '126,560.00',
+    value: '0',
     children: []
   },
   {
@@ -98,7 +98,7 @@ export const INFO_LIST = [
     iconStyle: 'color: #1989FA;',
     tooltip: '',
     key: 'totalUnSettleAmount',
-    value: '126,560.00',
+    value: '0',
     children: []
   },
   {
@@ -109,7 +109,7 @@ export const INFO_LIST = [
     iconStyle: 'color: #65CC30;',
     tooltip: '',
     key: 'totalSettledAmount',
-    value: '126,560.00',
+    value: '0',
     children: []
   }
 ]
