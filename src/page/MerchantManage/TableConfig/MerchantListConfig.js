@@ -38,6 +38,7 @@ export const STATISTICS_LIST =[
     icon: 'iconshuliang',
     iconStyle: 'color: #50C514;',
     tooltip: '',
+    key: 'merchantCount',
     value: '0'
   },
   {
@@ -46,8 +47,9 @@ export const STATISTICS_LIST =[
     label: '活跃商户（个）',
     icon: 'iconshuliang',
     iconStyle: 'color: #1989FA;',
-    tooltip: '',
-    value: '0'
+    tooltip: '0',
+    key: 'activeMerchantCount',
+    value: ''
   },
   {
     span: 8,
@@ -56,6 +58,7 @@ export const STATISTICS_LIST =[
     icon: '',
     iconStyle: 'color: #FA6577;',
     tooltip: '',
+    key: 'inactiveMerchantCount',
     value: '0'
   }
 ]

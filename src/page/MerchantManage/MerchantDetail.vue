@@ -67,7 +67,6 @@
             :params="params"
             :api-service="api"
             @details="onClickDetails"
-            @goMerchant="onClickGoMerchant"
         ></yun-table>
       </div>
     </div>
@@ -149,22 +148,23 @@
         api.merchantDetailStatic({
           merchantNo: merchantNo
         }).then(res => {
-          console.log(res)
           if (res.status === 0) {
+            this.infoList.forEach((item, index) => {
+              item.value = String(res.data[item.key]) || '0'
+              item.children.forEach((childrenItem, childrenIndex) => {
+                childrenItem.value = String(res.data[item.key]) || '0'
+                if (childrenItem.key === 'yesterdayRealAmount') {
+                  childrenItem.value = '¥' + (String(res.data[item.key]) || '0')
+                }
+                if (childrenItem.key === 'refundTotalAmount') {
+                  childrenItem.value = '¥' + (String(res.data[item.key]) || '0')
+                }
+              })
+            })
             this.infoList[0].label = '实收总额（' + res.data.realTotalCount + '）笔'
-            this.infoList[0].value = '¥' + res.data.realTotalAmount
-            this.infoList[0].children[0].label = '今日订单金额（' + res.data.yesterdayRealAmount + '）笔'
-            this.infoList[0].children[0].value = '¥' + res.data.yesterdayRealAmount
+            this.infoList[0].children[0].label = '昨日订单金额（' + res.data.yesterdayRealCount + '笔）'
             this.infoList[1].label = '退款总额（' + res.data.refundTotalCount + '）笔'
-            this.infoList[1].value = '¥' + res.data.refundTotalAmount
-            this.infoList[1].children[0].label = '今日订单金额（' + res.data.refundTotalCount + '）笔'
-            this.infoList[1].children[0].value = '¥' + res.data.refundTotalAmount
-            this.infoList[2].value = String(res.data.shopCount)
-            this.infoList[2].children[0].value = String(res.data.yesterdayActiveShopCount)
-            this.infoList[2].children[1].value = String(res.data.auditShopCount)
-            this.infoList[3].value = String(res.data.deviceNum)
-            this.infoList[3].children[0].value = String(res.data.yesterdayActiveDeviceNum)
-            this.infoList[3].children[1].value = String(res.data.unBindDeviceNum)
+            this.infoList[1].children[0].label = '昨日退款金额（' + res.data.refundTotalCount + '笔）'
           }
         })
       },
@@ -217,9 +217,8 @@
           query: {
             shopNo: row.shopNo
           }
-        }).catch(() => {})
+        })
       },
-      onClickGoMerchant(row) {},
       clickSubmit() {
         this.$refs['formInfo'].$children[0].validate((valid) => {
           if (valid) {

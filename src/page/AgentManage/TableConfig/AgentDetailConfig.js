@@ -87,7 +87,7 @@ export const AGENT_DETAIL_STATIC = [
     value: '0',
     children: [
       {
-        label: '今日订单金额（0笔）',
+        label: '昨日订单金额（0笔）',
         value: '¥0'
       }
     ]
@@ -102,7 +102,7 @@ export const AGENT_DETAIL_STATIC = [
     value: '0',
     children: [
       {
-        label: '今日订单分润',
+        label: '昨日订单分润',
         value: '¥0'
       }
     ]
@@ -117,7 +117,7 @@ export const AGENT_DETAIL_STATIC = [
     value: '0',
     children: [
       {
-        label: '今日订单分润',
+        label: '昨日订单分润',
         value: '¥0'
       }
     ]
@@ -147,7 +147,7 @@ export const AGENT_DETAIL_STATIC = [
     value: '0',
     children: [
       {
-        label: '今日退款金额（0笔）',
+        label: '昨日退款金额（0笔）',
         value: '¥0'
       }
     ]
@@ -162,12 +162,12 @@ export const AGENT_DETAIL_STATIC = [
     value: '0',
     children: [
       {
-        label: '今日新增商户（个）',
+        label: '昨日新增商户（个）',
         value: '0',
         span: 24
       },
       {
-        label: '今日活跃商户（个）',
+        label: '昨日活跃商户（个）',
         value: '0',
         span: 24
       }
@@ -183,12 +183,12 @@ export const AGENT_DETAIL_STATIC = [
     value: '0',
     children: [
       {
-        label: '今日新增门店（个）',
+        label: '昨日新增门店（个）',
         value: '0',
         span: 24
       },
       {
-        label: '今日活跃门店（个）',
+        label: '昨日活跃门店（个）',
         value: '0',
         span: 24
       },
@@ -209,17 +209,17 @@ export const AGENT_DETAIL_STATIC = [
     value: '0',
     children: [
       {
-        label: '今日新增设备（台）',
+        label: '昨日新增设备（台）',
         value: '0',
         span: 24
       },
       {
-        label: '今日活跃设备（台）',
+        label: '昨日活跃设备（台）',
         value: '0',
         span: 24
       },
       {
-        label: '带绑定设备数（台）',
+        label: '待绑定设备数（台）',
         value: '0',
         span: 24
       }

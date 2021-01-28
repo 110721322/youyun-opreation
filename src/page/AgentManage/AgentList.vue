@@ -100,11 +100,9 @@
       getAgentNo() {
         api.totalAgentNum().then(res => {
           if (res.status === 0) {
-            if (res.status === 0) {
-              this.infoList[0].value = String(res.data.totalAgentNum)
-              this.infoList[1].value = String(res.data.activeAgentNum)
-              this.infoList[2].value = String(res.data.abnormalAgentNum)
-            }
+            this.infoList.forEach((item, index) => {
+              item.value = String(res.data[item.key]) || '0'
+            })
           }
         })
       },
