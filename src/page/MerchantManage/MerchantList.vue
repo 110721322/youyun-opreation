@@ -51,6 +51,7 @@
 
 <script>
   import api from "@/api/api_merchantManage.js";
+  import commonApi from "@/api/api_common.js"
   import { SEARCH_FORM_CONFIG } from "./FormConfig/MerchantListSearch"
   import { MERCHANT_LIST_CONFIG } from "./TableConfig/ListConfig"
   import { STATISTICS_LIST } from "./TableConfig/MerchantListConfig"
@@ -99,7 +100,17 @@
           }
         }).catch(() => {})
       },
-      onClickGoMerchant(row) {}
+      onClickGoMerchant(row) {
+        commonApi.generateLoginTicket({
+          system: 'merchant',
+          phone: row.loginAccount,
+          password: row.password
+        }).then(res => {
+          if (res.status === 0) {
+            window.open(process.env.VUE_APP_MERCHANT_URL + '#/Login?ticket' + '=' + res.data)
+          }
+        })
+      }
     }
   }
 </script>
