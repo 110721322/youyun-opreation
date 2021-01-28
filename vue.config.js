@@ -92,15 +92,15 @@ module.exports = {
       port: 8082,
       proxy: {
         '/common': {
-          target: process.env.COMMON_URL,
+          target: process.env.VUE_APP_COMMON_URL,
           changeOrigin: true
         },
         '/operation': {
-          target: process.env.OPERATION_URL,
+          target: process.env.VUE_APP_OPERATION_URL,
           changeOrigin: true
         },
         '/agent': {
-          target: process.env.AGENT_URL,
+          target: process.env.VUE_APP_AGENT_URL,
           changeOrigin: true
         }
       }
