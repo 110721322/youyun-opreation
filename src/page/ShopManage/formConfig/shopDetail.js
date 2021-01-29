@@ -392,3 +392,47 @@ export const FORM_CONFIG = {
     }
   ]
 }
+export const INFO_LIST = [
+  {
+    span: 8,
+    style: 'height: 134px;margin-bottom:0px;',
+    label: '实收金额（0笔）',
+    icon: '',
+    iconStyle: '',
+    tooltip: '',
+    key: 'totalActualAmount',
+    value: '126,560.00',
+    children: [{
+      label: '昨日日订单金额',
+      value: '¥12,423.00'
+    }]
+  },
+  {
+    span: 8,
+    style: 'height: 134px;margin-bottom:0px;',
+    label: '退款总额（0笔）',
+    icon: '',
+    iconStyle: '',
+    tooltip: '',
+    key: 'totalRefundAmount',
+    value: '126,560.00',
+    children: [{
+      label: '昨日日退款金额',
+      value: '0'
+    }]
+  },
+  {
+    span: 8,
+    style: 'height: 134px;margin-right:0px;margin-bottom:0px;',
+    label: '设备总数（台）',
+    icon: '',
+    iconStyle: '',
+    tooltip: '',
+    key: 'totalDeviceCount',
+    value: '126,560.00',
+    children: [{
+      label: '今日活跃设备数',
+      value: '¥12,423.00'
+    }]
+  }
+]

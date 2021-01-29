@@ -85,8 +85,6 @@
           status: 0
         }
       ]
-      this.infoList = this.$g.utils.deepClone(SETTLE_CONT)
-      this.getCunt(this.params)
     },
     mounted() {
       this.$EventBus.$on('handleAgentChange', this.handleAgentChange)
@@ -118,9 +116,9 @@
           if (res.status === 0) {
             this.infoList.forEach((item,index) => {
               if (item.key === 'totalSettleAmount') {
-                item.value = res.data['unSettleAmount'] + res.data['settledAmount']
+                item.value = (Number(res.data['unSettleAmount']||0) + Number(res.data['settledAmount']||0))+''
               } else {
-                item.value = res.data[item.key]
+                item.value = (res.data[item.key] || 0) + ''
               }
             })
           }

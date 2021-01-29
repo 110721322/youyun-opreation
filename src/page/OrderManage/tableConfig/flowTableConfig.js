@@ -185,3 +185,71 @@ export const REFUND_TABLE_CONFIG = {
   },
   hideEditArea: false
 };
+export const INFO_LIST = [
+  {
+    span: 8,
+    style: 'height: 91px;',
+    label: '订单总额（元）',
+    icon: 'iconshuliang',
+    iconStyle: 'color: #5AD8A6;',
+    tooltip: '',
+    key: 'totalAmount',
+    value: '126,560.00',
+    children: []
+  },
+  {
+    span: 8,
+    style: 'height: 91px;',
+    label: '',
+    icon: 'iconshenhechenggong',
+    iconStyle: 'color: #50C514;',
+    tooltip: '',
+    key: 'actualAmount',
+    value: '126,560.00',
+    children: []
+  },
+  {
+    span: 8,
+    style: 'height: 91px;margin-right: 0;',
+    label: '',
+    icon: 'iconjine',
+    iconStyle: 'color: #F62735;',
+    tooltip: '',
+    key: 'refundAmount',
+    value: '126,560.00',
+    children: []
+  },
+  {
+    span: 8,
+    style: 'height: 91px;',
+    label: '手续费总额（元）',
+    icon: 'iconshouxufei',
+    iconStyle: 'color: #1989FA;',
+    tooltip: '',
+    key: 'serviceFee',
+    value: '126,560.00',
+    children: []
+  },
+  {
+    span: 8,
+    style: 'height: 91px;',
+    label: '服务商佣金总额（元）',
+    icon: 'iconfenzhang',
+    iconStyle: 'color: #EFA911;',
+    tooltip: '',
+    key: 'agentCommission',
+    value: '126,560.00',
+    children: []
+  },
+  {
+    span: 8,
+    style: 'height: 91px;margin-right: 0;',
+    label: '平台佣金总额（元）',
+    icon: 'iconfenzhang',
+    iconStyle: 'color: #EFA911;',
+    tooltip: '',
+    key: 'platformCommission',
+    value: '126,560.00',
+    children: []
+  }
+]

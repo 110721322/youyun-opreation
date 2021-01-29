@@ -1,5 +1,22 @@
 <template>
   <div>
+    <div class="settle-data">
+      <!--数据统计开始-->
+      <el-row>
+        <el-col :span="item.span" v-for="(item, index) in infoList" :key="index">
+          <yun-card-first
+            :style="item.style"
+            :label="item.label"
+            :icon="item.icon"
+            :icon-style="item.iconStyle"
+            :tooltip="item.tooltip"
+            :value="item.value"
+            :children="item.children"
+          >
+          </yun-card-first>
+        </el-col>
+      </el-row>
+    </div>
     <div class="search-box">
       <yun-search :form-base-data="searchConfig.formData" @search="onClickSearch"></yun-search>
     </div>
@@ -22,7 +39,7 @@
 
 <script>
 import { SEARCH_CONFIG } from "../formConfig/shopListSearch";
-import { TABLE_CONFIG } from "../tableConfig/shopListTable";
+import { TABLE_CONFIG, INFO_LIST } from "../tableConfig/shopListTable";
 import api from "@/api/api_shop";
 export default {
   name: "ShopList",
@@ -32,12 +49,15 @@ export default {
       tableConfig: TABLE_CONFIG,
       api: api.shopQueryByPage,
       params: {},
-      testData: []
+      testData: [],
+      infoList: []
     };
   },
   computed: {
   },
   created() {
+    this.infoList = this.$g.utils.deepClone(INFO_LIST)
+    this.getListStatistic()
   },
   mounted() {
     this.$EventBus.$on('handleAgentChange', this.handleAgentChange)
@@ -46,6 +66,16 @@ export default {
     this.$EventBus.$off('handleAgentChange', this.handleAgentChange)
   },
   methods: {
+    getListStatistic() {
+      const params = {}
+      api.getListStatistic(params).then(res => {
+        if (res.status === 0) {
+          this.infoList.forEach((item,index) => {
+            item.value = res.data[item.key] || 0
+          })
+        }
+      })
+    },
     handleAgentChange($val) {
       this.searchConfig.formData[5].urlOptions.params["agentNo"] = $val.agentNo;
     },
@@ -75,7 +105,15 @@ export default {
   overflow: hidden;
   background: #fff;
 }
-
+  .settle-data {
+    margin: 24px 24px 0;
+    /deep/ .m-card .m-top {
+      border: 0;
+    }
+    /deep/ .el-col-4 {
+      width: 20%;
+    }
+  }
 .tab-title {
   display: flex;
   justify-content: space-between;

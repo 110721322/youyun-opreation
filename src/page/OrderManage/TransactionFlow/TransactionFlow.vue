@@ -1,84 +1,21 @@
 <template>
   <div class="m-page">
-    <div class="m-trade">
-      <div class="m-trade-box">
-        <div class="m-trade-line1">
-          <div class="left-trade">
-            <span>订单总额(元)</span>
-            <img src="@/assets/img/orderAllMoney.svg" alt="订单图标" />
-          </div>
-          <div class="right-trade">
-            <img src="@/assets/img/warn.svg" alt="提示图标" />
-          </div>
-        </div>
-        <div class="m-trade-line2">{{ statisticsData.totalAmount || 0 }}</div>
-<!--        <div class="m-trade-line3">今日订单金额(12笔) ¥23669.00</div>-->
-      </div>
-      <div class="m-trade-box">
-        <div class="m-trade-line1">
-          <div class="left-trade">
-            <span>实收总额({{ statisticsData.actualCount || 0 }}笔)</span>
-            <img src="@/assets/img/actionMoney.svg" alt="总额图标" />
-          </div>
-          <div class="right-trade">
-            <img src="@/assets/img/warn.svg" alt="提示图标" />
-          </div>
-        </div>
-        <div class="m-trade-line2">{{ statisticsData.actualAmount || 0 }}</div>
-<!--        <div class="m-trade-line3">今日实际金额(12笔) ¥23669.00</div>-->
-      </div>
-      <div class="m-trade-box">
-        <div class="m-trade-line1">
-          <div class="left-trade">
-            <span>退款总额({{ statisticsData.refundCount || 0 }}笔)</span>
-            <img src="@/assets/img/refundMoney.svg" alt="退款图标" />
-          </div>
-          <div class="right-trade">
-            <img src="@/assets/img/warn.svg" alt="提示图标" />
-          </div>
-        </div>
-        <div class="m-trade-line2">{{ statisticsData.refundAmount || 0 }}</div>
-<!--        <div class="m-trade-line3">今日退款金额(12笔) ¥23669.00</div>-->
-      </div>
-      <div class="m-trade-box">
-        <div class="m-trade-line1">
-          <div class="left-trade">
-            <span>手续费总额（元）</span>
-            <img src="@/assets/img/fee.svg" alt="手续费图标" />
-          </div>
-          <div class="right-trade">
-            <img src="@/assets/img/warn.svg" alt="提示图标" />
-          </div>
-        </div>
-        <div class="m-trade-line2">{{ statisticsData.serviceFee || 0 }}</div>
-<!--        <div class="m-trade-line3">今日退款金额(12笔) ¥23669.00</div>-->
-      </div>
-      <div class="m-trade-box">
-        <div class="m-trade-line1">
-          <div class="left-trade">
-            <span>服务商佣金总额（元）</span>
-            <img src="@/assets/img/commsion.svg" alt="服务商佣金图标" />
-          </div>
-          <div class="right-trade">
-            <img src="@/assets/img/warn.svg" alt="提示图标" />
-          </div>
-        </div>
-        <div class="m-trade-line2">{{ statisticsData.agentCommission || 0 }}</div>
-<!--        <div class="m-trade-line3">今日退款金额(12笔) ¥23669.00</div>-->
-      </div>
-      <div class="m-trade-box">
-        <div class="m-trade-line1">
-          <div class="left-trade">
-            <span>平台佣金总额（元）</span>
-            <img src="@/assets/img/commsion.svg" alt="平台佣金图标" />
-          </div>
-          <div class="right-trade">
-            <img src="@/assets/img/warn.svg" alt="提示图标" />
-          </div>
-        </div>
-        <div class="m-trade-line2">{{ statisticsData.platformCommission || 0 }}</div>
-<!--        <div class="m-trade-line3">今日退款金额(12笔) ¥23669.00</div>-->
-      </div>
+    <div class="settle-data">
+      <!--数据统计开始-->
+      <el-row>
+        <el-col :span="item.span" v-for="(item, index) in infoList" :key="index">
+          <yun-card-first
+            :style="item.style"
+            :label="item.label"
+            :icon="item.icon"
+            :icon-style="item.iconStyle"
+            :tooltip="item.tooltip"
+            :value="item.value"
+            :children="item.children"
+          >
+          </yun-card-first>
+        </el-col>
+      </el-row>
     </div>
     <div class="m-select-top">
       <el-tabs v-model="activeName">
@@ -95,6 +32,7 @@
 <script>
   import OrderFlow from "../Components/OrderFlow";
   import RefundFlow from "../Components/RefundFlow";
+  import { INFO_LIST } from "../tableConfig/flowTableConfig";
   import api_order from '@/api/api_order'
   export default {
     name: "TransactionFlow",
@@ -105,7 +43,8 @@
       return {
         activeName: 'OrderFlow',
         statisticsData: {}, // 统计数据信息
-        params: {}
+        params: {},
+        infoList: []
       }
     },
     created() {
@@ -113,6 +52,7 @@
         beginTime: this.$g.utils.getToday(0) + ' 00:00:00',
         endTime: this.$g.utils.getToday(0) + ' 23:59:59'
       }
+      this.infoList = this.$g.utils.deepClone(INFO_LIST)
       this.getOrderStatistics()
     },
     methods: {
@@ -128,6 +68,15 @@
         }).then(res => {
           if (res.status === 0) {
             this.statisticsData = res.data;
+            this.infoList.forEach((item, index) => {
+              if (item.key === 'actualAmount') {
+                item.label = '实收总额（'+ (res.data.actualCount||0) +'笔）'
+              }
+              if (item.key === 'refundAmount') {
+                item.label = '实收总额（'+ (res.data.refundCount||0) +'笔）'
+              }
+              item.value = (res.data[item.key] || 0) + ''
+            })
           }
         })
       }
@@ -196,6 +145,12 @@
           line-height: 20px;
           color: #333335;
         }
+      }
+    }
+    .settle-data {
+      margin: 0 24px;
+      /deep/ .m-card .m-top {
+        border: 0;
       }
     }
     .m-select-top {

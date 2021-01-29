@@ -19,5 +19,7 @@ export default {
   // 根据条件查询门店列表
   selectShopByConditon: (params) => API.GET('/operation/v1/shop/selectShopByConditon', params),
   // 统计商户对应的门店详情信息
-  merchantShopInfo: (params) => API.GET('/operation/v1/statistic/merchant/shop/info', params)
+  merchantShopInfo: (params) => API.GET('/operation/v1/statistic/merchant/shop/info', params),
+  // 门店列表统计
+  getListStatistic: (params) => API.GET('/operation/v1/shop/getListStatistic', params)
 }

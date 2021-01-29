@@ -12,7 +12,7 @@ const api = {
   // 门店结算-门店结算记录查询
   queryShopSettle: (params) => API.GET('/operation/v1/shopSettle/queryShopSettle', params),
   // 门店结算-查询汇总数据
-  shopSettleTotalData: (params) => API.GET('/operation/v1/shopSettle/shopSettleTotalData', params),
+  shopSettleTotalData: (params) => API.GET('/operation/v1/shopSettle/shopSettleStatisticData', params),
   // 服务商结算-查询结算汇总数据
   queryAgentSettleStatistic: (params) => API.GET('/operation/v1/agentSettle/queryAgentSettleStatistic', params)
 };

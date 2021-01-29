@@ -99,44 +99,23 @@
         <el-button size="normal" @click="dialogVisible = true">驳回</el-button>
       </div>
     </div>
-    <!-- 数据统计 -->
-    <div v-if="activeName==='0'" class="m-trade">
-      <div class="m-trade-box">
-        <div class="m-trade-line1">
-          <div class="left-trade">
-            <span>实收金额({{ statisticsData.totalActualCount || 0 }}笔)</span>
-          </div>
-          <div class="right-trade">
-            <img src="@/assets/img/warn.svg" alt="提示图标" />
-          </div>
-        </div>
-        <div class="m-trade-line2">{{ statisticsData.totalActualAmount || 0 }}</div>
-        <div class="m-trade-line3">昨日日订单金额({{ statisticsData.yesterdayActualCount || 0 }}笔) ¥{{ statisticsData.yesterdayActualAmount || 0 }}</div>
-      </div>
-      <div class="m-trade-box">
-        <div class="m-trade-line1">
-          <div class="left-trade">
-            <span>退款总额({{ statisticsData.totalRefundCount || 0 }}笔)</span>
-          </div>
-          <div class="right-trade">
-            <img src="@/assets/img/warn.svg" alt="提示图标" />
-          </div>
-        </div>
-        <div class="m-trade-line2">{{ statisticsData.totalRefundAmount || 0 }}</div>
-        <div class="m-trade-line3">昨日日退款金额({{ statisticsData.yesterdayRefundCount || 0 }}笔) ¥{{ statisticsData.yesterdayRefundAmount || 0 }}</div>
-      </div>
-      <div class="m-trade-box">
-        <div class="m-trade-line1">
-          <div class="left-trade">
-            <span>设备总数（台）</span>
-          </div>
-          <div class="right-trade">
-            <img src="@/assets/img/warn.svg" alt="提示图标" />
-          </div>
-        </div>
-        <div class="m-trade-line2">{{ statisticsData.totalDeviceCount || 0 }}</div>
-        <div class="m-trade-line3">今日活跃设备数（台）{{ statisticsData.yesterdayActiveDeviceCount || 0 }}</div>
-      </div>
+
+    <div v-if="activeName==='0'" class="settle-data">
+      <!--数据统计开始-->
+      <el-row>
+        <el-col :span="item.span" v-for="(item, index) in infoList" :key="index">
+          <yun-card-first
+            :style="item.style"
+            :label="item.label"
+            :icon="item.icon"
+            :icon-style="item.iconStyle"
+            :tooltip="item.tooltip"
+            :value="item.value"
+            :children="item.children"
+          >
+          </yun-card-first>
+        </el-col>
+      </el-row>
     </div>
 
     <el-dialog
@@ -185,7 +164,7 @@
 </template>
 
 <script>
-  import { FORM_CONFIG } from "../formConfig/shopDetail";
+  import { FORM_CONFIG, INFO_LIST } from "../formConfig/shopDetail";
   import areaData from "youyun-vue-components/assets/data/areaData.ws"
   import api from "@/api/api_shop";
   export default {
@@ -206,10 +185,12 @@
         dialogVisible: false,
         value: 0,
         qrCodeDialoger: false,
-        statisticsData: {}
+        statisticsData: {},
+        infoList: []
       }
     },
     created() {
+      this.infoList = this.$g.utils.deepClone(INFO_LIST)
       this.shopQueryDetail()
     },
     mounted() {
@@ -274,6 +255,22 @@
         api.merchantShopInfo(params).then(res => {
           if (res.status === 0) {
             this.statisticsData = res.data
+            this.infoList.forEach((item, index) => {
+              if (item.key === 'totalActualAmount') {
+                item.label = '实收金额（'+ (res.data.totalActualCount||0) +'笔）'
+                item.children[0].label = '昨日日订单金额(' + (res.data.yesterdayActualCount || 0) + '笔)'
+                item.children[0].value = '¥' + (res.data.yesterdayActualAmount || 0)
+              }
+              if (item.key === 'totalRefundAmount') {
+                item.label = '退款总额（'+ (res.data.totalRefundCount||0) +'笔）'
+                item.children[0].label = '昨日退款金额(' + (res.data.yesterdayRefundCount || 0) + '笔)'
+                item.children[0].value = '¥' + (res.data.yesterdayRefundAmount || 0)
+              }
+              if (item.key === 'totalDeviceCount') {
+                item.children[0].value = (res.data.yesterdayActiveDeviceCount || 0)
+              }
+              item.value = (res.data[item.key] || 0) + ''
+            })
           }
         })
       },
@@ -387,7 +384,6 @@
     justify-content: space-between;
     flex-wrap: wrap;
     .m-trade-box {
-      width: 30%;
       padding: 16px 24px;
       background: #fff;
       margin-right: 24px;
@@ -437,6 +433,9 @@
         color: #333335;
       }
     }
+  }
+  .settle-data {
+    margin: 0 24px;
   }
   .error-box {
     padding: 0 24px;

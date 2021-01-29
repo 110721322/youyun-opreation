@@ -110,3 +110,60 @@ export const TABLE_CONFIG = {
   },
   hideEditArea: false
 };
+export const INFO_LIST = [
+  {
+    span: 4,
+    style: 'height: 91px;margin-bottom: 0px;',
+    label: '门店数量（个）',
+    icon: 'iconshuliang',
+    iconStyle: 'color: #5AD8A6;',
+    tooltip: '',
+    key: 'shopCount',
+    value: '126,560.00',
+    children: []
+  },
+  {
+    span: 4,
+    style: 'height: 91px;margin-bottom: 0px;',
+    label: '审核中门店（个）',
+    icon: 'iconshenhe',
+    iconStyle: 'color: #1989FA;',
+    tooltip: '',
+    key: 'auditShopCount',
+    value: '126,560.00',
+    children: []
+  },
+  {
+    span: 4,
+    style: 'height: 91px;margin-bottom: 0px;',
+    label: '驳回门店（个）',
+    icon: 'iconshenheshibai',
+    iconStyle: 'color: #F52130;',
+    tooltip: '',
+    key: 'rejectShopCount',
+    value: '126,560.00',
+    children: []
+  },
+  {
+    span: 4,
+    style: 'height: 91px;margin-bottom: 0px;',
+    label: '活跃门店（个）',
+    icon: 'iconshenhechenggong',
+    iconStyle: 'color: #50C514;',
+    tooltip: '',
+    key: 'activeShopCount',
+    value: '126,560.00',
+    children: []
+  },
+  {
+    span: 4,
+    style: 'height: 91px;margin-right:0px;margin-bottom: 0px;',
+    label: '异常门店（个）',
+    icon: 'iconshenheshibai',
+    iconStyle: 'color:#EFA911;',
+    tooltip: '',
+    key: 'abnormalShopCount',
+    value: '126,560.00',
+    children: []
+  }
+]
