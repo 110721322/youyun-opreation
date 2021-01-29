@@ -84,10 +84,12 @@ export const AGENT_DETAIL_STATIC = [
     icon: '',
     iconStyle: 'color: #50C514;',
     tooltip: '',
+    key: 'actualAmount',
     value: '0',
     children: [
       {
         label: '昨日订单金额（0笔）',
+        key: 'lastActualAmount',
         value: '¥0'
       }
     ]
@@ -99,10 +101,12 @@ export const AGENT_DETAIL_STATIC = [
     icon: '',
     iconStyle: 'color: #50C514;',
     tooltip: '',
+    key: 'topAgentCommission',
     value: '0',
     children: [
       {
-        label: '昨日订单分润',
+        label: '昨日平台佣金',
+        key: 'lastTopAgentCommission',
         value: '¥0'
       }
     ]
@@ -110,14 +114,16 @@ export const AGENT_DETAIL_STATIC = [
   {
     span: 6,
     style: 'height: 134px;',
-    label: '订单分润总计（元）',
+    label: '订单佣金总计（元）',
     icon: '',
     iconStyle: 'color: #50C514;',
     tooltip: '',
+    key: 'agentCommission',
     value: '0',
     children: [
       {
-        label: '昨日订单分润',
+        label: '昨日订单佣金',
+        key: 'lastAgentCommission',
         value: '¥0'
       }
     ]
@@ -125,75 +131,84 @@ export const AGENT_DETAIL_STATIC = [
   {
     span: 6,
     style: 'height: 134px;',
-    label: '可结算分润（元）',
+    label: '可结算佣金（元）',
     icon: '',
     iconStyle: 'color: #50C514;',
     tooltip: '',
+    key: 'unSettleAmount',
     value: '0',
     children: [
       {
-        label: '已结算分润',
+        label: '已结算佣金',
+        key: 'settledAmount',
         value: '¥0'
       }
     ]
   },
   {
     span: 6,
-    style: 'height: 204px;',
+    style: 'height: 160px;',
     label: '退款总额（0笔）',
     icon: '',
     iconStyle: 'color: #1989FA;',
     tooltip: '',
+    key: 'refundAmount',
     value: '0',
     children: [
       {
         label: '昨日退款金额（0笔）',
+        key: 'lastRefundAmount',
         value: '¥0'
       }
     ]
   },
   {
     span: 6,
-    style: 'height: 204px;',
+    style: 'height: 160px;',
     label: '商户数量（个）',
     icon: '',
     iconStyle: 'color: #FA6577;',
     tooltip: '',
+    key: 'merchantCount',
     value: '0',
     children: [
       {
         label: '昨日新增商户（个）',
-        value: '0',
-        span: 24
-      },
-      {
-        label: '昨日活跃商户（个）',
+        key: 'lastNewMerchantCount',
         value: '0',
         span: 24
       }
+      // {
+      //   label: '昨日活跃商户（个）',
+      //   value: '0',
+      //   span: 24
+      // }
     ]
   },
   {
     span: 6,
-    style: 'height: 204px;',
+    style: 'height: 160px;',
     label: '门店数量（个）',
     icon: '',
     iconStyle: 'color: #FA6577;',
     tooltip: '',
+    key: 'shopCount',
     value: '0',
     children: [
       {
         label: '昨日新增门店（个）',
+        key: 'lastNewShopCount',
         value: '0',
         span: 24
       },
-      {
-        label: '昨日活跃门店（个）',
-        value: '0',
-        span: 24
-      },
+      // {
+      //   label: '昨日活跃门店（个）',
+      //   value: '0',
+      //   span: 24
+      // },
       {
         label: '待审核门店（个）',
+        key: 'auditingShopCount',
         value: '0',
         span: 24
       }
@@ -201,26 +216,28 @@ export const AGENT_DETAIL_STATIC = [
   },
   {
     span: 6,
-    style: 'height: 204px;',
+    style: 'height: 160px;',
     label: '设备总数（个）',
     icon: '',
     iconStyle: 'color: #FA6577;',
     tooltip: '',
+    key: 'deviceCount',
     value: '0',
     children: [
-      {
-        label: '昨日新增设备（台）',
-        value: '0',
-        span: 24
-      },
-      {
-        label: '昨日活跃设备（台）',
-        value: '0',
-        span: 24
-      },
+      // {
+      //   label: '昨日新增设备（台）',
+      //   value: '0',
+      //   span: 24
+      // },
+      // {
+      //   label: '昨日活跃设备（台）',
+      //   value: '0',
+      //   span: 24
+      // },
       {
         label: '待绑定设备数（台）',
         value: '0',
+        key: 'unBindDeviceCount',
         span: 24
       }
     ]

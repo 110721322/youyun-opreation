@@ -87,7 +87,7 @@
         api.queryAgentSettleStatistic().then(res => {
           if (res.status === 0) {
             this.infoList.forEach((item,index) => {
-              item.value = String(res.data[item.key]) || '0'
+              item.value = String(res.data[item.key])
             })
           }
         })

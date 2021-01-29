@@ -152,19 +152,19 @@
             this.infoList.forEach((item, index) => {
               item.value = String(res.data[item.key]) || '0'
               item.children.forEach((childrenItem, childrenIndex) => {
-                childrenItem.value = String(res.data[item.key]) || '0'
+                childrenItem.value = String(res.data[childrenItem.key])
                 if (childrenItem.key === 'yesterdayRealAmount') {
-                  childrenItem.value = '¥' + (String(res.data[item.key]) || '0')
+                  childrenItem.value = '¥' + String(res.data[childrenItem.key])
                 }
                 if (childrenItem.key === 'refundTotalAmount') {
-                  childrenItem.value = '¥' + (String(res.data[item.key]) || '0')
+                  childrenItem.value = '¥' + String(res.data[childrenItem.key])
                 }
               })
             })
-            this.infoList[0].label = '实收总额（' + res.data.realTotalCount + '）笔'
-            this.infoList[0].children[0].label = '昨日订单金额（' + res.data.yesterdayRealCount + '笔）'
-            this.infoList[1].label = '退款总额（' + res.data.refundTotalCount + '）笔'
-            this.infoList[1].children[0].label = '昨日退款金额（' + res.data.refundTotalCount + '笔）'
+            this.infoList[0].label = `实收总额（${res.data.realTotalCount}笔）`
+            this.infoList[0].children[0].label = `昨日订单金额（${res.data.yesterdayRealCount}笔）`
+            this.infoList[1].label = `退款总额（${res.data.refundTotalCount}笔）`
+            this.infoList[1].children[0].label = `昨日退款金额（${res.data.refundTotalCount}笔）`
           }
         })
       },
