@@ -51,6 +51,7 @@
 
 <script>
   import api from "@/api/api_merchantManage.js";
+  import commonApi from "@/api/api_common.js"
   import { SEARCH_FORM_CONFIG } from "./FormConfig/MerchantListSearch"
   import { MERCHANT_LIST_CONFIG } from "./TableConfig/ListConfig"
   import { STATISTICS_LIST } from "./TableConfig/MerchantListConfig"
@@ -74,11 +75,10 @@
     methods: {
       getMerchantNum() {
         api.merchantCount().then(res => {
-          console.log(res)
           if (res.status === 0) {
-            this.infoList[0].value = res.data.merchantCount
-            this.infoList[1].value = res.data.activeMerchantCount
-            this.infoList[2].value = res.data.inactiveMerchantCount
+            this.infoList.forEach((item, index) => {
+              item.value = String(res.data[item.key]) || '0'
+            })
           }
         })
       },
@@ -97,9 +97,19 @@
             merchantNo: row.merchantNo,
             id: row.id
           }
-        }).catch(() => {})
+        })
       },
-      onClickGoMerchant(row) {}
+      onClickGoMerchant(row) {
+        commonApi.generateLoginTicket({
+          system: 'merchant',
+          phone: row.loginAccount,
+          password: row.password
+        }).then(res => {
+          if (res.status === 0) {
+            window.open(process.env.VUE_APP_MERCHANT_URL + '#/Login?ticket' + '=' + res.data)
+          }
+        })
+      }
     }
   }
 </script>

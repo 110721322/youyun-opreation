@@ -75,11 +75,6 @@ export const MERCHANT_DETAIL_CONFIG = {
         name: '详情',
         emitName: 'details',
         type: 'text'
-      },
-      {
-        name: '门店后台',
-        emitName: 'goMerchant',
-        type: 'text'
       }
     ]
   }
@@ -93,11 +88,13 @@ export const MERCHANT_DETAIL_STATIC = [
     icon: '',
     iconStyle: 'color: #50C514;',
     tooltip: '',
+    key: 'realTotalAmount',
     value: '0',
     children: [
       {
-        label: '今日订单金额（0笔）',
-        value: '¥0'
+        label: '昨日订单金额（0笔）',
+        key: 'yesterdayRealAmount',
+        value: ''
       }
     ]
   },
@@ -108,11 +105,13 @@ export const MERCHANT_DETAIL_STATIC = [
     icon: '',
     iconStyle: 'color: #1989FA;',
     tooltip: '',
+    key: 'refundTotalAmount',
     value: '0',
     children: [
       {
-        label: '今日退款金额（0笔）',
-        value: '¥0'
+        label: '昨日退款金额（0笔）',
+        key: 'refundTotalAmount',
+        value: ''
       }
     ]
   },
@@ -123,15 +122,18 @@ export const MERCHANT_DETAIL_STATIC = [
     icon: '',
     iconStyle: 'color: #FA6577;',
     tooltip: '',
+    key: 'shopCount',
     value: '0',
     children: [
       {
-        label: '今日活跃门店（个）',
-        value: '0',
+        label: '昨日活跃门店（个）',
+        key: 'yesterdayActiveShopCount',
+        value: '',
         span: 12
       },
       {
         label: '审核中门店数（个）',
+        key: 'auditShopCount',
         value: '0',
         span: 12
       }
@@ -144,15 +146,18 @@ export const MERCHANT_DETAIL_STATIC = [
     icon: '',
     iconStyle: 'color: #FA6577;',
     tooltip: '',
+    key: 'deviceNum',
     value: '0',
     children: [
       {
-        label: '今日活跃设备（台）',
+        label: '昨日活跃设备（台）',
+        key: 'yesterdayActiveDeviceNum',
         value: '0',
         span: 12
       },
       {
         label: '待绑定设备（台）',
+        key: 'unBindDeviceNum',
         value: '0',
         span: 12
       }

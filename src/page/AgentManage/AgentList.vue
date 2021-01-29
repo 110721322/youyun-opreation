@@ -72,6 +72,7 @@
 
 <script>
   import api from "@/api/api_agentManage.js";
+  import commonApi from "@/api/api_common.js"
   import { ADD_AGENT } from "./FormConfig/AddAgent"
   import { SEARCH_FORM_CONFIG } from "./FormConfig/SearchConfig"
   import { AGENT_LIST_CONFIG, AGENT_LIST_COUNT } from "./TableConfig/AgentListConfig"
@@ -99,11 +100,9 @@
       getAgentNo() {
         api.totalAgentNum().then(res => {
           if (res.status === 0) {
-            if (res.status === 0) {
-              this.infoList[0].value = res.data.totalAgentNum
-              this.infoList[1].value = res.data.activeAgentNum
-              this.infoList[2].value = res.data.abnormalAgentNum
-            }
+            this.infoList.forEach((item, index) => {
+              item.value = String(res.data[item.key]) || '0'
+            })
           }
         })
       },
@@ -129,7 +128,7 @@
           query: {
             agentNo: row.agentNo
           }
-        }).catch(err => {})
+        })
       },
 
       clickChangeOperation() {
@@ -147,17 +146,17 @@
       clickToAdd() {
         this.$router.push({
           name: 'AddAgent',
-        }).catch(err => {})
+        })
       },
 
       onClickGoAgent(row) {
-        api.generateLoginTicket({
+        commonApi.generateLoginTicket({
           system: 'agent',
           phone: row.loginAccount,
           password: row.password
         }).then(res => {
           if (res.status === 0) {
-            window.open(process.env.VUE_APP_AGENTURL + '#/login?ticket' + '=' + res.data)
+            window.open(process.env.VUE_APP_AGENT_URL + '#/Login?ticket' + '=' + res.data)
           }
         })
       },

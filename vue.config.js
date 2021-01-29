@@ -6,7 +6,7 @@ const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const { library } = require('./webpack/dll.config')
 const dllPath = './public/vendor'
 const productionGzipExtensions = ['js', 'css']
-const serves = ['production', 'test']
+const serves = ['production']
 const devtool = process.env.NODE_ENV === 'production' ? 'none' : 'eval-source-map'
 const packageInfo = require('./package.json')
 
@@ -92,15 +92,19 @@ module.exports = {
       port: 8082,
       proxy: {
         '/common': {
-          target: process.env.COMMON_URL,
+          target: process.env.VUE_APP_COMMON_URL,
           changeOrigin: true
         },
         '/operation': {
-          target: process.env.OPERATION_URL,
+          target: process.env.VUE_APP_OPERATION_URL,
           changeOrigin: true
         },
         '/agent': {
-          target: process.env.AGENT_URL,
+          target: process.env.VUE_APP_AGENT_URL,
+          changeOrigin: true
+        },
+        '/merchant': {
+          target: process.env.VUE_APP_MERCHANT_URL,
           changeOrigin: true
         }
       }

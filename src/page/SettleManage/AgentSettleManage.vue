@@ -66,8 +66,7 @@
         searchConfig: SEARCH_FORM_CONFIG,
         fromConfigData: REJECT_CONFIG.formData,
         gridConfig: AGENT_SETTLE_CONFIG.gridConfig,
-        gridBtnConfig: AGENT_SETTLE_CONFIG.gridBtnConfig,
-        infoList: []
+        gridBtnConfig: AGENT_SETTLE_CONFIG.gridBtnConfig
       }
     },
     created() {
@@ -85,11 +84,10 @@
         }
       },
       queryAgentSettleStatistic() {
-        const params = {}
-        api.queryAgentSettleStatistic(params).then(res => {
+        api.queryAgentSettleStatistic().then(res => {
           if (res.status === 0) {
             this.infoList.forEach((item,index) => {
-              item.value = res.data[item.key]||0
+              item.value = String(res.data[item.key]) || '0'
             })
           }
         })
@@ -100,7 +98,7 @@
           query: {
             id: row.id
           }
-        }).catch(() => {})
+        })
       }
     }
   }
@@ -108,7 +106,7 @@
 
 <style lang="scss" scoped>
   .settle-data {
-    margin: 24px;
+    margin: 24px 24px;
     /deep/ .m-card .m-top {
       border: 0;
     }

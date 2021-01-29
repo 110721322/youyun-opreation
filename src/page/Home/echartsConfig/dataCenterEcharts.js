@@ -70,7 +70,7 @@ export const ECHARTS_LINE_CONFIG =  {
   xAxis: {
     type: 'category',
     boundaryGap: false,
-    data: ['01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00','08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00']
+    data: []
   },
   yAxis: {
     type: 'value'
@@ -86,7 +86,7 @@ export const ECHARTS_LINE_CONFIG =  {
       itemStyle: {
         color: amountLine.color
       },
-      data: [120, 132, 101, 300, 90, 230, 210,120, 132, 101, 134, 90, 210,120]
+      data: []
     },
     {
       name: countLine.name,
@@ -98,7 +98,7 @@ export const ECHARTS_LINE_CONFIG =  {
       itemStyle: {
         color: countLine.color
       },
-      data: [220, 182, 191, 234, 290, 330, 310,220, 182, 191, 234, 290, 310,220]
+      data: []
     }
   ]
 };

@@ -77,6 +77,7 @@ export const AGENT_LIST_COUNT = [
     icon: 'iconshuliang',
     iconStyle: 'color: #50C514;',
     tooltip: '',
+    key: 'totalAgentNum',
     value: '0'
   },
   {
@@ -86,6 +87,7 @@ export const AGENT_LIST_COUNT = [
     icon: 'iconshuliang',
     iconStyle: 'color: #1989FA;',
     tooltip: '',
+    key: 'activeAgentNum',
     value: '0'
   },
   {
@@ -95,6 +97,7 @@ export const AGENT_LIST_COUNT = [
     icon: 'iconyichang',
     iconStyle: 'color: #EFA911;',
     tooltip: '',
+    key: 'abnormalAgentNum',
     value: '0'
   }
 ]
