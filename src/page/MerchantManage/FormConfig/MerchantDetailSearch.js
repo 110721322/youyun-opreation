@@ -5,14 +5,14 @@ export const SEARCH_FORM_CONFIG = {
       label: '门店ID',
       key: 'shopNo',
       labelWidth: '128px',
-      span: 11
+      span: 12
     },
     {
       type: 0,
       label: '门店名称',
       key: 'shopName',
       labelWidth: '128px',
-      span: 11
+      span: 12
     },
     {
       type: 1,
@@ -53,7 +53,7 @@ export const SEARCH_FORM_CONFIG = {
           value: 7
         }
       ],
-      span: 11
+      span: 12
     },
     {
       type: 1,
@@ -70,14 +70,14 @@ export const SEARCH_FORM_CONFIG = {
           value: 1
         }
       ],
-      span: 11
+      span: 12
     },
     {
       type: 0,
       label: '服务电话',
       key: 'phone',
       labelWidth: '128px',
-      span: 11
+      span: 12
     }
   ]
 }

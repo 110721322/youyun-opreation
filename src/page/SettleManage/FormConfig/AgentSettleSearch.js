@@ -6,7 +6,7 @@ export const SEARCH_FORM_CONFIG = {
       label: '结算ID',
       key: 'settleNo',
       labelWidth: '128px',
-      span: 11
+      span: 12
     },
     {
       type: 1,
@@ -24,7 +24,7 @@ export const SEARCH_FORM_CONFIG = {
           pageSize: 20
         }
       },
-      span: 11
+      span: 12
     },
     {
       type: 9,
@@ -32,7 +32,7 @@ export const SEARCH_FORM_CONFIG = {
       key: 'date',
       isHiddenBtn: true,
       labelWidth: '128px',
-      span: 11
+      span: 12
     },
     {
       type: 1,
@@ -57,7 +57,7 @@ export const SEARCH_FORM_CONFIG = {
           value: 4
         }
       ],
-      span: 11
+      span: 12
     }
   ]
 }

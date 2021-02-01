@@ -6,20 +6,20 @@ export const SEARCH_FORM_CONFIG = {
       type: 0,
       label: '服务商ID',
       key: 'agentNo',
-      span: 11
+      span: 12
     },
     {
       type: 0,
       label: '服务商名称',
       key: 'agentName',
-      span: 11
+      span: 12
     },
     {
       type: 9,
       label: '到期时间',
       key: 'date',
       isHiddenBtn: true,
-      span: 11
+      span: 12
     },
     {
       type: 1,
@@ -30,20 +30,20 @@ export const SEARCH_FORM_CONFIG = {
         keyName: 'status',
         valueName: 'desc'
       },
-      span: 11
+      span: 12
     },
     {
       type: 0,
       label: '手机号码',
       key: 'loginAccount',
-      span: 11
+      span: 12
     },
     {
       type: 8,
       label: '地址',
       key: 'area',
       options: areaData,
-      span: 11
+      span: 12
     },
     // TODO {
     //   type: 1,
@@ -59,7 +59,7 @@ export const SEARCH_FORM_CONFIG = {
     //       value: 21
     //     }
     //   ],
-    //   span: 11
+    //   span: 12
     // },
     {
       type: 1,
@@ -72,7 +72,7 @@ export const SEARCH_FORM_CONFIG = {
         valueName: 'operationName',
         params: {}
       },
-      span: 11
+      span: 12
     }
   ]
 }
