@@ -19,7 +19,7 @@ export const SEARCH_FORM_CONFIG = {
       label: '到期时间',
       key: 'date',
       isHiddenBtn: true,
-      span: 24
+      span: 11
     },
     {
       type: 1,
