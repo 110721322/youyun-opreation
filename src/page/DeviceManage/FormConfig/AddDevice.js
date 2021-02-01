@@ -1,4 +1,5 @@
 import api from '@/api/api_deviceManage'
+import commonApi from '@/api/api_common'
 export const ADD_DEVICE = {
   deviceData: {
     formData: [
@@ -61,6 +62,22 @@ export const ADD_DEVICE = {
       }
     ],
   },
+  showSubmit: false,
+  showFootBtn: false
+}
+
+export const IMPORT_DEVICE = {
+  formData: [
+    {
+      type: 6,
+      span: 24,
+      label: '上传文件',
+      key: 'shopImg',
+      labelWidth: '120px',
+      urlData: 'excel',
+      uploadService: commonApi.queryOssExlToken
+    }
+  ],
   showSubmit: false,
   showFootBtn: false
 }

@@ -154,7 +154,7 @@ import 'youyun-vue-components/assets/css/element-variables.scss';
 // 加载组件库
 import ElementUI, {Message} from 'element-ui';
 import {
-  Layout, DetailMode, Form, Dialog, Search, Table, DetailBox, CardFirst, Ratio, Echarts, Legend, RadioGroup
+  Layout, DetailMode, Form, Dialog, Search, Table, DetailBox, CardFirst, Ratio, Echarts, Legend, RadioGroup, UploadXlsx
 } from 'youyun-vue-components'
 
 Vue.use(Layout)
@@ -169,6 +169,7 @@ Vue.use(Ratio)
 Vue.use(Echarts)
 Vue.use(Legend)
 Vue.use(RadioGroup)
+Vue.use(UploadXlsx)
 
 Vue.prototype.$EventBus = new Vue();
 

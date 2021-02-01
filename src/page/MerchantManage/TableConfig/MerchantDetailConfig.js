@@ -18,6 +18,19 @@ export const MERCHANT_DETAIL_CONFIG = {
       prop: 'mccCodeCN',
     },
     {
+      label: 'logo或门头照',
+      prop: 'shopImg',
+      render: (h, params) => {
+        const imgUrl = params.row.shopImg;
+        return h('el-image', {
+          props: {
+            src: imgUrl,
+            'preview-src-list': [imgUrl]
+          }
+        }, '正常');
+      }
+    },
+    {
       label: '服务电话',
       prop: 'phone'
     },

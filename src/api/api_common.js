@@ -12,5 +12,7 @@ export default {
   // oss获取表格上传Token
   queryOssExlToken: () => API.POST('/common/v1/oss/queryOssToken', {type: 'excel'}, { needFormData: true }),
   // 跨平台登录票据生成
-  generateLoginTicket: (params) => API.POST('/common/v1/user/generateLoginTicket', params, { needFormData: true })
+  generateLoginTicket: (params) => API.POST('/common/v1/user/generateLoginTicket', params, { needFormData: true }),
+  // excel模版下载
+  downloadExcel: (params) => API.GET('/operation/v1/excelTemplate/download', {url: 'excel/device_template20210129.xlsx'})
 };
