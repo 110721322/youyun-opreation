@@ -240,7 +240,6 @@
         api.queryAgentData({
           agentNo: agentNo
         }).then(res => {
-          console.log(res)
           if (res.status === 0) {
             this.infoList.forEach((item, index) => {
               item.value = String(res.data[item.key])
@@ -252,7 +251,7 @@
               item.children.forEach((childrenItem, indexItem) => {
                 childrenItem.value = String(res.data[item.key])
                 if (childrenItem.key === 'lastActualAmount') {
-                  childrenItem.label = `昨日订单金额（${res.data.lastActualCount}笔）`
+                  childrenItem.label = `昨日订单金额（${res.data.lastTradeCount}笔）`
                   childrenItem.value = '¥' + res.data[childrenItem.key]
                 } else if (childrenItem.key === 'lastTopAgentCommission') {
                   childrenItem.value = '¥' + res.data[childrenItem.key]
