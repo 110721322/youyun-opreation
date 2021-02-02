@@ -314,6 +314,13 @@
       .basecrud-box {
         padding: 0 24px 24px;
         background: #fff;
+        /deep/ .el-image {
+          width: 72px;
+          height: 72px;
+          /deep/ img {
+            object-fit: contain;
+          }
+        }
       }
     }
   }

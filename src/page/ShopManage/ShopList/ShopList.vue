@@ -104,6 +104,13 @@ export default {
   padding: 24px;
   overflow: hidden;
   background: #fff;
+  /deep/ .el-image {
+    width: 72px;
+    height: 72px;
+    /deep/ img {
+      object-fit: contain;
+    }
+  }
 }
   .settle-data {
     margin: 24px 24px 0;
