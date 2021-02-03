@@ -36,7 +36,7 @@ export const MERCHANT_DETAIL_CONFIG = {
     },
     {
       label: '门店地址',
-      prop: 'address'
+      prop: 'shopAddress'
     },
     {
       label: '门店状态',

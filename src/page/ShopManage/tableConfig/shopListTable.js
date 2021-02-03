@@ -43,7 +43,7 @@ export const TABLE_CONFIG = {
     // },
     {
       label: '门店地址',
-      prop: 'address'
+      prop: 'shopAddress'
     },
     {
       label: '门店状态',
