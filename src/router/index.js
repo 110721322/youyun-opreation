@@ -77,9 +77,9 @@ const router = new VueRouter({
 })
 
 // 全局钩子函数,在跳转之前执行
-import { authRoutes } from "./authRoutes";
-// const authRoutes = store.state.role.routes;
-store.dispatch('setRoleRoutes', authRoutes);
+// import { authRoutes } from "./authRoutes";
+const authRoutes = store.state.role.routes;
+// store.dispatch('setRoleRoutes', authRoutes);
 const routerList = currRouter.menusToRoutes(authRoutes);
 store.dispatch('saveRoutersArr', utils.deepClone(routerList));
 
