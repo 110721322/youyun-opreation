@@ -12,7 +12,7 @@ export const INFO_LIST = [
     value: null,
     children: [
       {
-        label: '今日支付金额',
+        label: '统计支付金额',
         prop: 'dayTradeAmount',
         formatter($params) {
           return '¥' + $params.dayTradeAmount
@@ -32,7 +32,7 @@ export const INFO_LIST = [
     value: null,
     children: [
       {
-        label: '今日支付笔数',
+        label: '统计支付笔数',
         prop: 'dayTradeCount',
         formatter($params) {
           return $params.dayTradeCount + '笔'
@@ -52,7 +52,7 @@ export const INFO_LIST = [
     value: null,
     children: [
       {
-        label: '今日分润',
+        label: '统计佣金',
         prop: 'dayPlatformCommission',
         formatter($params) {
           return '¥' + $params.dayTradeAmount
@@ -72,13 +72,13 @@ export const INFO_LIST = [
     value: null,
     children: [
       {
-        label: '今日新增服务商数（个）',
+        label: '统计新增服务数（个）',
         prop: 'dayNewAgentCount',
         value: null,
         span: 12
       },
       {
-        label: '今日活跃服务商数（个）',
+        label: '统计活跃服务商数（个）',
         prop: 'dayActiveAgentCount',
         value: null,
         span: 12
@@ -96,13 +96,13 @@ export const INFO_LIST = [
     value: null,
     children: [
       {
-        label: '今日新增商户数（个）',
+        label: '统计新增商户数（个）',
         prop: 'dayNewMerchantCount',
         value: null,
         span: 12
       },
       {
-        label: '今日活跃商户数（个）',
+        label: '统计活跃商户数（个）',
         prop: 'dayActiveMerchantCount',
         value: null,
         span: 12
@@ -120,13 +120,13 @@ export const INFO_LIST = [
     value: null,
     children: [
       {
-        label: '今日新增门店数（个）',
+        label: '统计新增门店数（个）',
         prop: 'dayNewShopCount',
         value: null,
         span: 8
       },
       {
-        label: '今日活跃门店数（个）',
+        label: '统计活跃门店数（个）',
         prop: 'dayActiveShopCount',
         value: null,
         span: 8
@@ -135,7 +135,8 @@ export const INFO_LIST = [
         label: '审核中门店数（个）',
         prop: 'dayAuditShopCount',
         value: null,
-        valueStyle: 'color: #1989FA;text-decoration: underline;',
+        valueStyle: 'color: #1989FA;text-decoration: underline;cursor: pointer;',
+        valueEmit: 'shopCount',
         span: 8
       }
     ]
@@ -151,13 +152,13 @@ export const INFO_LIST = [
     value: null,
     children: [
       {
-        label: '今日新增设备数（台）',
+        label: '统计新增设备数（台）',
         prop: 'dayNewDeviceCount',
         value: null,
         span: 8
       },
       {
-        label: '今日活跃设备数（台）',
+        label: '统计活跃设备数（台）',
         prop: 'dayActiveDeviceCount',
         value: null,
         span: 8
@@ -166,7 +167,6 @@ export const INFO_LIST = [
         label: '待绑定设备数（台）',
         prop: 'dayBindingDeviceCount',
         value: null,
-        valueStyle: 'color: #1989FA;text-decoration: underline;',
         span: 8
       }
     ]
