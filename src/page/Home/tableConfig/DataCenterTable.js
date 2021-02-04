@@ -58,7 +58,7 @@ export const MERCHANT_TABLE_CONFIG = {
     },
     {
       label: '所属服务',
-      prop: 'service',
+      prop: 'agentName',
       width: '80px'
     },
     {
@@ -100,7 +100,7 @@ export const SHOP_TABLE_CONFIG = {
     },
     {
       label: '所属服务',
-      prop: 'service',
+      prop: 'agentName',
       width: '80px'
     },
     {

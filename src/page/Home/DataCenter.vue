@@ -21,6 +21,7 @@
             :tooltip="item.tooltip"
             :value="item.value"
             :children="item.children"
+            @shopCount="toShopList"
         ></yun-card-first>
       </el-col>
     </el-row>
@@ -208,6 +209,9 @@
             item.ratio = this.$g.utils.AccDiv(item.value, this.totalAmount || 1) * 100
           })
         })
+      },
+      toShopList() {
+        this.$router.push({name: 'shopList'})
       }
     }
   }
