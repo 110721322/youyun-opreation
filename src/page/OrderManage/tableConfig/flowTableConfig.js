@@ -30,7 +30,7 @@ export const TABLE_CONFIG = {
       prop: 'payWayName'
     },
     {
-      label: '实收（退）金额',
+      label: '实收金额',
       prop: 'actualAmount',
       width: '120px'
     },
@@ -117,7 +117,7 @@ export const REFUND_TABLE_CONFIG = {
     },
     {
       label: '退款时间',
-      prop: 'refundTime'
+      prop: 'createTime'
     },
     {
       label: '所属服务商',

@@ -21,7 +21,7 @@ export const TABLE_CONFIG = {
     //   prop: 'deviceSN'
     // },
     {
-      label: '实收（退）金额',
+      label: '实收金额',
       prop: 'tradeAmount'
     },
     {

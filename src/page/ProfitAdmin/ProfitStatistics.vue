@@ -1,17 +1,6 @@
 <template>
   <div>
     <div class="content">
-      <div class="profit-search">
-        <!--搜索开始-->
-        <yun-search
-          style="margin: 0 0 24px 0;"
-          is-hide-btn
-          show-btn-refresh
-          @dataSelect="search"
-          :form-base-data="searchConfig"
-        ></yun-search>
-        <!--搜索结束-->
-      </div>
       <div class="profit-data">
         <!--数据统计开始-->
         <el-row>
@@ -25,21 +14,21 @@
               :value="item.value"
               :children="item.children"
             >
-              <div v-if="item.slot" slot="countDown" class="flex-row" style="margin-bottom: 12px">
-                <p class="f-fz-14 f-fc-333335 flex-align-center" style="margin-right: 40px">
-                  <span class="f-fc-909399">同比</span>
-                  <i :class="[item.slotItem.MoMDownOrUp?'el-icon-caret-top f-fc-success':'el-icon-caret-bottom f-fc-fail']"></i>
-                  <span>{{ item.slotItem.MoMData }}%</span>
-                </p>
-                <p class="f-fz-14 f-fc-333335 flex-align-center">
-                  <span class="f-fc-909399">环比</span>
-                  <i :class="[item.slotItem.YoYDownOrUp?'el-icon-caret-top f-fc-success':'el-icon-caret-bottom f-fc-fail']"></i>
-                  <span>{{ item.slotItem.YoYData }}%</span>
-                </p>
-              </div>
             </yun-card-first>
           </el-col>
         </el-row>
+      </div>
+      <div class="profit-search">
+        <!--搜索开始-->
+        <yun-search
+          style="margin: 0 0 24px 0;"
+          is-hide-btn
+          show-btn-refresh
+          @dataSelect="dataSelect"
+          @refresh="refresh"
+          :form-base-data="searchConfig"
+        ></yun-search>
+        <!--搜索结束-->
       </div>
       <div class="profit-echarts">
         <div class="echarts-head">
@@ -72,6 +61,7 @@
 </template>
 
 <script>
+  import api from "@/api/api_profit";
   import { SEARCH_CONFIG } from "./formConfig/profitStatisticsForm";
   import { SHOP_PROFIT, MERCHANT_PROFIT, AGENT_PROFIT, INFO_LIST, ECHARTS_BAR_CONFIG } from "./tableConfig/profitTable";
   const echarts = require('echarts');
@@ -82,36 +72,76 @@
     data() {
       return {
         searchConfig: SEARCH_CONFIG,
-        tableList: [{name: '门店分润排名', api: '', params: {}, tableConfig: SHOP_PROFIT}, 
-          {name: '商户分润排名', api: '', params: {}, tableConfig: MERCHANT_PROFIT}, 
-          {name: '服务商分润排名', api: '', params: {}, tableConfig: AGENT_PROFIT}
+        tableList: [{name: '门店分润排名', api: api.queryShopDataList, params: {sortFiled: 'curMonthTopAgentCommission', sortRule: 'desc'}, tableConfig: SHOP_PROFIT}, 
+          {name: '商户分润排名', api: api.queryMerchantDataList, params: {sortFiled: 'curMonthTopAgentCommission', sortRule: 'desc'}, tableConfig: MERCHANT_PROFIT}, 
+          {name: '服务商分润排名', api: api.queryAgentDataList, params: {sortFiled: 'curMonthTopAgentCommission', sortRule: 'desc'}, tableConfig: AGENT_PROFIT}
         ],
         infoList: [],
-        testData: [
-          {
-            id: 1
-          },
-          {
-            id: 2
-          },
-          {
-            id: 3
-          },
-          {
-            id: 4
-          }
-        ]
+        testData: [],
+        params: {
+          beginDate: this.$g.utils.getToday(-1),
+          endDate: this.$g.utils.getToday(-1),
+          type: 0
+        }
       }
     },
     created() {
       this.infoList = this.$g.utils.deepClone(INFO_LIST)
       this.echartsBarConfig = this.$g.utils.deepClone(ECHARTS_BAR_CONFIG)
+      this.queryTotalData()
+      this.queryTrendDataList()
     },
     mounted() {
     },
     methods: {
-      search($ruleForm) {
-        console.log($ruleForm);
+      queryTotalData() {
+        const params = {}
+        api.queryTotalData(params).then(res => {
+          if (res.status === 0) {
+            this.infoList.forEach((item, index) => {
+              if (item.key === 'currMonthCommission') {
+                item.children[0].value = '¥' + (res.data.lastMonthCommission||0)
+              }
+              item.value = (res.data[item.key] || 0) + ''
+            })
+          }
+        })
+      },
+      queryTrendDataList() {
+        const params = {
+          ...this.params
+        }
+        api.queryTrendDataList(params).then(res => {
+          if (res.status === 0) {
+            if (res.data.length > 0) {
+              const xArr = []
+              const yArr = []
+              res.data.forEach((item,index) => {
+                const xValue = this.params.type === 0 ? item.tradeDate : item.tradeMonth
+                const yValue = item.topAgentCommission || 0
+                xArr.push(xValue)
+                yArr.push(yValue)
+              })
+              this.echartsBarConfig.xAxis[0].data = xArr
+              this.echartsBarConfig.series[0].data = yArr
+            }
+          }
+        })
+      },
+      dataSelect($date, $key) {
+        this.params = {
+          beginDate: $date?$date[0] : '',
+          endDate: $date?$date[1] : '',
+        }
+        if ($key === 'currentYear') {
+          this.params.type = 1
+        } else {
+          this.params.type = 0
+        }
+        this.queryTrendDataList()
+      },
+      refresh() {
+        this.queryTrendDataList();
       }
     }
   }

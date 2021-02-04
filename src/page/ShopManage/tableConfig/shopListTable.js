@@ -37,10 +37,10 @@ export const TABLE_CONFIG = {
       label: '服务电话',
       prop: 'phone'
     },
-    // {
-    //   label: '设备数量',
-    //   prop: 'shopName'
-    // },
+    {
+      label: '设备数量',
+      prop: 'deviceNum'
+    },
     {
       label: '门店地址',
       prop: 'address'

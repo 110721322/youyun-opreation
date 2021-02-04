@@ -134,56 +134,40 @@ export const AGENT_PROFIT = {
 export const INFO_LIST = [
   {
     span: 8,
-    style: 'height: 168px;',
+    style: 'height: 137px;',
     label: '本月佣金金额（元）',
     icon: 'iconyue',
     iconStyle: 'color: #1989FA;',
     tooltip: '',
-    value: '126,560.00',
+    key: 'currMonthCommission',
+    value: '0',
     children: [
       {
         label: '上月佣金金额',
-        value: '¥12,423.00'
+        value: '¥0'
       }
-    ],
-    slot: true,
-    slotItem: {
-      MoMDownOrUp: true,
-      MoMData: 11,
-      YoYDownOrUp: true,
-      YoYData: 12
-    }
+    ]
   },
   {
     span: 8,
-    style: 'height: 168px;',
-    label: '今日分润金额（元）',
+    style: 'height: 137px;',
+    label: '昨日佣金金额（元）',
     icon: 'iconjin',
     iconStyle: 'color: #65CC30;',
     tooltip: '',
-    value: '126,560.00',
-    children: [
-      {
-        label: '昨日分润金额',
-        value: '¥12,423.00'
-      }
-    ],
-    slot: true,
-    slotItem: {
-      MoMDownOrUp: false,
-      MoMData: 13,
-      YoYDownOrUp: false,
-      YoYData: 14
-    }
+    key: 'lastDayCommission',
+    value: '0',
+    children: []
   },
   {
     span: 8,
-    style: 'height: 168px;margin-right: 0;',
+    style: 'height: 137px;margin-right: 0;',
     label: '佣金总额（元）',
     icon: 'iconfenzhang',
     iconStyle: 'color: #EFA911;',
     tooltip: '',
-    value: '126,560.00',
+    key: 'totalCommission',
+    value: '0',
     children: []
   }
 ]
@@ -212,7 +196,7 @@ export const ECHARTS_BAR_CONFIG = {
   xAxis: [
     {
       type: 'category',
-      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      data: [],
       axisTick: {
         alignWithLabel: true
       }
@@ -229,7 +213,7 @@ export const ECHARTS_BAR_CONFIG = {
       name: '订单佣金',
       type: 'bar',
       barWidth: '30',
-      data: [10, 52, 200, 334, 390, 330, 220]
+      data: []
     }
   ]
 }
