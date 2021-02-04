@@ -12,6 +12,11 @@ export const DEVICE_LIST_CONFIG = {
     {
       label: '设备类型',
       prop: 'deviceType',
+      render: (h, params) => {
+        return h(
+          'span', params.row.deviceName + '(' + params.row.deviceType + ')'
+        )
+      }
     },
     {
       label: '设备型号',

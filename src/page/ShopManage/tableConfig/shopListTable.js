@@ -43,7 +43,7 @@ export const TABLE_CONFIG = {
     },
     {
       label: '门店地址',
-      prop: 'address'
+      prop: 'shopAddress'
     },
     {
       label: '门店状态',
@@ -119,7 +119,7 @@ export const INFO_LIST = [
     iconStyle: 'color: #5AD8A6;',
     tooltip: '',
     key: 'shopCount',
-    value: '126,560.00',
+    value: '0.00',
     children: []
   },
   {
@@ -130,7 +130,7 @@ export const INFO_LIST = [
     iconStyle: 'color: #1989FA;',
     tooltip: '',
     key: 'auditShopCount',
-    value: '126,560.00',
+    value: '0.00',
     children: []
   },
   {
@@ -141,7 +141,7 @@ export const INFO_LIST = [
     iconStyle: 'color: #F52130;',
     tooltip: '',
     key: 'rejectShopCount',
-    value: '126,560.00',
+    value: '0.00',
     children: []
   },
   {
@@ -152,7 +152,7 @@ export const INFO_LIST = [
     iconStyle: 'color: #50C514;',
     tooltip: '',
     key: 'activeShopCount',
-    value: '126,560.00',
+    value: '0.00',
     children: []
   },
   {
@@ -163,7 +163,7 @@ export const INFO_LIST = [
     iconStyle: 'color:#EFA911;',
     tooltip: '',
     key: 'abnormalShopCount',
-    value: '126,560.00',
+    value: '0.00',
     children: []
   }
 ]

@@ -218,8 +218,10 @@
     created() {
       this.infoList = this.$g.utils.deepClone(AGENT_DETAIL_STATIC)
       this.getAgentDetail(this.agentNo)
+      this.getCount(this.agentNo)
     },
     methods: {
+      // 查询服务商详情
       getAgentDetail(agentNo) {
         api.getAgentDetail({
           agentNo: this.agentNo
@@ -233,6 +235,38 @@
         })
       },
 
+      // 服务商数据统计
+      getCount(agentNo) {
+        api.queryAgentData({
+          agentNo: agentNo
+        }).then(res => {
+          if (res.status === 0) {
+            this.infoList.forEach((item, index) => {
+              item.value = String(res.data[item.key])
+              if (item.key === 'actualAmount') {
+                item.label = `实收总额（${res.data.tradeCount}笔）`
+              } else if (item.key === 'refundAmount') {
+                item.label = `退款总额（${res.data.refundCount}笔）`
+              }
+              item.children.forEach((childrenItem, indexItem) => {
+                childrenItem.value = String(res.data[item.key])
+                if (childrenItem.key === 'lastActualAmount') {
+                  childrenItem.label = `昨日订单金额（${res.data.lastTradeCount}笔）`
+                  childrenItem.value = '¥' + res.data[childrenItem.key]
+                } else if (childrenItem.key === 'lastTopAgentCommission') {
+                  childrenItem.value = '¥' + res.data[childrenItem.key]
+                } else if (childrenItem.key === 'lastAgentCommission') {
+                  childrenItem.value = '¥' + res.data[childrenItem.key]
+                } else if (childrenItem.key === 'lastRefundAmount') {
+                  childrenItem.label = `昨日退款金额（${res.data.lastRefundCount}笔）`
+                  childrenItem.value = '¥' + res.data[childrenItem.key]
+                }
+              })
+            })
+          }
+        })
+      },
+      
       // 重置登录密码
       clickResetPassword() {
         this.drawer = true

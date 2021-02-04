@@ -20,7 +20,7 @@ export const DEVICE_CALL = {
         rules: [
           { required: true, message: '请选择服务商', trigger: 'change' },
         ],
-        span: 11
+        span: 12
       }
     ]
   },

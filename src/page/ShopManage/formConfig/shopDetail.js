@@ -401,10 +401,10 @@ export const INFO_LIST = [
     iconStyle: '',
     tooltip: '',
     key: 'totalActualAmount',
-    value: '126,560.00',
+    value: '0.00',
     children: [{
-      label: '昨日日订单金额',
-      value: '¥12,423.00'
+      label: '昨日订单金额',
+      value: '¥0.00'
     }]
   },
   {
@@ -415,10 +415,10 @@ export const INFO_LIST = [
     iconStyle: '',
     tooltip: '',
     key: 'totalRefundAmount',
-    value: '126,560.00',
+    value: '0.00',
     children: [{
-      label: '昨日日退款金额',
-      value: '0'
+      label: '昨日退款金额',
+      value: '0.00'
     }]
   },
   {
@@ -429,10 +429,10 @@ export const INFO_LIST = [
     iconStyle: '',
     tooltip: '',
     key: 'totalDeviceCount',
-    value: '126,560.00',
+    value: '0',
     children: [{
       label: '今日活跃设备数',
-      value: '¥12,423.00'
+      value: '0'
     }]
   }
 ]

@@ -36,7 +36,9 @@ const api = {
   // 服务商-开户行联行号查询
   getBank: (params) => API.GET('/operation/v1/bankLineConstSys/queryBankLineConstSysByCondition', params),
   // 联行号-根据联行号编号查询详情
-  getByUnionCode: (params) => API.GET('/operation/v1/bankLineConstSys/getByUnionCode', params, {needFormData: true})
+  getByUnionCode: (params) => API.GET('/operation/v1/bankLineConstSys/getByUnionCode', params, {needFormData: true}),
+  // 服务商详情-查询统计数据
+  queryAgentData: (params) => API.GET('/operation/v1/agentData/queryAgentData', params)
 };
 
 export default api

@@ -91,7 +91,6 @@
         this.title = '编辑型号'
         this.fromConfigData[0].initVal = $row.deviceType
         this.fromConfigData[1].initVal = $row.deviceModel
-        console.log(this.fromConfigData[2].children[0].initVal = $row.deviceImg)
         this.drawer = true
       },
       clickSubmit() {
@@ -169,6 +168,13 @@
     .m-basecrud {
       padding: 24px 24px;
       background: #fff;
+      /deep/ .el-image {
+        width: 72px;
+        height: 72px;
+        /deep/ img {
+          object-fit: contain;
+        }
+      }
     }
   }
   .dot.disabled {

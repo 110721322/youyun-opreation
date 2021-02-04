@@ -112,7 +112,8 @@ export const ADD_AGENT = {
         showSlotName: '%',
         key: 'chargeFeePercent',
         rules: [
-          { required: true, message: '请输入服务商利润分成', trigger: 'blur' }
+          { required: true, message: '请输入服务商利润分成', trigger: 'blur' },
+          { pattern: /^([1-9][0-9]|[0-9]|100)$/, message: '请输入0-100的正整数' }
         ]
       }
     ]

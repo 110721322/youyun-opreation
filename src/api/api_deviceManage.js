@@ -26,5 +26,7 @@ export default {
   // 运营后台回拨设备
   recallDevice: (params) => API.POST('/operation/v1/deviceinfo/recall', params, { needFormData: true }),
   // 运营后台分页查看设备的操作日志
-  queryOperlog: (params) => API.GET('/operation/v1/deviceinfo/operlog/page/query', params)
+  queryOperlog: (params) => API.GET('/operation/v1/deviceinfo/operlog/page/query', params),
+  // excel批量导入设备记录
+  excelTemplate: (params) => API.POST('/operation/v1/excelTemplate/upload', params)
 };

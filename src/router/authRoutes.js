@@ -118,7 +118,7 @@ export const authRoutes = [
     name: 'profitAdmin',
     meta: {
       title: '分润管理',
-      icon: 'iconjiaoyi'
+      icon: 'iconfenruntongji'
     },
     children: [
       {
@@ -154,7 +154,7 @@ export const authRoutes = [
     name: 'DeviceManage',
     meta: {
       title: '订单管理',
-      icon: 'iconjiaoyi'
+      icon: 'iconshebeiguanli'
     },
     children: [
       {

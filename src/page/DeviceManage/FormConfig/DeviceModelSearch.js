@@ -10,7 +10,7 @@ export const SEARCH_FORM_CONFIG = {
         keyName: 'typeCode',
         valueName: 'typeName'
       },
-      span: 11
+      span: 12
     },
     {
       type: 1,
@@ -21,13 +21,13 @@ export const SEARCH_FORM_CONFIG = {
         keyName: 'deviceType',
         valueName: 'deviceModel'
       },
-      span: 11
+      span: 12
     },
     {
       type: 11,
       label: '添加时间',
       key: 'bindDate',
-      span: 11
+      span: 12
     }
   ]
 }

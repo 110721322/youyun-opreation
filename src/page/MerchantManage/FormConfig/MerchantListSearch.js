@@ -6,14 +6,14 @@ export const SEARCH_FORM_CONFIG = {
       label: '商户ID',
       key: 'merchantNo',
       labelWidth: '128px',
-      span: 11
+      span: 12
     },
     {
       type: 0,
       label: '商户名称',
       key: 'merchantName',
       labelWidth: '128px',
-      span: 11
+      span: 12
     },
     {
       type: 1,
@@ -31,7 +31,7 @@ export const SEARCH_FORM_CONFIG = {
           pageSize: 20
         }
       },
-      span: 11
+      span: 12
     },
     {
       type: 1,
@@ -48,7 +48,7 @@ export const SEARCH_FORM_CONFIG = {
           value: 1
         }
       ],
-      span: 11
+      span: 12
     }
   ]
 }
