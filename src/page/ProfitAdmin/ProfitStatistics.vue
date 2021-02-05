@@ -72,9 +72,9 @@
     data() {
       return {
         searchConfig: SEARCH_CONFIG,
-        tableList: [{name: '门店分润排名', api: api.queryShopDataList, params: {sortFiled: 'curMonthTopAgentCommission', sortRule: 'desc'}, tableConfig: SHOP_PROFIT}, 
-          {name: '商户分润排名', api: api.queryMerchantDataList, params: {sortFiled: 'curMonthTopAgentCommission', sortRule: 'desc'}, tableConfig: MERCHANT_PROFIT}, 
-          {name: '服务商分润排名', api: api.queryAgentDataList, params: {sortFiled: 'curMonthTopAgentCommission', sortRule: 'desc'}, tableConfig: AGENT_PROFIT}
+        tableList: [{name: '门店分润排名', api: api.queryShopDataList, params: {sortFiled: 'currMonthTopAgentCommission', sortRule: 'desc'}, tableConfig: SHOP_PROFIT}, 
+          {name: '商户分润排名', api: api.queryMerchantDataList, params: {sortFiled: 'currMonthTopAgentCommission', sortRule: 'desc'}, tableConfig: MERCHANT_PROFIT}, 
+          {name: '服务商分润排名', api: api.queryAgentDataList, params: {sortFiled: 'currMonthTopAgentCommission', sortRule: 'desc'}, tableConfig: AGENT_PROFIT}
         ],
         infoList: [],
         testData: [],
