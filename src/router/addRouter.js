@@ -152,7 +152,7 @@ const asyncRoutes = {
     component: Layout,
     meta: {
       title: '设备管理',
-      icon: 'shopManage'
+      icon: 'iconshebeiguanli'
     },
     children: [
       {
