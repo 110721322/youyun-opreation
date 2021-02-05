@@ -177,6 +177,9 @@
       }
     }
   }
+  /deep/ .m-example-text {
+    white-space: nowrap;
+  }
   .dot.disabled {
     color: #F5222D !important;
   }

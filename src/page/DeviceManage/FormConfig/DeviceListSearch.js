@@ -28,7 +28,11 @@ export const SEARCH_FORM_CONFIG = {
       urlOptions: {
         url: api.queryDeviceModelPage,
         keyName: 'deviceModel',
-        valueName: 'deviceModel'
+        valueName: 'deviceModel',
+        params: {
+          currentPage: 1,
+          pageSize: 10000
+        }
       },
       span: 12
     },
