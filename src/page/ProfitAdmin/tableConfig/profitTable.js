@@ -213,7 +213,8 @@ export const ECHARTS_BAR_CONFIG = {
       name: '订单佣金',
       type: 'bar',
       barWidth: '30',
-      data: []
+      data: [],
+      id: 'topAgentCommission'
     }
   ]
 }

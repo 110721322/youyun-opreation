@@ -35,7 +35,7 @@
           <div class="head-title">佣金统计</div>
         </div>
         <div class="echarts-box">
-          <yun-echarts :echarts-config="echartsBarConfig"></yun-echarts>
+          <yun-echarts ref="yunEcharts" :echarts-config="echartsBarConfig"></yun-echarts>
         </div>
       </div>
       <div class="profit-tables">
@@ -113,17 +113,24 @@
         }
         api.queryTrendDataList(params).then(res => {
           if (res.status === 0) {
-            if (res.data.length > 0) {
-              const xArr = []
-              const yArr = []
-              res.data.forEach((item,index) => {
-                const xValue = this.params.type === 0 ? item.tradeDate : item.tradeMonth
-                const yValue = item.topAgentCommission || 0
-                xArr.push(xValue)
-                yArr.push(yValue)
+            // if (res.data.length > 0) {
+            //   const xArr = []
+            //   const yArr = []
+            //   res.data.forEach((item,index) => {
+            //     const xValue = this.params.type === 0 ? item.tradeDate : item.tradeMonth
+            //     const yValue = item.topAgentCommission || 0
+            //     xArr.push(xValue)
+            //     yArr.push(yValue)
+            //   })
+            //   this.echartsBarConfig.xAxis[0].data = xArr
+            //   this.echartsBarConfig.series[0].data = yArr
+            // }
+            if (this.$g.utils.isArr(res.data)) {
+              this.echartsBarConfig.xAxis[0].data = res.data.map(item => item.tradeDate);
+              this.echartsBarConfig.series.forEach(config => {
+                config.data = res.data.map(item => item[config.id])
               })
-              this.echartsBarConfig.xAxis[0].data = xArr
-              this.echartsBarConfig.series[0].data = yArr
+              this.$refs.yunEcharts.setOption()
             }
           }
         })
