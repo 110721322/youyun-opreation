@@ -22,7 +22,7 @@ export default {
   // 查询设备详情
   deviceDetail: (params) => API.GET('/operation/v1/deviceinfo/bydeviceno/query', params),
   // 运营后台解绑设备
-  unbindDevice: (params) => API.POST('/operation/v1/deviceinfo/unbind', params),
+  unbindDevice: (params) => API.POST('/operation/v1/deviceinfo/unbind', params, { needFormData: true }),
   // 运营后台回拨设备
   recallDevice: (params) => API.POST('/operation/v1/deviceinfo/recall', params, { needFormData: true }),
   // 运营后台分页查看设备的操作日志

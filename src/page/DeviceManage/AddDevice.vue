@@ -23,33 +23,16 @@
     <yun-upload-xlsx
       v-if="drawer"
       :content="xlsxContent"
-      :xlsxTempUrl="xlsxTempUrl"
       :ossApiService="ossApiService"
       :dialoger="drawer"
       @upload="onClickUpload"
       @cancel="onClickCancel"
       title="批量导入设备">
+      <div slot="bottom" class="dialog-content">
+        <span>点击下方按钮上传填写好的模版内容，单个文件大小限制20M以内。 如无模版，请先下载模版。</span>
+        <span @click="clickDown">下载导入模版</span>
+      </div>
     </yun-upload-xlsx>
-<!--    <yun-dialog-->
-<!--      title="批量导入设备"-->
-<!--      :dialoger="drawer"-->
-<!--      width="488px"-->
-<!--      @cancel="drawer = false"-->
-<!--      @confirm="onClickConfirm"-->
-<!--    >-->
-<!--      <div slot="body" class="dialog-content">-->
-<!--        <span>点击下方按钮上传填写好的模版内容，单个文件大小限制20M以内。 如无模版，请先下载模版。</span>-->
-<!--        <span @click="clickDown">下载导入模版</span>-->
-<!--      </div>-->
-<!--      <div slot="body">-->
-<!--        <yun-form-->
-<!--          ref="operationInfo"-->
-<!--          :form-base-data="excleConfigData.formData"-->
-<!--          :show-foot-btn="excleConfigData.showFootBtn === false"-->
-<!--          label-width="130px"-->
-<!--        ></yun-form>-->
-<!--      </div>-->
-<!--    </yun-dialog>-->
   </div>
 </template>
 
@@ -206,7 +189,6 @@ export default {
     }
   }
   .dialog-content {
-    padding: 24px 24px;
     span:nth-child(1) {
       color: #606266;
       font-size: 14px;

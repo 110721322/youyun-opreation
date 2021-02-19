@@ -19,14 +19,18 @@ export const SEARCH_FORM_CONFIG = {
       urlOptions: {
         url: api.queryDeviceModelPage,
         keyName: 'deviceType',
-        valueName: 'deviceModel'
+        valueName: 'deviceModel',
+        params: {
+          currentPage: 1,
+          pageSize: 10000
+        }
       },
       span: 12
     },
     {
       type: 11,
       label: '添加时间',
-      key: 'bindDate',
+      key: 'createTime',
       span: 12
     }
   ]
