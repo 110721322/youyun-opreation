@@ -21,6 +21,7 @@
               label-width="130px"
           ></yun-form>
         </div>
+        <!--TODO review: 类名不规范-->
         <div class="m-box m-nobord">
           <div class="m-service-title">结算账号</div>
           <yun-form
@@ -41,6 +42,7 @@
 
 <script>
   import api from "@/api/api_agentManage.js";
+  // TODO review: utils已挂载至Vue.prototype请通过this.$g.utils访问
   import utils from "youyun-vue-components/global/kit/utils.js"
   import { ADD_AGENT } from "./FormConfig/AddAgent";
 
@@ -75,6 +77,7 @@
           this.$message('请完善结算信息');
           return
         }
+        // TODO review: refs.clickFootBtn()表单验证通过会返回ruleForm，无需重复获取，请修改
         const serviceData = this.$refs['serviceInfo'].ruleForm
         const rateData = this.$refs['rateInfo'].ruleForm
         const settleData = this.$refs['settleInfo'].ruleForm
@@ -109,6 +112,7 @@
       },
 
       clickCancel() {
+        // TODO review: back不接收参数返回上一页，指定返回某一页用go()
         this.$router.back(-1)
       }
     }

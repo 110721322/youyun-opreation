@@ -13,6 +13,8 @@
     <yun-table
         class="m-table"
         ref="table"
+        pagination-layout="sizes, prev, pager, next"
+        pagination-small
         hide-edit-area
         :is-async="true"
         :page-sizes="pageSizes"

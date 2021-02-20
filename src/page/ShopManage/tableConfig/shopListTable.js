@@ -49,6 +49,7 @@ export const TABLE_CONFIG = {
       label: '门店状态',
       prop: 'isDisabled',
       render: (h, params) => {
+        // TODO review: 状态值以常量替换
         const actions = new Map([
           [0, {className: 's-status-success', statusDesc: '启用'}],
           [1, {className: 's-status-fail', statusDesc: '禁用'}],
@@ -64,6 +65,7 @@ export const TABLE_CONFIG = {
       label: '审核状态',
       prop: 'status',
       render: (h, params) => {
+        // TODO review: 状态值以常量替换
         const actions = new Map([
           [0, {className: 's-status-primary', statusDesc: '预审核中'}],
           [1, {className: 's-status-fail', statusDesc: '平台驳回'}],

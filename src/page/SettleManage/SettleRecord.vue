@@ -80,6 +80,7 @@
         this.searchConfig.formData[7].urlOptions.params["agentNo"] = $val.agentNo;
       },
       onClickSearch($ruleForm) {
+        // TODO review: 无意义的判断语句请简化
         this.params = {
           settleNo: $ruleForm.settleNo ? $ruleForm.settleNo : null,
           settleMerchantName: $ruleForm.settleMerchantName ? $ruleForm.settleMerchantName : null,

@@ -108,7 +108,7 @@
         </yun-form>
       </div>
     </yun-dialog>
-  
+
     <yun-dialog
         title="修改资料"
         :dialoger="materialDrawer"
@@ -116,6 +116,7 @@
         @cancel="materialDrawer = false"
         @confirm="clickSubmitMaterial"
     >
+      <!--TODO review: v-if="materialDrawer"判断重复，直接对外部容器进行判断-->
       <div class="dialog-form" slot="body">
         <yun-form
             v-if="materialDrawer"
@@ -159,6 +160,7 @@
 
 <script>
   import api from "@/api/api_agentManage.js";
+  // TODO review: utils已挂载至Vue.prototype请通过this.$g.utils访问
   import utils from 'youyun-vue-components/global/kit/utils.js'
   import { AGENT_TALK_DATA } from "./TableConfig/AgentTalkConfig";
   import { DETAILCONFIG, AGENT_DETAIL_STATIC } from "./TableConfig/AgentDetailConfig";
@@ -168,6 +170,7 @@
   export default {
     name: "AgentDetail",
     data() {
+      //TODO review: 属性过多使用命名空间对同类属性名划分,无用的属性移除
       return {
         params: {
           agentNo: this.$route.query.agentNo
@@ -191,6 +194,7 @@
         testData: [],
         switchStatus: false,
         countPsdTime: 0,
+        //TODO review: 引入变量通过deepClone函数进行深拷贝
         nameConfigData: FORM_CONFIG.nameSet.formData,
         rateConfigData: FORM_CONFIG.rateSet.formData,
         settleConfigData: FORM_CONFIG.bankSet.formData,
@@ -227,6 +231,7 @@
           agentNo: this.agentNo
         }).then(res => {
           if (res.status === 0) {
+            //TODO review: 多次访问同一个对象可以对其生命使用const ruleForm = res.data
             res.data.alipayRate = utils.AccMul(res.data.alipayRate, 100)
             res.data.wechatPayRate = utils.AccMul(res.data.wechatPayRate, 100)
             res.data.chargeFeePercent = utils.AccMul(res.data.chargeFeePercent, 100)
@@ -241,6 +246,7 @@
           agentNo: agentNo
         }).then(res => {
           if (res.status === 0) {
+            //TODO review: 以回调方式formatter重组字符串
             this.infoList.forEach((item, index) => {
               item.value = String(res.data[item.key])
               if (item.key === 'actualAmount') {
@@ -248,6 +254,7 @@
               } else if (item.key === 'refundAmount') {
                 item.label = `退款总额（${res.data.refundCount}笔）`
               }
+              //TODO review: 二叉树通过递归解析
               item.children.forEach((childrenItem, indexItem) => {
                 childrenItem.value = String(res.data[item.key])
                 if (childrenItem.key === 'lastActualAmount') {
@@ -266,7 +273,7 @@
           }
         })
       },
-      
+
       // 重置登录密码
       clickResetPassword() {
         this.drawer = true
@@ -274,8 +281,9 @@
         this.drawerType = 'updataLogin'
         this.fromConfigData = FORM_CONFIG.resetPassword.formData
       },
-      
+
       // 服务商状态启用禁用
+      //TODO review: 该方法未调用
       changeSwitch(val) {
         if (val) {
           api.updateStatusUnfrozen({
@@ -301,16 +309,18 @@
           })
         }
       },
-      
+
       // 修改手机号码
+      //TODO review: 深拷贝清空表单
       editTel() {
         this.drawer = true
         this.title = '修改手机号'
         this.drawerType = 'updatePhone'
         this.fromConfigData = FORM_CONFIG.changeMoblie.formData
       },
-      
+
       // 修改服务商状态
+      //TODO review: 深拷贝清空表单
       onClickEditStatus() {
         this.drawer = true
         this.title = '服务商状态'
@@ -318,8 +328,9 @@
         this.fromConfigData = FORM_CONFIG.agentStop.formData
         this.fromConfigData[0].initVal = this.ruleForm.blockStatus
       },
-      
+
       // 修改服务商信息
+      //TODO review: 深拷贝清空表单,赋值请使用函数式按key进行回显
       clickModify() {
         this.title = '修改资料'
         this.materialDrawer = true
@@ -332,19 +343,25 @@
         this.settleConfigData[2].initVal = this.ruleForm.bankAccountHolder
         this.dateConfigData[0].initVal = this.ruleForm.expireDate
       },
-      
+
       // 添加沟通计划
+      //TODO review: 深拷贝清空表单
       clickAddTalk() {
         this.drawer = true
         this.drawerType = 'addTalk'
         this.title = '添加沟通记录'
         this.fromConfigData = FORM_CONFIG.talkData.formData
       },
-      
+
       // 发送短信验证码
+      //TODO review: 若无用请删除若有用请TODO标注
       clickSendPsdCode() {},
 
       clickSubmit() {
+        /*TODO review:
+           1.表单校验提交通过调用实例clickFootBtn获取结果!
+           2.switch中不要写业务逻辑请以函数调用方式替换，此段代码建议使用策略模式重构
+         */
         this.$refs['formInfo'].$children[0].validate((valid) => {
           if (valid) {
             const type = this.drawerType
@@ -388,6 +405,7 @@
       },
 
       clickSubmitMaterial() {
+        // TODO review: 表单校验提交通过调用实例clickFootBtn获取结果!
         this.$refs['nameInfo'].$children[0].validate((valid) => {
           if (valid) {
             this.nameVal = true
@@ -448,10 +466,11 @@
           }
         })
       },
-      
+
       submitSuccess(data, type) {
         if (data === 0) {
           this.$message({
+            //TODO review 复杂度大于1请勿使用三元表达式
             message: type === 'addTalk' ? '添加成功' : type === 'updataLogin' ? '重置成功' : '更新成功',
             type: 'message'
           })

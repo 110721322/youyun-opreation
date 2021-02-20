@@ -19,6 +19,7 @@ export const SEARCH_FORM_CONFIG = {
       label: '审核状态',
       key: 'status',
       labelWidth: '128px',
+      //TODO review: 状态值以常量方式替换
       options: [
         {
           label: '预审核',
@@ -60,6 +61,7 @@ export const SEARCH_FORM_CONFIG = {
       label: '门店状态',
       key: 'isDisabled',
       labelWidth: '128px',
+      //TODO review: 状态值以常量方式替换
       options: [
         {
           label: '启用',

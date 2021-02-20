@@ -30,6 +30,7 @@ export const SEARCH_CONFIG = {
       valueName: "shopName"
     }
   },
+    //TODO review: 无用的注释请删除
   // {
   //   type: 1,
   //   label: "交易类型",
@@ -90,6 +91,7 @@ export const SEARCH_CONFIG = {
     label: "交易状态",
     key: "orderStatus",
     span: 12,
+    //TODO review: 状态值以常量替换
     options: [
       {label: "待支付", value: 0},
       {label: "支付中", value: 1},
@@ -135,6 +137,7 @@ export const REFUND_SEARCH_CONFIG = {
     label: "退款方式",
     key: "refundChannel",
     span: 12,
+    //TODO review: 状态值以常量替换
     options: [
       {label: "乐刷", value: 'leshua'},
       {label: "网商", value: 'mybank'},
@@ -148,6 +151,7 @@ export const REFUND_SEARCH_CONFIG = {
     label: "退单状态",
     key: "refundStatus",
     span: 12,
+    //TODO review: 状态值以常量替换
     options: [
       {label: "待退款", value: 0},
       {label: "退款中", value: 1},

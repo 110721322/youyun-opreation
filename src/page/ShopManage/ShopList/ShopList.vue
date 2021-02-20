@@ -91,6 +91,7 @@ export default {
       }
     },
     onClickDetail(row) {
+      // TODO review: 路由跳转使用name方式
       this.$router.push('/shopManage/shopList/shopDetail?shopNo=' + row.shopNo).catch(() => {})
     }
   }

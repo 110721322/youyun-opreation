@@ -23,6 +23,7 @@
           <div class="tab-title">
             <span>操作记录列表</span>
           </div>
+          <!--TODO review: 请勿书写无用属性或与默认值相同的属性-->
           <yun-table
             ref="table"
             :grid-config="tableConfig.gridConfig"
@@ -116,14 +117,14 @@
     overflow: hidden;
     background: #fff;
   }
-  
+
   .tab-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
   }
-  
+
   .tab-title span {
     font-size: 16px;
     font-weight: 500;

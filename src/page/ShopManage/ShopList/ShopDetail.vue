@@ -15,7 +15,7 @@
           :title="ruleForm.rejectReason"
           type="error"
           show-icon>
-        </el-alert>  
+        </el-alert>
       </div>
       <div v-if="activeName==='0'" class="info-box">
         <div class="detail-mode-box">
@@ -46,7 +46,7 @@
             module-title="支付信息"
             theme="border"
           >
-          </yun-detail-mode>  
+          </yun-detail-mode>
         </div>
         <div class="detail-mode-box">
           <yun-detail-mode
@@ -55,7 +55,7 @@
             module-title="开户信息"
             theme="border"
           >
-          </yun-detail-mode>  
+          </yun-detail-mode>
         </div>
       </div>
       <div v-if="activeName==='1'" class="detail-box">
@@ -88,7 +88,7 @@
             :rule-form="ruleForm"
             :filed-config-list="rateDetailConfig"
             module-title="费率信息"
-            >  
+            >
           </yun-detail-mode>
         </div>
       </div>
@@ -213,6 +213,11 @@
               .map(item => item.label)
             const areasStr = areas.join('')
             this.ruleForm.areasStr = areasStr
+            /*TODO review:
+               1.使用计算属性替换;
+               2.Map简化条件语句;
+               3.状态值替换常量。
+            */
             switch(this.ruleForm.status) {
               case 0:
                 this.ruleForm.statusTxt = '预审核中'
@@ -255,6 +260,7 @@
         api.merchantShopInfo(params).then(res => {
           if (res.status === 0) {
             this.statisticsData = res.data
+            // TODO review: 通过回调函数处理字段值重组
             this.infoList.forEach((item, index) => {
               if (item.key === 'totalActualAmount') {
                 item.label = '实收金额（'+ (res.data.totalActualCount||0) +'笔）'
@@ -322,6 +328,7 @@
         })
       },
       clickEdit() {
+        // TODO review: 路由跳转使用name方式
         this.$router.push('/shopManage/shopList/shopDetail/editShop?id=' + this.ruleForm.id + '&shopNo=' + this.ruleForm.shopNo).catch(() => {})
       },
       handleClose() {
@@ -489,7 +496,7 @@
     width: 16px;
     height: 16px;
   }
-  .rateTxt {    
+  .rateTxt {
     font-size: 14px;
     font-weight: 400;
     color: #333335;
@@ -498,7 +505,7 @@
   .passDialogTxt {
     text-align: center;
     margin-top: 60px;
-    margin-bottom: 90px;  
+    margin-bottom: 90px;
     font-size: 16px;
     font-weight: 400;
     color: #333335;

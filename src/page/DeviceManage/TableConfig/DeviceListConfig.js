@@ -34,6 +34,7 @@ export const DEVICE_LIST_CONFIG = {
       label: '绑定状态',
       prop: 'currentStatus',
       render: (h, params) => {
+        //TODO review: 状态值应以常量进行管理，常量以模块为命名空间在constant.config.js文件中声明
         const actions = new Map([
           [1, {className: 's-status-fail', statusDesc: '未划拨'}],
           [2, {className: 's-status-pending', statusDesc: '未绑定'}],
@@ -68,6 +69,7 @@ export const DEVICE_LIST_CONFIG = {
         emitName: 'unBind',
         type: 'text',
         isShow: (params) => {
+          //TODO review: 状态值应以常量进行管理，常量以模块为命名空间在constant.config.js文件中声明
           return params.currentStatus === 3
         }
       },
@@ -76,6 +78,7 @@ export const DEVICE_LIST_CONFIG = {
         emitName: 'callBind',
         type: 'text',
         isShow: (params) => {
+          //TODO review: 状态值应以常量进行管理，常量以模块为命名空间在constant.config.js文件中声明
           return (params.currentStatus === 2 || params.currentStatus === 3)
         }
       },

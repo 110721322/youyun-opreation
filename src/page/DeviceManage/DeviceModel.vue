@@ -99,12 +99,14 @@
           this.$message('请完善设备信息');
           return
         }
+        //TODO review: clickFootBtn方法返回ruleForm
         const deviceData = this.$refs['deviceModelInfo'].ruleForm
         const params = {
           deviceType: deviceData.deviceType,
           deviceModel: deviceData.deviceModel,
           deviceImg: deviceData.deviceImg
         }
+        //TODO review: switch下不要编写业务逻辑，通过调用函数替换
         switch(this.type) {
           case "add":
             api.addDeviceModel(params).then(res => {

@@ -49,6 +49,7 @@ export const SETTLE_RECORD_CONFIG = {
       label: '支付状态',
       prop: 'status',
       render: (h, params) => {
+        // TODO review: 状态值常量替换,语句简化
         if (params.row.status === 0) {
           return [h('span', {
             'class': "dot " + "reject"

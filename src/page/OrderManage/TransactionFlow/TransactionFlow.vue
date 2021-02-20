@@ -68,6 +68,7 @@
         }).then(res => {
           if (res.status === 0) {
             this.statisticsData = res.data;
+            // TODO review: 回调方式formatter赋值
             this.infoList.forEach((item, index) => {
               if (item.key === 'actualAmount') {
                 item.label = '实收总额（'+ (res.data.actualCount||0) +'笔）'

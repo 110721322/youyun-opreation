@@ -25,6 +25,7 @@ export const SEARCH_CONFIG = {
     key: 'status',
     type: 1,
     span: 12,
+    // TODO review: 状态值以常量替换
     options: [
       {label: "预审核中", value: 0},
       {label: "平台驳回", value: 1},
@@ -77,6 +78,7 @@ export const SEARCH_CONFIG = {
     key: 'isDisabled',
     type: 1,
     span: 12,
+    // TODO review: 状态值以常量替换
     options: [
       {label: "禁用", value: 1},
       {label: "启用", value: 0}
