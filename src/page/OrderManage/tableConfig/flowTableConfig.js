@@ -194,7 +194,7 @@ export const INFO_LIST = [
     iconStyle: 'color: #5AD8A6;',
     tooltip: '',
     key: 'totalAmount',
-    value: '126,560.00',
+    value: '',
     children: []
   },
   {
@@ -205,7 +205,7 @@ export const INFO_LIST = [
     iconStyle: 'color: #50C514;',
     tooltip: '',
     key: 'actualAmount',
-    value: '126,560.00',
+    value: '',
     children: []
   },
   {
@@ -216,7 +216,7 @@ export const INFO_LIST = [
     iconStyle: 'color: #F62735;',
     tooltip: '',
     key: 'refundAmount',
-    value: '126,560.00',
+    value: '',
     children: []
   },
   {
@@ -227,7 +227,7 @@ export const INFO_LIST = [
     iconStyle: 'color: #1989FA;',
     tooltip: '',
     key: 'serviceFee',
-    value: '126,560.00',
+    value: '',
     children: []
   },
   {
@@ -238,7 +238,7 @@ export const INFO_LIST = [
     iconStyle: 'color: #EFA911;',
     tooltip: '',
     key: 'agentCommission',
-    value: '126,560.00',
+    value: '',
     children: []
   },
   {
@@ -249,7 +249,7 @@ export const INFO_LIST = [
     iconStyle: 'color: #EFA911;',
     tooltip: '',
     key: 'platformCommission',
-    value: '126,560.00',
+    value: '',
     children: []
   }
 ]

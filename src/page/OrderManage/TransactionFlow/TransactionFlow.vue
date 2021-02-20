@@ -73,7 +73,7 @@
                 item.label = '实收总额（'+ (res.data.actualCount||0) +'笔）'
               }
               if (item.key === 'refundAmount') {
-                item.label = '实收总额（'+ (res.data.refundCount||0) +'笔）'
+                item.label = '退款总额（'+ (res.data.refundCount||0) +'笔）'
               }
               item.value = (res.data[item.key] || 0) + ''
             })
