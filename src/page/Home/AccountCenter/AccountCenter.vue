@@ -11,6 +11,7 @@
           :filed-config-list="accountInfoConfig"
           module-title="账户信息"
           theme="border"
+          @editAccount="editAccount"
         >
         </yun-detail-mode>
       </div>
@@ -54,6 +55,9 @@
       },
       clickModify() {
         this.$refs.updatePsd.showUpdatePsd();
+      },
+      editAccount() {
+
       }
     }
   }
