@@ -12,6 +12,8 @@ export const TABLE_CONFIG = {
       label: '交易类型',
       prop: 'tradeType'
     },
+    //TODO review: 无用的代码请删除
+
     // {
     //   label: '设备类型',
     //   prop: 'diviceType'
@@ -28,6 +30,7 @@ export const TABLE_CONFIG = {
       label: '交易状态',
       prop: 'orderStatus',
       render: (h, params) => {
+        //TODO review: 状态值以常量替换,可以通过字符串拼接作为常量'支付_1','退款_1'消除if判断语句
         if (params.row.tradeType === '支付') {
           const actions = new Map([
             [0, {className: 's-status-pending', statusDesc: '待支付'}],

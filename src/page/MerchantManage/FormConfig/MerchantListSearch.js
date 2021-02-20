@@ -38,6 +38,7 @@ export const SEARCH_FORM_CONFIG = {
       label: '商户状态',
       key: 'isDisabled',
       labelWidth: '128px',
+      //TODO review: 状态值以常量方式替换
       options: [
         {
           label: '启用',

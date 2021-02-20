@@ -58,7 +58,7 @@
             :api-service-strategies="apiServiceAgent"
         ></table-data>
       </el-col>
-      <el-col :span="12" class="clearfix">
+      <el-col :span="12">
         <table-data
             ref="merchantTableTemp"
             style="margin: 0 0 24px 12px;"

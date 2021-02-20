@@ -34,26 +34,32 @@
         <div class="echarts-head">
           <div class="head-title">佣金统计</div>
         </div>
-        <div class="echarts-box">
-          <yun-echarts :echarts-config="echartsBarConfig"></yun-echarts>
+        <div class="echarts-box">
+          <yun-echarts :echarts-config="echartsBarConfig"></yun-echarts>
         </div>
       </div>
       <div class="profit-tables">
-        <el-row>
-          <el-col v-for="(item, index) in tableList" :key="index" :span="12" class="table-item">
-            <div class="table-head">{{ item.name }}</div>
-            <div class="table-box">
-              <yun-table
-                class="m-table"
-                :is-async="true"
-                :grid-config="item.tableConfig.gridConfig"
-                :grid-btn-config="item.tableConfig.gridBtnConfig"
-                :params="item.params"
-                :hide-edit-area="true"
-                :grid-data="testData"
-                :api-service="item.api"></yun-table>
-            </div>
-          </el-col>
+        <el-row style="width: 100%">
+          <template v-for="(item, index) in tableList">
+            <el-col :key="index" :span="12" class="table-item clearfix" :style="item.style">
+              <div class="table-head">{{ item.name }}</div>
+              <div class="table-box">
+                <yun-table
+                    class="m-table"
+                    pagination-layout="sizes, prev, pager, next"
+                    pagination-small
+                    :pageSizes="[5, 10, 20, 30, 40, 100]"
+                    :is-async="true"
+                    :grid-config="item.tableConfig.gridConfig"
+                    :grid-btn-config="item.tableConfig.gridBtnConfig"
+                    :params="item.params"
+                    :hide-edit-area="true"
+                    :grid-data="testData"
+                    :api-service="item.api"></yun-table>
+              </div>
+            </el-col>
+            <div class="clear-both" v-if="index === 1"></div>
+          </template>
         </el-row>
       </div>
     </div>
@@ -64,7 +70,6 @@
   import api from "@/api/api_profit";
   import { SEARCH_CONFIG } from "./formConfig/profitStatisticsForm";
   import { SHOP_PROFIT, MERCHANT_PROFIT, AGENT_PROFIT, INFO_LIST, ECHARTS_BAR_CONFIG } from "./tableConfig/profitTable";
-  const echarts = require('echarts');
   export default {
     name: 'ProfitStatistics',
     components: {
@@ -72,10 +77,30 @@
     data() {
       return {
         searchConfig: SEARCH_CONFIG,
-        tableList: [{name: '门店分润排名', api: api.queryShopDataList, params: {sortFiled: 'currMonthTopAgentCommission', sortRule: 'desc'}, tableConfig: SHOP_PROFIT}, 
-          {name: '商户分润排名', api: api.queryMerchantDataList, params: {sortFiled: 'currMonthTopAgentCommission', sortRule: 'desc'}, tableConfig: MERCHANT_PROFIT}, 
-          {name: '服务商分润排名', api: api.queryAgentDataList, params: {sortFiled: 'currMonthTopAgentCommission', sortRule: 'desc'}, tableConfig: AGENT_PROFIT}
+        tableList: [
+          {
+            name: '门店分润排名',
+            api: api.queryShopDataList,
+            params: {sortFiled: 'currMonthTopAgentCommission', sortRule: 'desc'},
+            tableConfig: SHOP_PROFIT,
+            style: 'padding-right: 12px;'
+          },
+          {
+            name: '商户分润排名',
+            api: api.queryMerchantDataList,
+            params: {sortFiled: 'currMonthTopAgentCommission', sortRule: 'desc'},
+            tableConfig: MERCHANT_PROFIT,
+            style: 'padding-left: 12px;'
+          },
+          {
+            name: '服务商分润排名',
+            api: api.queryAgentDataList,
+            params: {sortFiled: 'currMonthTopAgentCommission', sortRule: 'desc'},
+            tableConfig: AGENT_PROFIT,
+            style: 'padding-right: 12px;'
+          }
         ],
+        echartsBarConfig: null,
         infoList: [],
         testData: [],
         params: {
@@ -98,6 +123,7 @@
         const params = {}
         api.queryTotalData(params).then(res => {
           if (res.status === 0) {
+            //TODO review: 以回调方式formatter重组字符串
             this.infoList.forEach((item, index) => {
               if (item.key === 'currMonthCommission') {
                 item.children[0].value = '¥' + (res.data.lastMonthCommission||0)
@@ -108,6 +134,7 @@
         })
       },
       queryTrendDataList() {
+        //TODO review: 多余，消耗内存
         const params = {
           ...this.params
         }
@@ -116,6 +143,7 @@
             if (res.data.length > 0) {
               const xArr = []
               const yArr = []
+              //TODO review: 尽量避免使用forEach，用map,filter
               res.data.forEach((item,index) => {
                 const xValue = this.params.type === 0 ? item.tradeDate : item.tradeMonth
                 const yValue = item.topAgentCommission || 0
@@ -133,6 +161,7 @@
           beginDate: $date?$date[0] : '',
           endDate: $date?$date[1] : '',
         }
+        //TODO review: 单个业务参数变化改用三元表达式,业务参数值以常量替换,常量用命名空间写入constant.config.js文件,大写连字符尽量不超过三个单词
         if ($key === 'currentYear') {
           this.params.type = 1
         } else {
@@ -148,6 +177,7 @@
 </script>
 
 <style scoped lang="scss">
+  /*TODO 类名规范模块以'm-'开头*/
   .content {
     margin: 24px;
   }
@@ -157,7 +187,7 @@
     .echarts-head {
       padding: 16px 24px;
       border-bottom: 1px solid #DCDFE6;
-      .head-title { 
+      .head-title {
         font-size: 16px;
         font-weight: 400;
         color: #000000;
@@ -192,11 +222,11 @@
     flex-wrap: wrap;
     justify-content: space-between;
     .table-item {
-      // background: white;
       margin-bottom: 24px;
+      overflow: hidden;
       .table-head {
         padding: 16px 24px;
-        background: white;     
+        background: white;
         border-bottom: 1px solid #DCDFE6;
         font-size: 16px;
         font-weight: 400;
@@ -222,9 +252,6 @@
           }
         }
       }
-    }
-    .table-item:nth-of-type(odd) {
-      padding-right: 24px;
     }
   }
 </style>

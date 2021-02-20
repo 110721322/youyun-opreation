@@ -30,6 +30,7 @@
         </div>
       </div>
       <div class="m-basecrud">
+        <!--TODO review: 请勿书写无用属性或与默认值相同的属性-->
         <yun-table
             ref="table"
             :grid-config="gridConfig"
@@ -107,6 +108,7 @@
         })
       },
       onClickSearch($ruleForm) {
+        //TODO review: 通过||运算符替换
         this.params = {
           agentNo: $ruleForm.agentNo ? $ruleForm.agentNo : null,
           agentName: $ruleForm.agentName ? $ruleForm.agentName : null,
@@ -131,6 +133,7 @@
         })
       },
 
+      //TODO review: 深拷贝清空表单
       clickChangeOperation() {
         if (this.selectList.length === 0) {
           this.$message({
@@ -166,6 +169,7 @@
       },
 
       clickSubmit() {
+        // TODO review: 表单校验提交通过调用实例clickFootBtn获取结果!
         this.$refs['operationInfo'].$children[0].validate((valid) => {
           if (valid) {
             const select = []

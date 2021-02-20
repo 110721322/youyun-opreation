@@ -1,4 +1,5 @@
 export const TABLE_CONFIG = {
+  //TODO review: 无用的代码请删除
   gridConfig: [
     {
       label: '订单号',
@@ -65,6 +66,7 @@ export const TABLE_CONFIG = {
       label: '交易状态',
       prop: 'orderStatus',
       render: (h, params) => {
+        // TODO review: 状态值以常量替换
         const actions = new Map([
           [0, {className: 's-status-pending', statusDesc: '待支付'}],
           [1, {className: 's-status-pending', statusDesc: '支付中'}],
@@ -143,6 +145,7 @@ export const REFUND_TABLE_CONFIG = {
       label: '退单状态',
       prop: 'refundStatus',
       render: (h, params) => {
+        // TODO review: 状态值以常量替换
         const actions = new Map([
           [0, {className: 's-status-pending', statusDesc: '待退款'}],
           [1, {className: 's-status-pending', statusDesc: '退款中'}],

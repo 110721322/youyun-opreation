@@ -14,7 +14,7 @@
             :filed-config-list="orderInfoConfig"
             module-title="订单信息"
             theme="border"
-          >  
+          >
           </yun-detail-mode>
         </div>
         <div class="detail-mode-box">
@@ -23,7 +23,7 @@
             :filed-config-list="moneyInfoConfig"
             module-title="收款信息"
             theme="border"
-          >  
+          >
           </yun-detail-mode>
         </div>
         <div class="detail-mode-box">
@@ -32,7 +32,7 @@
             :filed-config-list="payInfoConfig"
             module-title="付款信息"
             theme="border"
-          >  
+          >
           </yun-detail-mode>
         </div>
       </div>

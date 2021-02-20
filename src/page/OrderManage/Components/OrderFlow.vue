@@ -73,6 +73,7 @@
         this.$emit('clickSearch', this.params)
       },
       onClickDetail(row) {
+        //TODO review: 路由跳转以路由名称name方式跳转
         this.$router.push('/orderManage/transactionFlow/flowDetail?merchantNo=' + row.merchantNo + '&shopNo=' + row.shopNo + '&orderNo=' + row.orderNo).catch(() => {})
       }
     }

@@ -79,6 +79,7 @@
         })
       },
       dealCateList(arr, newArr) {
+        // TODO review: 使用map替换forEach
         arr.forEach((item,index) => {
           newArr[index] = {}
           newArr[index].label = item.name;
@@ -86,7 +87,7 @@
           if(item.childrenData) {
             const arr=[];
             this.dealCateList(item.childrenData,arr);
-            newArr[index].children=arr;  
+            newArr[index].children=arr;
           }
         });
       },
@@ -97,6 +98,7 @@
         api.shopQueryDetail(params).then(res => {
           if(res.status === 0) {
             this.shopDetail = res.data
+            // TODO review: 通过回调函数解决表单回显逻辑
             this.shopInfoFormData.forEach((item,index) => {
               item.initVal = this.shopDetail[item.key]
               if (item.key === "areaData") {
@@ -144,6 +146,7 @@
         })
       },
       clickShopEditDetail() {
+        // TODO review: clickFootBtn校验通过则返回ruleForm否则为false!
         const shopInfoForm = this.$g.utils.deepClone(this.$refs.shopInfoForm.ruleForm);
         const verityInfoForm = this.$g.utils.deepClone(this.$refs.verityInfoForm.ruleForm);
         const settleInfoForm = this.$g.utils.deepClone(this.$refs.settleInfoForm.ruleForm);

@@ -33,6 +33,10 @@ export const FORM_CONFIG = {
       key: "orderStatus",
       fieldType: 'render',
       render: (h, params) => {
+        /*TODO review:
+           1.判断超过3级，以switch或Map方式替换
+           2.状态值以常量替换
+        */
         if (params.orderStatus === 0) {
           return h(
             'span', { 'class': 'f-fc-606266' }, '待支付'
@@ -89,6 +93,7 @@ export const FORM_CONFIG = {
       key: "ourCommission"
     }
   ],
+  //TODO review: 无用的注释请删除
   moneyInfoData: [
     // {
     //   label: "所属服务商",

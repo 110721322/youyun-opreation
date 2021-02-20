@@ -75,6 +75,7 @@ export default {
   },
   methods: {
     onClickSearch($ruleForm) {
+      // TODO review: 无意义的判断
       this.params = {
         deviceNo: $ruleForm.deviceNo ? $ruleForm.deviceNo : null,
         deviceType: $ruleForm.deviceType ? $ruleForm.deviceType : null,
@@ -103,6 +104,7 @@ export default {
         this.$message('请选择服务商');
         return
       }
+      //TODO review: clickFootBtn方法返回ruleForm
       const deviceData = this.$refs['deviceModelInfo'].ruleForm
       api.flowService({
         toOperator: deviceData.toOperator,
@@ -117,7 +119,7 @@ export default {
       })
     },
     clickExport() {},
-    
+
     // 解绑设备
     onClickUnbind($row) {
       this.$confirm('是否确定解绑该设备', {
@@ -140,7 +142,7 @@ export default {
         this.$message('取消操作')
       })
     },
-    
+
     // 回拨设备
     onClickCallBind($row) {
       this.$confirm('是否确定回拨该设备', {
@@ -172,6 +174,7 @@ export default {
       })
     },
     selectionChange($row) {
+      //TODO review: 尽量少使用forEach通过map,filter替换
       const deviceNos = []
       $row.forEach((item) => {
         deviceNos.push(item.deviceNo)

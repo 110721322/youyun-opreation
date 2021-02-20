@@ -114,6 +114,7 @@ export const FORM_CONFIG = {
       key: "shopType",
       fieldType: 'render',
       render: (h, params) => {
+        // TODO review: 判断语句简化，使用Map替换
         if (params.shopType === 'personal') {
           return h(
             'span', { 'class': 'f-fc-606266' }, '个人'
@@ -257,6 +258,7 @@ export const FORM_CONFIG = {
       key: "settleType",
       fieldType: 'render',
       render: (h, params) => {
+        // TODO review: 判断语句简化，使用Map替换
         if (params.settleType === '0') {
           return h(
             'span', { 'class': 'f-fc-606266' }, '对公法人'

@@ -39,6 +39,7 @@ export const SEARCH_FORM_CONFIG = {
       label: '处理状态',
       key: 'settleStatus',
       labelWidth: '128px',
+      // TODO review: 状态值常量替换
       options: [
         {
           label: '已结算',

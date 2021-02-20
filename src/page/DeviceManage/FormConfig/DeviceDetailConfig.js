@@ -19,6 +19,7 @@ export const DEVICE_FORM_CONFIG = {
     {
       label: "设备状态",
       key: "currentStatus",
+      //TODO review: 若无用请删除
       render: (params) => {
 
       }

@@ -149,6 +149,7 @@
           merchantNo: merchantNo
         }).then(res => {
           if (res.status === 0) {
+            //TODO review: 字段赋值通过回调formatter处理
             this.infoList.forEach((item, index) => {
               item.value = String(res.data[item.key]) || '0'
               item.children.forEach((childrenItem, childrenIndex) => {
@@ -169,6 +170,7 @@
         })
       },
       onClickSearch($ruleForm) {
+        //TODO review: 没有意义的判断应去掉，增加了程序复杂度
         this.params = {
           merchantNo: this.merchantNo,
           shopNo: $ruleForm.shopNo ? $ruleForm.shopNo : null,
@@ -178,15 +180,16 @@
           phone: $ruleForm.phone ? $ruleForm.phone : null
         }
       },
-      
+
       // 重置登录密码
       clickResetPassword() {
         this.title = '重置登录密码'
         this.drawer = true
         this.drawerType = 'resetPassword'
+        //TODO review: 深拷贝表单配置对象
         this.fromConfigData = FORM_CONFIG.resetPassword.formData
       },
-      
+
       // 修改商户状态
       changeSwitch(val) {
         api.disabeldMerchant({
@@ -207,10 +210,11 @@
         this.title = '修改信息'
         this.openType = 'changeName'
         this.drawer = true
+        //TODO review: 深拷贝表单配置对象
         this.fromConfigData = FORM_CONFIG.shopInfo.formData
         this.fromConfigData[0].initVal = this.ruleForm.merchantName
       },
-      
+
       onClickDetails(row) {
         this.$router.push({
           name: 'shopDetail',
@@ -220,11 +224,13 @@
         })
       },
       clickSubmit() {
+        //TODO review: 表单验证通过clickFootBtn方法调用并返回表单json!
         this.$refs['formInfo'].$children[0].validate((valid) => {
           if (valid) {
             const infoData = this.$refs['formInfo'].ruleForm
             infoData.merchantNo = this.merchantNo
             const type = this.openType
+            //TODO review: switch下不要写长逻辑
             switch(type) {
               case "resetPassword":
                 api.resetPassword({

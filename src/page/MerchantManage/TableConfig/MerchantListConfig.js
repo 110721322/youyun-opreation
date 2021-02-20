@@ -1,3 +1,4 @@
+//TODO review:无意义的命名空间
 export const LIST_CONFIG = {
   configData: [
     {

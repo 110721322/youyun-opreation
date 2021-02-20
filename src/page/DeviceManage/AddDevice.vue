@@ -78,6 +78,7 @@ export default {
     clickImport() {
       this.drawer = true
     },
+    // TODO review: 接口调用方式写入api文件中，$g.utils.downloadBlob为下载文件流方法,重构!
     clickDown() {
       axios({
         method: "GET", // 如果是get方法，则写“GET”
@@ -98,7 +99,7 @@ export default {
         document.body.removeChild(eLink);
       }).catch(() => {});
     },
-    
+
     // 设备模板的导入功能
     onClickUpload($fileName, ossData) {
       api.excelTemplate({
@@ -122,7 +123,9 @@ export default {
         this.$message('请完善设备信息');
         return
       }
+      //TODO review: clickFootBtn方法返回ruleForm
       const deviceData = this.$refs['deviceInfo'].ruleForm
+      //TODO review: 无意义的赋值
       const params = {
         ...deviceData
       }
@@ -133,6 +136,7 @@ export default {
             type: 'success'
           })
         }
+        //TODO review: 成功失败都跳转？
         this.$router.replace({
           name: 'DeviceList'
         })
