@@ -1,4 +1,3 @@
-//TODO review 文件名命名不规范
 export const AGENT_TRANSFER = {
   gridConfig: [
     {

@@ -178,7 +178,7 @@ export const AGENT_DETAIL_STATIC = [
         value: '0',
         span: 24
       }
-      // {
+      // TODO {
       //   label: '昨日活跃商户（个）',
       //   value: '0',
       //   span: 24
@@ -201,7 +201,7 @@ export const AGENT_DETAIL_STATIC = [
         value: '0',
         span: 24
       },
-      // {
+      // TODO {
       //   label: '昨日活跃门店（个）',
       //   value: '0',
       //   span: 24
@@ -224,12 +224,12 @@ export const AGENT_DETAIL_STATIC = [
     key: 'deviceCount',
     value: '0',
     children: [
-      // {
+      // TODO {
       //   label: '昨日新增设备（台）',
       //   value: '0',
       //   span: 24
       // },
-      // {
+      // TODO {
       //   label: '昨日活跃设备（台）',
       //   value: '0',
       //   span: 24

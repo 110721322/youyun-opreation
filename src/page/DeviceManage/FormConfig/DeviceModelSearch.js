@@ -23,7 +23,7 @@ export const SEARCH_FORM_CONFIG = {
         valueName: 'deviceModel',
         params: {
           currentPage: 1,
-          pageSize: 10000
+          pageSize: 10
         }
       },
       span: 12

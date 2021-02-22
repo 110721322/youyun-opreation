@@ -1,5 +1,5 @@
 //TODO review:无意义的命名空间
-export const LIST_CONFIG = {
+export const MERCHANT_LIST_CONFIG = {
   configData: [
     {
       label: "所属服务商",

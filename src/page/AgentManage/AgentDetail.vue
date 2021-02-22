@@ -88,8 +88,8 @@
         <yun-form
             v-if="drawer"
             ref="formInfo"
-            :form-base-data="fromConfigData"
-            :show-foot-btn="fromConfigData.showFootBtn === false"
+            :form-base-data="formConfigData"
+            :show-foot-btn="formConfigData.showFootBtn === false"
             label-width="130px"
         >
           <template slot="code">
@@ -117,9 +117,8 @@
         @confirm="clickSubmitMaterial"
     >
       <!--TODO review: v-if="materialDrawer"判断重复，直接对外部容器进行判断-->
-      <div class="dialog-form" slot="body">
+      <div class="dialog-form" slot="body" v-if="materialDrawer">
         <yun-form
-            v-if="materialDrawer"
             ref="nameInfo"
             :form-base-data="nameConfigData"
             :show-foot-btn="nameConfigData.showFootBtn === false"
@@ -128,7 +127,6 @@
         </yun-form>
         <div class="form-drawer-title">费率设置</div>
         <yun-form
-            v-if="materialDrawer"
             ref="rateInfo"
             :form-base-data="rateConfigData"
             :show-foot-btn="nameConfigData.showFootBtn === false"
@@ -137,7 +135,6 @@
         </yun-form>
         <div class="form-drawer-title">结算账号</div>
         <yun-form
-            v-if="materialDrawer"
             ref="settleInfo"
             :form-base-data="settleConfigData"
             :show-foot-btn="nameConfigData.showFootBtn === false"
@@ -146,7 +143,6 @@
         </yun-form>
         <div class="form-drawer-title">有效期</div>
         <yun-form
-            v-if="materialDrawer"
             ref="dateInfo"
             :form-base-data="dateConfigData"
             :show-foot-btn="nameConfigData.showFootBtn === false"
@@ -161,11 +157,10 @@
 <script>
   import api from "@/api/api_agentManage.js";
   // TODO review: utils已挂载至Vue.prototype请通过this.$g.utils访问
-  import utils from 'youyun-vue-components/global/kit/utils.js'
   import { AGENT_TALK_DATA } from "./TableConfig/AgentTalkConfig";
   import { DETAILCONFIG, AGENT_DETAIL_STATIC } from "./TableConfig/AgentDetailConfig";
   import { FORM_CONFIG } from "./FormConfig/AgentDetailConfig";
-  import { AGENT_TRANSFER } from "./TableConfig/AgebtTransferConfig"
+  import { AGENT_TRANSFER } from "./TableConfig/AgentTransferConfig"
 
   export default {
     name: "AgentDetail",
@@ -178,16 +173,14 @@
         agentNo: this.$route.query.agentNo,
         api: api.queryByPage,
         ruleForm: {},
-        showEdit: true,
         shopInfoData: DETAILCONFIG.shopInfoData,
         rateInfoData: DETAILCONFIG.rateInfoData,
         bankInfoData: DETAILCONFIG.bankInfoData,
         gridConfig: AGENT_TALK_DATA.gridConfig,
         agentConfig: AGENT_TRANSFER,
-        fromConfigData: FORM_CONFIG,
+        formConfigData: null,
         gridBtnConfig: AGENT_TALK_DATA.gridBtnConfig,
         drawer: false,
-        drawerBase: false,
         drawerType: '',
         materialDrawer: false,
         title: '',
@@ -195,14 +188,10 @@
         switchStatus: false,
         countPsdTime: 0,
         //TODO review: 引入变量通过deepClone函数进行深拷贝
-        nameConfigData: FORM_CONFIG.nameSet.formData,
-        rateConfigData: FORM_CONFIG.rateSet.formData,
-        settleConfigData: FORM_CONFIG.bankSet.formData,
-        dateConfigData: FORM_CONFIG.validitySet.formData,
-        nameVal: false,
-        rateVal: false,
-        settleVal: false,
-        dateVal: false,
+        nameConfigData: null,
+        rateConfigData: null,
+        settleConfigData: null,
+        dateConfigData: null,
         infoList: []
       }
     },
@@ -231,11 +220,11 @@
           agentNo: this.agentNo
         }).then(res => {
           if (res.status === 0) {
-            //TODO review: 多次访问同一个对象可以对其生命使用const ruleForm = res.data
-            res.data.alipayRate = utils.AccMul(res.data.alipayRate, 100)
-            res.data.wechatPayRate = utils.AccMul(res.data.wechatPayRate, 100)
-            res.data.chargeFeePercent = utils.AccMul(res.data.chargeFeePercent, 100)
-            this.ruleForm = res.data
+            const ruleForm = res.data
+            ruleForm.alipayRate = this.$g.utils.AccMul(ruleForm.alipayRate, 100)
+            ruleForm.wechatPayRate = this.$g.utils.AccMul(ruleForm.wechatPayRate, 100)
+            ruleForm.chargeFeePercent = this.$g.utils.AccMul(ruleForm.chargeFeePercent, 100)
+            this.ruleForm = ruleForm
           }
         })
       },
@@ -279,36 +268,36 @@
         this.drawer = true
         this.title = '重置登录密码'
         this.drawerType = 'updataLogin'
-        this.fromConfigData = FORM_CONFIG.resetPassword.formData
+        this.formConfigData = this.$g.utils.deepClone(FORM_CONFIG.resetPassword)
       },
 
-      // 服务商状态启用禁用
+      // TODO 服务商状态启用禁用
       //TODO review: 该方法未调用
-      changeSwitch(val) {
-        if (val) {
-          api.updateStatusUnfrozen({
-            agentNo: this.$route.query.agentNo
-          }).then(res => {
-            if (res.status === 0) {
-              this.$message({
-                message: '启用成功',
-                type: 'success'
-              })
-            }
-          })
-        } else if (!this.switchStatus) {
-          api.updateStatusFrozen({
-            agentNo: this.$route.query.agentNo
-          }).then(res => {
-            if (res.status === 0) {
-              this.$message({
-                message: '禁用成功',
-                type: 'success'
-              })
-            }
-          })
-        }
-      },
+      // changeSwitch(val) {
+      //   if (val) {
+      //     api.updateStatusUnfrozen({
+      //       agentNo: this.$route.query.agentNo
+      //     }).then(res => {
+      //       if (res.status === 0) {
+      //         this.$message({
+      //           message: '启用成功',
+      //           type: 'success'
+      //         })
+      //       }
+      //     })
+      //   } else if (!this.switchStatus) {
+      //     api.updateStatusFrozen({
+      //       agentNo: this.$route.query.agentNo
+      //     }).then(res => {
+      //       if (res.status === 0) {
+      //         this.$message({
+      //           message: '禁用成功',
+      //           type: 'success'
+      //         })
+      //       }
+      //     })
+      //   }
+      // },
 
       // 修改手机号码
       //TODO review: 深拷贝清空表单
@@ -316,7 +305,7 @@
         this.drawer = true
         this.title = '修改手机号'
         this.drawerType = 'updatePhone'
-        this.fromConfigData = FORM_CONFIG.changeMoblie.formData
+        this.formConfigData = this.$g.utils.deepClone(FORM_CONFIG.changeMoblie)
       },
 
       // 修改服务商状态
@@ -325,8 +314,8 @@
         this.drawer = true
         this.title = '服务商状态'
         this.drawerType = 'updateBlock'
-        this.fromConfigData = FORM_CONFIG.agentStop.formData
-        this.fromConfigData[0].initVal = this.ruleForm.blockStatus
+        this.formConfigData = this.$g.utils.deepClone(FORM_CONFIG.agentStop)
+        this.formConfigData[0].initVal = this.ruleForm.blockStatus
       },
 
       // 修改服务商信息
@@ -334,123 +323,106 @@
       clickModify() {
         this.title = '修改资料'
         this.materialDrawer = true
-        this.nameConfigData[0].initVal = this.ruleForm.agentName
-        this.rateConfigData[0].initVal = this.ruleForm.alipayRate
-        this.rateConfigData[1].initVal = this.ruleForm.wechatPayRate
-        this.rateConfigData[2].initVal = this.ruleForm.chargeFeePercent
-        this.settleConfigData[0].initVal = this.ruleForm.bankBranchName
-        this.settleConfigData[1].initVal = this.ruleForm.bankCardNo
-        this.settleConfigData[2].initVal = this.ruleForm.bankAccountHolder
-        this.dateConfigData[0].initVal = this.ruleForm.expireDate
+        this.nameConfigData = this.$g.utils.deepClone(FORM_CONFIG.nameSet)
+        this.rateConfigData = this.$g.utils.deepClone(FORM_CONFIG.rateSet)
+        this.settleConfigData = this.$g.utils.deepClone(FORM_CONFIG.bankSet)
+        this.dateConfigData = this.$g.utils.deepClone(FORM_CONFIG.validitySet)
+        this.nameConfigData.forEach((item, index) => {
+          item.initVal = this.ruleForm[item.key]
+        })
+        this.rateConfigData.forEach((item, index) => {
+          item.initVal = this.ruleForm[item.key]
+        })
+        this.settleConfigData.forEach((item, index) => {
+          item.initVal = this.ruleForm[item.key]
+          if (item.key === 'bankContactLine') {
+            item.initVal = this.ruleForm.bankBranchName
+          }
+        })
+        this.dateConfigData.forEach((item, index) => {
+          item.initVal = this.ruleForm[item.key]
+        })
       },
 
       // 添加沟通计划
-      //TODO review: 深拷贝清空表单
       clickAddTalk() {
         this.drawer = true
         this.drawerType = 'addTalk'
         this.title = '添加沟通记录'
-        this.fromConfigData = FORM_CONFIG.talkData.formData
+        this.formConfigData = this.$g.utils.deepClone(FORM_CONFIG.talkData)
       },
 
-      // 发送短信验证码
-      //TODO review: 若无用请删除若有用请TODO标注
-      clickSendPsdCode() {},
+      // TODO 发送短信验证码
+      // clickSendPsdCode() {},
 
       clickSubmit() {
         /*TODO review:
            1.表单校验提交通过调用实例clickFootBtn获取结果!
            2.switch中不要写业务逻辑请以函数调用方式替换，此段代码建议使用策略模式重构
          */
-        this.$refs['formInfo'].$children[0].validate((valid) => {
-          if (valid) {
-            const type = this.drawerType
-            const ruleForm = this.$refs['formInfo'].ruleForm
-            switch(type) {
-              case "addTalk":
-                ruleForm.agentNo = this.agentNo
-                api.addTalk(ruleForm).then(res => {
-                  this.submitSuccess(res.status, type)
-                })
-                break;
-              case "updataLogin":
-                api.resetPassword({
-                  agentNo: this.agentNo,
-                  pwdType: 1
-                }).then(res => {
-                  this.submitSuccess(res.status, type)
-                })
-                break
-              case "updateBlock":
-                api.updateAgentBlockStatus({
-                  agentNo: this.agentNo,
-                  blockStatus: ruleForm.blockStatus
-                }).then(res => {
-                  if (res.status === 0) {
-                    this.$message({
-                      message: '状态修改成功',
-                      type: 'success'
-                    })
-                    this.getAgentDetail(this.agentNo)
-                    this.drawer = false
-                  }
-                })
-              default:
-                break;
+        const ruleForm = this.$refs['formInfo'].clickFootBtn()
+        if (!ruleForm) {
+          this.$message('请完善信息')
+          return
+        }
+        const type = this.drawerType
+        if (type === 'addTalk') {
+          ruleForm.agentNo = this.agentNo
+          api.addTalk(ruleForm).then(res => {
+            this.submitSuccess(res.status, type)
+          })
+        } else if (type === 'updataLogin') {
+          api.resetPassword({
+            agentNo: this.agentNo,
+            pwdType: 1
+          }).then(res => {
+            this.submitSuccess(res.status, type)
+          })
+        } else if (type === 'updateBlock') {
+          api.updateAgentBlockStatus({
+            agentNo: this.agentNo,
+            blockStatus: ruleForm.blockStatus
+          }).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                message: '状态修改成功',
+                type: 'success'
+              })
+              this.getAgentDetail(this.agentNo)
+              this.drawer = false
             }
-          } else {
-            return false;
-          }
-        });
+          })
+        }
       },
 
       clickSubmitMaterial() {
         // TODO review: 表单校验提交通过调用实例clickFootBtn获取结果!
-        this.$refs['nameInfo'].$children[0].validate((valid) => {
-          if (valid) {
-            this.nameVal = true
-          } else {
-            this.nameVal = false
-            return false;
-          }
-        })
-        this.$refs['rateInfo'].$children[0].validate((valid) => {
-          if (valid) {
-            this.rateVal = true
-          } else {
-            this.nameVal = false
-            return false;
-          }
-        })
-        this.$refs['settleInfo'].$children[0].validate((valid) => {
-          if (valid) {
-            this.settleVal = true
-          } else {
-            this.nameVal = false
-            return false;
-          }
-        })
-        this.$refs['dateInfo'].$children[0].validate((valid) => {
-          if (valid) {
-            this.dateVal = true
-          } else {
-            this.nameVal = false
-            return false;
-          }
-        })
-        if (!this.rateVal || !this.nameVal || !this.settleVal || !this.dateVal) {
+        const serviceData = this.$refs['nameInfo'].clickFootBtn();
+        const rateData = this.$refs['rateInfo'].clickFootBtn();
+        const settleData = this.$refs['settleInfo'].clickFootBtn();
+        const dateData = this.$refs['dateInfo'].clickFootBtn
+        if (!serviceData) {
+          this.$message('请完善服务商信息');
           return
         }
-        const serviceData = this.$refs['nameInfo'].ruleForm
-        const rateData = this.$refs['rateInfo'].ruleForm
-        const settleData = this.$refs['settleInfo'].ruleForm
-        const dateData = this.$refs['dateInfo'].ruleForm
+        if (!rateData) {
+          this.$message('请完善费率信息');
+          return
+        }
+        if (!settleData) {
+          this.$message('请完善结算信息');
+          return
+        }
+        if (!dateData) {
+          this.$message('请完善到期信息');
+          return
+        }
         let infoData = {}
         Object.assign(infoData, serviceData, rateData, settleData, dateData)
         infoData.agentNo = this.agentNo
-        infoData.alipayRate = utils.AccDiv(infoData.alipayRate, 100)
-        infoData.wechatPayRate = utils.AccDiv(infoData.wechatPayRate, 100)
-        infoData.chargeFeePercent = utils.AccDiv(infoData.chargeFeePercent, 100)
+        infoData.alipayRate = this.$g.utils.AccDiv(infoData.alipayRate, 100)
+        infoData.wechatPayRate = this.$g.utils.AccDiv(infoData.wechatPayRate, 100)
+        infoData.chargeFeePercent = this.$g.utils.AccDiv(infoData.chargeFeePercent, 100)
         api.updateAgentRate(infoData).then(res => {
           if (res.status === 0) {
             this.$message({
@@ -459,20 +431,28 @@
             })
             this.materialDrawer = false
             this.getAgentDetail(this.agentNo)
-            this.rateVal = false
-            this.nameVal = false
-            this.settleVal = false
-            this.dateVal = false
           }
         })
       },
 
       submitSuccess(data, type) {
         if (data === 0) {
+          var message = ''
+          switch(type) {
+            case 'addTalk':
+              message = '添加成功'
+              break
+            case 'updataLogin':
+              message = '重置成功'
+              break
+            case 'updateBlock':
+              message = '更新成功'
+              break
+          }
           this.$message({
             //TODO review 复杂度大于1请勿使用三元表达式
-            message: type === 'addTalk' ? '添加成功' : type === 'updataLogin' ? '重置成功' : '更新成功',
-            type: 'message'
+            message: message,
+            type: 'success'
           })
           this.drawer = false
           if (type === 'addTalk') {

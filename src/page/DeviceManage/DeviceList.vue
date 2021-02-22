@@ -77,15 +77,15 @@ export default {
     onClickSearch($ruleForm) {
       // TODO review: 无意义的判断
       this.params = {
-        deviceNo: $ruleForm.deviceNo ? $ruleForm.deviceNo : null,
-        deviceType: $ruleForm.deviceType ? $ruleForm.deviceType : null,
-        deviceModel: $ruleForm.deviceModel ? $ruleForm.deviceModel : null,
-        deviceSn: $ruleForm.deviceSn ? $ruleForm.deviceSn : null,
-        bindDate: $ruleForm.bindDate ? $ruleForm.bindDate : null,
-        merchantNo: $ruleForm.merchantNo ? $ruleForm.merchantNo : null,
-        shopNo: $ruleForm.shopNo ? $ruleForm.shopNo: null,
-        agentNo: $ruleForm.agentNo ? $ruleForm.agentNo : null,
-        currentStatus: $ruleForm.currentStatus ? $ruleForm.currentStatus : null
+        deviceNo: $ruleForm.deviceNo,
+        deviceType: $ruleForm.deviceType,
+        deviceModel: $ruleForm.deviceModel,
+        deviceSn: $ruleForm.deviceSn,
+        bindDate: $ruleForm.bindDate,
+        merchantNo: $ruleForm.merchantNo,
+        shopNo: $ruleForm.shopNo,
+        agentNo: $ruleForm.agentNo,
+        currentStatus: $ruleForm.currentStatus
       }
     },
     clickBind() {
@@ -105,9 +105,8 @@ export default {
         return
       }
       //TODO review: clickFootBtn方法返回ruleForm
-      const deviceData = this.$refs['deviceModelInfo'].ruleForm
       api.flowService({
-        toOperator: deviceData.toOperator,
+        toOperator: checkDeviceForm.toOperator,
         deviceNos: this.deviceNos
       }).then(res => {
         if (res.status === 0) {
@@ -176,7 +175,7 @@ export default {
     selectionChange($row) {
       //TODO review: 尽量少使用forEach通过map,filter替换
       const deviceNos = []
-      $row.forEach((item) => {
+      $row.map((item) => {
         deviceNos.push(item.deviceNo)
       })
       this.deviceNos = deviceNos
