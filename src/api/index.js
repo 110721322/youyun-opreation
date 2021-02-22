@@ -16,13 +16,11 @@ function setTimeShowMessage () {
 axios.defaults.timeout = 30000;
 axios.defaults.withCredentials = true;
 axios.defaults.headers["Content-Type"] = "application/json"
-// console.log(process.env);
-axios.defaults.baseURL = 'http://testapi.intranet.aduer.com'
+axios.defaults.baseURL = process.env.VUE_APP_BASE_URL
 
 // 添加一个请求拦截器
 axios.interceptors.request.use((config) => {
   // 设置全局参数
-  console.log(config);
   config.headers.common.client = 'WEB';
   config.headers.common.accessToken = store.state.admin.accessToken || ''
   for (const field in config.data) {

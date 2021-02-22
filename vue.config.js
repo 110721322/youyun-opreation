@@ -89,25 +89,7 @@ module.exports = {
       }
     },
     devServer: {
-      port: 8082,
-      proxy: {
-        '/common': {
-          target: process.env.VUE_BASE_URL,
-          changeOrigin: true
-        },
-        '/operation': {
-          target: process.env.VUE_BASE_URL,
-          changeOrigin: true
-        },
-        '/agent': {
-          target: process.env.VUE_BASE_URL,
-          changeOrigin: true
-        },
-        '/merchant': {
-          target: process.env.VUE_BASE_URL,
-          changeOrigin: true
-        }
-      }
+      port: 8082
     },
     devtool: devtool,
     plugins: plugins
