@@ -16,6 +16,7 @@ function setTimeShowMessage () {
 axios.defaults.timeout = 30000;
 axios.defaults.withCredentials = true;
 axios.defaults.headers["Content-Type"] = "application/json"
+axios.defaults.baseURL = process.env.VUE_APP_BASE_URL
 
 // 添加一个请求拦截器
 axios.interceptors.request.use((config) => {
