@@ -37,10 +37,10 @@ export const SEARCH_CONFIG = {
     key: "payWay",
     span: 12,
     options: [
-      {label: "余额", value: 'balance'},
-      {label: "支付宝", value: 'alipay'},
-      {label: "微信", value: 'wechat'},
-      {label: "云闪付", value: 'cloudPay'}
+      {label: "余额", value: TransactionFlow.BALANCE},
+      {label: "支付宝", value: TransactionFlow.ALIPAY},
+      {label: "微信", value: TransactionFlow.WECHAT},
+      {label: "云闪付", value: TransactionFlow.CLOUDPAY}
     ]
   },
   {

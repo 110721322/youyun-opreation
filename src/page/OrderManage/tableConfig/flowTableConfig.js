@@ -191,7 +191,7 @@ export const INFO_LIST = [
     iconStyle: 'color: #5AD8A6;',
     tooltip: '',
     key: 'totalAmount',
-    value: '',
+    value: null,
     children: []
   },
   {
@@ -205,7 +205,7 @@ export const INFO_LIST = [
     setLabel($params) {
       return `实收总额(${ $params.actualCount }笔)`
     },
-    value: '',
+    value: null,
     children: []
   },
   {
@@ -219,7 +219,7 @@ export const INFO_LIST = [
       return `退款总额(${ $params.refundCount }笔)`
     },
     key: 'refundAmount',
-    value: '',
+    value: null,
     children: []
   },
   {
@@ -230,7 +230,7 @@ export const INFO_LIST = [
     iconStyle: 'color: #1989FA;',
     tooltip: '',
     key: 'serviceFee',
-    value: '',
+    value: null,
     children: []
   },
   {

@@ -34,6 +34,8 @@ export const TransactionFlow = {
   PAY_CLOSE: 3,
   PART_REFUND: 4,
   ALL_REFUND: 5,
+  BALANCE: 'balance',
+  CLOUDPAY: 'cloudPay',
   LESHUA: 'leshua',
   MYBANK: 'mybank',
   ALIPAY: 'alipay',
