@@ -36,8 +36,15 @@
         }
       },
       onClickDetail(row) {
-        //TODO review: 路由跳转以路由名称name方式跳转
-        this.$router.push('/orderManage/transactionFlow/flowDetail?merchantNo=' + row.merchantNo + '&shopNo=' + row.shopNo + '&orderNo=' + row.orderNo + '&refundOrderNo=' + row.refundNo).catch(() => {})
+        this.$router.push({
+          name: 'flowDetail',
+          query: {
+            merchantNo: row.merchantNo,
+            shopNo: row.shopNo,
+            orderNo: row.orderNo,
+            refundOrderNo: row.refundNo
+          }
+        })
       }
     }
   }

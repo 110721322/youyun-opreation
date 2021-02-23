@@ -67,17 +67,26 @@
           endTime: this.params.queryEndPayTime || (this.$g.utils.getToday(0) + ' 23:59:59')
         }).then(res => {
           if (res.status === 0) {
-            this.statisticsData = res.data;
-            // TODO review: 回调方式formatter赋值
-            this.infoList.forEach((item, index) => {
-              if (item.key === 'actualAmount') {
-                item.label = '实收总额（'+ (res.data.actualCount||0) +'笔）'
-              }
-              if (item.key === 'refundAmount') {
-                item.label = '退款总额（'+ (res.data.refundCount||0) +'笔）'
-              }
-              item.value = (res.data[item.key] || 0) + ''
-            })
+            this.statisticsData = res.data
+            for (let key in this.statisticsData) {
+              this.statisticsData[key] = this.$g.utils.toLocaleString(this.statisticsData[key])
+            }
+            const forBinaryTree = ($data) => {
+              $data.forEach(item => {
+                if (this.$g.utils.isFunction(item.formatter)) {
+                  item.value = item.formatter(this.statisticsData)
+                } else {
+                  item.value = this.statisticsData[item.key]
+                }
+                if (this.$g.utils.isFunction(item.setLabel)) {
+                  item.label = item.setLabel(this.statisticsData)
+                }
+                if (this.$g.utils.isArr(item.children)) {
+                  forBinaryTree(item.children)
+                }
+              })
+            }
+            forBinaryTree(this.infoList)
           }
         })
       }

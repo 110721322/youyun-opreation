@@ -1,5 +1,5 @@
+import { TransactionFlow } from "@/libs/config/constant.config";
 export const TABLE_CONFIG = {
-  //TODO review: 无用的代码请删除
   gridConfig: [
     {
       label: '订单号',
@@ -22,10 +22,6 @@ export const TABLE_CONFIG = {
       label: '支付门店',
       prop: 'shopName'
     },
-    // {
-    //   label: '设备类型',
-    //   prop: 'shopName'
-    // },
     {
       label: '支付方式',
       prop: 'payWayName'
@@ -66,14 +62,13 @@ export const TABLE_CONFIG = {
       label: '交易状态',
       prop: 'orderStatus',
       render: (h, params) => {
-        // TODO review: 状态值以常量替换
         const actions = new Map([
-          [0, {className: 's-status-pending', statusDesc: '待支付'}],
-          [1, {className: 's-status-pending', statusDesc: '支付中'}],
-          [2, {className: 's-status-success', statusDesc: '支付成功'}],
-          [3, {className: 's-status-pending', statusDesc: '交易关闭'}],
-          [4, {className: 's-status-pending', statusDesc: '部分退款'}],
-          [5, {className: 's-status-fail', statusDesc: '全部退款'}],
+          [TransactionFlow.UNPAY, {className: 's-status-pending', statusDesc: '待支付'}],
+          [TransactionFlow.PAYING, {className: 's-status-pending', statusDesc: '支付中'}],
+          [TransactionFlow.PAY_SUCCESS, {className: 's-status-success', statusDesc: '支付成功'}],
+          [TransactionFlow.PAY_CLOSE, {className: 's-status-pending', statusDesc: '交易关闭'}],
+          [TransactionFlow.PART_REFUND, {className: 's-status-pending', statusDesc: '部分退款'}],
+          [TransactionFlow.ALL_REFUND, {className: 's-status-fail', statusDesc: '全部退款'}],
           ['default', {className: 's-status-pending', statusDesc: '--'}]
         ])
         const action = actions.get(params.row.orderStatus) || actions.get('default')
@@ -145,13 +140,12 @@ export const REFUND_TABLE_CONFIG = {
       label: '退单状态',
       prop: 'refundStatus',
       render: (h, params) => {
-        // TODO review: 状态值以常量替换
         const actions = new Map([
-          [0, {className: 's-status-pending', statusDesc: '待退款'}],
-          [1, {className: 's-status-pending', statusDesc: '退款中'}],
-          [2, {className: 's-status-success', statusDesc: '退款成功'}],
-          [3, {className: 's-status-fail', statusDesc: '退款失败'}],
-          [4, {className: 's-status-fail', statusDesc: '退款关闭'}],
+          [TransactionFlow.UNPAY, {className: 's-status-pending', statusDesc: '待退款'}],
+          [TransactionFlow.PAYING, {className: 's-status-pending', statusDesc: '退款中'}],
+          [TransactionFlow.PAY_SUCCESS, {className: 's-status-success', statusDesc: '退款成功'}],
+          [TransactionFlow.PAY_CLOSE, {className: 's-status-fail', statusDesc: '退款失败'}],
+          [TransactionFlow.PART_REFUND, {className: 's-status-fail', statusDesc: '退款关闭'}],
           ['default', {className: 's-status-pending', statusDesc: '--'}]
         ])
         const action = actions.get(params.row.refundStatus) || actions.get('default')
@@ -208,6 +202,9 @@ export const INFO_LIST = [
     iconStyle: 'color: #50C514;',
     tooltip: '',
     key: 'actualAmount',
+    setLabel($params) {
+      return `实收总额(${ $params.actualCount }笔)`
+    },
     value: '',
     children: []
   },
@@ -218,6 +215,9 @@ export const INFO_LIST = [
     icon: 'iconjine',
     iconStyle: 'color: #F62735;',
     tooltip: '',
+    setLabel($params) {
+      return `退款总额(${ $params.refundCount }笔)`
+    },
     key: 'refundAmount',
     value: '',
     children: []

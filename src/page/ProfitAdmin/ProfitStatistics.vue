@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="content">
+    <div class="m-content">
       <div class="profit-data">
         <!--数据统计开始-->
         <el-row>
@@ -123,36 +123,32 @@
         const params = {}
         api.queryTotalData(params).then(res => {
           if (res.status === 0) {
-            //TODO review: 以回调方式formatter重组字符串
-            this.infoList.forEach((item, index) => {
-              if (item.key === 'currMonthCommission') {
-                item.children[0].value = '¥' + (res.data.lastMonthCommission||0)
-              }
-              item.value = (res.data[item.key] || 0) + ''
-            })
+            const statisticsData = res.data;
+            for (let key in statisticsData) {
+              statisticsData[key] = this.$g.utils.toLocaleString(statisticsData[key])
+            }
+            const forBinaryTree = ($data) => {
+              $data.forEach(item => {
+                if (this.$g.utils.isFunction(item.formatter)) {
+                  item.value = item.formatter(statisticsData)
+                } else {
+                  item.value = statisticsData[item.key]
+                }
+                if (this.$g.utils.isArr(item.children)) {
+                  forBinaryTree(item.children)
+                }
+              })
+            }
+            forBinaryTree(this.infoList)
           }
         })
       },
       queryTrendDataList() {
-        //TODO review: 多余，消耗内存
         const params = {
           ...this.params
         }
         api.queryTrendDataList(params).then(res => {
           if (res.status === 0) {
-            //TODO review: 无用的注释请移除
-            // if (res.data.length > 0) {
-            //   const xArr = []
-            //   const yArr = []
-            //   res.data.forEach((item,index) => {
-            //     const xValue = this.params.type === 0 ? item.tradeDate : item.tradeMonth
-            //     const yValue = item.topAgentCommission || 0
-            //     xArr.push(xValue)
-            //     yArr.push(yValue)
-            //   })
-            //   this.echartsBarConfig.xAxis[0].data = xArr
-            //   this.echartsBarConfig.series[0].data = yArr
-            // }
             if (this.$g.utils.isArr(res.data)) {
               this.echartsBarConfig.xAxis[0].data = res.data.map(item => item.tradeDate);
               this.echartsBarConfig.series.forEach(config => {
@@ -168,12 +164,7 @@
           beginDate: $date?$date[0] : '',
           endDate: $date?$date[1] : '',
         }
-        //TODO review: 单个业务参数变化改用三元表达式,业务参数值以常量替换,常量用命名空间写入constant.config.js文件,大写连字符尽量不超过三个单词
-        if ($key === 'currentYear') {
-          this.params.type = 1
-        } else {
-          this.params.type = 0
-        }
+        this.params.type = $key === 'currentYear'? 1 : 0
         this.queryTrendDataList()
       },
       refresh() {
@@ -184,8 +175,7 @@
 </script>
 
 <style scoped lang="scss">
-  /*TODO 类名规范模块以'm-'开头*/
-  .content {
+  .m-content {
     margin: 24px;
   }
   .profit-echarts {

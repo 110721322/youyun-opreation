@@ -1,6 +1,7 @@
 import api from '@/api/api_agentManage'
 import api_merchantManage from '@/api/api_merchantManage'
 import api_shop from '@/api/api_shop'
+import { TransactionFlow } from "@/libs/config/constant.config";
 export const SEARCH_CONFIG = {
   formData: [{
     label: '交易时间',
@@ -30,15 +31,6 @@ export const SEARCH_CONFIG = {
       valueName: "shopName"
     }
   },
-    //TODO review: 无用的注释请删除
-  // {
-  //   type: 1,
-  //   label: "交易类型",
-  //   key: "tradeType",
-  //   span: 12,
-  //   options: [
-  //   ]
-  // },
   {
     type: 1,
     label: "支付方式",
@@ -91,14 +83,13 @@ export const SEARCH_CONFIG = {
     label: "交易状态",
     key: "orderStatus",
     span: 12,
-    //TODO review: 状态值以常量替换
     options: [
-      {label: "待支付", value: 0},
-      {label: "支付中", value: 1},
-      {label: "支付成功", value: 2},
-      {label: "交易关闭", value: 3},
-      {label: "部分退款", value: 4},
-      {label: "全部退款", value: 5}
+      {label: "待支付", value: TransactionFlow.UNPAY},
+      {label: "支付中", value: TransactionFlow.PAYING},
+      {label: "支付成功", value: TransactionFlow.PAY_SUCCESS},
+      {label: "交易关闭", value: TransactionFlow.PAY_CLOSE},
+      {label: "部分退款", value: TransactionFlow.PART_REFUND},
+      {label: "全部退款", value: TransactionFlow.ALL_REFUND}
     ]
   }],
   showFootBtn: true
@@ -137,13 +128,12 @@ export const REFUND_SEARCH_CONFIG = {
     label: "退款方式",
     key: "refundChannel",
     span: 12,
-    //TODO review: 状态值以常量替换
     options: [
-      {label: "乐刷", value: 'leshua'},
-      {label: "网商", value: 'mybank'},
-      {label: "支付宝", value: 'alipay'},
-      {label: "微信", value: 'wechat'},
-      {label: "新大陆", value: 'newland'}
+      {label: "乐刷", value: TransactionFlow.LESHUA},
+      {label: "网商", value: TransactionFlow.MYBANK},
+      {label: "支付宝", value: TransactionFlow.ALIPAY},
+      {label: "微信", value: TransactionFlow.WECHAT},
+      {label: "新大陆", value: TransactionFlow.NEWLAND}
     ]
   },
   {
@@ -151,13 +141,12 @@ export const REFUND_SEARCH_CONFIG = {
     label: "退单状态",
     key: "refundStatus",
     span: 12,
-    //TODO review: 状态值以常量替换
     options: [
-      {label: "待退款", value: 0},
-      {label: "退款中", value: 1},
-      {label: "退款成功", value: 2},
-      {label: "退款失败", value: 3},
-      {label: "退款关闭", value: 4}
+      {label: "待退款", value: TransactionFlow.UNPAY},
+      {label: "退款中", value: TransactionFlow.PAYING},
+      {label: "退款成功", value: TransactionFlow.PAY_SUCCESS},
+      {label: "退款失败", value: TransactionFlow.PAY_CLOSE},
+      {label: "退款关闭", value: TransactionFlow.PART_REFUND}
     ]
   },
   {
