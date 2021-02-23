@@ -112,8 +112,11 @@ export const MERCHANT_DETAIL_STATIC = [
       {
         label: '昨日订单金额',
         key: 'yesterdayRealAmount',
+        labelCallback($params) {
+          return this.label + '（' + $params.yesterdayRealCount + '笔）'
+        },
         formatter: ($params) => {
-          return '(' + $params.yesterdayRealCount + '笔)' + '¥' + $params.yesterdayRealAmount
+          return '¥' + $params.yesterdayRealAmount
         },
         value: null
       }
@@ -135,8 +138,11 @@ export const MERCHANT_DETAIL_STATIC = [
       {
         label: '昨日退款金额',
         key: 'refundTotalAmount',
+        labelCallback($params) {
+          return this.label + '（' + $params.refundTotalCount + '笔）'
+        },
         formatter: ($params) => {
-          return '(' + $params.refundTotalCount + '笔)' + '¥' + $params.refundTotalAmount
+          return '¥' + $params.refundTotalAmount
         },
         value: null
       }

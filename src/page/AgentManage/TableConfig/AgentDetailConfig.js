@@ -93,8 +93,11 @@ export const AGENT_DETAIL_STATIC = [
       {
         label: '昨日订单金额',
         key: 'lastActualAmount',
+        labelCallback($params) {
+          return this.label + '（' + $params.lastTradeCount + '笔）'
+        },
         formatter($params) {
-          return '(' + $params.lastTradeCount + '笔)' + ' ¥' + $params.lastActualAmount
+          return '¥' + $params.lastActualAmount
         },
         value: null
       }
@@ -176,8 +179,11 @@ export const AGENT_DETAIL_STATIC = [
       {
         label: '昨日退款金额',
         key: 'lastRefundAmount',
+        labelCallback($params) {
+          return this.label + '（' + $params.lastRefundCount + '笔）'
+        },
         formatter($params) {
-          return '(' + $params.lastRefundCount + '笔)' + ' ¥' + $params.lastRefundAmount
+          return '¥' + $params.lastRefundAmount
         },
         value: null
       }
