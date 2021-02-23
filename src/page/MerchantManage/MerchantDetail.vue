@@ -43,7 +43,7 @@
       </el-row>
     </div>
     <yun-search
-        :form-base-data="searchConfig.formData"
+        :form-base-data="searchConfig"
         @search="onClickSearch"
     />
     <div class="m-basecrud">
@@ -81,8 +81,8 @@
         <yun-form
             v-if="drawer"
             ref="formInfo"
-            :form-base-data="fromConfigData"
-            :show-foot-btn="fromConfigData.showFootBtn === false"
+            :form-base-data="formConfigData"
+            :show-foot-btn="formConfigData.showFootBtn === false"
             label-width="130px"
         ></yun-form>
       </div>
@@ -92,7 +92,7 @@
 
 <script>
   import api from "@/api/api_merchantManage.js";
-  import { LIST_CONFIG } from "./TableConfig/MerchantListConfig"
+  import { MERCHANT_LIST_CONFIG } from "./TableConfig/MerchantListConfig"
   import { SEARCH_FORM_CONFIG } from "./FormConfig/MerchantDetailSearch"
   import { FORM_CONFIG } from "./FormConfig/MerchantDetailConfig"
   import { MERCHANT_DETAIL_CONFIG, MERCHANT_DETAIL_STATIC } from "./TableConfig/MerchantDetailConfig"
@@ -110,11 +110,11 @@
         api: api.shopByPage,
         drawer: false,
         openType: '',
-        fromConfigData: {},
+        formConfigData: {},
         id: this.$route.query.id,
         merchantNo: this.$route.query.merchantNo,
         searchConfig: SEARCH_FORM_CONFIG,
-        configData: LIST_CONFIG.configData,
+        configData: MERCHANT_LIST_CONFIG,
         gridConfig: MERCHANT_DETAIL_CONFIG.gridConfig,
         gridBtnConfig: MERCHANT_DETAIL_CONFIG.gridBtnConfig,
         infoList: []
@@ -145,27 +145,34 @@
         })
       },
       getMerchantStatic(merchantNo) {
-        api.merchantDetailStatic({
+        return api.merchantDetailStatic({
           merchantNo: merchantNo
         }).then(res => {
           if (res.status === 0) {
             //TODO review: 字段赋值通过回调formatter处理
-            this.infoList.forEach((item, index) => {
-              item.value = String(res.data[item.key]) || '0'
-              item.children.forEach((childrenItem, childrenIndex) => {
-                childrenItem.value = String(res.data[childrenItem.key])
-                if (childrenItem.key === 'yesterdayRealAmount') {
-                  childrenItem.value = '¥' + String(res.data[childrenItem.key])
+            const merchantData = res.data
+            for (let key in merchantData) {
+              if (this.$g.utils.isNumber(merchantData[key])) {
+                merchantData[key] = this.$g.utils.toLocaleString(merchantData[key])
+              }
+            }
+            const forBinaryTree = ($data) => {
+              $data.forEach(item => {
+                if(this.$g.utils.isFunction(item.labelCallback)) {
+                  item.label = item.labelCallback(merchantData)
                 }
-                if (childrenItem.key === 'refundTotalAmount') {
-                  childrenItem.value = '¥' + String(res.data[childrenItem.key])
+                if (this.$g.utils.isFunction(item.formatter)) {
+                  item.value = item.formatter(merchantData)
+                } else {
+                  item.value = merchantData[item.key]
+                }
+                if (this.$g.utils.isArr(item.children)) {
+                  forBinaryTree(item.children)
                 }
               })
-            })
-            this.infoList[0].label = `实收总额（${res.data.realTotalCount}笔）`
-            this.infoList[0].children[0].label = `昨日订单金额（${res.data.yesterdayRealCount}笔）`
-            this.infoList[1].label = `退款总额（${res.data.refundTotalCount}笔）`
-            this.infoList[1].children[0].label = `昨日退款金额（${res.data.refundTotalCount}笔）`
+            }
+            forBinaryTree(this.infoList)
+            return merchantData;
           }
         })
       },
@@ -173,11 +180,11 @@
         //TODO review: 没有意义的判断应去掉，增加了程序复杂度
         this.params = {
           merchantNo: this.merchantNo,
-          shopNo: $ruleForm.shopNo ? $ruleForm.shopNo : null,
-          shopName: $ruleForm.shopName ? $ruleForm.shopName : null,
+          shopNo: $ruleForm.shopNo,
+          shopName: $ruleForm.shopName,
           isDisabled: $ruleForm.isDisabled,
-          status: $ruleForm.status ? $ruleForm.status : null,
-          phone: $ruleForm.phone ? $ruleForm.phone : null
+          status: $ruleForm.status,
+          phone: $ruleForm.phone
         }
       },
 
@@ -187,7 +194,7 @@
         this.drawer = true
         this.drawerType = 'resetPassword'
         //TODO review: 深拷贝表单配置对象
-        this.fromConfigData = FORM_CONFIG.resetPassword.formData
+        this.formConfigData = this.$g.utils.deepClone(FORM_CONFIG.resetPassword)
       },
 
       // 修改商户状态
@@ -211,8 +218,8 @@
         this.openType = 'changeName'
         this.drawer = true
         //TODO review: 深拷贝表单配置对象
-        this.fromConfigData = FORM_CONFIG.shopInfo.formData
-        this.fromConfigData[0].initVal = this.ruleForm.merchantName
+        this.formConfigData = this.$g.utils.deepClone(FORM_CONFIG.shopInfo)
+        this.formConfigData[0].initVal = this.ruleForm.merchantName
       },
 
       onClickDetails(row) {
@@ -225,45 +232,37 @@
       },
       clickSubmit() {
         //TODO review: 表单验证通过clickFootBtn方法调用并返回表单json!
-        this.$refs['formInfo'].$children[0].validate((valid) => {
-          if (valid) {
-            const infoData = this.$refs['formInfo'].ruleForm
-            infoData.merchantNo = this.merchantNo
-            const type = this.openType
-            //TODO review: switch下不要写长逻辑
-            switch(type) {
-              case "resetPassword":
-                api.resetPassword({
-                  merchantNo: this.merchantNo,
-                  id: this.id
-                }).then(res => {
-                  if (res.status === 0) {
-                    this.$message({
-                      message: '重置成功',
-                      type: 'success'
-                    })
-                    this.drawer = false
-                  }
-                })
-                break;
-              case "changeName":
-                infoData.system = 'operation '
-                api.updateMerchantInfo(infoData).then(res => {
-                  if (res.status === 0) {
-                    this.$message({
-                      message: '修改成功',
-                      type: 'success'
-                    })
-                    this.drawer = false
-                    this.getMerchantDetail(this.merchantNo)
-                  }
-                })
-                break;
+        const formInfoData = this.$refs['formInfo'].clickFootBtn()
+        if (!formInfoData) {
+          return
+        }
+        if (this.openType === 'resetPassword') {
+          api.resetPassword({
+            merchantNo: this.merchantNo,
+            id: this.id
+          }).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                message: '重置成功',
+                type: 'success'
+              })
+              this.drawer = false
             }
-          } else {
-            return false;
-          }
-        });
+          })
+        } else if (this.openType === 'changeName') {
+          formInfoData.merchantNo = this.merchantNo
+          formInfoData.system = 'operation '
+          api.updateMerchantInfo(formInfoData).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                message: '修改成功',
+                type: 'success'
+              })
+              this.drawer = false
+              this.getMerchantDetail(this.merchantNo)
+            }
+          })
+        }
       }
     }
   }

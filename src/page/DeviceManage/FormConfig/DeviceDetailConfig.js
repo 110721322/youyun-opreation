@@ -18,11 +18,8 @@ export const DEVICE_FORM_CONFIG = {
     },
     {
       label: "设备状态",
-      key: "currentStatus",
+      key: "currentStatusCn"
       //TODO review: 若无用请删除
-      render: (params) => {
-
-      }
     },
     {
       label: "添加人",

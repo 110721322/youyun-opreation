@@ -18,7 +18,7 @@
       </el-row>
     </div>
     <yun-search
-        :form-base-data="searchConfig.formData"
+        :form-base-data="searchConfig"
         @search="onClickSearch"
     />
     <div class="m-table">
@@ -38,11 +38,6 @@
             :grid-edit-width="200"
             :is-async="true"
             :is-select="true"
-            :is-data-select="false"
-            :is-table-expand="false"
-            :row-key="'id'"
-            :default-expand-all="false"
-            :hide-edit-area="false"
             :params="params"
             :api-service="api"
             @details="onClickDetails"
@@ -110,16 +105,16 @@
       onClickSearch($ruleForm) {
         //TODO review: 通过||运算符替换
         this.params = {
-          agentNo: $ruleForm.agentNo ? $ruleForm.agentNo : null,
-          agentName: $ruleForm.agentName ? $ruleForm.agentName : null,
+          agentNo: $ruleForm.agentNo,
+          agentName: $ruleForm.agentName,
           beginDate: $ruleForm.date && $ruleForm.date[1] ? $ruleForm.date[0] : null,
           endDate: $ruleForm.date && $ruleForm.date[1] ? $ruleForm.date[1] : null,
-          blockStatus: $ruleForm.blockStatus ? $ruleForm.blockStatus : null,
+          blockStatus: $ruleForm.blockStatus,
           provinceCode: $ruleForm.area && $ruleForm.area[2] ? $ruleForm.area[0] : null,
           cityCode: $ruleForm.area && $ruleForm.area[2] ? $ruleForm.area[1] : null,
           areaCode: $ruleForm.area && $ruleForm.area[2] ? $ruleForm.area[2] : null,
-          loginAccount: $ruleForm.loginAccount ? $ruleForm.loginAccount : null,
-          operationId: $ruleForm.operationId ? $ruleForm.operationId : null
+          loginAccount: $ruleForm.loginAccount,
+          operationId: $ruleForm.operationId
           // TODO parentAgentNo: $ruleForm.parentAgentNo ? $ruleForm.parentAgentNo : null,
         }
       },
@@ -143,7 +138,7 @@
           return
         }
         this.drawer = true
-        this.fromConfigData = ADD_AGENT.operationData.formData
+        this.fromConfigData = this.$g.utils.deepClone(ADD_AGENT.operationData)
       },
 
       clickToAdd() {
@@ -170,32 +165,31 @@
 
       clickSubmit() {
         // TODO review: 表单校验提交通过调用实例clickFootBtn获取结果!
-        this.$refs['operationInfo'].$children[0].validate((valid) => {
-          if (valid) {
-            const select = []
-            const list = this.selectList
-            list.map((item) => {
-              select.push(item.agentNo)
+        const operationData = this.$refs['operationInfo'].clickFootBtn()
+        if (!operationData) {
+          this.$message('请选择服务商')
+          return
+        }
+        const select = []
+        const list = this.selectList
+        list.map((item) => {
+          select.push(item.agentNo)
+        })
+        const agentNos = select.join(',')
+        api.updateOperationId({
+          agentNos: agentNos,
+          operationId: operationData.operationId
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '修改成功',
+              type: 'success'
             })
-            const agentNos = select.join(',')
-            api.updateOperationId({
-              agentNos: agentNos,
-              operationId: this.$refs['operationInfo'].ruleForm.operationId
-            }).then(res => {
-              if (res.status === 0) {
-                this.$message({
-                  message: '修改成功',
-                  type: 'success'
-                })
-                this.$refs['table'].getData()
-                this.$refs['table'].$children[0].clearSelection()
-                this.drawer = false
-              }
-            })
-          } else {
-            return false;
+            this.$refs['table'].getData()
+            this.$refs['table'].$children[0].clearSelection()
+            this.drawer = false
           }
-        });
+        })
       }
     }
   }
