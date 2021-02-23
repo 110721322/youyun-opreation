@@ -211,8 +211,7 @@
                 return areasNetedList.find(area => item === area.value)
               })
               .map(item => item.label)
-            const areasStr = areas.join('')
-            this.ruleForm.areasStr = areasStr
+            this.ruleForm.areasStr = areas.join('')
           }
         })
       },
