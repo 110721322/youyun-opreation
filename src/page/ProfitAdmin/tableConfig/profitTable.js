@@ -142,10 +142,13 @@ export const INFO_LIST = [
     key: 'currMonthCommission',
     value: '0',
     children: [
-      //TODO review: 以字段名对value赋值，通过回调重组字符串
       {
         label: '上月佣金金额',
-        value: '¥0'
+        key: 'lastMonthCommission',
+        formatter($params) {
+          return '¥' + $params.lastMonthCommission
+        },
+        value: null
       }
     ]
   },

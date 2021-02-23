@@ -213,42 +213,6 @@
               .map(item => item.label)
             const areasStr = areas.join('')
             this.ruleForm.areasStr = areasStr
-            /*TODO review:
-               1.使用计算属性替换;
-               2.Map简化条件语句;
-               3.状态值替换常量。
-            */
-            switch(this.ruleForm.status) {
-              case 0:
-                this.ruleForm.statusTxt = '预审核中'
-                break;
-              case 1:
-                this.ruleForm.statusTxt = '平台驳回'
-                break;
-              case 2:
-                this.ruleForm.statusTxt = '通道审核中'
-                break;
-              case 3:
-                this.ruleForm.statusTxt = '通道驳回'
-                break;
-              case 4:
-                this.ruleForm.statusTxt = '通过'
-                break;
-              case 5:
-                this.ruleForm.statusTxt = '微信认证中'
-                break;
-              case 6:
-                this.ruleForm.statusTxt = '微信未认证'
-                break;
-              case 7:
-                this.ruleForm.statusTxt = '微信认证拒绝'
-                break;
-              case 8:
-                this.ruleForm.statusTxt = '已开通'
-                break;
-              default:
-                this.ruleForm.statusTxt = '--'
-            }
           }
         })
       },
@@ -260,23 +224,25 @@
         api.merchantShopInfo(params).then(res => {
           if (res.status === 0) {
             this.statisticsData = res.data
-            // TODO review: 通过回调函数处理字段值重组
-            this.infoList.forEach((item, index) => {
-              if (item.key === 'totalActualAmount') {
-                item.label = '实收金额（'+ (res.data.totalActualCount||0) +'笔）'
-                item.children[0].label = '昨日日订单金额(' + (res.data.yesterdayActualCount || 0) + '笔)'
-                item.children[0].value = '¥' + (res.data.yesterdayActualAmount || 0)
-              }
-              if (item.key === 'totalRefundAmount') {
-                item.label = '退款总额（'+ (res.data.totalRefundCount||0) +'笔）'
-                item.children[0].label = '昨日退款金额(' + (res.data.yesterdayRefundCount || 0) + '笔)'
-                item.children[0].value = '¥' + (res.data.yesterdayRefundAmount || 0)
-              }
-              if (item.key === 'totalDeviceCount') {
-                item.children[0].value = (res.data.yesterdayActiveDeviceCount || 0)
-              }
-              item.value = (res.data[item.key] || 0) + ''
-            })
+            for (let key in this.statisticsData) {
+              this.statisticsData[key] = this.$g.utils.toLocaleString(this.statisticsData[key])
+            }
+            const forBinaryTree = ($data) => {
+              $data.forEach(item => {
+                if (this.$g.utils.isFunction(item.formatter)) {
+                  item.value = item.formatter(this.statisticsData)
+                } else {
+                  item.value = this.statisticsData[item.key]
+                }
+                if (this.$g.utils.isFunction(item.setLabel)) {
+                  item.label = item.setLabel(this.statisticsData)
+                }
+                if (this.$g.utils.isArr(item.children)) {
+                  forBinaryTree(item.children)
+                }
+              })
+            }
+            forBinaryTree(this.infoList)
           }
         })
       },
@@ -328,8 +294,13 @@
         })
       },
       clickEdit() {
-        // TODO review: 路由跳转使用name方式
-        this.$router.push('/shopManage/shopList/shopDetail/editShop?id=' + this.ruleForm.id + '&shopNo=' + this.ruleForm.shopNo).catch(() => {})
+        this.$router.push({
+          name: 'editShop',
+          query: {
+            id: this.ruleForm.id,
+            shopNo: this.ruleForm.shopNo
+          }
+        })
       },
       handleClose() {
         this.dialogVisible = false

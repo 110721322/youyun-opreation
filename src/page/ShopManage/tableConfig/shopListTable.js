@@ -1,3 +1,4 @@
+import { ShopList } from "@/libs/config/constant.config";
 export const TABLE_CONFIG = {
   gridConfig: [
     {
@@ -49,10 +50,9 @@ export const TABLE_CONFIG = {
       label: '门店状态',
       prop: 'isDisabled',
       render: (h, params) => {
-        // TODO review: 状态值以常量替换
         const actions = new Map([
-          [0, {className: 's-status-success', statusDesc: '启用'}],
-          [1, {className: 's-status-fail', statusDesc: '禁用'}],
+          [ShopList.ENABLE, {className: 's-status-success', statusDesc: '启用'}],
+          [ShopList.DISABLE, {className: 's-status-fail', statusDesc: '禁用'}],
           ['default', {className: 's-status-pending', statusDesc: '--'}]
         ])
         const action = actions.get(params.row.isDisabled) || actions.get('default')
@@ -65,17 +65,16 @@ export const TABLE_CONFIG = {
       label: '审核状态',
       prop: 'status',
       render: (h, params) => {
-        // TODO review: 状态值以常量替换
         const actions = new Map([
-          [0, {className: 's-status-primary', statusDesc: '预审核中'}],
-          [1, {className: 's-status-fail', statusDesc: '平台驳回'}],
-          [2, {className: 's-status-primary', statusDesc: '通道审核中'}],
-          [3, {className: 's-status-fail', statusDesc: '通道驳回'}],
-          [4, {className: 's-status-success', statusDesc: '通道通过'}],
-          [5, {className: 's-status-pending', statusDesc: '微信审核中'}],
-          [6, {className: 's-status-pending', statusDesc: '微信未认证'}],
-          [7, {className: 's-status-fail', statusDesc: '微信认证拒绝'}],
-          [8, {className: 's-status-success', statusDesc: '已开通'}],
+          [ShopList.INQUIRY, {className: 's-status-primary', statusDesc: '预审核中'}],
+          [ShopList.REJECTED, {className: 's-status-fail', statusDesc: '平台驳回'}],
+          [ShopList.CHANNEL_REVIEW, {className: 's-status-primary', statusDesc: '通道审核中'}],
+          [ShopList.CHANNEL_REJECTED, {className: 's-status-fail', statusDesc: '通道驳回'}],
+          [ShopList.CHANNEL_PASS, {className: 's-status-success', statusDesc: '通道通过'}],
+          [ShopList.WECHAT_REVIEW, {className: 's-status-pending', statusDesc: '微信审核中'}],
+          [ShopList.WECHAT_IDENTIFY, {className: 's-status-pending', statusDesc: '微信未认证'}],
+          [ShopList.WECHAT_REJECTED, {className: 's-status-fail', statusDesc: '微信认证拒绝'}],
+          [ShopList.OPENED, {className: 's-status-success', statusDesc: '已开通'}],
           ['default', {className: 's-status-pending', statusDesc: '--'}]
         ])
         const action = actions.get(params.row.status) || actions.get('default')

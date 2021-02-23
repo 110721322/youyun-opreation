@@ -71,6 +71,9 @@ export const FORM_CONFIG = {
       rules: [
         { required: true, message: '请选择门店类目', trigger: 'change' }
       ],
+      formatter($params) {
+        return [$params.grandpaCode, $params.fatherCode, $params.mccCode]
+      },
       options: []
     },
     {
@@ -81,6 +84,9 @@ export const FORM_CONFIG = {
       rules: [
         { required: true, message: '请选择门店区域', trigger: 'change' }
       ],
+      formatter($params) {
+        return [$params.provinceCode, $params.cityCode, $params.areaCode]
+      },
       options: areaData
     },
     {
@@ -167,6 +173,9 @@ export const FORM_CONFIG = {
       rules: [
         { required: true, message: '请选择营业执照有效期', trigger: 'change' }
       ],
+      formatter($params) {
+        return [$params.shopLicenseBegDate, $params.shopLicenseEndDate]
+      },
       isShow: (params) => {
         if (params.shopType === 'personal') {
           return false
@@ -200,6 +209,9 @@ export const FORM_CONFIG = {
       labelWidth: "120px",
       key: 'idCardDate',
       checkedType: 'long', //长期有效选择
+      formatter($params) {
+        return [$params.idCardBeginDate, $params.idCardExpireDate]
+      },
       rules: [
         { required: true, message: '请选择法人身份证有效期', trigger: 'change' }
       ]

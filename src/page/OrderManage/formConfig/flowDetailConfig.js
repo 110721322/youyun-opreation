@@ -24,43 +24,42 @@ export const FORM_CONFIG = {
       label: "支付模式",
       key: "payTypeCN"
     },
-    // {
-    //   label: "交易类型",
-    //   key: "tradeType"
-    // },
     {
       label: "交易状态",
       key: "orderStatus",
       fieldType: 'render',
       render: (h, params) => {
-        /*TODO review:
-           1.判断超过3级，以switch或Map方式替换
-           2.状态值以常量替换
-        */
-        if (params.orderStatus === 0) {
-          return h(
-            'span', { 'class': 'f-fc-606266' }, '待支付'
-          )
-        } else if (params.orderStatus === 1) {
-          return h(
-            'span', { 'class': 'f-fc-606266' }, '支付中'
-          )
-        } else if (params.orderStatus === 2) {
-          return h(
-            'span', { 'class': 'f-fc-606266' }, '支付成功'
-          )
-        } else if (params.orderStatus === 3) {
-          return h(
-            'span', { 'class': 'f-fc-606266' }, '交易关闭'
-          )
-        } else if (params.orderStatus === 4) {
-          return h(
-            'span', { 'class': 'f-fc-606266' }, '部分退款'
-          )
-        } else if (params.orderStatus === 5) {
-          return h(
-            'span', { 'class': 'f-fc-606266' }, '全部退款'
-          )
+        switch (params.orderStatus) {
+          case 0 :
+            return h(
+              'span', { 'class': 'f-fc-606266' }, '待支付'
+            )
+            break;
+          case 1 :
+            return h(
+              'span', { 'class': 'f-fc-606266' }, '支付中'
+            )
+            break;
+          case 2 :
+            return h(
+              'span', { 'class': 'f-fc-606266' }, '支付成功'
+            )
+            break;
+          case 3 :
+            return h(
+              'span', { 'class': 'f-fc-606266' }, '交易关闭'
+            )
+            break;
+          case 4 :
+            return h(
+              'span', { 'class': 'f-fc-606266' }, '部分退款'
+            )
+            break;
+          case 5 :
+            return h(
+              'span', { 'class': 'f-fc-606266' }, '全部退款'
+            )
+            break;
         }
       }
     },
@@ -93,12 +92,7 @@ export const FORM_CONFIG = {
       key: "ourCommission"
     }
   ],
-  //TODO review: 无用的注释请删除
   moneyInfoData: [
-    // {
-    //   label: "所属服务商",
-    //   key: "agentName"
-    // },
     {
       label: "所属商户",
       key: "merchantName"
@@ -111,18 +105,6 @@ export const FORM_CONFIG = {
       label: "收银员",
       key: "cashierName"
     }
-    // {
-    //   label: "设备类型",
-    //   key: "deviceType"
-    // },
-    // {
-    //   label: "设备型号",
-    //   key: "deviceNo"
-    // },
-    // {
-    //   label: "设备SN",
-    //   key: "key"
-    // }
   ],
   payInfoData: [
     {

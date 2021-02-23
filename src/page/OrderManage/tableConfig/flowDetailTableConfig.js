@@ -1,3 +1,4 @@
+import { TransactionFlow } from "@/libs/config/constant.config";
 export const TABLE_CONFIG = {
   gridConfig: [
     {
@@ -12,16 +13,6 @@ export const TABLE_CONFIG = {
       label: '交易类型',
       prop: 'tradeType'
     },
-    //TODO review: 无用的代码请删除
-
-    // {
-    //   label: '设备类型',
-    //   prop: 'diviceType'
-    // },
-    // {
-    //   label: '设备SN',
-    //   prop: 'deviceSN'
-    // },
     {
       label: '实收金额',
       prop: 'tradeAmount'
@@ -30,15 +21,14 @@ export const TABLE_CONFIG = {
       label: '交易状态',
       prop: 'orderStatus',
       render: (h, params) => {
-        //TODO review: 状态值以常量替换,可以通过字符串拼接作为常量'支付_1','退款_1'消除if判断语句
         if (params.row.tradeType === '支付') {
           const actions = new Map([
-            [0, {className: 's-status-pending', statusDesc: '待支付'}],
-            [1, {className: 's-status-pending', statusDesc: '支付中'}],
-            [2, {className: 's-status-success', statusDesc: '支付成功'}],
-            [3, {className: 's-status-success', statusDesc: '交易关闭'}],
-            [4, {className: 's-status-pending', statusDesc: '部分退款'}],
-            [5, {className: 's-status-pending', statusDesc: '全部退款'}],
+            [TransactionFlow.UNPAY, {className: 's-status-pending', statusDesc: '待支付'}],
+            [TransactionFlow.PAYING, {className: 's-status-pending', statusDesc: '支付中'}],
+            [TransactionFlow.PAY_SUCCESS, {className: 's-status-success', statusDesc: '支付成功'}],
+            [TransactionFlow.PAY_CLOSE, {className: 's-status-success', statusDesc: '交易关闭'}],
+            [TransactionFlow.PART_REFUND, {className: 's-status-pending', statusDesc: '部分退款'}],
+            [TransactionFlow.ALL_REFUND, {className: 's-status-pending', statusDesc: '全部退款'}],
             ['default', {className: 's-status-pending', statusDesc: '等待'}],
           ])
           const action = actions.get(params.row.orderStatus) || actions.get('default')
@@ -47,11 +37,11 @@ export const TABLE_CONFIG = {
           )
         } else {
           const actions = new Map([
-            [0, {className: 's-status-pending', statusDesc: '待退款'}],
-            [1, {className: 's-status-pending', statusDesc: '退款中'}],
-            [2, {className: 's-status-success', statusDesc: '退款成功'}],
-            [3, {className: 's-status-fail', statusDesc: '退款失败'}],
-            [4, {className: 's-status-pending', statusDesc: '退款关闭'}],
+            [TransactionFlow.UNPAY, {className: 's-status-pending', statusDesc: '待退款'}],
+            [TransactionFlow.PAYING, {className: 's-status-pending', statusDesc: '退款中'}],
+            [TransactionFlow.PAY_SUCCESS, {className: 's-status-success', statusDesc: '退款成功'}],
+            [TransactionFlow.PAY_CLOSE, {className: 's-status-fail', statusDesc: '退款失败'}],
+            [TransactionFlow.PART_REFUND, {className: 's-status-pending', statusDesc: '退款关闭'}],
             ['default', {className: 's-status-pending', statusDesc: '等待'}],
           ])
           const action = actions.get(params.row.orderStatus) || actions.get('default')

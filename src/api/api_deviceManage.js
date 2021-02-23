@@ -28,5 +28,7 @@ export default {
   // 运营后台分页查看设备的操作日志
   queryOperlog: (params) => API.GET('/operation/v1/deviceinfo/operlog/page/query', params),
   // excel批量导入设备记录
-  excelTemplate: (params) => API.POST('/operation/v1/excelTemplate/upload', params)
+  excelTemplate: (params) => API.POST('/operation/v1/excelTemplate/upload', params),
+  // 设备模板下载
+  downloadExcel: (params) => API.GET('/operation/v1/excelTemplate/download?url=excel/device_template20210129.xlsx', params, { Access_token: localStorage.getItem('userToken'), responseType: 'blob' } )
 };

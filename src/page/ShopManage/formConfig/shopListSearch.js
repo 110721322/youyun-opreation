@@ -1,5 +1,6 @@
 import api from '@/api/api_agentManage'
 import api_merchantManage from '@/api/api_merchantManage'
+import { ShopList } from "@/libs/config/constant.config";
 export const SEARCH_CONFIG = {
   formData: [
   {
@@ -25,17 +26,16 @@ export const SEARCH_CONFIG = {
     key: 'status',
     type: 1,
     span: 12,
-    // TODO review: 状态值以常量替换
     options: [
-      {label: "预审核中", value: 0},
-      {label: "平台驳回", value: 1},
-      {label: "通道审核中", value: 2},
-      {label: "通道驳回", value: 3},
-      {label: "通道通过", value: 4},
-      {label: "微信审核中", value: 5},
-      {label: "微信未认证", value: 6},
-      {label: "微信认证拒绝", value: 7},
-      {label: "已开通", value: 8}
+      {label: "预审核中", value: ShopList.INQUIRY},
+      {label: "平台驳回", value: ShopList.REJECTED},
+      {label: "通道审核中", value: ShopList.CHANNEL_REVIEW},
+      {label: "通道驳回", value: ShopList.CHANNEL_REJECTED},
+      {label: "通道通过", value: ShopList.CHANNEL_PASS},
+      {label: "微信审核中", value: ShopList.WECHAT_REVIEW},
+      {label: "微信未认证", value: ShopList.WECHAT_IDENTIFY},
+      {label: "微信认证拒绝", value: ShopList.WECHAT_REJECTED},
+      {label: "已开通", value: ShopList.OPENED}
     ]
   },
   {
@@ -78,10 +78,9 @@ export const SEARCH_CONFIG = {
     key: 'isDisabled',
     type: 1,
     span: 12,
-    // TODO review: 状态值以常量替换
     options: [
-      {label: "禁用", value: 1},
-      {label: "启用", value: 0}
+      {label: "禁用", value: ShopList.DISABLE},
+      {label: "启用", value: ShopList.ENABLE}
     ]
   }],
   showFootBtn: true

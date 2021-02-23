@@ -28,13 +28,8 @@
             ref="table"
             :grid-config="tableConfig.gridConfig"
             :grid-btn-config="tableConfig.gridBtnConfig"
-            :form-config="tableConfig.formConfig"
-            :form-data="tableConfig.formModel"
             :grid-edit-width="250"
             :is-async="true"
-            :is-data-select="false"
-            :is-table-expand="false"
-            :row-key="'id'"
             :params="params"
             grid-operation-name="流水记录列表"
             :default-expand-all="false"
@@ -78,7 +73,15 @@
         }
         api.deviceDetail(params).then(res => {
           if (res.status === 0) {
-            this.ruleForm = res.data
+            const ruleForm = res.data
+            if (ruleForm.currentStatus === 1) {
+              ruleForm.currentStatusCn = '未划拨'
+            } else if (ruleForm.currentStatus === 2) {
+              ruleForm.currentStatusCn = '未绑定'
+            } else {
+              ruleForm.currentStatusCn = '已绑定'
+            }
+            this.ruleForm = ruleForm
           }
         })
       }

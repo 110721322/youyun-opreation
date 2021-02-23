@@ -71,7 +71,7 @@ export default {
       api.getListStatistic(params).then(res => {
         if (res.status === 0) {
           this.infoList.forEach((item,index) => {
-            item.value = res.data[item.key] || 0
+            item.value = this.$g.utils.toLocaleString(res.data[item.key])
           })
         }
       })
@@ -91,8 +91,12 @@ export default {
       }
     },
     onClickDetail(row) {
-      // TODO review: 路由跳转使用name方式
-      this.$router.push('/shopManage/shopList/shopDetail?shopNo=' + row.shopNo).catch(() => {})
+      this.$router.push({
+        name: 'shopDetail',
+        query: {
+          shopNo: row.shopNo
+        }
+      })
     }
   }
 };

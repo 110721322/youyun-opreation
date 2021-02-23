@@ -26,3 +26,31 @@ export const DataCenter = {
   WARN_RADIO: 'warn',
   ALL_YEAR: 1
 }
+
+export const TransactionFlow = {
+  UNPAY: 0,
+  PAYING: 1,
+  PAY_SUCCESS: 2,
+  PAY_CLOSE: 3,
+  PART_REFUND: 4,
+  ALL_REFUND: 5,
+  LESHUA: 'leshua',
+  MYBANK: 'mybank',
+  ALIPAY: 'alipay',
+  WECHAT: 'wechat',
+  NEWLAND: 'newland'
+}
+
+export const ShopList = {
+  DISABLE: 1,
+  ENABLE: 0,
+  INQUIRY: 0,
+  REJECTED: 1,
+  CHANNEL_REVIEW: 2,
+  CHANNEL_REJECTED: 3,
+  CHANNEL_PASS: 4,
+  WECHAT_REVIEW: 5,
+  WECHAT_IDENTIFY: 6,
+  WECHAT_REJECTED: 7,
+  OPENED: 8,
+}

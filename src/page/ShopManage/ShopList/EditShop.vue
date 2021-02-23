@@ -73,23 +73,23 @@
         api.queryAllCategory({}).then(res => {
           if (res.status === 0) {
             const newArr = []
-            this.dealCateList(res.data, newArr)
-            this.shopInfoFormData[3].options = newArr || []
+            this.shopInfoFormData[3].options = this.dealCateList(res.data, newArr) || []
           }
         })
       },
       dealCateList(arr, newArr) {
-        // TODO review: 使用map替换forEach
-        arr.forEach((item,index) => {
-          newArr[index] = {}
-          newArr[index].label = item.name;
-          newArr[index].value = item.code;
+        newArr = arr.map((item,index) => {
+          const newObj = {
+            label: item.name,
+            value: item.code,
+          }
           if(item.childrenData) {
             const arr=[];
-            this.dealCateList(item.childrenData,arr);
-            newArr[index].children=arr;
+            newObj.children=this.dealCateList(item.childrenData,arr);
           }
-        });
+          return newObj
+        })
+        return newArr
       },
       shopQueryDetail() {
         const params = {
@@ -98,28 +98,24 @@
         api.shopQueryDetail(params).then(res => {
           if(res.status === 0) {
             this.shopDetail = res.data
-            // TODO review: 通过回调函数解决表单回显逻辑
             this.shopInfoFormData.forEach((item,index) => {
-              item.initVal = this.shopDetail[item.key]
-              if (item.key === "areaData") {
-                item.initVal = [this.shopDetail.provinceCode, this.shopDetail.cityCode, this.shopDetail.areaCode]
+              if (this.$g.utils.isFunction(item.formatter)) {
+                item.initVal = item.formatter(this.shopDetail)
+              } else {
+                item.initVal = this.shopDetail[item.key]
               }
               if (item.key === "shopImg") {
                 item.children.forEach((imgItem, imgIndex) => {
                   imgItem.initVal = this.shopDetail[imgItem.key]
                 })
               }
-              if (item.key === "mccCodeData") {
-                item.initVal = [this.shopDetail.grandpaCode, this.shopDetail.fatherCode, this.shopDetail.mccCode]
-              }
             });
             this.verityInfoFormData.forEach((item,index) => {
               item.initVal = this.shopDetail[item.key]
-              if (item.key === "shopLicenseDate") {
-                item.initVal = [this.shopDetail.shopLicenseBegDate, this.shopDetail.shopLicenseEndDate]
-              }
-              if (item.key === "idCardDate") {
-                item.initVal = [this.shopDetail.idCardBeginDate, this.shopDetail.idCardExpireDate]
+              if (this.$g.utils.isFunction(item.formatter)) {
+                item.initVal = item.formatter(this.shopDetail)
+              } else {
+                item.initVal = this.shopDetail[item.key]
               }
               if (item.key === "authImg") {
                 item.children.forEach((imgItem, imgIndex) => {
@@ -146,11 +142,6 @@
         })
       },
       clickShopEditDetail() {
-        // TODO review: clickFootBtn校验通过则返回ruleForm否则为false!
-        const shopInfoForm = this.$g.utils.deepClone(this.$refs.shopInfoForm.ruleForm);
-        const verityInfoForm = this.$g.utils.deepClone(this.$refs.verityInfoForm.ruleForm);
-        const settleInfoForm = this.$g.utils.deepClone(this.$refs.settleInfoForm.ruleForm);
-        const rateInfoForm = this.$g.utils.deepClone(this.$refs.rateInfoForm.ruleForm);
         const checkShopForm = this.$refs.shopInfoForm.clickFootBtn();
         const checkVerityForm = this.$refs.verityInfoForm.clickFootBtn();
         const checkSettleForm = this.$refs.settleInfoForm.clickFootBtn();
@@ -171,6 +162,10 @@
           this.$message('请完善费率信息');
           return
         }
+        const shopInfoForm = this.$g.utils.deepClone(this.$refs.shopInfoForm.ruleForm);
+        const verityInfoForm = this.$g.utils.deepClone(this.$refs.verityInfoForm.ruleForm);
+        const settleInfoForm = this.$g.utils.deepClone(this.$refs.settleInfoForm.ruleForm);
+        const rateInfoForm = this.$g.utils.deepClone(this.$refs.rateInfoForm.ruleForm);
         const params = {
           id: this.$route.query.id,
           shopNo: this.shopDetail.shopNo,

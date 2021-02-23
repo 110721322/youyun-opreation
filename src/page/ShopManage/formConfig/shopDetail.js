@@ -1,4 +1,5 @@
 import utils from "youyun-vue-components/global/kit/utils";
+import { ShopList } from "@/libs/config/constant.config";
 export const FORM_CONFIG = {
   basicInfoData: [
     {
@@ -39,7 +40,61 @@ export const FORM_CONFIG = {
       label: "门店审核状态",
       key: "statusTxt",
       fieldType: 'slot',
-      slot: 'statusSlot'
+      slot: 'statusSlot',
+      fieldType: 'render',
+      render: (h, params) => {
+        switch (params.status) {
+          case ShopList.INQUIRY :
+            return h(
+              'span', { 'class': 'f-fc-606266' }, '预审核中'
+            )
+            break;
+          case ShopList.REJECTED :
+            return h(
+              'span', { 'class': 'f-fc-606266' }, '平台驳回'
+            )
+            break;
+          case ShopList.CHANNEL_REVIEW :
+            return h(
+              'span', { 'class': 'f-fc-606266' }, '通道审核中'
+            )
+            break;
+          case ShopList.CHANNEL_REJECTED :
+            return h(
+              'span', { 'class': 'f-fc-606266' }, '通道驳回'
+            )
+            break;
+          case ShopList.CHANNEL_PASS :
+            return h(
+              'span', { 'class': 'f-fc-606266' }, '通过'
+            )
+            break;
+          case ShopList.WECHAT_REVIEW :
+            return h(
+              'span', { 'class': 'f-fc-606266' }, '微信认证中'
+            )
+            break;
+          case ShopList.WECHAT_IDENTIFY :
+            return h(
+              'span', { 'class': 'f-fc-606266' }, '微信未认证'
+            )
+            break;
+          case ShopList.WECHAT_REJECTED :
+            return h(
+              'span', { 'class': 'f-fc-606266' }, '微信认证拒绝'
+            )
+            break;
+          case ShopList.OPENED:
+            return h(
+              'span', { 'class': 'f-fc-606266' }, '已开通'
+            )
+            break;
+          default:
+            return h(
+              'span', { 'class': 'f-fc-606266' }, '--'
+            )
+        }
+      }
     }
   ],
   payInfoData: [
@@ -114,20 +169,22 @@ export const FORM_CONFIG = {
       key: "shopType",
       fieldType: 'render',
       render: (h, params) => {
-        // TODO review: 判断语句简化，使用Map替换
-        if (params.shopType === 'personal') {
-          return h(
-            'span', { 'class': 'f-fc-606266' }, '个人'
-          )
-        } else if (params.shopType === 'enterprise') {
-          return h(
-            'span', { 'class': 'f-fc-606266' }, '企业'
-          )
-        }
-        if (params.shopType === 'individual') {
-          return h(
-            'span', { 'class': 'f-fc-606266' }, '个体工商'
-          )
+        switch (params.shopType) {
+          case 'personal':
+            return h(
+              'span', { 'class': 'f-fc-606266' }, '个人'
+            )
+            break;
+          case 'enterprise':
+            return h(
+              'span', { 'class': 'f-fc-606266' }, '企业'
+            )
+            break;
+          case 'individual':
+            return h(
+              'span', { 'class': 'f-fc-606266' }, '个体工商'
+            )
+            break;
         }
       }
     },
@@ -258,20 +315,22 @@ export const FORM_CONFIG = {
       key: "settleType",
       fieldType: 'render',
       render: (h, params) => {
-        // TODO review: 判断语句简化，使用Map替换
-        if (params.settleType === '0') {
-          return h(
-            'span', { 'class': 'f-fc-606266' }, '对公法人'
-          )
-        } else if (params.settleType === '1') {
-          return h(
-            'span', { 'class': 'f-fc-606266' }, '对私法人'
-          )
-        }
-        if (params.settleType === '2') {
-          return h(
-            'span', { 'class': 'f-fc-606266' }, '对私非法人'
-          )
+        switch (params.settleType) {
+          case '0':
+            return h(
+              'span', { 'class': 'f-fc-606266' }, '对公法人'
+            )
+            break;
+          case '1':
+            return h(
+              'span', { 'class': 'f-fc-606266' }, '对私法人'
+            )
+            break;
+          case '2':
+            return h(
+              'span', { 'class': 'f-fc-606266' }, '对私非法人'
+            )
+            break;
         }
       }
     },
@@ -398,15 +457,24 @@ export const INFO_LIST = [
   {
     span: 8,
     style: 'height: 134px;margin-bottom:0px;',
-    label: '实收金额（0笔）',
+    label: '',
     icon: '',
     iconStyle: '',
     tooltip: '',
     key: 'totalActualAmount',
     value: '0.00',
+    setLabel($params) {
+      return `实收金额(${ $params.totalActualCount }笔)`
+    },
     children: [{
       label: '昨日订单金额',
-      value: '¥0.00'
+      setLabel($params) {
+        return `昨日日订单金额(${$params.yesterdayActualCount}笔)`
+      },
+      formatter($params) {
+        return '¥' + $params.yesterdayActualAmount
+      },
+      value: ''
     }]
   },
   {
@@ -418,8 +486,17 @@ export const INFO_LIST = [
     tooltip: '',
     key: 'totalRefundAmount',
     value: '0.00',
+    setLabel($params) {
+      return `退款总额(${ $params.totalRefundCount }笔)`
+    },
     children: [{
       label: '昨日退款金额',
+      setLabel($params) {
+        return `昨日退款金额(${$params.yesterdayRefundCount}笔)`
+      },
+      formatter($params) {
+        return '¥' + $params.yesterdayRefundAmount
+      },
       value: '0.00'
     }]
   },
@@ -434,6 +511,9 @@ export const INFO_LIST = [
     value: '0',
     children: [{
       label: '今日活跃设备数',
+      formatter($params) {
+        return $params.yesterdayActiveDeviceCount
+      },
       value: '0'
     }]
   }

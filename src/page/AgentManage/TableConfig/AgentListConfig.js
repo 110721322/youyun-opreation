@@ -22,6 +22,10 @@ export const AGENT_LIST_CONFIG = {
       prop: 'merchantCount'
     },
     {
+      label: '服务商地址',
+      prop: 'fullAddress'
+    },
+    {
       label: '到期时间',
       prop: 'expireDate'
     },
