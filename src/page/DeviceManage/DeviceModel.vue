@@ -1,7 +1,7 @@
 <template>
   <div>
     <yun-search
-      :form-base-data="searchConfig.formData"
+      :form-base-data="searchConfig"
       @search="onClickSearch"
     />
     <div class="m-table">
@@ -42,8 +42,8 @@
         <yun-form
           v-if="drawer"
           ref="deviceModelInfo"
-          :form-base-data="fromConfigData"
-          :show-foot-btn="fromConfigData.showFootBtn === false"
+          :form-base-data="formConfigData"
+          :show-foot-btn="formConfigData.showFootBtn === false"
           label-width="130px"
         ></yun-form>
       </div>
@@ -67,30 +67,38 @@
         api: api.queryDeviceModelPage,
         gridConfig: DEVICE_MODEL_CONFIG.gridConfig,
         gridBtnConfig: DEVICE_MODEL_CONFIG.gridBtnConfig,
-        fromConfigData: ADD_DEVICE_MODEL.deviceData.formData,
+        formConfigData: {},
         drawer: false
       }
     },
     methods: {
       onClickSearch($ruleForm) {
         this.params = {
-          deviceType: $ruleForm.deviceType ? $ruleForm.deviceType : null,
-          deviceModel: $ruleForm.deviceModel ? $ruleForm.deviceModel : null,
-          createTime: $ruleForm.createTime ? $ruleForm.createTime : null
+          deviceType: $ruleForm.deviceType,
+          deviceModel: $ruleForm.deviceModel,
+          createTime: $ruleForm.createTime
         }
       },
       clickModel() {
         this.type = 'add'
         this.title = '新增型号'
         this.drawer = true
+        this.formConfigData = this.$g.utils.deepClone(ADD_DEVICE_MODEL.deviceData)
       },
       clickExport() {},
       onClickEdit($row) {
         this.id = $row.id
         this.type = 'edit'
         this.title = '编辑型号'
-        this.fromConfigData[0].initVal = $row.deviceType
-        this.fromConfigData[1].initVal = $row.deviceModel
+        this.formConfigData = this.$g.utils.deepClone(ADD_DEVICE_MODEL.deviceData)
+        this.formConfigData.map((item) => {
+          item.initVal = $row[item.key]
+          if (item.children) {
+            item.children.map((childrenItem) => {
+              childrenItem.initVal = $row[item.key]
+            })
+          }
+        })
         this.drawer = true
       },
       clickSubmit() {
@@ -100,40 +108,36 @@
           return
         }
         //TODO review: clickFootBtn方法返回ruleForm
-        const deviceData = this.$refs['deviceModelInfo'].ruleForm
         const params = {
-          deviceType: deviceData.deviceType,
-          deviceModel: deviceData.deviceModel,
-          deviceImg: deviceData.deviceImg
+          deviceType: checkDerviceForm.deviceType,
+          deviceModel: checkDerviceForm.deviceModel,
+          deviceImg: checkDerviceForm.deviceImg
+        }
+        if (this.type === 'add') {
+          api.addDeviceModel(params).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                message: '添加成功',
+                type: 'success'
+              })
+              this.drawer = false
+              this.$refs.table.getData()
+            }
+          })
+        } else if (this.type === 'edit') {
+          params.id = this.id
+          api.updateDeviceModel(params).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                message: '编辑成功',
+                type: 'success'
+              })
+              this.drawer = false
+              this.$refs.table.getData()
+            }
+          })
         }
         //TODO review: switch下不要编写业务逻辑，通过调用函数替换
-        switch(this.type) {
-          case "add":
-            api.addDeviceModel(params).then(res => {
-              if (res.status === 0) {
-                this.$message({
-                  message: '添加成功',
-                  type: 'success'
-                })
-                this.drawer = false
-                this.$refs.table.getData()
-              }
-            })
-            break;
-          case "edit":
-            params.id = this.id
-            api.updateDeviceModel(params).then(res => {
-              if (res.status === 0) {
-                this.$message({
-                  message: '编辑成功',
-                  type: 'success'
-                })
-                this.drawer = false
-                this.$refs.table.getData()
-              }
-            })
-            break;
-        }
       }
     }
   }

@@ -10,7 +10,7 @@
         <div class="m-box">
           <yun-form
             ref="deviceInfo"
-            :form-base-data="formConfigData.deviceData.formData"
+            :form-base-data="formConfigData.deviceData"
             :show-foot-btn="formConfigData.showFootBtn"
             label-width="130px"
           ></yun-form>
@@ -71,7 +71,7 @@ export default {
       this.excleConfigData = this.$g.utils.deepClone(IMPORT_DEVICE)
     },
     handleDeviceType($ruleForm) {
-      this.formConfigData.deviceData.formData[1].urlOptions.params = {
+      this.formConfigData.deviceData[1].urlOptions.params = {
         deviceType: $ruleForm.deviceType
       }
     },
@@ -80,24 +80,14 @@ export default {
     },
     // TODO review: 接口调用方式写入api文件中，$g.utils.downloadBlob为下载文件流方法,重构!
     clickDown() {
-      axios({
-        method: "GET", // 如果是get方法，则写“GET”
-        url: '/operation/v1/excelTemplate/download?url=excel/device_template20210129.xlsx',
-        responseType: "blob",
-        Access_token: localStorage.getItem('userToken')
-      }).then(res => {
-        var blob = new Blob([res.data], {
-          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8" // 这里需要根据不同的文件格式写不同的参数
-        });
-        var eLink = document.createElement("a");
-        eLink.download = "设备模板下载"; // 这里需要自己给下载的文件命名
-        eLink.style.display = "none";
-        eLink.href = URL.createObjectURL(blob);
-        document.body.appendChild(eLink);
-        eLink.click();
-        URL.revokeObjectURL(eLink.href);
-        document.body.removeChild(eLink);
-      }).catch(() => {});
+      api.downloadExcel().then(res => {
+        const $data = res.data
+        const $config = {
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+        }
+        const $fileName = '设备模板下载'
+        this.$g.utils.downloadBlob($data, $config, $fileName)
+      })
     },
 
     // 设备模板的导入功能
@@ -124,22 +114,18 @@ export default {
         return
       }
       //TODO review: clickFootBtn方法返回ruleForm
-      const deviceData = this.$refs['deviceInfo'].ruleForm
       //TODO review: 无意义的赋值
-      const params = {
-        ...deviceData
-      }
-      api.addDevice(params).then(res => {
+      api.addDevice(checkDerviceForm).then(res => {
         if (res.status === 0) {
           this.$message({
             message: '添加设备成功',
             type: 'success'
           })
+          this.$router.replace({
+            name: 'DeviceList'
+          })
         }
         //TODO review: 成功失败都跳转？
-        this.$router.replace({
-          name: 'DeviceList'
-        })
       })
     }
   }

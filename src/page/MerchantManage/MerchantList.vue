@@ -18,7 +18,7 @@
       </el-row>
     </div>
     <yun-search
-        :form-base-data="searchConfig.formData"
+        :form-base-data="searchConfig"
         @search="onClickSearch"
     />
     <div class="m-basecrud">
@@ -84,11 +84,11 @@
       },
       onClickSearch($ruleForm) {
         this.params = {
-          merchantNo: $ruleForm.merchantNo ? $ruleForm.merchantNo : null,
-          merchantName: $ruleForm.merchantName ? $ruleForm.merchantName : null,
-          agentNo: $ruleForm.agentNo ? $ruleForm.agentNo : null,
+          merchantNo: $ruleForm.merchantNo,
+          merchantName: $ruleForm.merchantName,
+          agentNo: $ruleForm.agentNo,
           //TODO review: 三元表达式判断复杂度大于1
-          isDisabled: $ruleForm.isDisabled === 1 ? 1 : $ruleForm.isDisabled === 0 ? 0 : null
+          isDisabled: $ruleForm.isDisabled
         }
       },
       onClickDetails(row) {

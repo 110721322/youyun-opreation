@@ -7,8 +7,8 @@
           <div class="m-service-title">服务商信息</div>
           <yun-form
               ref="serviceInfo"
-              :form-base-data="fromConfigData.serviceData.formData"
-              :show-foot-btn="fromConfigData.showFootBtn"
+              :form-base-data="formConfigData.serviceData"
+              :show-foot-btn="formConfigData.showFootBtn"
               label-width="130px"
           ></yun-form>
         </div>
@@ -16,18 +16,18 @@
           <div class="m-service-title">费率信息</div>
           <yun-form
               ref="rateInfo"
-              :form-base-data="fromConfigData.rateData.formData"
-              :show-foot-btn="fromConfigData.showFootBtn"
+              :form-base-data="formConfigData.rateData"
+              :show-foot-btn="formConfigData.showFootBtn"
               label-width="130px"
           ></yun-form>
         </div>
         <!--TODO review: 类名不规范-->
-        <div class="m-box m-nobord">
+        <div class="m-box nobord">
           <div class="m-service-title">结算账号</div>
           <yun-form
               ref="settleInfo"
-              :form-base-data="fromConfigData.settleData.formData"
-              :show-foot-btn="fromConfigData.showFootBtn"
+              :form-base-data="formConfigData.settleData"
+              :show-foot-btn="formConfigData.showFootBtn"
               label-width="130px"
           ></yun-form>
         </div>
@@ -42,15 +42,13 @@
 
 <script>
   import api from "@/api/api_agentManage.js";
-  // TODO review: utils已挂载至Vue.prototype请通过this.$g.utils访问
-  import utils from "youyun-vue-components/global/kit/utils.js"
   import { ADD_AGENT } from "./FormConfig/AddAgent";
 
   export default {
     name: "AddAgent",
     data() {
       return {
-        fromConfigData: ADD_AGENT,
+        formConfigData: ADD_AGENT,
         serviceInfo: {
           agentName: '',
           phone: '',
@@ -77,12 +75,8 @@
           this.$message('请完善结算信息');
           return
         }
-        // TODO review: refs.clickFootBtn()表单验证通过会返回ruleForm，无需重复获取，请修改
-        const serviceData = this.$refs['serviceInfo'].ruleForm
-        const rateData = this.$refs['rateInfo'].ruleForm
-        const settleData = this.$refs['settleInfo'].ruleForm
         let infoData = {}
-        Object.assign(infoData, serviceData, rateData, settleData)
+        Object.assign(infoData, checkServiceForm, checkRateForm, checkSettleForm)
         const params = {
           account: infoData.account,
           address: infoData.address,
@@ -90,9 +84,9 @@
           areaCode: infoData.area[2],
           cityCode: infoData.area[1],
           provinceCode: infoData.area[0],
-          alipayRate: utils.AccDiv(infoData.alipayRate, 100),
-          wechatPayRate : utils.AccDiv(infoData.wechatPayRate, 100),
-          chargeFeePercent: utils.AccDiv(infoData.chargeFeePercent, 100),
+          alipayRate: this.$g.utils.AccDiv(infoData.alipayRate, 100),
+          wechatPayRate : this.$g.utils.AccDiv(infoData.wechatPayRate, 100),
+          chargeFeePercent: this.$g.utils.AccDiv(infoData.chargeFeePercent, 100),
           bankBranchName: infoData.bankBranchName,
           bankCardNo: infoData.bankCardNo,
           bankAccountHolder: infoData.bankAccountHolder,
@@ -112,8 +106,9 @@
       },
 
       clickCancel() {
-        // TODO review: back不接收参数返回上一页，指定返回某一页用go()
-        this.$router.back(-1)
+        this.$router.replace({
+          name: 'AgentList'
+        })
       }
     }
   }
@@ -145,7 +140,7 @@
             font-weight: 500;
           }
         }
-        .m-box.m-nobord {
+        .m-box.nobord {
           border-bottom: 0;
         }
       }

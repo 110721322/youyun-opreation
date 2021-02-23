@@ -2,10 +2,7 @@ export const DEVICE_MODEL_CONFIG = {
   gridConfig: [
     {
       label: '序号',
-      prop: 'deviceNo',
-      formatter($row, $index) {
-        return $index + 1;
-      }
+      prop: 'rank'
     },
     {
       label: '设备类型',

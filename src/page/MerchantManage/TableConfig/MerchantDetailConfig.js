@@ -99,34 +99,46 @@ export const MERCHANT_DETAIL_STATIC = [
   {
     span: 6,
     style: 'height: 170px;',
-    label: '实收总额（0笔）',
+    label: '实收总额',
     icon: '',
     iconStyle: 'color: #50C514;',
     tooltip: '',
     key: 'realTotalAmount',
-    value: '0',
+    labelCallback($params) {
+      return this.label + '（' + $params.realTotalCount + '笔）'
+    },
+    value: null,
     children: [
       {
-        label: '昨日订单金额（0笔）',
+        label: '昨日订单金额',
         key: 'yesterdayRealAmount',
-        value: ''
+        formatter: ($params) => {
+          return '(' + $params.yesterdayRealCount + '笔)' + '¥' + $params.yesterdayRealAmount
+        },
+        value: null
       }
     ]
   },
   {
     span: 6,
     style: 'height: 170px;',
-    label: '退款总额（0笔）',
+    label: '退款总额',
     icon: '',
     iconStyle: 'color: #1989FA;',
     tooltip: '',
     key: 'refundTotalAmount',
-    value: '0',
+    labelCallback($params) {
+      return this.label + '（' + $params.refundTotalCount + '笔）'
+    },
+    value: null,
     children: [
       {
-        label: '昨日退款金额（0笔）',
+        label: '昨日退款金额',
         key: 'refundTotalAmount',
-        value: ''
+        formatter: ($params) => {
+          return '(' + $params.refundTotalCount + '笔)' + '¥' + $params.refundTotalAmount
+        },
+        value: null
       }
     ]
   },
@@ -138,18 +150,18 @@ export const MERCHANT_DETAIL_STATIC = [
     iconStyle: 'color: #FA6577;',
     tooltip: '',
     key: 'shopCount',
-    value: '0',
+    value: null,
     children: [
       {
         label: '昨日活跃门店（个）',
         key: 'yesterdayActiveShopCount',
-        value: '',
+        value: null,
         span: 12
       },
       {
         label: '审核中门店数（个）',
         key: 'auditShopCount',
-        value: '0',
+        value: null,
         span: 12
       }
     ]
@@ -162,18 +174,18 @@ export const MERCHANT_DETAIL_STATIC = [
     iconStyle: 'color: #FA6577;',
     tooltip: '',
     key: 'deviceNum',
-    value: '0',
+    value: null,
     children: [
       {
         label: '昨日活跃设备（台）',
         key: 'yesterdayActiveDeviceNum',
-        value: '0',
+        value: null,
         span: 12
       },
       {
         label: '待绑定设备（台）',
         key: 'unBindDeviceNum',
-        value: '0',
+        value: null,
         span: 12
       }
     ]
