@@ -1,3 +1,5 @@
+import { AgentList } from "@/libs/config/constant.config";
+
 export const SETTLE_RECORD_CONFIG = {
   gridConfig: [
     {
@@ -50,19 +52,16 @@ export const SETTLE_RECORD_CONFIG = {
       prop: 'status',
       render: (h, params) => {
         // TODO review: 状态值常量替换,语句简化
-        if (params.row.status === 0) {
-          return [h('span', {
-            'class': "dot " + "reject"
-          }), '失败']
-        } else if (params.row.status === 1) {
-          return [h('span', {
-            'class': "dot " + "opened"
-          }), '结算中']
-        } else if (params.row.status === 2) {
-          return [h('span', {
-            'class': "dot " + "success"
-          }), '成功']
-        }
+        const actions = new Map([
+          [AgentList.SETTLE_RECORD_FAIL, {className: 's-status-fail', statusDesc: '失败'}],
+          [AgentList.SETTLE_RECORD_STEELE, {className: 's-status-pending', statusDesc: '结算中'}],
+          [AgentList.SETTLE_RECORD_SUCCESS, {className: 's-status-success', statusDesc: '成功'}],
+          ['default', {className: 's-status-pending', statusDesc: '等待'}],
+        ])
+        const action = actions.get(params.row.status) || actions.get('default')
+        return (
+          <span class={['flex-align-center', 'g-status-icon', 's-status-radius', action.className]}>{ action.statusDesc }</span>
+      )
       }
     },
     {

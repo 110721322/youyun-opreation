@@ -54,3 +54,31 @@ export const ShopList = {
   WECHAT_REJECTED: 7,
   OPENED: 8,
 }
+
+export const AgentList = {
+  ENABLE: 1, // 启用
+  DISABLED: 2, // 禁用
+  BAN: 3, // 封禁
+  FROZEN: 4, // 冻结
+  UNCALL: 1, // 未划拨
+  UNBIND: 2, // 未绑定
+  BIND: 3, // 已绑定
+  MERCHANT_AUDIT: 0, // 门店预审核
+  PLATEFORM_REJECT: 1, // 平台驳回
+  CHANNEL_AUDIT: 2, // 通道审核中
+  CHANNEL_REJECT: 3, // 通道驳回
+  CHANNEL_PASS: 4, // 通道通过
+  WECHAT_AUDIT: 5, // 微信审核中
+  WECHAT_UNAUTH: 6, // 微信未认证
+  WECHAT_REJECT: 7, // 微信认证拒绝
+  WECHAT_PASS: 8, // 微信认证成功
+  MERCHANT_OPEN: 0, // 门店启用
+  MERCHANT_DISABLED: 1, // 门店禁用
+  SETTLED: '1', // 已结算
+  SETTLE: '2', // 结算中
+  UNSETTLE: '3', // 未结算
+  SETTLE_REJECT: '4', // 结算驳回
+  SETTLE_RECORD_FAIL: 0, // 结算记录结算失败
+  SETTLE_RECORD_STEELE: 1, // 结算记录结算中
+  SETTLE_RECORD_SUCCESS: 2, // 结算成功
+}

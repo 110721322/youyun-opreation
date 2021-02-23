@@ -1,3 +1,4 @@
+import { AgentList } from "@/libs/config/constant.config";
 export const AGENT_LIST_CONFIG = {
   gridConfig: [
     {
@@ -38,10 +39,10 @@ export const AGENT_LIST_CONFIG = {
       prop: 'blockStatus',
       render: (h, params) => {
         const actions = new Map([
-          [1, {className: 's-status-success', statusDesc: '启用'}],
-          [2, {className: 's-status-fail', statusDesc: '禁用'}],
-          [3, {className: 's-status-fail', statusDesc: '封禁'}],
-          [4, {className: 's-status-fail', statusDesc: '冻结'}],
+          [AgentList.ENABLE, {className: 's-status-success', statusDesc: '启用'}],
+          [AgentList.DISABLED, {className: 's-status-fail', statusDesc: '禁用'}],
+          [AgentList.BAN, {className: 's-status-fail', statusDesc: '封禁'}],
+          [AgentList.FROZEN, {className: 's-status-fail', statusDesc: '冻结'}],
           ['default', {className: 's-status-pending', statusDesc: '等待'}],
         ])
         const action = actions.get(params.row.blockStatus) || actions.get('default')
