@@ -1,3 +1,4 @@
+import { AgentList } from "@/libs/config/constant.config";
 export const DEVICE_LIST_CONFIG = {
   gridConfig: [
     {
@@ -36,9 +37,9 @@ export const DEVICE_LIST_CONFIG = {
       render: (h, params) => {
         //TODO review: 状态值应以常量进行管理，常量以模块为命名空间在constant.config.js文件中声明
         const actions = new Map([
-          [1, {className: 's-status-fail', statusDesc: '未划拨'}],
-          [2, {className: 's-status-pending', statusDesc: '未绑定'}],
-          [3, {className: 's-status-success', statusDesc: '已绑定'}],
+          [AgentList.UNCALL, {className: 's-status-fail', statusDesc: '未划拨'}],
+          [AgentList.UNBIND, {className: 's-status-pending', statusDesc: '未绑定'}],
+          [AgentList.BIND, {className: 's-status-success', statusDesc: '已绑定'}],
           ['default', {className: 's-status-pending', statusDesc: '等待'}],
         ])
         const action = actions.get(params.row.currentStatus) || actions.get('default')
@@ -70,7 +71,7 @@ export const DEVICE_LIST_CONFIG = {
         type: 'text',
         isShow: (params) => {
           //TODO review: 状态值应以常量进行管理，常量以模块为命名空间在constant.config.js文件中声明
-          return params.currentStatus === 3
+          return params.currentStatus === AgentList.BIND
         }
       },
       {
@@ -79,7 +80,7 @@ export const DEVICE_LIST_CONFIG = {
         type: 'text',
         isShow: (params) => {
           //TODO review: 状态值应以常量进行管理，常量以模块为命名空间在constant.config.js文件中声明
-          return (params.currentStatus === 2 || params.currentStatus === 3)
+          return (params.currentStatus === AgentList.UNBIND || params.currentStatus === AgentList.BIND)
         }
       },
       {

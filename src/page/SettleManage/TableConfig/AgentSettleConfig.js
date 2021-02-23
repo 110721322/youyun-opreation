@@ -1,3 +1,4 @@
+import { AgentList } from "@/libs/config/constant.config";
 export const AGENT_SETTLE_CONFIG = {
   gridConfig: [
     {
@@ -27,10 +28,10 @@ export const AGENT_SETTLE_CONFIG = {
       render: (h, params) => {
         // TODO review: 状态值常量替换
         const actions = new Map([
-          ['1', {className: 's-status-success', statusDesc: '已结算'}],
-          ['2', {className: 's-status-pending', statusDesc: '结算中'}],
-          ['3', {className: 's-status-primary', statusDesc: '未结算'}],
-          ['4', {className: 's-status-fail', statusDesc: '驳回'}],
+          [AgentList.SETTLED, {className: 's-status-success', statusDesc: '已结算'}],
+          [AgentList.SETTLE, {className: 's-status-pending', statusDesc: '结算中'}],
+          [AgentList.UNSETTLE, {className: 's-status-primary', statusDesc: '未结算'}],
+          [AgentList.SETTLE_REJECT, {className: 's-status-fail', statusDesc: '驳回'}],
           ['default', {className: 's-status-pending', statusDesc: '等待'}],
         ])
         const action = actions.get(params.row.settleStatus) || actions.get('default')

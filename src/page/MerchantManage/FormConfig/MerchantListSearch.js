@@ -1,4 +1,5 @@
 import api from '@/api/api_agentManage'
+import { AgentList } from "@/libs/config/constant.config";
 export const SEARCH_FORM_CONFIG = [
   {
     type: 0,
@@ -41,11 +42,11 @@ export const SEARCH_FORM_CONFIG = [
     options: [
       {
         label: '启用',
-        value: 0
+        value: AgentList.MERCHANT_OPEN
       },
       {
         label: '禁用',
-        value: 1
+        value: AgentList.MERCHANT_DISABLED
       }
     ],
     span: 12

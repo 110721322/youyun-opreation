@@ -54,10 +54,10 @@
   export default {
     data() {
       return {
-        shopInfoFormData: FORM_CONFIG.shopInfoConfigData,
-        verityInfoFormData: FORM_CONFIG.verityInfoConfigData,
-        settleInfoFormData: FORM_CONFIG.settleInfoConfigData,
-        rateInfoFormData: FORM_CONFIG.rateInfoConfigData,
+        shopInfoFormData: this.$g.utils.deepClone(FORM_CONFIG.shopInfoConfigData),
+        verityInfoFormData: this.$g.utils.deepClone(FORM_CONFIG.verityInfoConfigData),
+        settleInfoFormData: this.$g.utils.deepClone(FORM_CONFIG.settleInfoConfigData),
+        rateInfoFormData: this.$g.utils.deepClone(FORM_CONFIG.rateInfoConfigData),
         shopDetail: {},
         getInfoShow: false
       }
@@ -111,7 +111,6 @@
               }
             });
             this.verityInfoFormData.forEach((item,index) => {
-              item.initVal = this.shopDetail[item.key]
               if (this.$g.utils.isFunction(item.formatter)) {
                 item.initVal = item.formatter(this.shopDetail)
               } else {
@@ -186,7 +185,7 @@
         api.shopEditDetail(params).then(res => {
           if (res.status === 0) {
             this.$router.back();
-            this.$message.success('编辑成功')
+            this.$message({type:"success", message:'编辑成功'})
           }
         })
       },

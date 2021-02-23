@@ -211,44 +211,7 @@
                 return areasNetedList.find(area => item === area.value)
               })
               .map(item => item.label)
-            const areasStr = areas.join('')
-            this.ruleForm.areasStr = areasStr
-            /*TODO review:
-               1.使用计算属性替换;
-               2.Map简化条件语句;
-               3.状态值替换常量。
-            */
-            switch(this.ruleForm.status) {
-              case 0:
-                this.ruleForm.statusTxt = '预审核中'
-                break;
-              case 1:
-                this.ruleForm.statusTxt = '平台驳回'
-                break;
-              case 2:
-                this.ruleForm.statusTxt = '通道审核中'
-                break;
-              case 3:
-                this.ruleForm.statusTxt = '通道驳回'
-                break;
-              case 4:
-                this.ruleForm.statusTxt = '通过'
-                break;
-              case 5:
-                this.ruleForm.statusTxt = '微信认证中'
-                break;
-              case 6:
-                this.ruleForm.statusTxt = '微信未认证'
-                break;
-              case 7:
-                this.ruleForm.statusTxt = '微信认证拒绝'
-                break;
-              case 8:
-                this.ruleForm.statusTxt = '已开通'
-                break;
-              default:
-                this.ruleForm.statusTxt = '--'
-            }
+            this.ruleForm.areasStr = areas.join('')
           }
         })
       },
