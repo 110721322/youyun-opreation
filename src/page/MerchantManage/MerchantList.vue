@@ -87,7 +87,6 @@
           merchantNo: $ruleForm.merchantNo,
           merchantName: $ruleForm.merchantName,
           agentNo: $ruleForm.agentNo,
-          //TODO review: 三元表达式判断复杂度大于1
           isDisabled: $ruleForm.isDisabled
         }
       },

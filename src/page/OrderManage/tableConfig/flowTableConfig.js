@@ -202,7 +202,7 @@ export const INFO_LIST = [
     iconStyle: 'color: #50C514;',
     tooltip: '',
     key: 'actualAmount',
-    setLabel($params) {
+    labelFormatter($params) {
       return `实收总额(${ $params.actualCount }笔)`
     },
     value: null,
@@ -215,7 +215,7 @@ export const INFO_LIST = [
     icon: 'iconjine',
     iconStyle: 'color: #F62735;',
     tooltip: '',
-    setLabel($params) {
+    labelFormatter($params) {
       return `退款总额(${ $params.refundCount }笔)`
     },
     key: 'refundAmount',

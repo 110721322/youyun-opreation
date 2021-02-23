@@ -75,7 +75,6 @@ export default {
   },
   methods: {
     onClickSearch($ruleForm) {
-      // TODO review: 无意义的判断
       this.params = {
         deviceNo: $ruleForm.deviceNo,
         deviceType: $ruleForm.deviceType,
@@ -104,7 +103,6 @@ export default {
         this.$message('请选择服务商');
         return
       }
-      //TODO review: clickFootBtn方法返回ruleForm
       api.flowService({
         toOperator: checkDeviceForm.toOperator,
         deviceNos: this.deviceNos
@@ -173,12 +171,7 @@ export default {
       })
     },
     selectionChange($row) {
-      //TODO review: 尽量少使用forEach通过map,filter替换
-      const deviceNos = []
-      $row.map((item) => {
-        deviceNos.push(item.deviceNo)
-      })
-      this.deviceNos = deviceNos
+      this.deviceNos = $row.map(item => item.deviceNo)
     }
   }
 }

@@ -64,7 +64,6 @@
         drawer: false,
         infoList: [],
         searchConfig: SEARCH_FORM_CONFIG,
-        // TODO review: 未引用该表单配置，无用请删除
         gridConfig: AGENT_SETTLE_CONFIG.gridConfig,
         gridBtnConfig: AGENT_SETTLE_CONFIG.gridBtnConfig
       }

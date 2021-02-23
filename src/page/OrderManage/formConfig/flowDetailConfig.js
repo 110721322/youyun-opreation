@@ -30,38 +30,19 @@ export const FORM_CONFIG = {
       key: "orderStatus",
       fieldType: 'render',
       render: (h, params) => {
-        switch (params.orderStatus) {
-          case TransactionFlow.UNPAY :
-            return h(
-              'span', { 'class': 'f-fc-606266' }, '待支付'
-            )
-            break;
-          case TransactionFlow.PAYING :
-            return h(
-              'span', { 'class': 'f-fc-606266' }, '支付中'
-            )
-            break;
-          case TransactionFlow.PAY_SUCCESS :
-            return h(
-              'span', { 'class': 'f-fc-606266' }, '支付成功'
-            )
-            break;
-          case TransactionFlow.PAY_CLOSE :
-            return h(
-              'span', { 'class': 'f-fc-606266' }, '交易关闭'
-            )
-            break;
-          case TransactionFlow.PART_REFUND :
-            return h(
-              'span', { 'class': 'f-fc-606266' }, '部分退款'
-            )
-            break;
-          case TransactionFlow.ALL_REFUND :
-            return h(
-              'span', { 'class': 'f-fc-606266' }, '全部退款'
-            )
-            break;
-        }
+        const actions = new Map([
+          [TransactionFlow.UNPAY, '待支付'],
+          [TransactionFlow.PAYING, '支付中'],
+          [TransactionFlow.PAY_SUCCESS, '支付成功'],
+          [TransactionFlow.PAY_CLOSE, '交易关闭'],
+          [TransactionFlow.PART_REFUND, '部分退款'],
+          [TransactionFlow.ALL_REFUND, '全部退款'],
+          ['default', '--'],
+        ])
+        const statusTxt = actions.get(params.orderStatus) || actions.get('default')
+        return h(
+          'span', { 'class': 'f-fc-606266' }, statusTxt
+        )
       }
     },
     {

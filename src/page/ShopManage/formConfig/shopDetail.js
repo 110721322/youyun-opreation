@@ -41,6 +41,7 @@ export const FORM_CONFIG = {
       key: "statusTxt",
       fieldType: 'render',
       render: (h, params) => {
+        // TODO review: Map结构简化条件语句
         switch (params.status) {
           case ShopList.INQUIRY :
             return h(
@@ -167,6 +168,7 @@ export const FORM_CONFIG = {
       key: "shopType",
       fieldType: 'render',
       render: (h, params) => {
+        // TODO review: 判断语句简化，使用Map替换,常量替换状态值
         switch (params.shopType) {
           case 'personal':
             return h(
@@ -190,7 +192,7 @@ export const FORM_CONFIG = {
       label: "营业执照编号",
       key: "shopLicenseNo",
       isShow: (params) => {
-        return params.shopType === 'personal' ? false : true
+        return params.shopType !== 'personal'
       }
     },
     {
@@ -209,7 +211,7 @@ export const FORM_CONFIG = {
         }
       },
       isShow: (params) => {
-        return params.shopType === 'personal' ? false : true
+        return params.shopType !== 'personal'
       }
     },
     {
@@ -241,7 +243,7 @@ export const FORM_CONFIG = {
       key: "key",
       span: 24,
       isShow: (params) => {
-        return params.shopType === 'personal' ? false : true
+        return params.shopType !== 'personal'
       },
       children: [
         {
@@ -313,6 +315,7 @@ export const FORM_CONFIG = {
       key: "settleType",
       fieldType: 'render',
       render: (h, params) => {
+        // TODO review: 判断语句简化，使用Map替换,常量替换状态值
         switch (params.settleType) {
           case '0':
             return h(
@@ -461,12 +464,12 @@ export const INFO_LIST = [
     tooltip: '',
     key: 'totalActualAmount',
     value: '0.00',
-    setLabel($params) {
+    labelFormatter($params) {
       return `实收金额(${ $params.totalActualCount }笔)`
     },
     children: [{
       label: '昨日订单金额',
-      setLabel($params) {
+      labelFormatter($params) {
         return `昨日日订单金额(${$params.yesterdayActualCount}笔)`
       },
       formatter($params) {
@@ -484,12 +487,12 @@ export const INFO_LIST = [
     tooltip: '',
     key: 'totalRefundAmount',
     value: '0.00',
-    setLabel($params) {
+    labelFormatter($params) {
       return `退款总额(${ $params.totalRefundCount }笔)`
     },
     children: [{
       label: '昨日退款金额',
-      setLabel($params) {
+      labelFormatter($params) {
         return `昨日退款金额(${$params.yesterdayRefundCount}笔)`
       },
       formatter($params) {

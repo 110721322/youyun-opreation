@@ -71,22 +71,7 @@
             for (let key in this.statisticsData) {
               this.statisticsData[key] = this.$g.utils.toLocaleString(this.statisticsData[key])
             }
-            const forBinaryTree = ($data) => {
-              $data.forEach(item => {
-                if (this.$g.utils.isFunction(item.formatter)) {
-                  item.value = item.formatter(this.statisticsData)
-                } else {
-                  item.value = this.statisticsData[item.key]
-                }
-                if (this.$g.utils.isFunction(item.setLabel)) {
-                  item.label = item.setLabel(this.statisticsData)
-                }
-                if (this.$g.utils.isArr(item.children)) {
-                  forBinaryTree(item.children)
-                }
-              })
-            }
-            forBinaryTree(this.infoList)
+            this.infoList = this.$g.utils.eachDetailTree(this.infoList, this.statisticsData)
           }
         })
       }

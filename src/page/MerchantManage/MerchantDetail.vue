@@ -149,35 +149,18 @@
           merchantNo: merchantNo
         }).then(res => {
           if (res.status === 0) {
-            //TODO review: 字段赋值通过回调formatter处理
             const merchantData = res.data
             for (let key in merchantData) {
               if (this.$g.utils.isNumber(merchantData[key])) {
                 merchantData[key] = this.$g.utils.toLocaleString(merchantData[key])
               }
             }
-            const forBinaryTree = ($data) => {
-              $data.forEach(item => {
-                if(this.$g.utils.isFunction(item.labelCallback)) {
-                  item.label = item.labelCallback(merchantData)
-                }
-                if (this.$g.utils.isFunction(item.formatter)) {
-                  item.value = item.formatter(merchantData)
-                } else {
-                  item.value = merchantData[item.key]
-                }
-                if (this.$g.utils.isArr(item.children)) {
-                  forBinaryTree(item.children)
-                }
-              })
-            }
-            forBinaryTree(this.infoList)
+            this.infoList = this.$g.utils.eachDetailTree(this.infoList, merchantData)
             return merchantData;
           }
         })
       },
       onClickSearch($ruleForm) {
-        //TODO review: 没有意义的判断应去掉，增加了程序复杂度
         this.params = {
           merchantNo: this.merchantNo,
           shopNo: $ruleForm.shopNo,
@@ -193,7 +176,6 @@
         this.title = '重置登录密码'
         this.drawer = true
         this.drawerType = 'resetPassword'
-        //TODO review: 深拷贝表单配置对象
         this.formConfigData = this.$g.utils.deepClone(FORM_CONFIG.resetPassword)
       },
 
@@ -217,7 +199,6 @@
         this.title = '修改信息'
         this.openType = 'changeName'
         this.drawer = true
-        //TODO review: 深拷贝表单配置对象
         this.formConfigData = this.$g.utils.deepClone(FORM_CONFIG.shopInfo)
         this.formConfigData[0].initVal = this.ruleForm.merchantName
       },
@@ -231,38 +212,39 @@
         })
       },
       clickSubmit() {
-        //TODO review: 表单验证通过clickFootBtn方法调用并返回表单json!
         const formInfoData = this.$refs['formInfo'].clickFootBtn()
         if (!formInfoData) {
           return
         }
-        if (this.openType === 'resetPassword') {
-          api.resetPassword({
-            merchantNo: this.merchantNo,
-            id: this.id
-          }).then(res => {
-            if (res.status === 0) {
-              this.$message({
-                message: '重置成功',
-                type: 'success'
-              })
-              this.drawer = false
-            }
-          })
-        } else if (this.openType === 'changeName') {
-          formInfoData.merchantNo = this.merchantNo
-          formInfoData.system = 'operation '
-          api.updateMerchantInfo(formInfoData).then(res => {
-            if (res.status === 0) {
-              this.$message({
-                message: '修改成功',
-                type: 'success'
-              })
-              this.drawer = false
-              this.getMerchantDetail(this.merchantNo)
-            }
-          })
-        }
+        this[this.openType](formInfoData)
+      },
+      resetPassword() {
+        api.resetPassword({
+          merchantNo: this.merchantNo,
+          id: this.id
+        }).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '重置成功',
+              type: 'success'
+            })
+            this.drawer = false
+          }
+        })
+      },
+      changeName($ruleForm) {
+        $ruleForm.merchantNo = this.merchantNo
+        $ruleForm.system = 'operation '
+        api.updateMerchantInfo($ruleForm).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '修改成功',
+              type: 'success'
+            })
+            this.drawer = false
+            this.getMerchantDetail(this.merchantNo)
+          }
+        })
       }
     }
   }

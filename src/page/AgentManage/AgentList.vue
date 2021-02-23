@@ -30,7 +30,6 @@
         </div>
       </div>
       <div class="m-basecrud">
-        <!--TODO review: 请勿书写无用属性或与默认值相同的属性-->
         <yun-table
             ref="table"
             :grid-config="gridConfig"
@@ -103,7 +102,6 @@
         })
       },
       onClickSearch($ruleForm) {
-        //TODO review: 通过||运算符替换
         this.params = {
           agentNo: $ruleForm.agentNo,
           agentName: $ruleForm.agentName,
@@ -128,7 +126,6 @@
         })
       },
 
-      //TODO review: 深拷贝清空表单
       clickChangeOperation() {
         if (this.selectList.length === 0) {
           this.$message({
@@ -164,18 +161,14 @@
       },
 
       clickSubmit() {
-        // TODO review: 表单校验提交通过调用实例clickFootBtn获取结果!
         const operationData = this.$refs['operationInfo'].clickFootBtn()
         if (!operationData) {
           this.$message('请选择服务商')
           return
         }
-        const select = []
-        const list = this.selectList
-        list.map((item) => {
-          select.push(item.agentNo)
-        })
-        const agentNos = select.join(',')
+        const agentNos = this.selectList
+          .map(item => item.agentNo)
+          .join(',')
         api.updateOperationId({
           agentNos: agentNos,
           operationId: operationData.operationId

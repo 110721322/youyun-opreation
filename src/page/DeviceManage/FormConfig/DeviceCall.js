@@ -1,6 +1,5 @@
 import agentApi from '@/api/api_agentManage'
 export const DEVICE_CALL = {
-  //TODO review: 无意义的命名空间
   deviceData: [
     {
       type: 1,

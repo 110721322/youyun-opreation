@@ -33,6 +33,11 @@
             </template>
             <template slot="statusSlot">
               <div class="flex-align-center">
+                <!--TODO review:
+                1.使用计算属性替换;
+                2.Map简化条件语句;
+                3.状态值替换常量。
+                -->
                 <span>{{ ruleForm.statusTxt }}</span>
                 <span v-if="ruleForm.status === 6" class="statusActTxt" @click="qrCodeDialoger=true">微信未认证</span>
               </div>
@@ -226,22 +231,7 @@
             for (let key in this.statisticsData) {
               this.statisticsData[key] = this.$g.utils.toLocaleString(this.statisticsData[key])
             }
-            const forBinaryTree = ($data) => {
-              $data.forEach(item => {
-                if (this.$g.utils.isFunction(item.formatter)) {
-                  item.value = item.formatter(this.statisticsData)
-                } else {
-                  item.value = this.statisticsData[item.key]
-                }
-                if (this.$g.utils.isFunction(item.setLabel)) {
-                  item.label = item.setLabel(this.statisticsData)
-                }
-                if (this.$g.utils.isArr(item.children)) {
-                  forBinaryTree(item.children)
-                }
-              })
-            }
-            forBinaryTree(this.infoList)
+            this.infoList = this.$g.utils.eachDetailTree(this.infoList, this.statisticsData)
           }
         })
       },
@@ -288,6 +278,7 @@
         }
         api.shopUpdate(params).then(res => {
           if (res.status === 0) {
+            // TODO review: 改用obj传参的方式,链式调用存在Bug
             this.$message.success('门店状态已改变！')
           }
         })

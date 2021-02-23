@@ -157,11 +157,7 @@ export const FORM_CONFIG = {
         { required: true, message: '请输入营业执照编号', trigger: 'blur' }
       ],
       isShow: (params) => {
-        if (params.shopType === 'personal') {
-          return false
-        } else {
-          return true
-        }
+        return params.shopType !== 'personal'
       }
     },
     {
@@ -177,11 +173,7 @@ export const FORM_CONFIG = {
         return [$params.shopLicenseBegDate, $params.shopLicenseEndDate]
       },
       isShow: (params) => {
-        if (params.shopType === 'personal') {
-          return false
-        } else {
-          return true
-        }
+        return params.shopType !== 'personal'
       }
     },
     {
@@ -303,7 +295,7 @@ export const FORM_CONFIG = {
         }
       ],
       isShow: (params) => {
-        return params.shopType === 'personal' ? false : true
+        return params.shopType !== 'personal'
       },
     },
     {
@@ -375,7 +367,7 @@ export const FORM_CONFIG = {
         }
       ],
       isShow: (params) => {
-        return params.shopType === 'personal' ? true : false
+        return params.shopType === 'personal'
       }
     }
   ],

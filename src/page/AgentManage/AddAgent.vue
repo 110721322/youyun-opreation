@@ -21,8 +21,7 @@
               label-width="130px"
           ></yun-form>
         </div>
-        <!--TODO review: 类名不规范-->
-        <div class="m-box nobord">
+        <div class="m-box m-no-bord">
           <div class="m-service-title">结算账号</div>
           <yun-form
               ref="settleInfo"
@@ -106,9 +105,7 @@
       },
 
       clickCancel() {
-        this.$router.replace({
-          name: 'AgentList'
-        })
+        this.$router.go(-1)
       }
     }
   }
@@ -140,7 +137,7 @@
             font-weight: 500;
           }
         }
-        .m-box.nobord {
+        .m-box.m-no-bord {
           border-bottom: 0;
         }
       }

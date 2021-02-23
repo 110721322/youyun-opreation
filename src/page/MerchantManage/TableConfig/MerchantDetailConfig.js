@@ -105,7 +105,7 @@ export const MERCHANT_DETAIL_STATIC = [
     iconStyle: 'color: #50C514;',
     tooltip: '',
     key: 'realTotalAmount',
-    labelCallback($params) {
+    labelFormatter($params) {
       return this.label + '（' + $params.realTotalCount + '笔）'
     },
     value: null,
@@ -128,7 +128,7 @@ export const MERCHANT_DETAIL_STATIC = [
     iconStyle: 'color: #1989FA;',
     tooltip: '',
     key: 'refundTotalAmount',
-    labelCallback($params) {
+    labelFormatter($params) {
       return this.label + '（' + $params.refundTotalCount + '笔）'
     },
     value: null,

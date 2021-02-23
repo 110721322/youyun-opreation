@@ -1,4 +1,3 @@
-//TODO review:无意义的命名空间
 export const MERCHANT_LIST_CONFIG = [
   {
     label: "所属服务商",
