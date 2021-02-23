@@ -173,9 +173,9 @@
         agentNo: this.$route.query.agentNo,
         api: api.queryByPage,
         ruleForm: {},
-        shopInfoData: DETAILCONFIG.shopInfoData,
-        rateInfoData: DETAILCONFIG.rateInfoData,
-        bankInfoData: DETAILCONFIG.bankInfoData,
+        shopInfoData: this.$g.utils.deepClone(DETAILCONFIG.shopInfoData),
+        rateInfoData: this.$g.utils.deepClone(DETAILCONFIG.rateInfoData),
+        bankInfoData: this.$g.utils.deepClone(DETAILCONFIG.bankInfoData),
         gridConfig: AGENT_TALK_DATA.gridConfig,
         agentConfig: AGENT_TRANSFER,
         formConfigData: null,
@@ -231,34 +231,34 @@
 
       // 服务商数据统计
       getCount(agentNo) {
-        api.queryAgentData({
+        return api.queryAgentData({
           agentNo: agentNo
         }).then(res => {
           if (res.status === 0) {
             //TODO review: 以回调方式formatter重组字符串
-            this.infoList.forEach((item, index) => {
-              item.value = String(res.data[item.key])
-              if (item.key === 'actualAmount') {
-                item.label = `实收总额（${res.data.tradeCount}笔）`
-              } else if (item.key === 'refundAmount') {
-                item.label = `退款总额（${res.data.refundCount}笔）`
+            const agentData = res.data
+            for (let key in agentData) {
+              if (this.$g.utils.isNumber(agentData[key])) {
+                agentData[key] = this.$g.utils.toLocaleString(agentData[key])
               }
-              //TODO review: 二叉树通过递归解析
-              item.children.forEach((childrenItem, indexItem) => {
-                childrenItem.value = String(res.data[item.key])
-                if (childrenItem.key === 'lastActualAmount') {
-                  childrenItem.label = `昨日订单金额（${res.data.lastTradeCount}笔）`
-                  childrenItem.value = '¥' + res.data[childrenItem.key]
-                } else if (childrenItem.key === 'lastTopAgentCommission') {
-                  childrenItem.value = '¥' + res.data[childrenItem.key]
-                } else if (childrenItem.key === 'lastAgentCommission') {
-                  childrenItem.value = '¥' + res.data[childrenItem.key]
-                } else if (childrenItem.key === 'lastRefundAmount') {
-                  childrenItem.label = `昨日退款金额（${res.data.lastRefundCount}笔）`
-                  childrenItem.value = '¥' + res.data[childrenItem.key]
+            }
+            const forBinaryTree = ($data) => {
+              $data.forEach(item => {
+                if(this.$g.utils.isFunction(item.labelCallback)) {
+                  item.label = item.labelCallback(agentData)
+                }
+                if (this.$g.utils.isFunction(item.formatter)) {
+                  item.value = item.formatter(agentData)
+                } else {
+                  item.value = agentData[item.key]
+                }
+                if (this.$g.utils.isArr(item.children)) {
+                  forBinaryTree(item.children)
                 }
               })
-            })
+            }
+            forBinaryTree(this.infoList)
+            return agentData;
           }
         })
       },

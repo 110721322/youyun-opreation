@@ -18,7 +18,7 @@
       </el-row>
     </div>
     <yun-search
-        :form-base-data="searchConfig.formData"
+        :form-base-data="searchConfig"
         @search="onClickSearch"
     />
     <div class="m-basecrud">
@@ -82,15 +82,12 @@
       onClickSearch($ruleForm) {
         // TODO review: 无意义的判断语句请简化
         this.params = {
-          settleNo: $ruleForm.settleNo ? $ruleForm.settleNo : null,
-          settleMerchantName: $ruleForm.settleMerchantName ? $ruleForm.settleMerchantName : null,
-          name: $ruleForm.name ? $ruleForm.name : null,
-          bankName: $ruleForm.bankName ? $ruleForm.bankName : null,
-          bankNo: $ruleForm.bankNo ? $ruleForm.bankNo : null,
-          createTime: $ruleForm.createTime ? $ruleForm.createTime : null,
-          receiveTime: $ruleForm.receiveTime ? $ruleForm.receiveTime : null,
-          agent: $ruleForm.agent ? $ruleForm.agent : null,
-          merchant: $ruleForm.merchant ? $ruleForm.merchant : null
+          settleNo: $ruleForm.settleNo,
+          shopName: $ruleForm.shopName,
+          agentNo: $ruleForm.agentNo,
+          merchantNo: $ruleForm.merchantNo,
+          shopNo: $ruleForm.shopNo,
+          beginDate: $ruleForm.beginDate,
         }
         this.getCunt(this.params)
       },

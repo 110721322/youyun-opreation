@@ -80,17 +80,23 @@ export const AGENT_DETAIL_STATIC = [
   {
     span: 6,
     style: 'height: 134px;',
-    label: '实收总额（0笔）',
+    label: '实收总额',
     icon: '',
     iconStyle: 'color: #50C514;',
     tooltip: '',
     key: 'actualAmount',
-    value: '0',
+    labelCallback($params) {
+      return this.label + '（' + $params.tradeCount + '笔）'
+    },
+    value: null,
     children: [
       {
-        label: '昨日订单金额（0笔）',
+        label: '昨日订单金额',
         key: 'lastActualAmount',
-        value: '¥0'
+        formatter($params) {
+          return '(' + $params.lastTradeCount + '笔)' + ' ¥' + $params.lastActualAmount
+        },
+        value: null
       }
     ]
   },
@@ -102,11 +108,14 @@ export const AGENT_DETAIL_STATIC = [
     iconStyle: 'color: #50C514;',
     tooltip: '',
     key: 'topAgentCommission',
-    value: '0',
+    value: null,
     children: [
       {
         label: '昨日平台佣金',
         key: 'lastTopAgentCommission',
+        formatter($params) {
+          return '¥' + $params.lastTopAgentCommission
+        },
         value: '¥0'
       }
     ]
@@ -119,12 +128,15 @@ export const AGENT_DETAIL_STATIC = [
     iconStyle: 'color: #50C514;',
     tooltip: '',
     key: 'agentCommission',
-    value: '0',
+    value: null,
     children: [
       {
         label: '昨日订单佣金',
         key: 'lastAgentCommission',
-        value: '¥0'
+        formatter($params) {
+          return '¥' + $params.lastAgentCommission
+        },
+        value: null
       }
     ]
   },
@@ -136,29 +148,38 @@ export const AGENT_DETAIL_STATIC = [
     iconStyle: 'color: #50C514;',
     tooltip: '',
     key: 'unSettleAmount',
-    value: '0',
+    value: null,
     children: [
       {
         label: '已结算佣金',
         key: 'settledAmount',
-        value: '¥0'
+        formatter($params) {
+          return '¥' + $params.settledAmount
+        },
+        value: null
       }
     ]
   },
   {
     span: 6,
     style: 'height: 160px;',
-    label: '退款总额（0笔）',
+    label: '退款总额',
     icon: '',
     iconStyle: 'color: #1989FA;',
     tooltip: '',
     key: 'refundAmount',
-    value: '0',
+    labelCallback($params) {
+      return this.label + '（' + $params.refundCount + '笔）'
+    },
+    value: null,
     children: [
       {
-        label: '昨日退款金额（0笔）',
+        label: '昨日退款金额',
         key: 'lastRefundAmount',
-        value: '¥0'
+        formatter($params) {
+          return '(' + $params.lastRefundCount + '笔)' + ' ¥' + $params.lastRefundAmount
+        },
+        value: null
       }
     ]
   },
@@ -170,12 +191,12 @@ export const AGENT_DETAIL_STATIC = [
     iconStyle: 'color: #FA6577;',
     tooltip: '',
     key: 'merchantCount',
-    value: '0',
+    value: null,
     children: [
       {
         label: '昨日新增商户（个）',
         key: 'lastNewMerchantCount',
-        value: '0',
+        value: null,
         span: 24
       }
       // TODO {
@@ -193,12 +214,12 @@ export const AGENT_DETAIL_STATIC = [
     iconStyle: 'color: #FA6577;',
     tooltip: '',
     key: 'shopCount',
-    value: '0',
+    value: null,
     children: [
       {
         label: '昨日新增门店（个）',
         key: 'lastNewShopCount',
-        value: '0',
+        value: null,
         span: 24
       },
       // TODO {
@@ -209,7 +230,7 @@ export const AGENT_DETAIL_STATIC = [
       {
         label: '待审核门店（个）',
         key: 'auditingShopCount',
-        value: '0',
+        value: null,
         span: 24
       }
     ]
@@ -222,7 +243,7 @@ export const AGENT_DETAIL_STATIC = [
     iconStyle: 'color: #FA6577;',
     tooltip: '',
     key: 'deviceCount',
-    value: '0',
+    value: null,
     children: [
       // TODO {
       //   label: '昨日新增设备（台）',
@@ -236,7 +257,7 @@ export const AGENT_DETAIL_STATIC = [
       // },
       {
         label: '待绑定设备数（台）',
-        value: '0',
+        value: null,
         key: 'unBindDeviceCount',
         span: 24
       }

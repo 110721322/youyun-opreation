@@ -18,7 +18,7 @@
       </el-row>
     </div>
     <yun-search
-        :form-base-data="searchConfig.formData"
+        :form-base-data="searchConfig"
         @search="onClickSearch"
     />
     <div class="m-table">

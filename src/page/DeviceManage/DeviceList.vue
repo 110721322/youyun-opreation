@@ -68,7 +68,7 @@ export default {
       api: api.queryDeviceList,
       gridConfig: DEVICE_LIST_CONFIG.gridConfig,
       drawer: false,
-      fromConfigData: DEVICE_CALL.deviceData.formData,
+      fromConfigData: this.$g.utils.deepClone(DEVICE_CALL.deviceData),
       gridBtnConfig: DEVICE_LIST_CONFIG.gridBtnConfig,
       deviceNos: []
     }

@@ -1,17 +1,17 @@
 export const SETTLE_RECORD_CONFIG = {
   gridConfig: [
     {
-      label: '结算单号',
-      prop: 'settleNo',
+      label: '结算ID',
+      prop: 'id',
       render: (h, params) => {
         return h(
-          'span', {'class': 'tab-color' }, params.row.settleNo
+          'span', {'class': 'tab-color' }, params.row.id
         )
       }
     },
     {
-      label: '创建时间',
-      prop: 'createTime',
+      label: '交易时间',
+      prop: 'tradeDate',
     },
     {
       label: '所属服务商',
@@ -22,31 +22,31 @@ export const SETTLE_RECORD_CONFIG = {
       prop: 'merchantName'
     },
     {
+      label: '门店ID',
+      prop: 'shopNo'
+    },
+    {
       label: '结算门店',
       prop: 'shopName'
     },
     {
       label: '结算通道',
-      prop: 'settleChannel'
+      prop: 'channelCode'
+    },
+    {
+      label: '实收金额(元)',
+      prop: 'totalActualAmount'
+    },
+    {
+      label: '手续费(元)',
+      prop: 'totalServiceFee'
     },
     {
       label: '结算金额(元)',
-      prop: 'settleAmount'
+      prop: 'totalSettleAmount'
     },
     {
-      label: '开户人姓名',
-      prop: 'name'
-    },
-    {
-      label: '开户银行',
-      prop: 'bankName'
-    },
-    {
-      label: '银行卡号',
-      prop: 'bankNo'
-    },
-    {
-      label: '支付状态',
+      label: '结算状态',
       prop: 'status',
       render: (h, params) => {
         // TODO review: 状态值常量替换,语句简化
@@ -66,7 +66,7 @@ export const SETTLE_RECORD_CONFIG = {
       }
     },
     {
-      label: '处理时间',
+      label: '结算时间',
       prop: 'settleDate'
     },
     {
