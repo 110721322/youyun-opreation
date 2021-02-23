@@ -1,3 +1,4 @@
+import { TransactionFlow } from "@/libs/config/constant.config";
 export const FORM_CONFIG = {
   orderInfoData: [
     {
@@ -30,32 +31,32 @@ export const FORM_CONFIG = {
       fieldType: 'render',
       render: (h, params) => {
         switch (params.orderStatus) {
-          case 0 :
+          case TransactionFlow.UNPAY :
             return h(
               'span', { 'class': 'f-fc-606266' }, '待支付'
             )
             break;
-          case 1 :
+          case TransactionFlow.PAYING :
             return h(
               'span', { 'class': 'f-fc-606266' }, '支付中'
             )
             break;
-          case 2 :
+          case TransactionFlow.PAY_SUCCESS :
             return h(
               'span', { 'class': 'f-fc-606266' }, '支付成功'
             )
             break;
-          case 3 :
+          case TransactionFlow.PAY_CLOSE :
             return h(
               'span', { 'class': 'f-fc-606266' }, '交易关闭'
             )
             break;
-          case 4 :
+          case TransactionFlow.PART_REFUND :
             return h(
               'span', { 'class': 'f-fc-606266' }, '部分退款'
             )
             break;
-          case 5 :
+          case TransactionFlow.ALL_REFUND :
             return h(
               'span', { 'class': 'f-fc-606266' }, '全部退款'
             )
