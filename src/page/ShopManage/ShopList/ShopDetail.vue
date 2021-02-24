@@ -33,7 +33,7 @@
             </template>
             <template slot="statusSlot">
               <div class="flex-align-center">
-                <span>{{ ruleForm.statusTxt }}</span>
+                <span>{{ statusTxt }}</span>
                 <span v-if="ruleForm.status === 6" class="statusActTxt" @click="qrCodeDialoger=true">微信未认证</span>
               </div>
             </template>
@@ -167,6 +167,7 @@
   import { FORM_CONFIG, INFO_LIST } from "../formConfig/shopDetail";
   import areaData from "youyun-vue-components/assets/data/areaData.ws"
   import api from "@/api/api_shop";
+  import { ShopList } from "@/libs/config/constant.config";
   export default {
     data() {
       return {
@@ -192,6 +193,23 @@
     created() {
       this.infoList = this.$g.utils.deepClone(INFO_LIST)
       this.shopQueryDetail()
+    },
+    computed: {
+      statusTxt() {
+        const actions = new Map([
+          [ShopList.INQUIRY, '预审核中'],
+          [ShopList.REJECTED, '平台驳回'],
+          [ShopList.CHANNEL_REVIEW, '通道审核中'],
+          [ShopList.CHANNEL_REJECTED, '通道驳回'],
+          [ShopList.CHANNEL_PASS, '通过'],
+          [ShopList.WECHAT_REVIEW, '微信认证中'],
+          [ShopList.WECHAT_IDENTIFY, '微信未认证'],
+          [ShopList.WECHAT_REJECTED, '微信认证拒绝'],
+          [ShopList.OPENED, '已开通'],
+          ['default', '--']
+        ])
+        return actions.get(this.ruleForm.status) || actions.get('default')
+      }
     },
     mounted() {
     },

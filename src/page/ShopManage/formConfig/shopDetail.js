@@ -39,60 +39,8 @@ export const FORM_CONFIG = {
     {
       label: "门店审核状态",
       key: "statusTxt",
-      fieldType: 'render',
-      render: (h, params) => {
-        switch (params.status) {
-          case ShopList.INQUIRY :
-            return h(
-              'span', { 'class': 'f-fc-606266' }, '预审核中'
-            )
-            break;
-          case ShopList.REJECTED :
-            return h(
-              'span', { 'class': 'f-fc-606266' }, '平台驳回'
-            )
-            break;
-          case ShopList.CHANNEL_REVIEW :
-            return h(
-              'span', { 'class': 'f-fc-606266' }, '通道审核中'
-            )
-            break;
-          case ShopList.CHANNEL_REJECTED :
-            return h(
-              'span', { 'class': 'f-fc-606266' }, '通道驳回'
-            )
-            break;
-          case ShopList.CHANNEL_PASS :
-            return h(
-              'span', { 'class': 'f-fc-606266' }, '通过'
-            )
-            break;
-          case ShopList.WECHAT_REVIEW :
-            return h(
-              'span', { 'class': 'f-fc-606266' }, '微信认证中'
-            )
-            break;
-          case ShopList.WECHAT_IDENTIFY :
-            return h(
-              'span', { 'class': 'f-fc-606266' }, '微信未认证'
-            )
-            break;
-          case ShopList.WECHAT_REJECTED :
-            return h(
-              'span', { 'class': 'f-fc-606266' }, '微信认证拒绝'
-            )
-            break;
-          case ShopList.OPENED:
-            return h(
-              'span', { 'class': 'f-fc-606266' }, '已开通'
-            )
-            break;
-          default:
-            return h(
-              'span', { 'class': 'f-fc-606266' }, '--'
-            )
-        }
-      }
+      fieldType: 'slot',
+      slot: 'statusSlot'
     }
   ],
   payInfoData: [

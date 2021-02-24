@@ -37,7 +37,7 @@ export const AGENT_LIST_CONFIG = {
       label: '状态',
       prop: 'blockStatus',
       render: (h, params) => {
-        const actions = new Map([
+        const actions = ([
           [1, {className: 's-status-success', statusDesc: '启用'}],
           [2, {className: 's-status-fail', statusDesc: '禁用'}],
           [3, {className: 's-status-fail', statusDesc: '封禁'}],
