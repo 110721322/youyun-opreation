@@ -1,3 +1,4 @@
+import { AgentList } from "@/libs/config/constant.config";
 export const SEARCH_FORM_CONFIG = [
   {
     type: 0,
@@ -22,35 +23,39 @@ export const SEARCH_FORM_CONFIG = [
     options: [
       {
         label: '预审核',
-        value: 0
+        value: AgentList.MERCHANT_AUDIT
       },
       {
         label: '平台驳回',
-        value: 1
+        value: AgentList.PLATEFORM_REJECT
       },
       {
         label: '通道审核中',
-        value: 2
+        value: AgentList.CHANNEL_AUDIT
       },
       {
         label: '通道驳回',
-        value: 3
+        value: AgentList.CHANNEL_REJECT
       },
       {
         label: '通道通过',
-        value: 4
+        value: AgentList.CHANNEL_PASS
       },
       {
         label: '微信审核中',
-        value: 5
+        value: AgentList.WECHAT_AUDIT
+      },
+      {
+        label: '微信未认证',
+        value: AgentList.WECHAT_UNAUTH
       },
       {
         label: '微信认证拒绝',
-        value: 6
+        value: AgentList.WECHAT_REJECT
       },
       {
         label: '微信认证成功',
-        value: 7
+        value: AgentList.WECHAT_PASS
       }
     ],
     span: 12
@@ -64,11 +69,11 @@ export const SEARCH_FORM_CONFIG = [
     options: [
       {
         label: '启用',
-        value: 0
+        value: AgentList.MERCHANT_OPEN
       },
       {
         label: '禁用',
-        value: 1
+        value: AgentList.MERCHANT_DISABLED
       }
     ],
     span: 12

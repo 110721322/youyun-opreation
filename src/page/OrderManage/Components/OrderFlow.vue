@@ -21,7 +21,7 @@
           :is-select="false"
           :is-data-select="false"
           :is-table-expand="false"
-          :row-key="'id'"
+          :row-key="'rank'"
           :default-expand-all="false"
           :hide-edit-area="false"
           :params="params"

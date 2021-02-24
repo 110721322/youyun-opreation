@@ -107,37 +107,37 @@
           this.$message('请完善设备信息');
           return
         }
-        //TODO review: clickFootBtn方法返回ruleForm
         const params = {
           deviceType: checkDerviceForm.deviceType,
           deviceModel: checkDerviceForm.deviceModel,
           deviceImg: checkDerviceForm.deviceImg
         }
-        if (this.type === 'add') {
-          api.addDeviceModel(params).then(res => {
-            if (res.status === 0) {
-              this.$message({
-                message: '添加成功',
-                type: 'success'
-              })
-              this.drawer = false
-              this.$refs.table.getData()
-            }
-          })
-        } else if (this.type === 'edit') {
-          params.id = this.id
-          api.updateDeviceModel(params).then(res => {
-            if (res.status === 0) {
-              this.$message({
-                message: '编辑成功',
-                type: 'success'
-              })
-              this.drawer = false
-              this.$refs.table.getData()
-            }
-          })
-        }
-        //TODO review: switch下不要编写业务逻辑，通过调用函数替换
+        this[this.type](params);
+      },
+      add($params) {
+        api.addDeviceModel($params).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '添加成功',
+              type: 'success'
+            })
+            this.drawer = false
+            this.$refs.table.getData()
+          }
+        })
+      },
+      edit($params) {
+        $params.id = this.id
+        api.updateDeviceModel(params).then(res => {
+          if (res.status === 0) {
+            this.$message({
+              message: '编辑成功',
+              type: 'success'
+            })
+            this.drawer = false
+            this.$refs.table.getData()
+          }
+        })
       }
     }
   }

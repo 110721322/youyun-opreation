@@ -244,22 +244,7 @@
             for (let key in this.statisticsData) {
               this.statisticsData[key] = this.$g.utils.toLocaleString(this.statisticsData[key])
             }
-            const forBinaryTree = ($data) => {
-              $data.forEach(item => {
-                if (this.$g.utils.isFunction(item.formatter)) {
-                  item.value = item.formatter(this.statisticsData)
-                } else {
-                  item.value = this.statisticsData[item.key]
-                }
-                if (this.$g.utils.isFunction(item.setLabel)) {
-                  item.label = item.setLabel(this.statisticsData)
-                }
-                if (this.$g.utils.isArr(item.children)) {
-                  forBinaryTree(item.children)
-                }
-              })
-            }
-            forBinaryTree(this.infoList)
+            this.infoList = this.$g.utils.eachDetailTree(this.infoList, this.statisticsData)
           }
         })
       },
@@ -306,7 +291,8 @@
         }
         api.shopUpdate(params).then(res => {
           if (res.status === 0) {
-            this.$message.success('门店状态已改变！')
+            // TODO review: 改用obj传参的方式,链式调用存在Bug
+            this.$message({message: '门店状态已改变', type: 'success'})
           }
         })
       },

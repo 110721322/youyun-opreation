@@ -11,7 +11,6 @@ export const SEARCH_FORM_CONFIG = [
     },
     span: 12
   },
-  //TODO review :select组件提供翻页的能力请优化！
   {
     type: 1,
     label: '设备型号',

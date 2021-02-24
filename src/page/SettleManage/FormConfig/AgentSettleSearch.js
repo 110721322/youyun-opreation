@@ -1,4 +1,6 @@
 import api from '@/api/api_agentManage'
+import { AgentList } from "@/libs/config/constant.config";
+
 export const SEARCH_FORM_CONFIG = [
   {
     type: 0,
@@ -42,19 +44,19 @@ export const SEARCH_FORM_CONFIG = [
     options: [
       {
         label: '已结算',
-        value: 1
+        value: AgentList.SETTLED
       },
       {
         label: '结算中',
-        value: 2
+        value: AgentList.SETTLE
       },
       {
         label: '未结算',
-        value: 3
+        value: AgentList.UNSETTLE
       },
       {
         label: '驳回',
-        value: 4
+        value: AgentList.SETTLE_REJECT
       }
     ],
     span: 12

@@ -72,24 +72,23 @@
       getCategoryList() {
         api.queryAllCategory({}).then(res => {
           if (res.status === 0) {
-            const newArr = []
-            this.shopInfoFormData[3].options = this.dealCateList(res.data, newArr) || []
+            this.shopInfoFormData[3].options = this.dealCateList(res.data) || []
           }
         })
       },
-      dealCateList(arr, newArr) {
-        newArr = arr.map((item,index) => {
+      // TODO review: $newArr是多余的参数
+      dealCateList($arr) {
+        return $arr.map((item,index) => {
           const newObj = {
             label: item.name,
             value: item.code,
           }
-          if(item.childrenData) {
-            const arr=[];
-            newObj.children=this.dealCateList(item.childrenData,arr);
+          // TODO review: 存在漏洞应判断是否为数组
+          if(this.$g.utils.isArr(item.childrenData)) {
+            newObj.children=this.dealCateList(item.childrenData);
           }
           return newObj
         })
-        return newArr
       },
       shopQueryDetail() {
         const params = {
@@ -98,49 +97,32 @@
         api.shopQueryDetail(params).then(res => {
           if(res.status === 0) {
             this.shopDetail = res.data
-            this.shopInfoFormData.forEach((item,index) => {
-              if (this.$g.utils.isFunction(item.formatter)) {
-                item.initVal = item.formatter(this.shopDetail)
-              } else {
-                item.initVal = this.shopDetail[item.key]
-              }
-              if (item.key === "shopImg") {
-                item.children.forEach((imgItem, imgIndex) => {
-                  imgItem.initVal = this.shopDetail[imgItem.key]
-                })
-              }
-            });
-            this.verityInfoFormData.forEach((item,index) => {
-              if (this.$g.utils.isFunction(item.formatter)) {
-                item.initVal = item.formatter(this.shopDetail)
-              } else {
-                item.initVal = this.shopDetail[item.key]
-              }
-              if (item.key === "authImg") {
-                item.children.forEach((imgItem, imgIndex) => {
-                  imgItem.initVal = this.shopDetail[imgItem.key]
-                })
-              }
-            });
-            this.settleInfoFormData.forEach((item,index) => {
-              item.initVal = this.shopDetail[item.key]
-              if (item.key === "bankContactLine") {
-                item.urlOptions.params.bankName = this.shopDetail['bankBranchName']
-              }
-              if (item.key === "settleImg") {
-                item.children.forEach((imgItem, imgIndex) => {
-                  imgItem.initVal = this.shopDetail[imgItem.key]
-                })
-              }
-            });
-            this.rateInfoFormData.forEach((item,index) => {
-              item.initVal = this.$g.utils.AccMul(this.shopDetail[item.key], 100)
-            });
+            // TODO review: 通过回调函数解决表单回显逻辑,还能继续优化,有相同的代码块，应进行封装
+            const forBinaryTree = ($data) => {
+              $data.forEach(item => {
+                if (this.$g.utils.isFunction(item.formatter)) {
+                  item.initVal = item.formatter(this.shopDetail)
+                } else {
+                  item.initVal = this.shopDetail[item.key]
+                }
+                if (item.key === "bankContactLine") {
+                  item.urlOptions.params.bankName = this.shopDetail['bankBranchName']
+                }
+                if (this.$g.utils.isArr(item.children)) {
+                  forBinaryTree(item.children)
+                }
+              })
+            }
+            forBinaryTree(this.shopInfoFormData)
+            forBinaryTree(this.verityInfoFormData)
+            forBinaryTree(this.settleInfoFormData)
+            forBinaryTree(this.rateInfoFormData)
           }
           this.getInfoShow = true
         })
       },
       clickShopEditDetail() {
+        // TODO review: clickFootBtn校验通过则返回ruleForm否则为false,还是不对请重新修改!
         const checkShopForm = this.$refs.shopInfoForm.clickFootBtn();
         const checkVerityForm = this.$refs.verityInfoForm.clickFootBtn();
         const checkSettleForm = this.$refs.settleInfoForm.clickFootBtn();
@@ -161,26 +143,22 @@
           this.$message('请完善费率信息');
           return
         }
-        const shopInfoForm = this.$g.utils.deepClone(this.$refs.shopInfoForm.ruleForm);
-        const verityInfoForm = this.$g.utils.deepClone(this.$refs.verityInfoForm.ruleForm);
-        const settleInfoForm = this.$g.utils.deepClone(this.$refs.settleInfoForm.ruleForm);
-        const rateInfoForm = this.$g.utils.deepClone(this.$refs.rateInfoForm.ruleForm);
+        let infoData = {}
+        Object.assign(infoData, checkShopForm, checkVerityForm, checkSettleForm, checkRateForm)
         const params = {
           id: this.$route.query.id,
           shopNo: this.shopDetail.shopNo,
-          ...shopInfoForm,
-          provinceCode: shopInfoForm.areaData[0],
-          cityCode: shopInfoForm.areaData[1],
-          areaCode: shopInfoForm.areaData[2],
-          mccCode: shopInfoForm.mccCodeData[2],
-          ...verityInfoForm,
-          shopLicenseBegDate: verityInfoForm.shopLicenseDate[0]?verityInfoForm.shopLicenseDate[0]:'',
-          shopLicenseEndDate: verityInfoForm.shopLicenseDate[1]?verityInfoForm.shopLicenseDate[1]:'',
-          idCardBeginDate: verityInfoForm.idCardDate[0]?verityInfoForm.idCardDate[0]:'',
-          idCardExpireDate: verityInfoForm.idCardDate[1]?verityInfoForm.idCardDate[1]:'',
-          ...settleInfoForm,
-          wechatPayRate: this.$g.utils.AccDiv(rateInfoForm.wechatPayRate, 100),
-          alipayRate: this.$g.utils.AccDiv(rateInfoForm.alipayRate, 100)
+          ...infoData,
+          provinceCode: infoData.areaData[0],
+          cityCode: infoData.areaData[1],
+          areaCode: infoData.areaData[2],
+          mccCode: infoData.mccCodeData[2],
+          shopLicenseBegDate: infoData.shopLicenseDate[0]?infoData.shopLicenseDate[0]:'',
+          shopLicenseEndDate: infoData.shopLicenseDate[1]?infoData.shopLicenseDate[1]:'',
+          idCardBeginDate: infoData.idCardDate[0]?infoData.idCardDate[0]:'',
+          idCardExpireDate: infoData.idCardDate[1]?infoData.idCardDate[1]:'',
+          wechatPayRate: this.$g.utils.AccDiv(infoData.wechatPayRate, 100),
+          alipayRate: this.$g.utils.AccDiv(infoData.alipayRate, 100)
         }
         api.shopEditDetail(params).then(res => {
           if (res.status === 0) {

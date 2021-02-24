@@ -85,7 +85,7 @@ export const AGENT_DETAIL_STATIC = [
     iconStyle: 'color: #50C514;',
     tooltip: '',
     key: 'actualAmount',
-    labelCallback($params) {
+    labelFormatter($params) {
       return this.label + '（' + $params.tradeCount + '笔）'
     },
     value: null,
@@ -168,7 +168,7 @@ export const AGENT_DETAIL_STATIC = [
     iconStyle: 'color: #1989FA;',
     tooltip: '',
     key: 'refundAmount',
-    labelCallback($params) {
+    labelFormatter($params) {
       return this.label + '（' + $params.refundCount + '笔）'
     },
     value: null,

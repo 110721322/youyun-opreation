@@ -13,6 +13,7 @@ export const FORM_CONFIG = [
   },
   {
     label: "登录手机号",
-    key: "phone"
+    key: "phone",
+    emitEdit: 'editAccount'
   }
 ]

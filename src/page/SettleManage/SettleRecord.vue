@@ -80,7 +80,6 @@
         this.searchConfig.formData[7].urlOptions.params["agentNo"] = $val.agentNo;
       },
       onClickSearch($ruleForm) {
-        // TODO review: 无意义的判断语句请简化
         this.params = {
           settleNo: $ruleForm.settleNo,
           shopName: $ruleForm.shopName,
@@ -94,6 +93,7 @@
       getCunt(params) {
         api.shopSettleTotalData(params).then(res => {
           if (res.status === 0) {
+            // TODO review: 回调处理字段值,utils.eachDetailTree已封装该算法，请查看
             this.infoList.forEach((item,index) => {
               if (item.key === 'totalSettleAmount') {
                 item.value = (Number(res.data['unSettleAmount']||0) + Number(res.data['settledAmount']||0))+''

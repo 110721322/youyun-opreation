@@ -1,5 +1,6 @@
 import areaData from "youyun-vue-components/assets/data/areaData.ws";
 import api from '@/api/api_agentManage';
+import utils from "youyun-vue-components/global/kit/utils";
 import commonApi from "@/api/api_common"
 import { checkPersonId, validPhone } from "youyun-vue-components/global/kit/validate";
 
@@ -157,11 +158,7 @@ export const FORM_CONFIG = {
         { required: true, message: '请输入营业执照编号', trigger: 'blur' }
       ],
       isShow: (params) => {
-        if (params.shopType === 'personal') {
-          return false
-        } else {
-          return true
-        }
+        return params.shopType !== 'personal'
       }
     },
     {
@@ -177,11 +174,7 @@ export const FORM_CONFIG = {
         return [$params.shopLicenseBegDate, $params.shopLicenseEndDate]
       },
       isShow: (params) => {
-        if (params.shopType === 'personal') {
-          return false
-        } else {
-          return true
-        }
+        return params.shopType !== 'personal'
       }
     },
     {
@@ -303,7 +296,7 @@ export const FORM_CONFIG = {
         }
       ],
       isShow: (params) => {
-        return params.shopType === 'personal' ? false : true
+        return params.shopType !== 'personal'
       },
     },
     {
@@ -375,7 +368,7 @@ export const FORM_CONFIG = {
         }
       ],
       isShow: (params) => {
-        return params.shopType === 'personal' ? true : false
+        return params.shopType === 'personal'
       }
     }
   ],
@@ -565,6 +558,9 @@ export const FORM_CONFIG = {
       labelWidth: '120px',
       isShowSlot: true,
       showSlotName: '%',
+      formatter($params) {  
+        return utils.AccMul($params.alipayRate, 100)
+      },
       rules: [
         { required: true, message: '请输入支付宝费率', trigger: 'blur' },
         { validator: function(rule, value, callback){
@@ -584,6 +580,9 @@ export const FORM_CONFIG = {
       labelWidth: '120px',
       isShowSlot: true,
       showSlotName: '%',
+      formatter($params) {  
+        return utils.AccMul($params.wechatPayRate, 100)
+      },
       rules: [
         { required: true, message: '请输入微信费率', trigger: 'blur' },
         { validator: function(rule, value, callback){

@@ -23,7 +23,6 @@
           <div class="tab-title">
             <span>操作记录列表</span>
           </div>
-          <!--TODO review: 请勿书写无用属性或与默认值相同的属性-->
           <yun-table
             ref="table"
             :grid-config="tableConfig.gridConfig"
@@ -71,6 +70,7 @@
         const params = {
           deviceNo: this.$route.query.deviceNo
         }
+        // TODO review: 常量替换状态值
         api.deviceDetail(params).then(res => {
           if (res.status === 0) {
             const ruleForm = res.data

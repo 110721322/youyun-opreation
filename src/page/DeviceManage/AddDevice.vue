@@ -78,15 +78,14 @@ export default {
     clickImport() {
       this.drawer = true
     },
-    // TODO review: 接口调用方式写入api文件中，$g.utils.downloadBlob为下载文件流方法,重构!
     clickDown() {
       api.downloadExcel().then(res => {
-        const $data = res.data
-        const $config = {
+        const data = res.data
+        const config = {
           type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
         }
-        const $fileName = '设备模板下载'
-        this.$g.utils.downloadBlob($data, $config, $fileName)
+        const fileName = '设备模板下载'
+        this.$g.utils.downloadBlob(data, config, fileName)
       })
     },
 
@@ -113,8 +112,6 @@ export default {
         this.$message('请完善设备信息');
         return
       }
-      //TODO review: clickFootBtn方法返回ruleForm
-      //TODO review: 无意义的赋值
       api.addDevice(checkDerviceForm).then(res => {
         if (res.status === 0) {
           this.$message({
@@ -125,7 +122,6 @@ export default {
             name: 'DeviceList'
           })
         }
-        //TODO review: 成功失败都跳转？
       })
     }
   }
