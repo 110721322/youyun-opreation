@@ -27,5 +27,7 @@ export default {
   // 新增门店统计
   getNewShop: (params) => API.GET('/operation/v1/statistic/getNewShop', params),
   // 活跃门店统计
-  getActiveShop: (params) => API.GET('/operation/v1/statistic/getActiveShop', params)
+  getActiveShop: (params) => API.GET('/operation/v1/statistic/getActiveShop', params),
+  // 修改登录手机号
+  updatePhone: (params) => API.POST('/operation/v1/user/updatePhone', params, { needFormData: true })
 }
