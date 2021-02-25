@@ -88,6 +88,7 @@
         showModify: false,
         formPhoneConfig: null,
         updatePhoneDialoger: false,
+        system: 'operation',
         phone: '',
         oldCode: {
           time: 0,
@@ -129,6 +130,7 @@
           return
         }
         api.updatePhone(ruleForm).then(() => {
+          this.getLoginUser()
           this.closeDialog();
           this.$message({
             type: 'success',
