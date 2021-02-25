@@ -8,6 +8,13 @@ export const SEARCH_FORM_CONFIG = [
     key: 'settleNo',
     labelWidth: '128px',
     span: 12
+  },{
+    type: 9,
+    label: '结算时间',
+    key: 'date',
+    isHiddenBtn: true,
+    labelWidth: '128px',
+    span: 12
   },
   {
     type: 1,
@@ -27,20 +34,7 @@ export const SEARCH_FORM_CONFIG = [
     },
     span: 12
   },
-  {
-    type: 11,
-    label: '交易时间',
-    key: 'beginDate',
-    labelWidth: '128px',
-    span: 12
-  },
-  {
-    type: 11,
-    label: '到账时间',
-    key: 'endDate',
-    labelWidth: '128px',
-    span: 12
-  },
+ 
   {
     type: 0,
     label: '门店ID',

@@ -81,7 +81,15 @@
       },
       
       onClickSearch($ruleForm) {
-        this.params = {...$ruleForm}
+        
+        this.params = {
+          settleNo: $ruleForm.settleNo,
+          agentNo: $ruleForm.agentNo,
+          merchantNo: $ruleForm.merchantNo,
+          shopNo: $ruleForm.shopNo,
+          beginDate: $ruleForm.date && $ruleForm.date[1]  ? $ruleForm.date[0] : null,
+          endDate: $ruleForm.date && $ruleForm.date[1]  ? $ruleForm.date[1] : null
+        }
         this.getCunt(this.params)
       },
       getCunt(params) {
