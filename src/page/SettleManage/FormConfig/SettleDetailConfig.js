@@ -14,6 +14,7 @@ export const SETTLE_CONFIG = {
       key: "settleRemark"
     }
   ],
+
   bankInfoData: [
     {
       label: "开户行",

@@ -98,7 +98,10 @@
       },
       showUpdatePsd() {
         this.formConfigPsd = this.$g.utils.deepClone(FORM_CONFIG);
-        this.formConfigPsd[1].initVal = this.phone
+        if (this.phone) {
+          this.formConfigPsd[1].initVal = this.phone
+          this.formConfigPsd[1].isDisabled = true
+        }
         this.forgetPsdDialoger = true
       },
       closeForget() {

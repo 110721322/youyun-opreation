@@ -90,6 +90,7 @@
           }
         })
       },
+      
       clickPass() {
         this.$confirm('是否驳回结算申请？', '提示', {
           confirmButtonText: '确定',
@@ -117,6 +118,7 @@
           });
         });
       },
+      
       clickReject() {
         this.$confirm('是否驳回结算申请？', '提示', {
           confirmButtonText: '确定',

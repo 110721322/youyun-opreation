@@ -136,6 +136,7 @@ export const FORM_CONFIG = {
       labelWidth: '120px',
       key: 'bankContactLine',
       isSearch: true,
+      initVal: '',
       urlOptions: {
         url: api.getBank,
         keyName: 'unionCode',
@@ -143,6 +144,9 @@ export const FORM_CONFIG = {
         method: 'get',
         searchKey: 'bankName',
         params: {}
+      },
+      formatter($params) {
+        return this.initVal = $params.bankBranchName
       },
       callback: (item, data) => {
         item.bankBranchName = data.bankName

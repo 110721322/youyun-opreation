@@ -1,4 +1,4 @@
-import { AgentList } from "@/libs/config/constant.config";
+import { SettleList } from "@/libs/config/constant.config";
 export const AGENT_SETTLE_CONFIG = {
   gridConfig: [
     {
@@ -28,10 +28,10 @@ export const AGENT_SETTLE_CONFIG = {
       render: (h, params) => {
         // TODO review: 状态值常量替换
         const actions = new Map([
-          [AgentList.SETTLED, {className: 's-status-success', statusDesc: '已结算'}],
-          [AgentList.SETTLE, {className: 's-status-pending', statusDesc: '结算中'}],
-          [AgentList.UNSETTLE, {className: 's-status-primary', statusDesc: '未结算'}],
-          [AgentList.SETTLE_REJECT, {className: 's-status-fail', statusDesc: '驳回'}],
+          [SettleList.SETTLED, {className: 's-status-success', statusDesc: '已结算'}],
+          [SettleList.SETTLE, {className: 's-status-pending', statusDesc: '结算中'}],
+          [SettleList.UNSETTLE, {className: 's-status-primary', statusDesc: '未结算'}],
+          [SettleList.SETTLE_REJECT, {className: 's-status-fail', statusDesc: '驳回'}],
           ['default', {className: 's-status-pending', statusDesc: '等待'}],
         ])
         const action = actions.get(params.row.settleStatus) || actions.get('default')
@@ -69,6 +69,8 @@ export const AGENT_SETTLE_CONFIG = {
     ]
   }
 };
+
+
 export const INFO_LIST = [
   {
     span: 6,

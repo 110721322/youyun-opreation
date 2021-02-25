@@ -1,4 +1,4 @@
-import { AgentList } from "@/libs/config/constant.config";
+import { SettleList } from "@/libs/config/constant.config";
 
 export const SETTLE_RECORD_CONFIG = {
   gridConfig: [
@@ -53,9 +53,9 @@ export const SETTLE_RECORD_CONFIG = {
       render: (h, params) => {
         // TODO review: 状态值常量替换,语句简化
         const actions = new Map([
-          [AgentList.SETTLE_RECORD_FAIL, {className: 's-status-fail', statusDesc: '失败'}],
-          [AgentList.SETTLE_RECORD_STEELE, {className: 's-status-pending', statusDesc: '结算中'}],
-          [AgentList.SETTLE_RECORD_SUCCESS, {className: 's-status-success', statusDesc: '成功'}],
+          [SettleList.SETTLE_RECORD_FAIL, {className: 's-status-fail', statusDesc: '失败'}],
+          [SettleList.SETTLE_RECORD_STEELE, {className: 's-status-pending', statusDesc: '结算中'}],
+          [SettleList.SETTLE_RECORD_SUCCESS, {className: 's-status-success', statusDesc: '成功'}],
           ['default', {className: 's-status-pending', statusDesc: '等待'}],
         ])
         const action = actions.get(params.row.status) || actions.get('default')
@@ -90,9 +90,8 @@ export const INFO_LIST = [
     icon: 'iconjine',
     iconStyle: 'color: #EFA911;',
     tooltip: '',
-    key: 'totalSettleAmount',
-    value: '0',
-    children: []
+    key: 'totalAmount',
+    value: null
   },
   {
     span: 6,
@@ -102,8 +101,7 @@ export const INFO_LIST = [
     iconStyle: 'color: #65CC30;',
     tooltip: '',
     key: 'settleCount',
-    value: '0',
-    children: []
+    value: null
   },
   {
     span: 6,
@@ -113,8 +111,7 @@ export const INFO_LIST = [
     iconStyle: 'color: #1989FA;',
     tooltip: '',
     key: 'unSettleAmount',
-    value: '0',
-    children: []
+    value: null
   },
   {
     span: 6,
@@ -124,7 +121,6 @@ export const INFO_LIST = [
     iconStyle: 'color: #65CC30;',
     tooltip: '',
     key: 'settledAmount',
-    value: '0',
-    children: []
+    value: null
   }
 ]

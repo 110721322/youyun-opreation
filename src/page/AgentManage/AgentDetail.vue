@@ -116,7 +116,6 @@
         @cancel="materialDrawer = false"
         @confirm="clickSubmitMaterial"
     >
-      <!--TODO review: v-if="materialDrawer"判断重复，直接对外部容器进行判断-->
       <div class="dialog-form" slot="body" v-if="materialDrawer">
         <yun-form
             ref="nameInfo"
@@ -156,7 +155,6 @@
 
 <script>
   import api from "@/api/api_agentManage.js";
-  // TODO review: utils已挂载至Vue.prototype请通过this.$g.utils访问
   import { AGENT_TALK_DATA } from "./TableConfig/AgentTalkConfig";
   import { DETAILCONFIG, AGENT_DETAIL_STATIC } from "./TableConfig/AgentDetailConfig";
   import { FORM_CONFIG } from "./FormConfig/AgentDetailConfig";
@@ -165,7 +163,6 @@
   export default {
     name: "AgentDetail",
     data() {
-      //TODO review: 属性过多使用命名空间对同类属性名划分,无用的属性移除
       return {
         params: {
           agentNo: this.$route.query.agentNo
@@ -184,10 +181,8 @@
         drawerType: '',
         materialDrawer: false,
         title: '',
-        testData: [],
         switchStatus: false,
         countPsdTime: 0,
-        //TODO review: 引入变量通过deepClone函数进行深拷贝
         nameConfigData: null,
         rateConfigData: null,
         settleConfigData: null,
@@ -235,29 +230,13 @@
           agentNo: agentNo
         }).then(res => {
           if (res.status === 0) {
-            //TODO review: 以回调方式formatter重组字符串
             const agentData = res.data
             for (let key in agentData) {
               if (this.$g.utils.isNumber(agentData[key])) {
                 agentData[key] = this.$g.utils.toLocaleString(agentData[key])
               }
             }
-            const forBinaryTree = ($data) => {
-              $data.forEach(item => {
-                if(this.$g.utils.isFunction(item.labelCallback)) {
-                  item.label = item.labelCallback(agentData)
-                }
-                if (this.$g.utils.isFunction(item.formatter)) {
-                  item.value = item.formatter(agentData)
-                } else {
-                  item.value = agentData[item.key]
-                }
-                if (this.$g.utils.isArr(item.children)) {
-                  forBinaryTree(item.children)
-                }
-              })
-            }
-            forBinaryTree(this.infoList)
+            this.infoList = this.$g.utils.eachDetailTree(this.infoList, agentData)
             return agentData;
           }
         })
@@ -267,40 +246,38 @@
       clickResetPassword() {
         this.drawer = true
         this.title = '重置登录密码'
-        this.drawerType = 'updataLogin'
+        this.drawerType = 'updateLogin'
         this.formConfigData = this.$g.utils.deepClone(FORM_CONFIG.resetPassword)
       },
 
-      // TODO 服务商状态启用禁用
-      //TODO review: 该方法未调用
-      // changeSwitch(val) {
-      //   if (val) {
-      //     api.updateStatusUnfrozen({
-      //       agentNo: this.$route.query.agentNo
-      //     }).then(res => {
-      //       if (res.status === 0) {
-      //         this.$message({
-      //           message: '启用成功',
-      //           type: 'success'
-      //         })
-      //       }
-      //     })
-      //   } else if (!this.switchStatus) {
-      //     api.updateStatusFrozen({
-      //       agentNo: this.$route.query.agentNo
-      //     }).then(res => {
-      //       if (res.status === 0) {
-      //         this.$message({
-      //           message: '禁用成功',
-      //           type: 'success'
-      //         })
-      //       }
-      //     })
-      //   }
-      // },
+      /* TODO 服务商状态启用禁用
+      changeSwitch(val) {
+        if (val) {
+          api.updateStatusUnfrozen({
+            agentNo: this.$route.query.agentNo
+          }).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                message: '启用成功',
+                type: 'success'
+              })
+            }
+          })
+        } else if (!this.switchStatus) {
+          api.updateStatusFrozen({
+            agentNo: this.$route.query.agentNo
+          }).then(res => {
+            if (res.status === 0) {
+              this.$message({
+                message: '禁用成功',
+                type: 'success'
+              })
+            }
+          })
+        }
+      },*/
 
       // 修改手机号码
-      //TODO review: 深拷贝清空表单
       editTel() {
         this.drawer = true
         this.title = '修改手机号'
@@ -309,7 +286,6 @@
       },
 
       // 修改服务商状态
-      //TODO review: 深拷贝清空表单
       onClickEditStatus() {
         this.drawer = true
         this.title = '服务商状态'
@@ -319,7 +295,6 @@
       },
 
       // 修改服务商信息
-      //TODO review: 深拷贝清空表单,赋值请使用函数式按key进行回显
       clickModify() {
         this.title = '修改资料'
         this.materialDrawer = true
@@ -327,21 +302,11 @@
         this.rateConfigData = this.$g.utils.deepClone(FORM_CONFIG.rateSet)
         this.settleConfigData = this.$g.utils.deepClone(FORM_CONFIG.bankSet)
         this.dateConfigData = this.$g.utils.deepClone(FORM_CONFIG.validitySet)
-        this.nameConfigData.forEach((item, index) => {
-          item.initVal = this.ruleForm[item.key]
-        })
-        this.rateConfigData.forEach((item, index) => {
-          item.initVal = this.ruleForm[item.key]
-        })
-        this.settleConfigData.forEach((item, index) => {
-          item.initVal = this.ruleForm[item.key]
-          if (item.key === 'bankContactLine') {
-            item.initVal = this.ruleForm.bankBranchName
-          }
-        })
-        this.dateConfigData.forEach((item, index) => {
-          item.initVal = this.ruleForm[item.key]
-        })
+        // TODO review: 重复的代码块可封装简化,特殊处理的字段通过formatter回调处理
+        this.$g.utils.eachFormTree(this.nameConfigData, this.ruleForm)
+        this.$g.utils.eachFormTree(this.rateConfigData, this.ruleForm)
+        this.$g.utils.eachFormTree(this.settleConfigData, this.ruleForm)
+        this.$g.utils.eachFormTree(this.dateConfigData, this.ruleForm)
       },
 
       // 添加沟通计划
@@ -356,47 +321,51 @@
       // clickSendPsdCode() {},
 
       clickSubmit() {
-        /*TODO review:
-           1.表单校验提交通过调用实例clickFootBtn获取结果!
-           2.switch中不要写业务逻辑请以函数调用方式替换，此段代码建议使用策略模式重构
-         */
         const ruleForm = this.$refs['formInfo'].clickFootBtn()
         if (!ruleForm) {
           this.$message('请完善信息')
           return
         }
-        const type = this.drawerType
-        if (type === 'addTalk') {
-          ruleForm.agentNo = this.agentNo
-          api.addTalk(ruleForm).then(res => {
-            this.submitSuccess(res.status, type)
-          })
-        } else if (type === 'updataLogin') {
-          api.resetPassword({
-            agentNo: this.agentNo,
-            pwdType: 1
-          }).then(res => {
-            this.submitSuccess(res.status, type)
-          })
-        } else if (type === 'updateBlock') {
-          api.updateAgentBlockStatus({
-            agentNo: this.agentNo,
-            blockStatus: ruleForm.blockStatus
-          }).then(res => {
-            if (res.status === 0) {
-              this.$message({
-                message: '状态修改成功',
-                type: 'success'
-              })
-              this.getAgentDetail(this.agentNo)
-              this.drawer = false
-            }
-          })
+        const strategies = {
+          addTalk() {
+            ruleForm.agentNo = this.agentNo
+            api.addTalk(ruleForm).then(res => {
+              this.submitSuccess(res.status, type)
+            })
+          },
+          updateLogin() {
+            api.resetPassword({
+              agentNo: this.agentNo,
+              pwdType: 1
+            }).then(res => {
+              this.submitSuccess(res.status, type)
+            })
+          },
+          updateBlock() {
+            api.updateAgentBlockStatus({
+              agentNo: this.agentNo,
+              blockStatus: ruleForm.blockStatus
+            }).then(res => {
+              if (res.status === 0) {
+                this.$message({
+                  message: '状态修改成功',
+                  type: 'success'
+                })
+                this.getAgentDetail(this.agentNo)
+                this.drawer = false
+              }
+            })
+          }
         }
+
+        const func = ($strategy) => {
+          return strategies[$strategy]
+        }
+
+        func(this.drawerType)
       },
 
       clickSubmitMaterial() {
-        // TODO review: 表单校验提交通过调用实例clickFootBtn获取结果!
         const serviceData = this.$refs['nameInfo'].clickFootBtn();
         const rateData = this.$refs['rateInfo'].clickFootBtn();
         const settleData = this.$refs['settleInfo'].clickFootBtn();
@@ -437,12 +406,12 @@
 
       submitSuccess(data, type) {
         if (data === 0) {
-          var message = ''
+          let message = ''
           switch(type) {
             case 'addTalk':
               message = '添加成功'
               break
-            case 'updataLogin':
+            case 'updateLogin':
               message = '重置成功'
               break
             case 'updateBlock':
@@ -450,7 +419,6 @@
               break
           }
           this.$message({
-            //TODO review 复杂度大于1请勿使用三元表达式
             message: message,
             type: 'success'
           })

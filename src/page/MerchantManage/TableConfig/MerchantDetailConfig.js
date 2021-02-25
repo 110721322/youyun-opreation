@@ -1,4 +1,4 @@
-import { AgentList } from "@/libs/config/constant.config";
+import { MerchantList } from "@/libs/config/constant.config";
 export const MERCHANT_DETAIL_CONFIG = {
   gridConfig: [
     {
@@ -45,8 +45,8 @@ export const MERCHANT_DETAIL_CONFIG = {
       render: (h, params) => {
         //TODO review: 状态值以常量方式替换
         const actions = new Map([
-          [AgentList.MERCHANT_OPEN, {className: 's-status-success', statusDesc: '启用'}],
-          [AgentList.MERCHANT_DISABLED, {className: 's-status-fail', statusDesc: '禁用'}],
+          [MerchantList.MERCHANT_OPEN, {className: 's-status-success', statusDesc: '启用'}],
+          [MerchantList.MERCHANT_DISABLED, {className: 's-status-fail', statusDesc: '禁用'}],
           ['default', {className: 's-status-pending', statusDesc: '等待'}],
         ])
         const action = actions.get(params.row.isDisabled) || actions.get('default')
@@ -61,15 +61,15 @@ export const MERCHANT_DETAIL_CONFIG = {
       render: (h, params) => {
         //TODO review: 状态值以常量方式替换
         const actions = new Map([
-          [AgentList.MERCHANT_AUDIT, {className: 's-status-pending', statusDesc: '预审核中'}],
-          [AgentList.PLATEFORM_REJECT, {className: 's-status-fail', statusDesc: '平台驳回'}],
-          [AgentList.CHANNEL_AUDIT, {className: 's-status-pending', statusDesc: '通道审核中'}],
-          [AgentList.CHANNEL_REJECT, {className: 's-status-fail', statusDesc: '通道驳回'}],
-          [AgentList.CHANNEL_PASS, {className: 's-status-success', statusDesc: '通道通过'}],
-          [AgentList.WECHAT_AUDIT, {className: 's-status-pending', statusDesc: '微信审核中'}],
-          [AgentList.WECHAT_UNAUTH, {className: 's-status-pending', statusDesc: '微信未认证'}],
-          [AgentList.WECHAT_REJECT, {className: 's-status-fail', statusDesc: '微信认证拒绝'}],
-          [AgentList.WECHAT_PASS, {className: 's-status-success', statusDesc: '微信认证成功'}],
+          [MerchantList.MERCHANT_AUDIT, {className: 's-status-pending', statusDesc: '预审核中'}],
+          [MerchantList.PLATEFORM_REJECT, {className: 's-status-fail', statusDesc: '平台驳回'}],
+          [MerchantList.CHANNEL_AUDIT, {className: 's-status-pending', statusDesc: '通道审核中'}],
+          [MerchantList.CHANNEL_REJECT, {className: 's-status-fail', statusDesc: '通道驳回'}],
+          [MerchantList.CHANNEL_PASS, {className: 's-status-success', statusDesc: '通道通过'}],
+          [MerchantList.WECHAT_AUDIT, {className: 's-status-pending', statusDesc: '微信审核中'}],
+          [MerchantList.WECHAT_UNAUTH, {className: 's-status-pending', statusDesc: '微信未认证'}],
+          [MerchantList.WECHAT_REJECT, {className: 's-status-fail', statusDesc: '微信认证拒绝'}],
+          [MerchantList.WECHAT_PASS, {className: 's-status-success', statusDesc: '微信认证成功'}],
           ['default', {className: 's-status-pending', statusDesc: '等待'}]
         ])
         const action = actions.get(params.row.status) || actions.get('default')
@@ -105,7 +105,7 @@ export const MERCHANT_DETAIL_STATIC = [
     iconStyle: 'color: #50C514;',
     tooltip: '',
     key: 'realTotalAmount',
-    labelCallback($params) {
+    labelFormatter($params) {
       return this.label + '（' + $params.realTotalCount + '笔）'
     },
     value: null,
@@ -113,7 +113,7 @@ export const MERCHANT_DETAIL_STATIC = [
       {
         label: '昨日订单金额',
         key: 'yesterdayRealAmount',
-        labelCallback($params) {
+        labelFormatter($params) {
           return this.label + '（' + $params.yesterdayRealCount + '笔）'
         },
         formatter: ($params) => {
@@ -131,7 +131,7 @@ export const MERCHANT_DETAIL_STATIC = [
     iconStyle: 'color: #1989FA;',
     tooltip: '',
     key: 'refundTotalAmount',
-    labelCallback($params) {
+    labelFormatter($params) {
       return this.label + '（' + $params.refundTotalCount + '笔）'
     },
     value: null,
@@ -139,7 +139,7 @@ export const MERCHANT_DETAIL_STATIC = [
       {
         label: '昨日退款金额',
         key: 'refundTotalAmount',
-        labelCallback($params) {
+        labelFormatter($params) {
           return this.label + '（' + $params.refundTotalCount + '笔）'
         },
         formatter: ($params) => {

@@ -1,7 +1,6 @@
 import api from '@/api/api_deviceManage'
 import commonApi from '@/api/api_common'
 export const ADD_DEVICE = {
-  //TODO review: 多余的命名空间deviceData
   deviceData: [
     {
       type: 1,

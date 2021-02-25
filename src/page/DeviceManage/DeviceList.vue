@@ -45,8 +45,8 @@
         <yun-form
           v-if="drawer"
           ref="deviceModelInfo"
-          :form-base-data="fromConfigData"
-          :show-foot-btn="fromConfigData.showFootBtn === false"
+          :form-base-data="formConfigData"
+          :show-foot-btn="formConfigData.showFootBtn === false"
           label-width="130px"
         ></yun-form>
       </div>
@@ -68,26 +68,16 @@ export default {
       api: api.queryDeviceList,
       gridConfig: DEVICE_LIST_CONFIG.gridConfig,
       drawer: false,
-      fromConfigData: this.$g.utils.deepClone(DEVICE_CALL.deviceData),
+      formConfigData: null,
       gridBtnConfig: DEVICE_LIST_CONFIG.gridBtnConfig,
       deviceNos: []
     }
   },
   methods: {
     onClickSearch($ruleForm) {
-      // TODO review: 无意义的判断
-      this.params = {
-        deviceNo: $ruleForm.deviceNo,
-        deviceType: $ruleForm.deviceType,
-        deviceModel: $ruleForm.deviceModel,
-        deviceSn: $ruleForm.deviceSn,
-        bindDate: $ruleForm.bindDate,
-        merchantNo: $ruleForm.merchantNo,
-        shopNo: $ruleForm.shopNo,
-        agentNo: $ruleForm.agentNo,
-        currentStatus: $ruleForm.currentStatus
-      }
+      this.params = {...$ruleForm}
     },
+    
     clickBind() {
       if(this.deviceNos.length === 0) {
         this.$message({
@@ -97,14 +87,15 @@ export default {
         return
       }
       this.drawer = true
+      this.formConfigData = this.$g.utils.deepClone(DEVICE_CALL.deviceData)
     },
+    
     clickSubmit() {
       const checkDeviceForm = this.$refs['deviceModelInfo'].clickFootBtn();
       if (!checkDeviceForm) {
         this.$message('请选择服务商');
         return
       }
-      //TODO review: clickFootBtn方法返回ruleForm
       api.flowService({
         toOperator: checkDeviceForm.toOperator,
         deviceNos: this.deviceNos
@@ -117,6 +108,7 @@ export default {
         }
       })
     },
+    
     clickExport() {},
 
     // 解绑设备
@@ -164,6 +156,7 @@ export default {
         this.$message('取消操作')
       })
     },
+    
     onClickDetails($row) {
       this.$router.push({
         name: 'DeviceDetail',
@@ -172,8 +165,8 @@ export default {
         }
       })
     },
+    
     selectionChange($row) {
-      //TODO review: 尽量少使用forEach通过map,filter替换
       this.deviceNos = $row.map(item => item.deviceNo)
     }
   }

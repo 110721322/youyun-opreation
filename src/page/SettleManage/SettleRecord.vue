@@ -79,29 +79,23 @@
       handleAgentChange($val) {
         this.searchConfig.formData[7].urlOptions.params["agentNo"] = $val.agentNo;
       },
+      
       onClickSearch($ruleForm) {
-        // TODO review: 无意义的判断语句请简化
-        this.params = {
-          settleNo: $ruleForm.settleNo,
-          shopName: $ruleForm.shopName,
-          agentNo: $ruleForm.agentNo,
-          merchantNo: $ruleForm.merchantNo,
-          shopNo: $ruleForm.shopNo,
-          beginDate: $ruleForm.beginDate,
-          endDate: $ruleForm.endDate
-        }
+        this.params = {...$ruleForm}
         this.getCunt(this.params)
       },
       getCunt(params) {
         api.shopSettleTotalData(params).then(res => {
           if (res.status === 0) {
-            this.infoList.forEach((item,index) => {
-              if (item.key === 'totalSettleAmount') {
-                item.value = (Number(res.data['unSettleAmount']||0) + Number(res.data['settledAmount']||0))+''
-              } else {
-                item.value = String(res.data[item.key])
+            // TODO review: 回调处理字段值,utils.eachDetailTree已封装该算法，请查看
+            const settleCunt = res.data
+            for (let key in settleCunt) {
+              if (this.$g.utils.isNumber(settleCunt[key])) {
+                settleCunt[key] = this.$g.utils.toLocaleString(settleCunt[key])
               }
-            })
+            }
+            this.infoList = this.$g.utils.eachDetailTree(this.infoList, settleCunt)
+            return settleCunt
           }
         })
       }

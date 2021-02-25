@@ -2,6 +2,8 @@ import api from '@/api/api_deviceManage';
 import agentApi from '@/api/api_agentManage'
 import merchantApi from '@/api/api_merchantManage'
 import shopApi from '@/api/api_shop'
+import { DeviceList } from "@/libs/config/constant.config";
+
 export const SEARCH_FORM_CONFIG = [
   {
     type: 0,
@@ -85,18 +87,19 @@ export const SEARCH_FORM_CONFIG = [
     type: 1,
     label: '绑定状态',
     key: 'currentStatus',
+    // TODO review: 常量替换状态值
     options: [
       {
         label: '未划拨',
-        value: 1
+        value: DeviceList.UNCALL
       },
       {
         label: '未绑定',
-        value: 2
+        value: DeviceList.UNBIND
       },
       {
         label: '已绑定',
-        value: 3
+        value: DeviceList.BIND
       }
     ],
     span: 12

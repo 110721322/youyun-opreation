@@ -39,7 +39,6 @@
 <script>
 import api from "@/api/api_deviceManage";
 import commonApi from '@/api/api_common'
-import axios from "axios"
 import { ADD_DEVICE, IMPORT_DEVICE } from "./FormConfig/AddDevice";
 
 export default {
@@ -52,7 +51,6 @@ export default {
       xlsxContent: {
         title: '批量导入设备'
       },
-      xlsxTempUrl: '/operation/v1/excelTemplate/download?url=excel/device_template20210129.xlsx',
       ossApiService: commonApi.queryOssExlToken
     }
   },
@@ -78,15 +76,14 @@ export default {
     clickImport() {
       this.drawer = true
     },
-    // TODO review: 接口调用方式写入api文件中，$g.utils.downloadBlob为下载文件流方法,重构!
     clickDown() {
       api.downloadExcel().then(res => {
-        const $data = res.data
-        const $config = {
+        const data = res.data
+        const config = {
           type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
         }
-        const $fileName = '设备模板下载'
-        this.$g.utils.downloadBlob($data, $config, $fileName)
+        const fileName = '设备模板下载'
+        this.$g.utils.downloadBlob(data, config, fileName)
       })
     },
 
@@ -104,17 +101,17 @@ export default {
         }
       })
     },
+    
     onClickCancel() {
       this.drawer = false
     },
+    
     clickSubmit() {
       const checkDerviceForm = this.$refs['deviceInfo'].clickFootBtn();
       if (!checkDerviceForm) {
         this.$message('请完善设备信息');
         return
       }
-      //TODO review: clickFootBtn方法返回ruleForm
-      //TODO review: 无意义的赋值
       api.addDevice(checkDerviceForm).then(res => {
         if (res.status === 0) {
           this.$message({
@@ -125,7 +122,6 @@ export default {
             name: 'DeviceList'
           })
         }
-        //TODO review: 成功失败都跳转？
       })
     }
   }

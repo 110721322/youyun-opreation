@@ -30,7 +30,6 @@
         </div>
       </div>
       <div class="m-basecrud">
-        <!--TODO review: 请勿书写无用属性或与默认值相同的属性-->
         <yun-table
             ref="table"
             :grid-config="gridConfig"
@@ -56,8 +55,8 @@
       <div class="m-select-baseCrud" slot="body">
         <yun-form
             ref="operationInfo"
-            :form-base-data="fromConfigData"
-            :show-foot-btn="fromConfigData.showFootBtn === false"
+            :form-base-data="formConfigData"
+            :show-foot-btn="formConfigData.showFootBtn === false"
             label-width="130px"
         ></yun-form>
       </div>
@@ -82,7 +81,7 @@
         selectList: [],
         agentNumData: {},
         searchConfig: SEARCH_FORM_CONFIG,
-        fromConfigData: {},
+        formConfigData: {},
         gridConfig: AGENT_LIST_CONFIG.gridConfig,
         gridBtnConfig: AGENT_LIST_CONFIG.gridBtnConfig,
         infoList: []
@@ -103,7 +102,6 @@
         })
       },
       onClickSearch($ruleForm) {
-        //TODO review: 通过||运算符替换
         this.params = {
           agentNo: $ruleForm.agentNo,
           agentName: $ruleForm.agentName,
@@ -128,7 +126,6 @@
         })
       },
 
-      //TODO review: 深拷贝清空表单
       clickChangeOperation() {
         if (this.selectList.length === 0) {
           this.$message({
@@ -138,7 +135,7 @@
           return
         }
         this.drawer = true
-        this.fromConfigData = this.$g.utils.deepClone(ADD_AGENT.operationData)
+        this.formConfigData = this.$g.utils.deepClone(ADD_AGENT.operationData)
       },
 
       clickToAdd() {
@@ -164,18 +161,14 @@
       },
 
       clickSubmit() {
-        // TODO review: 表单校验提交通过调用实例clickFootBtn获取结果!
         const operationData = this.$refs['operationInfo'].clickFootBtn()
         if (!operationData) {
           this.$message('请选择服务商')
           return
         }
-        const select = []
-        const list = this.selectList
-        list.map((item) => {
-          select.push(item.agentNo)
-        })
-        const agentNos = select.join(',')
+        const agentNos = this.selectList
+          .map(item => item.agentNo)
+          .join(',')
         api.updateOperationId({
           agentNos: agentNos,
           operationId: operationData.operationId

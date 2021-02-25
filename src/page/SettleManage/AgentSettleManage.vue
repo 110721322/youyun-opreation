@@ -64,7 +64,6 @@
         drawer: false,
         infoList: [],
         searchConfig: SEARCH_FORM_CONFIG,
-        // TODO review: 未引用该表单配置，无用请删除
         gridConfig: AGENT_SETTLE_CONFIG.gridConfig,
         gridBtnConfig: AGENT_SETTLE_CONFIG.gridBtnConfig
       }
@@ -83,15 +82,20 @@
           endTime: $ruleForm.date && $ruleForm.date[1]  ? $ruleForm.date[1] : null
         }
       },
+      
       queryAgentSettleStatistic() {
         api.queryAgentSettleStatistic().then(res => {
-          if (res.status === 0) {
-            this.infoList.forEach((item,index) => {
-              item.value = String(res.data[item.key])
-            })
+          const settleCunt = res.data
+          for (let key in settleCunt) {
+            if (this.$g.utils.isNumber(settleCunt[key])) {
+              settleCunt[key] = this.$g.utils.toLocaleString(settleCunt[key])
+            }
           }
+          this.infoList = this.$g.utils.eachDetailTree(this.infoList, settleCunt)
+          return settleCunt
         })
       },
+      
       onClickDetails(row) {
         this.$router.push({
           name: 'SettleDetail',

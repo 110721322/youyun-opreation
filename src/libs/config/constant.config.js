@@ -55,6 +55,12 @@ export const ShopList = {
   WECHAT_IDENTIFY: 6,
   WECHAT_REJECTED: 7,
   OPENED: 8,
+  PERSONAL: 'personal',
+  ENTERPRISE: 'enterprise',
+  INDIVIDUAL: 'individual',
+  PUBLIC_PERSON: '0',
+  PRIVATE_PERSON: '1',
+  PRIVATE_UNLEGAL_PERSON: '2'
 }
 
 export const AgentList = {
@@ -62,9 +68,22 @@ export const AgentList = {
   DISABLED: 2, // 禁用
   BAN: 3, // 封禁
   FROZEN: 4, // 冻结
+  SETTLED: '1', // 已结算
+  SETTLE: '2', // 结算中
+  UNSETTLE: '3', // 未结算
+  SETTLE_REJECT: '4', // 结算驳回
+  SETTLE_RECORD_FAIL: 0, // 结算记录结算失败
+  SETTLE_RECORD_STEELE: 1, // 结算记录结算中
+  SETTLE_RECORD_SUCCESS: 2, // 结算成功
+}
+
+export const DeviceList = {
   UNCALL: 1, // 未划拨
   UNBIND: 2, // 未绑定
   BIND: 3, // 已绑定
+}
+
+export const MerchantList = {
   MERCHANT_AUDIT: 0, // 门店预审核
   PLATEFORM_REJECT: 1, // 平台驳回
   CHANNEL_AUDIT: 2, // 通道审核中
@@ -76,6 +95,9 @@ export const AgentList = {
   WECHAT_PASS: 8, // 微信认证成功
   MERCHANT_OPEN: 0, // 门店启用
   MERCHANT_DISABLED: 1, // 门店禁用
+}
+
+export const SettleList = {
   SETTLED: '1', // 已结算
   SETTLE: '2', // 结算中
   UNSETTLE: '3', // 未结算

@@ -85,7 +85,7 @@ export const AGENT_DETAIL_STATIC = [
     iconStyle: 'color: #50C514;',
     tooltip: '',
     key: 'actualAmount',
-    labelCallback($params) {
+    labelFormatter($params) {
       return this.label + '（' + $params.tradeCount + '笔）'
     },
     value: null,
@@ -93,7 +93,7 @@ export const AGENT_DETAIL_STATIC = [
       {
         label: '昨日订单金额',
         key: 'lastActualAmount',
-        labelCallback($params) {
+        labelFormatter($params) {
           return this.label + '（' + $params.lastTradeCount + '笔）'
         },
         formatter($params) {
@@ -171,7 +171,7 @@ export const AGENT_DETAIL_STATIC = [
     iconStyle: 'color: #1989FA;',
     tooltip: '',
     key: 'refundAmount',
-    labelCallback($params) {
+    labelFormatter($params) {
       return this.label + '（' + $params.refundCount + '笔）'
     },
     value: null,
@@ -179,7 +179,7 @@ export const AGENT_DETAIL_STATIC = [
       {
         label: '昨日退款金额',
         key: 'lastRefundAmount',
-        labelCallback($params) {
+        labelFormatter($params) {
           return this.label + '（' + $params.lastRefundCount + '笔）'
         },
         formatter($params) {
@@ -201,7 +201,7 @@ export const AGENT_DETAIL_STATIC = [
     children: [
       {
         label: '昨日新增商户（个）',
-        key: 'lastNewMerchantCount',
+        key: 'newMerchantCount',
         value: null,
         span: 24
       }
@@ -224,7 +224,7 @@ export const AGENT_DETAIL_STATIC = [
     children: [
       {
         label: '昨日新增门店（个）',
-        key: 'lastNewShopCount',
+        key: 'newShopCount',
         value: null,
         span: 24
       },

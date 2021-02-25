@@ -1,4 +1,4 @@
-import { AgentList } from "@/libs/config/constant.config";
+import { MerchantList } from "@/libs/config/constant.config";
 export const MERCHANT_LIST_CONFIG = {
   gridConfig: [
     {
@@ -32,8 +32,8 @@ export const MERCHANT_LIST_CONFIG = {
       render: (h, params) => {
         //TODO review: 状态值以常量方式替换
         const actions = new Map([
-          [AgentList.MERCHANT_OPEN, {className: 's-status-success', statusDesc: '启用'}],
-          [AgentList.MERCHANT_DISABLED, {className: 's-status-fail', statusDesc: '禁用'}],
+          [MerchantList.MERCHANT_OPEN, {className: 's-status-success', statusDesc: '启用'}],
+          [MerchantList.MERCHANT_DISABLED, {className: 's-status-fail', statusDesc: '禁用'}],
           ['default', {className: 's-status-pending', statusDesc: '等待'}],
         ])
         const action = actions.get(params.row.isDisabled) || actions.get('default')

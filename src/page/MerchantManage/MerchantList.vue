@@ -76,21 +76,18 @@
       getMerchantNum() {
         api.merchantCount().then(res => {
           if (res.status === 0) {
+            
             this.infoList.forEach((item, index) => {
               item.value = String(res.data[item.key])
             })
           }
         })
       },
+      
       onClickSearch($ruleForm) {
-        this.params = {
-          merchantNo: $ruleForm.merchantNo,
-          merchantName: $ruleForm.merchantName,
-          agentNo: $ruleForm.agentNo,
-          //TODO review: 三元表达式判断复杂度大于1
-          isDisabled: $ruleForm.isDisabled
-        }
+        this.params = {...$ruleForm}
       },
+      
       onClickDetails(row) {
         this.$router.push({
           name: 'MerchantDetail',
@@ -100,6 +97,7 @@
           }
         })
       },
+      
       onClickGoMerchant(row) {
         commonApi.generateLoginTicket({
           system: 'merchant',

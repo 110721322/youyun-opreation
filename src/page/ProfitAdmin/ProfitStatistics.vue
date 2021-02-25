@@ -127,27 +127,12 @@
             for (let key in statisticsData) {
               statisticsData[key] = this.$g.utils.toLocaleString(statisticsData[key])
             }
-            const forBinaryTree = ($data) => {
-              $data.forEach(item => {
-                if (this.$g.utils.isFunction(item.formatter)) {
-                  item.value = item.formatter(statisticsData)
-                } else {
-                  item.value = statisticsData[item.key]
-                }
-                if (this.$g.utils.isArr(item.children)) {
-                  forBinaryTree(item.children)
-                }
-              })
-            }
-            forBinaryTree(this.infoList)
+            this.infoList = this.$g.utils.eachDetailTree(this.infoList, statisticsData)
           }
         })
       },
       queryTrendDataList() {
-        const params = {
-          ...this.params
-        }
-        api.queryTrendDataList(params).then(res => {
+        api.queryTrendDataList(this.params).then(res => {
           if (res.status === 0) {
             if (this.$g.utils.isArr(res.data)) {
               this.echartsBarConfig.xAxis[0].data = res.data.map(item => item.tradeDate);

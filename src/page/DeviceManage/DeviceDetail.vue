@@ -23,7 +23,6 @@
           <div class="tab-title">
             <span>操作记录列表</span>
           </div>
-          <!--TODO review: 请勿书写无用属性或与默认值相同的属性-->
           <yun-table
             ref="table"
             :grid-config="tableConfig.gridConfig"
@@ -44,6 +43,7 @@
 
 <script>
   import api from "@/api/api_deviceManage";
+  import { DeviceList } from "@/libs/config/constant.config";
   import { DEVICE_FORM_CONFIG } from "./FormConfig/DeviceDetailConfig";
   import { RECORD_CONFIG } from "./TableConfig/RecordConfig";
   export default {
@@ -71,12 +71,13 @@
         const params = {
           deviceNo: this.$route.query.deviceNo
         }
+        // TODO review: 常量替换状态值
         api.deviceDetail(params).then(res => {
           if (res.status === 0) {
             const ruleForm = res.data
-            if (ruleForm.currentStatus === 1) {
+            if (ruleForm.currentStatus === DeviceList.UNCALL) {
               ruleForm.currentStatusCn = '未划拨'
-            } else if (ruleForm.currentStatus === 2) {
+            } else if (ruleForm.currentStatus === DeviceList.UNBIND) {
               ruleForm.currentStatusCn = '未绑定'
             } else {
               ruleForm.currentStatusCn = '已绑定'

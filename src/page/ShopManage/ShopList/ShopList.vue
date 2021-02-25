@@ -70,9 +70,13 @@ export default {
       const params = {}
       api.getListStatistic(params).then(res => {
         if (res.status === 0) {
-          this.infoList.forEach((item,index) => {
-            item.value = this.$g.utils.toLocaleString(res.data[item.key])
-          })
+          const statisticData = res.data;
+          for (let key in statisticData) {
+            if (this.$g.utils.isNumber(statisticData[key])) {
+              statisticData[key] = this.$g.utils.toLocaleString(statisticData[key])
+            }
+          }
+          this.infoList = this.$g.utils.eachDetailTree(this.infoList, statisticData)
         }
       })
     },

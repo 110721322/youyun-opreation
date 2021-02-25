@@ -1,5 +1,4 @@
 export const FORM_CONFIG = {
-  //TODO review: 无意义的命名空间
   resetPassword: [
     {
       type: 5,
@@ -15,7 +14,6 @@ export const FORM_CONFIG = {
       span: 24
     }
   ],
-  //TODO review: 无意义的命名空间
   shopInfo: [
     {
       type: 0,
@@ -28,7 +26,6 @@ export const FORM_CONFIG = {
       ]
     }
   ],
-  //TODO review: 无意义的命名空间
   // TODO loginSet: [
   //   {
   //     type: 0,

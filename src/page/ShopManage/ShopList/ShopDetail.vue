@@ -33,7 +33,7 @@
             </template>
             <template slot="statusSlot">
               <div class="flex-align-center">
-                <span>{{ ruleForm.statusTxt }}</span>
+                <span>{{ statusTxt }}</span>
                 <span v-if="ruleForm.status === 6" class="statusActTxt" @click="qrCodeDialoger=true">微信未认证</span>
               </div>
             </template>
@@ -167,6 +167,7 @@
   import { FORM_CONFIG, INFO_LIST } from "../formConfig/shopDetail";
   import areaData from "youyun-vue-components/assets/data/areaData.ws"
   import api from "@/api/api_shop";
+  import { ShopList } from "@/libs/config/constant.config";
   export default {
     data() {
       return {
@@ -192,6 +193,23 @@
     created() {
       this.infoList = this.$g.utils.deepClone(INFO_LIST)
       this.shopQueryDetail()
+    },
+    computed: {
+      statusTxt() {
+        const actions = new Map([
+          [ShopList.INQUIRY, '预审核中'],
+          [ShopList.REJECTED, '平台驳回'],
+          [ShopList.CHANNEL_REVIEW, '通道审核中'],
+          [ShopList.CHANNEL_REJECTED, '通道驳回'],
+          [ShopList.CHANNEL_PASS, '通过'],
+          [ShopList.WECHAT_REVIEW, '微信认证中'],
+          [ShopList.WECHAT_IDENTIFY, '微信未认证'],
+          [ShopList.WECHAT_REJECTED, '微信认证拒绝'],
+          [ShopList.OPENED, '已开通'],
+          ['default', '--']
+        ])
+        return actions.get(this.ruleForm.status) || actions.get('default')
+      }
     },
     mounted() {
     },
@@ -226,22 +244,7 @@
             for (let key in this.statisticsData) {
               this.statisticsData[key] = this.$g.utils.toLocaleString(this.statisticsData[key])
             }
-            const forBinaryTree = ($data) => {
-              $data.forEach(item => {
-                if (this.$g.utils.isFunction(item.formatter)) {
-                  item.value = item.formatter(this.statisticsData)
-                } else {
-                  item.value = this.statisticsData[item.key]
-                }
-                if (this.$g.utils.isFunction(item.setLabel)) {
-                  item.label = item.setLabel(this.statisticsData)
-                }
-                if (this.$g.utils.isArr(item.children)) {
-                  forBinaryTree(item.children)
-                }
-              })
-            }
-            forBinaryTree(this.infoList)
+            this.infoList = this.$g.utils.eachDetailTree(this.infoList, this.statisticsData)
           }
         })
       },
@@ -288,7 +291,8 @@
         }
         api.shopUpdate(params).then(res => {
           if (res.status === 0) {
-            this.$message.success('门店状态已改变！')
+            // TODO review: 改用obj传参的方式,链式调用存在Bug
+            this.$message({message: '门店状态已改变', type: 'success'})
           }
         })
       },
