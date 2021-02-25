@@ -30,14 +30,14 @@ export const SEARCH_FORM_CONFIG = [
   {
     type: 11,
     label: '交易时间',
-    key: 'createTime',
+    key: 'beginDate',
     labelWidth: '128px',
     span: 12
   },
   {
     type: 11,
     label: '到账时间',
-    key: 'receiveTime',
+    key: 'endDate',
     labelWidth: '128px',
     span: 12
   },

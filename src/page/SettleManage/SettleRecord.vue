@@ -88,6 +88,7 @@
           merchantNo: $ruleForm.merchantNo,
           shopNo: $ruleForm.shopNo,
           beginDate: $ruleForm.beginDate,
+          endDate: $ruleForm.endDate
         }
         this.getCunt(this.params)
       },
