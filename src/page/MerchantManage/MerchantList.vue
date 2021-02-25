@@ -76,7 +76,6 @@
       getMerchantNum() {
         api.merchantCount().then(res => {
           if (res.status === 0) {
-            
             this.infoList.forEach((item, index) => {
               item.value = String(res.data[item.key])
             })

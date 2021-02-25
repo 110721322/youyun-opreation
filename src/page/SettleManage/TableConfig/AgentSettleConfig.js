@@ -11,7 +11,7 @@ export const AGENT_SETTLE_CONFIG = {
       }
     },
     {
-      label: '创建时间',
+      label: '交易时间',
       prop: 'createTime',
     },
     {

@@ -303,10 +303,10 @@
         this.settleConfigData = this.$g.utils.deepClone(FORM_CONFIG.bankSet)
         this.dateConfigData = this.$g.utils.deepClone(FORM_CONFIG.validitySet)
         // TODO review: 重复的代码块可封装简化,特殊处理的字段通过formatter回调处理
-        this.$g.utils.eachFormTree(this.nameConfigData, this.ruleForm)
-        this.$g.utils.eachFormTree(this.rateConfigData, this.ruleForm)
-        this.$g.utils.eachFormTree(this.settleConfigData, this.ruleForm)
-        this.$g.utils.eachFormTree(this.dateConfigData, this.ruleForm)
+        this.nameConfigData = this.$g.utils.eachFormTree(this.nameConfigData, this.ruleForm)
+        this.rateConfigData = this.$g.utils.eachFormTree(this.rateConfigData, this.ruleForm)
+        this.settleConfigData = this.$g.utils.eachFormTree(this.settleConfigData, this.ruleForm)
+        this.dateConfigData = this.$g.utils.eachFormTree(this.dateConfigData, this.ruleForm)
       },
 
       // 添加沟通计划
