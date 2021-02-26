@@ -125,7 +125,6 @@ export const FORM_CONFIG = {
         return h(
           'span', { 'class': 'f-fc-606266' }, action
         )
-        // TODO review: 判断语句简化，使用Map替换,常量替换状态值
       }
     },
     {
@@ -265,7 +264,6 @@ export const FORM_CONFIG = {
         return h(
           'span', { 'class': 'f-fc-606266' }, action
         )
-        // TODO review: 判断语句简化，使用Map替换,常量替换状态值
       }
     },
     {

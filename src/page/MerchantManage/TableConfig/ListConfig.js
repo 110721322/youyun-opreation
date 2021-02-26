@@ -30,7 +30,6 @@ export const MERCHANT_LIST_CONFIG = {
       label: '状态',
       prop: 'isDisabled',
       render: (h, params) => {
-        //TODO review: 状态值以常量方式替换
         const actions = new Map([
           [MerchantList.MERCHANT_OPEN, {className: 's-status-success', statusDesc: '启用'}],
           [MerchantList.MERCHANT_DISABLED, {className: 's-status-fail', statusDesc: '禁用'}],

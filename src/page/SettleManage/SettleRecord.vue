@@ -79,9 +79,9 @@
       handleAgentChange($val) {
         this.searchConfig.formData[7].urlOptions.params["agentNo"] = $val.agentNo;
       },
-      
+
       onClickSearch($ruleForm) {
-        
+
         this.params = {
           settleNo: $ruleForm.settleNo,
           agentNo: $ruleForm.agentNo,
@@ -95,7 +95,6 @@
       getCunt(params) {
         api.shopSettleTotalData(params).then(res => {
           if (res.status === 0) {
-            // TODO review: 回调处理字段值,utils.eachDetailTree已封装该算法，请查看
             const settleCunt = res.data
             for (let key in settleCunt) {
               if (this.$g.utils.isNumber(settleCunt[key])) {

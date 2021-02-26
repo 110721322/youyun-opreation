@@ -427,6 +427,9 @@ export const FORM_CONFIG = {
           pageSize: 20
         }
       },
+      formatter($ruleForm) {
+        this.urlOptions.params.bankName = $ruleForm['bankBranchName']
+      },
       callback: (item, data) => {
         item.bankBranchName = data.bankName
       },
@@ -558,7 +561,7 @@ export const FORM_CONFIG = {
       labelWidth: '120px',
       isShowSlot: true,
       showSlotName: '%',
-      formatter($params) {  
+      formatter($params) {
         return utils.AccMul($params.alipayRate, 100)
       },
       rules: [
@@ -580,7 +583,7 @@ export const FORM_CONFIG = {
       labelWidth: '120px',
       isShowSlot: true,
       showSlotName: '%',
-      formatter($params) {  
+      formatter($params) {
         return utils.AccMul($params.wechatPayRate, 100)
       },
       rules: [

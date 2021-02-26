@@ -278,7 +278,7 @@
         api.rejectIndirectAudit(params).then(res => {
           if (res.status === 0) {
             this.dialogVisible = false
-            this.$router.replace('/shopManage/shopList');
+            this.$router.replace({ name: 'shopList' });
             this.$message.success('已驳回！')
           }
         })
@@ -291,7 +291,6 @@
         }
         api.shopUpdate(params).then(res => {
           if (res.status === 0) {
-            // TODO review: 改用obj传参的方式,链式调用存在Bug
             this.$message({message: '门店状态已改变', type: 'success'})
           }
         })

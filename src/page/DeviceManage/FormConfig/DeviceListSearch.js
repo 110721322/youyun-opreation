@@ -87,7 +87,6 @@ export const SEARCH_FORM_CONFIG = [
     type: 1,
     label: '绑定状态',
     key: 'currentStatus',
-    // TODO review: 常量替换状态值
     options: [
       {
         label: '未划拨',

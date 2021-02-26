@@ -51,7 +51,6 @@ export const SETTLE_RECORD_CONFIG = {
       label: '结算状态',
       prop: 'status',
       render: (h, params) => {
-        // TODO review: 状态值常量替换,语句简化
         const actions = new Map([
           [SettleList.SETTLE_RECORD_FAIL, {className: 's-status-fail', statusDesc: '失败'}],
           [SettleList.SETTLE_RECORD_STEELE, {className: 's-status-pending', statusDesc: '结算中'}],

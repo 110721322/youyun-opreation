@@ -76,14 +76,12 @@
           }
         })
       },
-      // TODO review: $newArr是多余的参数
       dealCateList($arr) {
         return $arr.map((item,index) => {
           const newObj = {
             label: item.name,
             value: item.code,
           }
-          // TODO review: 存在漏洞应判断是否为数组
           if(this.$g.utils.isArr(item.childrenData)) {
             newObj.children=this.dealCateList(item.childrenData);
           }
@@ -97,32 +95,15 @@
         api.shopQueryDetail(params).then(res => {
           if(res.status === 0) {
             this.shopDetail = res.data
-            // TODO review: 通过回调函数解决表单回显逻辑,还能继续优化,有相同的代码块，应进行封装
-            const forBinaryTree = ($data) => {
-              $data.forEach(item => {
-                if (this.$g.utils.isFunction(item.formatter)) {
-                  item.initVal = item.formatter(this.shopDetail)
-                } else {
-                  item.initVal = this.shopDetail[item.key]
-                }
-                if (item.key === "bankContactLine") {
-                  item.urlOptions.params.bankName = this.shopDetail['bankBranchName']
-                }
-                if (this.$g.utils.isArr(item.children)) {
-                  forBinaryTree(item.children)
-                }
-              })
-            }
-            forBinaryTree(this.shopInfoFormData)
-            forBinaryTree(this.verityInfoFormData)
-            forBinaryTree(this.settleInfoFormData)
-            forBinaryTree(this.rateInfoFormData)
+            this.shopInfoFormData = this.$g.utils.eachFormTree(this.shopInfoFormData, this.shopDetail)
+            this.verityInfoFormData = this.$g.utils.eachFormTree(this.verityInfoFormData, this.shopDetail)
+            this.settleInfoFormData = this.$g.utils.eachFormTree(this.settleInfoFormData, this.shopDetail)
+            this.rateInfoFormData = this.$g.utils.eachFormTree(this.rateInfoFormData, this.shopDetail)
           }
           this.getInfoShow = true
         })
       },
       clickShopEditDetail() {
-        // TODO review: clickFootBtn校验通过则返回ruleForm否则为false,还是不对请重新修改!
         const checkShopForm = this.$refs.shopInfoForm.clickFootBtn();
         const checkVerityForm = this.$refs.verityInfoForm.clickFootBtn();
         const checkSettleForm = this.$refs.settleInfoForm.clickFootBtn();

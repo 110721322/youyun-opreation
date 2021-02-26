@@ -43,7 +43,6 @@ export const MERCHANT_DETAIL_CONFIG = {
       label: '门店状态',
       prop: 'isDisabled',
       render: (h, params) => {
-        //TODO review: 状态值以常量方式替换
         const actions = new Map([
           [MerchantList.MERCHANT_OPEN, {className: 's-status-success', statusDesc: '启用'}],
           [MerchantList.MERCHANT_DISABLED, {className: 's-status-fail', statusDesc: '禁用'}],
@@ -59,7 +58,6 @@ export const MERCHANT_DETAIL_CONFIG = {
       label: '审核状态',
       prop: 'status',
       render: (h, params) => {
-        //TODO review: 状态值以常量方式替换
         const actions = new Map([
           [MerchantList.MERCHANT_AUDIT, {className: 's-status-pending', statusDesc: '预审核中'}],
           [MerchantList.PLATEFORM_REJECT, {className: 's-status-fail', statusDesc: '平台驳回'}],

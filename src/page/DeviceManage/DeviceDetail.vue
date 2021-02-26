@@ -71,7 +71,6 @@
         const params = {
           deviceNo: this.$route.query.deviceNo
         }
-        // TODO review: 常量替换状态值
         api.deviceDetail(params).then(res => {
           if (res.status === 0) {
             const ruleForm = res.data

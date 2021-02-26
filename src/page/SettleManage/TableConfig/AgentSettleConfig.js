@@ -26,7 +26,6 @@ export const AGENT_SETTLE_CONFIG = {
       label: '处理状态',
       prop: 'settleStatus',
       render: (h, params) => {
-        // TODO review: 状态值常量替换
         const actions = new Map([
           [SettleList.SETTLED, {className: 's-status-success', statusDesc: '已结算'}],
           [SettleList.SETTLE, {className: 's-status-pending', statusDesc: '结算中'}],
