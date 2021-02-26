@@ -71,8 +71,7 @@
 
 <script>
   import UpdatePsd from "@/components/UpdatePsd/UpdatePsd";
-  import { FORM_CONFIG } from "../formConfig/accountCenter";
-  import { FORM_PHONE_CONFIG } from "../formConfig/accountCenter";
+  import { FORM_CONFIG, FORM_PHONE_CONFIG } from "../formConfig/accountCenter";
   import { validPhone } from "youyun-vue-components/global/kit/validate";
   import api from "@/api/api_account";
   import api_common from "@/api/api_common";
