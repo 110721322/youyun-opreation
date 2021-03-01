@@ -81,7 +81,6 @@
       },
 
       onClickSearch($ruleForm) {
-
         this.params = {
           settleNo: $ruleForm.settleNo,
           agentNo: $ruleForm.agentNo,
