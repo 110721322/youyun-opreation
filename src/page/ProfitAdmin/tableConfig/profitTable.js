@@ -25,12 +25,12 @@ export const SHOP_PROFIT = {
     },
     {
       label: '本月分润',
-      prop: 'shopNo',
+      prop: 'currMonthTopAgentCommission',
       sortable: true
     },
     {
       label: '分润总额',
-      prop: 'agentName'
+      prop: 'totalTopAgentCommission'
     }
   ],
 
@@ -69,12 +69,12 @@ export const MERCHANT_PROFIT = {
     },
     {
       label: '本月分润',
-      prop: 'shopNo',
+      prop: 'currMonthTopAgentCommission',
       sortable: true
     },
     {
       label: '分润总额',
-      prop: 'agentName'
+      prop: 'totalTopAgentCommission'
     }
   ],
 
@@ -109,12 +109,12 @@ export const AGENT_PROFIT = {
     },
     {
       label: '本月分润',
-      prop: 'shopNo',
+      prop: 'currMonthTopAgentCommission',
       sortable: true
     },
     {
       label: '分润总额',
-      prop: 'agentName'
+      prop: 'totalTopAgentCommission'
     }
   ],
 
