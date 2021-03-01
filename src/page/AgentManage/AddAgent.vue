@@ -74,6 +74,10 @@
           this.$message('请完善结算信息');
           return
         }
+        // TODO review: refs.clickFootBtn()表单验证通过会返回ruleForm，无需重复获取，请修改
+        const serviceData = this.$refs['serviceInfo'].ruleForm
+        const rateData = this.$refs['rateInfo'].ruleForm
+        const settleData = this.$refs['settleInfo'].ruleForm
         let infoData = {}
         Object.assign(infoData, checkServiceForm, checkRateForm, checkSettleForm)
         const params = {

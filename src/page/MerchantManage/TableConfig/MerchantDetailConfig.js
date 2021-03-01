@@ -104,7 +104,7 @@ export const MERCHANT_DETAIL_STATIC = [
     tooltip: '',
     key: 'realTotalAmount',
     labelFormatter($params) {
-      return this.label + '（' + $params.realTotalCount + '笔）'
+      return '实收总额' + '（' + $params.realTotalCount + '笔）'
     },
     value: null,
     children: [
@@ -112,7 +112,7 @@ export const MERCHANT_DETAIL_STATIC = [
         label: '昨日订单金额',
         key: 'yesterdayRealAmount',
         labelFormatter($params) {
-          return this.label + '（' + $params.yesterdayRealCount + '笔）'
+          return '昨日订单金额' + '（' + $params.yesterdayRealCount + '笔）'
         },
         formatter: ($params) => {
           return '¥' + $params.yesterdayRealAmount
@@ -130,7 +130,7 @@ export const MERCHANT_DETAIL_STATIC = [
     tooltip: '',
     key: 'refundTotalAmount',
     labelFormatter($params) {
-      return this.label + '（' + $params.refundTotalCount + '笔）'
+      return '退款总额' + '（' + $params.refundTotalCount + '笔）'
     },
     value: null,
     children: [
@@ -138,7 +138,7 @@ export const MERCHANT_DETAIL_STATIC = [
         label: '昨日退款金额',
         key: 'refundTotalAmount',
         labelFormatter($params) {
-          return this.label + '（' + $params.refundTotalCount + '笔）'
+          return '昨日退款金额' + '（' + $params.refundTotalCount + '笔）'
         },
         formatter: ($params) => {
           return '¥' + $params.refundTotalAmount

@@ -34,14 +34,6 @@ export const SEARCH_FORM_CONFIG = [
     },
     span: 12
   },
- 
-  {
-    type: 0,
-    label: '门店ID',
-    key: 'shopNo',
-    labelWidth: '128px',
-    span: 12
-  },
   {
     type: 1,
     label: '所属服务商',
