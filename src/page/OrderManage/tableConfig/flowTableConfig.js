@@ -197,7 +197,7 @@ export const INFO_LIST = [
     span: 8,
     style: 'height: 91px;margin-right: 0;',
     label: '',
-    icon: 'iconjine',
+    icon: 'icontuikuan',
     iconStyle: 'color: #F62735;',
     tooltip: '',
     labelFormatter($params) {
