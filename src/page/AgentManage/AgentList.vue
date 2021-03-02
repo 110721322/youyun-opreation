@@ -236,4 +236,7 @@
   /deep/ .tab-color {
     color: #1989FA;
   }
+  /deep/ .el-date-editor--daterange.el-input__inner {
+    width: 100%;
+  }
 </style>

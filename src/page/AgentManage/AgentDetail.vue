@@ -317,7 +317,7 @@
       },
 
       // TODO 发送短信验证码
-      // clickSendPsdCode() {},
+      clickSendPsdCode() {},
 
       clickSubmit() {
         const ruleForm = this.$refs['formInfo'].clickFootBtn()
@@ -325,43 +325,45 @@
           this.$message('请完善信息')
           return
         }
+        const that = this;
         const strategies = {
           addTalk() {
-            ruleForm.agentNo = this.agentNo
+            ruleForm.agentNo = that.agentNo
             api.addTalk(ruleForm).then(res => {
-              this.submitSuccess(res.status, type)
+              that.submitSuccess(res.status, type)
             })
           },
           updateLogin() {
             api.resetPassword({
-              agentNo: this.agentNo,
+              agentNo: that.agentNo,
               pwdType: 1
             }).then(res => {
-              this.submitSuccess(res.status, type)
+              that.submitSuccess(res.status, type)
             })
           },
           updateBlock() {
             api.updateAgentBlockStatus({
-              agentNo: this.agentNo,
+              agentNo: that.agentNo,
               blockStatus: ruleForm.blockStatus
             }).then(res => {
               if (res.status === 0) {
-                this.$message({
+                that.$message({
                   message: '状态修改成功',
                   type: 'success'
                 })
-                this.getAgentDetail(this.agentNo)
-                this.drawer = false
+                that.getAgentDetail(that.agentNo)
+                that.drawer = false
               }
             })
           }
         }
 
-        const func = ($strategy) => {
+        const computedFunc = ($strategy) => {
           return strategies[$strategy]
         }
 
-        func(this.drawerType)
+        const func = computedFunc(this.drawerType)
+          func()
       },
 
       clickSubmitMaterial() {
