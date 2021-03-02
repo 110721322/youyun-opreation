@@ -165,19 +165,7 @@
           for (let key in statisticsData) {
             statisticsData[key] = this.$g.utils.toLocaleString(statisticsData[key])
           }
-          const forBinaryTree = ($data) => {
-            $data.forEach(item => {
-              if (this.$g.utils.isFunction(item.formatter)) {
-                item.value = item.formatter(statisticsData)
-              } else {
-                item.value = statisticsData[item.prop]
-              }
-              if (this.$g.utils.isArr(item.children)) {
-                forBinaryTree(item.children)
-              }
-            })
-          }
-          forBinaryTree(this.infoList)
+          this.infoList = this.$g.utils.eachDetailTree(this.infoList, statisticsData)
           return statisticsData;
         })
       },
