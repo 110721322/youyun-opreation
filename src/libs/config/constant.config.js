@@ -102,7 +102,7 @@ export const SettleList = {
   SETTLE: '2', // 结算中
   UNSETTLE: '3', // 未结算
   SETTLE_REJECT: '4', // 结算驳回
-  SETTLE_RECORD_FAIL: 0, // 结算记录结算失败
-  SETTLE_RECORD_STEELE: 1, // 结算记录结算中
-  SETTLE_RECORD_SUCCESS: 2, // 结算成功
+  SETTLE_RECORD_FAIL: 'settleFail', // 结算记录结算失败
+  SETTLE_RECORD_STEELE: 'noSettle', // 结算记录结算中
+  SETTLE_RECORD_SUCCESS: 'finishSettle', // 结算成功
 }

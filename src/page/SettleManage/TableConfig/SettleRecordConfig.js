@@ -49,7 +49,19 @@ export const SETTLE_RECORD_CONFIG = {
     },
     {
       label: '结算状态',
-      prop: 'settleStatusDesc'
+      prop: 'settleStatusDesc',
+      render: (h, params) => {
+        const actions = new Map([
+          [SettleList.SETTLE_RECORD_FAIL, {className: 's-status-fail'}],
+          [SettleList.SETTLE_RECORD_STEELE, {className: 's-status-pending'}],
+          [SettleList.SETTLE_RECORD_SUCCESS, {className: 's-status-success'}],
+          ['default', {className: 's-status-pending'}],
+        ])
+        const action = actions.get(params.row.settleStatus) || actions.get('default')
+        return (
+          <span class={['flex-align-center', 'g-status-icon', 's-status-radius', action.className]}>{ params.row.settleStatusDesc }</span>
+        )
+      }
     },
     {
       label: '结算时间',
