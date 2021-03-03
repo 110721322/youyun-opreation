@@ -106,4 +106,3 @@ export const SettleList = {
   SETTLE_RECORD_STEELE: 'noSettle', // 结算记录结算中
   SETTLE_RECORD_SUCCESS: 'finishSettle', // 结算成功
 }
-}
