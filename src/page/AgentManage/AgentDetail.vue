@@ -330,7 +330,7 @@
           addTalk() {
             ruleForm.agentNo = that.agentNo
             api.addTalk(ruleForm).then(res => {
-              that.submitSuccess(res.status, type)
+              that.submitSuccess(res.status, 'addTalk')
             })
           },
           updateLogin() {
@@ -338,7 +338,7 @@
               agentNo: that.agentNo,
               pwdType: 1
             }).then(res => {
-              that.submitSuccess(res.status, type)
+              that.submitSuccess(res.status, 'updateLogin')
             })
           },
           updateBlock() {
