@@ -142,4 +142,7 @@
   /deep/ .tab-disabled {
     color: #F5222D;
   }
+  /deep/ .el-date-editor--daterange.el-input__inner {
+    width: 100%;
+  }
 </style>

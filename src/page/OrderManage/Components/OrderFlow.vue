@@ -115,4 +115,7 @@
       background: #fff;
     }
   }
+  /deep/ .tab-color {
+    color: #1989FA;
+  }
 </style>
