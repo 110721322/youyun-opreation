@@ -4,11 +4,17 @@ export const TABLE_CONFIG = {
     {
       label: '订单号',
       prop: 'orderNo',
-      width: '150px'
+      width: '100px',
+      render: (h, params) => {
+        return h(
+            'span', {'class': 'tab-color' }, params.row.orderNo
+        )
+      }
     },
     {
       label: '创建时间',
-      prop: 'payTime'
+      prop: 'payTime',
+      width: '110px'
     },
     {
       label: '所属服务商',
@@ -28,8 +34,7 @@ export const TABLE_CONFIG = {
     },
     {
       label: '实收金额',
-      prop: 'actualAmount',
-      width: '120px'
+      prop: 'actualAmount'
     },
     {
       label: '服务商分润',
@@ -95,11 +100,17 @@ export const REFUND_TABLE_CONFIG = {
     {
       label: '退单号',
       prop: 'refundNo',
-      width: '150px'
+      width: '100px',
+      render: (h, params) => {
+        return h(
+            'span', {'class': 'tab-color' }, params.row.refundNo
+        )
+      }
     },
     {
       label: '退款时间',
-      prop: 'createTime'
+      prop: 'createTime',
+      width: '110px'
     },
     {
       label: '所属服务商',

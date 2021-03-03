@@ -154,9 +154,11 @@
     color: #606266;
     border-bottom: 1px solid #EBEEF5;
   }
-
   /deep/ .el-dialog__footer {
     padding-top: 20px;
     border-top: 1px solid #EBEEF5;
+  }
+  /deep/ .el-date-editor--daterange.el-input__inner {
+    width: 100%;
   }
 </style>

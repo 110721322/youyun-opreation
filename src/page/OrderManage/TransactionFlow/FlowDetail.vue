@@ -48,7 +48,7 @@
             :form-config="tableConfig.formConfig"
             :form-data="tableConfig.formModel"
             :grid-edit-width="250"
-            :is-async="true"
+            :is-async="false"
             :is-data-select="false"
             :is-table-expand="false"
             :row-key="'id'"

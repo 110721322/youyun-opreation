@@ -23,7 +23,7 @@ export const FORM_CONFIG = {
     },
     {
       label: "支付模式",
-      key: "payTypeCN"
+      key: "payType"
     },
     {
       label: "交易状态",
@@ -63,7 +63,10 @@ export const FORM_CONFIG = {
     },
     {
       label: "退款金额",
-      key: "refundAmount"
+      key: "refundAmount",
+      isShow: (params) => {
+        return params.orderStatus === TransactionFlow.PART_REFUND || params.orderStatus === TransactionFlow.ALL_REFUND
+      }
     },
     {
       label: "服务商分润",

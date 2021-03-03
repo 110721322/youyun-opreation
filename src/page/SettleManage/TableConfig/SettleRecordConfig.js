@@ -49,7 +49,7 @@ export const SETTLE_RECORD_CONFIG = {
     },
     {
       label: '结算状态',
-      prop: 'settleStatusDesc',
+      prop: 'settleStatus',
       render: (h, params) => {
         const actions = new Map([
           [SettleList.SETTLE_RECORD_FAIL, {className: 's-status-fail'}],
