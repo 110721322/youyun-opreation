@@ -40,7 +40,12 @@ export const TransactionFlow = {
   MYBANK: 'mybank', // 网商
   ALIPAY: 'alipay', // 支付宝
   WECHAT: 'wechat', // 微信
-  NEWLAND: 'newland' // 新大陆
+  NEWLAND: 'newland', // 新大陆
+  ACTIVESCAN: 'activeScan', // 支付模式（主扫）
+  PASSIVENSAN: 'passiveScan', // 支付模式（被扫）
+  FACESCAN: 'faceScan', // 支付模式（扫脸）
+  APPLET: 'applet', // 支付模式（小程序）
+  APP: 'app', // 支付模式（app）
 }
 
 export const ShopList = {
@@ -105,5 +110,4 @@ export const SettleList = {
   SETTLE_RECORD_FAIL: 'settleFail', // 结算记录结算失败
   SETTLE_RECORD_STEELE: 'noSettle', // 结算记录结算中
   SETTLE_RECORD_SUCCESS: 'finishSettle', // 结算成功
-}
 }
