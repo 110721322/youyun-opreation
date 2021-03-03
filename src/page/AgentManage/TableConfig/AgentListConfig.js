@@ -8,7 +8,7 @@ export const AGENT_LIST_CONFIG = {
         return h(
           'span', { 'class': 'tab-color' }, params.row.agentNo
         )
-    }
+      }
     },
     {
       label: '服务商名称',

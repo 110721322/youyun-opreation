@@ -23,7 +23,21 @@ export const FORM_CONFIG = {
     },
     {
       label: "支付模式",
-      key: "payType"
+      key: "payType",
+      render: (h, params) => {
+        const actions = new Map([
+          [TransactionFlow.ACTIVESCAN, '主扫'],
+          [TransactionFlow.PASSIVENSAN, '被扫'],
+          [TransactionFlow.FACESCAN, '刷脸'],
+          [TransactionFlow.APPLET, '小程序'],
+          [TransactionFlow.APP, 'app'],
+          ['default', '--'],
+        ])
+        const statusTxt = actions.get(params.payType) || actions.get('default')
+        return h(
+            'span', { 'class': 'f-fc-606266' }, statusTxt
+        )
+      }
     },
     {
       label: "交易状态",
