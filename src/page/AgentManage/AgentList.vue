@@ -117,6 +117,7 @@
         }
       },
 
+      // 跳转至服务商详情
       onClickDetails(row) {
         this.$router.push({
           name: 'AgentDetail',
